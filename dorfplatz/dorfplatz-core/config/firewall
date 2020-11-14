@@ -1,0 +1,53 @@
+
+config defaults
+	option syn_flood '1'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option drop_invalid '0'
+
+config include
+	option path '/etc/firewall.user'
+
+config zone 'zone_freifunk'
+	option input 'ACCEPT'
+	option forward 'REJECT'
+	option name 'freifunk'
+	option output 'ACCEPT'
+	option device 'tnl_+'
+	option network 'tunl0 dhcp mgmt mesh_sama'
+
+config forwarding
+	option dest 'freifunk'
+	option src 'freifunk'
+
+config rule
+	option proto 'icmp'
+	option target 'ACCEPT'
+	option src 'freifunk'
+
+config rule
+	option dest_port '80'
+	option proto 'tcp'
+	option target 'ACCEPT'
+	option src 'freifunk'
+
+config rule
+	option dest_port '443'
+	option proto 'tcp'
+	option target 'ACCEPT'
+	option src 'freifunk'
+
+config rule
+	option dest_port '22'
+	option proto 'tcp'
+	option target 'ACCEPT'
+	option src 'freifunk'
+
+config rule
+	option name 'DSCP olsr'
+	list proto 'udp'
+	option dest_port '698'
+	option target 'DSCP'
+	option set_dscp 'EF'
+

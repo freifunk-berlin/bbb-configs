@@ -1,0 +1,6 @@
+config public 'contact'
+	option nickname 'your_friendly_freifunk_operator'
+
+config public 'community'
+	option homepage 'http://freifunk.net'
+	option name 'berlin'

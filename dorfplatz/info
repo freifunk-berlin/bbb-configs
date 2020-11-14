@@ -1,0 +1,15 @@
+Networks:
+- DHCP clients
+  10.31.75.64/26
+  VLAN 40 (untagged on core)
+  .65 - dorfplatz-core
+ 
+- Management
+  10.31.75.32/28
+  VLAN 42
+  .33 - dorfplatz-core
+  .34 - dorfplatz-wilgu10
+
+- Mesh
+  10.31.74.220/30
+  .220/32 mesh_wilgu10

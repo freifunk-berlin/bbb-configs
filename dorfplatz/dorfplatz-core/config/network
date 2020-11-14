@@ -1,0 +1,52 @@
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+	option dns '46.182.19.48 80.67.169.40 194.150.168.168 2001:4ce8::53 2001:910:800::12 2a02:2970:1002::18'
+
+config interface 'dhcp'
+	option type 'bridge'
+	option proto 'static'
+        option ifname 'eth0.40'
+	option ipaddr '10.31.75.65/26'
+	option ip6assign '64'
+        option ip6prefix '2001:bf7:830:8200::/56'
+
+config interface 'mgmt'
+	option proto 'static'
+	option ifname 'eth0.42'
+	option ipaddr '10.31.75.33/28' 
+
+# 10.31.74.220/30 network is for peering purpose
+config interface 'mesh_sama'
+	option proto 'static'
+	option ipaddr '10.31.74.220'
+	option ip6assign '64'
+	option ifname 'eth0.10'
+
+config switch
+	option name 'switch0'
+	option reset '1'
+	option enable_vlan '1'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '10'
+	option ports '1t 2t 3t 4t 0t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '40'
+	option ports '1 2 3 4 0t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '41'
+	option ports '1t 2t 3t 4t 0t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '42'
+	option ports '1t 2t 3t 4t 0t'
+
