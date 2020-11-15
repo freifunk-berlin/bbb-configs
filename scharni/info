@@ -1,0 +1,28 @@
+Networks:
+- DHCP clients
+  10.36.194.128/26
+  .129 - scharni-core
+ 
+- Management
+  10.31.52.160/27
+  VLAN 42
+  .161 - scharni-core
+  .162 - scharni-switch
+  .163 - scharni-zwingli
+  .164 - scharni-sama
+  .187 - scharni-ap3
+  .189 - scharni-ap2
+  .190 - scharni-ap1
+
+- Mesh
+  10.31.52.192/29
+  .192/32 wilgu10
+  .193/32 sama
+  .194/32 zwingli
+
+- VLANs:
+  10: mesh_wilgu10
+  11: mesh_sama
+  12: mesh_zwingli
+  40: dhcp
+  42: mgmt vlan

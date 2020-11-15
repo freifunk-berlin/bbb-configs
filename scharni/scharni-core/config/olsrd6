@@ -1,0 +1,53 @@
+config LoadPlugin
+	option accept '0::'
+	option library 'olsrd_txtinfo'
+	option port '2006'
+	option ipv6only 'true'
+
+config LoadPlugin
+	option library 'olsrd_nameservice'
+	option suffix '.olsr'
+	option hosts_file '/tmp/hosts/olsr.ipv6'
+	option latlon_file '/var/run/latlon.js.ipv6'
+	option services_file '/var/etc/services.olsr.ipv6'
+
+config LoadPlugin
+	option accept '0::'
+	option library 'olsrd_jsoninfo'
+	option ignore '0'
+	option ipv6only 'true'
+
+config LoadPlugin
+	option library 'olsrd_watchdog'
+	option file '/var/run/olsrd6.watchdog'
+	option interval '30'
+
+config olsrd
+	option IpVersion '6'
+	option FIBMetric 'flat'
+	option AllowNoInt 'yes'
+	option TcRedundancy '2'
+	option LinkQualityAlgorithm 'etx_ffeth'
+	option Pollrate '0.025'
+	option RtTable '256'
+	option RtTableDefault '256'
+
+config InterfaceDefaults
+	option MidValidityTime '500.0'
+	option TcInterval '2.0'
+	option HnaValidityTime '125.0'
+	option HelloValidityTime '125.0'
+	option TcValidityTime '500.0'
+	option MidInterval '25.0'
+	option HelloInterval '3.0'
+	option HnaInterval '10.0'
+
+config Interface
+	option ignore '0'
+	option Mode 'ether'
+	option interface 'mesh_sama'
+
+config Interface
+	option ignore '0'
+	option Mode 'ether'
+	option interface 'mesh_zwingli'

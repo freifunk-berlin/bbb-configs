@@ -1,0 +1,13 @@
+config wifi-device 'radio0'
+	option type 'mac80211'
+	option hwmode '11a'
+	option path 'pci0000:00/0000:00:00.0'
+	option htmode 'HT40'
+
+config wifi-iface 'default_radio0'
+	option device 'radio0'
+	option network 'wmesh'
+	option mode 'sta'
+	option ssid 'sama-sued-5ghz'
+	option encryption 'none'
+        option macaddr 'b8:ec:a3:d6:8b:fe'

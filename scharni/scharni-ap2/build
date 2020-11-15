@@ -1,0 +1,29 @@
+#!/bin/bash
+
+IMAGEBUILDER_PATH="https://downloads.openwrt.org/snapshots/targets/ath79/generic"
+IMAGEBUILDER_FILE="openwrt-imagebuilder-ath79-generic.Linux-x86_64.tar.xz"
+
+PROFILE="tplink_archer-c6-v2"
+PACKAGES=" mtr tcpdump"
+PACKAGES+=" luci-ssl"
+PACKAGES+=" luci-app-statistics collectd-mod-uptime collectd-mod-ping"
+PACKAGES+=" -ppp -ppp-mod-pppoe"
+
+DISABLED_SERVICES="dnsmasq odhcpd"
+
+rm -rf openwrt* builder
+wget "$IMAGEBUILDER_PATH/$IMAGEBUILDER_FILE"
+tar -xJf "$IMAGEBUILDER_FILE"
+rm "$IMAGEBUILDER_FILE"
+
+mv openwrt* builder
+
+mkdir -p builder/files/etc/config/
+cp config/* builder/files/etc/config/
+
+cd builder
+
+make image PROFILE="$PROFILE" PACKAGES="$PACKAGES" DISABLED_SERVICES="$DISABLED_SERVICES" FILES=files/
+
+
+

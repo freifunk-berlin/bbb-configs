@@ -1,0 +1,19 @@
+config interface 'loopback'
+        option ifname 'lo'
+        option proto 'static'
+        option ipaddr '127.0.0.1'
+        option netmask '255.0.0.0'
+
+config interface 'mgmt'
+        option proto 'static'
+        option ifname 'eth0.42'
+        option ipaddr '10.31.52.164/27'
+        option gateway '10.31.52.161'
+        option dns '10.31.52.161'
+
+config interface 'mesh'
+        option proto 'static'
+        option ifname 'eth0.12'
+
+config interface 'wmesh'
+	option proto 'static'
