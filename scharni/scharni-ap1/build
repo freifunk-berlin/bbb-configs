@@ -7,6 +7,7 @@ PROFILE="tplink_archer-c6-v2"
 PACKAGES=" mtr tcpdump"
 PACKAGES+=" luci-ssl"
 PACKAGES+=" luci-app-statistics collectd-mod-uptime collectd-mod-ping"
+PACKAGES+=" nftables kmod-nft-bridge"
 PACKAGES+=" -ppp -ppp-mod-pppoe"
 
 DISABLED_SERVICES="dnsmasq odhcpd"
