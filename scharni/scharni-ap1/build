@@ -18,8 +18,8 @@ rm "$IMAGEBUILDER_FILE"
 
 mv openwrt* builder
 
-mkdir -p builder/files/etc/config/
-cp config/* builder/files/etc/config/
+mkdir -p builder/files
+cp -r etc builder/files
 
 cd builder
 

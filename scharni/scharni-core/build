@@ -24,8 +24,8 @@ rm "$IMAGEBUILDER_FILE"
 
 mv openwrt* builder
 
-mkdir -p builder/files/etc/config/
-cp config/* builder/files/etc/config/
+mkdir -p builder/files
+cp -r etc builder/files
 
 INSTR_SET=$(grep "openwrt_base" builder/repositories.conf | awk -F'/' '{print $8}')
 #echo "$FALTER_REPO/$INSTR_SET" >> builder/repositories.conf
