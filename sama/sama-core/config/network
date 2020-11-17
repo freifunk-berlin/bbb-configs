@@ -1,0 +1,127 @@
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+	option dns '46.182.19.48 80.67.169.40 194.150.168.168 2001:4ce8::53 2001:910:800::12 2a02:2970:1002::18'
+
+config globals 'globals'
+	option ula_prefix 'fd63:8cb2:35ff::/48'
+
+config switch
+	option name 'switch0'
+	option reset '1'
+	option enable_vlan '1'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '40'
+	option vid '40'
+	option ports '0t 1 2 3 4'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '10'
+	option vid '10'
+	option ports '0t 1t 2t 3t 4t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '11'
+	option vid '11'
+	option ports '0t 1t 2t 3t 4t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '12'
+	option vid '12'
+	option ports '0t 1t 2t 3t 4t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '13'
+	option vid '13'
+	option ports '0t 1t 2t 3t 4t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '14'
+	option vid '14'
+	option ports '0t 1t 2t 3t 4t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '15'
+	option vid '15'
+	option ports '0t 1t 2t 3t 4t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '42'
+	option vid '42'
+	option ports '0t 1t 2t 3t 4t'
+
+config interface 'mesh_f2a'
+	option proto 'static'
+	option ipaddr '10.31.66.13/32'
+	option ifname 'eth0.13'
+
+config interface 'mesh_wilgu10'
+	option proto 'static'
+	option ipaddr '10.31.66.14/32'
+	option ifname 'eth0.11'
+
+config interface 'mesh_scharni'
+	option proto 'static'
+	option ipaddr '10.31.66.32/32'
+	option ifname 'eth0.12'
+
+config interface 'mesh_zwingli'
+	option proto 'static'
+	option ipaddr '10.31.66.34/32'
+
+config interface 'mgmt'
+	option ipaddr '10.31.66.65'
+	option ifname 'eth0.42'
+	option proto 'static'
+	option netmask '255.255.255.224'
+
+config interface 'dhcp'
+	option type 'bridge'
+	option ipaddr '10.31.66.129'
+	option ip6assign '64'
+	option ifname 'eth0.40'
+	option proto 'static'
+	option netmask '255.255.255.128'
+
+config interface 'mesh_hds'
+	option ifname 'eth0.10'
+	option proto 'static'
+	option ipaddr '10.31.66.40/32'
+
+config interface 'mesh_rigaer'
+	option ifname 'eth0.15'
+	option proto 'static'
+	option ipaddr '10.31.66.106'
+
+config rule 'olsr_allif_ipv4'
+	option lookup 'olsr'
+	option priority '1000'
+
+config rule 'localnets_allif_ipv4'
+	option lookup 'localnets'
+	option priority '2000'
+
+config rule 'default_allif_ipv4'
+	option lookup 'olsr-default'
+	option priority '40000'
+
+config interface 'ffuplink'
+	option ifname 'ffuplink'
+	option ip4table 'ffuplink'
+	option ip6table 'ffuplink'
+	option proto 'none'
+
+config interface 'tunl0'
+	option ifname 'tunl0'
+	option proto 'none'
