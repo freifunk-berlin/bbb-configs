@@ -30,8 +30,8 @@ config olsrd
 	option TcRedundancy '2'
 	option LinkQualityAlgorithm 'etx_ffeth'
 	option Pollrate '0.025'
-	option RtTable '111'
-	option RtTableDefault '112'
+	option RtTable '256'
+	option RtTableDefault '256'
 	option RtTablePriority '1000'
 	option RtTableDefaultOlsrPriority '20000'
 
