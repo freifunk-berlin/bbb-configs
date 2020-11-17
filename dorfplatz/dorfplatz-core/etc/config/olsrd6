@@ -32,8 +32,6 @@ config olsrd
 	option Pollrate '0.025'
 	option RtTable '256'
 	option RtTableDefault '256'
-	option RtTablePriority '1000'
-	option RtTableDefaultOlsrPriority '20000'
 
 config InterfaceDefaults
 	option MidValidityTime '500.0'
