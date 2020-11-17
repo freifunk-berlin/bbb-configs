@@ -4,7 +4,7 @@ IMAGEBUILDER_PATH="https://downloads.openwrt.org/releases/19.07.3/targets/ipq40x
 IMAGEBUILDER_FILE="openwrt-imagebuilder-19.07.3-ipq40xx-generic.Linux-x86_64.tar.xz"
 FALTER_REPO="src/gz openwrt_falter http://download-master.berlin.freifunk.net/falter-feed/19.07.4/packages/arm_cortex-a7_neon-vfpv4/falter/"
 
-PROFILE="avm_fritzbox-7530"
+PROFILE="avm_fritzbox-4040"
 PACKAGES=" mtr tcpdump"
 PACKAGES+=" luci-ssl"
 PACKAGES+=" luci-app-statistics collectd-mod-uptime collectd-mod-ping collectd-mod-olsrd collectd-mod-exec"
