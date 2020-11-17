@@ -19,7 +19,7 @@ config statistics 'collectd_ping'
 	option Hosts 'ping.berlin.freifunk.net'
 
 config statistics 'collectd_interface'
-	option Interfaces 'eth0.10 eth0.11 eth0.12 eth0.13 eth0.15'
+	option Interfaces 'eth0.10 eth0.11 eth0.12 eth0.13 eth0.15 eth0.40 eth0.42'
 	option enable '1'
 
 config statistics 'collectd_load'
@@ -51,3 +51,8 @@ config collectd_network_server
 
 config statistics 'collectd_network'
 	option enable '1'
+
+config collectd_exec_input
+	option cmduser 'nobody'
+	option cmdgroup 'nogroup'
+	option cmdline '/etc/config/collectd_exec_dhcp_leases'

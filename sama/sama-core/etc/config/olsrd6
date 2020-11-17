@@ -29,8 +29,8 @@ config olsrd
 	option TcRedundancy '2'
 	option LinkQualityAlgorithm 'etx_ffeth'
 	option Pollrate '0.025'
-	option RtTable '111'
-	option RtTableDefault '112'
+	option RtTable '256'
+	option RtTableDefault '256'
 	option RtTablePriority '1000'
 	option RtTableDefaultOlsrPriority '20000'
 
@@ -57,26 +57,12 @@ config Interface
 config Interface
 	option ignore '0'
 	option Mode 'ether'
-	option interface 'mesh_schreiner27'
-
-config Interface
-	option ignore '0'
-	option Mode 'ether'
 	option interface 'mesh_scharni'
 
 config Interface
 	option ignore '0'
 	option Mode 'ether'
-	option interface 'mesh_scharni29'
-
-config Interface
-	option ignore '0'
-	option Mode 'ether'
 	option interface 'mesh_zwingli'
-
-config Hna6
-	option prefix '48'
-	option netaddr 'fd63:8cb2:35ff::'
 
 config Interface                              
 	option ignore '0'                         

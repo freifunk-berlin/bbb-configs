@@ -40,8 +40,8 @@ config olsrd
 	option SmartGateway 'no'
 	option SmartGatewayThreshold '50'
 	option Pollrate '0.025'
-	option RtTable '111'
-	option RtTableDefault '112'
+	option RtTable '256'
+	option RtTableDefault '256'
 	#option RtTableTunnel '113'
 	#option RtTableTunnelPriority '100000'
 	#option RtTableDefaultOlsrPriority '20000'
@@ -65,21 +65,10 @@ config Hna4
 	option netmask '255.255.255.224'
 	option netaddr '10.31.66.64'
 
-#config Interface                             
-#        option ignore '0'          
-#        option Mode 'ether'           
-#        option interface 'dhcp'
-
-#config Interface                           
-#        option ignore '0'                  
-#        option Mode 'ether'                    
-#        option interface 'mgmt'
-
 config Interface
 	option ignore '0'
 	option Mode 'ether'
 	option interface 'mesh_wilgu10'
-#	list LinkQualityMult 'default 0.5'
 
 config Interface
 	option ignore '0'
@@ -87,20 +76,10 @@ config Interface
 	option interface 'mesh_f2a'
 	list LinkQualityMult 'default 0.5'
 
-#config Interface
-#	option ignore '0'
-#	option Mode 'ether'
-#	option interface 'mesh_schreiner27'
-
 config Interface
 	option ignore '0'
 	option Mode 'ether'
 	option interface 'mesh_scharni'
-
-#config Interface
-#	option ignore '0'
-#	option Mode 'ether'
-#	option interface 'mesh_scharni29'
 
 config Interface
 	option ignore '0'

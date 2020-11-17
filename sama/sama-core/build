@@ -2,10 +2,9 @@
 
 IMAGEBUILDER_PATH="https://downloads.openwrt.org/releases/19.07.3/targets/ipq40xx/generic"
 IMAGEBUILDER_FILE="openwrt-imagebuilder-19.07.3-ipq40xx-generic.Linux-x86_64.tar.xz"
-#FALTER_REPO="src/gz openwrt_falter http://127.0.0.1:8080/19.07/"
 FALTER_REPO="src/gz openwrt_falter http://download-master.berlin.freifunk.net/falter-feed/19.07.4/packages/arm_cortex-a7_neon-vfpv4/falter/"
 
-PROFILE="avm_fritzbox-4040"
+PROFILE="avm_fritzbox-7530"
 PACKAGES=" mtr tcpdump"
 PACKAGES+=" luci-ssl"
 PACKAGES+=" luci-app-statistics collectd-mod-uptime collectd-mod-ping collectd-mod-olsrd collectd-mod-exec"
@@ -15,8 +14,6 @@ PACKAGES+=" luci-mod-falter falter-berlin-fix-luci"
 PACKAGES+=" luci-app-falter-owm luci-app-falter-owm-ant luci-app-falter-owm-cmd luci-app-falter-owm-gui"
 PACKAGES+=" -ppp -ppp-mod-pppoe"
 
-#DISABLED_SERVICES="dnsmasq odhcpd"
-
 rm -rf openwrt* builder
 wget "$IMAGEBUILDER_PATH/$IMAGEBUILDER_FILE"
 tar -xJf "$IMAGEBUILDER_FILE"
@@ -24,17 +21,12 @@ rm "$IMAGEBUILDER_FILE"
 
 mv openwrt* builder
 
-mkdir -p builder/files/etc/config/
-cp config/* builder/files/etc/config/
+mkdir -p builder/files
+cp -r etc builder/files
 
 INSTR_SET=$(grep "openwrt_base" builder/repositories.conf | awk -F'/' '{print $8}')
-#echo "$FALTER_REPO/$INSTR_SET" >> builder/repositories.conf
 echo "$FALTER_REPO" >> builder/repositories.conf
-
 
 cd builder
 
 make image PROFILE="$PROFILE" PACKAGES="$PACKAGES" DISABLED_SERVICES="$DISABLED_SERVICES" FILES=files/
-
-
-

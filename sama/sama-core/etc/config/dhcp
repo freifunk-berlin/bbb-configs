@@ -27,7 +27,7 @@ config domain 'frei_funk'
 
 config domain 'frei_funk_ipv6'
 	option name 'frei.funk'
-	option ip 'fd63:8cb2:35ff::1'
+	option ip '2001:bf7:830:7200::1/56'
 
 config odhcpd 'odhcpd'
 	option maindhcp '0'
