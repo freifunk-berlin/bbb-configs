@@ -6,7 +6,6 @@ config interface 'loopback'
 	option dns '46.182.19.48 80.67.169.40 194.150.168.168 2001:4ce8::53 2001:910:800::12 2a02:2970:1002::18'
 
 config interface 'dhcp'
-	option type 'bridge'
 	option proto 'static'
         option ifname 'eth0.40'
 	option ipaddr '10.36.194.129/26'
