@@ -25,6 +25,9 @@ config statistics 'collectd_interface'
 config statistics 'collectd_load'
 	option enable '1'
 
+config statistics 'collectd_exec'
+	option enable '1'
+
 config statistics 'collectd_rrdtool'
 	option enable '1'
 	option DataDir '/tmp/rrd'
@@ -47,7 +50,7 @@ config statistics 'collectd_uptime'
 	option enable '1'
 
 config collectd_network_server
-	option host 'monitor.berlin.freifunk.net'
+	option host '77.87.48.12'
 
 config statistics 'collectd_network'
 	option enable '1'
