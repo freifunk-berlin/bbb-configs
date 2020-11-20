@@ -1,0 +1,90 @@
+
+config LoadPlugin
+	option accept '0::'
+	option library 'olsrd_txtinfo'
+	option port '2007'
+	option ipv6only 'true'
+
+config LoadPlugin
+	option library 'olsrd_nameservice'
+	option suffix '.olsr'
+	option hosts_file '/tmp/hosts/olsr.ipv6'
+	option latlon_file '/var/run/latlon.js.ipv6'
+	option services_file '/var/etc/services.olsr.ipv6'
+
+config LoadPlugin
+	option accept '0::'
+	option library 'olsrd_jsoninfo.so'
+	option ignore '0'
+	option ipv6only 'true'
+
+config LoadPlugin
+	option library 'olsrd_watchdog.so'
+	option file '/var/run/olsrd.watchdog'
+	option interval '30'
+
+config olsrd
+	option FIBMetric 'flat'
+	option AllowNoInt 'yes'
+	option TcRedundancy '2'
+	option LinkQualityAlgorithm 'etx_ffeth'
+	option Pollrate '0.025'
+
+config InterfaceDefaults
+	option MidValidityTime '500.0'
+	option TcInterval '2.0'
+	option HnaValidityTime '125.0'
+	option HelloValidityTime '125.0'
+	option TcValidityTime '500.0'
+	option MidInterval '25.0'
+	option HelloInterval '3.0'
+	option HnaInterval '10.0'
+
+config Hna6
+	option prefix '56'
+	option netaddr '2001:bf7:830:ff00::'
+
+#config Hna6
+#	option prefix '56'
+#	option netaddr '2001:bf7:830:ba00::'
+
+#config Hna6
+#	option prefix '56'
+#	option netaddr '2001:bf7:830:aa00::'
+
+config Interface
+	option ignore '0'
+	option interface 'fhain'
+	option Mode 'mesh'
+
+config Interface
+	option Mode 'mesh'
+	option ignore '0'
+	option interface 'fluxfm'
+
+config Interface
+	option Mode 'mesh'
+	option ignore '0'
+	option interface 'emma'
+
+config Interface
+	option Mode 'mesh'
+	option ignore '0'
+	option interface 'neukoelln'
+
+#config Interface
+#	option Mode 'ether'
+#	option ignore '0'
+#	option interface 'olsr'
+
+config Interface
+	option ignore '0'
+	option interface 'rhxb'
+	option Mode 'mesh'
+
+config Interface
+        option ignore '0'
+	option interface 'mikrotik'
+	option Mode 'mesh'
+
+

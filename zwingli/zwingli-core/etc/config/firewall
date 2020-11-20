@@ -1,0 +1,14 @@
+# ich habe ausversehen die firewall config geloescht am 24.10.2018 (philipp)
+
+config defaults
+	option syn_flood '1'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+
+config zone
+	option name 'default'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+	option network 'lan mesh olsr olsrbat fhain emma fluxfm neukoelln f2a rhxb'

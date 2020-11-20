@@ -1,0 +1,67 @@
+
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1/8'
+	list ip6prefix '2001:bf7:830:ff00::/60'
+	option ip6assign '64'
+
+config interface 'mesh'
+	option proto 'static'
+	option ifname 'bat0'
+	option ipaddr '10.36.10.1/24'
+	option ip6assign '64'
+
+config interface 'lan'
+	option ifname 'eth0.30'
+	option type 'bridge'
+	option proto 'static'
+	option ipaddr '192.168.0.100/24'
+
+config interface 'olsr'
+	option proto 'static'
+	option ifname 'eth0.1'
+	option ipaddr '10.31.10.1/28'
+	option dns '194.150.168.168 213.73.91.35 2620:0:ccc::2'
+
+config interface 'olsrbat'
+	option ifname '@olsr'
+	option proto 'batadv'
+	option mesh 'bat0'
+
+config interface 'fhain'
+	option proto 'static'
+	option ifname 'eth0.3'
+	option ipaddr '10.31.10.17/30'
+	option ip6assign '64'
+
+config interface 'emma'
+	option proto 'static'
+	option ifname 'eth0.4'
+	option ipaddr '10.31.10.21/30'
+	option ip6assign '64'
+
+config interface 'fluxfm'
+	option proto 'static'
+	option ifname 'eth0.7'
+	option ipaddr '10.31.10.25/30'
+	option ip6assign '64'
+
+config interface 'neukoelln'
+	option proto 'static'
+	option ifname 'eth0.8'
+	option ipaddr '10.31.10.29/30'
+	option ip6assign '64'
+
+config interface 'f2a'
+	option proto 'static'
+	option ifname 'eth0.2'
+	option ipaddr '10.31.10.45/30'
+	option ip6assign '64'
+
+config interface 'rhxb'
+	option proto 'static'
+	option ifname 'eth0.6'
+	option ipaddr '10.31.10.49/30'
+	option ip6assign '64'
+

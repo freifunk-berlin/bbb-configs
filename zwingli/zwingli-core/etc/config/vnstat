@@ -1,0 +1,13 @@
+
+config vnstat
+	list interface 'bat0'
+	list interface 'eth0'
+	list interface 'eth0.2'
+	list interface 'eth0.3'
+	list interface 'eth0.4'
+	list interface 'eth0.5'
+	list interface 'eth0.6'
+	list interface 'eth0.7'
+	list interface 'eth0.8'
+	list interface 'eth0.1'
+

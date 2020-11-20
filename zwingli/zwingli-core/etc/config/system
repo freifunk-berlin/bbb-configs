@@ -1,0 +1,17 @@
+config system
+	option hostname 'Zwingli-Core'
+	option zonename 'Europe/Berlin'
+	option timezone 'CET-1CEST,M3.5.0,M10.5.0/3'
+	option location 'Zwinglikirche'
+	option cronloglevel '10'
+	option latitude '52.50355457229739'
+	option longitude '13.454830790023667'
+
+config timeserver 'ntp'
+	list server '0.openwrt.pool.ntp.org'
+	list server '1.openwrt.pool.ntp.org'
+	list server '2.openwrt.pool.ntp.org'
+	list server '3.openwrt.pool.ntp.org'
+	option enabled '1'
+	option enable_server '1'
+
