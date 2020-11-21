@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#IMAGEBUILDER_PATH="https://downloads.openwrt.org/releases/19.07.4/targets/ath79/generic"
+IMAGEBUILDER_FILE="../../_imagebuilders/imagebuilder-sxtsq5ac.tar.xz"
+
+PROFILE="mikrotik_sxtsq-5-ac"
+PACKAGES=" mtr tcpdump"
+PACKAGES+=" luci-ssl"
+PACKAGES+=" luci-app-statistics collectd-mod-uptime collectd-mod-ping"
+PACKAGES+=" nftables kmod-nft-bridge"
+PACKAGES+=" -ppp -ppp-mod-pppoe"
+PACKAGES="-kmod-ath10k-ct kmod-ath10k -ath10k-firmware-qca4019-ct ath10k-firmware-qca4019"
+
+DISABLED_SERVICES="dnsmasq odhcpd"
+
+rm -rf openwrt* builder
+#wget "$IMAGEBUILDER_PATH/$IMAGEBUILDER_FILE"
+tar -xJf "$IMAGEBUILDER_FILE"
+#rm "$IMAGEBUILDER_FILE"
+
+mv openwrt* builder
+
+mkdir -p builder/files
+cp -r etc builder/files
+
+cd builder
+
+make image PROFILE="$PROFILE" PACKAGES="$PACKAGES" DISABLED_SERVICES="$DISABLED_SERVICES" FILES=files/
+
+
+

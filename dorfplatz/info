@@ -9,6 +9,8 @@ Networks:
   VLAN 42
   .33 - dorfplatz-core
   .34 - dorfplatz-wilgu10
+  .46 - dorfplatz-ap1
+  .45 - dorfplatz-ap2
 
 - Mesh
   10.31.74.220/30
