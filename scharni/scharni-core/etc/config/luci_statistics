@@ -22,7 +22,7 @@ config statistics 'collectd_ping'
 config statistics 'collectd_interface'
 	option enable '1'
 	option IgnoreSelected '0'
-	option Interfaces 'etho.40 eth0.10 eth0.11 eth0.12'
+	option Interfaces 'eth0.40 eth0.10 eth0.11 eth0.12'
 
 config statistics 'collectd_load'
 	option enable '1'
