@@ -4,12 +4,12 @@ IMAGEBUILDER_PATH="https://downloads.openwrt.org/snapshots/targets/ath79/generic
 IMAGEBUILDER_FILE="openwrt-imagebuilder-ath79-generic.Linux-x86_64.tar.xz"
 
 PROFILE="ubnt_litebeam-ac-gen2"
-#PACKAGES="-kmod-ath10k-ct-smallbuffers kmod-ath10k -ath10k-firmware-qca988x-ct ath10k-firmware-qca988x"
+PACKAGES="-kmod-ath10k-ct-smallbuffers kmod-ath10k -ath10k-firmware-qca988x-ct ath10k-firmware-qca988x"
 PACKAGES+=" -kmod-ath9k"
 PACKAGES+=" mtr tcpdump"
 PACKAGES+=" kmod-trelay"
 PACKAGES+=" luci-ssl"
-#PACKAGES+=" luci-app-statistics collectd-mod-uptime collectd-mod-ping"
+PACKAGES+=" luci-app-statistics collectd-mod-uptime collectd-mod-ping"
 PACKAGES+=" -ppp -ppp-mod-pppoe"
 DISABLED_SERVICES="dnsmasq odhcpd"
 
@@ -24,9 +24,5 @@ mkdir -p builder/files
 cp -r etc builder/files
 
 cd builder
-
-# Work around failing collectd/snapshot build.
-# remove once fixed. https://github.com/openwrt/packages/issues/13934
-#sed -i 's/snapshots\/packages\/mips_24kc\/packages/releases\/packages-19.07\/mips_24kc\/packages/' repositories.conf
 
 make image PROFILE="$PROFILE" PACKAGES="$PACKAGES" DISABLED_SERVICES="$DISABLED_SERVICES" FILES=files/
