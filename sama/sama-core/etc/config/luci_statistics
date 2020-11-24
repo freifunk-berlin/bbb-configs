@@ -44,7 +44,7 @@ config statistics 'collectd_olsrd'
 	option Host '127.0.0.1'
 
 config statistics 'collectd_iwinfo'
-	option enable '1'
+	option enable '0'
 
 config statistics 'collectd_uptime'
 	option enable '1'
