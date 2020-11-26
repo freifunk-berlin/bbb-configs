@@ -63,10 +63,13 @@ config InterfaceDefaults
 	option HelloInterval '3.0'
 	option HnaInterval '10.0'
 
+# Uplink via Sama is much faster
 config Interface
         option ignore '0'
         option interface 'mesh_zwingli'
         option Mode 'ether'
+	list LinkQualityMult 'default 0.5'
+
 
 config Interface
 	option ignore '0'
