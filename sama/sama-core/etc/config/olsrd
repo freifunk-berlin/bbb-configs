@@ -67,10 +67,12 @@ config Interface
 	option Mode 'ether'
 	option interface 'mesh_wilgu10'
 
+# Link is unstable and has low throughput
 config Interface
 	option ignore '0'
 	option Mode 'ether'
 	option interface 'mesh_f2a'
+	list LinkQualityMult 'default 0.5'
 
 config Interface
 	option ignore '0'
