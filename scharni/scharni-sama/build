@@ -4,7 +4,7 @@ IMAGEBUILDER_PATH="https://downloads.openwrt.org/snapshots/targets/ath79/generic
 IMAGEBUILDER_FILE="openwrt-imagebuilder-ath79-generic.Linux-x86_64.tar.xz"
 
 PROFILE="ubnt_litebeam-ac-gen2"
-PACKAGES="-kmod-ath10k-ct-smallbuffers kmod-ath10k -ath10k-firmware-qca988x-ct ath10k-firmware-qca988x"
+#PACKAGES="-kmod-ath10k-ct-smallbuffers kmod-ath10k -ath10k-firmware-qca988x-ct ath10k-firmware-qca988x"
 PACKAGES+=" -kmod-ath9k"
 PACKAGES+=" mtr tcpdump"
 PACKAGES+=" kmod-trelay"
