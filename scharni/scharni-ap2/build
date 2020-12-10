@@ -9,6 +9,7 @@ PACKAGES+=" luci-ssl"
 PACKAGES+=" luci-app-statistics collectd-mod-uptime collectd-mod-ping"
 PACKAGES+=" nftables kmod-nft-bridge"
 PACKAGES+=" -ppp -ppp-mod-pppoe"
+PACKAGES+=" -wpad-basic-wolfssl hostapd-openssl"
 
 DISABLED_SERVICES="dnsmasq odhcpd"
 
