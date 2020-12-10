@@ -1,7 +1,7 @@
 #!/bin/bash
 
-IMAGEBUILDER_PATH="https://downloads.openwrt.org/releases/19.07.4/targets/ath79/generic"
-IMAGEBUILDER_FILE="openwrt-imagebuilder-19.07.4-ath79-generic.Linux-x86_64.tar.xz"
+IMAGEBUILDER_PATH="https://downloads.openwrt.org/releases/19.07.5/targets/ath79/generic"
+IMAGEBUILDER_FILE="openwrt-imagebuilder-19.07.5-ath79-generic.Linux-x86_64.tar.xz"
 
 PROFILE="tplink_archer-c6-v2"
 PACKAGES=" mtr tcpdump"
