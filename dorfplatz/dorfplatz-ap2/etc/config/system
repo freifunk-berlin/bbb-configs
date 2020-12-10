@@ -1,5 +1,5 @@
 config system
-        option hostname 'dorfplatz-ap1'
+        option hostname 'dorfplatz-ap2'
         option zonename 'Europe/Berlin'
         option timezone 'CET-1CEST,M3.5.0,M10.5.0/3'
         option ttylogin '0'
