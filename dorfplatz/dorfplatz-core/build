@@ -13,6 +13,7 @@ PACKAGES+=" luci-app-olsr luci-app-olsr-services"
 PACKAGES+=" luci-mod-falter falter-berlin-fix-luci"
 PACKAGES+=" luci-app-falter-owm luci-app-falter-owm-ant luci-app-falter-owm-cmd luci-app-falter-owm-gui"
 PACKAGES+=" -ppp -ppp-mod-pppoe"
+PACKAGES+=" -wpad-basic-wolfssl hostapd-openssl"
 
 #DISABLED_SERVICES="dnsmasq odhcpd"
 
