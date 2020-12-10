@@ -8,7 +8,7 @@ Networks:
   VLAN 42
   .161 - scharni-core
   .162 - scharni-switch
-  .163 - scharni-zwingli
+  .163 - scharni-wilgu10
   .164 - scharni-sama
   .188 - scharni-ap3
   .189 - scharni-ap2
@@ -16,13 +16,13 @@ Networks:
 
 - Mesh
   10.31.52.192/29
-  .192/32 wilgu10
+  .192/32 ___
   .193/32 sama
-  .194/32 zwingli
+  .194/32 wilgu10
 
 - VLANs:
-  10: mesh_wilgu10
+  10: mesh_
   11: mesh_sama
-  12: mesh_zwingli
+  12: mesh_wilgu10
   40: dhcp
   42: mgmt vlan

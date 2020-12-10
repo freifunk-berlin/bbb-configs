@@ -17,7 +17,7 @@ config interface 'mgmt'
 	option ifname 'eth0.42'
 	option ipaddr '10.31.52.161/27'
 
-config interface 'mesh_zwingli'
+config interface 'mesh_wilgu10'
 	option proto 'static'
 	option ipaddr '10.31.252.194/32'
 	option ifname 'eth0.11'

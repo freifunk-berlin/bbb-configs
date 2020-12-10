@@ -50,4 +50,4 @@ config Interface
 config Interface
 	option ignore '0'
 	option Mode 'ether'
-	option interface 'mesh_zwingli'
+	option interface 'mesh_wilgu10'
