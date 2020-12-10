@@ -11,7 +11,7 @@ config include
 
 config zone 'zone_freifunk'
 	option name 'freifunk'
-	option network 'mgmt mesh_sama mesh_zwingli'
+	option network 'mgmt mesh_sama mesh_wilgu10'
 
 
 config zone 'zone_dhcp'
