@@ -1,0 +1,12 @@
+---
+- name: Merge packages variable
+  merge_vars:
+    suffix_to_merge: packages__to_merge
+    merged_var_name: packages
+    expected_type: list
+
+- name: Merge disabled_services variable
+  merge_vars:
+    suffix_to_merge: disabled_services__to_merge
+    merged_var_name: disabled_services
+    expected_type: list
