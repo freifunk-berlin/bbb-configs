@@ -1,10 +1,8 @@
 ---
-packages:
-  role_ap:
-    - "-wpad-basic"
-    - "hostapd-openssl"
+packages__to_merge:
+  - "-wpad-basic"
+  - "hostapd-openssl"
 
-disabled_services:
-  role_ap:
-    - "dnsmasq"
-    - "odhcpd"
+disabled_services__to_merge:
+  - "dnsmasq"
+  - "odhcpd"

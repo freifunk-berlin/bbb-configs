@@ -1,4 +1,7 @@
 ---
+- name: Include tasks for merging variables
+  include_tasks: merge_vars.yml
+
 - name: Prepare some variables
   set_fact:
     path: /tmp/configs/{{ inventory_hostname }}
