@@ -1,0 +1,15 @@
+{% include './common/config/luci_statistics.j2' %}
+
+config statistics 'collectd_olsrd'
+	option enable '1'
+	option Port '2006'
+	option Host '127.0.0.1'
+
+config statistics 'collectd_exec'
+	option enable '1'
+
+config collectd_exec_input
+	option cmduser 'nobody'
+	option cmdgroup 'nogroup'
+	option cmdline '/etc/config/collectd_exec_dhcp_leases'
+
