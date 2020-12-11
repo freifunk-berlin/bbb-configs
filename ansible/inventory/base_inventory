@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
+
+HOSTS=$(for i in host_vars/*; do echo -e "$i\c" | awk -F'/' '{print "\""$2"\","}'; done)
+HOSTS=$(echo $HOSTS | sed 's/\(.*\),/\1 /')
 cat <<EOF
 {
     "all": {
-	"hosts": [ $(for i in host_vars/*; do echo $i | awk -F'/' '{print $2","}'; done) ]
+	"hosts": [ $HOSTS ]
     }
 }
 EOF
