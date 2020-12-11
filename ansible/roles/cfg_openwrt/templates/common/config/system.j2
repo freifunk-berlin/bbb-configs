@@ -1,0 +1,22 @@
+config system
+        option hostname '{{ inventory_hostname }}'
+        option zonename '{{ zonename }}'
+        option timezone '{{ timezone }}'
+        option ttylogin '0'
+        option log_size '64'
+        option urandom_seed '0'
+{% if role == 'corerouter' %}
+	option latitude '{{ latitude|default(0) }}'
+	option longitude '{{ longitude|default(0) }}'
+	option altitude '60.000000000000000'
+	option location '{{ location_nice|default(location) }}'
+{% endif %}
+
+
+config timeserver 'ntp'
+        option enabled '1'
+        option enable_server '0'
+{% for ntp_server in ntp_servers %}
+        list server '{{ ntp_server }}'
+{% endfor %}
+

@@ -1,0 +1,8 @@
+{% for wd in wireless_devices %}
+# Purpose of {{ wd['name'] }}: {{ wd['role'] }}
+config wifi-device '{{ wd['name'] }}'
+	option type 'mac80211'
+	option hwmode '{{ wd['hwmode'] }}'
+	option path '{{ wd['path'] }}'
+
+{% endfor %}

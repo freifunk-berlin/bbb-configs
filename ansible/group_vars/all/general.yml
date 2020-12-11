@@ -1,0 +1,18 @@
+---
+zonename: 'Europe/Berlin'
+timezone: 'CET-1CEST,M3.5.0,M10.5.0/3'
+
+dns_servers:
+  - 85.214.20.141
+  - 213.73.91.35
+  - 194.150.168.168
+  - 2001:4ce8::53
+  - 2001:910:800::12
+
+ntp_servers:
+  - 0.openwrt.pool.ntp.org
+  - 1.openwrt.pool.ntp.org
+  - 2.openwrt.pool.ntp.org
+  - 3.openwrt.pool.ntp.org
+
+collectd_server: 77.87.48.12

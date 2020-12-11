@@ -7,3 +7,13 @@ switch_ignore_ports: [5]
 # WAN port is hardwired to VLAN2. ignore
 
 int_port: eth0
+
+wireless_devices:
+  - name: radio0
+    role: clients
+    hwmode: 11a
+    path: platform/soc/a000000.wifi
+  - name: radio1
+    role: clients
+    hwmode: 11g
+    path: platform/soc/a000000.wifi
