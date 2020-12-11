@@ -2,6 +2,10 @@
 zonename: 'Europe/Berlin'
 timezone: 'CET-1CEST,M3.5.0,M10.5.0/3'
 
+contact_nickname: 'your_friendly_freifunk_operator'
+contact_email: 'no@mail.de'
+
+
 dns_servers:
   - 85.214.20.141
   - 213.73.91.35
