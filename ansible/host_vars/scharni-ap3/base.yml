@@ -1,0 +1,6 @@
+---
+
+location: scharni
+role: ap
+target: "ath79/generic"
+model: "tplink_eap225-outdoor-v1"

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# list host_vars/ and group_vars/ to pass them to constructed plugin
+ansible-inventory -i inventory/base_inventory $1 $2 | grep -v '    "ungrouped": {}'

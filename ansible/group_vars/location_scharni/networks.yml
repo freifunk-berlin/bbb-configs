@@ -1,0 +1,35 @@
+---
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_wilgu10
+    prefix: 10.31.252.194/32
+    assignments:
+      scharni-core: 0
+
+  - vid: 11
+    role: mesh
+    name: mesh_sama
+    prefix: 10.31.252.193/32
+    assignments:
+      scharni-core: 0
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.36.194.128/26
+    assignments:
+      scharni-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.52.160/27
+    assignments:
+      scharni-core: 1
+      scharni-switch: 2
+      scharni-wilgu10: 3
+      scharni-zwingli: 3
+      scharni-ap1: 29
+      scharni-ap2: 28
+      scharni-ap3: 27
+

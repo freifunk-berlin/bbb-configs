@@ -1,0 +1,6 @@
+---
+- hosts: all
+  connection: local
+  roles:
+    - {role: cfg_openwrt}
+

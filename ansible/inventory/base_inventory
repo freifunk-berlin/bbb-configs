@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+cat <<EOF
+{
+    "all": {
+	"hosts": [ $(for i in host_vars/*; do echo $i | awk -F'/' '{print $2","}'; done) ]
+    }
+}
+EOF
+

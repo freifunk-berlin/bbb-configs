@@ -1,0 +1,12 @@
+---
+packages:
+  all:
+    - mtr
+    - tcpdump
+    - iperf3
+    - luci-ssl
+    - luci-app-statistics
+    - collectd-mod-uptime
+    - collectd-mod-ping
+    - "-ppp"
+    - "-ppp-mod-ppoe"

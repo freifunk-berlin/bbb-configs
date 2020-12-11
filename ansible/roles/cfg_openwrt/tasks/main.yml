@@ -1,0 +1,15 @@
+---
+- name: Prepare some variables
+  set_fact:
+    path: /tmp/configs/{{ inventory_hostname }}
+
+- name: Create directory
+  file:
+    path: "{{ path }}"
+    state: directory
+
+- name: Include render_subdir for {{ subdir }}
+  include_tasks: render_subdir.yml
+  loop: ['/config','/dropbear']
+  loop_control:
+    loop_var: subdir

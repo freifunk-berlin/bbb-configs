@@ -1,0 +1,10 @@
+---
+packages:
+  role_ap:
+    - "-wpad-basic"
+    - "hostapd-openssl"
+
+disabled_services:
+  role_ap:
+    - "dnsmasq"
+    - "odhcpd"

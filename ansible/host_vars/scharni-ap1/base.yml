@@ -1,0 +1,6 @@
+---
+
+location: scharni
+role: ap
+target: "ath79/generic"
+model: "tplink_archer-c6-v2"

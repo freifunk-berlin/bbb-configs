@@ -1,0 +1,19 @@
+---
+packages:
+  role_corerouter:
+    - collectd-mod-olsrd
+    - collectd-mod-exec
+    - olsrd
+    - olsrd-mod-arprefresh
+    - olsrd-mod-dyngw
+    - olsrd-mod-jsoninfo
+    - olsrd-mod-nameservice
+    - olsrd-mod-txtinfo
+    - olsrd-mod-watchdog
+    - luci-app-olsr
+    - luci-app-olsr-services
+    - luci-mod-falter
+    - luci-app-falter-owm
+    - luci-app-falter-owm-ant
+    - luci-app-falter-owm-cmd
+    - luci-app-falter-owm-gui
