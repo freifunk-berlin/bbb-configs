@@ -1,0 +1,69 @@
+
+config LoadPlugin
+	option library 'olsrd_arprefresh'
+
+config LoadPlugin
+	option library 'olsrd_nameservice'
+	option suffix '.olsr'
+	option hosts_file '/tmp/hosts/olsr'
+	option latlon_file '/var/run/latlon.js'
+	option services_file '/var/etc/services.olsr'
+
+config LoadPlugin
+	option accept '0.0.0.0'
+	option library 'olsrd_jsoninfo'
+	option ignore '0'
+
+config LoadPlugin
+	option accept '0.0.0.0'
+	option library 'olsrd_txtinfo'
+	option port '2006'
+
+config LoadPlugin
+	option library 'olsrd_watchdog'
+	option file '/var/run/olsrd.watchdog'
+	option interval '30'
+
+config olsrd
+	option IpVersion '4'
+	option FIBMetric 'flat'
+	option AllowNoInt 'yes'
+	option TcRedundancy '2'
+	option NatThreshold '0.75'
+	option LinkQualityAlgorithm 'etx_ff'
+	option SmartGateway 'no'
+	option SmartGatewayThreshold '50'
+	option Pollrate '0.025'
+	option SmartGatewaySpeed '45000 200000'
+	option SmartGatewayUplink 'both'
+	option LinkQualityLevel '2'
+	option OlsrPort '698'
+	option Willingness '3'
+	option TosValue '16'
+
+config InterfaceDefaults
+	option MidValidityTime '500.0'
+	option TcInterval '2.0'
+	option HnaValidityTime '125.0'
+	option HelloValidityTime '125.0'
+	option TcValidityTime '500.0'
+	option Ip4Broadcast '255.255.255.255'
+	option MidInterval '25.0'
+	option HelloInterval '3.0'
+	option HnaInterval '10.0'
+
+{% for network in networks | selectattr('role', 'equalto', 'mesh') %}
+config Interface
+	option ignore '0'
+	option interface '{{ network['name'] if 'name' in network else network['role'] }}'
+	option Mode 'ether'
+
+{% endfor %}
+
+{% for network in networks | rejectattr('role', 'equalto', 'mesh') | selectattr('prefix') %}
+# Network: {{ network['name'] if 'name' in network else network['role'] }}
+config Hna4
+	option netmask '{{ network['prefix'] | ipaddr('netmask') }}'
+	option netaddr '{{ network['prefix'] | ipaddr('network') }}'
+
+{% endfor %}
