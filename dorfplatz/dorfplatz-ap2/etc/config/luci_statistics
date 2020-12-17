@@ -43,7 +43,7 @@ config statistics 'collectd_network'
 config statistics 'collectd_interface'
 	option enable '1'
 	option IgnoreSelected '0'
-	option Interfaces 'wlan5-ff eth0.40'
+	option Interfaces 'wlan5-ff wlan5-ffowe eth0.40'
 
 config statistics 'collectd_iwinfo'
 	option enable '1'
