@@ -4,6 +4,7 @@
 echo ondemand > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
 echo 200000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
 
+sleep 10
 nft -f /etc/nftable.conf
 
 exit 0
