@@ -1,0 +1,35 @@
+config dnsmasq
+	option domainneeded '1'
+	option localise_queries '1'
+	option rebind_protection '1'
+	option rebind_localhost '1'
+	option local '/lan/'
+	option domain 'lan'
+	option expandhosts '1'
+	option authoritative '1'
+	option readethers '1'
+	option leasefile '/tmp/dhcp.leases'
+	option resolvfile '/tmp/resolv.conf.auto'
+	option localservice '1'
+
+{% set dhcp = networks | selectattr('role','equalto','dhcp') | first %}
+config domain 'frei_funk'
+	option name 'frei.funk'
+	option ip '{{ dhcp['prefix'] | ipaddr(dhcp['assignments'][inventory_hostname]) | ipaddr('address') }}
+
+config odhcpd 'odhcpd'
+	option maindhcp '0'
+	option leasefile '/tmp/hosts/odhcpd'
+	option leasetrigger '/usr/sbin/odhcpd-update'
+	option loglevel '4'
+
+config dhcp 'dhcp'
+	option leasetime '5m'
+	option start '2'
+	option force '1'
+	option ignore '0'
+	option interface '{{ dhcp['name'] if 'name' in dhcp else dhcp['role'] }}'
+	option dhcpv6 'server'
+	option ra 'server'
+	option limit '{{ dhcp['prefix'] | ipaddr('size') -3 }}'
+
