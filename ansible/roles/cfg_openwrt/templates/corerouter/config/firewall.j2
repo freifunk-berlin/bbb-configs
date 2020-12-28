@@ -1,0 +1,42 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% set l3_networks = networks | selectattr('assignments', 'contains', inventory_hostname) %}
+{% set query = "[].{name: name||role,inbound_filtering: inbound_filtering}" %}
+{% set l3_networks = l3_networks | json_query(query) %}
+
+config defaults
+	option syn_flood '1'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option drop_invalid '0'
+
+config include
+	option path '/etc/firewall.user'
+
+config zone 'zone_freifunk'
+	option name 'freifunk'
+	option network '{{ l3_networks | rejectattr('inbound_filtering') | map(attribute='name') | join(' ') }}'
+
+{% for i in l3_networks | selectattr('inbound_filtering') %}
+config zone 'zone_{{ i['name'] }}'
+        option name '{{ i['name'] }}'
+        option network '{{ i['name'] }}'
+
+{% endfor %}
+config forwarding
+	option dest 'freifunk'
+	option src 'freifunk'
+
+{% for i in l3_networks | selectattr('inbound_filtering') %}
+config forwarding
+        option dest 'freifunk'
+        option src '{{ i['name'] }}'
+
+{% endfor %}
+config rule
+	option name 'DSCP olsr'
+	list proto 'udp'
+        option dest 'freifunk'
+	option dest_port '698'
+	option target 'DSCP'
+	option set_dscp 'EF'

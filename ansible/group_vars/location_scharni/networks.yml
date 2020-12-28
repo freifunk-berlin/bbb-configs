@@ -17,6 +17,7 @@ networks:
 
   - vid: 40
     role: dhcp
+    inbound_filtering: true
     prefix: 10.36.194.128/26
     assignments:
       scharni-core: 1
