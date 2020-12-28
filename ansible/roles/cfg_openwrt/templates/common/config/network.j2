@@ -1,4 +1,6 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% set profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first %}
+{% set wifi_networks = profile | json_query('ifaces[].network') | default([], true) %}
 
 config interface 'loopback'
 	option ifname 'lo'
@@ -27,9 +29,17 @@ config switch_vlan
   {% endfor %}
 {% endif %}
 
-{% for network in networks | selectattr('assignments', 'contains', inventory_hostname) %}
-config interface '{{ network['name'] if 'name' in network else network['role'] }}'
+{% for network in networks %}
+  {% set name = network['name'] if 'name' in network else network['role'] %}
+  {% if inventory_hostname in network['assignments'] or name in wifi_networks %}
+config interface '{{ name }}'
 	option proto 'static'
-	option ipaddr '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) }}'
 	option ifname '{{ int_port }}.{{ network['vid'] }}'
+    {% if inventory_hostname in network['assignments'] %}
+	option ipaddr '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) }}'
+    {% elif name in wifi_networks %}
+        option type 'bridge'
+    {% endif %}
+  {% endif %}
+
 {% endfor %}

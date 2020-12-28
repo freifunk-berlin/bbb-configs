@@ -9,10 +9,10 @@ PACKAGES+=" luci-ssl"
 PACKAGES+=" luci-app-statistics collectd-mod-uptime collectd-mod-ping"
 PACKAGES+=" nftables kmod-nft-bridge"
 PACKAGES+=" -ppp -ppp-mod-pppoe"
-PACKAGES+=" -kmod-ath10k-ct kmod-ath10k -ath10k-firmware-qca4019-ct ath10k-firmware-qca4019"
+#PACKAGES+=" -kmod-ath10k-ct kmod-ath10k -ath10k-firmware-qca4019-ct ath10k-firmware-qca4019"
 PACKAGES+=" -wpad-basic-wolfssl hostapd-openssl"
 
-DISABLED_SERVICES="dnsmasq odhcpd"
+DISABLED_SERVICES="dnsmasq odhcpd firewall"
 
 rm -rf openwrt* builder
 #wget "$IMAGEBUILDER_PATH/$IMAGEBUILDER_FILE"

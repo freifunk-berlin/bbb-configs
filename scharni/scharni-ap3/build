@@ -13,7 +13,7 @@ PACKAGES+=" nftables kmod-nft-bridge"
 PACKAGES+=" -ppp -ppp-mod-pppoe"
 PACKAGES+=" -wpad-basic-wolfssl hostapd-openssl"
 
-DISABLED_SERVICES="dnsmasq odhcpd"
+DISABLED_SERVICES="dnsmasq odhcpd firewall"
 
 rm -rf openwrt* builder
 wget "$IMAGEBUILDER_PATH/$IMAGEBUILDER_FILE"
