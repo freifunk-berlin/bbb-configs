@@ -1,0 +1,49 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+
+{% set profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first %}
+# Wifi Config is derived from wireless profile: '{{ wireless_profile }}'
+{% for wd in wireless_devices %}
+  {% set wd_id = 'radio' + loop.index0|string %}
+  {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name']) | first %}
+  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
+
+
+# Radio: {{ wd['name'] }}
+config wifi-device '{{ wd_id }}'
+	option type 'mac80211'
+	option hwmode '{{ wd['hwmode'] }}'
+	option path '{{ wd['path'] }}'
+  {% if 'bandwidth' in wd_config %}
+	option htmode 'VHT{{ wd_config['bandwidth'] }}'
+  {% endif %}
+  {% if 'channel' in wd_config %}
+	option channel '{{ wd_config['channel'] }}'
+  {% endif %}
+  {% if 'disabled' in wd_config %}
+	option disabled '{{ wd_config['disabled']|int }}'
+  {% endif %}
+
+  {% for iface in wd_ifaces %}
+config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
+	option device '{{ wd_id }}'
+    {% if 'network' in iface %}
+	option network '{{ iface['network'] }}'
+    {% endif %}
+    {% if 'ifname' in iface %}
+	option ifname '{{ iface['ifname'] }}'
+    {% endif %}
+    {% if 'mode' in iface %}
+	option mode '{{ iface['mode'] }}'
+    {% endif %}
+    {% if 'ssid' in iface %}
+	option ssid '{{ iface['ssid'] }}'
+    {% endif %}
+    {% if 'encryption' in iface %}
+	option encryption '{{ iface['encryption'] }}'
+    {% endif %}
+    {% if 'isolate' in iface %}
+	option isolate '{{ iface['isolate'] }}'
+    {% endif %}
+
+  {% endfor %}
+{% endfor %}

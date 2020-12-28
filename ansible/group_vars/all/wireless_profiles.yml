@@ -1,0 +1,29 @@
+---
+
+wireless_profiles:
+  - name: disable
+    devices:
+      - radio: 11a_standard
+        disabled: true
+      - radio: 11g_standard
+        disabled: true
+
+  - name: freifunk_default
+    devices:
+      - radio: 11a_standard
+        channel: 36
+        bandwidth: 20
+      - radio: 11g_standard
+        channel: 13
+        bandwidth: 20
+
+    ifaces:
+      - ssid: berlin.freifunk.net
+        encryption: open
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+
+      - ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]

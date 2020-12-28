@@ -9,11 +9,9 @@ switch_ignore_ports: [5]
 int_port: eth0
 
 wireless_devices:
-  - name: radio0
-    role: clients
+  - name: 11a_standard
     hwmode: 11a
     path: platform/soc/a000000.wifi
-  - name: radio1
-    role: clients
+  - name: 11g_standard
     hwmode: 11g
     path: platform/soc/a000000.wifi

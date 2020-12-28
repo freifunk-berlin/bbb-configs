@@ -4,11 +4,9 @@ imagebuilder: "https://downloads.openwrt.org/snapshots/targets/ath79/generic/ope
 int_port: eth0
 
 wireless_devices:
-  - name: radio0
-    role: clients
+  - name: 11a_standard
     hwmode: 11a
     path: pci0000:00/0000:00:00.0
-  - name: radio1
-    role: clients
+  - name: 11g_standard
     hwmode: 11g
     path: platform/ahb/18100000.wmac
