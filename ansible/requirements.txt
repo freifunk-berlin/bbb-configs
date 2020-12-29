@@ -1,2 +1,3 @@
 ansible >= 2.8
 ansible_merge_vars >= 5.0.0
+jmespath >= 0.10.0
