@@ -2,6 +2,7 @@
 packages__to_merge:
   - "-wpad-basic"
   - "hostapd-openssl"
+  - "-firewall"
 
 disabled_services__to_merge:
   - "dnsmasq"
