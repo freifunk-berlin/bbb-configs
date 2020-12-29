@@ -12,6 +12,7 @@ networks:
   - vid: 40
     role: dhcp
     inbound_filtering: true
+    enforce_client_isolation: true
     prefix: 10.31.75.64/26
     assignments:
       dorfplatz-core: 1

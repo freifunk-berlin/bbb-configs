@@ -37,6 +37,9 @@ config interface '{{ name }}'
 	option ifname '{{ int_port }}.{{ network['vid'] }}'
     {% if inventory_hostname in network['assignments'] %}
 	option ipaddr '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) }}'
+        {% if network.get('enforce_client_isolation') %}
+	option macaddr '02:00:00:00:00:01'
+        {% endif %}
     {% elif name in wifi_networks %}
         option type 'bridge'
     {% endif %}
