@@ -1,0 +1,67 @@
+---
+- name: "Create Download directory"
+  file:
+    path: "{{ imagebuilder_dir }}"
+    state: directory
+  run_once: yes
+
+- name: Download Imagebuilder
+  get_url:
+    url: "{{ imagebuilder }}"
+    dest: "{{ imagebuilder_dir }}"
+  register: dl
+
+- set_fact:
+    imagebuilder_path: "{{ dl.dest }}"
+
+- name: Clear workdir
+  file:
+    state: absent
+    path: "{{ imagebuild_dir }}"
+
+- name: (Re)-Create workdir
+  file:
+    state: directory
+    path: "{{ imagebuild_dir }}"
+
+- name: Extract imagebuilder
+  unarchive:
+    src: "{{ imagebuilder_path }}"
+    dest: "{{ imagebuild_dir }}"
+    extra_opts: ['--strip=1']
+
+- name: Run Imagebuilder
+  command:
+    chdir: "{{ imagebuild_dir }}"
+    argv:
+      - "make"
+      - "image"
+      - "PROFILE={{ model }}"
+      - "PACKAGES={{ packages | join(' ') }}"
+      - "DISABLED_SERVICES={{ disabled_services | join(' ') }}"
+      - "FILES={{ config_path }}"
+  register: output
+
+- name: Clear imagedir
+  file:
+    state: absent
+    path: "{{ image_dir}}"
+
+- name: (Re)-Create image dir
+  file:
+    state: directory
+    path: "{{ image_dir }}"
+  run_once: yes
+
+- name: Write build log to output dir
+  copy:
+    content: "{{ output.stdout }}"
+    dest: "{{ image_dir }}/{{ inventory_hostname }}.log"
+
+- name: Declare some var
+  set_fact:
+    image: "{{ image_dir }}/{{ inventory_hostname }}.bin"
+
+- name: Copy Image to Image dir
+  shell:
+    cmd: "cp {{ imagebuild_dir }}/bin/*/*/*/*-sysupgrade.bin {{ image }}"

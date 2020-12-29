@@ -8,3 +8,7 @@
   with_fileglob:
     - "{{ role_path  }}/templates/{{ role }}/{{ subdir }}/*.j2"
 
+- name: Copy static files {{ subdir }}
+  copy: src={{ item }} dest={{ config_path }}/etc/{{ subdir }}/{{ item | basename | regex_replace('\.j2','') }}
+  with_fileglob:
+    - "{{ role_path }}/files/{{ role }}/{{ subdir }}/*"
