@@ -1,10 +1,10 @@
 ---
 - name: Ensure subdir {{ subdir }} exists
   file:
-    path: "{{ path }}/etc/{{ subdir }}"
+    path: "{{ config_path }}/etc/{{ subdir }}"
     state: directory
 - name: Render all the config in {{ subdir }}
-  template: src={{ item }} dest={{ path }}/etc/{{ subdir }}/{{ item | basename | regex_replace('\.j2','') }}
+  template: src={{ item }} dest={{ config_path }}/etc/{{ subdir }}/{{ item | basename | regex_replace('\.j2','') }}
   with_fileglob:
     - "{{ role_path  }}/templates/{{ role }}/{{ subdir }}/*.j2"
 
