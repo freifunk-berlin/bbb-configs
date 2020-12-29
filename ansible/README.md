@@ -12,3 +12,11 @@ pip3 install -r requirements.txt
 ansible-playbook play.yml
 ```
 
+### Whats required to bringup a location?
+
+```
+/group_vars : Create location folder
+/host_vars : Create host folder for every openwrt device
+Done!
+
+```

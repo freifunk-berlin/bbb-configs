@@ -1,0 +1,6 @@
+---
+
+location: dorfplatz
+role: corerouter
+target: "ipq40xx/generic"
+model: "zyxel_nbg6617"

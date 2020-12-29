@@ -1,0 +1,26 @@
+---
+
+networks:
+# 10.31.74.220/30 is reserved for meshing
+  - vid: 10
+    role: mesh
+    name: mesh_wilgu10
+    prefix: 10.31.64.220/32
+    assignments:
+      dorfplatz-core: 0
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    prefix: 10.31.75.64/26
+    assignments:
+      dorfplatz-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.75.32/28
+    assignments:
+      dorfplatz-core: 1
+      dorfplatz-wilgu10: 2
+      dorfplatz-ap1: 15
+      dorfplatz-ap2: 14
