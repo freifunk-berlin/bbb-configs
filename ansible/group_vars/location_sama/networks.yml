@@ -1,20 +1,48 @@
 ---
-############## WRONG VALUES #################
 networks:
   - vid: 42
     role: mgmt
-    prefix: 10.31.52.160/27
+    prefix: 10.31.66.64/27
     assignments:
-      scharni-core: 1
-      scharni-switch: 2
-      scharni-wilgu10: 3
-      scharni-zwingli: 3
-      scharni-ap1: 29
-      scharni-ap2: 28
-      scharni-ap3: 27
+      sama-core: 1
   - vid: 40
     role: dhcp
-    prefix: 10.36.194.128/26
+    prefix: 10.31.66.128/25
     assignments:
-      scharni-core: 1
-
+      sama-core: 1
+  - vid: 10
+    role: mesh
+    name: mesh_hds
+    prefix: 10.31.66.40/32
+    assignments:
+      sama-core: 0
+  - vid: 11
+    role: mesh
+    name: mesh_wilgu10
+    prefix: 10.31.66.14/32
+    assignments:
+      sama-core: 0
+  - vid: 12
+    role: mesh
+    name: mesh_scharni
+    prefix: 10.31.66.32/32
+    assignments:
+      sama-core: 0
+  - vid: 13
+    role: mesh
+    name: mesh_f2a
+    prefix: 10.31.66.13/32
+    assignments:
+      sama-core: 0
+  - vid: 14
+    role: mesh
+    name: mesh_zwingli
+    prefix: 10.31.66.34/32
+    assignments:
+      sama-core: 0
+  - vid: 15
+    role: msh
+    name: mesh_zwingli
+    prefix: 10.31.66.106/32
+    assignments:
+      sama-core: 0
