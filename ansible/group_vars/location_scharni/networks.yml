@@ -1,14 +1,14 @@
 ---
 
 networks:
-  - vid: 10
+  - vid: 11
     role: mesh
     name: mesh_wilgu10
     prefix: 10.31.252.194/32
     assignments:
       scharni-core: 0
 
-  - vid: 11
+  - vid: 12
     role: mesh
     name: mesh_sama
     prefix: 10.31.252.193/32
