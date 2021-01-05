@@ -12,6 +12,18 @@ pip3 install -r requirements.txt
 ansible-playbook play.yml
 ```
 
+### How to spin up a config run and generate images
+
+```
+ansible-playbook play.yml --tags image
+```
+
+### How to spin up a config run, generate image and flash (to be implemented)
+
+```
+ansible-playbook play.yml --tags flash
+```
+
 ### Whats required to bringup a location?
 
 ```

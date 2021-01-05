@@ -1,11 +1,15 @@
 ---
 - name: Include tasks for merging variables
-  include_tasks: merge_vars.yml
-
+  include_tasks:
+    file: merge_vars.yml
+    apply:
+      tags: always
+  tags: always
 
 - name: Prepare some variables (1)
   set_fact:
     basedir: /tmp/ansible-openwrt
+  tags: always
 
 - name: Prepare some variables
   set_fact:
@@ -13,17 +17,30 @@
     imagebuilder_dir: "{{ basedir }}/imagebuilders/"
     imagebuild_dir: "{{ basedir }}/tmp/imagebuild/{{ inventory_hostname }}"
     image_dir: "{{ basedir }}/images/"
+  tags: always
 
 - name: Create directory
   file:
     path: "{{ config_path }}"
     state: directory
+  tags: always
 
 - name: Include render_subdir for {{ subdir }}
-  include_tasks: render_subdir.yml
+  include_tasks:
+    file: render_subdir.yml
+    apply:
+      tags: always
   loop: ['/config','/dropbear']
   loop_control:
     loop_var: subdir
+  tags: always
 
 - name: Include image generation
-  include_tasks: imagebuilder.yml
+  include_tasks:
+    file: imagebuilder.yml
+    apply:
+      tags: always
+  tags:
+    - never
+    - image
+    - flash
