@@ -3,6 +3,8 @@ networks:
   - vid: 42
     role: mgmt
     prefix: 10.31.66.64/27
+    gateway: 1
+    dns: 1
     assignments:
       sama-core: 1
   - vid: 40
@@ -41,7 +43,7 @@ networks:
     assignments:
       sama-core: 0
   - vid: 15
-    role: msh
+    role: mesh
     name: mesh_zwingli
     prefix: 10.31.66.106/32
     assignments:

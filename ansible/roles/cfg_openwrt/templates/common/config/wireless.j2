@@ -20,6 +20,12 @@ config wifi-device '{{ wd_id }}'
 	option path '{{ wd['path'] }}'
 	option htmode 'VHT{{ bandwidth }}'
 	option channel '{{ channel }}'
+  {% if 'country' in wd_config %}
+	option country '{{ wd_config['country'] }}'
+  {% endif %}
+  {% if 'legacy_rates' in wd_config %}
+	option legacy_rates '{{ wd_config['legacy_rates']|int }}'
+  {% endif %}
   {% if 'disabled' in wd_config %}
 	option disabled '{{ wd_config['disabled']|int }}'
   {% endif %}
@@ -41,7 +47,21 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
 	option encryption '{{ iface['encryption'] }}'
     {% endif %}
     {% if 'isolate' in iface %}
-	option isolate '{{ iface['isolate'] }}'
+	option isolate '{{ iface['isolate']|int }}'
+    {% else %}
+      {% set nets = networks | selectattr('name', 'defined') | selectattr('name','equalto',iface['network']) %}
+      {% if nets|length == 0 %}
+        {% set nets = networks | selectattr('role','equalto',iface['network']) %}
+      {% endif %}
+      {% if nets|length > 0 %}
+        {% set net = nets|first %}
+        {% if 'enforce_client_isolation' in net %}
+	option isolate '{{ net['enforce_client_isolation']|int }}'
+        {% endif %}
+      {% endif %}
+    {% endif %}
+    {% if 'ieee80211w' in iface %}
+	option ieee80211w '{{ iface['ieee80211w'] }}'
     {% endif %}
 
   {% endfor %}

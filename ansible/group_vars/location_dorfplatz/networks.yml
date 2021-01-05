@@ -20,6 +20,8 @@ networks:
   - vid: 42
     role: mgmt
     prefix: 10.31.75.32/28
+    gateway: 1
+    dns: 1
     assignments:
       dorfplatz-core: 1
       dorfplatz-wilgu10: 2

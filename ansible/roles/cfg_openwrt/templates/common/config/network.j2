@@ -7,7 +7,9 @@ config interface 'loopback'
 	option proto 'static'
 	option ipaddr '127.0.0.1'
 	option netmask '255.0.0.0'
+{% if role == 'corerouter' %}
 	option dns '{{ dns_servers | join(' ') }}'
+{% endif %}
 
 {% if switch_ports|default(0) > 0 %}
 config switch
@@ -39,6 +41,12 @@ config interface '{{ name }}'
 	option ipaddr '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) }}'
         {% if network.get('enforce_client_isolation') %}
 	option macaddr '02:00:00:00:00:01'
+        {% endif %}
+	{% if role != "corerouter" and 'dns' in network %}
+	option dns '{{ network['prefix'] | ipaddr(network['dns']) | ipaddr('address') }}'
+        {% endif %}
+	{% if 'gateway' in network and network['assignments'][inventory_hostname] != network['gateway'] %}
+	option gateway '{{ network['prefix'] | ipaddr(network['gateway']) | ipaddr('address') }}'
         {% endif %}
     {% elif name in wifi_networks %}
         option type 'bridge'
