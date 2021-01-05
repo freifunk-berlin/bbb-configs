@@ -1,5 +1,5 @@
 ---
-packages__to_merge:
+all__packages__to_merge:
   - mtr
   - tcpdump
   - iperf3

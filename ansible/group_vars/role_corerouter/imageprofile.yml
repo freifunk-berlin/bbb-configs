@@ -1,5 +1,5 @@
 ---
-packages__to_merge:
+role_corerouter__packages__to_merge:
   - collectd-mod-olsrd
   - collectd-mod-exec
   - olsrd
