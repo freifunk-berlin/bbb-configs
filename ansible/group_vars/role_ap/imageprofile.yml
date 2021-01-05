@@ -1,8 +1,5 @@
 ---
 role_ap__packages__to_merge:
-  - "-wpad-basic"
-  - "-wpad-basic-wolfssl"
-  - "hostapd-openssl"
   - "-firewall"
 
 role_ap__disabled_services__to_merge:

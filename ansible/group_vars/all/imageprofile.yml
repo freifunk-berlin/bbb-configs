@@ -7,5 +7,11 @@ all__packages__to_merge:
   - luci-app-statistics
   - collectd-mod-uptime
   - collectd-mod-ping
-  - "-ppp"
-  - "-ppp-mod-ppoe"
+  - -ppp
+  - -ppp-mod-ppoe
+
+  - -wpad-basic
+  - -wpad-basic-wolfssl
+  - wpad-openssl
+  - nftables
+  - kmod-nft-bridge
