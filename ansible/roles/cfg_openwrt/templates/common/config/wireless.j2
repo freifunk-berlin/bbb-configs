@@ -30,9 +30,7 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
     {% if 'network' in iface %}
 	option network '{{ iface['network'] }}'
     {% endif %}
-    {% if 'ifname' in iface %}
-	option ifname '{{ iface['ifname'] }}'
-    {% endif %}
+	option ifname '{{ wd['ifname_hint'] }}-{{ iface['ifname_hint']|default('if' + loop.index0|string) }}'
     {% if 'mode' in iface %}
 	option mode '{{ iface['mode'] }}'
     {% endif %}

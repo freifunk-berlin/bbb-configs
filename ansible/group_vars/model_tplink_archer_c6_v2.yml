@@ -12,6 +12,8 @@ wireless_devices:
   - name: 11a_standard
     hwmode: 11a
     path: pci0000:00/0000:00:00.0
+    ifname_hint: wlan5
   - name: 11g_standard
     hwmode: 11g
     path: platform/ahb/18100000.wmac
+    ifname_hint: wlan2
