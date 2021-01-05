@@ -8,17 +8,8 @@ config statistics 'collectd'
 	option Interval '30'
 	option ReadThreads '2'
 
-config statistics 'rrdtool'
-	option default_timespan '1hour'
-	option image_width '600'
-	option image_path '/tmp/rrdimg'
-
 config statistics 'collectd_rrdtool'
-	option enable '1'
-	option DataDir '/tmp/rrd'
-	option RRARows '100'
-	option RRASingle '1'
-	option RRATimespans '1hour 1day 1week 1month 1year'
+	option enable '0'
 
 config statistics 'collectd_network'
 	option enable '1'
