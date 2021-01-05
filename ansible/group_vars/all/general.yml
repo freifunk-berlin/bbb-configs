@@ -19,7 +19,7 @@ ntp_servers:
   - 2.openwrt.pool.ntp.org
   - 3.openwrt.pool.ntp.org
 
-collectd_host: 77.87.48.12
+collectd_host: monitor.berlin.freifunk.net
 collectd_ping_host: ping.berlin.freifunk.net
 
 feed: "src/gz openwrt_falter http://download-master.berlin.freifunk.net/falter-feed/__FEED_VERSION__/packages/__INSTR_SET__/falter"
