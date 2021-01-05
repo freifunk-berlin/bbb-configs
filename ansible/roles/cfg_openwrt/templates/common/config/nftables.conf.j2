@@ -1,0 +1,48 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+#!/usr/sbin/nft -f
+{% set profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first -%}
+
+{# DISCLAIMER: i'm not very proud of the following. feel free to find more elegant way!
+   Basically we need a list of dicts which can be used later on.
+network_ifname_map =
+  - network: dhcp
+    ifname: wlan5-dhcp
+  - ..
+#}
+{% set network_ifname_map = [] %}
+{% for wd in wireless_devices %}
+  {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name']) | first %}
+  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
+  {% if not wd_config.get('disabled') %}
+    {% for iface in wd_ifaces %}
+      {{ network_ifname_map.append({'network': iface['network'], 'ifname': wd['ifname_hint'] + '-' + iface['ifname_hint']|default('if' + loop.index0|string)})}}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+{# DISCLAIMER SCOPE END #}
+
+{% for network in networks | selectattr('enforce_client_isolation', 'defined') | selectattr('enforce_client_isolation') %}
+  {% set name = network['name'] if 'name' in network else network['role'] %}
+  {% set wifi_ifnames = network_ifname_map | selectattr('network', 'equalto', name) | map(attribute='ifname') %}
+  {% if wifi_ifnames|length > 0 %}
+    {% set wifi = '{ ' + wifi_ifnames | join(', ') + '}' %}
+    {% set uplink = (int_port + '.' + network['vid']|string) if role == 'ap' else '!= ' + wifi %}
+    {% if loop.first %}
+define gw = 02:00:00:00:00:01
+define bc = ff:ff:ff:ff:ff:ff
+
+flush ruleset
+table bridge client_isolation {
+    {% endif %}
+	chain PREROUTING_{{ name }} {
+		type filter hook prerouting priority 0; policy accept;
+		iif {{ uplink }} accept
+		iif {{ wifi }} ether daddr $bc ether daddr set $gw
+		iif {{ wifi }} ether daddr $gw accept
+		iif {{ wifi }} drop
+	}
+    {% if loop.last %}
+}
+    {% endif %}
+  {% endif %}
+{% endfor %}

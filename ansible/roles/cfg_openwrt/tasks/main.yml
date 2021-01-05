@@ -30,7 +30,7 @@
     file: render_subdir.yml
     apply:
       tags: always
-  loop: ['/config','/dropbear']
+  loop: ['/', '/config','/dropbear']
   loop_control:
     loop_var: subdir
   tags: always

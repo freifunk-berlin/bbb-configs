@@ -1,0 +1,10 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+NFT_CONF="/etc/config/nftables.conf"
+if [[ -f "$NFT_CONF" ]]; then
+    # sleep in order to make sure all interfaces are created
+    sleep 10
+    nft -f "$NFT_CONF"
+fi
+
