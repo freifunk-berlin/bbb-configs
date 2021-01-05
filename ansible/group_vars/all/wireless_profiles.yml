@@ -11,11 +11,7 @@ wireless_profiles:
   - name: freifunk_default
     devices:
       - radio: 11a_standard
-        channel: 36
-        bandwidth: 20
       - radio: 11g_standard
-        channel: 13
-        bandwidth: 20
 
     ifaces:
       - ssid: berlin.freifunk.net
@@ -27,3 +23,9 @@ wireless_profiles:
         encryption: owe
         network: dhcp
         radio: [11a_standard, 11g_standard]
+
+all__channel_assignments_11a_standard__to_merge:
+  default: "36-20"
+
+all__channel_assignments_11g_standard__to_merge:
+  default: "13-20"

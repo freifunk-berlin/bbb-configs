@@ -10,3 +10,10 @@
     suffix_to_merge: disabled_services__to_merge
     merged_var_name: disabled_services
     expected_type: list
+
+- name: "Merge channel_assignments variables"
+  merge_vars:
+    suffix_to_merge: "{{ item.split('__')[1] + '__to_merge' }}"
+    merged_var_name: "{{ item.split('__')[1] }}"
+    expected_type: dict
+  loop: "{{ hostvars[inventory_hostname] | select('match', '.*__channel_assignments_.*') }}"

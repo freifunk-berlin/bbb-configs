@@ -7,18 +7,19 @@
   {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name']) | first %}
   {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
 
+  {% set channel_assignments = hostvars[inventory_hostname]['channel_assignments_' + wd['name']] %}
+  {% set channel_assignment = (channel_assignments[inventory_hostname] | default(channel_assignments['default'])).split('-') %}
+  {% set channel = channel_assignment[0] %}
+  {% set bandwidth = channel_assignment[1] %}
+
 
 # Radio: {{ wd['name'] }}
 config wifi-device '{{ wd_id }}'
 	option type 'mac80211'
 	option hwmode '{{ wd['hwmode'] }}'
 	option path '{{ wd['path'] }}'
-  {% if 'bandwidth' in wd_config %}
-	option htmode 'VHT{{ wd_config['bandwidth'] }}'
-  {% endif %}
-  {% if 'channel' in wd_config %}
-	option channel '{{ wd_config['channel'] }}'
-  {% endif %}
+	option htmode 'VHT{{ bandwidth }}'
+	option channel '{{ channel }}'
   {% if 'disabled' in wd_config %}
 	option disabled '{{ wd_config['disabled']|int }}'
   {% endif %}
