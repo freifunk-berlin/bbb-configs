@@ -1,5 +1,6 @@
 ---
 imagebuilder: "https://downloads.openwrt.org/snapshots/targets/ath79/generic/openwrt-imagebuilder-ath79-generic.Linux-x86_64.tar.xz"
+feed_version: "19.07"
 
 int_port: eth0
 

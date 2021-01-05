@@ -4,7 +4,7 @@ role_corerouter__packages__to_merge:
   - collectd-mod-exec
   - olsrd
   - olsrd-mod-arprefresh
-  - olsrd-mod-dyngw
+  - olsrd-mod-dyn-gw
   - olsrd-mod-jsoninfo
   - olsrd-mod-nameservice
   - olsrd-mod-txtinfo

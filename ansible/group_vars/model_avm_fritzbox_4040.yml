@@ -1,5 +1,6 @@
 ---
 imagebuilder: "https://downloads.openwrt.org/releases/19.07.5/targets/ipq40xx/generic/openwrt-imagebuilder-19.07.5-ipq40xx-generic.Linux-x86_64.tar.xz"
+feed_version: "19.07"
 
 switch_ports: 6
 switch_int_port: 0

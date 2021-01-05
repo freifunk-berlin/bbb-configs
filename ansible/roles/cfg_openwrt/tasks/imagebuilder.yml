@@ -30,6 +30,17 @@
     dest: "{{ imagebuild_dir }}"
     extra_opts: ['--strip=1']
 
+- name: Read instruction set
+  shell:
+    chdir: "{{ imagebuild_dir }}"
+    cmd: "grep 'openwrt_base' repositories.conf | awk -F'/' '{print $8}'"
+  register: instr_set_result
+
+- name: Insert falter feed
+  lineinfile:
+    path: "{{ imagebuild_dir }}/repositories.conf"
+    line: "{{ feed | replace('__INSTR_SET__', instr_set_result.stdout_lines|first) | replace('__FEED_VERSION__', feed_version) }}"
+
 - name: Run Imagebuilder
   command:
     chdir: "{{ imagebuild_dir }}"
