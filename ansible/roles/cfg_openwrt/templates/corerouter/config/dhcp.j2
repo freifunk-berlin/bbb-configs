@@ -15,7 +15,7 @@ config dnsmasq
 {% set dhcp = networks | selectattr('role','equalto','dhcp') | first %}
 config domain 'frei_funk'
 	option name 'frei.funk'
-	option ip '{{ dhcp['prefix'] | ipaddr(dhcp['assignments'][inventory_hostname]) | ipaddr('address') }}
+	option ip '{{ dhcp['prefix'] | ipaddr(dhcp['assignments'][inventory_hostname]) | ipaddr('address') }}'
 
 config odhcpd 'odhcpd'
 	option maindhcp '0'
