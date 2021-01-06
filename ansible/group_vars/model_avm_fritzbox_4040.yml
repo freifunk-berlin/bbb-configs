@@ -12,7 +12,7 @@ int_port: eth0
 wireless_devices:
   - name: 11a_standard
     hwmode: 11a
-    path: platform/soc/a000000.wifi
+    path: platform/soc/a800000.wifi
     ifname_hint: wlan5
   - name: 11g_standard
     hwmode: 11g
