@@ -35,10 +35,11 @@
     loop_var: subdir
   tags: always
 
-- name: Set permission for authorized_keys
-  file:
-    path: "{{ config_path }}/etc/dropbear/authorized_keys"
-    mode: "600"
+- name: Include fix_permissions.yml
+  include_tasks:
+    file: fix_permissions.yml
+    apply:
+      tags: always
   tags: always
 
 - name: Include image generation

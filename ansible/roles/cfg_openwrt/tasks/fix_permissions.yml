@@ -1,0 +1,13 @@
+---
+- name: Set permission for authorized_keys
+  file:
+    path: "{{ config_path }}/etc/dropbear/authorized_keys"
+    mode: "600"
+
+- name: Set permission for collectd_exec_dhcp_leases
+  file:
+    path: "{{ config_path }}/etc/config/collectd_exec_dhcp_leases"
+    mode: "755"
+  ignore_errors: true
+  when: role == "corerouter"
+
