@@ -1,18 +1,21 @@
 ---
-- name: "Create Download directory"
+- name: Create Download directory
   file:
     path: "{{ imagebuilder_dir }}"
     state: directory
   run_once: yes
 
-- name: Download Imagebuilder
-  get_url:
-    url: "{{ imagebuilder }}"
-    dest: "{{ imagebuilder_dir }}"
-  register: dl
+- name: set destination path for imagebuilder
+  set_fact:
+    imagebuilder_path: "{{ imagebuilder_dir }}/{{ imagebuilder | basename }}"
 
-- set_fact:
-    imagebuilder_path: "{{ dl.dest }}"
+- name: Download Imagebuilder if upstream is newer
+  command:
+    chdir: "{{ imagebuilder_dir }}"
+    argv:
+      - "wget"
+      - "-N"
+      - "{{ imagebuilder }}"
 
 - name: Clear workdir
   file:
