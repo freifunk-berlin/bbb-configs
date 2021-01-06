@@ -48,7 +48,8 @@ config interface '{{ name }}'
 	{% if 'gateway' in network and network['assignments'][inventory_hostname] != network['gateway'] %}
 	option gateway '{{ network['prefix'] | ipaddr(network['gateway']) | ipaddr('address') }}'
         {% endif %}
-    {% elif name in wifi_networks %}
+    {% endif %}
+    {% if name in wifi_networks %}
         option type 'bridge'
     {% endif %}
   {% endif %}
