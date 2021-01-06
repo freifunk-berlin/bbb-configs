@@ -1,4 +1,6 @@
 ---
+ipv6_prefix: "2001:bf7:830:7200::/56"
+
 networks:
   - vid: 42
     role: mgmt

@@ -1,4 +1,5 @@
 ---
+ipv6_prefix: "2001:bf7:830:8200::/56"
 
 networks:
 # 10.31.74.220/30 is reserved for meshing
