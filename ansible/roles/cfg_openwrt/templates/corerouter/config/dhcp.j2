@@ -11,6 +11,7 @@ config dnsmasq
 	option leasefile '/tmp/dhcp.leases'
 	option resolvfile '/tmp/resolv.conf.auto'
 	option localservice '1'
+	option noping '1'
 
 {% set dhcp = networks | selectattr('role','equalto','dhcp') | first %}
 config domain 'frei_funk'
