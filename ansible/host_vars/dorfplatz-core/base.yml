@@ -5,3 +5,5 @@ role: corerouter
 target: "ipq40xx/generic"
 model: "zyxel_nbg6617"
 wireless_profile: freifunk_default
+
+dhcp_no_ping: false
