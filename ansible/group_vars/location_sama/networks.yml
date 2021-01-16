@@ -68,7 +68,7 @@ networks:
       sama-core: 0
   - vid: 15
     role: mesh
-    name: mesh_zwingli
+    name: mesh_rigaer
     prefix: 10.31.66.106/32
     ipv6_subprefix: -6
     assignments:
