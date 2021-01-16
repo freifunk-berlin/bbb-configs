@@ -7,6 +7,7 @@ networks:
     role: mesh
     name: mesh_wilgu10
     prefix: 10.31.64.220/32
+    ipv6_subprefix: -1
     assignments:
       dorfplatz-core: 0
 
@@ -15,6 +16,7 @@ networks:
     inbound_filtering: true
     enforce_client_isolation: true
     prefix: 10.31.75.64/26
+    ipv6_subprefix: 0
     assignments:
       dorfplatz-core: 1
 
@@ -23,6 +25,7 @@ networks:
     prefix: 10.31.75.32/28
     gateway: 1
     dns: 1
+    ipv6_subprefix: 1
     assignments:
       dorfplatz-core: 1
       dorfplatz-wilgu10: 2

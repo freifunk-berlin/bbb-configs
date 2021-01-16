@@ -7,6 +7,7 @@ networks:
     prefix: 10.31.66.64/27
     gateway: 1
     dns: 1
+    ipv6_subprefix: 1
     assignments:
       sama-core: 1
       sama-poe-1: 2
@@ -27,41 +28,48 @@ networks:
   - vid: 40
     role: dhcp
     prefix: 10.31.66.128/25
+    ipv6_subprefix: 0
     assignments:
       sama-core: 1
   - vid: 10
     role: mesh
     name: mesh_hds
     prefix: 10.31.66.40/32
+    ipv6_subprefix: -1
     assignments:
       sama-core: 0
   - vid: 11
     role: mesh
     name: mesh_wilgu10
     prefix: 10.31.66.14/32
+    ipv6_subprefix: -2
     assignments:
       sama-core: 0
   - vid: 12
     role: mesh
     name: mesh_scharni
     prefix: 10.31.66.32/32
+    ipv6_subprefix: -3
     assignments:
       sama-core: 0
   - vid: 13
     role: mesh
     name: mesh_f2a
     prefix: 10.31.66.13/32
+    ipv6_subprefix: -4
     assignments:
       sama-core: 0
   - vid: 14
     role: mesh
     name: mesh_zwingli
     prefix: 10.31.66.34/32
+    ipv6_subprefix: -5
     assignments:
       sama-core: 0
   - vid: 15
     role: mesh
     name: mesh_zwingli
     prefix: 10.31.66.106/32
+    ipv6_subprefix: -6
     assignments:
       sama-core: 0

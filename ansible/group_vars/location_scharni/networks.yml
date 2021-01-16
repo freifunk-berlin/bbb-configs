@@ -6,6 +6,8 @@ networks:
     role: mesh
     name: mesh_wilgu10
     prefix: 10.31.252.194/32
+    ipv6_subprefix: -1
+    mesh_metric: 512
     assignments:
       scharni-core: 0
 
@@ -13,6 +15,8 @@ networks:
     role: mesh
     name: mesh_sama
     prefix: 10.31.252.193/32
+    ipv6_subprefix: -2
+    mesh_metric: 1024
     assignments:
       scharni-core: 0
 
@@ -21,6 +25,7 @@ networks:
     inbound_filtering: true
     enforce_client_isolation: true
     prefix: 10.36.194.128/26
+    ipv6_subprefix: 0
     assignments:
       scharni-core: 1
 
@@ -29,6 +34,7 @@ networks:
     prefix: 10.31.52.160/27
     gateway: 1
     dns: 1
+    ipv6_subprefix: 1
     assignments:
       scharni-core: 1
       scharni-switch: 2
