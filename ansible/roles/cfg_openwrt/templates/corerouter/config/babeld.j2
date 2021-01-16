@@ -1,0 +1,25 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% if ipv6_prefix is defined %}
+package babeld
+
+config general
+	option 'local_port' '33123'
+	option 'ipv6_subtrees' 'true'
+
+  {% for network in networks | selectattr('role', 'equalto', 'mesh') | selectattr('ipv6_subprefix') %}
+config interface
+	option 'ifname' '{{ network['name'] if 'name' in network else network['role'] }}'
+	option 'rxcost' '{{ network['mesh_metric'] if 'mesh_metric' in network else '512' }}'
+
+  {% endfor -%}
+
+config filter
+	option 'type'	'redistribute'
+	option 'ip'	'{{ ipv6_prefix }}'
+	option 'eq'	'{{ ipv6_prefix | ipaddr('prefix') }}'
+
+config filter
+        option 'type'   'redistribute'
+	option 'local'  'true'
+        option 'action' 'deny'
+{% endif %}
