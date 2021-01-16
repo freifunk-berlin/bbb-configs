@@ -51,3 +51,13 @@
     - never
     - image
     - flash
+
+- name: Include image flash
+  include_tasks:
+    file: flash.yml
+    apply:
+      tags: always
+  tags:
+    - never
+    - flash
+  when: ipv6_prefix is defined

@@ -1,0 +1,15 @@
+---
+- name: Define MGMT prefix number
+  set_fact:
+    mgmt_network: "{{ networks | selectattr('role', 'equalto', 'mgmt') | first }}"
+
+
+- name: Set ansible ssh target from IPv6 Prefix
+  set_fact:
+    ansible_ssh_host: "{{ ipv6_prefix | ipsubnet('64', mgmt_network['ipv6_subprefix']) | ipaddr(1) | ipaddr('address') }}"
+    ansible_connection: ssh
+
+- name: Transfer image to remote host
+  copy:
+    src: "{{ image }}"
+    dest: "/tmp/"
