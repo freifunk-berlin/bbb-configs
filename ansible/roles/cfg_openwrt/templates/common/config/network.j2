@@ -60,7 +60,7 @@ config interface '{{ name }}'
   {% if role == 'corerouter' and ipv6_prefix is defined %}
     {% if 'ipv6_subprefix' in network %}
       {% set subprefix = ipv6_prefix | ipsubnet('64', network['ipv6_subprefix']) %}
-	option ip6addr '{{ subprefix | ipaddr(1) | ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}
+	option ip6addr '{{ subprefix | ipaddr(1) | ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
     {% endif %}
   {% endif %}
 
