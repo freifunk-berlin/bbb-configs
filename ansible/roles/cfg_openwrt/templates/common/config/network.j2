@@ -9,6 +9,9 @@ config interface 'loopback'
 	option netmask '255.0.0.0'
 {% if role == 'corerouter' %}
 	option dns '{{ dns_servers | join(' ') }}'
+  {% if ipv6_prefix is defined %}
+	option ip6addr '{{ ipv6_prefix }}'
+  {% endif %}
 {% endif %}
 
 {% if switch_ports|default(0) > 0 %}
@@ -31,6 +34,7 @@ config switch_vlan
   {% endfor %}
 {% endif %}
 
+
 {% for network in networks %}
   {% set name = network['name'] if 'name' in network else network['role'] %}
   {% if inventory_hostname in network['assignments'] or name in wifi_networks %}
@@ -51,6 +55,12 @@ config interface '{{ name }}'
     {% endif %}
     {% if name in wifi_networks %}
         option type 'bridge'
+    {% endif %}
+  {% endif %}
+  {% if role == 'corerouter' and ipv6_prefix is defined %}
+    {% if 'ipv6_subprefix' in network %}
+      {% set subprefix = ipv6_prefix | ipsubnet('64', network['ipv6_subprefix']) %}
+	option ip6addr '{{ subprefix | ipaddr(1) | ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}
     {% endif %}
   {% endif %}
 
