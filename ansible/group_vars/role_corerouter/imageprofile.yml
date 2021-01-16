@@ -18,3 +18,5 @@ role_corerouter__packages__to_merge:
   - luci-app-falter-owm-ant
   - luci-app-falter-owm-cmd
   - luci-app-falter-owm-gui
+  - iptables-mod-ipopt
+  - kmod-ipt-ipopt
