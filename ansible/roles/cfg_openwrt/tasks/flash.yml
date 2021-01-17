@@ -8,8 +8,14 @@
   set_fact:
     ansible_ssh_host: "{{ ipv6_prefix | ipsubnet('64', mgmt_network['ipv6_subprefix']) | ipaddr(1) | ipaddr('address') }}"
     ansible_connection: ssh
+    ansible_user: root
 
 - name: Transfer image to remote host
   copy:
     src: "{{ image }}"
     dest: "/tmp/"
+
+- name: Launch Sysupgrade
+  shell:
+    chdir: "/tmp"
+    cmd: "sysupgrade -n {{ inventory_hostname }}.bin"
