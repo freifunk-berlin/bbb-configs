@@ -1,5 +1,5 @@
 ---
-ipv6_prefix: "2001:bf7:830:7200::/56"
+ipv6_prefix: "2001:bf7:830:8500::/56"
 
 networks:
   - vid: 42
@@ -27,7 +27,7 @@ networks:
 
   - vid: 40
     role: dhcp
-    prefix: 10.31.66.128/25
+    prefix: 10.31.80.0/25
     ipv6_subprefix: 0
     assignments:
       sama-core: 1
