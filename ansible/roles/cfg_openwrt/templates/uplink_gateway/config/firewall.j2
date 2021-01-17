@@ -21,6 +21,9 @@ config zone
 	option input		REJECT
 	option output		ACCEPT
 	option forward		REJECT
+{% if downlink is defined %}
+        option masq		1
+{% endif %}
 
 config forwarding
 	option src		freifunk

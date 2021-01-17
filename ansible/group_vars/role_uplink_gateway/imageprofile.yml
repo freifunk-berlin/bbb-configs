@@ -1,8 +1,28 @@
 ---
 role_ap__packages__to_merge:
-  - "bird2 babeld"
-  - "ip-full"
-  - "-luci-ssl"
+  - collectd-mod-olsrd
+  - collectd-mod-exec
+  - collectd-mod-conntrack
+  - olsrd
+  - olsrd-mod-arprefresh
+  - olsrd-mod-dyn-gw
+  - olsrd-mod-jsoninfo
+  - olsrd-mod-nameservice
+  - olsrd-mod-txtinfo
+  - olsrd-mod-watchdog
+  - luci-app-olsr
+  - luci-app-olsr-services
+  - luci-mod-falter
+  - falter-berlin-fix-luci
+  - luci-app-falter-owm
+  - luci-app-falter-owm-ant
+  - luci-app-falter-owm-cmd
+  - luci-app-falter-owm-gui
+  - iptables-mod-ipopt
+  - kmod-ipt-ipopt
+  - bird2
+  - babeld
+  - ip-full
 
 role_ap__disabled_services__to_merge:
   - "dnsmasq"

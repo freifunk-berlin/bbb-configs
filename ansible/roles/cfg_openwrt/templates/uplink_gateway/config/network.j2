@@ -10,6 +10,7 @@ config interface 'uplink'
 	option ifname '{{ uplink['ifname'] }}'
 	option proto 'static'
 	option ipaddr '{{ uplink['ipv4'] }}'
+	option gateway '{{ uplink['ipv4'] | ipaddr('peer') }}'
 	option ip6addr '{{ uplink['ipv6'] }}'
 
 
