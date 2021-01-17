@@ -1,0 +1,31 @@
+package babeld
+config general
+	option 'log_file' '/var/log/babeld.log'
+	option 'ipv6_subtrees' 'true'
+
+config interface
+	option 'ifname' 'uplink'
+	option 'ignore' 'true'
+
+{% if downlink is defined %}
+config interface
+	option 'ifname' 'downlink'
+	option 'rxcost' '{{ downlink['metric'] }}'
+{% endif %}
+
+config interface
+	option 'rxcost' '{{ tunnel_metric }}'
+
+# Redistribute default route learend from BIRD
+config filter
+	option 'type'	'redistribute'
+	option 'ip'     '::0/0'
+	option 'eq'     '0'
+	option 'proto'	'12'
+	option 'action' 'src-prefix 2001:bf7::/32'
+
+# Prohibit distribution of all local networks. (.. but allow non-local networks, e.g learned via tunnel)
+config filter
+	option 'type'	'redistribute'
+	option 'local'  'true'
+	option 'action' 'deny'

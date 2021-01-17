@@ -1,0 +1,12 @@
+---
+
+freifunk_global_prefix: 2001:bf7::/32
+freifunk_wahlkreis_prefixes:
+  - 2001:bf7:830::/44
+  - 2001:bf7:860::/44
+
+local_asn: 65002
+peer_asn: 25291
+
+role_uplink_gateway_sysctl__to_merge:
+  net.netfilter.nf_conntrack_max: 524288

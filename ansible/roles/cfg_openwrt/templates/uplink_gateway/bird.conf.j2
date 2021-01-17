@@ -1,0 +1,46 @@
+#loglevel syslog all;
+# debug protocols all;
+
+filter default_route {
+	if ( net ~ [ ::0/0 ] ) then accept;
+	reject;
+}
+
+# Attention: Safety measure below!
+# First drop everything which is not in freifunk prefix and a /48
+filter export_aggregates {
+	if ( net !~ [ {{ freifunk_global_prefix }}{48,48} ] ) then reject;
+	include "/dev/shm/announcement*.bird.conf";
+#	reject;
+	accept;
+}
+
+
+
+protocol device {
+}
+
+protocol kernel kernel6 {
+	ipv6 {
+		export all;
+		import none;
+	};
+}
+
+protocol static {
+	ipv6;
+{% for wahlkreis in freifunk_wahlkreis_prefixes %}
+  {% for no in range(1, wahlkreis | ipsubnet(48) | int) %}
+ 	route {{ wahlkreis | ipsubnet(48, no) }} unreachable;
+  {% endfor %}
+{% endfor %}
+}
+
+protocol bgp {
+	local {{ uplink['ipv6'] | ipaddr('address') }} as {{ local_asn }};
+	neighbor {{ uplink['ipv6'] | ipaddr('peer') }} as {{ peer_asn }};
+	ipv6 {
+		import filter default_route;
+		export filter export_aggregates;
+	};
+}

@@ -1,0 +1,76 @@
+config defaults
+	option syn_flood	1
+	option input		ACCEPT
+	option output		ACCEPT
+	option forward		REJECT
+
+config zone
+	option name		freifunk
+{% if downlink is defined %}
+	list   network		'downlink'
+{% endif %}
+        list   network		'wg_+'
+	option input		ACCEPT
+	option output		ACCEPT
+	option forward		REJECT
+	option mtu_fix          1
+
+config zone
+	option name		uplink
+	list   network		'uplink'
+	option input		REJECT
+	option output		ACCEPT
+	option forward		REJECT
+
+config forwarding
+	option src		freifunk
+	option dest		uplink
+
+config forwarding
+	option src		freifunk
+	option dest		freifunk
+
+config rule
+	option name             "Allow BGP"
+	option src		uplink
+	option src_ip		'{{ uplink['ipv6'] | ipaddr('peer')  }}'
+	option proto		tcp
+	option dest_port        179
+
+# Allow essential incoming IPv6 ICMP traffic
+config rule
+	option name		Allow-ICMPv6-Input
+	option src		uplink
+	option proto		icmp
+	list icmp_type		echo-request
+	list icmp_type		echo-reply
+	list icmp_type		destination-unreachable
+	list icmp_type		packet-too-big
+	list icmp_type		time-exceeded
+	list icmp_type		bad-header
+	list icmp_type		unknown-header-type
+	list icmp_type		router-solicitation
+	list icmp_type		neighbour-solicitation
+	list icmp_type		router-advertisement
+	list icmp_type		neighbour-advertisement
+	option limit		1000/sec
+	option family		ipv6
+	option target		ACCEPT
+
+# Allow essential forwarded IPv6 ICMP traffic
+config rule
+	option name		Allow-ICMPv6-Forward
+	option src		uplink
+	option dest		*
+	option proto		icmp
+	list icmp_type		echo-request
+	list icmp_type		echo-reply
+	list icmp_type		destination-unreachable
+	list icmp_type		packet-too-big
+	list icmp_type		time-exceeded
+	list icmp_type		bad-header
+	list icmp_type		unknown-header-type
+	option limit		1000/sec
+	option family		ipv6
+	option target		ACCEPT
+

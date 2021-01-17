@@ -1,0 +1,11 @@
+---
+imagebuilder: "https://downloads.openwrt.org/releases/19.07.5/targets/ramips/mt7621/openwrt-imagebuilder-19.07.5-ramips-mt7621.Linux-x86_64.tar.xz"
+feed_version: "19.07"
+
+#switch_ports: 6
+#switch_int_port: 0
+#switch_ignore_ports: [5]
+## WAN port is hardwired to VLAN2. ignore
+
+#int_port: eth0
+#

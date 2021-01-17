@@ -1,0 +1,26 @@
+
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+	option dns '{{ dns_servers | join(' ') }}'
+
+config interface 'uplink'
+	option ifname '{{ uplink['ifname'] }}'
+	option proto 'static'
+	option ipaddr '{{ uplink['ipv4'] }}'
+	option ip6addr '{{ uplink['ipv6'] }}'
+
+
+{% if downlink is defined %}
+config interface 'downlink'
+        option ifname '{{ downlink['ifname'] }}'
+        option proto 'static'
+	option ipaddr '{{ downlink['ipv4'] }}'
+	option ip6addr '{{ downlink['ipv6'] }}'
+{% endif %}
+
+# Todo:
+* Wireguard Tunnels between all Routers / Iterate over hostgroup
+* 

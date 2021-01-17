@@ -1,0 +1,9 @@
+---
+role_ap__packages__to_merge:
+  - "bird2 babeld"
+  - "ip-full"
+  - "-luci-ssl"
+
+role_ap__disabled_services__to_merge:
+  - "dnsmasq"
+  - "odhcpd"
