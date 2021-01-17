@@ -40,6 +40,12 @@ config rule
 	option proto		tcp
 	option dest_port        179
 
+config rule
+	option name             "Allow SSH"
+	option src		uplink
+	option proto		tcp
+	option dest_port        22
+
 # Allow essential incoming IPv6 ICMP traffic
 config rule
 	option name		Allow-ICMPv6-Input
