@@ -1,5 +1,5 @@
 ---
-ipv6_prefix: '2001:bf7:830:8200::/56'
+ipv6_prefix: '2001:bf7:810:1d00::/56'
 
 networks:
   - vid: 11
