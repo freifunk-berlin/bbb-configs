@@ -12,18 +12,16 @@ networks:
       sama-core: 1
       sama-poe-1: 2
       sama-poe-2: 3
-      sama-m2-sued-mitte-ap: 7
-      sama-m2-sued-west-ap: 8
-      sama-m2-west-mitte-ap: 9
-      sama-m2-nord-mitte-ap: 10
-      sama-m5-sued-ost-f2a-5ghz: 17
-      sama-m5-nord-mitte-ap: 18
-      sama-m5-ost-mitte-ap: 19
-      sama-m5-west-mitte-ap: 20
-      sama-zwingli-5ghz: 21
-      sama-west-5ghz: 22
-      sama-ost-5ghz: 23
-      sama-sued-5ghz: 24
+# 6-15 (Local APs)
+      sama-nord-nf-5ghz: 6
+      sama-ost-nf-5ghz: 7
+      sama-sued-nf-5ghz: 8
+      sama-west-nf-5ghz: 9
+# 16-31 (BBB)
+      sama-nord-5ghz: 16
+      sama-ost-5ghz: 17
+      sama-sued-5ghz: 18
+      sama-west-5ghz: 19
 
   - vid: 40
     role: dhcp
@@ -73,3 +71,12 @@ networks:
     ipv6_subprefix: -6
     assignments:
       sama-core: 0
+
+location__channel_assignments_11a_standard__to_merge:
+  sama-nord-nf-5ghz: 44-40
+  sama-ost-nf-5ghz: 36-40
+  sama-sued-nf-5ghz: 44-40
+  sama-west-nf-5ghz: 36-40
+
+# Back to Back channel is reused
+# - Hopefully rf-Shield performs :)
