@@ -27,6 +27,8 @@ networks:
     role: dhcp
     prefix: 10.31.80.0/25
     ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
     assignments:
       sama-core: 1
   - vid: 10
