@@ -69,3 +69,9 @@ config interface '{{ name }}'
   {% endif %}
 
 {% endfor %}
+{% for i in mac_override|default({}) %}
+config device '{{ i }}_dev'
+	option name '{{ i }}'
+	option macaddr '{{ mac_override[i] }}'
+
+{% endfor %}
