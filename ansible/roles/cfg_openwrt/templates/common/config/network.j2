@@ -18,6 +18,9 @@ config interface 'loopback'
 config switch
 	option name 'switch0'
 	option reset '1'
+  {% if switch_disable_vlan | default(false) %}
+	option enable_vlan '0'
+  {% else %}
 	option enable_vlan '1'
 
   {% for network in networks %}
@@ -32,6 +35,7 @@ config switch_vlan
 	option vlan '{{ network['vid'] }}'
 	option ports '{{ portmapping|join(' ') }}'
   {% endfor %}
+  {% endif %}
 {% endif %}
 
 
