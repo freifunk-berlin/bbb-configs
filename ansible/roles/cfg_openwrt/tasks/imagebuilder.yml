@@ -16,6 +16,15 @@
       - "wget"
       - "-N"
       - "{{ imagebuilder }}"
+  when: '"http" in imagebuilder'
+
+- name: Copy Local Imagebuilder
+  command:
+    argv:
+      - "cp"
+      - "{{ imagebuilder }}"
+      - "{{ imagebuilder_dir }}"
+  when: '"http" not in imagebuilder'
 
 - name: Clear workdir
   file:
@@ -38,11 +47,13 @@
     chdir: "{{ imagebuild_dir }}"
     cmd: "grep 'openwrt_base' repositories.conf | awk -F'/' '{print $8}'"
   register: instr_set_result
+  when: 'instr_set is not defined and feed_version is defined'
 
 - name: Insert falter feed
   lineinfile:
     path: "{{ imagebuild_dir }}/repositories.conf"
     line: "{{ feed | replace('__INSTR_SET__', instr_set_result.stdout_lines|first) | replace('__FEED_VERSION__', feed_version) }}"
+  when: 'feed_version is defined'
 
 - name: Run Imagebuilder
   command:
