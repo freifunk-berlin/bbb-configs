@@ -1,4 +1,0 @@
-config trelay
-	option enabled	1
-	option dev1	eth0.12
-	option dev2	wlan0
