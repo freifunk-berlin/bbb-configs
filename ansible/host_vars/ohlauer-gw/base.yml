@@ -2,4 +2,4 @@
 
 location: ohlauer
 role: uplink_gateway
-model: "ubnt-erx-sfp"
+model: "ubnt_edgerouter-4"
