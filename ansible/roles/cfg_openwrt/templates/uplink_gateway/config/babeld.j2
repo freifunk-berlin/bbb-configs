@@ -22,9 +22,18 @@ config filter
 	option 'ip'     '::0/0'
 	option 'eq'     '0'
 	option 'proto'	'12'
-	option 'action' 'src-prefix 2001:bf7::/32'
+	option 'action' 'src-prefix {{ freifunk_global_prefix }}'
 
-# Prohibit distribution of all local networks. (.. but allow non-local networks, e.g learned via tunnel)
+{% if mgmt is defined %}
+# Redistribute local MGMT prefix
+config filter
+	option 'type'	'redistribute'
+	option 'local'  'true'
+	option 'ip'	'{{ mgmt['ipv6'] | ipaddr('network/prefix') }}'
+	option 'eq'	'{{ mgmt['ipv6'] | ipaddr('prefix') }}'
+{% endif %}
+
+# Finally Prohibit distribution of all local networks. (.. but allow non-local networks, e.g learned via tunnel)
 config filter
 	option 'type'	'redistribute'
 	option 'local'  'true'

@@ -9,6 +9,9 @@ config zone
 {% if downlink is defined %}
 	list   network		'downlink'
 {% endif %}
+{% if mgmt is defined %}
+	list   network		'mgmt'
+{% endif %}
         list   network		'wg_+'
 	option input		ACCEPT
 	option output		ACCEPT

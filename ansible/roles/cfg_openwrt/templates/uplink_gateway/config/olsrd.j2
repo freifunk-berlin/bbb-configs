@@ -1,3 +1,4 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {% if downlink is defined %}
 config LoadPlugin
 	option library 'olsrd_arprefresh'
@@ -62,4 +63,9 @@ config Interface
 	option interface 'downlink'
 	option Mode 'ether'
 
+  {% if mgmt is defined %}
+config Hna4
+	option netmask '{{ mgmt['ipv4'] | ipaddr('netmask') }}'
+	option netaddr '{{ mgmt['ipv4'] | ipaddr('network') }}'
+  {% endif %}
 {% endif %}
