@@ -1,4 +1,3 @@
-
 config interface 'loopback'
 	option ifname 'lo'
 	option proto 'static'
@@ -16,16 +15,16 @@ config interface 'uplink'
 
 {% if downlink is defined %}
 config interface 'downlink'
-        option ifname '{{ downlink['ifname'] }}'
-        option proto 'static'
+	option ifname '{{ downlink['ifname'] }}'
+	option proto 'static'
 	option ipaddr '{{ downlink['ipv4'] }}'
 	option ip6addr '{{ downlink['ipv6'] }}'
 {% endif %}
 
 {% if mgmt is defined %}
 config interface 'mgmt'
-        option ifname '{{ mgmt['ifname'] }}'
-        option proto 'static'
+	option ifname '{{ mgmt['ifname'] }}'
+	option proto 'static'
 	option ipaddr '{{ mgmt['ipv4'] }}'
 	option ip6addr '{{ mgmt['ipv6'] }}'
 {% endif %}
