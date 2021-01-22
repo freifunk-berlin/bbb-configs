@@ -49,11 +49,23 @@
   register: instr_set_result
   when: 'instr_set is not defined and feed_version is defined'
 
+- name: Extract Instruction set if needed
+  set_fact:
+    instr_set: "{{ instr_set_result.stdout_lines|first }}"
+  when: 'instr_set is not defined and feed_version is defined'
+
 - name: Insert falter feed
   lineinfile:
     path: "{{ imagebuild_dir }}/repositories.conf"
-    line: "{{ feed | replace('__INSTR_SET__', instr_set_result.stdout_lines|first) | replace('__FEED_VERSION__', feed_version) }}"
+    line: "{{ feed | replace('__INSTR_SET__', instr_set) | replace('__FEED_VERSION__', feed_version) }}"
   when: 'feed_version is defined'
+
+- name: Disable Signature verification if required
+  lineinfile:
+    path: "{{ imagebuild_dir }}/repositories.conf"
+    line: "option check_signature"
+    state: "absent"
+  when: 'imagebuilder_disable_signature_check is defined and imagebuilder_disable_signature_check'
 
 - name: Run Imagebuilder
   command:
@@ -83,10 +95,22 @@
     content: "{{ output.stdout }}"
     dest: "{{ image_dir }}/{{ inventory_hostname }}.log"
 
-- name: Declare some var
+- name: Find output image
+  find:
+    paths: "{{ imagebuild_dir }}/bin/"
+    patterns: "*-sysupgrade.*"
+    recurse: true
+  register: image_list
+
+- name: Declare source
   set_fact:
-    image: "{{ image_dir }}/{{ inventory_hostname }}.bin"
+    image_src: "{{ image_list.files | map(attribute='path') | list | first }}"
+
+- name: Declare target
+  set_fact:
+    image: "{{ image_dir }}/{{ inventory_hostname }}{{ image_src | splitext | last }}"
 
 - name: Copy Image to Image dir
-  shell:
-    cmd: "cp {{ imagebuild_dir }}/bin/*/*/*/*-sysupgrade.bin {{ image }}"
+  copy:
+    src: "{{ image_src }}"
+    dest: "{{ image }}"
