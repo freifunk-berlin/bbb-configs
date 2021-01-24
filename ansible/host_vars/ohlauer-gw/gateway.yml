@@ -1,15 +1,17 @@
 ---
 
 uplink:
-  ifname: eth5
+  ifname: lan0
   ipv4: 176.74.57.19/31
   ipv6: 2a04:d480:1c01::1/127
 
 downlink:
-  ifname: eth0
-  ipv4: 10.31.78.154/32
+  ifname: lan3
+  ipv4: 10.31.11.101/29
   ipv6: 2001:bf7:830:8300::/128
   metric: 256
+
+# Downlink IPv4 is in net announced by emma.
 
 tunnel_metric: 1024
 # Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s

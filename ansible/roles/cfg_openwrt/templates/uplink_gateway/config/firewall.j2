@@ -42,12 +42,14 @@ config rule
 	option src_ip		'{{ uplink['ipv6'] | ipaddr('peer')  }}'
 	option proto		tcp
 	option dest_port        179
+	option target		ACCEPT
 
 config rule
 	option name             "Allow SSH"
 	option src		uplink
 	option proto		tcp
 	option dest_port        22
+	option target		ACCEPT
 
 # Allow essential incoming IPv6 ICMP traffic
 config rule

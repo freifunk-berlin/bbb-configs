@@ -5,6 +5,9 @@ freifunk_wahlkreis_prefixes:
   - 2001:bf7:830::/44
   - 2001:bf7:860::/44
 
+freifunk_wahlkreis_announcement_prefix: 44
+# Change to 48 if you wnat to announce 48s
+
 local_asn: 65002
 peer_asn: 25291
 

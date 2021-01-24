@@ -9,9 +9,8 @@ filter default_route {
 # Attention: Safety measure below!
 # First drop everything which is not in freifunk prefix and a /48
 filter export_aggregates {
-	if ( net !~ [ {{ freifunk_global_prefix }}{48,48} ] ) then reject;
+	if ( net !~ [ {{ freifunk_global_prefix }}{{ '{' }}{{ freifunk_wahlkreis_announcement_prefix }},{{ freifunk_wahlkreis_announcement_prefix}}{{ '}' }} ] ) then reject;
 	include "/dev/shm/announcement*.bird.conf";
-#	reject;
 	accept;
 }
 
@@ -30,8 +29,8 @@ protocol kernel kernel6 {
 protocol static {
 	ipv6;
 {% for wahlkreis in freifunk_wahlkreis_prefixes %}
-  {% for no in range(1, wahlkreis | ipsubnet(48) | int) %}
- 	route {{ wahlkreis | ipsubnet(48, no) }} unreachable;
+  {% for no in range(0, wahlkreis | ipsubnet(freifunk_wahlkreis_announcement_prefix) | int) %}
+	route {{ wahlkreis | ipsubnet(freifunk_wahlkreis_announcement_prefix, no) }} unreachable;
   {% endfor %}
 {% endfor %}
 }
