@@ -5,7 +5,7 @@ config system
         option ttylogin '0'
         option log_size '64'
         option urandom_seed '0'
-{% if role == 'corerouter' %}
+{% if role == 'corerouter' or role  == 'uplink_gateway' %}
 	option latitude '{{ latitude|default(0) }}'
 	option longitude '{{ longitude|default(0) }}'
 	option altitude '60.000000000000000'
