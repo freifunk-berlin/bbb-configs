@@ -57,6 +57,11 @@ config InterfaceDefaults
 	option MidInterval '25.0'
 	option HelloInterval '3.0'
 	option HnaInterval '10.0'
+  {% if 'sgw' in downlink and downlink['sgw'] %}
+	option SmartGateway 'yes'
+	option SmartGatewayUplink 'both'
+	option SmartGatewaySpeed '{{ downlink['sgw'] }}'
+  {% endif %}
 
 config Interface
 	option ignore '0'
