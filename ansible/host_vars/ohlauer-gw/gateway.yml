@@ -10,6 +10,7 @@ downlink:
   ipv4: 10.31.11.101/29
   ipv6: 2001:bf7:830:8300::/128
   metric: 256
+  sgw: "100000 100000"
 
 # Downlink IPv4 is in net announced by emma.
 
