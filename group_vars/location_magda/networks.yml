@@ -1,0 +1,46 @@
+---
+ipv6_prefix: "2001:bf7:860:9000::/56"
+
+networks:
+  - vid: 42
+    role: mgmt
+    prefix: 10.78.31.0/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      magda-core: 1
+      magda-ap1: 2
+      magda-ap2: 3
+# 6-15 (Local APs)
+      magda-sama-bbb: 4
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.3.80.128/27
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      magda-core: 1
+
+  - vid: 10
+    role: mesh
+    name: mesh_sama
+    prefix: 10.31.79.176/32
+    ipv6_subprefix: -1
+    assignments:
+      magda-core: 0
+
+location__channel_assignments_11a_standard__to_merge:
+  magda-ap1: 36-20
+  magda-ap2: 38-20
+  magda-ap3: 40-20
+
+location__channel_assignments_11g_standard__to_merge:
+  magda-ap1: 11-20
+  magda-ap2: 6-20
+  magda-ap3: 1-20
+
+# Back to Back channel is reused
+# - Hopefully rf-Shield performs :)
