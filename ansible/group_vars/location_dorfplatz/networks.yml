@@ -29,5 +29,5 @@ networks:
     assignments:
       dorfplatz-core: 1
       dorfplatz-wilgu10: 2
-      dorfplatz-ap1: 15
-      dorfplatz-ap2: 14
+      dorfplatz-ap1: 14
+      dorfplatz-ap2: 13
