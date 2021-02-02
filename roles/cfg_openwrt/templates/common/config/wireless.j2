@@ -11,6 +11,7 @@
   {% set channel_assignment = (channel_assignments[inventory_hostname] | default(channel_assignments['default'])).split('-') %}
   {% set channel = channel_assignment[0] %}
   {% set bandwidth = channel_assignment[1] %}
+  {% set txpower = channel_assignment[2]|default(False) %}
 
 
 # Radio: {{ wd['name'] }}
@@ -20,6 +21,9 @@ config wifi-device '{{ wd_id }}'
 	option path '{{ wd['path'] }}'
 	option htmode 'VHT{{ bandwidth }}'
 	option channel '{{ channel }}'
+  {% if txpower %}
+	option txpower '{{ txpower }}'
+  {% endif %}
   {% if 'country' in wd_config %}
 	option country '{{ wd_config['country'] }}'
   {% endif %}
