@@ -1,4 +1,4 @@
-# network/ankibinn
+# bbb-configs (Ansible Config Management)
 
 ### How to get started
 
