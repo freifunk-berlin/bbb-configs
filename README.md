@@ -18,7 +18,7 @@ ansible-playbook play.yml
 ansible-playbook play.yml --tags image
 ```
 
-### How to spin up a config run, generate image and flash (Requires IPv6 Connectivity from inside freifunk network)
+### How to spin up a config run, generate image and flash (Requires IPv6 Connectivity from inside freifunk network, not yet fully working)
 
 ```
 ansible-playbook play.yml --tags flash
