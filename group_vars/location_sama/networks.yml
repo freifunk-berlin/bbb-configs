@@ -1,5 +1,5 @@
 ---
-ipv6_prefix: "2001:bf7:860::/56"
+ipv6_prefix: "2001:bf7:830:8600::/56"
 
 networks:
   - vid: 42
@@ -25,7 +25,7 @@ networks:
 
   - vid: 40
     role: dhcp
-    prefix: 10.31.80.128/25
+    prefix: 10.31.81.128/25
     ipv6_subprefix: 0
     inbound_filtering: true
     enforce_client_isolation: true
