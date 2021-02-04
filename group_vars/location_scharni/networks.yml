@@ -2,15 +2,6 @@
 ipv6_prefix: '2001:bf7:830:8400::/56'
 
 networks:
-  - vid: 11
-    role: mesh
-    name: mesh_wilgu10
-    prefix: 10.31.252.194/32
-    ipv6_subprefix: -1
-    mesh_metric: 512
-    assignments:
-      scharni-core: 0
-
   - vid: 12
     role: mesh
     name: mesh_sama
