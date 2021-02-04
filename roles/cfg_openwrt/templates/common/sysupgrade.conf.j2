@@ -1,0 +1,7 @@
+# if sysupgrade_preserve_custom_files is set, all
+# shipped "preservation" definitions in /var/upgrade/keep.d/
+# will be deleted and our custom ones will be defined here
+
+{% for i in sysupgrade_preserve_custom_files | default([]) %}
+{{ i }}
+{% endfor %}
