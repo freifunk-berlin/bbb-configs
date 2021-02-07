@@ -28,6 +28,8 @@ role_ap__packages__to_merge:
   - babeld
   - ip-full
   - wireguard
+  - wg-installer-server
+  - wg-installer-server-hotplug-babeld
 # Required for some ugly hack which can be removed in DC
   - iptables-mod-ipopt
 
