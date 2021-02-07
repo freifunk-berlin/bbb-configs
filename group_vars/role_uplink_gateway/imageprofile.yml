@@ -3,6 +3,8 @@ role_ap__packages__to_merge:
   - collectd-mod-olsrd
   - collectd-mod-exec
   - collectd-mod-conntrack
+  - collectd-mod-snmp6
+  - collectd-mod-ipstatistics
   - olsrd
   - olsrd-mod-arprefresh
   - olsrd-mod-dyn-gw
