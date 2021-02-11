@@ -11,6 +11,12 @@
     merged_var_name: disabled_services
     expected_type: list
 
+- name: Merge ssh_keys variable
+  merge_vars:
+    suffix_to_merge: ssh_keys__to_merge
+    merged_var_name: ssh_keys
+    expected_type: list
+
 - name: Merge sysctl variable
   merge_vars:
     suffix_to_merge: sysctl__to_merge
