@@ -18,3 +18,9 @@ tunnel_metric: 1024
 # Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
 # 2001:bf7:830:8300::/56 is the base prefix
 
+wireguard:
+  port_start: 51820
+  port_end: 52820
+  base_prefix: 2001:bf7:830:8301::/64
+  wg_key: '/etc/wireguard/wg.key'
+  wg_pub: '/etc/wireguard/wg.pub'
