@@ -34,14 +34,15 @@ networks:
       scharni-ap1: 30
       scharni-ap2: 29
       scharni-ap3: 28
+      scharni-ap4: 27
 
 location_scharni__channel_assignments_11a_standard__to_merge:
   scharni-ap1: 36-40
   scharni-ap2: 44-40
   scharni-ap3: 36-40
+  scharni-ap4: 36-20-10
 
 location_scharni__channel_assignments_11g_standard__to_merge:
   scharni-ap1: 11-20
   scharni-ap2: 6-20
   scharni-ap3: 1-20
-
