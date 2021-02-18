@@ -1,5 +1,6 @@
 ---
-role_ap__packages__to_merge:
+role_uplink_gw__packages__to_merge:
+  - -wpad-openssl
   - collectd-mod-olsrd
   - collectd-mod-exec
   - collectd-mod-conntrack
@@ -33,6 +34,6 @@ role_ap__packages__to_merge:
 # Required for some ugly hack which can be removed in DC
   - iptables-mod-ipopt
 
-role_ap__disabled_services__to_merge:
+role_uplink_gw__disabled_services__to_merge:
   - "dnsmasq"
   - "odhcpd"
