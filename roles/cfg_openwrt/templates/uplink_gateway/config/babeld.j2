@@ -7,11 +7,12 @@ config interface
 	option 'ifname' 'uplink'
 	option 'ignore' 'true'
 
-{% if downlink is defined %}
+{% for interface in mesh_links|default([]) %}
 config interface
-	option 'ifname' 'downlink'
-	option 'rxcost' '{{ downlink['metric'] }}'
-{% endif %}
+	option 'ifname' '{{ interface['name'] }}'
+	option 'rxcost' '{{ interface['metric'] }}'
+
+{% endfor %}
 
 config interface
 	option 'rxcost' '{{ tunnel_metric }}'

@@ -6,9 +6,9 @@ config defaults
 
 config zone
 	option name		freifunk
-{% if downlink is defined %}
-	list   network		'downlink'
-{% endif %}
+{% for interface in mesh_links|default([]) %}
+	list   network		'{{ interface['name'] }}'
+{% endfor %}
 {% if mgmt is defined %}
 	list   network		'mgmt'
 {% endif %}
@@ -24,7 +24,7 @@ config zone
 	option input		REJECT
 	option output		ACCEPT
 	option forward		REJECT
-{% if downlink is defined %}
+{% if mesh_links is defined and mesh_links|length > 0 %}
         option masq		1
 {% endif %}
 

@@ -57,16 +57,18 @@ config InterfaceDefaults
 	option MidInterval '25.0'
 	option HelloInterval '3.0'
 	option HnaInterval '10.0'
-  {% if 'sgw' in downlink and downlink['sgw'] %}
+  {% if sgw is defined and sgw %}
 	option SmartGateway 'yes'
 	option SmartGatewayUplink 'both'
-	option SmartGatewaySpeed '{{ downlink['sgw'] }}'
+	option SmartGatewaySpeed '{{ sgw }}'
   {% endif %}
 
+  {% for interface in mesh_links %}
 config Interface
 	option ignore '0'
-	option interface 'downlink'
+	option interface '{{ interface['name'] }}'
 	option Mode 'ether'
+  {% endfor %}
 
   {% if mgmt is defined %}
 config Hna4

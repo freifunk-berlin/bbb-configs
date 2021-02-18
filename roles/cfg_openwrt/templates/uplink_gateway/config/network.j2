@@ -13,13 +13,13 @@ config interface 'uplink'
 	option ip6addr '{{ uplink['ipv6'] }}'
 
 
-{% if downlink is defined %}
-config interface 'downlink'
-	option ifname '{{ downlink['ifname'] }}'
+{% for interface in mesh_links|default([]) %}
+config interface '{{ interface['name'] }}'
+	option ifname '{{ interface['ifname'] }}'
 	option proto 'static'
-	option ipaddr '{{ downlink['ipv4'] }}'
-	option ip6addr '{{ downlink['ipv6'] }}'
-{% endif %}
+	option ipaddr '{{ interface['ipv4'] }}'
+	option ip6addr '{{ interface['ipv6'] }}'
+{% endfor %}
 
 {% if mgmt is defined %}
 config interface 'mgmt'
