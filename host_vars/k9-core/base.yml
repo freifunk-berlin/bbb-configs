@@ -1,0 +1,8 @@
+---
+
+location: k9
+role: corerouter
+target: "ipq40xx/generic"
+model: "avm_fritzbox-7530"
+
+wireless_profile: freifunk_default
