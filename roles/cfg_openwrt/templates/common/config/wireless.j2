@@ -2,7 +2,7 @@
 
 {% set profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first %}
 # Wifi Config is derived from wireless profile: '{{ wireless_profile }}'
-{% for wd in wireless_devices %}
+{% for wd in wireless_devices | default([]) %}
   {% set wd_id = 'radio' + loop.index0|string %}
   {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name']) | first %}
   {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}

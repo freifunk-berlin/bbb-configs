@@ -10,7 +10,7 @@ network_ifname_map =
   - ..
 #}
 {% set network_ifname_map = [] %}
-{% for wd in wireless_devices %}
+{% for wd in wireless_devices | default([]) %}
   {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name']) | first %}
   {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
   {% if not wd_config.get('disabled') %}
