@@ -14,28 +14,10 @@ config interface 'loopback'
   {% endif %}
 {% endif %}
 
-{% if switch_ports|default(0) > 0 %}
-config switch
-	option name 'switch0'
-	option reset '1'
-  {% if switch_disable_vlan | default(false) %}
-	option enable_vlan '0'
-  {% else %}
-	option enable_vlan '1'
-
-  {% for network in networks %}
-    {% set portmapping = [] %}
-    {% for port in range(switch_ports)|list|difference(switch_ignore_ports) %}
-      {% set tagged = not network.get('untagged') or port == switch_int_port %}
-      {{ portmapping.append(port|string + "t" if tagged else "") }}
-    {%- endfor %}
-
-config switch_vlan
-	option device 'switch0'
-	option vlan '{{ network['vid'] }}'
-	option ports '{{ portmapping|join(' ') }}'
-  {% endfor %}
-  {% endif %}
+{% if dsa_ports is defined %}
+  {% include './common/config/dsa.network.inc' %}
+{% elif switch_ports|default(0) > 0 %}
+  {% include './common/config/swconfig.network.inc' %}
 {% endif %}
 
 
@@ -44,7 +26,7 @@ config switch_vlan
   {% if inventory_hostname in network['assignments'] or name in wifi_networks %}
 config interface '{{ name }}'
 	option proto 'static'
-	option ifname '{{ int_port }}.{{ network['vid'] }}'
+	option ifname '{{ 'switch0' if dsa_ports is defined else int_port }}.{{ network['vid'] }}'
     {% if inventory_hostname in network['assignments'] %}
 	option ipaddr '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) }}'
         {% if network.get('enforce_client_isolation') %}

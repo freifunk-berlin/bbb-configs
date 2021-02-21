@@ -1,0 +1,10 @@
+---
+imagebuilder: "https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-imagebuilder-ramips-mt7621.Linux-x86_64.tar.xz"
+feed_version: "master"
+
+dsa_ports:
+  - eth0
+  - eth1
+  - eth2
+  - eth3
+  - eth4
