@@ -2,7 +2,7 @@
 imagebuilder: "https://downloads.openwrt.org/snapshots/targets/octeon/generic/openwrt-imagebuilder-octeon.Linux-x86_64.tar.xz"
 instr_set: "mips64_octeonplus"
 imagebuilder_disable_signature_check: true
-feed_version: "19.07"
+feed_version: "master"
 
 #switch_ports: 6
 #switch_int_port: 0
