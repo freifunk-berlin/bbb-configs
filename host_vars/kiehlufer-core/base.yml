@@ -1,0 +1,6 @@
+---
+
+location: kiehlufer
+role: corerouter
+target: "ipq40xx/generic"
+model: "fritzbox_7530"
