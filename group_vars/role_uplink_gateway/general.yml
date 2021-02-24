@@ -13,3 +13,8 @@ peer_asn: 25291
 
 role_uplink_gateway_sysctl__to_merge:
   net.netfilter.nf_conntrack_max: 524288
+
+wireguard_port_start: 51820
+wireguard_port_end: 52820
+wireguard_wg_key: '/etc/wireguard/wg.key'
+wireguard_wg_pub: '/etc/wireguard/wg.pub'
