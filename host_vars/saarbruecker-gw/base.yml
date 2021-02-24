@@ -1,0 +1,5 @@
+---
+
+location: saarbruecker
+role: uplink_gateway
+model: "ubnt_edgerouter-4"
