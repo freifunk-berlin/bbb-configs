@@ -28,6 +28,19 @@ config interface 'mgmt'
 	option ipaddr '{{ mgmt['ipv4'] }}'
 	option ip6addr '{{ mgmt['ipv6'] }}'
 {% endif %}
-# Todo:
-* Wireguard Tunnels between all Routers / Iterate over hostgroup
-* 
+
+
+# gre doesnt support _ in name
+{% for gateway in groups['role_uplink_gateway'] | difference([inventory_hostname]) %}
+{% set name = hostvars[gateway]['location'] %}
+config interface '{{ name }}'
+	option proto 'gre'
+	option ipaddr '{{ uplink['ipv4'] | ipaddr('address') }}'
+	option peeraddr '{{ hostvars[gateway]['uplink']['ipv4'] | ipaddr('address') }}'
+
+config interface '{{ name }}_ip'
+	option proto 'static'
+	option ifname '@{{ name }}'
+	option ip6addr '{{ gre_base_prefix | nthhost(loop.index) }}/128'
+
+{% endfor %}

@@ -7,9 +7,15 @@ uplink:
 
 mgmt:
   ifname: lan3.42
-  ipv4: 10.31.83.48/29
-  ipv6: 2001:bf7:760:2202::/64 
+  ipv4: 10.31.83.49/29
+  ipv6: 2001:bf7:760:2201::/64
 
+# .49 gw
+# .50 sw
+# .51 mesh_hds
+# .52 mesh_sama
+# .53 -
+# .54 -
 
 # Mesh Network: 10.31.83.56/30
 mesh_links:
@@ -34,7 +40,8 @@ tunnel_metric: 1024
 # Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
 # 2001:bf7:760:2200::/56 is the base prefix
 
-wireguard_base_prefix: 2001:bf7:760:2201::/64
+wireguard_base_prefix: 2001:bf7:760:2202::/64
+gre_base_prefix: 2001:bf7:760:2201::/64
 
  
 

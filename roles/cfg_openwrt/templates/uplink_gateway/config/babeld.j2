@@ -14,6 +14,12 @@ config interface
 
 {% endfor %}
 
+{% for gateway in groups['role_uplink_gateway'] | difference([inventory_hostname]) %}
+config interface
+	option 'ifname' '{{ hostvars[gateway]['location'] }}'
+	option 'rxcost' '{{ gre_metric }}'
+{% endfor %}
+
 config interface
 	option 'rxcost' '{{ tunnel_metric }}'
 

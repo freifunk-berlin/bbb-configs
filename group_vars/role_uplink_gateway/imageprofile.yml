@@ -28,7 +28,9 @@ role_uplink_gw__packages__to_merge:
   - bird2c
   - babeld
   - ip-full
-  - wireguard
+  - gre
+  - wireguard-tools
+  - kmod-wireguard
   - wg-installer-server
   - wg-installer-server-hotplug-babeld
 # Required for some ugly hack which can be removed in DC

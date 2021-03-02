@@ -22,3 +22,4 @@ tunnel_metric: 1024
 # 2001:bf7:830:8300::/56 is the base prefix
 
 wireguard_base_prefix: 2001:bf7:830:8301::/64
+gre_base_prefix: 2001:bf7:830:8302::/64

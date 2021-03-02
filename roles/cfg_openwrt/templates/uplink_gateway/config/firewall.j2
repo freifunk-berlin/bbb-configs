@@ -13,6 +13,7 @@ config zone
 	list   network		'mgmt'
 {% endif %}
 	list   device		'wg_+'
+	list   device		'gre+'
 	option input		ACCEPT
 	option output		ACCEPT
 	option forward		REJECT
@@ -49,6 +50,12 @@ config rule
 	option src		uplink
 	option proto		tcp
 	option dest_port        22
+	option target		ACCEPT
+
+config rule
+	option name             "Allow GRE"
+	option src		uplink
+	option proto		gre
 	option target		ACCEPT
 
 # Allow essential incoming IPv6 ICMP traffic
