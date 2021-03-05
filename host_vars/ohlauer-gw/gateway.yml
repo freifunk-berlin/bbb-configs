@@ -22,4 +22,8 @@ tunnel_metric: 1024
 # 2001:bf7:830:8300::/56 is the base prefix
 
 wireguard_base_prefix: 2001:bf7:830:8301::/64
+
 gre_base_prefix: 2001:bf7:830:8302::/64
+
+# gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
+gre_tunnel_alias: ohlauer

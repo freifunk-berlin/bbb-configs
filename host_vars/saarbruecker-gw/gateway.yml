@@ -50,4 +50,5 @@ wireguard_base_prefix: 2001:bf7:760:2202::/64
 gre_base_prefix: 2001:bf7:760:2201::/64
 
  
-
+# gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
+gre_tunnel_alias: saarbrue
