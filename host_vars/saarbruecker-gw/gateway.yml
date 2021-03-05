@@ -1,12 +1,12 @@
 ---
 
 uplink:
-  ifname: lan0
+  ifname: lan3
   ipv4: 176.74.57.43/31
   ipv6: 2a04:d480:2001::1/127
 
 mgmt:
-  ifname: lan3.42
+  ifname: lan0.42
   ipv4: 10.31.83.49/29
   ipv6: 2001:bf7:760:2201::/64
 
@@ -14,21 +14,27 @@ mgmt:
 # .50 sw
 # .51 mesh_hds
 # .52 mesh_sama
-# .53 -
+# .53 mesh_segen
 # .54 -
 
 # Mesh Network: 10.31.83.56/30
 mesh_links:
   - name: mesh_hds
-    ifname: lan3.10
+    ifname: lan0.10
     ipv4: 10.31.83.56/32
     ipv6: 2001:bf7:760:2200::1/128 
-    metric: 256
+    metric: 128
 
   - name: mesh_sama
-    ifname: lan3.11
+    ifname: lan0.11
     ipv4: 10.31.83.57/32
     ipv6: 2001:bf7:760:2200::2/128 
+    metric: 512
+
+  - name: mesh_segen
+    ifname: lan0.12
+    ipv4: 10.31.83.58/32
+    ipv6: 2001:bf7:760:2200::3/128
     metric: 256
 
 # Downlink IPv4 is in net announced by emma.
