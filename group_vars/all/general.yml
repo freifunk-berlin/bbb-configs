@@ -30,5 +30,6 @@ sysupgrade_preserve_custom_files:
   - /etc/uhttpd.crt
   - /etc/uhttpd.key
   - /etc/dropbear/dropbear_rsa_host_key
+  - /etc/dropbear/dropbear_ed25519_host_key
   - /etc/wireguard/wg.pub
   - /etc/wireguard/wg.key
