@@ -1,5 +1,5 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
-{% if downlink is defined %}
+{% if mesh_links is defined and mesh_links|length>0 %}
 config LoadPlugin
 	option library 'olsrd_arprefresh'
 
@@ -46,6 +46,11 @@ config olsrd
 	option OlsrPort '698'
 	option Willingness '3'
 	option TosValue '16'
+  {% if sgw is defined and sgw %}
+	option SmartGateway 'yes'
+	option SmartGatewayUplink 'both'
+	option SmartGatewaySpeed '{{ sgw }}'
+  {% endif %}
 
 config InterfaceDefaults
 	option MidValidityTime '500.0'
@@ -57,11 +62,6 @@ config InterfaceDefaults
 	option MidInterval '25.0'
 	option HelloInterval '3.0'
 	option HnaInterval '10.0'
-  {% if sgw is defined and sgw %}
-	option SmartGateway 'yes'
-	option SmartGatewayUplink 'both'
-	option SmartGatewaySpeed '{{ sgw }}'
-  {% endif %}
 
   {% for interface in mesh_links %}
 config Interface
