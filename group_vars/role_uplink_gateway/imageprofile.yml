@@ -27,6 +27,7 @@ role_uplink_gw__packages__to_merge:
   - bird2
   - bird2c
   - babeld
+  - luci-app-babeld
   - ip-full
   - gre
   - wireguard-tools
