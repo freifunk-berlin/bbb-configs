@@ -1,7 +1,8 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
-{% set l3_networks = networks | selectattr('assignments', 'contains', inventory_hostname) %}
+{% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | default([]) %}
+{% set l3_mesh_networks = networks | selectattr('assignments', 'undefined') | selectattr('role', 'equalto', 'mesh') | default([]) %}
 {% set query = "[].{name: name||role,inbound_filtering: inbound_filtering}" %}
-{% set l3_networks = l3_networks | json_query(query) %}
+{% set l3_networks = (l3_networks + l3_mesh_networks) | json_query(query) %}
 
 config defaults
 	option syn_flood '1'

@@ -39,29 +39,21 @@ networks:
     name: mesh_nord
     prefix: 10.31.79.176/32
     ipv6_subprefix: -1
-    assignments:
-      sama-core: 0
   - vid: 11
     role: mesh
     name: mesh_ost
     prefix: 10.31.79.177/32
     ipv6_subprefix: -2
-    assignments:
-      sama-core: 0
   - vid: 12
     role: mesh
     name: mesh_sued
     prefix: 10.31.79.178/32
     ipv6_subprefix: -3
-    assignments:
-      sama-core: 0
   - vid: 13
     role: mesh
     name: mesh_west
     prefix: 10.31.79.179/32
     ipv6_subprefix: -4
-    assignments:
-      sama-core: 0
 
 location__channel_assignments_11a_standard__to_merge:
   sama-nord-nf-5ghz: 36-20-10
