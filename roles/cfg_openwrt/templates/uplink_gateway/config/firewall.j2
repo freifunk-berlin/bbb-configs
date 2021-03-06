@@ -12,6 +12,9 @@ config zone
 {% if mgmt is defined %}
 	list   network		'mgmt'
 {% endif %}
+{% if sgw is defined and sgw %}
+	list   device		'tunl0'
+{% endif %}
 	list   device		'wg_+'
 	list   device		'gre+'
 	option input		ACCEPT
