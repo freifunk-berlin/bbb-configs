@@ -8,8 +8,16 @@ networks:
     prefix: 10.31.252.193/32
     ipv6_subprefix: -2
     mesh_metric: 1024
-    assignments:
-      scharni-core: 0
+
+  - vid: 20
+    role: mesh
+    name: mesh_ap4
+    prefix: 10.31.252.194/32
+    ipv6_subprefix: -3
+    mesh_metric: 2048
+    mesh_ap: scharni-ap4
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
 
   - vid: 40
     role: dhcp

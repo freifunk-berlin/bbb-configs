@@ -35,6 +35,17 @@ config wifi-device '{{ wd_id }}'
   {% endif %}
 
   {% for iface in wd_ifaces %}
+    {% set mesh_net = false %}
+    {% if iface['mode'] == 'mesh' %}
+      {% set mesh_nets = networks | selectattr('role','defined') | selectattr('role','equalto','mesh')
+         | selectattr('mesh_ap','defined') | selectattr('mesh_ap','equalto',inventory_hostname)
+         | selectattr('mesh_radio','equalto', wd['name']) | selectattr('mesh_iface','equalto',iface['ifname_hint']) %}
+      {% if mesh_nets | length > 0 %}
+        {% set mesh_net = mesh_nets|first %}
+      {% endif %}
+    {% endif %}
+
+    {% if iface['mode'] == 'ap' or (iface['mode'] == 'mesh' and mesh_net) %}
 config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
 	option device '{{ wd_id }}'
     {% if 'network' in iface %}
@@ -44,32 +55,46 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
     {% if 'mode' in iface %}
 	option mode '{{ iface['mode'] }}'
     {% endif %}
-    {% if 'ssid' in iface %}
-	option ssid '{{ iface['ssid'] }}'
-    {% endif %}
     {% if 'encryption' in iface %}
 	option encryption '{{ iface['encryption'] }}'
       {% if 'key' in iface %}
 	option key '{{ iface['key'] }}'
       {% endif %}
     {% endif %}
-    {% if 'isolate' in iface %}
-	option isolate '{{ iface['isolate']|int }}'
-    {% else %}
-      {% set nets = networks | selectattr('name', 'defined') | selectattr('name','equalto',iface['network']) %}
-      {% if nets|length == 0 %}
-        {% set nets = networks | selectattr('role','equalto',iface['network']) %}
+    {% if iface['mode'] == 'ap' %}
+      {% if 'ssid' in iface %}
+	option ssid '{{ iface['ssid'] }}'
       {% endif %}
-      {% if nets|length > 0 %}
-        {% set net = nets|first %}
-        {% if 'enforce_client_isolation' in net %}
+      {% if 'ieee80211w' in iface %}
+	option ieee80211w '{{ iface['ieee80211w'] }}'
+      {% endif %}
+      {% if 'isolate' in iface %}
+	option isolate '{{ iface['isolate']|int }}'
+      {% else %}
+        {% set nets = networks | selectattr('name', 'defined') | selectattr('name','equalto',iface['network']) %}
+        {% if nets|length == 0 %}
+          {% set nets = networks | selectattr('role','equalto',iface['network']) %}
+        {% endif %}
+        {% if nets|length > 0 %}
+          {% set net = nets|first %}
+          {% if 'enforce_client_isolation' in net %}
 	option isolate '{{ net['enforce_client_isolation']|int }}'
+          {% endif %}
         {% endif %}
       {% endif %}
     {% endif %}
-    {% if 'ieee80211w' in iface %}
-	option ieee80211w '{{ iface['ieee80211w'] }}'
+    {% if iface['mode'] == 'mesh'  %}
+      {% if 'mesh_id' in iface %}
+	option mesh_id '{{ iface['mesh_id'] }}'
+      {% endif %}
+      {% if 'mesh_fwding' in iface %}
+	option mesh_fwding '{{ iface['mesh_fwding'] }}'
+      {% endif %}
+      {% if 'mcast_rate' in iface %}
+	option mcast_rate '{{ iface['mcast_rate'] }}'
+      {% endif %}
+	option network '{{ mesh_net['name'] }}'
     {% endif %}
-
+    {% endif %}
   {% endfor %}
 {% endfor %}

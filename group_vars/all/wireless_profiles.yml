@@ -33,6 +33,12 @@ wireless_profiles:
         ifname_hint: ffowe
         ieee80211w: 1
 
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
 
   - name: wilgu10
     devices:
@@ -74,6 +80,13 @@ wireless_profiles:
         network: prdhcp
         radio: 11g_standard
         ifname_hint: pr
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
 
 all__channel_assignments_11a_standard__to_merge:
   default: "36-20"

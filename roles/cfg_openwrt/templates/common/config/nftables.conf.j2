@@ -12,7 +12,7 @@ network_ifname_map =
 {% set network_ifname_map = [] %}
 {% for wd in wireless_devices | default([]) %}
   {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name']) | first %}
-  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
+  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) | selectattr('mode', 'equalto', 'ap') %}
   {% if not wd_config.get('disabled') %}
     {% for iface in wd_ifaces %}
       {{ network_ifname_map.append({'network': iface['network'], 'ifname': wd['ifname_hint'] + '-' + iface['ifname_hint']|default('if' + loop.index0|string)})}}
