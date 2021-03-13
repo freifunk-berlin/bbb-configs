@@ -3,4 +3,4 @@
 location: kiehlufer
 role: corerouter
 target: "ipq40xx/generic"
-model: "fritzbox_7530"
+model: "avm_fritzbox-7530"

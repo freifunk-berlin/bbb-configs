@@ -1,0 +1,4 @@
+---
+location__ssh_keys__to_merge:
+  - comment: martin@koltonowski.de
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRiZkLdeg7pBS4m37vnDX1A9+iQ+Eim1A0XACSa5qfE
