@@ -57,6 +57,9 @@ config Interface
 	option ignore '0'
 	option interface '{{ network['name'] if 'name' in network else network['role'] }}'
 	option Mode 'ether'
+  {% for i in network['mesh_metric_lqm'] | default([]) %}
+	list LinkQualityMult '{{ i }}'
+  {% endfor %}
 
 {% endfor %}
 
