@@ -1,0 +1,55 @@
+---
+ipv6_prefix: "2001:bf7:860:900::/56"
+
+# Mesh: 10.230.210.104/29
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_west
+    prefix: 10.230.210.104/32
+    ipv6_subprefix: -1
+
+  - vid: 12
+    role: mesh
+    name: mesh_sama
+    prefix: 10.230.210.105/32
+    ipv6_subprefix: -2
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.36.190.176/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      wilgu10-core: 1
+      wilgu10-int: 2
+      wilgu10-east-nf: 3
+      wilgu10-west-nf: 4
+      wilgu10-sama: 5
+      wilgu10-west: 6
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.36.164.64/27
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      wilgu10-core: 1
+
+  - vid: 41
+    name: prdhcp
+    role: ext
+    untagged: true
+
+location__channel_assignments_11a_standard__to_merge:
+  wilgu10-core: 52-80
+  wilgu10-int: 36-80
+  wilgu10-east-nf: 36-20-20
+  wilgu10-west-nf: 36-20-20
+
+location__channel_assignments_11g_standard__to_merge:
+  wilgu10-core: 6-20-3
+  wilgu10-int: 1-20-3
+  wilgu10-east-nf: 13-20
