@@ -60,7 +60,7 @@ config Interface
 
 {% endfor %}
 
-{% for network in networks | rejectattr('role', 'equalto', 'mesh') | selectattr('prefix') %}
+{% for network in networks | rejectattr('role', 'in', ['mesh','ext']) | selectattr('prefix') %}
 # Network: {{ network['name'] if 'name' in network else network['role'] }}
 config Hna4
 	option netmask '{{ network['prefix'] | ipaddr('netmask') }}'
