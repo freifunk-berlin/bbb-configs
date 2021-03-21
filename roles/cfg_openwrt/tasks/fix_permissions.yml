@@ -1,4 +1,9 @@
 ---
+- name: Set permission for dropbear directory
+  file:
+    path: "{{ config_path }}/etc/dropbear/"
+    mode: "700"
+
 - name: Set permission for authorized_keys
   file:
     path: "{{ config_path }}/etc/dropbear/authorized_keys"
@@ -10,4 +15,9 @@
     mode: "755"
   ignore_errors: true
   when: role == "corerouter"
+
+- name: Set permission for replace_secrets script
+  file:
+    path: "{{ config_path }}/etc/init.d/replace_secrets"
+    mode: "755"
 
