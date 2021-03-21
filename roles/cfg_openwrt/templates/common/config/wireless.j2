@@ -49,6 +49,9 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
     {% endif %}
     {% if 'encryption' in iface %}
 	option encryption '{{ iface['encryption'] }}'
+      {% if 'key' in iface %}
+	option key '{{ iface['key'] }}'
+      {% endif %}
     {% endif %}
     {% if 'isolate' in iface %}
 	option isolate '{{ iface['isolate']|int }}'
