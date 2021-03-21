@@ -44,9 +44,9 @@ networks:
       kiehlufer-nf-wbp4: 8
 
 location__channel_assignments_11a_standard__to_merge:
-  kiehlufer-nf-wbp1: 36-20-10
-  kiehlufer-nf-wbp2: 40-20-10
-  kiehlufer-nf-wbp3: 44-20-10
-  kiehlufer-nf-wbp4: 48-20-10
+  kiehlufer-nf-wbp1: 36-20-15
+  kiehlufer-nf-wbp2: 40-20-15
+  kiehlufer-nf-wbp3: 44-20-15
+  kiehlufer-nf-wbp4: 48-20-15
 
 # Channel - Bandwidth - TX Power
