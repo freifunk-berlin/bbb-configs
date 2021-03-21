@@ -10,7 +10,7 @@ config switch
     {% set portmapping = [] %}
     {% for port in range(switch_ports)|list|difference(switch_ignore_ports) %}
       {% set tagged = not network.get('untagged') or port == switch_int_port %}
-      {{ portmapping.append(port|string + "t" if tagged else "") }}
+      {{ portmapping.append(port|string + ("t" if tagged else "")) }}
     {%- endfor %}
 
 config switch_vlan

@@ -33,3 +33,4 @@ sysupgrade_preserve_custom_files:
   - /etc/dropbear/dropbear_ed25519_host_key
   - /etc/wireguard/wg.pub
   - /etc/wireguard/wg.key
+  - /root/
