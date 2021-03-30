@@ -112,3 +112,24 @@ config rule
 	option family		ipv6
 	option target		ACCEPT
 
+# Allow list via group_vars/role_uplink_gateway/general.yml
+{% for rule in inbound_allow | default([]) %}
+config rule
+	option name		'{{ rule['name'] }}'
+	option src		uplink
+	option dest		freifunk
+	option dest_ip		'{{ rule['dst'] }}'
+  {% if 'src' in rule %}
+	option src_ip		'{{ rule['src'] }}'
+  {% endif %}
+  {% if 'proto' in rule %}
+	option proto		'{{ rule['proto'] }}'
+  {% endif %}
+  {% if 'src_port' in rule %}
+	option src_port		'{{ rule['src_port'] }}'
+  {% endif %}
+  {% if 'dst_port' in rule %}
+	option dest_port	'{{ rule['dst_port'] }}'
+  {% endif %}
+	option target		ACCEPT
+{% endfor %}

@@ -21,3 +21,17 @@ wireguard_wg_pub: '/etc/wireguard/wg.pub'
 
 
 gre_metric: 64
+
+# Inbound is filtered by default
+inbound_allow:
+  - name: 'k9-core SSH'
+    dst: 2001:bf7:830:8d00::/128
+    proto: tcp
+    dst_port: 22
+
+#  - name: Rule Description (mandatory)
+#    dst: Destination IP (mandatory)
+#    src: Source IP
+#    proto: [tcp, udp, icmp.]
+#    src_port:
+#    dst_port: 22
