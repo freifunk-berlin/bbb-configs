@@ -73,7 +73,7 @@
     argv:
       - "make"
       - "image"
-      - "PROFILE={{ model }}"
+      - "PROFILE={{ override_target|default(model) }}"
       - "PACKAGES={{ packages | join(' ') }}"
       - "DISABLED_SERVICES={{ disabled_services | join(' ') }}"
       - "FILES={{ config_path }}"
