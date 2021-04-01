@@ -1,0 +1,11 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% for device in airmax_devices|default([]) %}
+  {% if 'dfs_reset' in device %}
+    {% set cfg = device['dfs_reset'] %}
+config device '{{ device['name'] | replace('-','_') }}'
+	option target '{{ device['target'] }}'
+	option username '{{ cfg['username'] }}'
+	option password '{{ cfg['password'] }}'
+	option daytime_limit '{{ cfg['daytime_limit'] }}'
+  {% endif %}
+{% endfor %}

@@ -1,0 +1,3 @@
+18 * * * *	test -e /usr/sbin/owm.lua && /usr/sbin/owm.lua
+*/5 * * * *	killall -HUP dnsmasq
+*/10 * * * *    /etc/config/airmax_dfs_reset
