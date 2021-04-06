@@ -25,9 +25,9 @@ config interface 'loopback'
   {% set name = network['name'] if 'name' in network else network['role'] %}
   {% if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments']) or name in wifi_networks %}
 config interface '{{ name }}'
-	option proto 'static'
 	option ifname '{{ 'switch0' if dsa_ports is defined else int_port }}.{{ network['vid'] }}'
     {% if 'assignments' in network and inventory_hostname in network['assignments'] %}
+	option proto 'static'
 	option ipaddr '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) }}'
         {% if network.get('enforce_client_isolation') %}
 	option macaddr '02:00:00:00:00:01'
@@ -39,7 +39,10 @@ config interface '{{ name }}'
 	option gateway '{{ network['prefix'] | ipaddr(network['gateway']) | ipaddr('address') }}'
         {% endif %}
     {% elif role == 'corerouter' and network['role'] == 'mesh' %}
+	option proto 'static'
 	option ipaddr '{{ network['prefix'] }}'
+    {% else %}
+	option proto 'none'
     {% endif %}
     {% if name in wifi_networks %}
         option type 'bridge'
