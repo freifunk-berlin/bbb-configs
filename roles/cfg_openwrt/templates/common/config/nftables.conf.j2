@@ -30,6 +30,8 @@ network_ifname_map =
     {% if loop.first %}
 define gw = 02:00:00:00:00:01
 define bc = ff:ff:ff:ff:ff:ff
+define mc6 = 33:33:00:00:00:00/16
+
 
 flush ruleset
 table bridge client_isolation {
@@ -38,6 +40,7 @@ table bridge client_isolation {
 		type filter hook prerouting priority 0; policy accept;
 		iif {{ uplink }} accept
 		iif {{ wifi }} ether daddr $bc ether daddr set $gw
+		iif {{ wifi }} ether daddr $mc6 ether daddr set $gw
 		iif {{ wifi }} ether daddr $gw accept
 		iif {{ wifi }} drop
 	}
