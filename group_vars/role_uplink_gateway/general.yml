@@ -2,13 +2,23 @@
 
 freifunk_global_prefix: 2001:bf7::/32
 freifunk_wahlkreis_prefixes:
+  - 2001:bf7:750::/44
+  - 2001:bf7:760::/44
+  - 2001:bf7:770::/44
+  - 2001:bf7:780::/44
+  - 2001:bf7:790::/44
+  - 2001:bf7:800::/44
+  - 2001:bf7:810::/44
+  - 2001:bf7:820::/44
   - 2001:bf7:830::/44
+  - 2001:bf7:840::/44
+  - 2001:bf7:850::/44
   - 2001:bf7:860::/44
 
 freifunk_wahlkreis_announcement_prefix: 44
 # Change to 48 if you wnat to announce 48s
 
-local_asn: 65002
+local_asn: 44194
 peer_asn: 25291
 
 role_uplink_gateway_sysctl__to_merge:
