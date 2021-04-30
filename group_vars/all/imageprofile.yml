@@ -10,9 +10,8 @@ all__packages__to_merge:
   - vnstat
   - -ppp
   - -ppp-mod-ppoe
-
   - -wpad-basic
   - -wpad-basic-wolfssl
-  - wpad-openssl
+  - wpad-mesh-wolfssl
   - nftables
   - kmod-nft-bridge
