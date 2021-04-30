@@ -1,7 +1,8 @@
 ---
-imagebuilder: "~/git/openwrt/bin/targets/ipq40xx/mikrotik/openwrt-imagebuilder-ipq40xx-mikrotik.Linux-x86_64.tar.xz"
-#feed_version: "19.07"
-#instr_set: "arm_cortex-a7_neon-vfpv4"
+imagebuilder: "https://downloads.openwrt.org/snapshots/targets/ipq40xx/mikrotik/openwrt-imagebuilder-ipq40xx-mikrotik.Linux-x86_64.tar.xz"
+feed_version: "1.2.0-snapshot"
+imagebuilder_disable_signature_check: true
+instr_set: "arm_cortex-a7_neon-vfpv4"
 
 # Somehow this doesnt work properly anymore
 #switch_disable_vlan: true

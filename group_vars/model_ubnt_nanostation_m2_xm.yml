@@ -1,6 +1,6 @@
 ---
-imagebuilder: "https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/openwrt-imagebuilder-19.07.7-ath79-generic.Linux-x86_64.tar.xz"
-feed_version: "19.07"
+imagebuilder: "https://downloads.openwrt.org/releases/19.07-SNAPSHOT/targets/ath79/generic/openwrt-imagebuilder-19.07-SNAPSHOT-ath79-generic.Linux-x86_64.tar.xz"
+feed_version: "1.1.1-snapshot"
 override_target: "ubnt_nanostation-m"
 
 int_port: eth1
