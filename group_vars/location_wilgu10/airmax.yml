@@ -1,0 +1,12 @@
+---
+
+airmax_devices:
+  - name: "wilgu10-west-5ghz"
+    target: "10.36.190.183"
+    dfs_reset:
+      username: "ubnt"
+      password: "file:/root/pwd"
+      daytime_limit: "2-7"
+
+  - name: "wilgu10-sama"
+    target: "10.36.190.181"

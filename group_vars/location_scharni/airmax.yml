@@ -1,0 +1,5 @@
+---
+
+airmax_devices:
+  - name: "scharni-sama"
+    target: "10.31.52.164"

@@ -1,0 +1,7 @@
+---
+
+airmax_devices:
+  - name: "magda-sama"
+    target: "10.31.83.115"
+  - name: "magda-ost-5ghz"
+    target: "10.31.83.116"

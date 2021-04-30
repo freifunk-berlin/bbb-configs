@@ -1,0 +1,9 @@
+---
+
+airmax_devices:
+  - name: "k9-sama"
+    target: "10.31.9.211"
+  - name: "k9-zwingli"
+    target: "10.31.9.212"
+  - name: "k9-wilgu10"
+    target: "10.31.9.213"

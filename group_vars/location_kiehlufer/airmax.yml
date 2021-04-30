@@ -1,0 +1,7 @@
+---
+
+airmax_devices:
+  - name: "kiehlufer-rhnk"
+    target: "10.31.82.211"
+  - name: "kiehlufer-vaterhaus"
+    target: "10.31.82.212"
