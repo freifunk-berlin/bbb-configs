@@ -3,6 +3,10 @@ imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/ath
 feed_version: "1.2.0-snapshot"
 imagebuilder_disable_signature_check: true
 
+model__packages__to_merge:
+  - "-kmod-ath10k-ct -ath10k-firmware-qca9888-ct"
+  - "kmod-ath10k ath10k-firmware-qca9888"
+
 switch_ports: 7
 switch_int_port: 0
 switch_ignore_ports: [6]
