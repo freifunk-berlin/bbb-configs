@@ -1,0 +1,6 @@
+---
+
+location: colbe15
+role: corerouter
+target: "ipq40xx/generic"
+model: "avm_fritzbox-7530"
