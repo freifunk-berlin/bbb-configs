@@ -6,4 +6,4 @@ target: "ipq40xx/mikrotik"
 model: "mikrotik_sxtsq-5-ac"
 
 mac_override:
-  eth0: TODO
+  eth0: 08:55:31:54:63:0a
