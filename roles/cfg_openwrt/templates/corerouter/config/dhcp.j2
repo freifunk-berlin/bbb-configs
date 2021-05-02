@@ -13,24 +13,26 @@ config dnsmasq
 	option localservice '1'
 	option noping '{{ dhcp_no_ping|int if dhcp_no_ping is defined else 1 }}'
 
-{% set dhcp = networks | selectattr('role','equalto','dhcp') | first %}
+{% for network in networks | selectattr('role','equalto','dhcp') %}
+config dhcp 'dhcp_{{ network['name'] if 'name' in network else network['role'] }}'
+	option leasetime '5m'
+	option start '2'
+	option force '1'
+	option ignore '0'
+	option interface '{{ network['name'] if 'name' in network else network['role'] }}'
+	option dhcpv6 'server'
+	option ra 'server'
+	option limit '{{ network['prefix'] | ipaddr('size') -3 }}'
+{% if not network.get('no_corerouter_dns_record') %}
+
 config domain 'frei_funk'
 	option name 'frei.funk'
-	option ip '{{ dhcp['prefix'] | ipaddr(dhcp['assignments'][inventory_hostname]) | ipaddr('address') }}'
+	option ip '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) | ipaddr('address') }}'
+{% endif %}
 
+{% endfor %}
 config odhcpd 'odhcpd'
 	option maindhcp '0'
 	option leasefile '/tmp/hosts/odhcpd'
 	option leasetrigger '/usr/sbin/odhcpd-update'
 	option loglevel '4'
-
-config dhcp 'dhcp'
-	option leasetime '5m'
-	option start '2'
-	option force '1'
-	option ignore '0'
-	option interface '{{ dhcp['name'] if 'name' in dhcp else dhcp['role'] }}'
-	option dhcpv6 'server'
-	option ra 'server'
-	option limit '{{ dhcp['prefix'] | ipaddr('size') -3 }}'
-
