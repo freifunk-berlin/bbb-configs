@@ -12,6 +12,6 @@ all__packages__to_merge:
   - -ppp-mod-ppoe
   - -wpad-basic
   - -wpad-basic-wolfssl
-  - wpad-wolfssl
+  - wpad-openssl
   - nftables
   - kmod-nft-bridge
