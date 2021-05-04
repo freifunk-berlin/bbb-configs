@@ -29,6 +29,7 @@ networks:
       wilgu10-west-nf: 4
       wilgu10-sama: 5
       wilgu10-west: 6
+      wilgu10-east-nf-2ghz: 7
 
   - vid: 40
     role: dhcp
@@ -53,4 +54,4 @@ location__channel_assignments_11a_standard__to_merge:
 location__channel_assignments_11g_standard__to_merge:
   wilgu10-core: 6-20-3
   wilgu10-int: 1-20-3
-  wilgu10-east-nf: 13-20
+  wilgu10-east-nf-2ghz: 13-20
