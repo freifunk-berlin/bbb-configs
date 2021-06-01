@@ -22,6 +22,7 @@ networks:
       sama-ost-5ghz: 21
       sama-sued-5ghz: 22
       sama-west-5ghz: 23
+      sama-saarbruecker-60g: 30
 
   - vid: 40
     role: dhcp
@@ -54,6 +55,12 @@ networks:
     name: mesh_west
     prefix: 10.31.79.179/32
     ipv6_subprefix: -4
+  - vid: 14
+    role: mesh
+    name: mesh_sabr
+    prefix: 10.31.79.180/32
+    ipv6_subprefix: -5
+    mesh_metric: 128
 
 location__channel_assignments_11a_standard__to_merge:
   sama-nord-nf-5ghz: 36-20-10
