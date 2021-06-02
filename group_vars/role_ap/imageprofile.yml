@@ -5,3 +5,4 @@ role_ap__packages__to_merge:
 role_ap__disabled_services__to_merge:
   - "dnsmasq"
   - "odhcpd"
+  - "vnstat"

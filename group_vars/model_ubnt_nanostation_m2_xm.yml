@@ -5,6 +5,10 @@ override_target: "ubnt_nanostation-m"
 
 int_port: eth1
 
+# low-mem hack
+device_disabled_services__to_merge:
+  - "uhttpd"
+
 wireless_devices:
   - name: 11g_standard
     hwmode: 11g
