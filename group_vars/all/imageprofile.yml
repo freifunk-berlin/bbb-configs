@@ -7,6 +7,7 @@ all__packages__to_merge:
   - "-libustream-wolfssl"
   - luci-app-statistics
   - collectd-mod-uptime
+  - collectd-mod-memory
   - collectd-mod-ping
   - vnstat
   - -ppp
