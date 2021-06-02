@@ -1,0 +1,48 @@
+---
+ipv6_prefix: "2001:bf7:860:b00::/56"
+
+# Mesh: 10.31.96.216/30
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_sama
+    prefix: 10.31.96.216/32
+    ipv6_subprefix: -1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.96.240/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      fesev-core: 1
+      fesev-switch: 2
+      fesev-sama: 3
+      fesev-ap1: 4
+      fesev-ap2: 5
+      fesev-ap3: 6
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.97.128/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      fesev-core: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  fesev-ap1: 38-40
+  fesev-ap2: 46-40
+
+location__channel_assignments_11g_standard__to_merge:
+  fesev-ap1: 1-20
+  fesev-ap2: 6-20
+  fesev-ap3: 13-20
+
+# channel-bandwith-txpower in dbm
+
+# ap1: 5ghz
+# ap2: 5ghz
+# ap3: anwohnerblock - 2ghz

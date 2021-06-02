@@ -1,0 +1,5 @@
+---
+
+airmax_devices:
+  - name: "fesev-sama"
+    target: "10.31.96.240"
