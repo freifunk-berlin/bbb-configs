@@ -31,3 +31,7 @@ networks:
       dorfplatz-wilgu10: 2
       dorfplatz-ap1: 14
       dorfplatz-ap2: 13
+
+location__channel_assignments_11a_standard__to_merge:
+  dorfplatz-ap1: 36-20-10
+  dorfplatz-ap2: 40-20-10
