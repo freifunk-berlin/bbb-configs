@@ -5,6 +5,7 @@ package babeld
 config general
 	option 'local_port' '33123'
 	option 'ipv6_subtrees' 'true'
+	option 'ubus_bindings' 'true'
 
   {% for network in networks | selectattr('role', 'equalto', 'mesh') | selectattr('ipv6_subprefix') %}
 config interface
