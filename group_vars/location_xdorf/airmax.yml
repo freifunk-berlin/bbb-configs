@@ -6,4 +6,4 @@ airmax_devices:
   - name: "xdorf-ap1"
     target: "10.31.54.163"
   - name: "xdorf-ap2"
-    target: "10.31.54.163"
+    target: "10.31.54.164"
