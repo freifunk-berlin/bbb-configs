@@ -1,0 +1,36 @@
+---
+ipv6_prefix: "2001:bf7:830:9000::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_georg
+    prefix: 10.31.23.24/32
+    ipv6_subprefix: -1
+    assignments:
+      xdorf-core: 0
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.62.0/25
+    ipv6_subprefix: 0
+    untagged: true
+    assignments:
+      xdorf-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.54.160/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      xdorf-core: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  xdorf-core: 36-20-10
+
+location__channel_assignments_11g_standard__to_merge:
+  xdorf-core: 1-20-10

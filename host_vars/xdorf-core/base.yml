@@ -1,0 +1,8 @@
+---
+
+location: xdorf
+role: corerouter
+target: "ath79/generic"
+model: "tplink_tl_wdr3600_v1"
+
+wireless_profile: freifunk_default

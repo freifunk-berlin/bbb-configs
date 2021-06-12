@@ -1,0 +1,9 @@
+---
+
+airmax_devices:
+  - name: "xdorf-rauchhaus"
+    target: "10.31.54.162"
+  - name: "xdorf-ap1"
+    target: "10.31.54.163"
+  - name: "xdorf-ap2"
+    target: "10.31.54.163"
