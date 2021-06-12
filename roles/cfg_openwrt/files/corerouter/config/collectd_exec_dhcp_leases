@@ -12,5 +12,4 @@ LEASEFILE="/tmp/dhcp.leases"
 while sleep $INTERVAL; do
   LEASES=$(cat ${LEASEFILE} | wc -l)
   echo "PUTVAL \"$HOSTNAME/exec-dhcp/gauge-dhcp-leases\" interval=$INTERVAL N:$LEASES"
-  logger "PUTVAL \"$HOSTNAME/exec-dhcp/gauge-dhcp-leases\" interval=$INTERVAL N:$LEASES"
 done
