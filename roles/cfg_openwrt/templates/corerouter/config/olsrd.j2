@@ -19,11 +19,6 @@ config LoadPlugin
 	option library 'olsrd_txtinfo'
 	option port '2006'
 
-config LoadPlugin
-	option library 'olsrd_watchdog'
-	option file '/var/run/olsrd.watchdog'
-	option interval '30'
-
 config olsrd
 	option IpVersion '4'
 	option FIBMetric 'flat'

@@ -21,11 +21,6 @@ config LoadPlugin
 	option port '2006'
 
 config LoadPlugin
-	option library 'olsrd_watchdog'
-	option file '/var/run/olsrd.watchdog'
-	option interval '30'
-
-config LoadPlugin
 	option library 'olsrd_dyn_gw'
 	list Ping '46.182.19.48'
 	list Ping '80.67.169.40'

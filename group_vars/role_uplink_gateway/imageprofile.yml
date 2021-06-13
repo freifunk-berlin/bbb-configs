@@ -12,7 +12,6 @@ role_uplink_gw__packages__to_merge:
   - olsrd-mod-jsoninfo
   - olsrd-mod-nameservice
   - olsrd-mod-txtinfo
-  - olsrd-mod-watchdog
   - kmod-ipip
   - luci-app-olsr
   - luci-app-olsr-services
