@@ -1,0 +1,8 @@
+---
+
+location: rauchhaus
+role: corerouter
+target: "ath79/generic"
+model: "tplink_tl-wdr4300-v1"
+
+wireless_profile: freifunk_default

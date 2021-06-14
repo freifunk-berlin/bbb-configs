@@ -1,0 +1,6 @@
+---
+
+location: rauchhaus
+role: ap
+target: "ath79/generic"
+model: "tplink_tl-wdr4300-v1"

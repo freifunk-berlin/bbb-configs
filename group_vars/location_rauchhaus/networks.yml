@@ -1,0 +1,55 @@
+---
+ipv6_prefix: "2001:bf7:830:9200::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_emma
+    prefix: 10.230.153.224/29 # change this after flashing
+    untagged: true # change this after flashing
+    ipv6_subprefix: -1
+    assignments:
+      rauchhaus-core: 1
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.230.157.128/25
+    ipv6_subprefix: 0
+    assignments:
+      rauchhaus-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.98.224/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      rauchhaus-core: 1
+      rauchhaus-emma: 1
+      rauchhaus-basement137: 10
+      rauchhaus-floor0north135: 11
+      rauchhaus-floor0south136: 12
+      rauchhaus-floor1north133: 13
+      rauchhaus-floor1south134: 14
+      rauchhaus-floor2north132: 15
+
+location__channel_assignments_11a_standard__to_merge:
+  rauchhaus-core: 36-20
+  rauchhaus-basement137: 46-20
+  rauchhaus-floor0north135: 36-20
+  rauchhaus-floor0south136: 46-20
+  rauchhaus-floor1north133: 36-20
+  rauchhaus-floor1south134: 46-20
+  rauchhaus-floor2north132: 36-20
+
+location__channel_assignments_11g_standard__to_merge:
+  rauchhaus-core: 1-20
+  rauchhaus-basement137: 6-20
+  rauchhaus-floor0north135: 11-20
+  rauchhaus-floor0south136: 1-20
+  rauchhaus-floor1north133: 6-20
+  rauchhaus-floor1south134: 11-20
+  rauchhaus-floor2north132: 1-20
