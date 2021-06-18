@@ -17,3 +17,6 @@ all__packages__to_merge:
   - hostapd-openssl
   - nftables
   - kmod-nft-bridge
+
+all_disabled_services__to_merge:
+  - "olsrd6"
