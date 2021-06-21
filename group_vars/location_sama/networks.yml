@@ -61,6 +61,7 @@ networks:
     prefix: 10.31.79.180/32
     ipv6_subprefix: -5
     mesh_metric: 128
+    ptp: true
 
 location__channel_assignments_11a_standard__to_merge:
   sama-nord-nf-5ghz: 36-20-10
