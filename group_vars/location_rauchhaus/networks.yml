@@ -5,11 +5,8 @@ networks:
   - vid: 10
     role: mesh
     name: mesh_emma
-    prefix: 10.230.153.224/29 # change this after flashing
-    untagged: true # change this after flashing
+    prefix: 10.31.98.188/32
     ipv6_subprefix: -1
-    assignments:
-      rauchhaus-core: 1
 
   - vid: 40
     role: dhcp
@@ -28,7 +25,7 @@ networks:
     ipv6_subprefix: 1
     assignments:
       rauchhaus-core: 1
-      rauchhaus-emma: 1
+      rauchhaus-emma: 2
       rauchhaus-basement137: 10
       rauchhaus-floor0north135: 11
       rauchhaus-floor0south136: 12
