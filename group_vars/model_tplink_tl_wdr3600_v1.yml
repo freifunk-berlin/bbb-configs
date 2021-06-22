@@ -16,5 +16,5 @@ wireless_devices:
     ifname_hint: wlan5
   - name: 11g_standard
     hwmode: 11g
-    path: platform/ar934x_wmac
+    path: platform/ahb/18100000.wmac
     ifname_hint: wlan2

@@ -12,9 +12,9 @@ int_port: eth0
 wireless_devices:
   - name: 11a_standard
     hwmode: 11a
-    path: pci0000:00/0000:00:00.0
+    path: ffe09000.pcie/pci9000:00/9000:00:00.0/9000:01:00.0
     ifname_hint: wlan5
   - name: 11g_standard
     hwmode: 11g
-    path: platform/ar934x_wmac
+    path: ffe0a000.pcie/pcia000:02/a000:02:00.0/a000:03:00.0
     ifname_hint: wlan2
