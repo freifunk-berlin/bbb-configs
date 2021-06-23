@@ -11,7 +11,7 @@ config interface
 config interface
 	option 'ifname' '{{ interface['name'] }}'
 	option 'rxcost' '{{ interface['metric'] }}'
-	option 'split_horizon' '{{ (network['ptp'] if 'ptp' in network else false ) | string | lower }}'
+	option 'split_horizon' '{{ (interface['ptp'] if 'ptp' in interface else false ) | string | lower }}'
 
 {% endfor %}
 
