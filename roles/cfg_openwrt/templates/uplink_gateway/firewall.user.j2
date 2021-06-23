@@ -1,0 +1,7 @@
+# Allow established packets (hopefully) belonging to flows which are not being synced yet (rate limited to prevent DoS)
+ip6tables -A forwarding_uplink_rule -p tcp -m tcp --tcp-flags ACK ACK -m limit --limit {{ untracked_flows_tcp_ack_rate }}/sec --limit-burst {{ untracked_flows_tcp_ack_burst }} -m comment --comment "Allow established connections which not made it in the conntrack sync yet" -j ACCEPT
+ip6tables -A forwarding_uplink_rule -p tcp -m tcp --tcp-flags RST RST -m limit --limit {{ untracked_flows_tcp_rst_rate }}/sec --limit-burst {{ untracked_flows_tcp_rst_burst }} -m comment --comment "Allow established connections which not made it in the conntrack sync yet" -j ACCEPT
+
+# Redirect conntrackd to samplicator which listens at port 2000
+iptables -t nat -I OUTPUT -p udp -o lo --dport {{ conntrackd_port }} -j REDIRECT --to-ports 2000
+

@@ -49,6 +49,16 @@ config rule
 	option target		ACCEPT
 
 config rule
+	option name             "Allow conntrack sync"
+	option src		uplink
+{% for host in groups['role_uplink_gateway'] if host != inventory_hostname %}
+	list src_ip		'{{ hostvars[host]['uplink']['ipv4'] | ipaddr('address')  }}'
+{% endfor %}
+	option proto		udp
+	option dest_port        {{ conntrackd_port }}
+	option target		ACCEPT
+
+config rule
 	option name             "Allow SSH"
 	option src		uplink
 	option proto		tcp
@@ -133,3 +143,6 @@ config rule
   {% endif %}
 	option target		ACCEPT
 {% endfor %}
+
+config include
+	option	path		'/etc/firewall.user'

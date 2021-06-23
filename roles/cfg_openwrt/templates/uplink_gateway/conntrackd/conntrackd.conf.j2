@@ -1,0 +1,37 @@
+Sync {
+    Mode FTFW {
+        DisableExternalCache On
+        StartupResync on
+    }
+
+    UDP {
+        IPv4_address {{ uplink['ipv4'] | ipaddr('address') }}
+        IPv4_Destination_Address 127.0.0.1
+        Port {{ conntrackd_port }}
+        Interface lo
+        SndSocketBuffer 1249280
+        RcvSocketBuffer 1249280
+        Checksum on
+    }
+}
+
+General {
+    HashSize 32768
+    HashLimit 131072
+    LogFile off
+    Syslog on
+    UNIX {
+        Path /var/run/conntrackd.ctl
+    }
+    Filter From Userspace {
+        Protocol Accept {
+            tcp
+            udp
+            ipv6-icmp
+        }
+        Address Ignore {
+            IPv4_address 0.0.0.0/0
+            IPv6_address ::1
+        }
+    }
+}
