@@ -19,6 +19,7 @@ config interface
 config interface
 	option 'ifname' '{{ hostvars[gateway]['gre_tunnel_alias'] }}'
 	option 'rxcost' '{{ gre_metric }}'
+	option 'split_horizon' 'true'
 {% endfor %}
 
 config interface
