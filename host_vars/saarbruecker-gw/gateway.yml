@@ -24,18 +24,21 @@ mesh_links:
     ipv4: 10.31.83.56/32
     ipv6: 2001:bf7:760:2200::1/128 
     metric: 128
+    ptp: true
 
   - name: mesh_sama
     ifname: lan0.11
     ipv4: 10.31.83.57/32
     ipv6: 2001:bf7:760:2200::2/128 
-    metric: 512
+    metric: 128
+    ptp: true
 
   - name: mesh_segen
     ifname: lan0.12
     ipv4: 10.31.83.58/32
     ipv6: 2001:bf7:760:2200::3/128
-    metric: 256
+    metric: 128
+    ptp: true
 
 # Downlink IPv4 is in net announced by emma.
 
