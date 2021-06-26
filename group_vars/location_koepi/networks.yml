@@ -8,7 +8,7 @@ networks:
     prefix: 10.31.18.130/32
     ipv6_subprefix: -1
 
-  - vid: 10
+  - vid: 11
     role: mesh
     name: mesh_simon
     prefix: 10.31.19.8/32
