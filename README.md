@@ -18,6 +18,13 @@ ansible-playbook play.yml
 ansible-playbook play.yml --tags image
 ```
 
+### How to limit image creation to a single location
+
+```
+ansible-playbook play.yml --limit example-core
+ansible-playbook play.yml --limit example-*
+```
+
 ### How to spin up a config run, generate image and flash (Requires IPv6 Connectivity from inside freifunk network, not yet fully working)
 
 ```
