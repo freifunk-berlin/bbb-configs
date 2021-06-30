@@ -50,12 +50,12 @@ gre_metric: 64
 conntrackd_port: 3780
 
 # Rate Limit for packets with ACK flag set
-untracked_flows_tcp_ack_rate: 100
-untracked_flows_tcp_ack_burst: 50
+untracked_flows_tcp_ack_rate: 1000
+untracked_flows_tcp_ack_burst: 500
 
 # Rate Limit for packets with RST flag set
-untracked_flows_tcp_rst_rate: 100
-untracked_flows_tcp_rst_burst: 50
+untracked_flows_tcp_rst_rate: 1000
+untracked_flows_tcp_rst_burst: 500
 
 
 
