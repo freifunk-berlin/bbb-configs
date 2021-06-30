@@ -1,0 +1,52 @@
+---
+ipv6_prefix: "2001:bf7:830:9400::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_f2a
+    prefix: 10.31.26.186/32
+    ipv6_subprefix: -1
+    assignments:
+      schleidenplatz-core: 0
+
+  - vid: 11
+    role: mesh
+    name: mesh_sama
+    prefix: 10.31.26.187/32
+    ipv6_subprefix: -2
+    assignments:
+      schleidenplatz-core: 0
+
+  - vid: 12
+    role: mesh
+    name: mesh_k9
+    prefix: 10.31.26.188/32
+    ipv6_subprefix: -3
+    assignments:
+      schleidenplatz-core: 0
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    untagged: true
+    prefix: 10.31.103.128/25
+    ipv6_subprefix: 0
+    assignments:
+      schleidenplatz-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.102.96/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      schleidenplatz-core: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  schleidenplatz-core: 36-40
+
+location__channel_assignments_11g_standard__to_merge:
+  schleidenplatz-core: 6-20
