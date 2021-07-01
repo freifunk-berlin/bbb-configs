@@ -1,0 +1,33 @@
+---
+ipv6_prefix: "2001:bf7:750:3700::/56"
+
+networks:
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.104.128/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      simeon-core: 1
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.104.0/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      simeon-core: 1
+
+  - vid: 10
+    role: mesh
+    name: mesh_hds
+    prefix: 10.31.51.136/32
+    ipv6_subprefix: -1
+
+  - vid: 11
+    role: mesh
+    name: mesh_koepi
+    prefix: 10.31.51.137/32
+    ipv6_subprefix: -2
