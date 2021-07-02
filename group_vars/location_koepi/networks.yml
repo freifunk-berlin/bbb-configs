@@ -7,12 +7,15 @@ networks:
     name: mesh_emma
     prefix: 10.31.18.130/32
     ipv6_subprefix: -1
+    mesh_metric_lqm: ['default 0.2']
+    mesh_metric: 2048
 
   - vid: 11
     role: mesh
     name: mesh_simon
     prefix: 10.31.19.8/32
     ipv6_subprefix: -2
+    mesh_metric: 256
 
   - vid: 40
     role: dhcp
