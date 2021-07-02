@@ -45,7 +45,7 @@
 - name: Read instruction set
   shell:
     chdir: "{{ imagebuild_dir }}"
-    cmd: "grep 'openwrt_base' repositories.conf | awk -F'/' '{print $8}'"
+    cmd: grep -oP 'CONFIG_TARGET_ARCH_PACKAGES="\K[^"]+' .config
   register: instr_set_result
   when: 'instr_set is not defined and feed_version is defined'
 
