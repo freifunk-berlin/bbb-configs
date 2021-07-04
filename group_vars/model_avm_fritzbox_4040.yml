@@ -6,6 +6,7 @@ imagebuilder_disable_signature_check: true
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"
   - "kmod-ath10k ath10k-firmware-qca4019"
+  - "irqbalance"
 
 switch_ports: 6
 switch_int_port: 0
