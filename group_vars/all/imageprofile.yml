@@ -3,8 +3,7 @@ all__packages__to_merge:
   - mtr
   - tcpdump
   - iperf3
-  - luci-ssl-openssl
-  - "-libustream-wolfssl"
+  - luci-ssl
   - luci-app-statistics
   - collectd-mod-uptime
   - collectd-mod-memory
@@ -14,7 +13,7 @@ all__packages__to_merge:
   - -ppp-mod-ppoe
   - -wpad-basic
   - -wpad-basic-wolfssl
-  - hostapd-openssl
+  - hostapd-wolfssl
   - nftables
   - kmod-nft-bridge
 
