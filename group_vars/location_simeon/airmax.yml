@@ -1,1 +1,11 @@
 ---
+
+airmax_devices:
+  - name: "simeon-mgh"
+    target: "10.31.104.131"
+  - name: "simeon-nord"
+    target: "10.31.104.132"
+  - name: "simeon-emma"
+    target: "10.31.104.133"
+  - name: "simeon-rhx"
+    target: "10.31.104.134"
