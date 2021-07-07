@@ -10,10 +10,11 @@ networks:
     ipv6_subprefix: 1
     assignments:
       simeon-core: 1
-      simeon-hds: 2
-      simeon-r5ac: 3
-      simeon-nanobeam: 4
-      simeon-prism: 5
+      simeon-poe-switch: 2
+      simeon-mgh: 3
+      simeon-nord: 4
+      simeon-emma: 5
+      simeon-rhx: 6
 
   - vid: 40
     role: dhcp
@@ -27,24 +28,24 @@ networks:
 
   - vid: 10
     role: mesh
-    name: mesh_hds
+    name: mesh_mgh
     prefix: 10.31.51.136/32
     ipv6_subprefix: -1
 
   - vid: 11
     role: mesh
-    name: mesh_r5ac
+    name: mesh_nord
     prefix: 10.31.51.137/32
     ipv6_subprefix: -2
 
   - vid: 12
     role: mesh
-    name: mesh_nanobeam
+    name: mesh_emma
     prefix: 10.31.51.138/32
     ipv6_subprefix: -3
 
   - vid: 13
     role: mesh
-    name: mesh_prism
+    name: mesh_rhx
     prefix: 10.31.51.139/32
     ipv6_subprefix: -4
