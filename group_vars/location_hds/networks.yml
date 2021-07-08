@@ -1,0 +1,43 @@
+---
+ipv6_prefix: "2001:bf7:750:3000::/56"
+
+networks:
+  - vid: 40
+    role: dhcp
+    prefix: 10.36.166.193/26
+    ipv6_subprefix: 0
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      hds-core: 1
+
+  - vid: 105
+    role: mesh
+    name: vlan_105
+    prefix: 10.36.166.121/30
+    ipv6_subprefix: -1
+
+  - vid: 106
+    role: mesh
+    name: vlan_106
+    prefix: 10.36.166.125/30
+    ipv6_subprefix: -2
+
+  - vid: 107
+    role: mesh
+    name: vlan_107
+    prefix: 10.36.166.133/30
+    ipv6_subprefix: -3
+
+  - vid: 108
+    role: mesh
+    name: vlan_108
+    prefix: 10.36.166.129/30
+    ipv6_subprefix: -4
+
+  - vid: 200
+    role: mesh
+    name: mesh_lan
+    prefix: 10.36.166.141/32
+    ipv6_subprefix: -5
