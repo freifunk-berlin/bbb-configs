@@ -20,3 +20,13 @@ config timeserver 'ntp'
         list server '{{ ntp_server }}'
 {% endfor %}
 
+{% for led in leds | default([]) %}
+
+config led 'led_{{ led['name'] }}'
+        option name '{{ led['name'] }}'
+        option sysfs '{{ led['sysfs'] }}'
+        option trigger '{{ led['trigger'] }}'
+{% if led['port_mask'] is defined %}
+        option port_mask '{{ '0x%0x' % led['port_mask'] }}'
+{% endif %}
+{% endfor %}
