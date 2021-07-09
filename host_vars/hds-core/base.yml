@@ -3,4 +3,4 @@
 location: hds
 role: corerouter
 target: "ramips/mt7621"
-model: "ubnt_edgerouter-x"
+model: "mikrotik_routerboard-750gr3"
