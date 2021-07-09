@@ -40,7 +40,9 @@ networks:
       koepi-simeon: 4
       koepi-ap1: 10
       koepi-ap2: 11
-      koepi-outdoor: 21
+      koepi-out1: 20
+      koepi-out2: 21
+      koepi-out3: 22
 
 location__channel_assignments_11a_standard__to_merge:
   koepi-core: 36-20
