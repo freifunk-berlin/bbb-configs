@@ -9,9 +9,6 @@ switch_ignore_ports: [5]
 
 int_port: eth0
 
-model__packages__to_merge:
-  - "hostapd-common"
-
 wireless_devices:
   - name: 11a_standard
     hwmode: 11a
