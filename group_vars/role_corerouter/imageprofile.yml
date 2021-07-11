@@ -12,6 +12,7 @@ role_corerouter__packages__to_merge:
   - olsrd-mod-jsoninfo
   - olsrd-mod-nameservice
   - olsrd-mod-txtinfo
+  - olsrd-utils
   - luci-app-olsr
   - luci-app-olsr-services
   - luci-mod-falter
