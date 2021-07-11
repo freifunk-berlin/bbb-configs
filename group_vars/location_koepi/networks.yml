@@ -7,14 +7,20 @@ networks:
     name: mesh_emma
     prefix: 10.31.18.130/32
     ipv6_subprefix: -1
-    mesh_metric_lqm: ['default 0.2']
-    mesh_metric: 2048
+    mesh_metric: 256
 
   - vid: 11
     role: mesh
     name: mesh_simeon
     prefix: 10.31.19.8/32
     ipv6_subprefix: -2
+    mesh_metric: 256
+
+  - vid: 12
+    role: mesh
+    name: mesh_rhnk
+    prefix: 10.31.38.204/32
+    ipv6_subprefix: -3
     mesh_metric: 256
 
   - vid: 40
@@ -37,12 +43,15 @@ networks:
       koepi-core: 1
       koepi-poe: 2
       koepi-emma: 3
-      koepi-simeon: 4
+      koepi-rhnk: 4
+      koepi-simeon: 5
       koepi-ap1: 10
       koepi-ap2: 11
       koepi-out1: 20
       koepi-out2: 21
       koepi-out3: 22
+      koepi-out4: 23
+      koepi-out-front: 24
 
 location__channel_assignments_11a_standard__to_merge:
   koepi-core: 36-20
