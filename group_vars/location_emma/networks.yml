@@ -1,0 +1,85 @@
+---
+ipv6_prefix: "2001:bf7:831::/56"
+
+# Emma got 10.31.11.0/24 as prefix
+
+networks:
+  - vid: 1
+    role: mgmt
+    prefix: 10.31.11.8/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    untagged: true
+    assignments:
+      emma-core: 1
+      emma-switch01: 2
+      emma-switch02: 3
+      emma-switch03: 4
+      emma-switch04: 5
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.11.128/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      emma-core: 1
+
+  - vid: 104
+    role: mesh
+    name: mesh_fflan
+    prefix: 10.31.11.1/32
+    ipv6_subprefix: 2
+
+  - vid: 21
+    role: mesh
+    name: mesh_nno
+    prefix: 10.31.11.65/30
+    ipv6_subprefix: -1
+
+  - vid: 22
+    role: mesh
+    name: mesh_ono
+    prefix: 10.31.11.69/30
+    ipv6_subprefix: -2
+
+  - vid: 31
+    role: mesh
+    name: mesh_oso
+    prefix: 10.31.11.73/30
+    ipv6_subprefix: -3
+
+  - vid: 32
+    role: mesh
+    name: mesh_sso
+    prefix: 10.31.11.77/30
+    ipv6_subprefix: -4
+
+    # uplink via Airfiber 
+  - vid: 41
+    role: mesh
+    name: mesh_ssw
+    prefix: 10.31.11.97/29
+    ipv6_subprefix: -5
+    mesh_metric: 256
+
+  - vid: 42
+    role: mesh
+    name: mesh_wsw
+    prefix: 10.31.11.85/30
+    ipv6_subprefix: -6
+  
+  - vid: 51
+    role: mesh
+    name: mesh_wnw
+    prefix: 10.31.11.89/30
+    ipv6_subprefix: -7
+
+  # Segen
+  - vid: 52
+    role: mesh
+    name: mesh_nnw
+    prefix: 10.31.11.93/30
+    ipv6_subprefix: -8
