@@ -1,4 +1,4 @@
-
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
 config LoadPlugin
 	option library 'olsrd_arprefresh'
 
@@ -57,11 +57,12 @@ config Interface
   {% endfor %}
 
 {% endfor %}
+{% for network in networks | rejectattr('role', 'equalto', 'ext') | selectattr('prefix') %}
+  {% if network['prefix'] | ipaddr('prefix') < 32 %}
 
-{% for network in networks | rejectattr('role', 'in', ['mesh','ext']) | selectattr('prefix') %}
 # Network: {{ network['name'] if 'name' in network else network['role'] }}
 config Hna4
 	option netmask '{{ network['prefix'] | ipaddr('netmask') }}'
 	option netaddr '{{ network['prefix'] | ipaddr('network') }}'
-
+  {% endif %}
 {% endfor %}
