@@ -11,3 +11,9 @@
   when:
     - airos_dfs_reset|default([])|length > 0
     - role == 'corerouter'
+
+- name: "Add dawn if configured"
+  set_fact:
+    packages: "{{ packages + ['dawn', 'luci-app-dawn', 'umdns', 'procd-ujail', 'procd-seccomp'] }}"
+  when:
+    - dawn|default(false)|bool == true
