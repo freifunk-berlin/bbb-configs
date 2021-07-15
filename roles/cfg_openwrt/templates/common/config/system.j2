@@ -30,3 +30,11 @@ config led 'led_{{ led['name'] }}'
         option port_mask '{{ '0x%0x' % led['port_mask'] }}'
 {% endif %}
 {% endfor %}
+
+{% for poe in poe_ports | default([]) %}
+
+config gpio_switch 'poe_power_port{{ loop.index }}'
+        option name '{{ poe['name'] }}'
+        option gpio_pin '{{ poe['gpio_pin'] }}'
+        option value '{{ poe['value'] }}'
+{% endfor %}
