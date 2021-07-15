@@ -1,0 +1,9 @@
+---
+dawn_enabled: false
+
+dawn__packages__to_merge:
+  - luci-app-dawn
+  - dawn
+  - umdns
+  - procd-ujail
+  - procd-seccomp

@@ -1,0 +1,6 @@
+---
+- name: Merge DAWN packages
+  merge_vars:
+    suffix_to_merge: dawn__packages__to_merge
+    merged_var_name: packages
+    expected_type: list
