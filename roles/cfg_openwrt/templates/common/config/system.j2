@@ -33,8 +33,12 @@ config led 'led_{{ led['name'] }}'
 
 {% for poe in poe_ports | default([]) %}
 
-config gpio_switch 'poe_power_port{{ loop.index }}'
+config gpio_switch 'poe_power_port{{ loop.index - 1 }}'
         option name '{{ poe['name'] }}'
         option gpio_pin '{{ poe['gpio_pin'] }}'
+{% if (loop.index - 1) in poe_on %}
+        option value '{{ 0 if poe['value'] else 1 }}'
+{% else %}
         option value '{{ poe['value'] }}'
+{% endif %}
 {% endfor %}
