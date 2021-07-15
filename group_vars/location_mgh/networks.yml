@@ -1,0 +1,34 @@
+---
+ipv6_prefix: "2001:bf7:830:9500::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_simeon
+    prefix: 10.31.30.155/32
+    ipv6_subprefix: -1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.106.64/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      mgh-core: 1
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.106.128/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    untagged: true
+    assignments:
+      mgh-core: 1
+
+#location__channel_assignments_11a_standard__to_merge:
+#  mgh-core: 36-20-15
+
+#location__channel_assignments_11g_standard__to_merge:
+#  mgh-core: 1-20

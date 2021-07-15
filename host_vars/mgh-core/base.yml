@@ -1,0 +1,6 @@
+---
+
+location: mgh
+role: corerouter
+target: "ramips/mt7621"
+model: "ubnt_edgerouter-x-sfp"
