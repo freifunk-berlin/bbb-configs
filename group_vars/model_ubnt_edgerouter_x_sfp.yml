@@ -22,17 +22,17 @@ dsa_ports:
 
 poe_ports:
   - name: PoE Power Port0
-    gpio_pin: 496
+    gpio_pin: 400
     value: 0
   - name: PoE Power Port1
-    gpio_pin: 497
+    gpio_pin: 401
     value: 0
   - name: PoE Power Port2
-    gpio_pin: 498
+    gpio_pin: 402
     value: 0
   - name: PoE Power Port3
-    gpio_pin: 499
+    gpio_pin: 403
     value: 0
   - name: PoE Power Port4
-    gpio_pin: 500
+    gpio_pin: 404
     value: 0
