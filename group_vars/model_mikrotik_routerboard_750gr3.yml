@@ -13,8 +13,8 @@ model__packages__to_merge:
   - "-luci-app-falter-owm-gui"
 
 dsa_ports:
-  - eth0
   - wan
-  - eth2
-  - eth3
-  - eth4
+  - lan2
+  - lan3
+  - lan4
+  - lan5
