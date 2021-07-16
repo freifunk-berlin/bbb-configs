@@ -3,14 +3,9 @@ imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/ram
 feed_version: "1.2.0-snapshot"
 imagebuilder_disable_signature_check: true
 
-# ToDo: disable falter packages temporarily
 model__packages__to_merge:
-  - "-luci-mod-falter"
-  - "-falter-berlin-fix-luci"
-  - "-luci-app-falter-owm"
-  - "-luci-app-falter-owm-ant"
-  - "-luci-app-falter-owm-cmd"
-  - "-luci-app-falter-owm-gui"
+- "-luci-mod-falter"
+- "-falter-berlin-fix-luci"
 
 dsa_ports:
   - wan
