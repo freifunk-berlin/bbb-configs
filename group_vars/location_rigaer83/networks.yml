@@ -8,6 +8,12 @@ networks:
     prefix: 10.31.79.67/32
     ipv6_subprefix: -1
 
+  - vid: 11
+    role: mesh
+    name: mesh_rhnk
+    prefix: 10.31.54.227/32
+    ipv6_subprefix: -1
+
   - vid: 42
     role: mgmt
     prefix: 10.31.81.80/28
@@ -16,7 +22,11 @@ networks:
     ipv6_subprefix: 1
     assignments:
       rigaer83-core: 1
-      rigaer83-sama: 2
+      rigaer83-poe: 2
+      rigaer83-sama: 3
+      rigaer83-m5: 4
+      rigaer83-powerbeam: 5
+      rigaer83-m2: 6
 
   - vid: 40
     role: dhcp
@@ -26,3 +36,9 @@ networks:
     enforce_client_isolation: true
     assignments:
       rigaer83-core: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  rigaer83-core: 52-80
+
+location__channel_assignments_11g_standard__to_merge:
+  rigaer83-core: 6-20
