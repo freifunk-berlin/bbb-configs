@@ -55,11 +55,11 @@ location__channel_assignments_11a_standard__to_merge:
   koepi-core: 36-20
   koepi-ap1: 36-40
   koepi-ap2: 36-40
-  koepi-trailer1: 36-20
+  koepi-trailer1: 36-20-7
 
 location__channel_assignments_11g_standard__to_merge:
   koepi-core: 1-20
   koepi-ap1: 6-20
   koepi-ap2: 11-20
-  koepi-trailer2: 1-20
-  koepi-front: 6-20
+  koepi-trailer2: 1-20-9
+  koepi-front: 6-20-9
