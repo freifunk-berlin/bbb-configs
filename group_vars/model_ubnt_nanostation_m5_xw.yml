@@ -1,0 +1,21 @@
+---
+imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/ath79/generic/openwrt-imagebuilder-21.02-SNAPSHOT-ath79-generic.Linux-x86_64.tar.xz"
+feed_version: "1.2.0-snapshot"
+override_target: "ubnt_nanostation-m-xw"
+
+int_port: eth1
+
+# low-mem hack
+device_disabled_services__to_merge:
+  - "uhttpd"
+
+wireless_devices:
+  - name: 11a_standard
+    hwmode: 11a
+    path: platform/ahb/18100000.wmac
+    ifname_hint: wlan5
+
+poe_ports:
+  - name: PoE Passthrough
+    gpio_pin: 2
+    value: 0

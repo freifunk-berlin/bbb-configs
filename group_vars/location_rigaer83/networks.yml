@@ -24,9 +24,9 @@ networks:
       rigaer83-core: 1
       rigaer83-poe: 2
       rigaer83-sama: 3
-      rigaer83-m5: 4
-      rigaer83-powerbeam: 5
-      rigaer83-m2: 6
+      rigaer83-rhnk: 4
+      rigaer83-front-5ghz: 10
+      rigaer83-back-2ghz: 11
 
   - vid: 40
     role: dhcp
@@ -39,6 +39,8 @@ networks:
 
 location__channel_assignments_11a_standard__to_merge:
   rigaer83-core: 52-80
+  rigaer83-front-5ghz: 36-20
 
 location__channel_assignments_11g_standard__to_merge:
   rigaer83-core: 6-20
+  rigaer83-back-2ghz: 1-20
