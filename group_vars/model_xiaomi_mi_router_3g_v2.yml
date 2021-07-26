@@ -1,0 +1,19 @@
+---
+imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/ramips/mt7621/openwrt-imagebuilder-21.02-SNAPSHOT-ramips-mt7621.Linux-x86_64.tar.xz"
+feed_version: "1.2.0-snapshot"
+imagebuilder_disable_signature_check: true
+
+dsa_ports:
+  - eth0
+  - lan1
+  - lan2
+
+wireless_devices:
+  - name: 11a_standard
+    hwmode: 11a
+    path: 1e140000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
+    ifname_hint: wlan5
+  - name: 11g_standard
+    hwmode: 11g
+    path: 1e140000.pcie/pci0000:00/0000:00:01.0/0000:02:00.0
+    ifname_hint: wlan2
