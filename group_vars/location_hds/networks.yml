@@ -14,30 +14,43 @@ networks:
 
   - vid: 105
     role: mesh
-    name: vlan_105
+    name: mesh_nord
     prefix: 10.36.166.121/30
     ipv6_subprefix: -1
+    assignments:
+      hds-core: 1
+      hds-nord: 2
 
   - vid: 106
     role: mesh
-    name: vlan_106
+    name: mesh_sabr
     prefix: 10.36.166.125/30
     ipv6_subprefix: -2
+    assignments:
+      hds-core: 1
+      hds-saarbruecker: 2
 
   - vid: 107
     role: mesh
-    name: vlan_107
+    name: mesh_simeon
     prefix: 10.36.166.133/30
     ipv6_subprefix: -3
+    assignments:
+      hds-core: 1
+      hds-simeon: 2
 
   - vid: 108
     role: mesh
-    name: vlan_108
+    name: mesh_sama
     prefix: 10.36.166.129/30
     ipv6_subprefix: -4
+    assignments:
+      hds-core: 1
+      hds-sama: 2
 
-  - vid: 200
-    role: mesh
-    name: mesh_lan
-    prefix: 10.36.166.141/32
-    ipv6_subprefix: -5
+# Not in use?
+#  - vid: 200
+#    role: mesh
+#    name: mesh_lan
+#    prefix: 10.36.166.141/32
+#    ipv6_subprefix: -5
