@@ -16,7 +16,7 @@ networks:
       emma-switch-sw: 4
       emma-switch-nw: 5
 #     emma-nno-2ghz: 10
-#     emma-ono-2ghz: 11
+      emma-ono-2ghz: 11
       emma-oso-2ghz: 12
       emma-sso-2ghz: 13
 #     emma-ssw-2ghz: 14
