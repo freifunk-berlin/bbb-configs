@@ -2,21 +2,27 @@
 ipv6_prefix: "2001:bf7:831::/56"
 
 # Emma got 10.31.11.0/24 as prefix
-
 networks:
-  - vid: 1
+  - vid: 84
     role: mgmt
-    prefix: 10.31.11.8/29
+    prefix: 10.31.11.1/27
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
-    untagged: true
     assignments:
       emma-core: 1
-      emma-switch01: 2
-      emma-switch02: 3
-      emma-switch03: 4
-      emma-switch04: 5
+      emma-switch-no: 2
+      emma-switch-so: 3
+      emma-switch-sw: 4
+      emma-switch-nw: 5
+#     emma-nno-2ghz: 10
+#     emma-ono-2ghz: 11
+      emma-oso-2ghz: 12
+      emma-sso-2ghz: 13
+#     emma-ssw-2ghz: 14
+      emma-wsw-2ghz: 15
+      emma-wnw-2ghz: 16
+      emma-nnw-2ghz: 17
 
   - vid: 40
     role: dhcp
@@ -26,12 +32,6 @@ networks:
     enforce_client_isolation: true
     assignments:
       emma-core: 1
-
-  - vid: 104
-    role: mesh
-    name: mesh_fflan
-    prefix: 10.31.11.1/32
-    ipv6_subprefix: 2
 
   - vid: 21
     role: mesh
