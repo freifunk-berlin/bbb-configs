@@ -1,0 +1,37 @@
+---
+ipv6_prefix: "2001:bf7:860::/56"
+
+# Mesh: 10.31.83.60/30
+networks:
+  #- vid: 10
+  #  role: mesh
+  #  name: mesh_sama
+  #  prefix: 10.31.83.60/32
+  #  ipv6_subprefix: -1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.83.112/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      lebenshilfe-core: 1
+      #lebenshilfe-switch: 2
+      lebenshilfe-nw-ap-2ghz: 3
+      lebenshilfe-no-ap-2ghz: 4
+      lebenshilfe-so-ap-2ghz: 5
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.83.192/26
+    ipv6_subprefix: 0
+    assignments:
+      magda-core: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  magda-ap1: 36-20-15
+  magda-ap2: 40-20-15
+  magda-ap3: 44-20-15
+
+# channel-bandwith-txpower in dbm
