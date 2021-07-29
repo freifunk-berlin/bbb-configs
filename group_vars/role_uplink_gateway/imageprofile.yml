@@ -1,11 +1,17 @@
 ---
 role_uplink_gw__packages__to_merge:
-  - -wpad-openssl
+  
+  # monitoring
   - collectd-mod-olsrd
   - collectd-mod-exec
   - collectd-mod-conntrack
   - collectd-mod-snmp6
   - collectd-mod-ipstatistics
+  
+  #routing
+  - bird2
+  - bird2c
+  - babeld
   - olsrd
   - olsrd-mod-arprefresh
   - olsrd-mod-dyn-gw
@@ -13,29 +19,42 @@ role_uplink_gw__packages__to_merge:
   - olsrd-mod-nameservice
   - olsrd-mod-txtinfo
   - olsrd-utils
-  - kmod-ipip
+  
+  # UI and Falter-stuff
+  - falter-common
+  - luci-app-babeld
   - luci-app-olsr
   - luci-app-olsr-services
   - luci-mod-falter
-  - falter-common
   - luci-app-falter-owm
   - luci-app-falter-owm-ant
   - luci-app-falter-owm-cmd
   - luci-app-falter-owm-gui
-  - iptables-mod-ipopt
-  - kmod-ipt-ipopt
-  - bird2
-  - bird2c
-  - babeld
-  - luci-app-babeld
+
+  # utils
+  - tcpdump-mini
+  - mtr
   - ip-full
+  - iperf3
+  - tmux
+  - vnstat
+  - ethtool
+  - iwinfo
+  - libiwinfo-lua
+  
+  # tunnel
   - gre
   - wireguard-tools
   - kmod-wireguard
   - wg-installer-server
   - wg-installer-server-hotplug-babeld
+  
+  # kmods and stuff
+  - kmod-ipip
+  - kmod-ipt-ipopt
   - conntrackd
   - samplicator
+  - -wpad-openssl
 # Required for some ugly hack which can be removed in DC
   - iptables-mod-ipopt
 

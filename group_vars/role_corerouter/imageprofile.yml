@@ -1,11 +1,14 @@
 ---
 role_corerouter__packages__to_merge:
-  - babeld
+  # monitoring
   - collectd-mod-olsrd
   - collectd-mod-exec
   - collectd-mod-conntrack
   - collectd-mod-snmp
   - snmp-mibs
+  
+  # routing
+  - babeld
   - olsrd
   - olsrd-mod-arprefresh
   - olsrd-mod-dyn-gw
@@ -13,13 +16,28 @@ role_corerouter__packages__to_merge:
   - olsrd-mod-nameservice
   - olsrd-mod-txtinfo
   - olsrd-utils
+  
+  # UI and Falter-stuff
+  - falter-common
   - luci-app-olsr
   - luci-app-olsr-services
   - luci-mod-falter
-  - falter-common
   - luci-app-falter-owm
   - luci-app-falter-owm-ant
   - luci-app-falter-owm-cmd
   - luci-app-falter-owm-gui
+  
+  # utils
+  - tcpdump-mini
+  - mtr
+  - ip
+  - iperf3
+  - tmux
+  - vnstat
+  - ethtool
+  - iwinfo
+  - libiwinfo-lua
+  
+  # kmods
   - iptables-mod-ipopt
   - kmod-ipt-ipopt
