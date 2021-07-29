@@ -16,7 +16,6 @@ role_corerouter__packages__to_merge:
   - luci-app-olsr
   - luci-app-olsr-services
   - luci-mod-falter
-  - falter-berlin-fix-luci
   - falter-common
   - luci-app-falter-owm
   - luci-app-falter-owm-ant
