@@ -1,0 +1,10 @@
+---
+location: fffw-lebenshilfe
+role: ap
+model: "mikrotik_sxtsq-2-lite"
+
+wireless_profile: freifunk_fw
+
+mac_override:
+  eth0: cc:2d:e0:9c:4d:58
+...

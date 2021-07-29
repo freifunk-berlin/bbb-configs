@@ -41,7 +41,7 @@ wireless_profiles:
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
         radio: [11a_standard, 11g_standard, 11a_mesh]
-        mcast_rate: 12000
+        mcast_rate: 12000 # inzwischen 16000?
         mesh_fwding: 0
         ifname_hint: mesh
 
