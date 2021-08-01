@@ -1,0 +1,15 @@
+---
+imagebuilder: "https://downloads.openwrt.org/snapshots/targets/mediatek/mt7622/openwrt-imagebuilder-mediatek-mt7622.Linux-x86_64.tar.xz"
+feed_version: "1.2.0-snapshot"
+imagebuilder_disable_signature_check: true
+
+model__packages__to_merge:
+- "-luci-mod-falter"
+- "-falter-berlin-fix-luci"
+
+dsa_ports:
+  - wan
+  - lan1
+  - lan2
+  - lan3
+  - lan4
