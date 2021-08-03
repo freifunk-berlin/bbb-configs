@@ -1,0 +1,18 @@
+---
+
+snmp_devices:
+  - hostname: sama-nord-5ghz
+    address: 10.31.81.20
+    snmp_profile: airos_8
+
+  - hostname: sama-ost-5ghz
+    address: 10.31.81.21
+    snmp_profile: airos_8
+
+  - hostname: sama-sued-5ghz
+    address: 10.31.81.22
+    snmp_profile: airos_8
+
+  - hostname: sama-west-5ghz
+    address: 10.31.81.23
+    snmp_profile: airos_8

@@ -1,11 +1,8 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
-{% for device in airmax_devices|default([]) %}
-  {% if 'dfs_reset' in device %}
-    {% set cfg = device['dfs_reset'] %}
+{% for device in airos_dfs_reset|default([]) %}
 config device '{{ device['name'] | replace('-','_') }}'
 	option target '{{ device['target'] }}'
-	option username '{{ cfg['username'] }}'
-	option password '{{ cfg['password'] }}'
-	option daytime_limit '{{ cfg['daytime_limit'] }}'
-  {% endif %}
+	option username '{{ device['username'] }}'
+	option password '{{ device['password'] }}'
+	option daytime_limit '{{ device['daytime_limit'] }}'
 {% endfor %}

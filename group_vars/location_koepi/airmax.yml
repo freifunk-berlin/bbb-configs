@@ -1,9 +1,0 @@
----
-
-airmax_devices:
-  - name: "koepi-emma"
-    target: "10.31.102.2"
-  - name: "koepi-simeon"
-    target: "10.31.102.3"
-  - name: "koepi-clients"
-    target: "10.31.102.4"

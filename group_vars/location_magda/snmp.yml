@@ -1,0 +1,9 @@
+---
+
+snmp_devices:
+  - hostname: magda-sama
+    address: 10.31.83.115
+    snmp_profile: airos_8
+  - hostname: magda-ost-5ghz
+    address: 10.31.83.116
+    snmp_profile: airos_8

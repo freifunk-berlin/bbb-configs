@@ -1,0 +1,26 @@
+---
+
+airos_dfs_reset:
+  - name: "sama-nord-5ghz"
+    target: "10.31.81.20"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "sama-ost-5ghz"
+    target: "10.31.81.21"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "sama-sued-5ghz"
+    target: "10.31.81.22"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "sama-west-5ghz"
+    target: "10.31.81.23"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"

@@ -1,0 +1,6 @@
+---
+
+snmp_devices:
+  - hostname: fesev-sama
+    address: 10.31.96.243
+    snmp_profile: airos_8

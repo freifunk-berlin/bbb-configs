@@ -1,0 +1,6 @@
+---
+
+snmp_devices:
+  - hostname: dorfplatz-sama
+    address: 10.31.75.34
+    snmp_profile: airos_8

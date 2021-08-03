@@ -1,0 +1,13 @@
+---
+
+airos_dfs_reset:
+  - name: "simeon-mgh"
+    target: "10.31.104.131"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+  - name: "simeon-nord"
+    target: "10.31.104.132"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"

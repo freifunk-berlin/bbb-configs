@@ -1,0 +1,6 @@
+---
+
+snmp_devices:
+  - hostname: mgh-simeon
+    address: 10.31.106.66
+    snmp_profile: airos_8

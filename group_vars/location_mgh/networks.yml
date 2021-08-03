@@ -16,6 +16,7 @@ networks:
     ipv6_subprefix: 1
     assignments:
       mgh-core: 1
+      mgh-simeon: 2
 
   - vid: 40
     role: dhcp
