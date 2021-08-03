@@ -1,15 +1,18 @@
 ---
 
 snmp_devices:
-  - name: schreiner-f2a
-    target: 10.31.97.98
+  - hostname: schreiner-f2a
+    address: 10.31.97.98
     snmp_profile: airos_6
-  - name: schreiner-sama
-    target: 10.31.97.99
+
+  - hostname: schreiner-sama
+    address: 10.31.97.99
     snmp_profile: airos_6
-  - name: schreiner-client-1
-    target: 10.31.97.101
+
+  - hostname: schreiner-client-1
+    address: 10.31.97.101
     snmp_profile: airos_6
-  - name: schreiner-client-2
-    target: 10.31.97.102
+
+  - hostname: schreiner-client-2
+    address: 10.31.97.102
     snmp_profile: airos_6
