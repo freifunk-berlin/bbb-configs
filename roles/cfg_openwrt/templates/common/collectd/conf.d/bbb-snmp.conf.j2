@@ -1,6 +1,6 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 
-{% set profiles = snmp_devices | map(attribute='snmp_profile') | list | unique %}
+{% set profiles = snmp_devices | default([]) | map(attribute='snmp_profile') | list | unique %}
 
 {% if profiles | length > 0 %}
 LoadPlugin snmp
@@ -19,7 +19,7 @@ LoadPlugin snmp
 
 
 
-{% for device in snmp_devices %}
+{% for device in snmp_devices | default([]) %}
     <Host "{{ device['hostname'] }}">
         Address "{{ device['address'] }}"
         Version 1
