@@ -10,7 +10,6 @@ networks:
 
   - vid: 40
     role: dhcp
-    untagged: true
     inbound_filtering: true
     enforce_client_isolation: true
     prefix: 10.111.5.0/24
@@ -26,9 +25,13 @@ networks:
     ipv6_subprefix: 1
     assignments:
       manstein10-core: 1
-
-location__channel_assignments_11a_standard__to_merge:
-  manstein10-core: 52-80
-
-location__channel_assignments_11g_standard__to_merge:
-  manstein10-core: 6-20
+      manstein10-poe-switch-1: 2
+      manstein10-poe-switch-2: 3
+      # airos - bbb
+      manstein10-m5-rhxb: 4
+      # airos - clients
+      manstein10-m5-loco-s5: 5
+      manstein10-m5-w5: 6
+      # openwrt clients
+      manstein10-m2-s: 7
+      manstein10-m2-w: 8
