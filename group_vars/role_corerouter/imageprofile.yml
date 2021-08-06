@@ -1,6 +1,7 @@
 ---
 role_corerouter__packages__to_merge:
   - babeld
+  - luci-app-babeld
   - collectd-mod-olsrd
   - collectd-mod-exec
   - collectd-mod-conntrack
