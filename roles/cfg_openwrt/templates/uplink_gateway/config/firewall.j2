@@ -20,7 +20,7 @@ config zone
 	option input		ACCEPT
 	option output		ACCEPT
 	option forward		REJECT
-	option mtu_fix          1
+#	option mtu_fix          1 # mss is clamped manually in /etc/firewall.user
 
 config zone
 	option name		uplink
