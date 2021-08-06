@@ -36,8 +36,6 @@ role_uplink_gw__packages__to_merge:
   - wg-installer-server-hotplug-babeld
   - conntrackd
   - samplicator
-# Required for some ugly hack which can be removed in DC
-  - iptables-mod-ipopt
 
 role_uplink_gw__disabled_services__to_merge:
   - "dnsmasq"
