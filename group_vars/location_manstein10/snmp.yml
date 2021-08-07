@@ -1,0 +1,7 @@
+---
+
+snmp_devices:
+  # bbb devices
+  - hostname: manstein10-rhxb
+    address: 10.36.208.4
+    snmp_profile: airos_6
