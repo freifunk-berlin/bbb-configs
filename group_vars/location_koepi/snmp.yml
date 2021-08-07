@@ -1,0 +1,28 @@
+---
+
+snmp_devices:
+  # bbb devices
+  - hostname: koepi-emma
+    address: 10.31.102.3
+    snmp_profile: airos_6
+
+  - hostname: koepi-rhnk
+    address: 10.31.102.4
+    snmp_profile: airos_8
+
+  - hostname: koepi-simeon
+    address: 10.31.102.5
+    snmp_profile: airos_8
+
+  # client devices
+  - hostname: koepi-trailer1
+    address: 10.31.102.20
+    snmp_profile: airos_6
+
+  - hostname: koepi-trailer2
+    address: 10.31.102.21
+    snmp_profile: airos_6
+
+  - hostname: koepi-front
+    address: 10.31.102.22
+    snmp_profile: airos_6
