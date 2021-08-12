@@ -45,16 +45,17 @@ networks:
       koepi-simeon: 5
       koepi-ap1: 10
       koepi-ap2: 11
+      koepi-ap3: 12
       koepi-trailer1: 20
       koepi-trailer2: 21
       koepi-front: 22
 
 location__channel_assignments_11a_standard__to_merge:
-  koepi-core: 36-20
   koepi-ap1: 40-20
   koepi-ap2: 44-20
+  koepi-ap3: 36-20
 
 location__channel_assignments_11g_standard__to_merge:
-  koepi-core: 1-20
   koepi-ap1: 6-20
   koepi-ap2: 11-20
+  koepi-ap3: 1-20

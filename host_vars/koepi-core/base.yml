@@ -2,7 +2,5 @@
 
 location: koepi
 role: corerouter
-target: "mpc85xx/p1010"
-model: "tplink_tl-wdr4900-v1"
-
-wireless_profile: freifunk_default
+target: "mediatek/mt7622"
+model: "bananapi_bpi-r64"

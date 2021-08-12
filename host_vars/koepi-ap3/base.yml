@@ -1,0 +1,6 @@
+---
+
+location: koepi
+role: ap
+target: "mpc85xx/p1010"
+model: "tplink_tl-wdr4900-v1"
