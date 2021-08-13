@@ -1,0 +1,5 @@
+---
+
+# Add naywatch due to ipq40xx ethernet instabilities
+target__packages__to_merge:
+  - naywatch
