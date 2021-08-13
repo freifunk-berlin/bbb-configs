@@ -1,0 +1,19 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+
+{% if 'naywatch' in packages %}
+config naywatch general
+    option check_interval   '30'
+    option watchdog_timeout '60'
+    option use_watchdog     '1'
+    option save_logs        '1'
+{% for network in networks %}
+    {% set name = network['name'] if 'name' in network else network['role'] %}
+    {% if network['role'] == 'mgmt' or (role == 'corerouter' and network['role'] == 'mesh') %}
+    list interface          '{{ name }}'
+    {% endif %}
+{% endfor %}
+    list save_cmd           'dmesg'
+    list save_cmd           'logread'
+    list save_cmd           'swconfig dev switch0 show'
+
+{% endif %}
