@@ -4,31 +4,31 @@
 snmp_devices:
 
   - hostname: emma-nno-5ghz
-    address: 10.31.11.66
+    address: 10.31.11.20
     snmp_profile: airos_6
 
   - hostname: emma-ono-5ghz
-    address: 10.31.11.70
+    address: 10.31.11.21
     snmp_profile: airos_6
 
   - hostname: emma-oso-5ghz
-    address: 10.31.11.74
+    address: 10.31.11.24
     snmp_profile: airos_6
 
   - hostname: emma-sso-5ghz
-    address: 10.31.11.78
+    address: 10.31.11.25
     snmp_profile: airos_8
 
   - hostname: emma-wsw-5ghz
-    address: 10.31.11.86
+    address: 10.31.11.22
     snmp_profile: airos_6
 
   - hostname: emma-wnw-5ghz
-    address: 10.31.11.90
+    address: 10.31.11.23
     snmp_profile: airos_6
 
   - hostname: emma-nnw-5ghz
-    address: 10.31.11.94
+    address: 10.31.11.19
     snmp_profile: airos_6
 
 
