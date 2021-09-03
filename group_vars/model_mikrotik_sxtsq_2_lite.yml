@@ -1,5 +1,5 @@
 ---
-imagebuilder: "https://downloads.openwrt.org/releases/21.02.0/targets/ath79/mikrotik/openwrt-imagebuilder-21.02.0-ath79-mikrotik.Linux-x86_64.tar.xz"
+imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/ath79/mikrotik/openwrt-imagebuilder-21.02-SNAPSHOT-ath79-mikrotik.Linux-x86_64.tar.xz"
 feed_version: "1.2.0-snapshot"
 imagebuilder_disable_signature_check: true
 override_target: "mikrotik_routerboard-lhg-2nd"
