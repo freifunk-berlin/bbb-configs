@@ -1,0 +1,63 @@
+---
+ipv6_prefix: "2001:bf7:830:ff00::/56"
+
+networks:
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.110.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      sama-core: 1
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.110.128/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      sama-core: 1
+
+  - vid: 1
+    role: mesh
+    name: mesh_olsr
+    prefix: 10.31.10.1/28
+    ipv6_subprefix: -1
+
+  - vid: 2
+    role: mesh
+    name: mesh_f2a
+    prefix: 10.31.10.45/30
+    ipv6_subprefix: -2
+
+  - vid: 3
+    role: mesh
+    name: mesh_fhain
+    prefix: 10.31.10.17/30
+    ipv6_subprefix: -3
+
+  - vid: 4
+    role: mesh
+    name: mesh_emma
+    prefix: 10.31.10.21/30
+    ipv6_subprefix: -4
+
+  - vid: 6
+    role: mesh
+    name: mesh_rhxb
+    prefix: 10.31.10.49/30
+    ipv6_subprefix: -6
+
+  - vid: 7
+    role: mesh
+    name: mesh_fluxfm
+    prefix: 10.31.10.25/30
+    ipv6_subprefix: -7
+
+  - vid: 8
+    role: mesh
+    name: mesh_neukoelln
+    prefix: 10.31.10.29/30
+    ipv6_subprefix: -8
