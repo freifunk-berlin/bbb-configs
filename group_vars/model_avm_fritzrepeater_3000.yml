@@ -1,0 +1,29 @@
+---
+imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/ipq40xx/generic/openwrt-imagebuilder-21.02-SNAPSHOT-ipq40xx-generic.Linux-x86_64.tar.xz"
+feed_version: "1.2.0-snapshot"
+imagebuilder_disable_signature_check: true
+
+model__packages__to_merge:
+  - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"
+  - "kmod-ath10k ath10k-firmware-qca4019"
+
+switch_ports: 6
+switch_int_port: 0
+switch_ignore_ports: [1,2,3]
+# WAN port is hardwired to VLAN2. ignore
+
+int_port: eth0
+
+wireless_devices:
+  - name: 11a_standard
+    hwmode: 11a
+    path: soc/40000000.pci/pci0000:00/0000:00:00.0/0000:01:00.0
+    ifname_hint: wlan5_1
+  - name: 11g_standard
+    hwmode: 11g
+    path: platform/soc/a000000.wifi
+    ifname_hint: wlan2
+  - name: 11a_standard
+    hwmode: 11a
+    path: platform/soc/a800000.wifi
+    ifname_hint: wlan5_2

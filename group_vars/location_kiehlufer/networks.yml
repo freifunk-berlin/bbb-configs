@@ -46,7 +46,7 @@ networks:
     ipv6_subprefix: 1
     assignments:
       kiehlufer-core: 1
-      kiehlufer-switch: 2
+      kiehlufer-3000: 2
       kiehlufer-rhnk: 3
       kiehlufer-vaterhaus: 4
       kiehlufer-nf-wbp1: 5
