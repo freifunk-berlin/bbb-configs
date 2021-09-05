@@ -29,6 +29,16 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
+  - vid: 21
+    role: mesh
+    name: mesh_kiehlufer3000
+    prefix: 10.31.108.145/32
+    ipv6_subprefix: -5
+    mesh_metric: 2048
+    mesh_ap: kiehlufer-3000
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -46,7 +56,7 @@ networks:
     ipv6_subprefix: 1
     assignments:
       kiehlufer-core: 1
-      kiehlufer-switch: 2
+      kiehlufer-3000: 2
       kiehlufer-rhnk: 3
       kiehlufer-vaterhaus: 4
       kiehlufer-nf-wbp1: 5

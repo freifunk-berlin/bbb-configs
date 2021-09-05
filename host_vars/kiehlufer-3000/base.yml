@@ -1,0 +1,7 @@
+---
+
+location: kiehlufer
+role: ap
+target: "ipq40xx/generic"
+model: "avm_fritzrepeater-3000"
+
