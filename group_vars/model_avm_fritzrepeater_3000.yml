@@ -15,15 +15,15 @@ switch_ignore_ports: [1,2,3]
 int_port: eth0
 
 wireless_devices:
-  - name: 11a_standard
+  - name: 11a_uplink
     hwmode: 11a
     path: soc/40000000.pci/pci0000:00/0000:00:00.0/0000:01:00.0
-    ifname_hint: wlan5_1
+    ifname_hint: wlan5_up
   - name: 11g_standard
     hwmode: 11g
     path: platform/soc/a000000.wifi
     ifname_hint: wlan2
-  - name: 11a_standard
+  - name: 11a_mesh
     hwmode: 11a
     path: platform/soc/a800000.wifi
-    ifname_hint: wlan5_2
+    ifname_hint: wlan5_mesh
