@@ -70,4 +70,7 @@ location__channel_assignments_11a_standard__to_merge:
   kiehlufer-nf-wbp3: 44-20-15
   kiehlufer-nf-wbp4: 48-20-15
 
+location__channel_assignments_11a_mesh__to_merge:
+  kiehlufer-3000: 100-20
+
 # Channel - Bandwidth - TX Power

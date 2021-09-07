@@ -7,6 +7,8 @@ wireless_profiles:
         disabled: true
       - radio: 11g_standard
         disabled: true
+      - radio: 11a_mesh
+        disabled: true
 
   - name: freifunk_default
     devices:
@@ -14,6 +16,9 @@ wireless_profiles:
         legacy_rates: false
         country: DE
       - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11a_mesh
         legacy_rates: false
         country: DE
 
@@ -35,7 +40,7 @@ wireless_profiles:
 
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
-        radio: [11a_standard, 11g_standard]
+        radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
         ifname_hint: mesh
@@ -133,3 +138,6 @@ all__channel_assignments_11a_standard__to_merge:
 
 all__channel_assignments_11g_standard__to_merge:
   default: "13-20"
+
+all__channel_assignments_11a_mesh__to_merge:
+  default: "36-20"
