@@ -3,10 +3,6 @@ imagebuilder: "https://downloads.openwrt.org/snapshots/targets/mediatek/mt7623/o
 feed_version: "1.2.0-snapshot"
 imagebuilder_disable_signature_check: true
 
-model__packages__to_merge:
-- "-luci-mod-falter"
-- "-falter-berlin-fix-luci"
-
 dsa_ports:
   - wan
   - lan0
