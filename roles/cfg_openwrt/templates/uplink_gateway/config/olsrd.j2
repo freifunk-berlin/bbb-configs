@@ -61,7 +61,7 @@ config InterfaceDefaults
   {% for interface in mesh_links %}
 config Interface
 	option ignore '0'
-	option interface '{{ interface['name'] }}'
+	option interface '{{ interface['name'][:15] }}'
 	option Mode 'ether'
   {% endfor %}
 

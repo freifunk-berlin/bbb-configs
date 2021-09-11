@@ -14,8 +14,8 @@ config interface 'uplink'
 
 
 {% for interface in mesh_links|default([]) %}
-config interface '{{ interface['name'] }}'
-	option ifname '{{ interface['ifname'] }}'
+config interface '{{ interface['name'][:15] }}'
+	option ifname '{{ interface['ifname'][:15] }}'
 	option proto 'static'
 	option ipaddr '{{ interface['ipv4'] }}'
 	option ip6addr '{{ interface['ipv6'] }}'
@@ -23,7 +23,7 @@ config interface '{{ interface['name'] }}'
 
 {% if mgmt is defined %}
 config interface 'mgmt'
-	option ifname '{{ mgmt['ifname'] }}'
+	option ifname '{{ mgmt['ifname'][:15] }}'
 	option proto 'static'
 	option ipaddr '{{ mgmt['ipv4'] }}'
 	option ip6addr '{{ mgmt['ipv6'] }}'
@@ -33,14 +33,14 @@ config interface 'mgmt'
 # gre doesnt support _ in name
 {% for gateway in groups['role_uplink_gateway'] | difference([inventory_hostname]) %}
 {% set name = hostvars[gateway]['gre_tunnel_alias'] %}
-config interface '{{ name }}'
+config interface '{{ name[:15] }}'
 	option proto 'gre'
 	option ipaddr '{{ uplink['ipv4'] | ipaddr('address') }}'
 	option peeraddr '{{ hostvars[gateway]['uplink']['ipv4'] | ipaddr('address') }}'
 
-config interface '{{ name }}_ip'
+config interface '{{ name[:15] }}_ip'
 	option proto 'static'
-	option ifname '@{{ name }}'
+	option ifname '@{{ name[:15] }}'
 	option ip6addr '{{ gre_base_prefix | nthhost(loop.index) }}/128'
 
 {% endfor %}

@@ -15,12 +15,12 @@ config dnsmasq
 	option quietdhcp '1'
 
 {% for network in networks | selectattr('role','equalto','dhcp') %}
-config dhcp 'dhcp_{{ network['name'] if 'name' in network else network['role'] }}'
+config dhcp 'dhcp_{{ network['name'][:15] if 'name' in network else network['role'] }}'
 	option leasetime '5m'
 	option start '2'
 	option force '1'
 	option ignore '0'
-	option interface '{{ network['name'] if 'name' in network else network['role'] }}'
+	option interface '{{ network['name'][:15] if 'name' in network else network['role'] }}'
 	option dhcpv6 'server'
 	option ra 'server'
 	option limit '{{ network['prefix'] | ipaddr('size') -3 }}'

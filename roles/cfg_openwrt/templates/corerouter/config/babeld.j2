@@ -9,7 +9,7 @@ config general
 
   {% for network in networks | selectattr('role', 'equalto', 'mesh') | selectattr('ipv6_subprefix') %}
 config interface
-	option 'ifname' '{{ network['name'] if 'name' in network else network['role'] }}'
+	option 'ifname' '{{ network['name'][:15] if 'name' in network else network['role'] }}'
 	option 'rxcost' '{{ network['mesh_metric'] if 'mesh_metric' in network else '512' }}'
 	option 'split_horizon' '{{ (network['ptp'] if 'ptp' in network else false ) | string | lower }}'
 

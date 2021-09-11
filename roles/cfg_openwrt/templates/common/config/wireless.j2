@@ -4,17 +4,17 @@
 # Wifi Config is derived from wireless profile: '{{ wireless_profile }}'
 {% for wd in wireless_devices | default([]) %}
   {% set wd_id = 'radio' + loop.index0|string %}
-  {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name']) | first %}
-  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
+  {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name'][:15]) | first %}
+  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name'][:15]) %}
 
-  {% set channel_assignments = hostvars[inventory_hostname]['channel_assignments_' + wd['name']] %}
+  {% set channel_assignments = hostvars[inventory_hostname]['channel_assignments_' + wd['name'][:15]] %}
   {% set channel_assignment = (channel_assignments[inventory_hostname] | default(channel_assignments['default'])).split('-') %}
   {% set channel = channel_assignment[0] %}
   {% set bandwidth = channel_assignment[1] %}
   {% set txpower = channel_assignment[2]|default(False) %}
 
 
-# Radio: {{ wd['name'] }}
+# Radio: {{ wd['name'][:15] }}
 config wifi-device '{{ wd_id }}'
 	option type 'mac80211'
 	option hwmode '{{ wd['hwmode'] }}'
@@ -39,7 +39,7 @@ config wifi-device '{{ wd_id }}'
     {% if iface['mode'] == 'mesh' %}
       {% set mesh_nets = networks | selectattr('role','defined') | selectattr('role','equalto','mesh')
          | selectattr('mesh_ap','defined') | selectattr('mesh_ap','equalto',inventory_hostname)
-         | selectattr('mesh_radio','equalto', wd['name']) | selectattr('mesh_iface','equalto',iface['ifname_hint']) %}
+         | selectattr('mesh_radio','equalto', wd['name'][:15]) | selectattr('mesh_iface','equalto',iface['ifname_hint']) %}
       {% if mesh_nets | length > 0 %}
         {% set mesh_net = mesh_nets|first %}
       {% endif %}
@@ -93,7 +93,7 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
       {% if 'mcast_rate' in iface %}
 	option mcast_rate '{{ iface['mcast_rate'] }}'
       {% endif %}
-	option network '{{ mesh_net['name'] }}'
+	option network '{{ mesh_net['name'][:15] }}'
     {% endif %}
     {% endif %}
   {% endfor %}

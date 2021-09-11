@@ -7,9 +7,9 @@ config naywatch general
     option use_watchdog     '1'
     option save_logs        '1'
 {% for network in networks %}
-    {% set name = network['name'] if 'name' in network else network['role'] %}
+    {% set name = network['name'][:15] if 'name' in network else network['role'] %}
     {% if network['role'] == 'mgmt' or (role == 'corerouter' and network['role'] == 'mesh') %}
-    list interface          '{{ name }}'
+    list interface          '{{ name[:15] }}'
     {% endif %}
 {% endfor %}
     list save_cmd           'dmesg'

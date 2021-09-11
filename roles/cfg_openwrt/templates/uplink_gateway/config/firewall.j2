@@ -7,7 +7,7 @@ config defaults
 config zone
 	option name		freifunk
 {% for interface in mesh_links|default([]) %}
-	list   network		'{{ interface['name'] }}'
+	list   network		'{{ interface['name'][:15] }}'
 {% endfor %}
 {% if mgmt is defined %}
 	list   network		'mgmt'
@@ -125,7 +125,7 @@ config rule
 # Allow list via group_vars/role_uplink_gateway/general.yml
 {% for rule in inbound_allow | default([]) %}
 config rule
-	option name		'{{ rule['name'] }}'
+	option name		'{{ rule['name'][:15] }}'
 	option src		uplink
 	option dest		freifunk
 	option dest_ip		'{{ rule['dst'] }}'

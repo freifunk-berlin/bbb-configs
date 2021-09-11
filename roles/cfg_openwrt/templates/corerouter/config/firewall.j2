@@ -19,9 +19,9 @@ config zone 'zone_freifunk'
 	option network '{{ l3_networks | rejectattr('inbound_filtering') | map(attribute='name') | join(' ') }}'
 
 {% for i in l3_networks | selectattr('inbound_filtering') %}
-config zone 'zone_{{ i['name'] }}'
-        option name '{{ i['name'] }}'
-        option network '{{ i['name'] }}'
+config zone 'zone_{{ i['name'][:15] }}'
+        option name '{{ i['name'][:15] }}'
+        option network '{{ i['name'][:15] }}'
 
 {% endfor %}
 config forwarding
@@ -31,16 +31,16 @@ config forwarding
 {% for i in l3_networks | selectattr('inbound_filtering') %}
 config forwarding
         option dest 'freifunk'
-        option src '{{ i['name'] }}'
+        option src '{{ i['name'][:15] }}'
 
 {% endfor %}
 
 {% for i in l3_networks | selectattr('inbound_filtering') %}
 # Allow essential forwarded IPv6 ICMP traffic
 config rule
-	option name		Allow-ICMPv6-Forward-{{ i['name'] }}
+	option name		Allow-ICMPv6-Forward-{{ i['name'][:15] }}
 	option src		freifunk
-	option dest		{{ i['name'] }}
+	option dest		{{ i['name'][:15] }}
 	option proto		icmp
 	list icmp_type		echo-request
 	list icmp_type		echo-reply

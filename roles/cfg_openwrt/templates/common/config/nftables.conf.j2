@@ -11,8 +11,8 @@ network_ifname_map =
 #}
 {% set network_ifname_map = [] %}
 {% for wd in wireless_devices | default([]) %}
-  {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name']) | first %}
-  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) | selectattr('mode', 'equalto', 'ap') %}
+  {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name'][:15]) | first %}
+  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name'][:15]) | selectattr('mode', 'equalto', 'ap') %}
   {% if not wd_config.get('disabled') %}
     {% for iface in wd_ifaces %}
       {{ network_ifname_map.append({'network': iface['network'], 'ifname': wd['ifname_hint'] + '-' + iface['ifname_hint']|default('if' + loop.index0|string)})}}
@@ -22,7 +22,7 @@ network_ifname_map =
 {# DISCLAIMER SCOPE END #}
 
 {% for network in networks | selectattr('enforce_client_isolation', 'defined') | selectattr('enforce_client_isolation') %}
-  {% set name = network['name'] if 'name' in network else network['role'] %}
+  {% set name = network['name'][:15] if 'name' in network else network['role'] %}
   {% set wifi_ifnames = network_ifname_map | selectattr('network', 'equalto', name) | map(attribute='ifname') %}
   {% if wifi_ifnames|length > 0 %}
     {% set wifi = '{ ' + wifi_ifnames | join(', ') + '}' %}
@@ -36,7 +36,7 @@ define mc6 = 33:33:00:00:00:00/16
 flush ruleset
 table bridge client_isolation {
     {% endif %}
-	chain PREROUTING_{{ name }} {
+	chain PREROUTING_{{ name[:15] }} {
 		type filter hook prerouting priority 0; policy accept;
 		iif {{ uplink }} accept
 		iif {{ wifi }} ether daddr $bc ether daddr set $gw

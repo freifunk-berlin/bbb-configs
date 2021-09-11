@@ -55,7 +55,7 @@ config InterfaceDefaults
 {% for network in networks | selectattr('role', 'equalto', 'mesh') %}
 config Interface
 	option ignore '0'
-	option interface '{{ network['name'] if 'name' in network else network['role'] }}'
+	option interface '{{ network['name'][:15] if 'name' in network else network['role'] }}'
 	option Mode 'ether'
   {% for i in network['mesh_metric_lqm'] | default([]) %}
 	list LinkQualityMult '{{ i }}'
@@ -65,7 +65,7 @@ config Interface
 {% for network in networks | rejectattr('role', 'equalto', 'ext') | selectattr('prefix') %}
   {% if network['prefix'] | ipaddr('prefix') < 32 %}
 
-# Network: {{ network['name'] if 'name' in network else network['role'] }}
+# Network: {{ network['name'][:15] if 'name' in network else network['role'] }}
 config Hna4
 	option netmask '{{ network['prefix'] | ipaddr('netmask') }}'
 	option netaddr '{{ network['prefix'] | ipaddr('network') }}'

@@ -9,7 +9,7 @@ config interface
 
 {% for interface in mesh_links|default([]) %}
 config interface
-	option 'ifname' '{{ interface['name'] }}'
+	option 'ifname' '{{ interface['name'][:15] }}'
 	option 'rxcost' '{{ interface['metric'] }}'
 	option 'split_horizon' '{{ (interface['ptp'] if 'ptp' in interface else false ) | string | lower }}'
 
