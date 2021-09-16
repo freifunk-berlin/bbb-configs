@@ -2,5 +2,8 @@
 
 snmp_devices:
   - hostname: scharni-sama
-    address: 10.31.52.164
+    address: 10.31.52.163
     snmp_profile: airos_8
+  - hostname: scharni-zwingli
+    address: 10.31.52.164
+    snmp_profile: airos_6
