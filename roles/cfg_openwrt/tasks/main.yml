@@ -35,11 +35,6 @@
     loop_var: subdir
   tags: always
 
-- name: Add DAWN
-  include_tasks:
-    file: dawn.yml
-  when: dawn_enabled
-
 - name: Include add_symlinks.yml
   include_tasks:
     file: add_symlinks.yml
