@@ -21,7 +21,7 @@ networks:
     
   - vid: 20
     role: mesh
-    name: mesh_kiehlufer
+    name: mesh_kiehl
     prefix: 10.31.82.142/32
     ipv6_subprefix: -4
     mesh_metric: 2048
@@ -31,7 +31,7 @@ networks:
 
   - vid: 21
     role: mesh
-    name: mesh_kiehlufer3000
+    name: mesh_huette
     prefix: 10.31.108.145/32
     ipv6_subprefix: -5
     mesh_metric: 2048
