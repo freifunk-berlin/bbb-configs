@@ -6,7 +6,6 @@ role_corerouter__packages__to_merge:
   - collectd-mod-exec
   - collectd-mod-conntrack
   - collectd-mod-snmp
-  - snmp-mibs
   - olsrd
   - olsrd-mod-arprefresh
   - olsrd-mod-dyn-gw
