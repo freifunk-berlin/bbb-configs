@@ -37,6 +37,7 @@ config interface '{{ name }}'
 	option proto 'gre'
 	option ipaddr '{{ uplink['ipv4'] | ipaddr('address') }}'
 	option peeraddr '{{ hostvars[gateway]['uplink']['ipv4'] | ipaddr('address') }}'
+	option mtu '1476'
 
 config interface '{{ name }}_ip'
 	option proto 'static'
