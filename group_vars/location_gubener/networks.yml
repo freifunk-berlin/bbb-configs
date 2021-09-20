@@ -1,0 +1,30 @@
+---
+ipv6_prefix: "2001:bf7:830:4c00::/56"
+
+# mesh ips: 10.31.77.192/30
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_sama
+    prefix: 10.31.77.192/32
+    ipv6_subprefix: -1
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    untagged: true
+    prefix: 10.31.114.128/25
+    ipv6_subprefix: 0
+    assignments:
+      gubener-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.77.160/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      gubener-core: 1
+      gubener-sama: 2
