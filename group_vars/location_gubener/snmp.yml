@@ -1,0 +1,6 @@
+---
+
+snmp_devices:
+  - hostname: gubener-sama
+    address: 10.31.77.162
+    snmp_profile: airos_8
