@@ -1,0 +1,8 @@
+---
+
+location: huette15
+role: corerouter
+target: "ath79/generic"
+model: "tplink_eap225-outdoor-v1"
+
+wireless_profile: freifunk_default

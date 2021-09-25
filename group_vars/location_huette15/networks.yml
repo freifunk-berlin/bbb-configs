@@ -1,0 +1,36 @@
+---
+ipv6_prefix: '2001:bf7:830:9a00::/56'
+
+
+# Mesh: 10.31.77.200/30
+networks:
+  - vid: 20
+    role: mesh
+    name: mesh_core
+    prefix: 10.31.77.200/32
+    ipv6_subprefix: -1
+    mesh_metric: 1024
+    mesh_ap: huette15-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.112.192/26
+    ipv6_subprefix: 0
+    assignments:
+      huette15-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.77.196/30
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      huette15-core: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  huette15-core: 40-20
