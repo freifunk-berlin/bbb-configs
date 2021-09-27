@@ -1,0 +1,10 @@
+---
+
+snmp_devices:
+  - hostname: zwingli-nord-5ghz
+    address: 10.31.115.20
+    snmp_profile: airos_8
+
+  - hostname: zwingli-sama
+    address: 10.31.115.3
+    snmp_profile: af60

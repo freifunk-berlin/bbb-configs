@@ -1,0 +1,51 @@
+---
+ipv6_prefix: "2001:bf7:830:9800::/56"
+
+
+# Zwingli got 10.31.115.0/24
+
+networks:
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.115.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      zwingli-core-neu: 1
+# af60-lr
+      zwingli-sama: 3
+      zwingli-agym: 5
+# 5ghz sectors
+      zwingli-nord-5ghz-neu: 20
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.115.128/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      zwingli-core-neu: 1
+
+
+# 10.31.115.32/28 Mesh Prefix (16)
+  - vid: 10
+    role: mesh
+    name: mesh_nord
+    prefix: 10.31.115.32/32
+    ipv6_subprefix: -1
+  - vid: 14
+    role: mesh
+    name: mesh_sama
+    prefix: 10.31.115.36/32
+    ipv6_subprefix: -5
+    mesh_metric: 128
+    ptp: true
+  - vid: 16
+    role: mesh
+    name: mesh_agym
+    prefix: 10.31.115.38/32
+    ipv6_subprefix: -5
+    mesh_metric: 128
+    ptp: true

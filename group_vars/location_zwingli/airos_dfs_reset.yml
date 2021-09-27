@@ -1,0 +1,8 @@
+---
+
+airos_dfs_reset:
+  - name: "zwingli-nord-5ghz"
+    target: "10.31.115.20"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
