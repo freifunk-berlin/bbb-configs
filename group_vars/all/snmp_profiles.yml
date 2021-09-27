@@ -2,6 +2,49 @@
 
 
 collectd_snmp_profiles:
+  af60:
+    sys_uptime:
+      Type: uptime
+      TypeInstance: days
+      Table: false
+      Scale: 1.15740740741e-07
+      Values: .1.3.6.1.2.1.1.3.0
+    rf_freq:
+      Type: frequency
+      TypeInstance: "Frequency (MHz)"
+      Table: false
+      Values: .1.3.6.1.4.1.41112.1.11.1.1.2.1
+    rf_sta_distance:
+      PluginInstance: distance
+      Type: gauge
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.1.3.1.14
+      Values: .1.3.6.1.4.1.41112.1.11.1.3.1.15
+    rf_sta_signal:
+      Type: signal_power
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.1.3.1.14
+      Values: .1.3.6.1.4.1.41112.1.11.1.3.1.3
+    rf_sta_snr:
+      Type: snr
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.1.3.1.14
+      Values: .1.3.6.1.4.1.41112.1.11.1.3.1.4
+    rf_sta_rx_capacity:
+      Type: bitrate
+      PluginInstance: rx
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.1.3.1.14
+      Scale: 1000
+      Values: .1.3.6.1.4.1.41112.1.11.1.3.1.7
+    rf_sta_tx_capacity:
+      Type: bitrate
+      PluginInstance: tx
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.1.3.1.14
+      Scale: 1000
+      Values: .1.3.6.1.4.1.41112.1.11.1.3.1.8
+
   airos_8:
     sys_uptime:
       Type: uptime

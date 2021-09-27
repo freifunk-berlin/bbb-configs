@@ -16,3 +16,15 @@ snmp_devices:
   - hostname: sama-west-5ghz
     address: 10.31.81.23
     snmp_profile: airos_8
+
+  - hostname: saarbruecker-sama
+    address: 10.31.83.52
+    snmp_profile: af60
+
+  - hostname: sama-saarbruecker
+    address: 10.31.81.30
+    snmp_profile: af60
+
+  - hostname: sama-zwingli
+    address: 10.31.81.29
+    snmp_profile: af60
