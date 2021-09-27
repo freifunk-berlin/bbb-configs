@@ -3,6 +3,6 @@
 location: gubener
 role: corerouter
 target: "ipq40xx/generic"
-model: "avm_fritzbox-4040"
+model: "avm_fritzbox-7530"
 
 wireless_profile: freifunk_default
