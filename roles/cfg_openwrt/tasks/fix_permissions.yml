@@ -16,13 +16,6 @@
   ignore_errors: true
   when: role == "corerouter"
 
-- name: Set permission for collectd_exec_dhcp_leases
-  file:
-    path: "{{ config_path }}/etc/config/airmax_dfs_reset"
-    mode: "755"
-  ignore_errors: true
-  when: role == "corerouter"
-
 - name: Set permission for replace_secrets script
   file:
     path: "{{ config_path }}/etc/init.d/replace_secrets"
