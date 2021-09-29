@@ -17,3 +17,7 @@ rm /lib/upgrade/keep.d/*
 # Prune em'
 sed -i '/^ \/etc/d' /usr/lib/opkg/status
 {% endif %}
+
+{% for override in sysfs_overrides | default([]) %}
+echo {{ override['value'] }} > {{ override['path'] }}
+{% endfor%}
