@@ -2,6 +2,7 @@
 imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/mpc85xx/p1010/openwrt-imagebuilder-21.02-SNAPSHOT-mpc85xx-p1010.Linux-x86_64.tar.xz"
 feed_version: "1.2.0-snapshot"
 imagebuilder_disable_signature_check: true
+target: mpc85xx/p1010
 
 switch_ports: 6
 switch_int_port: 0

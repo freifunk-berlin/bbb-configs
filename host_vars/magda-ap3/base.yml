@@ -2,7 +2,6 @@
 
 location: magda
 role: ap
-target: "ipq40xx/mikrotik"
 model: "mikrotik_sxtsq-5-ac"
 
 mac_override:

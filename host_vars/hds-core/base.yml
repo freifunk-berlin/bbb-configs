@@ -2,5 +2,4 @@
 
 location: hds
 role: corerouter
-target: "ramips/mt7621"
 model: "mikrotik_routerboard-750gr3"

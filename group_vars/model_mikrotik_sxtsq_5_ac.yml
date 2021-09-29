@@ -3,6 +3,7 @@ imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/ipq
 feed_version: "1.2.0-snapshot"
 imagebuilder_disable_signature_check: true
 instr_set: "arm_cortex-a7_neon-vfpv4"
+target: ipq40xx/mikrotik
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"

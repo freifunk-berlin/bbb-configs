@@ -2,7 +2,6 @@
 
 location: koepi
 role: ap
-target: "ath79/generic"
 model: "ubnt_nanostation-m5_xm"
 
 poe_on: [0]

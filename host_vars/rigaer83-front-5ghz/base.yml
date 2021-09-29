@@ -2,7 +2,6 @@
 
 location: rigaer83
 role: ap
-target: "ath79/generic"
 model: "ubnt_nanostation-m5_xw"
 
 poe_on: []

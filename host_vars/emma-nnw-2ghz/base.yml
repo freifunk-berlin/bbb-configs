@@ -2,5 +2,4 @@
 
 location: emma
 role: ap
-target: "ath79/generic"
 model: "ubnt_nanostation-m2_xm"

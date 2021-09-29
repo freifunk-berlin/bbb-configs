@@ -2,5 +2,4 @@
 
 location: wilgu10
 role: ap
-target: "ath79/generic"
 model: "ubnt_nanostation-ac-loco"

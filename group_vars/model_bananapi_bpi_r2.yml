@@ -2,6 +2,7 @@
 imagebuilder: "https://downloads.openwrt.org/snapshots/targets/mediatek/mt7623/openwrt-sdk-mediatek-mt7623_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz"
 feed_version: "1.2.0-snapshot"
 imagebuilder_disable_signature_check: true
+target: mediatek/mt7623
 
 dsa_ports:
   - wan

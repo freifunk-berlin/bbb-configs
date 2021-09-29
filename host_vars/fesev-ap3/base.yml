@@ -2,5 +2,4 @@
 
 location: fesev
 role: ap
-target: "ath79/generic"
 model: "ubnt_nanostation-loco-m2_xm"

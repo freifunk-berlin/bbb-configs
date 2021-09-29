@@ -2,7 +2,6 @@
 
 location: wilgu10
 role: ap
-target: "ath79/generic"
 model: "mikrotik_sxtsq-2-lite"
 
 mac_override:

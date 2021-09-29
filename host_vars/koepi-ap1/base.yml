@@ -2,5 +2,4 @@
 
 location: koepi
 role: ap
-target: "ramips/mt76x8"
 model: "tplink_archer-c50-v3"
