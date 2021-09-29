@@ -1,3 +1,2 @@
 18 * * * *	test -e /usr/sbin/owm.sh && /usr/sbin/owm.sh
 */5 * * * *	killall -HUP dnsmasq
-*/10 * * * *    /etc/config/airmax_dfs_reset

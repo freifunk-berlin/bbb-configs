@@ -1,8 +1,15 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
-{% for device in airos_dfs_reset|default([]) %}
+{% if airos_dfs_reset|default([])|length > 0 %}
+config airos-dfs-reset general
+	option interval		'600'
+	option reset_sleep	'900'
+
+{% for device in airos_dfs_reset %}
 config device '{{ device['name'] | replace('-','_') }}'
 	option target '{{ device['target'] }}'
 	option username '{{ device['username'] }}'
 	option password '{{ device['password'] }}'
 	option daytime_limit '{{ device['daytime_limit'] }}'
+
 {% endfor %}
+{% endif %}
