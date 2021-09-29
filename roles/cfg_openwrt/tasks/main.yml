@@ -6,6 +6,13 @@
       tags: always
   tags: always
 
+- name: Include tasks for conditional packages
+  include_tasks:
+    file: conditional_packages.yml
+    apply:
+      tags: always
+  tags: always
+
 - name: Prepare some variables (1)
   set_fact:
     basedir: /tmp/ansible-openwrt

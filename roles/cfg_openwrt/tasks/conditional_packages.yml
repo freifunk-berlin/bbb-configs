@@ -1,0 +1,6 @@
+---
+- name: "Add irqbalance if multicore"
+  set_fact:
+    packages: "{{ packages + ['irqbalance'] }}"
+  when:
+    - multicore|default(false)|bool == true
