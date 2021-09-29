@@ -1,2 +1,0 @@
-18 * * * *	test -e /usr/sbin/owm.sh && /usr/sbin/owm.sh
-*/5 * * * *	killall -HUP dnsmasq
