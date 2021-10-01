@@ -5,11 +5,6 @@ config statistics 'collectd_olsrd'
 	option Port '2006'
 	option Host '127.0.0.1'
 
-config statistics 'collectd_exec'
+config statistics 'collectd_dhcpleases'
 	option enable '1'
-
-config collectd_exec_input
-	option cmduser 'nobody'
-	option cmdgroup 'nogroup'
-	option cmdline '/etc/config/collectd_exec_dhcp_leases'
-
+	option Path '/tmp/dhcp.leases'
