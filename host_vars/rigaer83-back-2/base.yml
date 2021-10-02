@@ -5,4 +5,4 @@ role: ap
 model: "mikrotik_sxtsq-2-lite"
 
 mac_override:
-  eth0: 08:55:31:4E:DD:35
+  eth0: 08:55:31:4E:CC:57
