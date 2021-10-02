@@ -24,7 +24,7 @@ networks:
       rigaer83-core: 1
       rigaer83-poe: 2
       rigaer83-sama: 3
-      rigaer83-rhnk: 4
+      rigaer83-zwingli: 4
 
       # riagaer83
       rigaer83-front-5: 9
