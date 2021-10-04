@@ -34,7 +34,7 @@ networks:
 
   - vid: 40
     role: dhcp
-    prefix: 10.31.91.192/26
+    prefix: 10.31.118.0/24
     ipv6_subprefix: 0
     inbound_filtering: true
     enforce_client_isolation: true
