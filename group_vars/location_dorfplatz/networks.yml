@@ -6,10 +6,14 @@ networks:
   - vid: 10
     role: mesh
     name: mesh_sama
-    prefix: 10.31.64.220/32
+    prefix: 10.31.74.220/32
     ipv6_subprefix: -1
-    assignments:
-      dorfplatz-core: 0
+
+  - vid: 11
+    role: mesh
+    name: mesh_zwingli
+    prefix: 10.31.74.221/32
+    ipv6_subprefix: -2
 
   - vid: 40
     role: dhcp
@@ -28,11 +32,13 @@ networks:
     ipv6_subprefix: 1
     assignments:
       dorfplatz-core: 1
-      dorfplatz-wilgu10: 2
-      dorfplatz-poe-switch: 3
+      dorfplatz-poe-switch: 2
+      dorfplatz-sama: 3
+      dorfplatz-zwingli: 4
       dorfplatz-ap1: 14
       dorfplatz-ap2: 13
       dorfplatz-ap3: 12
+      dorfplatz-ap4: 11
 
 location__channel_assignments_11a_standard__to_merge:
   dorfplatz-ap1: 36-20-15
