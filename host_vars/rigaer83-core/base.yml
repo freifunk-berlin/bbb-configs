@@ -2,6 +2,4 @@
 
 location: rigaer83
 role: corerouter
-model: "avm_fritzbox-7530"
-
-wireless_profile: freifunk_default
+model: "bananapi_bpi-r64"
