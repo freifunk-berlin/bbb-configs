@@ -12,7 +12,7 @@ networks:
     role: mesh
     name: mesh_rhnk
     prefix: 10.31.54.227/32
-    ipv6_subprefix: -1
+    ipv6_subprefix: -2
 
   - vid: 42
     role: mgmt
