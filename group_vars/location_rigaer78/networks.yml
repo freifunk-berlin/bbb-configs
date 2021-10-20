@@ -11,7 +11,7 @@ networks:
 
   - vid: 11
     role: mesh
-    name: mesh_rhnk
+    name: mesh_zwingli
     prefix: 10.31.109.65/32
     ipv6_subprefix: -2
 
