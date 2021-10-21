@@ -24,6 +24,9 @@ config wifi-device '{{ wd_id }}'
   {% if txpower %}
 	option txpower '{{ txpower }}'
   {% endif %}
+  {% if 'beacon_int' in wd_config %}
+	option beacon_int '{{ wd_config['beacon_int'] }}'
+  {% endif %}
   {% if 'country' in wd_config %}
 	option country '{{ wd_config['country'] }}'
   {% endif %}
