@@ -28,6 +28,7 @@ networks:
       rigaer78-zwingli: 4
       # aps
       rigaer78-ap1: 30
+      rigaer78-ap2: 29
 
   - vid: 40
     role: dhcp
