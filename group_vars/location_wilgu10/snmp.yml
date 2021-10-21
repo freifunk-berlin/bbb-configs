@@ -3,5 +3,5 @@
 
 snmp_devices:
   - hostname: wilgu10-sama
-    address: 10.36.190.181
+    address: 10.36.190.182
     snmp_profile: airos_8
