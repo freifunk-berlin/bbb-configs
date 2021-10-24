@@ -88,12 +88,15 @@ When defining a new location, you need to create a directory named like `locatio
 
 ##### general.yml
 
-This file might be fairly self-explanatory. Please mind that a contact is mandatory. If you don't like to give your email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net)
+This file might be fairly self-explanatory. Please mind that a contact is mandatory. _If you don't like to give your email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net)_.
 
 ```yml
 ---
-contact_nickname: 'Petrosilius Quaccus'
+contact_name: 'Petrosilius Quaccus'
+contact_nickname: 'Petro'
 contact_email: 'quaccus@example.com'
+# or:
+contact_email: 'https://config.berlin.freifunk.net/contact/446x/ImZmZnctZV0LTA0Ig.FFbQ8w._ZCA4hFY3zR8MdDVNrv3okqwPU'
 ```
 
 ##### owm.yml
