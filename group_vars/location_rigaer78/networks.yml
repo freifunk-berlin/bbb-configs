@@ -29,6 +29,8 @@ networks:
       # aps
       rigaer78-ap1: 30
       rigaer78-ap2: 29
+      rigaer78-ap3: 28
+      rigaer78-ap4: 27
 
   - vid: 40
     role: dhcp
@@ -38,3 +40,7 @@ networks:
     enforce_client_isolation: true
     assignments:
       rigaer78-core: 1
+
+location__channel_assignments_11g_standard__to_merge:
+  rigaer78-ap3: 1-20-10
+  rigaer78-ap4: 6-20-10
