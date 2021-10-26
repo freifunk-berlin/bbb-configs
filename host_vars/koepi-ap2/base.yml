@@ -3,3 +3,5 @@
 location: koepi
 role: ap
 model: "tplink_archer-c50-v3"
+
+wireless_profile: koepi

@@ -31,12 +31,23 @@ networks:
     assignments:
       koepi-core: 1
 
+  - vid: 41
+    role: dhcp
+    name: home
+    no_corerouter_dns_record: true
+    inbound_filtering: true
+    enforce_client_isolation: false
+    prefix: 10.31.123.0/25
+    ipv6_subprefix: 1
+    assignments:
+      koepi-core: 1
+
   - vid: 42
     role: mgmt
     prefix: 10.31.102.0/27
     gateway: 1
     dns: 1
-    ipv6_subprefix: 1
+    ipv6_subprefix: 2
     assignments:
       koepi-core: 1
       koepi-poe: 2
