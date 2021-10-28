@@ -9,6 +9,16 @@ networks:
     prefix: 10.230.210.104/32
     ipv6_subprefix: -1
 
+  - vid: 20
+    role: mesh
+    name: mesh_east_2g
+    prefix: 10.230.210.105/32
+    ipv6_subprefix: -2
+    mesh_metric: 2048
+    mesh_ap: wilgu10-east-nf-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
   - vid: 42
     role: mgmt
     prefix: 10.36.190.176/28
