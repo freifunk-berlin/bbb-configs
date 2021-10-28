@@ -13,8 +13,10 @@ networks:
     ipv6_subprefix: 1
     assignments:
       zwingli-core-neu: 1
+      zwingli-switch: 2
 # af60-lr
       zwingli-sama: 3
+      zwingli-rhnk: 4
       zwingli-agym: 5
 # 5ghz sectors
       zwingli-nord-5ghz-neu: 20
@@ -35,6 +37,21 @@ networks:
     name: mesh_nord
     prefix: 10.31.115.32/32
     ipv6_subprefix: -1
+  - vid: 11
+    role: mesh
+    name: mesh_ost
+    prefix: 10.31.115.33/32
+    ipv6_subprefix: -2
+  - vid: 12
+    role: mesh
+    name: mesh_sued
+    prefix: 10.31.115.34/32
+    ipv6_subprefix: -3
+  - vid: 13
+    role: mesh
+    name: mesh_west
+    prefix: 10.31.115.35/32
+    ipv6_subprefix: -4
   - vid: 14
     role: mesh
     name: mesh_sama
@@ -42,10 +59,26 @@ networks:
     ipv6_subprefix: -5
     mesh_metric: 128
     ptp: true
+  - vid: 15
+    role: mesh
+    name: mesh_rhnk
+    prefix: 10.31.115.37/32
+    ipv6_subprefix: -6
+    mesh_metric: 128
+    ptp: true
   - vid: 16
     role: mesh
     name: mesh_agym
     prefix: 10.31.115.38/32
-    ipv6_subprefix: -5
+    ipv6_subprefix: -7
     mesh_metric: 128
     ptp: true
+
+# Prelimary Switchports:
+# 17: Mesh Sama AF60-LR
+# 18: Mesh RHNK AF60-LR
+# 19: Mesh Agym AF60-LR
+# 20: Mesh Nord 5GHz (Rocket)
+# 21..23 ?
+# 25: Core Router
+# 26: DHCP Network Untagged
