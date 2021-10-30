@@ -1,0 +1,8 @@
+---
+
+location: rigaer78
+role: ap
+model: "mikrotik_sxtsq-2-lite"
+
+mac_override:
+  eth0: 08:55:31:DB:95:A8

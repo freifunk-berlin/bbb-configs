@@ -27,10 +27,10 @@ networks:
       rigaer78-sama: 3
       rigaer78-zwingli: 4
       # aps
-      rigaer78-ap1: 30
-      rigaer78-ap2: 29
-      rigaer78-ap3: 28
-      rigaer78-ap4: 27
+      rigaer78-east-5ghz: 30
+      rigaer78-east-2ghz: 29
+      rigaer78-west-5ghz: 28
+      rigaer78-west-2ghz: 27
 
   - vid: 40
     role: dhcp
