@@ -1,5 +1,7 @@
 ---
 
+wifiprefix: berlin
+
 wireless_profiles:
   - name: disable
     devices:
@@ -24,14 +26,14 @@ wireless_profiles:
 
     ifaces:
       - mode: ap
-        ssid: berlin.freifunk.net
+        ssid: "{{ wifiprefix | default('berlin') }}.freifunk.net"
         encryption: none
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
 
       - mode: ap
-        ssid: berlin.freifunk.net Encrypted
+        ssid: "{{ wifiprefix | default('berlin') }}.freifunk.net Encrypted"
         encryption: owe
         network: dhcp
         radio: [11a_standard, 11g_standard]
@@ -58,14 +60,14 @@ wireless_profiles:
 
     ifaces:
       - mode: ap
-        ssid: berlin.freifunk.net
+        ssid: "{{ wifiprefix | default('berlin') }}.freifunk.net"
         encryption: none
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
 
       - mode: ap
-        ssid: berlin.freifunk.net Encrypted
+        ssid: "{{ wifiprefix | default('berlin') }}.freifunk.net Encrypted"
         encryption: owe
         network: dhcp
         radio: [11a_standard, 11g_standard]
@@ -106,14 +108,14 @@ wireless_profiles:
 
     ifaces:
       - mode: ap
-        ssid: colbe15.freifunk.net
+        ssid: "{{ wifiprefix | default('berlin') }}.freifunk.net"
         encryption: none
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
 
       - mode: ap
-        ssid: colbe15.freifunk.net Encrypted
+        ssid: "{{ wifiprefix | default('berlin') }}.freifunk.net Encrypted"
         encryption: owe
         network: dhcp
         radio: [11a_standard, 11g_standard]
@@ -146,14 +148,14 @@ wireless_profiles:
 
     ifaces:
       - mode: ap
-        ssid: berlin.freifunk.net
+        ssid: "{{ wifiprefix | default('berlin') }}.freifunk.net"
         encryption: none
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
 
       - mode: ap
-        ssid: berlin.freifunk.net Encrypted
+        ssid: "{{ wifiprefix | default('berlin') }}.freifunk.net Encrypted"
         encryption: owe
         network: dhcp
         radio: [11a_standard, 11g_standard]
