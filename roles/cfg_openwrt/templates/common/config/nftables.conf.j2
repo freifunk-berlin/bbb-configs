@@ -26,7 +26,7 @@ network_ifname_map =
   {% set wifi_ifnames = network_ifname_map | selectattr('network', 'equalto', name) | map(attribute='ifname') %}
   {% if wifi_ifnames|length > 0 %}
     {% set wifi = '{ ' + wifi_ifnames | join(', ') + '}' %}
-    {% set uplink = (int_port + '.' + network['vid']|string) if role == 'ap' else '!= ' + wifi %}
+    {% set uplink = (('switch0' if dsa_ports is defined else int_port) + '.' + network['vid']|string) if role == 'ap' else '!= ' + wifi %}
     {% if loop.first %}
 define gw = 02:00:00:00:00:01
 define bc = ff:ff:ff:ff:ff:ff
