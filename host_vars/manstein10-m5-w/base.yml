@@ -1,0 +1,7 @@
+---
+
+location: manstein10
+role: ap
+model: "ubnt_nanostation-m5_xm"
+
+poe_on: []

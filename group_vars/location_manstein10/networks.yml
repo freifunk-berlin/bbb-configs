@@ -31,6 +31,15 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
+  - vid: 13
+    role: mesh
+    name: mesh_5ghz_w
+    prefix: 10.31.125.35/32
+    ipv6_subprefix: -4
+    mesh_ap: manstein10-m5-w
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
   # 10.31.125.32/25 for dhcp
   - vid: 40
     role: dhcp
@@ -56,7 +65,7 @@ networks:
       manstein10-rhxb: 4
       # airos - clients
       manstein10-m5-loco-s5: 5
-      manstein10-m5-w5: 6
       # openwrt clients
+      manstein10-m5-w: 6
       manstein10-m2-s: 7
       manstein10-m2-w: 8
