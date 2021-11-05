@@ -13,7 +13,25 @@ networks:
     prefix: 10.31.125.32/32
     ipv6_subprefix: -1
 
-  # 10.31.125.128/25 for dhcp
+  - vid: 11
+    role: mesh
+    name: mesh_2ghz_s
+    prefix: 10.31.125.33/32
+    ipv6_subprefix: -2
+    mesh_ap: manstein10-m2-s
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 12
+    role: mesh
+    name: mesh_2ghz_w
+    prefix: 10.31.125.34/32
+    ipv6_subprefix: -3
+    mesh_ap: manstein10-m2-w
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # 10.31.125.32/25 for dhcp
   - vid: 40
     role: dhcp
     inbound_filtering: true
