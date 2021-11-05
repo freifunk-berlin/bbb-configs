@@ -1,25 +1,32 @@
 ---
+# Overall we allocated: 10.31.125.0/24
+# Still unused:
+# - 10.31.125.64/26
+
 ipv6_prefix: "2001:bf7:810:1000::/56"
 
 networks:
+  # 10.31.125.32/27 for meshing
   - vid: 10
     role: mesh
     name: mesh_rhxb
-    prefix: 10.31.208.37/32
+    prefix: 10.31.125.32/32
     ipv6_subprefix: -1
 
+  # 10.31.125.128/25 for dhcp
   - vid: 40
     role: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.111.5.0/24
+    prefix: 10.31.125.128/25
     ipv6_subprefix: 0
     assignments:
       manstein10-core: 1
 
+  # 10.31.125.0/27 for mgmt
   - vid: 42
     role: mgmt
-    prefix: 10.36.208.0/27
+    prefix: 10.31.125.0/27
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
