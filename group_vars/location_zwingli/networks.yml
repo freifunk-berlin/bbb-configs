@@ -20,6 +20,7 @@ networks:
       zwingli-agym: 5
 # 5ghz sectors
       zwingli-nord-5ghz-neu: 20
+      zwingli-sued-5ghz: 22
 
   - vid: 40
     role: dhcp
@@ -75,10 +76,13 @@ networks:
     ptp: true
 
 # Prelimary Switchports:
-# 17: Mesh Sama AF60-LR
-# 18: Mesh RHNK AF60-LR
-# 19: Mesh Agym AF60-LR
-# 20: Mesh Nord 5GHz (Rocket)
-# 21..23 ?
-# 25: Core Router
-# 26: DHCP Network Untagged
+# 1: zwingli-core
+# 2: dhcp untagged
+# ..
+# 17: nord 5ghz
+# 18: ost 5ghz
+# 19: sued 5ghz
+# 20: west 5ghz
+# 21: af60 sama
+# 22: af60 rhnk
+# 23: af60 agym

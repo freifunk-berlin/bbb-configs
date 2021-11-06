@@ -5,6 +5,26 @@ snmp_devices:
     address: 10.31.115.20
     snmp_profile: airos_8
 
+# - hostname: zwingli-ost-5ghz
+#   address: 10.31.115.21
+#   snmp_profile: airos_8
+
+  - hostname: zwingli-sued-5ghz
+    address: 10.31.115.22
+    snmp_profile: airos_8
+
+# - hostname: zwingli-west-5ghz
+#   address: 10.31.115.23
+#   snmp_profile: airos_8
+
   - hostname: zwingli-sama
     address: 10.31.115.3
+    snmp_profile: af60
+
+  - hostname: zwingli-rhnk
+    address: 10.31.115.4
+    snmp_profile: af60
+
+  - hostname: zwingli-agym
+    address: 10.31.115.5
     snmp_profile: af60
