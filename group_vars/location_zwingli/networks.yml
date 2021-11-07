@@ -19,7 +19,8 @@ networks:
       zwingli-rhnk: 4
       zwingli-agym: 5
 # 5ghz sectors
-      zwingli-nord-5ghz-neu: 20
+      zwingli-nord-5ghz: 20
+      zwingli-nord-5ghz-alt: 21
       zwingli-sued-5ghz: 22
 
   - vid: 40
