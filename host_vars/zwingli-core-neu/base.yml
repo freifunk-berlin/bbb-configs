@@ -2,7 +2,7 @@
 
 location: zwingli
 role: corerouter
-model: "avm_fritzbox-7530"
+model: "glinet_gl-b1300"
 
 wireless_profile: freifunk_default
 
