@@ -3,7 +3,7 @@ ipv6_prefix: "2001:bf7:831::/56"
 
 # Emma got 10.31.11.0/24 as prefix
 networks:
-  - vid: 84
+  - vid: 42
     role: mgmt
     prefix: 10.31.11.1/27
     gateway: 1

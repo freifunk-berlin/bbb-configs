@@ -7,4 +7,3 @@ model: "mikrotik_sxtsq-5-ac"
 mac_override:
   eth0: 08:55:31:14:36:d7
 
-wireless_profile: colbe15
