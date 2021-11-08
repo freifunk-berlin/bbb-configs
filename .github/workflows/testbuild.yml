@@ -1,0 +1,45 @@
+name: Test Build
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    name: Test Ansible
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: sudo apt install python3
+
+      - name: Install dependencies
+        run: pip3 install -r requirements.txt --upgrade pip
+
+      - name: Determine branch name
+        run: |
+          BRANCH="${GITHUB_BASE_REF#refs/heads/}"
+          echo "Building for $BRANCH"
+          echo "BRANCH=$BRANCH" >> $GITHUB_ENV
+
+      - name: Determine changed locations
+        run: |
+          CHANGED_HOSTS=$(git diff --diff-filter=d --name-only origin/$BRANCH | grep host_vars/ | awk -F/ '{print $2}' | sed -z 's/\n/,/g')
+          echo "Building for $CHANGED_HOSTS"
+          echo "CHANGED_HOSTS=$CHANGED_HOSTS" >> $GITHUB_ENV
+          CHANGED_LOCATIONS=$(git diff --diff-filter=d --name-only origin/$BRANCH | grep location_ | awk -F/ '{print $2}' | awk -F_ '{print $2"*"}' | sed -z 's/\n/,/g')
+          echo "Building for $CHANGED_LOCATIONS"
+          echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> $GITHUB_ENV
+
+      - name: Build changed locations
+        run: |
+          ansible-playbook play.yml --tags image --limit $CHANGED_HOSTS,$CHANGED_LOCATIONS
+
+      - name: Store build output
+        uses: actions/upload-artifact@v1
+        with:
+          name: ansibleimages
+          path: /tmp/ansible-openwrt/images
