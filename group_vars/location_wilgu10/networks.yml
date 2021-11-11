@@ -1,6 +1,11 @@
 ---
 ipv6_prefix: "2001:bf7:860:900::/56"
 
+# Disable noping as we use dhcp and static assignments
+# both in w10-host network
+dhcp_no_ping: false
+
+
 # Mesh: 10.230.210.104/29
 networks:
   - vid: 10
@@ -46,6 +51,14 @@ networks:
     name: prdhcp
     role: ext
     untagged: true
+
+  - vid: 50
+    role: dhcp
+    name: w10host
+    prefix: 10.31.124.32/28
+    ipv6_subprefix: 50
+    assignments:
+      wilgu10-core: 1
 
 location__channel_assignments_11a_standard__to_merge:
   wilgu10-core: 52-80
