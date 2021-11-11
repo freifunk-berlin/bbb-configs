@@ -32,6 +32,13 @@ config domain 'frei_funk'
 {% endif %}
 
 {% endfor %}
+
+{% for network in networks | rejectattr('role','equalto','dhcp') %}
+config dhcp 'dhcp_{{ network['name'] if 'name' in network else network['role'] }}'
+	option interface '{{ network['name'] if 'name' in network else network['role'] }}'
+	option ignore '1'
+{% endfor %}
+
 config odhcpd 'odhcpd'
 	option maindhcp '0'
 	option leasefile '/tmp/hosts/odhcpd'
