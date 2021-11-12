@@ -62,7 +62,7 @@ config InterfaceDefaults
 config Interface
 	option ignore '0'
 	option interface '{{ interface['name'] }}'
-	option Mode 'ether'
+	option Mode '{{ 'ether' if interface.get('ptp') else 'mesh' }}'
   {% endfor %}
 
   {% if mgmt is defined %}
