@@ -10,6 +10,7 @@ networks:
     prefix: 10.31.82.140/32
     ipv6_subprefix: -2
     mesh_metric: 1024
+    ptp: true
 
   - vid: 11
     role: mesh
@@ -18,6 +19,7 @@ networks:
     ipv6_subprefix: -3
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.3']
+    ptp: true
     
   - vid: 20
     role: mesh

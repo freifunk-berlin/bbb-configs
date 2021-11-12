@@ -73,6 +73,7 @@ networks:
     prefix: 10.31.11.97/29
     ipv6_subprefix: -5
     mesh_metric: 256
+    ptp: true
 
   - vid: 42
     role: mesh

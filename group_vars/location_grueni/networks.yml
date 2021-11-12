@@ -9,6 +9,7 @@ networks:
     ipv6_subprefix: -1
     assignments:
       grueni-core: 0
+    ptp: true
 
   - vid: 40
     role: dhcp

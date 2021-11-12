@@ -29,6 +29,7 @@ networks:
     assignments:
       hds-core: 1
       hds-saarbruecker: 2
+    ptp: true
 
   - vid: 107
     role: mesh
@@ -38,6 +39,7 @@ networks:
     assignments:
       hds-core: 1
       hds-simeon: 2
+    ptp: true
 
   - vid: 108
     role: mesh
@@ -47,6 +49,7 @@ networks:
     assignments:
       hds-core: 1
       hds-sama: 2
+    ptp: true
 
 # Not in use?
 #  - vid: 200

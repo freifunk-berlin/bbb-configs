@@ -8,6 +8,7 @@ networks:
     name: mesh_sama
     prefix: 10.31.77.192/32
     ipv6_subprefix: -1
+    ptp: true
 
   - vid: 40
     role: dhcp

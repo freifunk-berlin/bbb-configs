@@ -7,6 +7,7 @@ networks:
     name: mesh_emma
     prefix: 10.31.18.130/32
     ipv6_subprefix: -1
+    ptp: true
 
   - vid: 11
     role: mesh
@@ -14,6 +15,7 @@ networks:
     prefix: 10.31.19.8/32
     ipv6_subprefix: -2
     mesh_metric: 256
+    ptp: true
 
   - vid: 12
     role: mesh
@@ -21,6 +23,7 @@ networks:
     prefix: 10.31.38.204/32
     ipv6_subprefix: -3
     mesh_metric: 256
+    ptp: true
 
   - vid: 40
     role: dhcp

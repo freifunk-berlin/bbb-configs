@@ -8,12 +8,14 @@ networks:
     name: mesh_sama
     prefix: 10.31.74.220/32
     ipv6_subprefix: -1
+    ptp: true
 
   - vid: 11
     role: mesh
     name: mesh_zwingli
     prefix: 10.31.74.221/32
     ipv6_subprefix: -2
+    ptp: true
 
   - vid: 40
     role: dhcp

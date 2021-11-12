@@ -13,6 +13,7 @@ networks:
     name: mesh_sama
     prefix: 10.230.210.104/32
     ipv6_subprefix: -1
+    ptp: true
 
   - vid: 20
     role: mesh

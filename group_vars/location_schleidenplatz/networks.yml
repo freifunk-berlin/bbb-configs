@@ -9,6 +9,7 @@ networks:
     ipv6_subprefix: -1
     assignments:
       schleidenplatz-core: 0
+    ptp: true
 
   - vid: 11
     role: mesh
@@ -17,6 +18,7 @@ networks:
     ipv6_subprefix: -2
     assignments:
       schleidenplatz-core: 0
+    ptp: true
 
   - vid: 12
     role: mesh
@@ -25,6 +27,7 @@ networks:
     ipv6_subprefix: -3
     assignments:
       schleidenplatz-core: 0
+    ptp: true
 
   - vid: 40
     role: dhcp

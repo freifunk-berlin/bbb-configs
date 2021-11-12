@@ -7,6 +7,7 @@ networks:
     name: mesh_emma
     prefix: 10.31.98.188/32
     ipv6_subprefix: -1
+    ptp: true
 
   - vid: 40
     role: dhcp

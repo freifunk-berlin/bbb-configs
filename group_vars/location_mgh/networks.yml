@@ -7,6 +7,7 @@ networks:
     name: mesh_simeon
     prefix: 10.31.30.155/32
     ipv6_subprefix: -1
+    ptp: true
 
   - vid: 42
     role: mgmt
