@@ -2,7 +2,7 @@
 
 location: zwingli
 role: corerouter
-model: "glinet_gl-b1300"
+model: "tplink_tl-wdr4900-v1"
 
 wireless_profile: freifunk_default
 

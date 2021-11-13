@@ -12,7 +12,7 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      zwingli-core-neu: 1
+      zwingli-core: 1
       zwingli-switch: 2
 # af60-lr
       zwingli-sama: 3
@@ -30,7 +30,7 @@ networks:
     inbound_filtering: true
     enforce_client_isolation: true
     assignments:
-      zwingli-core-neu: 1
+      zwingli-core: 1
 
 
 # 10.31.115.32/28 Mesh Prefix (16)
