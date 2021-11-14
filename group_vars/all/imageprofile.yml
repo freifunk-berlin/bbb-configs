@@ -10,7 +10,7 @@ all__packages__to_merge:
   - collectd-mod-ping
   - vnstat
   - -ppp
-  - -ppp-mod-ppoe
+  - -ppp-mod-pppoe
   - -wpad-basic
   - -wpad-basic-wolfssl
   - hostapd-wolfssl
