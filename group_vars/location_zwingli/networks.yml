@@ -18,6 +18,16 @@ networks:
       zwingli-sama: 3
       zwingli-rhnk: 4
       zwingli-agym: 5
+# local aps 2ghz
+      zwingli-nord-nf-2ghz: 10
+      zwingli-ost-nf-2ghz: 11
+      zwingli-sued-nf-2ghz: 12
+      zwingli-west-nf-2ghz: 13
+# local aps 5ghz
+      zwingli-nord-nf-5ghz: 14
+      zwingli-ost-nf-5ghz: 15
+      zwingli-sued-nf-5ghz: 16
+      zwingli-west-nf-5ghz: 17
 # 5ghz sectors
       zwingli-nord-5ghz: 20
       zwingli-nord-5ghz-alt: 21
@@ -80,6 +90,83 @@ networks:
     ipv6_subprefix: -7
     mesh_metric: 128
     ptp: true
+
+  # 11s mesh 2ghz
+  - vid: 20
+    role: mesh
+    name: mesh_11s_n2
+    prefix: 10.31.115.39/32
+    ipv6_subprefix: -8
+    mesh_metric: 1024
+    mesh_ap: zwingli-nord-nf-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+  - vid: 21
+    role: mesh
+    name: mesh_11s_o2
+    prefix: 10.31.115.40/32
+    ipv6_subprefix: -9
+    mesh_metric: 1024
+    mesh_ap: zwingli-ost-nf-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+  - vid: 22
+    role: mesh
+    name: mesh_11s_s2
+    prefix: 10.31.115.41/32
+    ipv6_subprefix: -10
+    mesh_metric: 1024
+    mesh_ap: zwingli-sued-nf-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+  - vid: 23
+    role: mesh
+    name: mesh_11s_w2
+    prefix: 10.31.115.42/32
+    ipv6_subprefix: -11
+    mesh_metric: 1024
+    mesh_ap: zwingli-west-nf-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # 11s mesh 5ghz
+  - vid: 24
+    role: mesh
+    name: mesh_11s_n5
+    prefix: 10.31.115.43/32
+    ipv6_subprefix: -12
+    mesh_metric: 1024
+    mesh_ap: zwingli-nord-nf-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+  - vid: 25
+    role: mesh
+    name: mesh_11s_o5
+    prefix: 10.31.115.44/32
+    ipv6_subprefix: -13
+    mesh_metric: 1024
+    mesh_ap: zwingli-ost-nf-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+  - vid: 26
+    role: mesh
+    name: mesh_11s_s5
+    prefix: 10.31.115.45/32
+    ipv6_subprefix: -14
+    mesh_metric: 1024
+    mesh_ap: zwingli-sued-nf-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+  - vid: 27
+    role: mesh
+    name: mesh_11s_w5
+    prefix: 10.31.115.46/32
+    ipv6_subprefix: -15
+    mesh_metric: 1024
+    mesh_ap: zwingli-west-nf-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
 
 # Prelimary Switchports:
 # 1: zwingli-core

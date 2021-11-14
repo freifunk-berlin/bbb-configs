@@ -1,0 +1,7 @@
+---
+
+location: zwingli
+role: ap
+model: ubnt_nanostation-m2_xm
+
+wireless_profile: zwingli_spezial
