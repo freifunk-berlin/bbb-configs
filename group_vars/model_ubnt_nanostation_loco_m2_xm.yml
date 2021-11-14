@@ -6,9 +6,7 @@ target: ath79/generic
 
 int_port: eth0
 
-# low-mem hack
-device_disabled_services__to_merge:
-  - "uhttpd"
+low_mem: true
 
 wireless_devices:
   - name: 11g_standard

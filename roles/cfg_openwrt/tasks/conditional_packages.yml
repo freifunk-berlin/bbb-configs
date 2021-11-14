@@ -11,3 +11,43 @@
   when:
     - airos_dfs_reset|default([])|length > 0
     - role == 'corerouter'
+
+- name: "Add zram-swap on low mem and big flash"
+  set_fact:
+    packages: "{{ packages + ['zram-swap'] }}"
+  when:
+    - low_mem | default(false)
+    - not (low_flash | default(false))
+
+- name: "Add zram-swap on low mem and big flash"
+  set_fact:
+    packages: "{{ packages + ['zram-swap'] }}"
+  when:
+    - low_mem | default(false)
+    - not (low_flash | default(false))
+
+- name: "Remove packages on low mem and low flash"
+  set_fact:
+    packages: "{{ packages + ['-' + item] }}"
+  when: low_mem | default(false) or low_flash | default(false)
+  loop:
+    - luci-ssl
+    - kmod-usb2
+    - kmod-usb-ehci
+    - kmod-usb-ohci
+    - kmod-phy-ath79-usb
+    - kmod-usb-core
+    - kmod-nls-base
+    - iptables
+    - ip6tables
+    - kmod-nf-ipt
+    - kmod-ipt-core
+    - kmod-ipt-offload
+
+- name: "replace tcpdump with mini version on low flash"
+  set_fact:
+    packages: "{{ packages + [item] }}"
+  when: low_flash | default(false)
+  loop:
+    - -tcpdump
+    - tcpdump-mini
