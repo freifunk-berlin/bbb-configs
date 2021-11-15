@@ -19,13 +19,6 @@
     - low_mem | default(false)
     - not (low_flash | default(false))
 
-- name: "Add zram-swap on low mem and big flash"
-  set_fact:
-    packages: "{{ packages + ['zram-swap'] }}"
-  when:
-    - low_mem | default(false)
-    - not (low_flash | default(false))
-
 - name: "Remove packages on low mem and low flash"
   set_fact:
     packages: "{{ packages + ['-' + item] }}"
