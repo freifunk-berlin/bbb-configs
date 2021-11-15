@@ -1,0 +1,107 @@
+---
+ipv6_prefix: "2001:bf7:830:9f00::/56"
+
+# Rhxb got following prefixes:
+# DHCP: 10.31.128.0/23
+# Router: 10.31.126.0/24
+# --MGMT: 10.31.126.0/25
+# --MESH: 10.31.126.128/28 {as /32}
+
+# Disable noping as we use dhcp and static assignments
+# both in mgmt network
+dhcp_no_ping: false
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_ipb
+    prefix: 10.31.126.128/32
+    ipv6_subprefix: -1
+    mesh_metric: 128
+    ptp: true
+
+  - vid: 11
+    role: mesh
+    name: mesh_flughafen
+    prefix: 10.230.89.129/32
+    ipv6_subprefix: -2
+    ptp: true
+
+  - vid: 12
+    role: mesh
+    name: mesh_manstein
+    prefix: 10.230.89.130/32
+    ipv6_subprefix: -3
+    ptp: true
+
+  - vid: 13
+    role: mesh
+    name: mesh_emmaus
+    prefix: 10.230.89.131/32
+    ipv6_subprefix: -4
+    ptp: true
+
+  - vid: 14
+    role: mesh
+    name: mesh_rhnk
+    prefix: 10.230.89.132/32
+    ipv6_subprefix: -5
+    ptp: true
+
+  - vid: 20
+    role: mesh
+    name: mesh_no_5ghz
+    prefix: 10.230.89.133/32
+    ipv6_subprefix: -6
+
+  - vid: 21
+    role: mesh
+    name: mesh_nw_5ghz
+    prefix: 10.230.89.134/32
+    ipv6_subprefix: -7
+
+  - vid: 22
+    role: mesh
+    name: mesh_sw_5ghz
+    prefix: 10.230.89.135/32
+    ipv6_subprefix: -8
+
+  - vid: 23
+    role: mesh
+    name: mesh_so_5ghz
+    prefix: 10.230.89.136/32
+    ipv6_subprefix: -9
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.128.0/23
+    ipv6_subprefix: 0
+    assignments:
+      rhxb-core: 1
+
+  - vid: 42
+    name: mgmt
+    role: dhcp # we wanna do dhcp for the access points
+    prefix: 10.31.126.0/25
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      rhxb-core: 1
+      rhxb-switch-roof: 2
+      rhxb-cloudkey: 3
+
+      #p2p
+      rhxb-ipb: 4
+      rhxb-flughafen: 5
+      rhxb-manstein: 6
+      rhxb-emmaus: 7
+      rhxb-rhnk: 8
+
+      # antenna 5ghz
+      rhxb-no-5ghz: 10
+      rhxb-nw-5ghz: 11
+      rhxb-sw-5ghz: 12
+      rhxb-so-5ghz: 13

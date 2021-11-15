@@ -1,0 +1,38 @@
+---
+
+snmp_devices:
+  - hostname: rhxb-ipb
+    address: 10.31.126.4
+    snmp_profile: af60
+
+  - hostname: rhxb-flughafen
+    address: 10.31.126.5
+    snmp_profile: af60
+
+  - hostname: rhxb-manstein
+    address: 10.230.89.6
+    snmp_profile: airos_8
+
+  - hostname: rhxb-emmaus
+    address: 10.230.89.7
+    snmp_profile: airos_8
+
+  - hostname: rhxb-rhnk
+    address: 10.230.89.8
+    snmp_profile: af60
+
+  - hostname: rhxb-no-5ghz
+    address: 10.230.89.10
+    snmp_profile: airos_6
+
+  - hostname: rhxb-nw-5ghz
+    address: 10.230.89.11
+    snmp_profile: airos_6
+
+  - hostname: rhxb-sw-5ghz
+    address: 10.230.89.12
+    snmp_profile: airos_6
+
+  - hostname: rhxb-so-5ghz
+    address: 10.230.89.13
+    snmp_profile: airos_6
