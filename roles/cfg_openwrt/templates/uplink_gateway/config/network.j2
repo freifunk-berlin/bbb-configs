@@ -9,7 +9,11 @@ config interface 'uplink'
 	option ifname '{{ uplink['ifname'] }}'
 	option proto 'static'
 	option ipaddr '{{ uplink['ipv4'] }}'
+{% if uplink['ipv4'] | ipaddr('prefix') >= 30 %}
 	option gateway '{{ uplink['ipv4'] | ipaddr('peer') }}'
+{% else %}
+	option gateway '{{ uplink['ipv4'] | ipaddr('1') | ipaddr('address') }}'
+{% endif %}
 	option ip6addr '{{ uplink['ipv6'] }}'
 
 
