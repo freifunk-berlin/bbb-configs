@@ -40,6 +40,7 @@ config forwarding
 	option src		freifunk
 	option dest		freifunk
 
+{% if 'ipv6' in uplink %}
 config rule
 	option name             "Allow BGP"
 	option src		uplink
@@ -47,6 +48,7 @@ config rule
 	option proto		tcp
 	option dest_port        179
 	option target		ACCEPT
+{% endif %}
 
 config rule
 	option name             "Allow conntrack sync"

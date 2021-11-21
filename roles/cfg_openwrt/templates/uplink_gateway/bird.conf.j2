@@ -1,3 +1,4 @@
+{% if 'ipv6' in uplink %}
 #loglevel syslog all;
 # debug protocols all;
 
@@ -43,3 +44,4 @@ protocol bgp {
 		export filter export_aggregates;
 	};
 }
+{% endif %}

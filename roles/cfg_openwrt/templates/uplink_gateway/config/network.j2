@@ -14,8 +14,9 @@ config interface 'uplink'
 {% else %}
 	option gateway '{{ uplink['ipv4'] | ipaddr('1') | ipaddr('address') }}'
 {% endif %}
+{% if 'ipv6' in uplink %}
 	option ip6addr '{{ uplink['ipv6'] }}'
-
+{% endif %}
 
 {% for interface in mesh_links|default([]) %}
 config interface '{{ interface['name'] }}'
