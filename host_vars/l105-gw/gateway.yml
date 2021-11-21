@@ -1,0 +1,57 @@
+---
+
+# L105 got following prefixes:
+# Router: 10.31.127.128/25 2001:bf7:750:3f00::/56 
+# --MGMT: 10.31.127.128/27
+# --MESH: 10.31.127.160/27 {as /32}
+# Not Used: 10.31.127.192/26
+
+# Disable noping as we use dhcp and static assignments
+# both in mgmt network
+
+uplink:
+  ifname: eth0
+  ipv4: 77.87.49.8/28
+#  ipv6: ToDo
+
+mgmt:
+  ifname: eth1.42
+  ipv4: 10.31.127.129/29
+  ipv6: 2001:bf7:750:3f00::/64
+
+# .129 gw
+# .130 poe
+# .131 mesh_rhxb
+# .132 mesh_tu
+
+# Mesh Network: 10.31.83.56/30
+mesh_links:
+  - name: mesh_rhxb
+    ifname: eth1.10
+    ipv4: 10.31.127.160/32
+    ipv6: 2001:bf7:750:3f01::1/128 
+    metric: 128
+    ptp: true
+
+  - name: mesh_tu
+    ifname: eth1.11
+    ipv4: 10.31.127.161/32
+    ipv6: 2001:bf7:750:3f01::2/128
+    metric: 128
+    ptp: true
+
+# Downlink IPv4 is in net announced by emma.
+
+sgw: "1000000 1000000"
+# OLSR Announce SmartGateway
+
+tunnel_metric: 1024
+# Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
+# 2001:bf7:760:2200::/56 is the base prefix
+
+wireguard_base_prefix: 2001:bf7:750:3f02::/64
+gre_base_prefix: 2001:bf7:750:3f03::/64
+
+ 
+# gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
+gre_tunnel_alias: l105
