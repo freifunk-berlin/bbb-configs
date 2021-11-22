@@ -98,7 +98,7 @@
 - name: Find output image
   find:
     paths: "{{ imagebuild_dir }}/bin/"
-    patterns: "*-sysupgrade.*"
+    patterns: "{{ image_search_pattern }}"
     recurse: true
   register: image_list
 
@@ -108,7 +108,7 @@
 
 - name: Declare target
   set_fact:
-    image: "{{ image_dir }}/{{ inventory_hostname }}{{ image_src | splitext | last }}"
+    image: "{{ image_dir }}/{{ inventory_hostname }}.{{ ((image_src | split('.'))[2:]) | join('.') }}"
 
 - name: Copy Image to Image dir
   copy:

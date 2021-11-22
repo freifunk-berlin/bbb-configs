@@ -34,3 +34,5 @@ sysupgrade_preserve_custom_files:
   - /etc/wireguard/wg.pub
   - /etc/wireguard/wg.key
   - /root/
+
+image_search_pattern: "*-sysupgrade.*"
