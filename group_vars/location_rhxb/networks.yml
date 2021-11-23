@@ -29,7 +29,7 @@ networks:
 
   - vid: 12
     role: mesh
-    name: mesh_manstein
+    name: mesh_rhnk
     prefix: 10.230.89.130/32
     ipv6_subprefix: -3
     ptp: true
@@ -43,7 +43,7 @@ networks:
 
   - vid: 14
     role: mesh
-    name: mesh_rhnk
+    name: mesh_manstein
     prefix: 10.230.89.132/32
     ipv6_subprefix: -5
     ptp: true
