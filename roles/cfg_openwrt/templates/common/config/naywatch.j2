@@ -3,7 +3,7 @@
 {% if 'naywatch' in packages %}
 config naywatch general
     option check_interval   '30'
-    option watchdog_timeout '60'
+    option watchdog_timeout '120'
     option use_watchdog     '1'
     option save_logs        '1'
 {% for network in networks %}
