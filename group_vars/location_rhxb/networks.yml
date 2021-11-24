@@ -86,7 +86,7 @@ networks:
     prefix: 10.230.89.138/32
     ipv6_subprefix: -9
 
-  - vid: 23
+  - vid: 24
     role: mesh
     name: mesh_nw_ac
     prefix: 10.230.89.139/32
