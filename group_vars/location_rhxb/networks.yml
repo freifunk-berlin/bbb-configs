@@ -99,9 +99,11 @@ networks:
       rhxb-manstein: 6
       rhxb-emmaus: 7
       rhxb-rhnk: 8
+      rhxb-technikmuseum: 9
 
       # antenna 5ghz
       rhxb-no-5ghz: 10
       rhxb-nw-5ghz: 11
       rhxb-sw-5ghz: 12
       rhxb-so-5ghz: 13
+      rhxb-simeon: 14
