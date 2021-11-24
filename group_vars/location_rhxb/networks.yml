@@ -48,28 +48,42 @@ networks:
     ipv6_subprefix: -5
     ptp: true
 
+  - vid: 15
+    role: mesh
+    name: mesh_simeon
+    prefix: 10.230.89.133/32
+    ipv6_subprefix: -6
+    ptp: true
+
+  - vid: 16
+    role: mesh
+    name: mesh_technik
+    prefix: 10.230.89.134/32
+    ipv6_subprefix: -7
+    ptp: true
+
   - vid: 20
     role: mesh
     name: mesh_no_5ghz
-    prefix: 10.230.89.133/32
+    prefix: 10.230.89.135/32
     ipv6_subprefix: -6
 
   - vid: 21
     role: mesh
     name: mesh_nw_5ghz
-    prefix: 10.230.89.134/32
+    prefix: 10.230.89.136/32
     ipv6_subprefix: -7
 
   - vid: 22
     role: mesh
     name: mesh_sw_5ghz
-    prefix: 10.230.89.135/32
+    prefix: 10.230.89.137/32
     ipv6_subprefix: -8
 
   - vid: 23
     role: mesh
     name: mesh_so_5ghz
-    prefix: 10.230.89.136/32
+    prefix: 10.230.89.138/32
     ipv6_subprefix: -9
 
   - vid: 40
