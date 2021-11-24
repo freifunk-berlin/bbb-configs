@@ -86,6 +86,12 @@ networks:
     prefix: 10.230.89.138/32
     ipv6_subprefix: -9
 
+  - vid: 23
+    role: mesh
+    name: mesh_nw_ac
+    prefix: 10.230.89.139/32
+    ipv6_subprefix: -10
+
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -121,3 +127,4 @@ networks:
       rhxb-sw-5ghz: 12
       rhxb-so-5ghz: 13
       rhxb-simeon: 14
+      rhxb-nw-ac: 15
