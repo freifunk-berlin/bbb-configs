@@ -1,0 +1,38 @@
+---
+# ipv6_prefix: "::/56" # TODO
+
+# Disable noping as we use dhcp and static assignments
+# both in mgmt network
+dhcp_no_ping: false
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_alboin
+    prefix: 10.36.163.97/30
+    ipv6_subprefix: -1
+    mesh_metric: 128
+    ptp: true
+
+  - vid: 20
+    role: mesh
+    name: mesh_rhxb
+    prefix: 10.36.163.101/30
+    ipv6_subprefix: -2
+    mesh_metric: 128
+    ptp: true
+
+  - vid: 30
+    role: mesh
+    name: mesh_feld
+    prefix: 10.36.163.105/30
+    ipv6_subprefix: -3
+    mesh_metric: 128
+    ptp: true
+
+  - vid: 40
+    role: mesh
+    name: mesh_lora
+    prefix: 10.36.163.105/30
+    ipv6_subprefix: -4
+    ptp: true

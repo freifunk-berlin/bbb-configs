@@ -1,0 +1,7 @@
+---
+
+location: flughafen
+role: corerouter
+model: "ubnt_edgerouter-x"
+
+wireless_profile: freifunk_default
