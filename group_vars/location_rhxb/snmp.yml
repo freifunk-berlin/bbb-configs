@@ -21,6 +21,10 @@ snmp_devices:
     address: 10.230.89.8
     snmp_profile: af60
 
+  - hostname: rhxb-technikmuseum
+    address: 10.230.89.9
+    snmp_profile: airos_6
+
   - hostname: rhxb-no-5ghz
     address: 10.230.89.10
     snmp_profile: airos_6
@@ -36,3 +40,11 @@ snmp_devices:
   - hostname: rhxb-so-5ghz
     address: 10.230.89.13
     snmp_profile: airos_6
+
+  - hostname: rhxb-simeon
+    address: 10.230.89.14
+    snmp_profile: airos_8
+
+  - hostname: rhxb-nw-ac
+    address: 10.230.89.15
+    snmp_profile: airos_8
