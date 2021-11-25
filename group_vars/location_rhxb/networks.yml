@@ -25,6 +25,7 @@ networks:
     name: mesh_flughafen
     prefix: 10.230.89.129/32
     ipv6_subprefix: -2
+    mesh_metric: 128
     ptp: true
 
   - vid: 12
@@ -32,6 +33,7 @@ networks:
     name: mesh_rhnk
     prefix: 10.230.89.130/32
     ipv6_subprefix: -3
+    mesh_metric: 128
     ptp: true
 
   - vid: 13
