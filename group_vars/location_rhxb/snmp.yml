@@ -48,3 +48,8 @@ snmp_devices:
   - hostname: rhxb-nw-ac
     address: 10.230.89.15
     snmp_profile: airos_8
+
+  # l105
+  - hostname: l105-rhxb
+    address: 10.31.127.160
+    snmp_profile: af60
