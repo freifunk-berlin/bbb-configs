@@ -1,7 +1,7 @@
 ---
 
 snmp_devices:
-  - hostname: rhxb-ipb
+  - hostname: rhxb-l105
     address: 10.31.126.4
     snmp_profile: af60
 
