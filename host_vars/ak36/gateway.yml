@@ -1,0 +1,84 @@
+---
+
+# L105 got following prefixes:
+# Router: 10.31.130.128/26 2001:bf7:750:4000::/56
+# --MGMT: 10.31.130.128/27
+# --MESH: 10.31.130.160/27 {as /32}
+
+# Disable noping as we use dhcp and static assignments
+# both in mgmt network
+
+ipv6_prefix: 2001:bf7:750:4000::/56
+
+uplink:
+  ifname: lan2.301
+  ipv4: 77.87.51.11/25
+#  ipv6: ToDo
+
+mgmt:
+  ifname: lan2.42
+  ipv4: 10.31.130.129/27
+  ipv6: 2001:bf7:750:4000::/64
+
+# .129 gw
+# .130 ak36-poe-rack
+# .131 ak36-poe-roof
+# .132 ak36-philmel
+# .133 ak36-flughafen
+# .134 ak36-dtmb
+# .135 ak36-friedenau
+# .135 ak36-m2
+# .136
+# .137
+
+# Mesh Network: 10.31.130.160/27
+mesh_links:
+  - name: mesh_philmel
+    ifname: lan2.10
+    ipv4: 10.31.130.160/32
+    ipv6: 2001:bf7:750:4001::1/128
+    metric: 1024
+    ptp: true
+
+  - name: mesh_flughafen
+    ifname: lan2.11
+    ipv4: 10.31.130.161/32
+    ipv6: 2001:bf7:750:4001::2/128
+    metric: 1024
+    ptp: true
+
+  - name: mesh_dtmb
+    ifname: lan2.12
+    ipv4: 10.31.130.162/32
+    ipv6: 2001:bf7:750:4001::3/128
+    metric: 1024
+    ptp: true
+
+  - name: mesh_friedenau
+    ifname: lan2.13
+    ipv4: 10.31.130.163/32
+    ipv6: 2001:bf7:750:4001::4/128
+    metric: 1024
+    ptp: true
+
+  - name: mesh_backbone
+    ifname: lan2.198
+    ipv4: 10.31.130.164/32
+    ipv6: 2001:bf7:750:4001::5/128
+    metric: 1024
+    ptp: true
+
+# Downlink IPv4 is in net announced by emma.
+
+sgw: "1000000 1000000"
+# OLSR Announce SmartGateway
+
+tunnel_metric: 1024
+# Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
+
+wireguard_base_prefix: 2001:bf7:750:4002::/64
+gre_base_prefix: 2001:bf7:750:4003::/64
+
+ 
+# gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
+gre_tunnel_alias: ak36
