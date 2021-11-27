@@ -9,6 +9,8 @@
 # Disable noping as we use dhcp and static assignments
 # both in mgmt network
 
+ipv6_prefix: 2001:bf7:750:3f00::/56
+
 uplink:
   ifname: eth0
   ipv4: 77.87.49.8/28

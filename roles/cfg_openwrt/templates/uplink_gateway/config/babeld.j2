@@ -33,14 +33,10 @@ config filter
 	option 'proto'	'12'
 	option 'action' 'src-prefix {{ freifunk_global_prefix }}'
 
-{% if mgmt is defined %}
-# Redistribute local MGMT prefix
 config filter
 	option 'type'	'redistribute'
-	option 'local'  'true'
-	option 'ip'	'{{ mgmt['ipv6'] | ipaddr('network/prefix') }}'
-	option 'eq'	'{{ mgmt['ipv6'] | ipaddr('prefix') }}'
-{% endif %}
+	option 'ip'	'{{ ipv6_prefix }}'
+	option 'eq'	'{{ ipv6_prefix | ipaddr('prefix') }}'
 
 # Finally Prohibit distribution of all local networks. (.. but allow non-local networks, e.g learned via tunnel)
 config filter

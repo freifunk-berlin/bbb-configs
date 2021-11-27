@@ -8,9 +8,9 @@ config interface 'loopback'
 	option ipaddr '127.0.0.1'
 	option netmask '255.0.0.0'
 {% if role == 'corerouter' %}
-	option dns '{{ dns_servers | join(' ') }}'
+  option dns '{{ dns_servers | join(' ') }}'
   {% if ipv6_prefix is defined %}
-	option ip6addr '{{ ipv6_prefix }}'
+  option ip6addr '{{ ipv6_prefix }}'
   {% endif %}
 {% endif %}
 

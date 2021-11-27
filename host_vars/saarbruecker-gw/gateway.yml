@@ -1,4 +1,5 @@
 ---
+ipv6_prefix: 2001:bf7:760:2201::/56
 
 uplink:
   ifname: lan3
