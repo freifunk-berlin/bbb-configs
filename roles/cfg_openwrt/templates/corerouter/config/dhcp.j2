@@ -39,6 +39,15 @@ config dhcp 'dhcp_{{ network['name'] if 'name' in network else network['role'] }
 	option ignore '1'
 {% endfor %}
 
+{% for network in networks | selectattr('role','equalto','dhcp') %}
+{% for assignment in network['assignments'] %}
+config host
+	option name '{{ assignment }}'
+	option ip '{{ network['prefix'] | ipaddr(network['assignments'][assignment]) | ipaddr('address') }}'
+
+{% endfor %}
+{% endfor %}
+
 config odhcpd 'odhcpd'
 	option maindhcp '0'
 	option leasefile '/tmp/hosts/odhcpd'
