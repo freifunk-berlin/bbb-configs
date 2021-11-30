@@ -1,0 +1,41 @@
+config dnsmasq
+	option domainneeded '1'
+	option localise_queries '1'
+	option rebind_protection '1'
+	option rebind_localhost '1'
+	option local '/lan/'
+	option domain 'lan'
+	option expandhosts '1'
+	option authoritative '1'
+	option readethers '1'
+	option leasefile '/tmp/dhcp.leases'
+	option resolvfile '/tmp/resolv.conf.auto'
+	option localservice '1'
+	option noping '{{ dhcp_no_ping|int if dhcp_no_ping is defined else 1 }}'
+	option quietdhcp '1'
+	list notinterface '{{ uplink['ifname'] }}'
+
+{% for link in mesh_links %}
+config dhcp 'dhcp_{{ link['name'] }}'
+	option interface '{{ link['name'] }}'
+	option ignore '1'
+{% endfor %}
+
+{% for gateway in groups['role_uplink_gateway'] | difference([inventory_hostname]) %}
+{% set name = hostvars[gateway]['gre_tunnel_alias'] %}
+config dhcp 'dhcp_{{ name }}'
+	option interface '{{ name }}'
+	option ignore '1'
+
+{% endfor %}
+
+config dhcp 'uplink'
+	option interface 'uplink'
+	option ignore '1'
+
+config dhcp 'mgmt'
+	option interface 'mgmt'
+	option ignore '1'
+
+config odhcpd 'odhcpd'
+	option ignore '1'

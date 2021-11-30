@@ -38,5 +38,4 @@ role_uplink_gw__packages__to_merge:
   - samplicator
 
 role_uplink_gw__disabled_services__to_merge:
-  - "dnsmasq"
   - "odhcpd"
