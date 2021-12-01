@@ -3,3 +3,6 @@
 location: ak36
 role: uplink_gateway
 model: "mikrotik_routerboard-750gr3"
+
+ak36__disabled_services__to_merge:
+  - "bird"

@@ -5,3 +5,6 @@ role: uplink_gateway
 model: "x86-64"
 
 image_search_pattern: "*-ext4-combined.img*"
+
+l105__disabled_services__to_merge:
+  - "bird"
