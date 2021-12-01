@@ -11,7 +11,6 @@ config dnsmasq
 	option leasefile '/tmp/dhcp.leases'
 	option resolvfile '/tmp/resolv.conf.auto'
 	option localservice '1'
-	option noping '{{ dhcp_no_ping|int if dhcp_no_ping is defined else 1 }}'
 	option quietdhcp '1'
 	list notinterface '{{ uplink['ifname'] }}'
 
