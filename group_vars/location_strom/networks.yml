@@ -1,0 +1,15 @@
+---
+ipv6_prefix: "2001:bf7:750:2400::/56"
+
+networks:
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.130.64/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 0
+    assignments:
+      strom-so-5ghz: 6
+      strom-sw-5ghz: 7
+      strom-sw-2ghz: 8
+      strom-so-2ghz: 9
