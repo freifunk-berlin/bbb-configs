@@ -1,0 +1,50 @@
+---
+
+# Strom got following prefixes:
+# Router: 10.31.130.64/26 2001:bf7:750:2400::/56
+# --MGMT: 10.31.130.64/27
+# --MESH: 10.31.130.96/27 {as /32}
+
+# Disable noping as we use dhcp and static assignments
+# both in mgmt network
+
+ipv6_prefix: 2001:bf7:750:2400::/56
+
+uplink:
+  ifname: eth0
+  ipv4: 77.87.51.131/25
+#  ipv6: ToDo
+
+mgmt:
+  ifname: eth1.42
+  ipv4: 10.31.130.65/27
+  ipv6: 2001:bf7:750:2400::/64
+
+# .65 gw
+# .66 poe
+# .67 strom-perleberger
+# .68 strom-tub
+# .69 strom-no-5ghz
+# .70 strom-so-5ghz
+# .71 strom-sw-2ghz
+# .72 strom-so-2ghz
+
+# Mesh Network: 10.31.130.96/27
+mesh_links:
+  - name: mesh_dach
+    ifname: eth1.10
+    ipv4: 10.31.130.96/32
+    ipv6: 2001:bf7:750:2401::1/128
+    metric: 128
+    ptp: true
+
+sgw: "1000000 1000000"
+# OLSR Announce SmartGateway
+
+tunnel_metric: 1024
+
+wireguard_base_prefix: 2001:bf7:750:2402::/64
+gre_base_prefix: 2001:bf7:750:2403::/64
+
+# gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
+gre_tunnel_alias: strom
