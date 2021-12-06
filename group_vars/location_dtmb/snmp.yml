@@ -1,0 +1,22 @@
+---
+
+snmp_devices:
+  - hostname: dtmb-ak36
+    address: 10.31.131.10
+    snmp_profile: airos_6
+
+  - hostname: dtmb-rhxb
+    address: 10.31.131.11
+    snmp_profile: airos_6
+
+  - hostname: dtmb-cbase
+    address: 10.31.131.12
+    snmp_profile: airos_6
+
+  - hostname: dtmb-laden
+    address: 10.31.131.13
+    snmp_profile: airos_6
+
+  - hostname: dtmb-x
+    address: 10.31.131.14
+    snmp_profile: airos_6
