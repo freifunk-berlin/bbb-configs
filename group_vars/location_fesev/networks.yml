@@ -23,6 +23,7 @@ networks:
       fesev-ap1: 4
       fesev-ap2: 5
       fesev-ap3: 6
+      fesev-ap4: 7
 
   - vid: 40
     role: dhcp
@@ -36,14 +37,17 @@ networks:
 location__channel_assignments_11a_standard__to_merge:
   fesev-ap1: 36-40
   fesev-ap2: 40-40
+  fesev-ap4: 60-40
 
 location__channel_assignments_11g_standard__to_merge:
   fesev-ap1: 1-20
-  fesev-ap2: 6-20
-  fesev-ap3: 13-20
+  fesev-ap2: 5-20
+  fesev-ap3: 9-20
+  fesev-ap4: 13-20
 
 # channel-bandwith-txpower in dbm
 
 # ap1: 5ghz
 # ap2: 5ghz
 # ap3: anwohnerblock - 2ghz
+# ap4: 5ghz
