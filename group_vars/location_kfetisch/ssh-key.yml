@@ -1,0 +1,4 @@
+---
+location__ssh_keys__to_merge:
+  - comment: narfpeng
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIONSKWdP3O0EHQei5tLZwCzpXC1CxGVh3FsN1GVJ/c+d id@narf.peng
