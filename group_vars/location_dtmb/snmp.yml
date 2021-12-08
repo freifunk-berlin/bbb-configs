@@ -20,3 +20,15 @@ snmp_devices:
   - hostname: dtmb-x
     address: 10.31.131.14
     snmp_profile: airos_6
+
+  - hostname: dtmb-m2-1
+    address: 10.31.131.20
+    snmp_profile: airos_6
+
+  - hostname: dtmb-m2-2
+    address: 10.31.131.21
+    snmp_profile: airos_6
+
+  - hostname: dtmb-m2-2
+    address: 10.31.131.22
+    snmp_profile: airos_6

@@ -48,6 +48,24 @@ networks:
     prefix: 10.31.131.36/32
     ipv6_subprefix: -6
 
+  - vid: 20
+    role: mesh
+    name: mesh_2ghz_1
+    prefix: 10.31.131.37/32
+    ipv6_subprefix: -7
+
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz_2
+    prefix: 10.31.131.38/32
+    ipv6_subprefix: -8
+
+  - vid: 22
+    role: mesh
+    name: mesh_2ghz_3
+    prefix: 10.31.131.39/32
+    ipv6_subprefix: -9
+
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -68,9 +86,15 @@ networks:
       dtmb-sw1: 2
       dtmb-sw2: 3
 
+      # 5 GHz
       dtmb-ak36: 10
       dtmb-rhxb: 11
       dtmb-cbase: 12
       dtmb-laden: 13
       dtmb-x: 14
       dtmb-y: 15
+
+      # 2 GHz
+      dtmb-m2-1: 20
+      dtmb-m2-2: 21
+      dtmb-m2-2: 22
