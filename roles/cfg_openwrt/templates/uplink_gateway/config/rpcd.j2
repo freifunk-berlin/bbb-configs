@@ -1,0 +1,15 @@
+config rpcd
+	option socket '/var/run/ubus/ubus.sock'
+	option timeout '30'
+
+config login
+	option username 'root'
+	option password '$p$root'
+	list read '*'
+	list write '*'
+
+config login
+	option username 'wginstaller'
+	option password '$1$$Ng2IYjyNwX/yapt7GLBx7/'
+	list read 'wginstaller'
+	list write 'wginstaller'
