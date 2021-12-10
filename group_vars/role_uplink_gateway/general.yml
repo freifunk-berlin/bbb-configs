@@ -68,6 +68,10 @@ inbound_allow:
     dst_port: 22
   - name: 'w10host'
     dst: 2001:bf7:860:932::/64
+  - name: 'rigaer78-core SSH'
+    dst: 2001:bf7:830:9d00::/128
+    proto: tcp
+    dst_port: 22
 #  - name: Rule Description (mandatory)
 #    dst: Destination IP (mandatory)
 #    src: Source IP
