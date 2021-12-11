@@ -1,6 +1,6 @@
 ---
 snmp_devices:
-  - hostname: thf-60-a36
+  - hostname: thf-60-ak36
     address: 10.31.131.131
     snmp_profile: af60
 
@@ -12,7 +12,7 @@ snmp_devices:
     address: 10.31.131.133
     snmp_profile: af60
 
-  - hostname: thf-a36
+  - hostname: thf-ak36
     address: 10.31.131.134
     snmp_profile: airos_6
 
