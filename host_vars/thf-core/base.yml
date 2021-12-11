@@ -1,0 +1,7 @@
+---
+
+location: thf
+role: corerouter
+model: "ubnt_edgerouter-x-sfp"
+
+poe_on: []

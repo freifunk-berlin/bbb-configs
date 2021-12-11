@@ -1,0 +1,86 @@
+---
+ipv6_prefix: "2001:bf7:830:8000::/56"
+
+# THF got following prefixes:
+# DHCP: 10.31.132.0/24
+# Router: 10.31.131.128/25
+# --MGMT: 10.31.131.128/26
+# --MESH: 10.31.131.192/26 {as /32}
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_60_a36
+    prefix: 10.31.131.192/32
+    ipv6_subprefix: -1
+    ptp: true
+
+  - vid: 11
+    role: mesh
+    name: mesh_60_rhxb
+    prefix: 10.31.131.193/32
+    ipv6_subprefix: -2
+    ptp: true
+
+  - vid: 12
+    role: mesh
+    name: mesh_60_emma
+    prefix: 10.31.131.194/32
+    ipv6_subprefix: -3
+    ptp: true
+
+  - vid: 13
+    role: mesh
+    name: mesh_a36
+    prefix: 10.31.131.195/32
+    ipv6_subprefix: -4
+    ptp: true
+
+  - vid: 14
+    role: mesh
+    name: mesh_rhxb
+    prefix: 10.31.131.196/32
+    ipv6_subprefix: -5
+    ptp: true
+
+  - vid: 15
+    role: mesh
+    name: mesh_feld
+    prefix: 10.31.131.197/32
+    ipv6_subprefix: -6
+
+  - vid: 16
+    role: mesh
+    name: mesh_lora
+    prefix: 10.31.131.198/32
+    ipv6_subprefix: -6
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.132.0/24
+    ipv6_subprefix: 0
+    assignments:
+      thf-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.131.128/26
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      thf-core: 1
+      thf-poe: 2
+
+      # 60 ghz
+      thf-60-a36: 3
+      thf-60-rhxb: 4
+      thf-60-emma: 5
+
+      # 5 ghz
+      thf-a36: 6
+      thf-rhxb: 7
+      thf-feld: 8
+      thf-lora: 9
