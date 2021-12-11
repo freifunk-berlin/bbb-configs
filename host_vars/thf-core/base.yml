@@ -4,4 +4,4 @@ location: thf
 role: corerouter
 model: "ubnt_edgerouter-x-sfp"
 
-poe_on: []
+poe_on: [1,2,3,4]
