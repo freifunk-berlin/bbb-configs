@@ -44,3 +44,9 @@
   loop:
     - -tcpdump
     - tcpdump-mini
+
+- name: "Add ip-bridge if dsa target"
+  set_fact:
+    packages: "{{ packages + ['ip-bridge'] }}"
+  when:
+    - dsa_ports is defined
