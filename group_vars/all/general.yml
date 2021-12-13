@@ -36,3 +36,13 @@ sysupgrade_preserve_custom_files:
   - /root/
 
 image_search_pattern: "*-sysupgrade.*"
+
+all_sysctl__to_merge:
+  # when oom kicks in most likely something broke. Panic/Reboot then
+  vm.panic_on_oom: 1
+
+  # resolves an issue where oom acting to early
+  vm.overcommit_memory: 2
+
+  # especially on low mem devices this is important
+  vm.min_free_kbytes: 1024
