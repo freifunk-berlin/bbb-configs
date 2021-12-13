@@ -1,5 +1,5 @@
 config interface 'loopback'
-	option ifname 'lo'
+	option device 'lo'
 	option proto 'static'
 	option ipaddr '127.0.0.1'
 	option netmask '255.0.0.0'
@@ -9,7 +9,7 @@ config interface 'loopback'
 {% endif %}
 
 config interface 'uplink'
-	option ifname '{{ uplink['ifname'] }}'
+	option device '{{ uplink['ifname'] }}'
 	option proto 'static'
 	option ipaddr '{{ uplink['ipv4'] }}'
 {% if uplink['ipv4'] | ipaddr('prefix') >= 30 %}
@@ -23,7 +23,7 @@ config interface 'uplink'
 
 {% for interface in mesh_links|default([]) %}
 config interface '{{ interface['name'] }}'
-	option ifname '{{ interface['ifname'] }}'
+	option device '{{ interface['ifname'] }}'
 	option proto 'static'
 	option ipaddr '{{ interface['ipv4'] }}'
 	option ip6addr '{{ interface['ipv6'] }}'
@@ -31,7 +31,7 @@ config interface '{{ interface['name'] }}'
 
 {% if mgmt is defined %}
 config interface 'mgmt'
-	option ifname '{{ mgmt['ifname'] }}'
+	option device '{{ mgmt['ifname'] }}'
 	option proto 'static'
 	option ipaddr '{{ mgmt['ipv4'] }}'
 	option ip6addr '{{ mgmt['ipv6'] }}'
@@ -49,7 +49,7 @@ config interface '{{ name }}'
 
 config interface '{{ name }}_ip'
 	option proto 'static'
-	option ifname '@{{ name }}'
+	option device '@{{ name }}'
 	option ip6addr '{{ gre_base_prefix | nthhost(loop.index) }}/128'
 
 {% endfor %}

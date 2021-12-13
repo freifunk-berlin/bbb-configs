@@ -3,14 +3,14 @@
 {% set wifi_networks = profile | json_query('ifaces[].network') | default([], true) %}
 
 config interface 'loopback'
-	option ifname 'lo'
+	option device 'lo'
 	option proto 'static'
 	option ipaddr '127.0.0.1'
 	option netmask '255.0.0.0'
 {% if role == 'corerouter' %}
-  option dns '{{ dns_servers | join(' ') }}'
+	option dns '{{ dns_servers | join(' ') }}'
   {% if ipv6_prefix is defined %}
-  option ip6addr '{{ ipv6_prefix }}'
+	option ip6addr '{{ ipv6_prefix }}'
   {% endif %}
 {% endif %}
 
@@ -23,11 +23,14 @@ config interface 'loopback'
 
 {% for network in networks %}
   {% set name = network['name'] if 'name' in network else network['role'] %}
-  {% if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
+  {% set port = ('switch0' if dsa_ports is defined else int_port) + '.' + network['vid']|string %}
+  {% set bridge_needed = name in wifi_networks or network.get('mesh_ap') == inventory_hostname %}
+
+  {%- if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
      or name in wifi_networks
      or network.get('mesh_ap') == inventory_hostname %}
 config interface '{{ name }}'
-	option ifname '{{ 'switch0' if dsa_ports is defined else int_port }}.{{ network['vid'] }}'
+	option device '{{ ('br-' + name) if bridge_needed else port }}'
     {% if 'assignments' in network and inventory_hostname in network['assignments'] %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) }}'
@@ -46,15 +49,19 @@ config interface '{{ name }}'
     {% else %}
 	option proto 'none'
     {% endif %}
-    {% if name in wifi_networks or network.get('mesh_ap') == inventory_hostname %}
-        option type 'bridge'
-    {% endif %}
   {% endif %}
   {% if role == 'corerouter' and ipv6_prefix is defined %}
     {% if 'ipv6_subprefix' in network %}
       {% set subprefix = ipv6_prefix | ipsubnet('64', network['ipv6_subprefix']) %}
 	option ip6addr '{{ subprefix | ipaddr(1) | ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
     {% endif %}
+  {% endif %}
+
+  {% if bridge_needed %}
+config device
+	option name 'br-{{ name }}'
+        option type 'bridge'
+	list ports '{{ port }}'
   {% endif %}
 
 {% endfor %}
