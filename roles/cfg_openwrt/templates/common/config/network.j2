@@ -25,12 +25,15 @@ config interface 'loopback'
   {% set name = network['name'] if 'name' in network else network['role'] %}
   {% set port = ('switch0' if dsa_ports is defined else int_port) + '.' + network['vid']|string %}
   {% set bridge_needed = name in wifi_networks or network.get('mesh_ap') == inventory_hostname %}
+  {% set port_needed = not (role == 'corerouter' and network.get('mesh_ap') == inventory_hostname) %}
 
   {%- if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
      or name in wifi_networks
      or network.get('mesh_ap') == inventory_hostname %}
 config interface '{{ name }}'
+    {% if port_needed %}
 	option device '{{ ('br-' + name) if bridge_needed else port }}'
+    {% endif %}
     {% if 'assignments' in network and inventory_hostname in network['assignments'] %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) }}'
@@ -57,7 +60,7 @@ config interface '{{ name }}'
     {% endif %}
   {% endif %}
 
-  {% if bridge_needed %}
+  {% if port_needed and bridge_needed %}
 config device
 	option name 'br-{{ name }}'
         option type 'bridge'
