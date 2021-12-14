@@ -97,4 +97,4 @@ networks:
       # 2 GHz
       dtmb-m2-1: 20
       dtmb-m2-2: 21
-      dtmb-m2-2: 22
+      dtmb-m2-3: 22
