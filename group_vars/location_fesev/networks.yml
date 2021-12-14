@@ -35,9 +35,10 @@ networks:
       fesev-core: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  fesev-ap1: 36-40
-  fesev-ap2: 40-40
-  fesev-ap4: 60-40
+  fesev-ap1: 40-40
+  fesev-ap2: 48-40
+  fesev-ap4: 40-40 
+#reusing channel 40 because of DFS-bug. AP1 and 4 have a 70m distance (and one building) in between so it should be fine 
 
 location__channel_assignments_11g_standard__to_merge:
   fesev-ap1: 1-20
@@ -47,7 +48,7 @@ location__channel_assignments_11g_standard__to_merge:
 
 # channel-bandwith-txpower in dbm
 
-# ap1: 5ghz
-# ap2: 5ghz
-# ap3: anwohnerblock - 2ghz
-# ap4: 5ghz
+# ap1: north-5ghz
+# ap2: middle-5ghz
+# ap3: neighbours on the west-2ghz
+# ap4: south-5ghz
