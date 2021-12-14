@@ -1,7 +1,7 @@
 ---
 ipv6_prefix: "2001:bf7:830:8000::/56"
 
-# THF got following prefixes:
+# Flughafen got following prefixes:
 # DHCP: 10.31.132.0/24
 # Router: 10.31.131.128/25
 # --MGMT: 10.31.131.128/26
@@ -62,7 +62,7 @@ networks:
     prefix: 10.31.132.0/24
     ipv6_subprefix: 0
     assignments:
-      thf-core: 1
+      flughafen-core: 1
 
   - vid: 42
     role: mgmt
@@ -71,16 +71,15 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      thf-core: 1
-      thf-poe: 2
+      flughafen-core: 1
+      flughafen-poe: 2
 
       # 60 ghz
-      thf-60-ak36: 3
-      thf-60-rhxb: 4
-      thf-60-emma: 5
+      flughafen-ak36: 3
+      flughafen-rhxb: 4
 
       # 5 ghz
-      thf-ak36: 6
-      thf-rhxb: 7
-      thf-feld: 8
-      thf-lora: 9
+      flughafen-zoll: 10
+      flughafen-feld: 11
+      flughafen-garten: 12
+      flughafen-ak36-legacy: 13

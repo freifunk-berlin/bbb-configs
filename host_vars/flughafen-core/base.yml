@@ -1,6 +1,6 @@
 ---
 
-location: thf
+location: flughafen
 role: corerouter
 model: "ubnt_edgerouter-x-sfp"
 
