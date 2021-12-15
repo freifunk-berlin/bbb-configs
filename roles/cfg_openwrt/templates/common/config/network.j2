@@ -34,12 +34,13 @@ config interface '{{ name }}'
     {% if port_needed %}
 	option device '{{ ('br-' + name) if bridge_needed else port }}'
     {% endif %}
+    {% if network.get('enforce_client_isolation') and role == 'corerouter' and
+          not bridge_needed %}
+	option macaddr '02:00:00:00:00:01'
+    {% endif %}
     {% if 'assignments' in network and inventory_hostname in network['assignments'] %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) }}'
-        {% if network.get('enforce_client_isolation') %}
-	option macaddr '02:00:00:00:00:01'
-        {% endif %}
 	{% if role != "corerouter" and 'dns' in network %}
 	option dns '{{ network['prefix'] | ipaddr(network['dns']) | ipaddr('address') }}'
         {% endif %}
@@ -64,6 +65,9 @@ config interface '{{ name }}'
 config device
 	option name 'br-{{ name }}'
         option type 'bridge'
+    {% if network.get('enforce_client_isolation') and role == 'corerouter' %}
+	option macaddr '02:00:00:00:00:01'
+    {% endif %}
 	list ports '{{ port }}'
   {% endif %}
 
