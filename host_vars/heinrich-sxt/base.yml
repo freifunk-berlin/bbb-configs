@@ -1,0 +1,8 @@
+---
+
+location: heinrich
+role: ap
+model: "mikrotik_sxtsq-5-ac"
+
+mac_override:
+  eth0: 2C:C8:1B:8D:7A:D0

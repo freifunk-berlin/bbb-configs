@@ -1,0 +1,7 @@
+---
+
+location: heinrich
+role: corerouter
+model: "ubnt_edgerouter-x"
+
+poe_on: []

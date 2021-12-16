@@ -1,0 +1,10 @@
+---
+
+snmp_devices:
+  - hostname: heinrich-emma
+    address: 10.31.134.3
+    snmp_profile: airos_6
+
+  - hostname: heinrich-simeon
+    address: 10.31.134.4
+    snmp_profile: airos_6

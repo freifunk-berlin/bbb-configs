@@ -1,0 +1,57 @@
+---
+ipv6_prefix: "2001:bf7:830:6700::/56"
+
+# Heinrich got following prefixes:
+# Router: 10.31.134.0/27
+# --MGMT: 10.31.134.0/28
+# --MESH: 10.31.134.16/28 {as /32}
+# --DHCP: 10.31.135.0/24
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_emma
+    prefix: 10.31.134.16/32
+    ipv6_subprefix: -1
+
+  - vid: 11
+    role: mesh
+    name: mesh_simeon
+    prefix: 10.31.134.17/32
+    ipv6_subprefix: -2
+
+  - vid: 20
+    role: mesh
+    name: mesh_heinrich
+    prefix: 10.31.134.18/32
+    ipv6_subprefix: -3
+    mesh_metric: 2048
+    mesh_ap: heinrich-sxt
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.135.0/24
+    ipv6_subprefix: 0
+    assignments:
+      heinrich-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.134.0/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      heinrich-core: 1
+      heinrich-poe: 2
+      heinrich-emma: 3
+      heinrich-simeon: 4
+      heinrich-platz-nf: 5
+      heinrich-sxt: 14
+
+location__channel_assignments_11a_standard__to_merge:
+  heinrich-ap1: 36-20-15
