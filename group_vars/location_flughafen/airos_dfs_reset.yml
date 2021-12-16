@@ -1,1 +1,12 @@
 ---
+airos_dfs_reset:
+  - name: "flughafen-zoll"
+    target: "10.31.131.138"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+  - name: "flughafen-feld"
+    target: "10.31.131.139"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
