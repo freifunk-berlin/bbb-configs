@@ -1,7 +1,7 @@
 ---
 ipv6_prefix: "2001:bf7:750:4100::/56"
 
-# Flughafen got following prefixes:
+# Potse got following prefixes:
 # DHCP: 10.31.133.0/24
 # Router: 10.31.130.192/27
 # --MGMT: 10.31.130.192/28
@@ -10,7 +10,7 @@ ipv6_prefix: "2001:bf7:750:4100::/56"
 networks:
   - vid: 10
     role: mesh
-    name: mesh_ak36
+    name: mesh_flughafen
     prefix: 10.31.130.208/32
     ipv6_subprefix: -1
     ptp: true
