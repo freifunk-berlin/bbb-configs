@@ -4,6 +4,8 @@ feed_version: "1.2.0-snapshot"
 imagebuilder_disable_signature_check: true
 target: ramips/mt7621
 
+compat_version: 1.1
+
 dsa_ports:
   - eth0
   - eth1

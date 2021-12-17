@@ -12,7 +12,7 @@ config system
 	option location '{{ location_nice|default(location) }}'
 {% endif %}
 {% if dsa_ports is defined %}
-	option compat_version '1.1'
+	option compat_version '{{ compat_version }}'
 {% endif %}
 
 config timeserver 'ntp'
