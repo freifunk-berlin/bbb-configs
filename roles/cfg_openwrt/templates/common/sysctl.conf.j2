@@ -3,3 +3,6 @@
 {{ i }}={{ sysctl[i] }}
 {% endfor %}
 
+{% if 'zram-swap' in packages %}
+vm.swappiness=100
+{% endif %}
