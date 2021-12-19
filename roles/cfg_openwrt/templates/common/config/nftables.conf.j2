@@ -12,14 +12,25 @@ network_ifname_map =
 {% set network_ifname_map = [] %}
 {% for wd in wireless_devices | default([]) %}
   {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name']) | first %}
-  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) | selectattr('mode', 'equalto', 'ap') %}
+  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
   {% if not wd_config.get('disabled') %}
     {% for iface in wd_ifaces %}
-      {{ network_ifname_map.append({'network': iface['network'], 'ifname': wd['ifname_hint'] + '-' + iface['ifname_hint']|default('if' + loop.index0|string)})}}
+      {% set ifname = wd['ifname_hint'] + '-' + iface['ifname_hint']|default('if' + loop.index0|string) %}
+      {% if iface['mode'] == 'ap' %}
+        {{ network_ifname_map.append({'network': iface['network'], 'ifname': ifname })}}
+      {% elif iface['mode'] == 'mesh' %}
+        {% set mesh_nets = networks | selectattr('role','defined') | selectattr('role','equalto','mesh')
+          | selectattr('mesh_ap','defined') | selectattr('mesh_ap','equalto',inventory_hostname)
+          | selectattr('mesh_radio','equalto', wd['name']) | selectattr('mesh_iface','equalto',iface['ifname_hint']) %}
+        {% if mesh_nets | length > 0 %}
+          {{ network_ifname_map.append({'network': (mesh_nets|first)['name'], 'ifname': ifname })}}
+        {% endif %}
+      {% endif %}
     {% endfor %}
   {% endif %}
 {% endfor %}
 {# DISCLAIMER SCOPE END #}
+flush ruleset
 
 {% for network in networks | selectattr('enforce_client_isolation', 'defined') | selectattr('enforce_client_isolation') %}
   {% set name = network['name'] if 'name' in network else network['role'] %}
@@ -33,7 +44,6 @@ define bc = ff:ff:ff:ff:ff:ff
 define mc6 = 33:33:00:00:00:00/16
 
 
-flush ruleset
 table bridge client_isolation {
     {% endif %}
 	chain PREROUTING_{{ name }} {
@@ -47,5 +57,33 @@ table bridge client_isolation {
     {% if loop.last %}
 }
     {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% for network in networks | selectattr('role', 'equalto', 'mesh') | selectattr('name','in', network_ifname_map|map(attribute='network')) %}
+  {% set wifi_if = network_ifname_map | selectattr('network', 'equalto', network['name']) | map(attribute='ifname') | first %}
+  {% set set_localrouter = 'localrouter_' + network['name'] %}
+  {% if loop.first %}
+
+{# Corerouters have no bridge, therefore we need to hook in family inet.
+    See https://wiki.nftables.org/wiki-nftables/index.php/Netfilter_hooks#Netfilter_hooks_into_Linux_networking_packet_flows #}
+table {{ 'bridge' if role == 'ap' else 'inet' }} prevent_mesh_reflection {
+  {% endif %}
+	set {{ set_localrouter }} {
+		type ether_addr
+		size 5
+		flags timeout
+	}
+	chain POSTROUTING_{{ network['name'] }} {
+		type filter hook postrouting priority 0; policy accept;
+		oif {{ wifi_if }} update @{{ set_localrouter }} { ether saddr timeout 1h }
+	}
+	chain PREROUTING_{{ network['name'] }} {
+		type filter hook prerouting priority 0; policy accept;
+		iif {{ wifi_if }} ether saddr @{{ set_localrouter }} counter drop
+
+	}
+  {% if loop.last %}
+}
   {% endif %}
 {% endfor %}
