@@ -97,7 +97,7 @@ networks:
   # 11s mesh 2ghz
   - vid: 23
     role: mesh
-    name: mesh_11s_nno_2
+    name: 11s_nno_2
     prefix: 10.31.11.41/32
     ipv6_subprefix: -9
     mesh_metric: 1024
@@ -107,7 +107,7 @@ networks:
 
   - vid: 24
     role: mesh
-    name: mesh_11s_ono_2
+    name: 11s_ono_2
     prefix: 10.31.11.42/32
     ipv6_subprefix: -10
     mesh_metric: 1024
@@ -117,7 +117,7 @@ networks:
 
   - vid: 33
     role: mesh
-    name: mesh_11s_oso_2
+    name: 11s_oso_2
     prefix: 10.31.11.43/32
     ipv6_subprefix: -11
     mesh_metric: 1024
@@ -127,7 +127,7 @@ networks:
 
   - vid: 34
     role: mesh
-    name: mesh_11s_sso_2
+    name: 11s_sso_2
     prefix: 10.31.11.44/32
     ipv6_subprefix: -12
     mesh_metric: 1024
@@ -137,7 +137,7 @@ networks:
 
   - vid: 43
     role: mesh
-    name: mesh_11s_ssw_2
+    name: 11s_ssw_2
     prefix: 10.31.11.45/32
     ipv6_subprefix: -13
     mesh_metric: 1024
@@ -147,7 +147,7 @@ networks:
 
   - vid: 44
     role: mesh
-    name: mesh_11s_wsw_2
+    name: 11s_wsw_2
     prefix: 10.31.11.46/32
     ipv6_subprefix: -14
     mesh_metric: 1024
@@ -157,7 +157,7 @@ networks:
 
   - vid: 53
     role: mesh
-    name: mesh_11s_wnw_2
+    name: 11s_wnw_2
     prefix: 10.31.11.47/32
     ipv6_subprefix: -15
     mesh_metric: 1024
@@ -167,7 +167,7 @@ networks:
 
   - vid: 54
     role: mesh
-    name: mesh_11s_nnw_2
+    name: 11s_nnw_2
     prefix: 10.31.11.48/32
     ipv6_subprefix: -16
     mesh_metric: 1024
