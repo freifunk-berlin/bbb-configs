@@ -36,12 +36,6 @@
     - kmod-nf-ipt
     - kmod-ipt-core
     - kmod-ipt-offload
-
-- name: "replace tcpdump with mini version on low flash"
-  set_fact:
-    packages: "{{ packages + [item] }}"
-  when: low_flash | default(false)
-  loop:
     - -tcpdump
     - tcpdump-mini
 
