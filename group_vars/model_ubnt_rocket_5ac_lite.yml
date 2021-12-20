@@ -1,0 +1,17 @@
+---
+imagebuilder: "https://downloads.openwrt.org/snapshots/targets/ath79/generic/openwrt-imagebuilder-ath79-generic.Linux-x86_64.tar.xz"
+feed_version: "1.2.0-snapshot"
+imagebuilder_disable_signature_check: true
+target: ath79_generic
+
+model__packages__to_merge:
+  - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"
+  - "kmod-ath10k ath10k-firmware-qca988x"
+
+int_port: eth0
+
+wireless_devices:
+  - name: 11a_standard
+    hwmode: 11a
+    path: pci0000:00/0000:00:00.0
+    ifname_hint: wlan5

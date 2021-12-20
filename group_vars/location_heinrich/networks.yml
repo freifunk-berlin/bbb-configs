@@ -30,6 +30,16 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
+  - vid: 21
+    role: mesh
+    name: mesh_ubnt
+    prefix: 10.31.134.19/32
+    ipv6_subprefix: -4
+    mesh_metric: 2048
+    mesh_ap: heinrich-ubnt
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -50,8 +60,9 @@ networks:
       heinrich-poe: 2
       heinrich-emma: 3
       heinrich-simeon: 4
-      heinrich-platz-nf: 5
       heinrich-sxt: 14
+      heinrich-ubnt: 13
 
 location__channel_assignments_11a_standard__to_merge:
-  heinrich-ap1: 36-20-15
+  heinrich-sxt: 36-20-10
+  heinrich-ubnt: 40-20-11
