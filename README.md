@@ -41,6 +41,15 @@ ansible-playbook play.yml --tags flash
 2. Create a folder for every OpenWrt device at the location under `/host_vars/`. Paste the `base.yml` in there.
 3. Done!
 
+### VLAN-Numbering-Convention
+
+```
+10+ for airmax & co mesh links
+20+ for 11s
+40+ DHCP Clients
+42  MGMT
+```
+
 
 ## Variables and structures explained
 
