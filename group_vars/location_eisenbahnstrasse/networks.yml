@@ -1,0 +1,29 @@
+---
+#no ipv6_prefix:
+# alloc'd DHCP: 10.31.137.64/26
+# alloc'd MGMT: 10.31.137.128/29
+
+networks:
+
+  - vid: 42
+    role: mgmt                # create a management vlan in which we can reach every device on this site for maintenance
+    prefix: 10.31.137.128/29
+    gateway: 1
+    dns: 1
+    assignments:
+      eisenbahnstrasse-core: 1
+      eisenbahnstrasse-n: 2   # nord-CPE
+      eisenbahnstrasse-s: 3   # sued-CPE
+
+  - vid: 40
+    role: dhcp                # dhcp server will run on core-router and serve it's network on vid 40
+    prefix: 10.31.137.64/26
+    assignments:              # assign static addresses to devices
+      eisenbahnstrasse-core: 1
+
+location__channel_assignments_11g_standard__to_merge:
+  # AP-id, wifi-channel, bandwidth, txpower
+  eisenbahnstrasse-n: 5-20-15
+  eisenbahnstrasse-s: 13-20-15
+
+...
