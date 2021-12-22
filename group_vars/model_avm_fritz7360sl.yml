@@ -1,0 +1,16 @@
+---
+imagebuilder: "https://downloads.openwrt.org/releases/21.02.1/targets/lantiq/xrx200/openwrt-imagebuilder-21.02.1-lantiq-xrx200.Linux-x86_64.tar.xz"
+feed_version: "1.2.0-snapshot"
+imagebuilder_disable_signature_check: true
+
+switch_ports: 7
+switch_int_port: 6
+switch_ignore_ports: [3,5]
+
+int_port: eth0
+
+wireless_devices:
+  - name: 11g_standard
+    hwmode: 11g
+    path: pci0000:00/0000:00:00.0/0000:01:00.0
+    ifname_hint: wlan2
