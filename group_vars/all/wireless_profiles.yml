@@ -45,6 +45,41 @@ wireless_profiles:
         mesh_fwding: 0
         ifname_hint: mesh
 
+  - name: freifunk_fw
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11a_mesh
+        legacy_rates: false
+        country: DE
+
+    ifaces:
+      - mode: ap
+        ssid: fuerstenwalde.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      #- mode: ap
+      #  ssid: fuerstenwalde.freifunk.net Encrypted
+      #  encryption: owe
+      #  network: dhcp
+      #  radio: [11a_standard, 11g_standard]
+      #  ifname_hint: ffowe
+      #  ieee80211w: 1
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
+
   - name: wilgu10
     devices:
       - radio: 11a_standard
