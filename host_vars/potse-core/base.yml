@@ -2,6 +2,6 @@
 
 location: potse
 role: corerouter
-model: "avm_fritzbox-7530"
+model: "tplink_tl-wdr4900-v1"
 
 wireless_profile: freifunk_default
