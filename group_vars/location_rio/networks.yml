@@ -1,7 +1,7 @@
 ---
 ipv6_prefix: "2001:bf7:830:6700::/56"
 
-# Heinrich got following prefixes:
+# Rio-Reiser got following prefixes:
 # Router: 10.31.134.0/27
 # --MGMT: 10.31.134.0/28
 # --MESH: 10.31.134.16/28 {as /32}
@@ -22,11 +22,11 @@ networks:
 
   - vid: 20
     role: mesh
-    name: mesh_heinrich
+    name: mesh_rio
     prefix: 10.31.134.18/32
     ipv6_subprefix: -3
     mesh_metric: 2048
-    mesh_ap: heinrich-sxt
+    mesh_ap: rio-sxt
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -36,7 +36,7 @@ networks:
     prefix: 10.31.134.19/32
     ipv6_subprefix: -4
     mesh_metric: 2048
-    mesh_ap: heinrich-ubnt
+    mesh_ap: rio-ubnt
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -47,7 +47,7 @@ networks:
     prefix: 10.31.135.0/24
     ipv6_subprefix: 0
     assignments:
-      heinrich-core: 1
+      rio-core: 1
 
   - vid: 42
     role: mgmt
@@ -56,13 +56,13 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      heinrich-core: 1
-      heinrich-poe: 2
-      heinrich-emma: 3
-      heinrich-simeon: 4
-      heinrich-sxt: 14
-      heinrich-ubnt: 13
+      rio-core: 1
+      rio-poe: 2
+      rio-emma: 3
+      rio-simeon: 4
+      rio-sxt: 14
+      rio-ubnt: 13
 
 location__channel_assignments_11a_standard__to_merge:
-  heinrich-sxt: 36-20-10
-  heinrich-ubnt: 40-20-11
+  rio-sxt: 36-20-10
+  rio-ubnt: 40-20-11
