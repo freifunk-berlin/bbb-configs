@@ -61,6 +61,7 @@ networks:
       koepi-ap2: 11
       koepi-ap3: 12
       koepi-ap4: 13
+      koepi-ap5: 14
       koepi-trailer1: 20
       koepi-trailer2: 21
       koepi-front: 22
@@ -70,9 +71,11 @@ location__channel_assignments_11a_standard__to_merge:
   koepi-ap2: 44-20
   koepi-ap3: 36-20
   koepi-ap4: 40-20
+  koepi-ap5: 36-20
 
 location__channel_assignments_11g_standard__to_merge:
   koepi-ap1: 6-20
   koepi-ap2: 11-20
   koepi-ap3: 1-20
   koepi-ap4: 6-20
+  koepi-ap5: 1-20
