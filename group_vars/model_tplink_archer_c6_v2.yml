@@ -6,7 +6,7 @@ target: ath79/generic
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca9888-ct"
-  - "kmod-ath10k ath10k-firmware-qca9888"
+  - "kmod-ath10k-smallbuffers ath10k-firmware-qca9888"
 
 switch_ports: 7
 switch_int_port: 0
