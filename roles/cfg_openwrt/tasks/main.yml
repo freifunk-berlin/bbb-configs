@@ -37,7 +37,7 @@
     file: render_subdir.yml
     apply:
       tags: always
-  loop: ['/', '/config','/dropbear', '/collectd/conf.d', '/init.d', '/crontabs', '/conntrackd']
+  loop: ['/', '/config','/dropbear', '/collectd/conf.d', '/init.d', '/crontabs', '/conntrackd', '/iproute2']
   loop_control:
     loop_var: subdir
   tags: always

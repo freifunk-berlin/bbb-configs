@@ -40,6 +40,11 @@ config olsrd
 	option OlsrPort '698'
 	option Willingness '3'
 	option TosValue '16'
+{% if olsr_table is defined %}
+	option RtTable '{{ olsr_table }}'
+	option RtTableDefault '{{ olsr_table }}'
+	option RtTableTunnel '{{ olsr_table }}'
+{% endif %}
 
 config InterfaceDefaults
 	option MidValidityTime '500.0'
@@ -62,7 +67,7 @@ config Interface
   {% endfor %}
 
 {% endfor %}
-{% for network in networks | rejectattr('role', 'equalto', 'ext') | selectattr('prefix') %}
+{% for network in networks | rejectattr('role', 'equalto', 'ext') | rejectattr('role', 'equalto', 'uplink') | selectattr('prefix') %}
   {% if network['prefix'] | ipaddr('prefix') < 32 %}
 
 # Network: {{ network['name'] if 'name' in network else network['role'] }}

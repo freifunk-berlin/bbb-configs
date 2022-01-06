@@ -61,6 +61,13 @@ config interface '{{ name }}'
     {% endif %}
   {% endif %}
 
+  {%- if (role == 'corerouter' and network['role'] == 'uplink') -%}
+config interface '{{ name }}'
+	option proto 'static'
+	option device '{{ ('br-' + name) if bridge_needed else port }}'
+  {% endif %}
+
+
   {% if port_needed and bridge_needed %}
 config device
 	option name 'br-{{ name }}'
@@ -76,5 +83,22 @@ config device
 config device '{{ i }}_dev'
 	option name '{{ i }}'
 	option macaddr '{{ mac_override[i] }}'
+
+{% endfor %}
+
+{% for network in networks | selectattr('role','equalto','dhcp') %}
+config rule
+	option in     '{{ network['name'] if 'name' in network else network['role'] }}'
+	option dest   '0.0.0.0/0'
+	option lookup '{{ olsr_table }}'
+
+config rule
+	option in     '{{ network['name'] if 'name' in network else network['role'] }}'
+	option dest   '0.0.0.0/0'
+	option lookup '{{ babel_table }}'
+
+config rule
+	option in     '{{ network['name'] if 'name' in network else network['role'] }}'
+	option action 'prohibit'
 
 {% endfor %}

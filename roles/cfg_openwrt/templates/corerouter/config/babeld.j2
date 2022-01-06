@@ -25,3 +25,9 @@ config filter
 	option 'local'  'true'
 	option 'action' 'deny'
 {% endif %}
+
+{% if babel_table is defined ||  %}
+config filter
+	option 'type'	'install'
+	option 'action'	'table {{ babel_table }}'
+{% endif %}

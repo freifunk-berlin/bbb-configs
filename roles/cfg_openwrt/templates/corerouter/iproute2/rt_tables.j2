@@ -1,0 +1,7 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% if olsr_table is defined %}
+echo {{ olsr_table }} olsr_table >> /etc/iproute2/rt_tables
+{% endif %}
+{% if babel_table is defined %}
+echo {{ babel_table }} babel >> /etc/iproute2/rt_tables
+{% endif %}
