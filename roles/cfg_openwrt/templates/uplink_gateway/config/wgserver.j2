@@ -1,6 +1,10 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
 config server
     option port_start '{{ wireguard_port_start }}'
     option port_end '{{ wireguard_port_end }}'
     option base_prefix '{{ wireguard_base_prefix }}'
+    {% if wireguard_base_v4prefix is defined %}
+    option base_v4prefix '{{ wireguard_base_v4prefix }}'
+    {% endif %}
     option wg_key '{{ wireguard_wg_key }}'
     option wg_pub '{{ wireguard_wg_pub }}'
