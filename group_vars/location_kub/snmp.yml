@@ -3,4 +3,4 @@
 snmp_devices:
   - hostname: kub-simeon
     address: 10.31.139.2
-    snmp_profile: airos_6
+    snmp_profile: airos_8
