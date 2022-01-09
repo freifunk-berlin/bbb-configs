@@ -39,7 +39,10 @@ ansible-playbook play.yml --tags flash
 
 1. Create a location folder at `/group_vars/` and fill in at least `general.yml`, `networks.yml` and `owm.yml`.
 2. Create a folder for every OpenWrt device at the location under `/host_vars/`. Paste the `base.yml` in there.
-3. Done!
+3. Run the image creation as shown in the commands above (image will be in `/tmp/ansible-openwrt/images/`).
+4. Flash the image to your router.
+5. Secure the router by setting a root password using SSH or the web interface.
+6. Done!
 
 ### VLAN-Numbering-Convention
 
@@ -49,7 +52,6 @@ ansible-playbook play.yml --tags flash
 40+ DHCP Clients
 42  MGMT
 ```
-
 
 ## Variables and structures explained
 
