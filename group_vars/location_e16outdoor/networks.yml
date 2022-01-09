@@ -1,0 +1,66 @@
+---
+ipv6_prefix: '2001:bf7:760:2700::/56'
+
+# e16outdoor got following prefixes:
+# Router: 10.31.142.0/26
+# --MGMT: 10.31.142.0/28
+# --MESH: 10.31.142.16/28
+# --DHCP: 10.31.142.32/27
+
+networks:
+# Mesh on LAN
+  - vid: 10
+    role: mesh
+    name: mesh_lan
+    prefix: 10.31.142.16/32
+    ipv6_subprefix: -1
+
+# 802.11s Mesh on 5 GHz
+  - vid: 20
+    role: mesh
+    name: mesh_11s_5ghz
+    prefix: 10.31.142.17/32
+    ipv6_subprefix: -2
+    mesh_metric: 1024
+    mesh_ap: e16outdoor-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+# 802.11s Mesh on 2.4 GHz
+  - vid: 21
+    role: mesh
+    name: mesh_11s_2ghz
+    prefix: 10.31.142.18/32
+    ipv6_subprefix: -3
+    mesh_metric: 1024
+    mesh_ap: e16outdoor-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+# DHCP
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.142.32/27
+    ipv6_subprefix: 0
+    assignments:
+      e16outdoor-core: 1
+
+# MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.142.0/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      e16outdoor-core: 1
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge: 
+  e16outdoor-core: 36-40-19
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  e16outdoor-core: 13-20-17
