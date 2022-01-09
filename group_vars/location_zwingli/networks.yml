@@ -18,6 +18,8 @@ networks:
       zwingli-sama: 3
       zwingli-rhnk: 4
       zwingli-agym: 5
+# legacy link to emma
+      zwingli-emma: 6
 # local aps 2ghz
       zwingli-nord-nf-2ghz: 10
       zwingli-ost-nf-2ghz: 11
@@ -30,8 +32,9 @@ networks:
       zwingli-west-nf-5ghz: 17
 # 5ghz sectors
       zwingli-nord-5ghz: 20
-      zwingli-nord-5ghz-alt: 21
+      zwingli-ost-5ghz: 21
       zwingli-sued-5ghz: 22
+      zwingli-west-5ghz: 23
 
   - vid: 40
     role: dhcp
@@ -54,16 +57,11 @@ networks:
     name: mesh_ost
     prefix: 10.31.115.33/32
     ipv6_subprefix: -2
-
-    # mesh_sued is being reused for old mesh_nord
   - vid: 12
     role: mesh
     name: mesh_sued
     prefix: 10.31.115.34/32
     ipv6_subprefix: -3
-    mesh_metric_lqm:
-      - 10.31.7.161 0.2 # Make sure f2a is not used as primary uplink
-
   - vid: 13
     role: mesh
     name: mesh_west
@@ -90,6 +88,16 @@ networks:
     ipv6_subprefix: -7
     mesh_metric: 128
     ptp: true
+  - vid: 17
+    role: mesh
+    name: mesh_emma
+    prefix: 10.31.115.47/32
+    ipv6_subprefix: -16
+    mesh_metric: 128
+    mesh_metric_lqm:
+      - default 0.3 # Make sure emma/ohlauer is not used as primary uplink
+    ptp: true
+
 
   # 11s mesh 2ghz
   - vid: 20
@@ -101,6 +109,8 @@ networks:
     mesh_ap: zwingli-nord-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
+    mesh_metric_lqm:
+      - default 0.4 # penalty on wild meshing
   - vid: 21
     role: mesh
     name: mesh_11s_o2
@@ -110,6 +120,8 @@ networks:
     mesh_ap: zwingli-ost-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
+    mesh_metric_lqm:
+      - default 0.4 # penalty on wild meshing
   - vid: 22
     role: mesh
     name: mesh_11s_s2
@@ -119,6 +131,8 @@ networks:
     mesh_ap: zwingli-sued-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
+    mesh_metric_lqm:
+      - default 0.4 # penalty on wild meshing
   - vid: 23
     role: mesh
     name: mesh_11s_w2
@@ -128,6 +142,8 @@ networks:
     mesh_ap: zwingli-west-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
+    mesh_metric_lqm:
+      - default 0.4 # penalty on wild meshing
 
   # 11s mesh 5ghz
   - vid: 24
@@ -139,6 +155,8 @@ networks:
     mesh_ap: zwingli-nord-nf-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_lqm:
+      - default 0.4 # penalty on wild meshing
   - vid: 25
     role: mesh
     name: mesh_11s_o5
@@ -148,6 +166,8 @@ networks:
     mesh_ap: zwingli-ost-nf-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_lqm:
+      - default 0.4 # penalty on wild meshing
   - vid: 26
     role: mesh
     name: mesh_11s_s5
@@ -157,6 +177,8 @@ networks:
     mesh_ap: zwingli-sued-nf-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_lqm:
+      - default 0.4 # penalty on wild meshing
   - vid: 27
     role: mesh
     name: mesh_11s_w5
@@ -166,16 +188,5 @@ networks:
     mesh_ap: zwingli-west-nf-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
-
-
-# Prelimary Switchports:
-# 1: zwingli-core
-# 2: dhcp untagged
-# ..
-# 17: nord 5ghz
-# 18: ost 5ghz
-# 19: sued 5ghz
-# 20: west 5ghz
-# 21: af60 sama
-# 22: af60 rhnk
-# 23: af60 agym
+    mesh_metric_lqm:
+      - default 0.4 # penalty on wild meshing
