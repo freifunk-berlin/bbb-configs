@@ -45,8 +45,8 @@ networks:
 
 location__channel_assignments_11a_standard__to_merge:
   rigaer83-core: 52-80
-  rigaer83-front-5: 36-20-15
-  rigaer83-back-5:  40-20-15
+  rigaer83-front-5: 36-20
+  rigaer83-back-5:  40-20
 
 location__channel_assignments_11g_standard__to_merge:
   rigaer83-core: 6-20

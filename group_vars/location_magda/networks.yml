@@ -42,9 +42,9 @@ networks:
       magda-core: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  magda-ap1: 36-20-15
-  magda-ap2: 40-20-15
-  magda-ap3: 44-20-15
+  magda-ap1: 36-20
+  magda-ap2: 40-20
+  magda-ap3: 44-20
 
 # channel-bandwith-txpower in dbm
 

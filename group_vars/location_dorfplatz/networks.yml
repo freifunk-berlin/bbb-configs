@@ -42,5 +42,5 @@ networks:
       dorfplatz-ap3: 12
 
 location__channel_assignments_11a_standard__to_merge:
-  dorfplatz-ap1: 36-20-15
-  dorfplatz-ap2: 40-20-15
+  dorfplatz-ap1: 36-20
+  dorfplatz-ap2: 40-20

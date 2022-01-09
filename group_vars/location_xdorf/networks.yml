@@ -30,7 +30,7 @@ networks:
       xdorf-core: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  xdorf-core: 36-20-10
+  xdorf-core: 36-20
 
 location__channel_assignments_11g_standard__to_merge:
-  xdorf-core: 1-20-10
+  xdorf-core: 1-20

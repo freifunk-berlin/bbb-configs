@@ -57,7 +57,7 @@ location_scharni__channel_assignments_11a_standard__to_merge:
   scharni-ap1: 44-40
   scharni-ap2: 44-40
   scharni-ap3: 36-40
-  scharni-ap4: 36-20-10
+  scharni-ap4: 36-20
 
 location_scharni__channel_assignments_11g_standard__to_merge:
   scharni-ap1: 11-20

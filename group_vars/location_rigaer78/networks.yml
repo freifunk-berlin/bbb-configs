@@ -46,10 +46,10 @@ networks:
 
 location__channel_assignments_11g_standard__to_merge:
   rigaer78-eap225: 11-20
-  rigaer78-east-2ghz: 1-20-10
-  rigaer78-west-2ghz: 6-20-10
+  rigaer78-east-2ghz: 1-20
+  rigaer78-west-2ghz: 6-20
 
 location__channel_assignments_11a_standard__to_merge:
   rigaer78-eap225: 36-20
-  rigaer78-east-5ghz: 40-20-10
-  rigaer78-west-5ghz: 44-20-10
+  rigaer78-east-5ghz: 40-20
+  rigaer78-west-5ghz: 44-20

@@ -72,10 +72,10 @@ networks:
     ptp: true
 
 location__channel_assignments_11a_standard__to_merge:
-  sama-nord-nf-5ghz: 36-20-10
-  sama-ost-nf-5ghz: 40-20-10
-  sama-sued-nf-5ghz: 44-20-10
-  sama-west-nf-5ghz: 48-20-10
+  sama-nord-nf-5ghz: 36-20
+  sama-ost-nf-5ghz: 40-20
+  sama-sued-nf-5ghz: 44-20
+  sama-west-nf-5ghz: 48-20
 
 
 # channel-bandwith-txpower in dbm

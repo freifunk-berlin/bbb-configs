@@ -12,3 +12,4 @@ wireless_devices:
     hwmode: 11g
     path: platform/ahb/18100000.wmac
     ifname_hint: wlan2
+    antenna_gain: 6

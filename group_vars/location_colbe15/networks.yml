@@ -44,4 +44,4 @@ networks:
       colbe15-ap1: 2
 
 location__channel_assignments_11a_standard__to_merge:
-  colbe15-ap1: 36-20-10
+  colbe15-ap1: 36-20

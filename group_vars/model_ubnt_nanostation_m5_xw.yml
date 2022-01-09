@@ -13,6 +13,7 @@ wireless_devices:
     hwmode: 11a
     path: platform/ahb/18100000.wmac
     ifname_hint: wlan5
+    antenna_gain: 12
 
 poe_ports:
   - name: PoE Passthrough
