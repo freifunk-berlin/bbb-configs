@@ -1,7 +1,7 @@
 ---
 
 location: borussia
-role: corerouter
+role: ap
 model: "tplink_tl-wdr4300-v1"
 
 wireless_profile: borussia
