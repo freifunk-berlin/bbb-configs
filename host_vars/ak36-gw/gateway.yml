@@ -77,6 +77,7 @@ tunnel_metric: 1024
 # Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
 
 wireguard_base_prefix: 2001:bf7:750:4002::/64
+wireguard_base_v4prefix: 10.31.145.0/24
 gre_base_prefix: 2001:bf7:750:4003::/64
 
  

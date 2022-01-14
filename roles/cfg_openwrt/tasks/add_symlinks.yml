@@ -3,7 +3,6 @@
   file:
     state: directory
     path: "{{ config_path }}/etc/rc.d"
-  when: role == "corerouter" or role == "ap"
 
 - name: Enable replace_secrets symlink
   file:
@@ -11,3 +10,10 @@
     dest: "{{ config_path }}/etc/rc.d/S15replace_secrets"
     state: link
   when: role == "corerouter" or role == "ap"
+
+- name: Enable symlink_mesh_routings symlink
+  file:
+    src: "../init.d/symlink_mesh_routings"
+    dest: "{{ config_path }}/etc/rc.d/S11symlink_mesh_routings"
+    state: link
+  when: role == "uplink_gateway"

@@ -52,8 +52,9 @@ tunnel_metric: 1024
 # 2001:bf7:760:2200::/56 is the base prefix
 
 wireguard_base_prefix: 2001:bf7:750:3f02::/64
-gre_base_prefix: 2001:bf7:750:3f03::/64
+wireguard_base_v4prefix: 10.31.143.0/24
 
+gre_base_prefix: 2001:bf7:750:3f03::/64
  
 # gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
 gre_tunnel_alias: l105

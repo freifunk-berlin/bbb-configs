@@ -1,0 +1,32 @@
+#!/bin/sh /etc/rc.common
+
+START=11
+STOP=89
+
+boot() {
+    # symlink babeld
+    if [ ! -L "/etc/config/babeld" ] && [ -f "/rom/etc/config/babeld" ]; then
+        cp /rom/etc/config/babeld /var/run
+        rm /etc/config/babeld
+        ln -s /var/run/babeld /etc/config/babeld
+    fi
+
+    # symlink olsrd
+    if [ ! -L "/etc/config/olsrd" ] && [ -f "/rom/etc/config/olsrd" ]; then
+        cp /rom/etc/config/olsrd /var/run
+        rm /etc/config/olsrd
+        ln -s /var/run/olsrd /etc/config/olsrd
+    fi
+}
+
+stop() {
+    if [ -L "/etc/config/babeld" ] && [ -f "/rom/etc/config/babeld" ]; then
+        rm /etc/config/babeld
+        cp /rom/etc/config/babeld /etc/config/babeld
+    fi
+
+    if [ -L "/etc/config/olsrd" ] && [ -f "/rom/etc/config/olsrd" ]; then
+        rm /etc/config/olsrd
+        cp /rom/etc/config/olsrd /etc/config/olsrd
+    fi
+}

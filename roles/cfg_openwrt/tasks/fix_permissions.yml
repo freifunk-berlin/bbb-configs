@@ -16,3 +16,16 @@
   ignore_errors: true
   when: role != "uplink_gateway"
 
+- name: Set permission for symlink_mesh_routings script
+  file:
+    path: "{{ config_path }}/etc/init.d/symlink_mesh_routings"
+    mode: "755"
+  ignore_errors: true
+  when: role == "uplink_gateway"
+
+- name: Set permission for wgconnect script
+  file:
+    path: "{{ config_path }}/etc/init.d/wgconnect"
+    mode: "755"
+  ignore_errors: true
+  when: role == "corerouter"

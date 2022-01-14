@@ -28,7 +28,7 @@ wireguard_port_start: 51820
 wireguard_port_end: 52820
 wireguard_wg_key: '/etc/wireguard/wg.key'
 wireguard_wg_pub: '/etc/wireguard/wg.pub'
-
+wireguard_wg_tmp_key: 1
 
 gre_metric: 64
 

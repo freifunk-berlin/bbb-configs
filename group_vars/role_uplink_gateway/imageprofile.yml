@@ -34,8 +34,10 @@ role_uplink_gw__packages__to_merge:
   - kmod-wireguard
   - wg-installer-server
   - wg-installer-server-hotplug-babeld
+  - wg-installer-server-hotplug-olsrd
   - conntrackd
   - samplicator
+  - ip-full
 
 role_uplink_gw__disabled_services__to_merge:
   - "odhcpd"

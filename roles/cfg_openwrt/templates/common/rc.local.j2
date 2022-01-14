@@ -21,3 +21,12 @@ sed -i '/^ \/etc/d' /usr/lib/opkg/status
 {% for override in sysfs_overrides | default([]) %}
 echo {{ override['value'] }} > {{ override['path'] }}
 {% endfor%}
+
+{% if role == 'uplink_gateway' %}
+# install cleanup script
+test -f /etc/crontabs/root || touch /etc/crontabs/root
+grep -q '/usr/share/wginstaller/wg.sh cleanup_wginterfaces' /etc/crontabs/root || {
+    echo "*/10 * * * *	/usr/share/wginstaller/wg.sh cleanup_wginterfaces" >> /etc/crontabs/root
+}
+/etc/init.d/cron restart
+{% endif %}
