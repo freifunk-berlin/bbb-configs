@@ -17,6 +17,15 @@ networks:
     assignments:
       borussia-core: 1
 
+  - vid: 20
+    role: mesh
+    name: mesh_core_5ghz
+    prefix: 10.31.96.16/32
+    ipv6_subprefix: -1
+    mesh_ap: borussia-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
   - vid: 41
     name: prdhcp
     role: ext
