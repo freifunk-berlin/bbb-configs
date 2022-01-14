@@ -1,0 +1,22 @@
+---
+imagebuilder: "https://downloads.openwrt.org/snapshots/targets/mediatek/mt7622/openwrt-imagebuilder-mediatek-mt7622.Linux-x86_64.tar.xz"
+feed_version: "1.2.0-snapshot"
+imagebuilder_disable_signature_check: true
+target: mediatek/mt7622
+
+dsa_ports:
+  - wan
+  - lan1
+  - lan2
+  - lan3
+  - lan4
+
+wireless_devices:
+  - name: 11g_standard
+    hwmode: 11g
+    path: platform/18000000.wmac
+    ifname_hint: wlan2
+  - name: 11a_standard
+    hwmode: 11a
+    path: 1a143000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
+    ifname_hint: wlan5
