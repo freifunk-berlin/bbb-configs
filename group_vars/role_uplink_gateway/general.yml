@@ -24,11 +24,18 @@ peer_asn: 25291
 role_uplink_gateway_sysctl__to_merge:
   net.netfilter.nf_conntrack_max: 524288
 
+## WIREGUARD SECTION
+
 wireguard_port_start: 51820
 wireguard_port_end: 52820
 wireguard_wg_key: '/etc/wireguard/wg.key'
 wireguard_wg_pub: '/etc/wireguard/wg.pub'
-
+# Use temporary keys:
+# Generate for each new connection a private and public key in the form of
+# wg_[PORT].key wg_[PORT].pub
+# in /tmp/run/wgserver.
+# If it is set wireguard_wg_key and wireguard_wg_pub are not used.
+wireguard_wg_tmp_key: false
 
 gre_metric: 64
 
