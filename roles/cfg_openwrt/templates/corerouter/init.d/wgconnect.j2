@@ -1,0 +1,242 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% if wg_connect %}
+#!/bin/sh /etc/rc.common
+
+START=99
+
+USE_PROCD=1
+NAME=wgconnect
+
+# crate bridge
+wan_if={{ wg_wan_if }}
+wan_ip={{ wg_wan_ip }}
+wan_mask={{ wg_wan_mask }}
+wan_gw={{ wg_wan_gw }}
+wan_switch={{ wg_wan_switch }}
+mesh_ip={{ wg_mesh_ip }}
+
+ips='{% for gateway in groups['role_uplink_gateway'] | difference([inventory_hostname]) %}{{ hostvars[gateway]['uplink']['ipv4'] | ipaddr('address') }} {% endfor %}'
+
+log() {
+	local msg="$1"
+	logger -t wgconnect "$msg"
+}
+
+start_service() {
+	clean_wg_interfaces
+	procd_open_instance
+	procd_set_param command /bin/sh "/etc/init.d/wgconnect" "main"
+	procd_set_param respawn
+	procd_close_instance
+}
+
+stop_service() {
+	clean_wg_interfaces
+}
+
+clean_wg_interfaces() {
+	delete_wg_interfaces
+	if [ -z $wan_gw ]; then
+		ip -n uplink route del default via $wan_gw
+		ip -n uplink addr add $wan_ip/$wan_mask dev $wan_if
+	fi
+	ip -n uplink link set $wan_if netns 1
+	ip netns del uplink
+	# ToDo: brctl addif $wan_switch $wan_if
+}
+
+delete_wg_interface() {
+	ip link del dev "$1"
+	delete_firewall "$1"
+}
+
+delete_wg_interfaces() {
+	wg_interfaces=$(ip link | grep ' wg_[0-9]*:' | awk '{print $2}' | sed 's/://')
+
+	log "Deleting $wg_interfaces"
+
+	for wg_int in $wg_interfaces; do
+		log "Deleting $wg_int"
+		delete_wg_interface "$wg_int"
+	done
+}
+
+setup_uplink() {
+	if [[ "$(ip netns list)" == *"uplink"* ]]; then
+		return
+	fi
+
+	# delete wan from brdige
+	# ToDo: brctl delif $wan_switch $wan_if
+
+	# create NS
+	ip netns add uplink
+
+	# add WAN interface to NS
+	ip link set dev $wan_if netns uplink
+
+	# bring wan interface up
+	ip -n uplink link set dev $wan_if up
+
+	if [ ! -z $wan_gw ]; then
+		# configure ip and routing on WAN interface
+		ip -n uplink addr add $wan_ip/$wan_mask dev $wan_if
+		ip -n uplink route add default via $wan_gw
+	else
+		ip netns exec uplink udhcpc -i $wan_if
+	fi
+}
+
+setup_wgtunnel() {
+	[ -d "/tmp/run/wgclient" ] || mkdir -p /tmp/run/wgclient
+	[ -f "/tmp/run/wgclient/wg.key" ] && rm "/tmp/run/wgclient/wg.key"
+    [ -f "/tmp/run/wgclient/wg.pub" ] && rm "/tmp/run/wgclient/wg.pub"
+
+	gw_key="/tmp/run/wgclient/wg.key"
+	gw_pub="/tmp/run/wgclient/wg.pub"
+	wg genkey | tee $gw_key | wg pubkey > $gw_pub
+
+	# do some kind of load balancing
+	randomized_ips=$(shuf -e "$ips" | tr "\n" " " && echo "")
+	for ip in $randomized_ips; do
+		port=$(timeout 5 ip netns exec uplink wg-client-installer register --ip $ip --user wginstaller --password wginstaller --wg-key-file $gw_pub --mtu 1420 --bandwidth 100 | grep Port | awk '{print $2}')
+		if [ ! -z "$port" ]; then
+			break
+		fi
+	done
+
+	if [ -z "$port" ]; then
+		return
+	fi
+
+	interface="wg_$port"
+	echo $interface
+}
+
+setup_firewall() {
+	uci add_list firewall.zone_freifunk.device=$1
+	uci commit
+	/etc/init.d/firewall reload
+}
+
+delete_firewall() {
+	uci del_list firewall.zone_freifunk.device=$1
+	uci commit
+	/etc/init.d/firewall reload
+}
+
+bringup_wgtunnel() {
+	ip link set dev $1 up
+	ip addr add fe80::2/64 dev $1
+	ip a add $mesh_ip broadcast 255.255.255.255 dev $1
+}
+
+move_wgtunnel() {
+	ip -n uplink link set $1 netns 1
+}
+
+setup_babeld() {
+	found=0
+	i=0
+	while uci get babeld.@interface[$i] &>/dev/null; do
+		if [ "$(uci get babeld.@interface[$i].ifname)" == "$1" ]; then
+			found=1
+		fi
+		i=$((i + 1))
+	done
+
+	if [ $found -eq 0 ]; then
+		uci add babeld interface
+		uci set babeld.@interface[-1].ifname=$1
+		uci commit
+	fi
+	/etc/init.d/babeld reload
+}
+
+setup_olsrd() {
+	found=0
+	i=0
+	while uci get olsrd.@Interface[$i] &>/dev/null; do
+		if [ "$(uci get olsrd.@Interface[$i].interface)" == "$1" ]; then
+			found=1
+		fi
+		i=$((i + 1))
+	done
+
+	if [ $found -eq 0 ]; then
+		uci add olsrd Interface
+		uci set olsrd.@Interface[-1].ignore=0
+		uci set olsrd.@Interface[-1].interface=$1
+		uci set olsrd.@Interface[-1].Mode='ether'
+		uci commit
+	fi
+	/etc/init.d/olsrd reload
+}
+
+neighbors_available() {
+	local phy
+
+	wg_interfaces=$(ip link | grep  ' wg_[0-9]*:' | awk '{print $2}' | sed 's/://')
+
+	for phy in $wg_interfaces; do
+		linklocal=$(ip -6 a list dev $phy | grep "scope link" | awk '{print $2}' | sed 's/\/64//') 2>/dev/null
+		ips=$(ping ff02::1%$phy -w5 -W5 -c10 | awk '/from/{print($4)}' | sed 's/.$//') 2>/dev/null
+		for ip in $ips; do
+			if [ $ip != $linklocal ] && [ $(owipcalc $ip linklocal) -eq 1 ]; then
+				echo 1
+				return 0
+			fi
+		done
+		# if we reach here the interface is no longer in use
+		log "Deleting Unused Interface $phy"
+		delete_wg_interface "$phy"
+	done
+
+	echo 0
+}
+
+main() {
+	log "Starting WG-Connect"
+	sleep 5
+	while true; do
+		log "Checking Neighbours"
+		has_neighbor=$(neighbors_available)
+		if [ ! $has_neighbor -eq 0 ]; then
+			log "We have Neighbours"
+			sleep 5
+			continue
+		fi
+		log "We have no Neighbours"
+
+		log "Delete old wg-interfaces"
+		clean_wg_interfaces
+
+		setup_uplink
+
+		sleep 10
+
+		wg_interface=$(setup_wgtunnel)
+		if [ -z "$wg_interface" ]; then
+			log "Failed to setup WG-Interface"
+			sleep 5
+			continue
+		fi
+
+		sleep 10
+
+		move_wgtunnel $wg_interface
+		bringup_wgtunnel $wg_interface
+		setup_babeld $wg_interface
+		setup_olsrd $wg_interface
+		setup_firewall $wg_interface
+		sleep 10
+	done
+}
+
+case $1 in
+main)
+	"$@"
+	exit
+	;;
+esac
+{% endif %}

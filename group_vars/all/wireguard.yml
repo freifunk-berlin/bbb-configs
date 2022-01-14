@@ -1,0 +1,7 @@
+---
+
+# wg-connect
+wg_connct: false
+wg_wan_ip: ""
+wg_wan_mask: ""
+wg_wan_gw: ""

@@ -24,3 +24,7 @@ role_corerouter__packages__to_merge:
   - luci-app-falter-owm-gui
   - iptables-mod-ipopt
   - kmod-ipt-ipopt
+  - wg-installer-client
+  - coreutils-timeout
+  - coreutils-shuf
+  - ip-full

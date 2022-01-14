@@ -5,8 +5,10 @@ config device
 {% for network in networks %}
   {% set portmapping = [] %}
   {% for port in dsa_ports %}
-    {% set tagged = not network.get('untagged') %}
-    {{ portmapping.append(port|string + (":t" if tagged else "")) }}
+    {% if wg_wan_if not in port %}
+      {% set tagged = not network.get('untagged') %}
+      {{ portmapping.append(port|string + (":t" if tagged else "")) }}
+    {% endif %}
   {%- endfor %}
 
 config bridge-vlan
