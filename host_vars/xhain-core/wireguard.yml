@@ -1,0 +1,8 @@
+---
+
+wg_wan_if: wan
+wg_wan_ip: 10.0.0.10
+wg_wan_mask: 24
+wg_wan_gw: 10.0.0.1
+wg_wan_switch: switch0
+wg_mesh_ip: 10.31.139.48/32
