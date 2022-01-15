@@ -1,6 +1,6 @@
 ---
 
-location: e16
+location: e16outdoor
 role: corerouter
 model: "tplink_eap225-outdoor-v1"
 

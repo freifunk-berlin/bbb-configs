@@ -1,64 +1,74 @@
 ---
 ipv6_prefix: '2001:bf7:760:2700::/56'
 
-# e16outdoor got following prefixes:
-# Router: 10.31.142.0/26
-# --MGMT: 10.31.142.0/28
-# --MESH: 10.31.142.16/28
-# --DHCP: 10.31.142.32/27
+# got following prefixes:
+# Router:  10.31.142.0/26
+# --DHCP:  10.31.142.0/27
+# --MESH:  10.31.142.32/28
+# --MGMT:  10.31.142.48/28
 
 networks:
-# Mesh on LAN
-  - vid: 10
-    role: mesh
-    name: mesh_lan
-    prefix: 10.31.142.16/32
-    ipv6_subprefix: -1
-
-# 802.11s Mesh on 5 GHz
-  - vid: 20
-    role: mesh
-    name: mesh_11s_5ghz
-    prefix: 10.31.142.17/32
-    ipv6_subprefix: -2
-    mesh_metric: 1024
-    mesh_ap: e16outdoor-core
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
-
-# 802.11s Mesh on 2.4 GHz
-  - vid: 21
-    role: mesh
-    name: mesh_11s_2ghz
-    prefix: 10.31.142.18/32
-    ipv6_subprefix: -3
-    mesh_metric: 1024
-    mesh_ap: e16outdoor-core
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
 # DHCP
   - vid: 40
     role: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.31.142.32/27
+    prefix: 10.31.142.0/27
     ipv6_subprefix: 0
     assignments:
       e16outdoor-core: 1
 
+# MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_11s_5ghz
+    prefix: 10.31.142.32/32
+    ipv6_subprefix: -1
+    mesh_metric: 1024
+    mesh_ap: e16outdoor-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+# MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_11s_2ghz
+    prefix: 10.31.142.33/32
+    ipv6_subprefix: -2
+    mesh_metric: 1024
+    mesh_ap: e16outdoor-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+# MESH - LAN
+  - vid: 10
+    role: mesh
+    name: mesh_lan
+    prefix: 10.31.142.34/32
+    ipv6_subprefix: -3
+
+# MESH - segen
+  - vid: 11
+    role: mesh
+    name: mesh_segen
+    prefix: 10.31.142.35/32
+    ipv6_subprefix: -4
+
 # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.31.142.0/28
+    prefix: 10.31.142.48/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
+      #10.31.142.49/32
       e16outdoor-core: 1
+      #10.31.142.50/32
+      e16outdoor-segen: 2
 
 # AP-id, wifi-channel, bandwidth, txpower
-location__channel_assignments_11a_standard__to_merge: 
+location__channel_assignments_11a_standard__to_merge:
   e16outdoor-core: 36-40-19
 
 # AP-id, wifi-channel, bandwidth, txpower
