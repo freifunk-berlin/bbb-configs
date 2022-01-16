@@ -14,30 +14,30 @@ networks:
       habersaath-sw-b: 3
       habersaath-sw-c: 4
       habersaath-sw-d: 5
-      habersaath-ap-a1: 10
-      habersaath-ap-a2: 11
-      habersaath-ap-a3: 12
-      habersaath-ap-a4: 13
-      habersaath-ap-a5: 14
-      habersaath-ap-a6: 15
-      habersaath-ap-b1: 20
-      habersaath-ap-b2: 21
-      habersaath-ap-b3: 22
-      habersaath-ap-b4: 23
-      habersaath-ap-b5: 24
-      habersaath-ap-b6: 25
-      habersaath-ap-c1: 30
-      habersaath-ap-c2: 31
-      habersaath-ap-c3: 32
-      habersaath-ap-c4: 33
-      habersaath-ap-c5: 34
-      habersaath-ap-c6: 35
-      habersaath-ap-d1: 40
-      habersaath-ap-d2: 41
-      habersaath-ap-d3: 42
-      habersaath-ap-d4: 43
-      habersaath-ap-d5: 44
-      habersaath-ap-d6: 45
+      habersaath-ap-a1: 12
+      habersaath-ap-a2: 13
+      habersaath-ap-a3: 14
+      habersaath-ap-a4: 15
+      habersaath-ap-a5: 16
+      habersaath-ap-a6: 17
+      habersaath-ap-b1: 18
+      habersaath-ap-b2: 19
+      habersaath-ap-b3: 20
+      habersaath-ap-b4: 21
+      habersaath-ap-b5: 22
+      habersaath-ap-b6: 23
+      habersaath-ap-c1: 24
+      habersaath-ap-c2: 25
+      habersaath-ap-c3: 26
+      habersaath-ap-c4: 27
+      habersaath-ap-c5: 28
+      habersaath-ap-c6: 29
+      habersaath-ap-d1: 30
+      habersaath-ap-d2: 31
+      habersaath-ap-d3: 32
+      habersaath-ap-d4: 33
+      habersaath-ap-d5: 34
+      habersaath-ap-d6: 35
 
   - vid: 40
     role: dhcp
