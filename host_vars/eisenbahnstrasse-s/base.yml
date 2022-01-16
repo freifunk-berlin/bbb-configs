@@ -1,0 +1,8 @@
+---
+location: eisenbahnstrasse
+role: ap
+target: "lantiq/xrx200"
+model: "avm_fritzbox-7360sl"
+
+wireless_profile: freifunk_fw
+...

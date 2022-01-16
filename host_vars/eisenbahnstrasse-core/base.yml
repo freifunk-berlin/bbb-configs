@@ -2,7 +2,7 @@
 location: eisenbahnstrasse
 role: corerouter
 target: "lantiq/xrx200"
-model: "avm_fritzbox-7360-sl"
+model: "avm_fritzbox-7360sl"
 
 wireless_profile: freifunk_fw
 ...
