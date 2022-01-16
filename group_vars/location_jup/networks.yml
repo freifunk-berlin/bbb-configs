@@ -42,3 +42,9 @@ networks:
       jup-poe: 2
       jup-beuth: 3
       jup-segen: 4
+
+      # aps
+      jup-m5-ap1: 30
+
+location__channel_assignments_11a_standard__to_merge:
+  jup-m5-ap1: 36-20
