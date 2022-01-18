@@ -2,6 +2,6 @@
 
 location: jup
 role: ap
-model: "ubnt_nanostation-m5_xm"
+model: "ubnt_bullet-m-ar7241"
 
 poe_on: []
