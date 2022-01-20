@@ -1,0 +1,5 @@
+---
+snmp_devices:
+  - hostname: e16outdoor-segen
+    address: 10.31.142.50
+    snmp_profile: airos_8
