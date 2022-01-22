@@ -42,7 +42,8 @@ define gw = 02:00:00:00:00:01
 define bc = ff:ff:ff:ff:ff:ff
 define mc6 = 33:33:00:00:00:00/16
 
-delete table bridge client_isolation
+table bridge client_isolation
+flush table bridge client_isolation
 table bridge client_isolation {
     {% endif %}
 	chain PREROUTING_{{ name }} {
@@ -68,7 +69,9 @@ table bridge client_isolation {
     See https://wiki.nftables.org/wiki-nftables/index.php/Netfilter_hooks#Netfilter_hooks_into_Linux_networking_packet_flows #}
 {% set type = 'bridge' if role == 'ap' else 'inet' %}
 
-delete table {{ type }} prevent_mesh_reflection
+
+table {{ type }} prevent_mesh_reflection
+flush table {{ type }} prevent_mesh_reflection
 table {{ type }} prevent_mesh_reflection {
   {% endif %}
 	set {{ set_localrouter }} {
