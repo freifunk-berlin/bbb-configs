@@ -5,6 +5,8 @@ all__packages__to_merge:
   - iperf3
   - luci-ssl
   - luci-app-statistics
+  - -firewall4
+  - firewall
   - collectd-mod-uptime
   - collectd-mod-memory
   - collectd-mod-ping
