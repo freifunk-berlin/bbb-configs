@@ -1,6 +1,8 @@
 ---
 ipv6_prefix: "2001:bf7:750:4a00::/56"
 
+# mesh_prefix: 10.31.147.224/29
+
 networks:
   - vid: 42
     role: mgmt
@@ -47,6 +49,16 @@ networks:
     enforce_client_isolation: true
     assignments:
       habersaath-core: 1
+
+  - vid: 50
+    untagged: true
+    name: vpn_lte
+    role: ext
+    tunnel_wan_ip: 192.168.2.2/24
+    tunnel_wan_gw: 192.168.2.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.147.224/29
 
 location__channel_assignments_11a_standard__to_merge:
       habersaath-ap-a1: 36-20
