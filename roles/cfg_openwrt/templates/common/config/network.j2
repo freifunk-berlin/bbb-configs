@@ -24,12 +24,14 @@ config interface 'loopback'
 {% for network in networks %}
   {% set name = network['name'] if 'name' in network else network['role'] %}
   {% set port = ('switch0' if dsa_ports is defined else int_port) + '.' + network['vid']|string %}
-  {% set bridge_needed = name in wifi_networks or network.get('mesh_ap') == inventory_hostname %}
+  {% set bridge_needed = name in wifi_networks or network.get('mesh_ap') == inventory_hostname or (role == 'corerouter' and 'tunnel_wan_ip' in network) %}
   {% set port_needed = not (role == 'corerouter' and network.get('mesh_ap') == inventory_hostname) %}
 
   {%- if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
      or name in wifi_networks
-     or network.get('mesh_ap') == inventory_hostname %}
+     or network.get('mesh_ap') == inventory_hostname
+     or (role == 'corerouter' and 'tunnel_wan_ip' in network)
+     %}
 config interface '{{ name }}'
     {% if port_needed %}
 	option device '{{ ('br-' + name) if bridge_needed else port }}'
