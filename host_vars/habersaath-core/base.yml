@@ -3,3 +3,10 @@
 location: habersaath
 role: corerouter
 model: "linksys_e8450-ubi"
+
+# temporarily add dependencies for tunnelmanager until its in the repositories
+host__packages__to_merge:
+  - wg-installer-client
+  - kmod-macvlan
+  - ip-full
+  - coreutils-timeout
