@@ -48,12 +48,12 @@ networks:
       jup-m5-ap2: 29
       jup-m2-ap3: 28
       jup-bullet-ap4: 27
-      jup-m5-ap4: 26
+      jup-m5-ap5: 26
 
 location__channel_assignments_11a_standard__to_merge:
   jup-m5-ap1: 36-20
   jup-m5-ap2: 40-20
-  jup-m5-ap4: 48-20
+  jup-m5-ap5: 48-20
 
 location__channel_assignments_11g_standard__to_merge:
   jup-m2-ap3: 1-20
