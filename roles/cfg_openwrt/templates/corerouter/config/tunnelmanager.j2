@@ -1,0 +1,19 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% for network in networks | selectattr('tunnel_wan_ip', 'defined') %}
+  {% set name = network['name'] if 'name' in network else network['role'] %}
+config tunnelmanager '{{ name }}'
+	option interface 'br-{{ name }}'
+	option namespace '{{ network['tunnel_namespace']|default(name) }}'
+	option uplink_ip '{{ network['tunnel_wan_ip'] }}'
+	option uplink_gateway '{{ network['tunnel_wan_gw'] }}'
+	option tunnel_count '{{ network['tunnel_connections']|default(2) }}'
+	option tunnel_timeout '{{ network['tunnel_timeout']|default(160) }}'
+	option check_interval '{{ network['tunnel_check_interval']|default(30) }}'
+	option up_script '{{ network['tunnel_up_script']|default('/usr/share/tunnelman/up.sh') }}'
+	option up_script_args '{{ network['tunnel_up_script_args']|default(network['tunnel_mesh_prefix_ipv4']) }}'
+	option down_script '{{ network['tunnel_down_script']|default('/usr/share/tunnelman/down.sh') }}'
+  {% for gateway in groups['role_uplink_gateway'] %}
+        # {{ gateway }}
+	list tunnel_endpoints '{{ hostvars[gateway]['uplink']['ipv4'] | ipaddr('address') }}'
+  {% endfor %}
+{% endfor %}

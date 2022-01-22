@@ -17,6 +17,7 @@ config include
 config zone 'zone_freifunk'
 	option name 'freifunk'
 	option network '{{ l3_networks | rejectattr('inbound_filtering') | map(attribute='name') | join(' ') }}'
+	list device 'wg_+'
 
 {% for i in l3_networks | selectattr('inbound_filtering') %}
 config zone 'zone_{{ i['name'] }}'
