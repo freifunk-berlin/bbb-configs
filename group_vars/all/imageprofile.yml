@@ -7,6 +7,7 @@ all__packages__to_merge:
   - luci-app-statistics
   - -firewall4
   - firewall
+  - ip6tables # Its not pulled in by default anymore bc fw4
   - collectd-mod-uptime
   - collectd-mod-memory
   - collectd-mod-ping
