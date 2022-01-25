@@ -1,0 +1,58 @@
+---
+ipv6_prefix: "2001:bf7:750:4b00::/56"
+
+# Mesh: 10.31.147.232/29
+networks:
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.149.128/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      linie206-core: 1
+      linie206-switch1: 2
+      linie206-switch2: 3
+      linie206-ap1: 4
+      linie206-ap2: 5
+      linie206-ap3: 6
+      linie206-ap4: 7
+      linie206-ap5: 8
+      linie206-ap6: 9
+      linie206-ap7: 10
+      linie206-ap8: 11
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.149.0/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      linie206-core: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  linie206-ap1: 36-40
+  linie206-ap2: 48-40
+  linie206-ap3: 40-20
+  linie206-ap4: 44-20
+  linie206-ap5: 48-20
+
+location__channel_assignments_11g_standard__to_merge:
+  linie206-ap1: 1-20
+  linie206-ap6: 5-20
+  linie206-ap7: 9-20
+  linie206-ap8: 13-20
+
+
+# channel-bandwith-txpower in dbm
+
+# ap1: wohnzimmer - 2 + 5ghz
+# ap2: linienstraße west - 5ghz
+# ap3: linienstraße ost - 5ghz
+# ap4: alter garnisonfriedhof - 5ghz
+# ap5: kleine rosenthaler straße - 5ghz
+# ap6: linienstraße west - 2,4 ghz
+# ap7: linienstraße ost - 2,4 ghz
+# ap8: kleine rosenthaler straße - 2,4ghz
