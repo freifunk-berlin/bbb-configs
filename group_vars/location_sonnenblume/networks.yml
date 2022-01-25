@@ -1,0 +1,32 @@
+---
+ipv6_prefix: "2001:bf7:830:a200::/56"
+
+# Sonnenblume got following prefixes:
+# Router: 10.31.149.160/27
+# --MGMT: 10.31.149.160/28
+# --MESH: 10.31.149.176/28
+# --DHCP: 10.31.149.192/26
+
+networks:
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.149.192/26
+    ipv6_subprefix: 0
+    assignments:
+      sonnenblume-core: 1
+
+  - vid: 50
+    name: prdhcp
+    role: ext
+    untagged: true
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.149.160/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      sonnenblume-core: 1
