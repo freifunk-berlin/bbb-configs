@@ -1,8 +1,5 @@
 ---
-imagebuilder: "https://downloads.openwrt.org/snapshots/targets/ath79/generic/openwrt-imagebuilder-ath79-generic.Linux-x86_64.tar.xz"
-feed_version: "1.2.0-snapshot"
-imagebuilder_disable_signature_check: true
-target: ath79_generic
+target: ath79/generic
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"

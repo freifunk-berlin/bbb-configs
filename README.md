@@ -70,9 +70,7 @@ There are also files for the standard ssh keys and definitions for the wifi prof
 These files define how bbb-configs needs to handle different hardware models. This example shows a WDR4900:
 ```yml
 ---
-imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/mpc85xx/p1010/openwrt-imagebuilder-21.02-SNAPSHOT-mpc85xx-p1010.Linux-x86_64.tar.xz"
-feed_version: "1.2.0-snapshot"
-imagebuilder_disable_signature_check: true      # ignore missing signatures for packages (i.e. selfcompiled)
+target: "ipq40xx/generic"       # target of router model
 
 switch_ports: 6             # number of physical ports + one (CPU)
 switch_int_port: 0          # port-id of the CPU
@@ -182,7 +180,6 @@ The `host-vars`-dir contains one directory for every OpenWrt-device. The directo
 
 location: sama                  # locations short name, like def'd in location-directories
 role: corerouter                # devices role. Could either be 'corerouter', 'ap' or 'uplink_gateway'
-target: "ipq40xx/generic"       # target of router model
 model: "avm_fritzbox-7530"      # model name like written in the corresponding file name in group_vars/
 
 wireless_profile: freifunk_default      # activates wifi with freifunk-default-settings on this device by overriding default wireless profile for corerouters, which is the profile disable

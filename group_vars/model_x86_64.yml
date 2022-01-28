@@ -1,9 +1,6 @@
-
 ---
 
-imagebuilder: https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/x86/64/openwrt-imagebuilder-21.02-SNAPSHOT-x86-64.Linux-x86_64.tar.xz
-feed_version: "1.2.0-snapshot"
-imagebuilder_disable_signature_check: true
+target: x86/64
 override_target: generic
 
 int_port: eth0

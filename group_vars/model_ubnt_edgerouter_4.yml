@@ -1,8 +1,10 @@
 ---
-imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/octeon/generic/openwrt-imagebuilder-21.02-SNAPSHOT-octeon.Linux-x86_64.tar.xz"
-feed_version: "1.2.0-snapshot"
-imagebuilder_disable_signature_check: true
 target: octeon/generic
+
+# Somehow OpenWRT has messed up the name of resulting imagebuilder
+# for target octeon. Fixing it here
+imagebuilder: https://downloads.openwrt.org/{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}/targets/{{ target }}/openwrt-imagebuilder-{{ openwrt_version ~ '-' if openwrt_version != 'snapshot' }}octeon.Linux-x86_64.tar.xz
+
 
 #switch_ports: 6
 #switch_int_port: 0
