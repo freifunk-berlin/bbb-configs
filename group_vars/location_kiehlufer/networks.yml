@@ -2,29 +2,37 @@
 ipv6_prefix: '2001:bf7:830:8c00::/56'
 
 
-# Mesh: 10.31.82.140/30
+# Mesh: 10.31.151.112/28
 networks:
   - vid: 10
     role: mesh
     name: mesh_rhnk
-    prefix: 10.31.82.140/32
-    ipv6_subprefix: -2
+    prefix: 10.31.151.112/32
+    ipv6_subprefix: -1
     mesh_metric: 1024
     ptp: true
 
   - vid: 11
     role: mesh
     name: mesh_vaterhaus
-    prefix: 10.31.82.141/32
-    ipv6_subprefix: -3
+    prefix: 10.31.151.113/32
+    ipv6_subprefix: -2
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.3']
+    ptp: true
+
+  - vid: 12
+    role: mesh
+    name: mesh_emma
+    prefix: 10.31.151.114/32
+    ipv6_subprefix: -3
+    mesh_metric: 1024
     ptp: true
     
   - vid: 20
     role: mesh
     name: mesh_kiehl
-    prefix: 10.31.82.142/32
+    prefix: 10.31.151.115/32
     ipv6_subprefix: -4
     mesh_metric: 2048
     mesh_ap: kiehlufer-nf-wbp2
@@ -34,7 +42,7 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_huette
-    prefix: 10.31.108.145/32
+    prefix: 10.31.151.116/28
     ipv6_subprefix: -5
     mesh_metric: 2048
     mesh_ap: kiehlufer-3000
@@ -65,6 +73,17 @@ networks:
       kiehlufer-nf-wbp2: 6
       kiehlufer-nf-wbp3: 7
       kiehlufer-nf-wbp4: 8
+      kiehlufer-emma: 9
+
+  - vid: 50
+    untagged: true
+    name: vpn_vdsl
+    role: ext
+    tunnel_wan_ip: 10.0.0.3/26
+    tunnel_wan_gw: 10.0.0.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.151.120/29
 
 location__channel_assignments_11a_standard__to_merge:
   kiehlufer-nf-wbp1: 36-20
