@@ -34,3 +34,13 @@ networks:
     ipv6_subprefix: 1
     assignments:
       b0russia-core: 1
+
+  - vid: 50
+    untagged: true
+    name: uplink
+    role: ext
+    tunnel_wan_ip: 192.168.1.2/24
+    tunnel_wan_gw: 192.168.1.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.142.120/29
