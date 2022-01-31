@@ -59,6 +59,7 @@ networks:
     role: mgmt # workaround until we have real p2p role
     name: lora_gw
     prefix: 10.36.163.108/30
+    untagged: true # workaround
     gateway: 1
     dns: 1
     ipv6_subprefix: 2
