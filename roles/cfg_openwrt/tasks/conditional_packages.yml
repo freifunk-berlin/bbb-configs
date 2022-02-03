@@ -15,7 +15,9 @@
 - name: "Add tunnelmanager if configured"
   set_fact:
     packages: "{{ packages + ['falter-berlin-tunnelmanager'] }}"
-  when: networks | selectattr('tunnel_wan_ip', 'defined') | count > 0
+  when:
+    - networks is defined
+    - networks | selectattr('tunnel_wan_ip', 'defined') | count > 0
 
 - name: "Add zram-swap on low mem and big flash"
   set_fact:
