@@ -16,6 +16,8 @@ networks:
       habersaath-sw-b: 3
       habersaath-sw-c: 4
       habersaath-sw-d: 5
+      habersaath-60g-local: 6
+      habersaath-60g-neigh: 7
       habersaath-ap-a1: 12
       habersaath-ap-a2: 13
       habersaath-ap-a3: 14
@@ -56,9 +58,18 @@ networks:
     role: ext
     tunnel_wan_ip: 192.168.2.2/24
     tunnel_wan_gw: 192.168.2.1
-    tunnel_connections: 2
+    tunnel_connections: 1
     tunnel_timeout: 600
     tunnel_mesh_prefix_ipv4: 10.31.147.224/29
+
+  - vid: 51
+    name: vpn_neigh
+    role: ext
+    tunnel_wan_ip: 192.168.1.2/24
+    tunnel_wan_gw: 192.168.1.1
+    tunnel_connections: 1
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.341.147.224/29
 
 location__channel_assignments_11a_standard__to_merge:
       habersaath-ap-a1: 36-20
