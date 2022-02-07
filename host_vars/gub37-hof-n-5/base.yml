@@ -1,0 +1,7 @@
+---
+
+location: gub37
+role: ap
+model: "ubnt_nanostation_loco_m5_xw"
+
+poe_on: []

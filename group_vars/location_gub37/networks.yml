@@ -28,6 +28,15 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
+  - vid: 22
+    role: mesh
+    name: mesh_hof_n_5
+    prefix: 10.31.77.195/32
+    ipv6_subprefix: -4
+    mesh_ap: gub37-hof-n-5
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -47,3 +56,4 @@ networks:
     assignments:
       gub37-core: 1
       gub37-sama: 2
+      gub37-hof-n-5: 3
