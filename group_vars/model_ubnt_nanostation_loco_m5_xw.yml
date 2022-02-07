@@ -1,0 +1,12 @@
+---
+override_target: "ubnt_nanostation-loco-m-xw"
+target: ath79/generic
+
+int_port: eth0
+
+wireless_devices:
+  - name: 11a_standard
+    hwmode: 11a
+    path: platform/ahb/18100000.wmac
+    ifname_hint: wlan5
+    antenna_gain: 6
