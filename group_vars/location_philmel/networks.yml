@@ -1,0 +1,95 @@
+---
+ipv6_prefix: "2001:bf7:820:1500::/56"
+
+networks:
+  - vid: 2
+    role: dhcp
+    prefix: 10.230.2.24/29
+    ipv6_subprefix: 0
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      philmel-core: 1
+
+  - vid: 10
+    role: mesh
+    name: mesh_nord
+    prefix: 10.230.2.160/30 # 10.36.154.41/29 ???
+    ipv6_subprefix: -1
+    assignments:
+      philmel-core: 2
+      philmel-nord: 1
+
+  - vid: 11
+    role: mesh
+    name: mesh_ost
+    prefix: 10.230.2.164/30 # 10.230.52.245/30 ???
+    ipv6_subprefix: -2
+    assignments:
+      philmel-core: 2
+      philmel-ost: 1
+
+  - vid: 12
+    role: mesh
+    name: mesh_sued
+    prefix: 10.230.2.168/30
+    ipv6_subprefix: -3
+    assignments:
+      philmel-core: 2
+      philmel-sued: 1
+
+  - vid: 13
+    role: mesh
+    name: mesh_west
+    prefix: 10.230.2.172/30
+    ipv6_subprefix: -4
+    assignments:
+      philmel-core: 2
+      philmel-west: 1
+
+  - vid: 14
+    role: mesh
+    name: mesh_rhnk
+    prefix: 10.230.2.176/30
+    ipv6_subprefix: -5
+    assignments:
+      philmel-core: 2
+      philmel-rhnk: 1
+
+  - vid: 19
+    role: mesh
+    name: mesh_ak36
+    prefix: 10.230.2.180/30
+    ipv6_subprefix: -6
+    assignments:
+      philmel-core: 2
+      philmel-ak36: 1
+
+  - vid: 20
+    role: mesh
+    name: mesh_autobahn
+    prefix: 10.230.2.184/30
+    ipv6_subprefix: -7
+    assignments:
+      philmel-core: 2
+      philmel-autobahn: 1
+
+  - vid: 21
+    role: mesh
+    name: vaterhaus
+    prefix: 10.230.2.188/30
+    ipv6_subprefix: -5
+    assignments:
+      philmel-core: 2
+      philmel-vaterhaus: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.230.2.0/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      philmel-core: 1
+      philmel-nord-m2: 2
