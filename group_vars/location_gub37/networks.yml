@@ -15,7 +15,7 @@ networks:
     name: mesh_core_2ghz
     prefix: 10.31.77.193/32
     ipv6_subprefix: -2
-    mesh_ap: gubener-core
+    mesh_ap: gub37-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
@@ -24,7 +24,7 @@ networks:
     name: mesh_core_5ghz
     prefix: 10.31.77.194/32
     ipv6_subprefix: -3
-    mesh_ap: gubener-core
+    mesh_ap: gub37-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -36,7 +36,7 @@ networks:
     prefix: 10.31.114.128/25
     ipv6_subprefix: 0
     assignments:
-      gubener-core: 1
+      gub37-core: 1
 
   - vid: 42
     role: mgmt
@@ -45,5 +45,5 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      gubener-core: 1
-      gubener-sama: 2
+      gub37-core: 1
+      gub37-sama: 2
