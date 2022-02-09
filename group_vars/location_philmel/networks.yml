@@ -93,3 +93,4 @@ networks:
     assignments:
       philmel-core: 1
       philmel-nord-m2: 2
+      philmel-poe: 3
