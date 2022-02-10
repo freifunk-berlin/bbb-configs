@@ -2,9 +2,7 @@ config public 'contact'
 {% if contact_name is defined %}
 	option name '{{ contact_name }}'
 {% endif %}
-{% if contact_name is not defined or contact_nickname != 'please_add_operator_name' %}
 	option nickname '{{ contact_nickname }}'
-{% endif %}
 	option mail '{{ contact_email }}'
 	option location '{{ location_nice }}'
 
