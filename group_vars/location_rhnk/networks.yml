@@ -139,7 +139,6 @@ networks:
   - vid: 42
     role: mgmt
     prefix: 10.230.3.1/29
-    untagged: true
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
