@@ -1,0 +1,50 @@
+---
+
+snmp_devices:
+  - hostname: rhnk-nno
+    address: 10.230.3.9
+    snmp_profile: airos_6
+
+  - hostname: rhnk-ono
+    address: 10.230.3.13
+    snmp_profile: airos_6
+
+  - hostname: rhnk-oso
+    address: 10.230.3.17
+    snmp_profile: airos_8
+
+  - hostname: rhnk-sso
+    address: 10.230.3.21
+    snmp_profile: airos_8
+
+  - hostname: rhnk-ssw
+    address: 10.230.3.25
+    snmp_profile: airos_6
+
+  - hostname: rhnk-wsw
+    address: 10.230.3.29
+    snmp_profile: airos_6
+
+  - hostname: rhnk-wnw
+    address: 10.230.3.33
+    snmp_profile: airos_6
+
+  - hostname: rhnk-nnw
+    address: 10.230.3.37
+    snmp_profile: airos_8
+
+  - hostname: rhnk-rhxb
+    address: 10.230.3.41
+    snmp_profile: airos_6
+
+  - hostname: rhnk-emma
+    address: 10.230.3.45
+    snmp_profile: airos_8
+
+  - hostname: rhnk-fhain
+    address: 10.230.3.49
+    snmp_profile: airos_6
+
+  - hostname: rhnk-fhain
+    address: 10.230.3.53
+    snmp_profile: airos_8
