@@ -115,3 +115,5 @@ networks:
       rhnk-vaterhaus: 11
       rhnk-philmel: 12
       rhnk-wnw: 13
+      rhnk-rhxb: 14
+      rhnk-tplink-poe: 15
