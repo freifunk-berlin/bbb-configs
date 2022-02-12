@@ -5,127 +5,86 @@ networks:
   - vid: 10
     role: mesh
     name: mesh_nno
-    prefix: 10.230.3.8/30
+    prefix: 10.230.3.8/32
     ipv6_subprefix: -1
-    assignments:
-      rhnk-core: 2
-      rhnk-nno: 1
 
   - vid: 11
     role: mesh
     name: mesh_ono
-    prefix: 10.230.3.12/30
+    prefix: 10.230.3.9/32
     ipv6_subprefix: -2
-    assignments:
-      rhnk-core: 2
-      rhnk-ono: 1
 
   - vid: 12
     role: mesh
     name: mesh_oso
-    prefix: 10.230.3.16/30
+    prefix: 10.230.3.10/32
     ipv6_subprefix: -3
-    assignments:
-      rhnk-core: 2
-      rhnk-oso: 1
 
   - vid: 13
     role: mesh
     name: mesh_sso
-    prefix: 10.230.3.20/30
+    prefix: 10.230.3.11/32
     ipv6_subprefix: -4
-    assignments:
-      rhnk-core: 2
-      rhnk-sso: 1
 
   - vid: 14
     role: mesh
     name: mesh_ssw
-    prefix: 10.230.3.24/30
+    prefix: 10.230.3.12/32
     ipv6_subprefix: -5
-    assignments:
-      rhnk-core: 2
-      rhnk-ssw: 1
 
   - vid: 15
     role: mesh
     name: mesh_wsw
-    prefix: 10.230.3.28/30
+    prefix: 10.230.3.13/32
     ipv6_subprefix: -6
-    assignments:
-      rhnk-core: 2
-      rhnk-wsw: 1
 
   - vid: 16
     role: mesh
     name: mesh_wnw
-    prefix: 10.230.3.32/30
+    prefix: 10.230.3.14/32
     ipv6_subprefix: -7
-    assignments:
-      rhnk-core: 2
-      rhnk-wnw: 1
 
   - vid: 17
     role: mesh
     name: mesh_nnw
-    prefix: 10.230.3.36/30
+    prefix: 10.230.3.15/32
     ipv6_subprefix: -8
-    assignments:
-      rhnk-core: 2
-      rhnk-nnw: 1
 
   - vid: 20
     role: mesh
     name: mesh_rhxb
-    prefix: 10.230.3.40/30
+    prefix: 10.230.3.16/32
     ipv6_subprefix: -9
-    assignments:
-      rhnk-core: 2
-      rhnk-rhxb: 1
 
   - vid: 21
     role: mesh
     name: mesh_emmaus
-    prefix: 10.230.3.44/30
+    prefix: 10.230.3.17/32
     ipv6_subprefix: -10
-    assignments:
-      rhnk-core: 2
-      rhnk-emmaus: 1
 
   - vid: 22
     role: mesh
     name: mesh_zwingli
-    prefix: 10.230.3.48/30
+    prefix: 10.230.3.18/32
     ipv6_subprefix: -11
-    assignments:
-      rhnk-core: 2
-      rhnk-zwingli: 1
 
   - vid: 23
     role: mesh
     name: mesh_neukoelln
-    prefix: 10.230.3.52/30
+    prefix: 10.230.3.19/32
     ipv6_subprefix: -12
-    assignments:
-      rhnk-core: 2
-      rhnk-neukoelln: 1
 
   - vid: 24
     role: mesh
     name: mesh_feld # missing antenna?
-    prefix: 10.230.3.56/30
+    prefix: 10.230.3.20/32
     ipv6_subprefix: -13
-    assignments:
-      rhnk-core: 2
-      rhnk-feld: 1
 
   - vid: 25
     role: mesh
     name: mesh_adlershof # missing antenna?
-    prefix: 10.36.91.156/30
+    prefix: 10.36.91.21/32
     ipv6_subprefix: -14
-    assignments:
-      rhnk-core: 1
 
   - vid: 40
     role: dhcp
