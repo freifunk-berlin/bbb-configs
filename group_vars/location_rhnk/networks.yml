@@ -138,11 +138,21 @@ networks:
 
   - vid: 42
     role: mgmt
-    prefix: 10.230.3.1/29
+    prefix: 10.31.152.128/27 # 10.230.3.1/29
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
       rhnk-core: 1
-      rhnk-poe: 2
-      rhnk-platz: 3
+      rhnk-poe1: 2
+      rhnk-poe2: 3
+      rhnk-neukoelln: 4
+      rhnk-wsw: 5
+      rhnk-fhain: 6
+      rhnk-emma: 7
+      rhnk-nnw: 8
+      rhnk-zwingli: 9
+      rhnk-oso: 10
+      rhnk-vaterhaus: 11
+      rhnk-philmel: 12
+      rhnk-wnw: 13
