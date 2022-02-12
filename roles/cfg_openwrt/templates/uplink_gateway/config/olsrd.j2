@@ -65,6 +65,13 @@ config Interface
 	option Mode '{{ 'ether' if interface.get('ptp') else 'mesh' }}'
   {% endfor %}
 
+  {% for gateway in groups['role_uplink_gateway'] | difference([inventory_hostname]) %}
+config Interface
+	option ignore '0'
+	option interface '{{  hostvars[gateway]['gre_tunnel_alias'] }}'
+	option Mode 'ether'
+	{% endfor %}
+
   {% if mgmt is defined %}
 config Hna4
 	option netmask '{{ mgmt['ipv4'] | ipaddr('netmask') }}'
