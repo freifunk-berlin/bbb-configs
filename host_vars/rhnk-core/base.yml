@@ -2,6 +2,6 @@
 
 location: rhnk
 role: corerouter
-model: "tplink_tl-wdr4900-v1"
+model: "linksys_e8450-ubi"
 
 wireless_profile: freifunk_default
