@@ -48,9 +48,13 @@ snmp_devices:
 
   - hostname: rhnk-oso
     address: 10.31.153.23
+    snmp_profile: airos_6
+
+  - hostname: rhnk-oso
+    address: 10.31.153.24
     snmp_profile: airos_8
 
   - hostname: rhnk-ssw
-    address: 10.31.153.24
+    address: 10.31.153.25
     snmp_profile: airos_8
 

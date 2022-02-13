@@ -105,7 +105,7 @@ networks:
       rhnk-core: 1
       rhnk-poe1: 2
       rhnk-poe2: 3
-      rhnk-tplink-poe: 4
+      rhnk-tplink-poe: 4 # default ip: 192.168.0.1
 
       # 60 GHz P2P
       rhnk-philmel: 10
@@ -122,5 +122,6 @@ networks:
       rhnk-nnw: 20
       rhnk-wnw: 21 # down? old ip: 10.31.152.141
       rhnk-wsw: 22
-      rhnk-oso: 23
-      rhnk-ssw: 24
+      rhnk-ono: 23
+      rhnk-oso: 24
+      rhnk-ssw: 25
