@@ -113,6 +113,9 @@ networks:
       rhnk-poe2: 3
       rhnk-tplink-poe: 4 # default ip: 192.168.0.1
 
+      # client access
+      rhnk-platz: 9
+
       # 60 GHz P2P
       rhnk-philmel: 10
       rhnk-rhxb: 11
