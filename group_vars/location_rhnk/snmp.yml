@@ -46,7 +46,7 @@ snmp_devices:
     address: 10.31.153.22
     snmp_profile: airos_6
 
-  - hostname: rhnk-oso
+  - hostname: rhnk-ono
     address: 10.31.153.23
     snmp_profile: airos_6
 

@@ -4,87 +4,93 @@ ipv6_prefix: "2001:bf7:820:1000::/56"
 networks:
   - vid: 10
     role: mesh
-    name: mesh_nno
-    prefix: 10.230.3.8/32
-    ipv6_subprefix: -1
+    name: mesh_philmel
+    prefix: 10.230.3.10/32
+    ipv6_subprefix: -10
 
   - vid: 11
     role: mesh
-    name: mesh_ono
-    prefix: 10.230.3.9/32
-    ipv6_subprefix: -2
+    name: mesh_rhxb
+    prefix: 10.230.3.11/32
+    ipv6_subprefix: -11
 
   - vid: 12
     role: mesh
-    name: mesh_oso
-    prefix: 10.230.3.10/32
-    ipv6_subprefix: -3
+    name: mesh_zwingli
+    prefix: 10.230.3.12/32
+    ipv6_subprefix: -12
 
   - vid: 13
     role: mesh
-    name: mesh_sso
-    prefix: 10.230.3.11/32
-    ipv6_subprefix: -4
-
-  - vid: 14
-    role: mesh
-    name: mesh_ssw
-    prefix: 10.230.3.12/32
-    ipv6_subprefix: -5
+    name: mesh_vaterhaus
+    prefix: 10.230.3.13/32
+    ipv6_subprefix: -13
 
   - vid: 15
     role: mesh
-    name: mesh_wsw
-    prefix: 10.230.3.13/32
-    ipv6_subprefix: -6
+    name: mesh_emma
+    prefix: 10.230.3.15/32
+    ipv6_subprefix: -15
 
   - vid: 16
     role: mesh
-    name: mesh_wnw
-    prefix: 10.230.3.14/32
-    ipv6_subprefix: -7
+    name: mesh_koelln
+    prefix: 10.230.3.16/32
+    ipv6_subprefix: -16
 
   - vid: 17
     role: mesh
-    name: mesh_nnw
-    prefix: 10.230.3.15/32
-    ipv6_subprefix: -8
+    name: mesh_fhain
+    prefix: 10.230.3.17/32
+    ipv6_subprefix: -17
 
   - vid: 20
     role: mesh
-    name: mesh_rhxb
-    prefix: 10.230.3.16/32
-    ipv6_subprefix: -9
+    name: mesh_nnw
+    prefix: 10.230.3.20/32
+    ipv6_subprefix: -20
 
   - vid: 21
     role: mesh
-    name: mesh_emmaus
-    prefix: 10.230.3.17/32
-    ipv6_subprefix: -10
+    name: mesh_wnw
+    prefix: 10.230.3.21/32
+    ipv6_subprefix: -21
 
   - vid: 22
     role: mesh
-    name: mesh_zwingli
-    prefix: 10.230.3.18/32
-    ipv6_subprefix: -11
+    name: mesh_wsw
+    prefix: 10.230.3.22/32
+    ipv6_subprefix: -22
 
   - vid: 23
     role: mesh
-    name: mesh_neukoelln
-    prefix: 10.230.3.19/32
-    ipv6_subprefix: -12
+    name: mesh_ono
+    prefix: 10.230.3.23/32
+    ipv6_subprefix: -23
 
   - vid: 24
     role: mesh
-    name: mesh_feld # missing antenna?
-    prefix: 10.230.3.20/32
-    ipv6_subprefix: -13
+    name: mesh_oso
+    prefix: 10.230.3.24/32
+    ipv6_subprefix: -24
 
   - vid: 25
     role: mesh
-    name: mesh_adlershof # missing antenna?
-    prefix: 10.36.91.21/32
-    ipv6_subprefix: -14
+    name: mesh_ssw
+    prefix: 10.36.91.25/32
+    ipv6_subprefix: -25
+
+  - vid: 30
+    role: mesh
+    name: mesh_u1
+    prefix: 10.36.91.30/32
+    ipv6_subprefix: -30
+
+  - vid: 31
+    role: mesh
+    name: mesh_u2
+    prefix: 10.36.91.31/32
+    ipv6_subprefix: -31
 
   - vid: 40
     role: dhcp
