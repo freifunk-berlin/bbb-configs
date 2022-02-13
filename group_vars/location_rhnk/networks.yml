@@ -97,7 +97,7 @@ networks:
 
   - vid: 42
     role: mgmt
-    prefix: 10.31.152.128/27 # 10.230.3.1/29
+    prefix: 10.31.153.0/27 # 10.230.3.1/29 # 10.31.152.128/27
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
@@ -105,15 +105,22 @@ networks:
       rhnk-core: 1
       rhnk-poe1: 2
       rhnk-poe2: 3
-      rhnk-neukoelln: 4
-      rhnk-wsw: 5
-      rhnk-fhain: 6
-      rhnk-emma: 7
-      rhnk-nnw: 8
-      rhnk-zwingli: 9
-      rhnk-oso: 10
-      rhnk-vaterhaus: 11
-      rhnk-philmel: 12
-      rhnk-wnw: 13
-      rhnk-rhxb: 14
-      rhnk-tplink-poe: 15
+      rhnk-tplink-poe: 4
+
+      # 60 GHz P2P
+      rhnk-philmel: 10
+      rhnk-rhxb: 11
+      rhnk-zwingli: 12
+      rhnk-vaterhaus: 13
+
+      # 5 GHz P2P
+      rhnk-emma: 15
+      rhnk-neukoelln: 16
+      rhnk-fhain: 17
+
+      # 5 GHz Sector
+      rhnk-nnw: 20
+      rhnk-wnw: 21 # down? old ip: 10.31.152.141
+      rhnk-wsw: 22
+      rhnk-oso: 23
+      rhnk-ssw: 24
