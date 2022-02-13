@@ -80,17 +80,17 @@ networks:
     prefix: 10.36.91.25/32
     ipv6_subprefix: -25
 
+  - vid: 26
+    role: mesh
+    name: mesh_nno
+    prefix: 10.36.91.26/32
+    ipv6_subprefix: -26
+
   - vid: 30
     role: mesh
     name: mesh_u1
     prefix: 10.36.91.30/32
     ipv6_subprefix: -30
-
-  - vid: 31
-    role: mesh
-    name: mesh_u2
-    prefix: 10.36.91.31/32
-    ipv6_subprefix: -31
 
   - vid: 40
     role: dhcp
@@ -131,3 +131,4 @@ networks:
       rhnk-ono: 23
       rhnk-oso: 24
       rhnk-ssw: 25
+      rhnk-nno: 26
