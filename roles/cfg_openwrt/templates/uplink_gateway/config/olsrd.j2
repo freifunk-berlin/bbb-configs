@@ -57,12 +57,14 @@ config InterfaceDefaults
 	option MidInterval '25.0'
 	option HelloInterval '3.0'
 	option HnaInterval '10.0'
+	option LinkQualityMult 'default 0.2'
 
   {% for interface in mesh_links %}
 config Interface
 	option ignore '0'
 	option interface '{{ interface['name'] }}'
 	option Mode '{{ 'ether' if interface.get('ptp') else 'mesh' }}'
+	option LinkQualityMult 'default 1.0'
   {% endfor %}
 
   {% if mgmt is defined %}
