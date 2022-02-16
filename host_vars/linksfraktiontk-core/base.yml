@@ -1,0 +1,7 @@
+---
+
+location: linksfraktiontk
+role: corerouter
+model: "avm_fritzbox-4040"
+
+wireless_profile: freifunk_default
