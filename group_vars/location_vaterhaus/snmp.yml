@@ -1,0 +1,30 @@
+---
+
+snmp_devices:
+  - hostname: vaterhaus-zwingli
+    address: 10.230.192.202
+    snmp_profile: af60
+
+  - hostname: vaterhaus-w
+    address: 10.230.192.203
+    snmp_profile: airos_8
+
+#  - hostname: vaterhaus-no
+#    address: 10.230.192.204
+#    snmp_profile: mikrotik
+
+  - hostname: vaterhaus-o
+    address: 10.230.192.205
+    snmp_profile: airos_8
+
+  - hostname: vaterhaus-adlershof
+    address: 10.230.192.206
+    snmp_profile: airos_8
+
+  - hostname: vaterhaus-cg47
+    address: 10.230.192.207
+    snmp_profile: airos_8
+
+#  - hostname: vaterhaus-m2no
+#    address: 10.230.192.208
+#    snmp_profile: airos_6
