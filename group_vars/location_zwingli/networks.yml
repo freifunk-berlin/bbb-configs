@@ -18,8 +18,9 @@ networks:
       zwingli-sama: 3
       zwingli-rhnk: 4
       zwingli-agym: 5
+      zwingli-vaterhaus: 6
 # legacy link to emma
-      zwingli-emma: 6
+      zwingli-emma: 7
 # local aps 2ghz
       zwingli-nord-nf-2ghz: 10
       zwingli-ost-nf-2ghz: 11
@@ -46,7 +47,7 @@ networks:
       zwingli-core: 1
 
 
-# 10.31.115.32/28 Mesh Prefix (16)
+# 10.31.115.32/27 Mesh Prefix (32)
   - vid: 10
     role: mesh
     name: mesh_nord
@@ -90,9 +91,16 @@ networks:
     ptp: true
   - vid: 17
     role: mesh
+    name: mesh_vaterhaus
+    prefix: 10.31.115.39/32
+    ipv6_subprefix: -8
+    mesh_metric: 128
+    ptp: true
+  - vid: 18
+    role: mesh
     name: mesh_emma
-    prefix: 10.31.115.47/32
-    ipv6_subprefix: -16
+    prefix: 10.31.115.40/32
+    ipv6_subprefix: -9
     mesh_metric: 128
     mesh_metric_lqm:
       - default 0.3 # Make sure emma/ohlauer is not used as primary uplink
@@ -103,8 +111,8 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_11s_n2
-    prefix: 10.31.115.39/32
-    ipv6_subprefix: -8
+    prefix: 10.31.115.41/32
+    ipv6_subprefix: -10
     mesh_metric: 1024
     mesh_ap: zwingli-nord-nf-2ghz
     mesh_radio: 11g_standard
@@ -114,8 +122,8 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_11s_o2
-    prefix: 10.31.115.40/32
-    ipv6_subprefix: -9
+    prefix: 10.31.115.42/32
+    ipv6_subprefix: -11
     mesh_metric: 1024
     mesh_ap: zwingli-ost-nf-2ghz
     mesh_radio: 11g_standard
@@ -125,8 +133,8 @@ networks:
   - vid: 22
     role: mesh
     name: mesh_11s_s2
-    prefix: 10.31.115.41/32
-    ipv6_subprefix: -10
+    prefix: 10.31.115.43/32
+    ipv6_subprefix: -12
     mesh_metric: 1024
     mesh_ap: zwingli-sued-nf-2ghz
     mesh_radio: 11g_standard
@@ -136,8 +144,8 @@ networks:
   - vid: 23
     role: mesh
     name: mesh_11s_w2
-    prefix: 10.31.115.42/32
-    ipv6_subprefix: -11
+    prefix: 10.31.115.44/32
+    ipv6_subprefix: -13
     mesh_metric: 1024
     mesh_ap: zwingli-west-nf-2ghz
     mesh_radio: 11g_standard
@@ -149,8 +157,8 @@ networks:
   - vid: 24
     role: mesh
     name: mesh_11s_n5
-    prefix: 10.31.115.43/32
-    ipv6_subprefix: -12
+    prefix: 10.31.115.45/32
+    ipv6_subprefix: -14
     mesh_metric: 1024
     mesh_ap: zwingli-nord-nf-5ghz
     mesh_radio: 11a_standard
@@ -160,8 +168,8 @@ networks:
   - vid: 25
     role: mesh
     name: mesh_11s_o5
-    prefix: 10.31.115.44/32
-    ipv6_subprefix: -13
+    prefix: 10.31.115.46/32
+    ipv6_subprefix: -15
     mesh_metric: 1024
     mesh_ap: zwingli-ost-nf-5ghz
     mesh_radio: 11a_standard
@@ -171,8 +179,8 @@ networks:
   - vid: 26
     role: mesh
     name: mesh_11s_s5
-    prefix: 10.31.115.45/32
-    ipv6_subprefix: -14
+    prefix: 10.31.115.47/32
+    ipv6_subprefix: -16
     mesh_metric: 1024
     mesh_ap: zwingli-sued-nf-5ghz
     mesh_radio: 11a_standard
@@ -182,8 +190,8 @@ networks:
   - vid: 27
     role: mesh
     name: mesh_11s_w5
-    prefix: 10.31.115.46/32
-    ipv6_subprefix: -15
+    prefix: 10.31.115.48/32
+    ipv6_subprefix: -17
     mesh_metric: 1024
     mesh_ap: zwingli-west-nf-5ghz
     mesh_radio: 11a_standard
