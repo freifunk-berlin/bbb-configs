@@ -1,0 +1,88 @@
+---
+ipv6_prefix: "2001:bf7:830:a500::/56"
+
+# Vaterhaus got following prefixes:
+# Router: 10.230.192.192/26
+# --MGMT: 10.230.192.192/27
+# --MESH: 10.230.192.224/27 {as /32}
+# --DHCP: 10.31.155.0/26 
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_zwingli
+    prefix: 10.230.192.224/32
+    ipv6_subprefix: -1
+    ptp: true
+    mesh_metric: 128
+
+  - vid: 11
+    role: mesh
+    name: mesh_w
+    prefix: 10.230.192.225/32
+    ipv6_subprefix: -2
+    mesh_metric_lqm:
+        - default 0.2
+
+  - vid: 12
+    role: mesh
+    name: mesh_no
+    prefix: 10.230.192.226/32
+    ipv6_subprefix: -3
+    ptp: true
+
+  - vid: 13
+    role: mesh
+    name: mesh_o    
+    prefix: 10.230.192.227/32
+    ipv6_subprefix: -4
+
+  - vid: 14
+    role: mesh
+    name: mesh_adlershof    
+    prefix: 10.230.192.228/32
+    ipv6_subprefix: -5
+
+  - vid: 15
+    role: mesh
+    name: mesh_cg47    
+    prefix: 10.230.192.229/32
+    ipv6_subprefix: -6
+    mesh_metric_lqm:
+        - default 0.2
+
+  - vid: 20
+    role: mesh
+    name: mesh_umfeld_no
+    prefix: 10.230.192.230/32
+    ipv6_subprefix: -7
+    mesh_metric: 2048
+    mesh_ap: vaterhaus-m2no
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.155.0/26
+    ipv6_subprefix: 0
+    assignments:
+      vaterhaus-core: 1
+  
+  - vid: 42
+    role: mgmt
+    prefix: 10.230.192.192/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      vaterhaus-core: 1
+      vaterhaus-switch: 2
+      vaterhaus-zwingli: 10
+      vaterhaus-w: 11
+      vaterhaus-no: 12
+      vaterhaus-o: 13
+      vaterhaus-adlershof: 14
+      vaterhaus-cg47: 15
+      vaterhaus-m2no: 16
