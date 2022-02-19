@@ -18,6 +18,7 @@ networks:
     mesh_ap: gub37-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.3']
 
   - vid: 21
     role: mesh
@@ -27,6 +28,7 @@ networks:
     mesh_ap: gub37-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.3']
 
   - vid: 22
     role: mesh
@@ -36,6 +38,7 @@ networks:
     mesh_ap: gub37-hof-n-5
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.3']
 
   - vid: 40
     role: dhcp
