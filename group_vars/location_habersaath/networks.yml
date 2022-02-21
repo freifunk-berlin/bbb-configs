@@ -65,8 +65,8 @@ networks:
   - vid: 51
     name: vpn_neigh
     role: ext
-    tunnel_wan_ip: 192.168.1.2/24
-    tunnel_wan_gw: 192.168.1.1
+    tunnel_wan_ip: 192.168.8.2/24
+    tunnel_wan_gw: 192.168.8.1
     tunnel_connections: 1
     tunnel_timeout: 600
     tunnel_mesh_prefix_ipv4: 10.341.147.224/29
