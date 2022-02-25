@@ -49,6 +49,7 @@ networks:
       jup-m2-ap3: 28
       jup-bullet-ap4: 27
       jup-m5-ap5: 26
+      jup-bar: 25
 
 location__channel_assignments_11a_standard__to_merge:
   jup-m5-ap1: 36-20
