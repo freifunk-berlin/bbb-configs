@@ -32,6 +32,15 @@ networks:
     assignments:
       linie206-core: 1
 
+  - vid: 23
+    role: ext
+    name: uplink
+    tunnel_wan_ip: 192.168.178.223/24
+    tunnel_wan_gw: 192.168.178.1
+    tunnel_timeout: 600
+    tunnel_connections: 2
+    tunnel_mesh_prefix_ipv4: 10.31.153.96/28
+
 location__channel_assignments_11a_standard__to_merge:
   linie206-ap1: 36-40
   linie206-ap2: 48-40
