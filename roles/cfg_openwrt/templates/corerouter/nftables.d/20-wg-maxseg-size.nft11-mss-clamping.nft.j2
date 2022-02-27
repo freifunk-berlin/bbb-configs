@@ -1,0 +1,7 @@
+{% if networks | selectattr('tunnel_wan_ip', 'defined') | count > 0 %}
+chain wg_maxseg {
+    type filter hook forward priority -1; policy accept;
+	oifname "wg_*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : 1352, ipv6 : 1372 }
+	iifname "wg_*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : 1352, ipv6 : 1372 }
+}
+{% endif %}
