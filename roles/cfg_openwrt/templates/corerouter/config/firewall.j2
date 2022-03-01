@@ -55,11 +55,3 @@ config rule
 	option target		ACCEPT
 
 {% endfor %}
-
-config rule
-	option name 'DSCP olsr'
-	list proto 'udp'
-        option dest 'freifunk'
-	option dest_port '698'
-	option target 'DSCP'
-	option set_dscp 'EF'
