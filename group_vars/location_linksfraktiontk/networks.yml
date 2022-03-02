@@ -30,8 +30,8 @@ networks:
     name: prdhcp
     role: ext
     untagged: true
-    tunnel_wan_ip: 192.168.1.10/24
-    tunnel_wan_gw: 192.168.1.1
+    tunnel_wan_ip: 192.168.189.2/24
+    tunnel_wan_gw: 192.168.189.1
     tunnel_connections: 2
     tunnel_timeout: 600
     tunnel_mesh_prefix_ipv4: 10.31.152.176/28
