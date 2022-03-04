@@ -1,0 +1,7 @@
+---
+
+location: gruni73
+role: corerouter
+model: "linksys_e8450-ubi"
+
+wireless_profile: freifunk_default
