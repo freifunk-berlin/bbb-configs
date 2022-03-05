@@ -99,8 +99,7 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
       {% if 'mcast_rate' in iface %}
 	option mcast_rate '{{ iface['mcast_rate'] }}'
       {% endif %}
-        {{ ('Mesh name ok' if mesh_net['name'] | length < 15) | mandatory('Network name is longer than 15 characters') }}
-	option network '{{ mesh_net['name'] }}'
+	option network '{{ (mesh_net['name'] if mesh_net['name'] | length < 15) | mandatory('Network name is longer than 15 characters') }}'
     {% endif %}
     {% endif %}
   {% endfor %}
