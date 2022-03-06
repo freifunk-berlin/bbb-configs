@@ -1,20 +1,31 @@
 ---
-ipv6_prefix: "2001:bf7:830:4c00::/56"
 
-# mesh ips: 10.31.77.192/30
+# IPv4 10.31.157.0/25
+# IPv6 2001:bf7:830:a700::/56
+
+ipv6_prefix: "2001:bf7:830:a700::/56"
+
+# 10.31.157.0/27
 networks:
   - vid: 10
     role: mesh
     name: mesh_sama
-    prefix: 10.31.77.192/32
+    prefix: 10.31.157.1/32
     ipv6_subprefix: -1
+    ptp: true
+
+  - vid: 11
+    role: mesh
+    name: mesh_zwingli
+    prefix: 10.31.157.2/32
+    ipv6_subprefix: -2
     ptp: true
 
   - vid: 20
     role: mesh
     name: mesh_core_2ghz
-    prefix: 10.31.77.193/32
-    ipv6_subprefix: -2
+    prefix: 10.31.157.11/32
+    ipv6_subprefix: -3
     mesh_ap: gub37-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -23,8 +34,8 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_core_5ghz
-    prefix: 10.31.77.194/32
-    ipv6_subprefix: -3
+    prefix: 10.31.157.12/32
+    ipv6_subprefix: -4
     mesh_ap: gub37-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -33,30 +44,32 @@ networks:
   - vid: 22
     role: mesh
     name: mesh_hof_n_5
-    prefix: 10.31.77.195/32
-    ipv6_subprefix: -4
+    prefix: 10.31.157.13/32
+    ipv6_subprefix: -5
     mesh_ap: gub37-hof-n-5
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm: ['default 0.3']
 
+# 10.31.157.32/27
   - vid: 40
     role: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
-    untagged: true
-    prefix: 10.31.114.128/25
-    ipv6_subprefix: 0
+    prefix: 10.31.157.32/27
+    ipv6_subprefix: -6
     assignments:
       gub37-core: 1
 
+# 10.31.157.64/26
   - vid: 42
     role: mgmt
-    prefix: 10.31.77.160/28
+    prefix: 10.31.157.64/26
     gateway: 1
     dns: 1
-    ipv6_subprefix: 1
+    ipv6_subprefix: -7
     assignments:
       gub37-core: 1
       gub37-sama: 2
-      gub37-hof-n-5: 3
+      gub37-zwingli: 3
+      gub37-hof-n-5: 5
