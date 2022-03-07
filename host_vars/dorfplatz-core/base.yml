@@ -2,7 +2,8 @@
 
 location: dorfplatz
 role: corerouter
-model: "zyxel_nbg6617"
+model: "linksys_e8450-ubi"
+
 wireless_profile: freifunk_default
 
 dhcp_no_ping: false
