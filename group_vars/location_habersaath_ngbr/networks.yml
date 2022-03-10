@@ -21,6 +21,7 @@ networks:
     name: mesh_habersaath
     prefix: 10.31.37.18/32
     ipv6_subprefix: -1
+    ptp: true
 
   - vid: 51
     name: vpn_uplink

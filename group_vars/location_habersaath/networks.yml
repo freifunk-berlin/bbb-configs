@@ -67,6 +67,7 @@ networks:
     role: mesh
     prefix: 10.31.37.19/32
     ipv6_subprefix: -2
+    ptp: true
 
 location__channel_assignments_11a_standard__to_merge:
       habersaath-ap-a1: 36-20
