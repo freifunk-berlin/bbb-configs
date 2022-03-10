@@ -62,14 +62,11 @@ networks:
     tunnel_timeout: 600
     tunnel_mesh_prefix_ipv4: 10.31.147.224/29
 
-  - vid: 51
-    name: vpn_neigh
-    role: ext
-    tunnel_wan_ip: 192.168.8.2/24
-    tunnel_wan_gw: 192.168.8.1
-    tunnel_connections: 1
-    tunnel_timeout: 600
-    tunnel_mesh_prefix_ipv4: 10.341.147.224/29
+  - vid: 23
+    name: mash_ngbr
+    role: mesh
+    prefix: 10.31.37.19/32
+    ipv6_subprefix: -2
 
 location__channel_assignments_11a_standard__to_merge:
       habersaath-ap-a1: 36-20

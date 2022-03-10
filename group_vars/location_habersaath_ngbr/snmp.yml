@@ -1,0 +1,6 @@
+---
+
+snmp_devices:
+  - hostname: habersaath-60g-ngbr
+    address: 10.31.42.76
+    snmp_profile: mikrotik_60g

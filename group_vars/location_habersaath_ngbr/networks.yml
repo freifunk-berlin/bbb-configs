@@ -1,0 +1,33 @@
+---
+ipv6_prefix: "2001:bf7:750:4f00::/56"
+
+# mesh_prefix: 10.31.37.18/31 2001:bf7:750:4f00::/56 
+# habersaath_ngbr_mgmt 10.31.42.74/31 2001:bf7:750:5000::/56 
+# habersaath_ngbr_tunnel_mesh 10.31.155.104/29 2001:bf7:750:5100::/56 
+
+networks:
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.42.74/31
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      habersaath-nbgr-core: 1
+      habersaath-60g-ngbr: 2
+
+  - vid: 23
+    role: mesh
+    name: mesh_habersaath
+    prefix: 10.31.37.18/32
+    ipv6_subprefix: -1
+
+  - vid: 51
+    name: vpn_uplink
+    role: ext
+    untagged: true
+    tunnel_wan_ip: 192.168.8.2/24
+    tunnel_wan_gw: 192.168.8.1
+    tunnel_connections: 1
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.155.104/29
