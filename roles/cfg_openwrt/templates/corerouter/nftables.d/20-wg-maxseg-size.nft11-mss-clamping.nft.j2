@@ -1,4 +1,4 @@
-{% if networks | selectattr('tunnel_wan_ip', 'defined') | count > 0 %}
+{% if (networks | selectattr('tunnel_wan_ip', 'defined') | count > 0) and (openwrt_version == 'snapshot') %}
 chain wg_maxseg {
     type filter hook forward priority -1; policy accept;
 	oifname "wg_*" tcp flags syn tcp option maxseg size set rt mtu
