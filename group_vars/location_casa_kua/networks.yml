@@ -1,0 +1,39 @@
+---
+ipv6_prefix: "2001:bf7:830:a800::/56"
+
+# Casa Kua got following prefixes:
+# --MGMT: 10.31.89.72/29
+# --MESH: 10.31.89.64/30
+# --DHCP: 10.31.154.128/25
+
+networks:
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.154.128/25
+    ipv6_subprefix: 0
+    assignments:
+      casa-kua-core: 1
+
+  - vid: 41
+    name: prdhcp
+    role: ext
+    untagged: true
+    tunnel_wan_ip: 192.168.178.2/24
+    tunnel_wan_gw: 192.168.178.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.89.64/30
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.89.72/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      casa-kua-core: 1
+      casa-kua-ap1: 2
+      casa-kua-ap2: 3
+      casa-kua-ap3: 4
