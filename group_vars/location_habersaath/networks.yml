@@ -69,6 +69,7 @@ networks:
     tunnel_wan_gw: 192.168.0.1
     tunnel_connections: 1
     tunnel_timeout: 600
+    tunnel_mtu: 1400
     tunnel_mesh_prefix_ipv4: 10.31.147.228/30
 
 location__channel_assignments_11a_standard__to_merge:
