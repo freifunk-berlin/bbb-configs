@@ -4,6 +4,7 @@
 config tunnelmanager '{{ name }}'
 	option interface 'br-{{ name }}'
 	option namespace '{{ network['tunnel_namespace']|default(name) }}'
+	option mtu '{{ network['tunnel_mtu']|default(1412) }}'
 	option uplink_ip '{{ network['tunnel_wan_ip'] }}'
 	option uplink_gateway '{{ network['tunnel_wan_gw'] }}'
 	option tunnel_count '{{ network['tunnel_connections']|default(2) }}'
