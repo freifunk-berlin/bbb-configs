@@ -1,0 +1,7 @@
+{% if (networks | selectattr('tunnel_wan_ip', 'defined') | count > 0) and (openwrt_version == 'snapshot') %}
+chain dscp_olsr {
+    type filter hook output priority -1; policy accept;
+    udp dport 698
+    ip dscp set ef
+}
+{% endif %}
