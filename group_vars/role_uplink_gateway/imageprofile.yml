@@ -37,6 +37,8 @@ role_uplink_gw__packages__to_merge:
   - wg-installer-server-hotplug-olsrd
   - conntrackd
   - samplicator
+  - -firewall4
+  - firewall
 
 role_uplink_gw__disabled_services__to_merge:
   - "odhcpd"
