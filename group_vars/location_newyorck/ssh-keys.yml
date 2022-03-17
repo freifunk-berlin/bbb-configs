@@ -1,0 +1,4 @@
+---
+location__ssh_keys__to_merge:
+  - comment: lislis
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICLnPtfWSqlIjR+k0u7Fz/QW4WVcuzW9ObWrDcUmoTOF lislis
