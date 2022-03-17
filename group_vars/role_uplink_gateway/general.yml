@@ -45,7 +45,7 @@ gre_metric: 64
 
 
 # For IPv6 there is a stateful firewall implemented. In order to
-# archieve that using multiple active-active gateways, the
+# achieve that using multiple active-active gateways, the
 # flows (connection-tracking) have to get synced. As the
 # outbound gateway (request, tracks state) could be different
 # from the inbound gateway (looks for state to accept), the
