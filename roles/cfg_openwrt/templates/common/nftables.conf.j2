@@ -49,10 +49,10 @@ table bridge client_isolation {
 	chain PREROUTING_{{ name }} {
 		type filter hook prerouting priority 0; policy accept;
 		iif {{ uplink }} accept
-		iif {{ wifi }} ether daddr $bc ether daddr set $gw
-		iif {{ wifi }} ether daddr $mc6 ether daddr set $gw
-		iif {{ wifi }} ether daddr $gw accept
-		iif {{ wifi }} drop
+		iifname {{ wifi }} ether daddr $bc ether daddr set $gw
+		iifname {{ wifi }} ether daddr $mc6 ether daddr set $gw
+		iifname {{ wifi }} ether daddr $gw accept
+		iifname {{ wifi }} drop
 	}
     {% if loop.last %}
 }
@@ -81,11 +81,11 @@ table {{ type }} prevent_mesh_reflection {
 	}
 	chain POSTROUTING_{{ network['name'] }} {
 		type filter hook postrouting priority 0; policy accept;
-		oif {{ wifi_if }} update @{{ set_localrouter }} { ether saddr timeout 1h }
+		oifname {{ wifi_if }} update @{{ set_localrouter }} { ether saddr timeout 1h }
 	}
 	chain PREROUTING_{{ network['name'] }} {
 		type filter hook prerouting priority 0; policy accept;
-		iif {{ wifi_if }} ether saddr @{{ set_localrouter }} counter drop
+		iifname {{ wifi_if }} ether saddr @{{ set_localrouter }} counter drop
 
 	}
   {% if loop.last %}
