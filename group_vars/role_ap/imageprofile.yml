@@ -2,6 +2,7 @@
 role_ap__packages__to_merge:
   - "-firewall"
   - "-firewall4"
+  - "-luci-app-firewall"
 
 role_ap__disabled_services__to_merge:
   - "dnsmasq"
