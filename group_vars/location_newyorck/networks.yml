@@ -1,0 +1,39 @@
+---
+ipv6_prefix: "2001:bf7:830:a900::/56"
+
+# mesh_prefix: 10.31.155.192/29
+
+networks:
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.155.224/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      newyorck-core: 1
+      newyorck-switch: 2
+      newyorck-ap1: 3
+      newyorck-ap2: 4
+      newyorck-ap3: 5
+      newyorck-ap4: 6
+      newyorck-ap5: 7
+      newyorck-ap6: 8
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.160.0/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      newyorck-core: 1
+
+  - vid: 50
+    name: vpn_5g
+    role: ext
+    tunnel_wan_ip: 192.168.2.2/24
+    tunnel_wan_gw: 192.168.2.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.155.192/29
