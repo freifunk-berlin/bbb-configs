@@ -1,0 +1,13 @@
+config poemgr 'settings'
+        option profile 'usw-flex'
+        option disabled '0'
+# TODO: uncomment this option once blocktrron/poemgr#5 is merged and shipped
+#        option power_budget '{{ poemgr_power_budget | default('0') }}'
+
+{% for poe in poemgr_ports | default([]) %}
+config port '{{ poe['name'] }}'
+        option name '{{ poe['name'] }}'
+        option port '{{ poe['port'] }}'
+        option disabled '{{ poe['disabled'] }}'
+
+{% endfor %}
