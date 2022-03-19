@@ -46,6 +46,13 @@
       tags: always
   tags: always
 
+- name: Add poemgr config if poemgr target
+  template:
+    src: "{{ role_path }}/templates/common/config/poemgr.j2"
+    dest: "{{ config_path }}/etc/config/poemgr"
+  when:
+    - poemgr_ports is defined
+
 - name: Include fix_permissions.yml
   include_tasks:
     file: fix_permissions.yml
