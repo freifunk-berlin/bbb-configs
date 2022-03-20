@@ -1,0 +1,47 @@
+LoadPlugin load
+LoadPlugin uptime
+LoadPlugin interface
+
+LoadPlugin ping
+<Plugin ping>
+	TTL 127
+	Interval 10
+	Host "{{ collectd_ping_host }}"
+</Plugin>
+
+LoadPlugin memory
+<Plugin memory>
+	ValuesPercentage false
+	ValuesAbsolute true
+</Plugin>
+
+LoadPlugin network
+<Plugin network>
+	Server "{{ collectd_host }}"
+	Forward false
+	ReportStats false
+</Plugin>
+
+
+{% if 'collectd-mod-olsrd' in packages %}
+LoadPlugin olsrd
+<Plugin olsrd>
+	Host "127.0.0.1"
+	Port "2006"
+</Plugin>
+{% endif %}
+
+{% if wireless_devices is defined and wireless_profile != 'disable' %}
+LoadPlugin iwinfo
+{% endif %}
+
+{% if 'collectd-mod-conntrack' in packages %}
+LoadPlugin conntrack
+{% endif %}
+
+{% if 'collectd-mod-dhcpleases' in packages %}
+LoadPlugin dhcpleases
+<Plugin dhcpleases>
+	Path "/tmp/dhcp.leases"
+</Plugin>
+{% endif %}
