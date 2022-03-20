@@ -9,8 +9,6 @@ all__packages__to_merge:
   - mtr
   - tcpdump
   - iperf3
-  - luci-ssl
-  - ip6tables # Its not pulled in by default anymore bc fw4
   - collectd-mod-interface
   - collectd-mod-iwinfo
   - collectd-mod-load
@@ -19,13 +17,27 @@ all__packages__to_merge:
   - collectd-mod-uptime
   - collectd-mod-network
   - vnstat
-  - -ppp
-  - -ppp-mod-pppoe
   - -wpad-basic
   - -wpad-basic-wolfssl
   - hostapd-wolfssl
+  - ip6tables # Its not pulled in by default anymore bc fw4
   - nftables
   - kmod-nft-bridge
+  - -ppp
+  - -ppp-mod-pppoe
+
+all_luci_base__packages__to_merge:
+  - libustream-wolfssl
+  - px5g-wolfssl
+  - uhttpd
+  - uhttpd-mod-ubus
+  - luci-mod-admin-full
+  - luci-theme-bootstrap
+  - libiwinfo-lua
+  - luci-proto-ipv6
+  - rpcd-mod-rrdns
+
+
 
 all_disabled_services__to_merge:
   - "olsrd6"
