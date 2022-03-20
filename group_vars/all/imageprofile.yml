@@ -10,11 +10,14 @@ all__packages__to_merge:
   - tcpdump
   - iperf3
   - luci-ssl
-  - luci-app-statistics
   - ip6tables # Its not pulled in by default anymore bc fw4
-  - collectd-mod-uptime
+  - collectd-mod-interface
+  - collectd-mod-iwinfo
+  - collectd-mod-load
   - collectd-mod-memory
   - collectd-mod-ping
+  - collectd-mod-uptime
+  - collectd-mod-network
   - vnstat
   - -ppp
   - -ppp-mod-pppoe

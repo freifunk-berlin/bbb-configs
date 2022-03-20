@@ -1,0 +1,2 @@
+config globals 'globals'
+	option Include '/etc/collectd/conf.d'
