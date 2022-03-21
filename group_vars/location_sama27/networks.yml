@@ -1,0 +1,36 @@
+---
+
+# IPv4 10.31.161.0/27
+# IPv6 2001:bf7:830:ab00::/56
+
+ipv6_prefix: '2001:bf7:830:ab00::/56'
+
+networks:
+# 10.31.161.8/29
+  - vid: 10
+    role: mesh
+    name: mesh_sama
+    prefix: 10.31.161.8/32
+    ipv6_subprefix: -1
+    ptp: true
+
+# 10.31.161.16/28
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.161.16/28
+    ipv6_subprefix: -2
+    assignments:
+      sama27-core: 1
+
+# 10.31.161.0/29
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.161.0/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      sama27-core: 1
+      sama27-sama: 2
