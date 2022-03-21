@@ -1,0 +1,92 @@
+---
+ipv6_prefix: "2001:bf7:750:1200::/56"
+
+networks:
+  - vid: 111
+    role: mesh
+    name: mesh_segen
+    prefix: 10.230.23.141/32
+    ipv6_subprefix: -1
+
+  - vid: 112
+    role: mesh
+    name: mesh_perleberger36
+    prefix: 10.230.23.142/32
+    ipv6_subprefix: -2
+
+  - vid: 113
+    role: mesh
+    name: mesh_scherer8
+    prefix: 10.230.23.143/32
+    ipv6_subprefix: -3
+
+  - vid: 114
+    role: mesh
+    name: mesh_nord
+    prefix: 10.230.23.144/32
+    ipv6_subprefix: -4
+
+  - vid: 115
+    role: mesh
+    name: mesh_nord
+    prefix: 10.230.23.145/32
+    ipv6_subprefix: -5
+
+  - vid: 116
+    role: mesh
+    name: mesh_jup
+    prefix: 10.230.23.146/32
+    ipv6_subprefix: -6
+
+  - vid: 117
+    role: mesh
+    name: mesh_ost
+    prefix: 10.230.23.147/32
+    ipv6_subprefix: -7
+
+  - vid: 118
+    role: mesh
+    name: mesh_sued
+    prefix: 10.230.23.148/32
+    ipv6_subprefix: -8
+
+  - vid: 119
+    role: mesh
+    name: mesh_fardf
+    prefix: 10.230.23.149/32
+    ipv6_subprefix: -9
+
+  - vid: 128
+    role: mesh
+    name: mesh_west
+    prefix: 10.230.23.158/32
+    ipv6_subprefix: -28
+
+  - vid: 104
+    role: dhcp
+    prefix: 10.230.23.152/29
+    ipv6_subprefix: 0
+    untagged: true
+    assignments:
+      beuth-core: 1
+
+  - vid: 102
+    role: mgmt
+    prefix: 192.168.190.0/24
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      beuth-core: 1
+      beuth-er1: 2
+      beuth-er2: 3
+      beuth-segen: 111
+      beuth-perleberger36: 112
+      beuth-scherer8: 113
+      beuth-nord: 114
+      beuth-chris: 115
+      beuth-jup: 116
+      beuth-ost: 117
+      beuth-sued: 118
+      beuth-fardf: 119
+      beuth-west: 128
