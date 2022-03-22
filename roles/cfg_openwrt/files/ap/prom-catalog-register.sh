@@ -1,0 +1,1 @@
+../common/prom-catalog-register.sh

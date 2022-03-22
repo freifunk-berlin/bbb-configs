@@ -21,3 +21,11 @@ sed -i '/^ \/etc/d' /usr/lib/opkg/status
 {% for override in sysfs_overrides | default([]) %}
 echo {{ override['value'] }} > {{ override['path'] }}
 {% endfor%}
+
+
+grep -q 'prom-catalog-register' /etc/crontabs/root || \
+    echo "5 20 * * *    /etc/prom-catalog-register.sh {{ role }} {{ location }}" >> /etc/crontabs/root
+
+
+sleep 15
+/etc/prom-catalog-register.sh {{ role }} {{ location }}
