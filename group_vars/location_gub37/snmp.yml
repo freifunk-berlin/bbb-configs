@@ -4,8 +4,6 @@ snmp_devices:
   - hostname: gub37-sama
     address: 10.31.157.66
     snmp_profile: airos_8
-
-snmp_devices:
   - hostname: gub37-zwingli
     address: 10.31.157.67
     snmp_profile: airos_8
