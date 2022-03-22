@@ -2,6 +2,6 @@
 
 location: borussia
 role: ap
-model: "tplink_tl-wdr4300-v1"
+model: "tplink_archer-c7-v2"
 
 wireless_profile: borussia
