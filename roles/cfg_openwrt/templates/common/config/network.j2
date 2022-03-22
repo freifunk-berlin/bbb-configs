@@ -49,6 +49,12 @@ config interface '{{ name }}'
 	{% if 'gateway' in network and network['assignments'][inventory_hostname] != network['gateway'] %}
 	option gateway '{{ network['prefix'] | ipaddr(network['gateway']) | ipaddr('address') }}'
         {% endif %}
+        {% if role != 'corerouter' and 'ipv6_subprefix' in network %}
+
+config interface '{{ name }}6'
+	option device '@{{ name }}'
+	option proto 'dhcpv6'
+        {% endif %}
     {% elif role == 'corerouter' and network['role'] == 'mesh' %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] }}'
