@@ -1,0 +1,46 @@
+---
+
+#
+# These tasks build /etc contents that will be copied to the target filesystem
+# to override the default configs of the respective packages and system parts.
+#
+# We copy Jinja2 templates (from ../templates) and static files (from ../files).
+# Files are simply copied, templates are rendered and then written to /etc.
+#
+# Symlinks can be used for individual files, but not for directories.
+# If symlinks were used for directories too, we couldn't tell whether the
+# symlink target is a file or a directory - Ansible doesn't seem to let us.
+#
+# Possible future additions:
+# - preserve permissions
+# - ability to remove files, not just to add or change/override them
+# - collapse files/ into templates/ and treat everything as a template
+#
+
+- name: Create /etc directories for template output
+  tags: always
+  file:
+    path: "{{ config_path }}/etc/{{ item.path }}"
+    state: directory
+  loop: "{{ lookup('community.general.filetree', role_path+'/templates/'+role) }}"
+  when: item.state == 'directory'
+
+- name: Create /etc directories for static files
+  tags: always
+  file:
+    path: "{{ config_path }}/etc/{{ item.path }}"
+    state: directory
+  loop: "{{ lookup('community.general.filetree', role_path+'/files/'+role) }}"
+  when: item.state == 'directory'
+
+- name: Render /etc templates
+  tags: always
+  template: src={{ item.root }}/{{ item.path }} dest={{ config_path }}/etc/{{ item.path | regex_replace('\.j2$','') }}
+  loop: "{{ lookup('community.general.filetree', role_path+'/templates/'+role) }}"
+  when: item.path is regex('\.j2$')
+
+- name: Copy /etc static files
+  tags: always
+  copy: src={{ item.root }}/{{ item.path }} dest={{ config_path }}/etc/{{ item.path }}
+  loop: "{{ lookup('community.general.filetree', role_path+'/files/'+role) }}"
+  when: (not item.path is regex('\.j2$')) and (item.state == 'file' or item.state == 'link')
