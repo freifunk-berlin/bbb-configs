@@ -23,7 +23,7 @@ log "started. Registering with following labels: hostname: $hostname, role: $rol
 
 log "Retrieving IPv6 Address"
 
-ownip="$(wget -qO /dev/stdout https://ipv6.icanhazip.com)"
+ownip="$(wget -qO- https://ipv6.icanhazip.com)"
 
 if [ $? -ne 0 ]; then
   log "Error while retrieving IPv6 Address - Check Connectivity?!"
