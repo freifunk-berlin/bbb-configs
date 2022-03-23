@@ -24,8 +24,8 @@ echo {{ override['value'] }} > {{ override['path'] }}
 
 
 grep -q 'prom-catalog-register' /etc/crontabs/root || \
-    echo "5 20 * * *    /etc/prom-catalog-register.sh {{ role }} {{ location }}" >> /etc/crontabs/root
+    echo "{{ 60 | random }} * * * *    /etc/prom-catalog-register.sh {{ role }} {{ location }}" >> /etc/crontabs/root
 
 
-sleep 15
+sleep 60
 /etc/prom-catalog-register.sh {{ role }} {{ location }}
