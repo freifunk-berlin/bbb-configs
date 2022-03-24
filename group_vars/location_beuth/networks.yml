@@ -7,18 +7,21 @@ networks:
     name: mesh_segen
     prefix: 10.230.23.141/32
     ipv6_subprefix: -1
+    ptp: true
 
   - vid: 112
     role: mesh
     name: mesh_perleberger36
     prefix: 10.230.23.142/32
     ipv6_subprefix: -2
+    ptp: true
 
   - vid: 113
     role: mesh
     name: mesh_scherer8
     prefix: 10.230.23.143/32
     ipv6_subprefix: -3
+    ptp: true
 
   - vid: 114
     role: mesh
@@ -28,15 +31,17 @@ networks:
 
   - vid: 115
     role: mesh
-    name: mesh_nord
+    name: mesh_chris
     prefix: 10.230.23.145/32
     ipv6_subprefix: -5
+    ptp: true
 
   - vid: 116
     role: mesh
     name: mesh_jup
     prefix: 10.230.23.146/32
     ipv6_subprefix: -6
+    ptp: true
 
   - vid: 117
     role: mesh
@@ -55,6 +60,7 @@ networks:
     name: mesh_fardf
     prefix: 10.230.23.149/32
     ipv6_subprefix: -9
+    ptp: true
 
   - vid: 128
     role: mesh
