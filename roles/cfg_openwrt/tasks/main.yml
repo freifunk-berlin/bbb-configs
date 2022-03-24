@@ -32,14 +32,11 @@
     state: directory
   tags: always
 
-- name: Include render_subdir for {{ subdir }}
+- name: Include render_etc.yml
   include_tasks:
-    file: render_subdir.yml
+    file: render_etc.yml
     apply:
       tags: always
-  loop: ['/', '/config','/dropbear', '/collectd/conf.d', '/init.d', '/crontabs', '/conntrackd', '/nftables.d']
-  loop_control:
-    loop_var: subdir
   tags: always
 
 - name: Include add_symlinks.yml
