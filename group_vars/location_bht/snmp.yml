@@ -1,42 +1,42 @@
 ---
 
 snmp_devices:
-  - hostname: beuth-segen
+  - hostname: bht-segen
     address: 192.168.190.111
     snmp_profile: airos_8
 
-  - hostname: beuth-perleberger36
+  - hostname: bht-perleberger36
     address: 192.168.190.112
     snmp_profile: airos_8
 
-  - hostname: beuth-scherer8
+  - hostname: bht-scherer8
     address: 192.168.190.113
     snmp_profile: airos_8
 
-  - hostname: beuth-nord
+  - hostname: bht-nord
     address: 192.168.190.114
     snmp_profile: airos_6
 
-  - hostname: beuth-chris
+  - hostname: bht-chris
     address: 192.168.190.115
     snmp_profile: airos_6
 
-  - hostname: beuth-jup
+  - hostname: bht-jup
     address: 192.168.190.116
     snmp_profile: airos_6
 
-  - hostname: beuth-ost
+  - hostname: bht-ost
     address: 192.168.190.117
     snmp_profile: airos_6
 
-  - hostname: beuth-sued
+  - hostname: bht-sued
     address: 192.168.190.118
     snmp_profile: airos_6
 
-  - hostname: beuth-fardf
+  - hostname: bht-fardf
     address: 192.168.190.119
     snmp_profile: airos_8
 
-  - hostname: beuth-fardf
+  - hostname: bht-fardf
     address: 192.168.190.128
     snmp_profile: airos_8
