@@ -24,6 +24,8 @@
     state: directory
   loop: "{{ lookup('community.general.filetree', role_path+'/templates/'+role) }}"
   when: item.state == 'directory'
+  loop_control:
+    label: "{{ item.path }}"
 
 - name: Create /etc directories for static files
   tags: always
@@ -32,15 +34,21 @@
     state: directory
   loop: "{{ lookup('community.general.filetree', role_path+'/files/'+role) }}"
   when: item.state == 'directory'
+  loop_control:
+    label: "{{ item.path }}"
 
 - name: Render /etc templates
   tags: always
   template: src={{ item.root }}/{{ item.path }} dest={{ config_path }}/etc/{{ item.path | regex_replace('\.j2$','') }}
   loop: "{{ lookup('community.general.filetree', role_path+'/templates/'+role) }}"
   when: item.path is regex('\.j2$')
+  loop_control:
+    label: "{{ item.path }}"
 
 - name: Copy /etc static files
   tags: always
   copy: src={{ item.root }}/{{ item.path }} dest={{ config_path }}/etc/{{ item.path }}
   loop: "{{ lookup('community.general.filetree', role_path+'/files/'+role) }}"
   when: (not item.path is regex('\.j2$')) and (item.state == 'file' or item.state == 'link')
+  loop_control:
+    label: "{{ item.path }}"
