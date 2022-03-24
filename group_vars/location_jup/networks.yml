@@ -10,7 +10,7 @@ ipv6_prefix: "2001:bf7:760:2600::/56"
 networks:
   - vid: 10
     role: mesh
-    name: mesh_beuth
+    name: mesh_bht
     prefix: 10.31.147.128/32
     ipv6_subprefix: -1
     ptp: true
@@ -40,7 +40,7 @@ networks:
     assignments:
       jup-core: 1
       jup-poe: 2
-      jup-beuth: 3
+      jup-bht: 3
       jup-segen: 4
 
       # aps
