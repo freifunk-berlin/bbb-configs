@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
-HOSTS=$(for i in host_vars/*; do echo -e "$i\c" | awk -F'/' '{print "\""$2"\","}'; done)
-HOSTS=$(echo $HOSTS | sed 's/\(.*\),/\1 /')
-cat <<EOF
+case "$1" in
+--host)
+    echo '{}'
+    ;;
+--list)
+    HOSTS=$(for i in host_vars/*; do echo -e "$i\c" | awk -F'/' '{print "\""$2"\","}'; done)
+    HOSTS=$(echo $HOSTS | sed 's/\(.*\),/\1 /')
+    cat <<EOF
 {
     "all": {
 	"hosts": [ $HOSTS ]
     }
 }
 EOF
-
+    ;;
+esac
