@@ -1,0 +1,14 @@
+{% if openwrt_version == 'snapshot' %}
+{% set TCP_HEADER_SIZE = 20 %}
+{% set IPV4_HEADER_SIZE = 20 %}
+{% set IPV6_HEADER_SIZE = 40 %}
+{% set GRE_HEADER_SIZE = 24 %}
+{% set MTU = 1500 %}
+{% set ipv4_mss = MTU - GRE_HEADER_SIZE - TCP_HEADER_SIZE - IPV4_HEADER_SIZE %}
+{% set ipv6_mss = MTU - GRE_HEADER_SIZE - TCP_HEADER_SIZE - IPV6_HEADER_SIZE %}
+chain gre_maxseg {
+    type filter hook forward priority -2; policy accept;
+	# ipv4 is never used since we only route ipv6 (just for completeness)
+	oifname "gre*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }
+}
+{% endif %}

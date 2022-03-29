@@ -1,0 +1,10 @@
+{% if openwrt_version == 'snapshot' %}
+chain limit_inbound {
+	type filter hook forward priority filter - 1; policy accept;
+	ct state established,related accept comment "Allow established connections"
+	tcp flags & ack == ack limit rate 5000/second burst 2500 packets jump accept_to_freifunk comment "Allow established connections which not made it in the conntrack sync yet"
+	tcp flags & rst == rst limit rate 5000/second burst 2500 packets jump accept_to_freifunk comment "Allow established connections which not made it in the conntrack sync yet"
+	tcp flags & ack == ack counter accept comment "Limit exceeded ACK"
+	tcp flags & rst == rst counter accept comment "Limit exceeded RST"
+}
+{% endif %}

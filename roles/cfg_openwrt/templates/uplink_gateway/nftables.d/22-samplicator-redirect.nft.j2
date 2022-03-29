@@ -1,0 +1,6 @@
+{% if openwrt_version == 'snapshot' %}
+chain samplicator_redirect {
+	type nat hook prerouting priority dstnat -1; policy accept;
+	oifname "lo" udp dport 3780 redirect to :2000
+}
+{% endif %}
