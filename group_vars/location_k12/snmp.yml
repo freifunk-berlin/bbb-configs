@@ -1,0 +1,5 @@
+---
+snmp_devices:
+  - hostname: k12-segen
+    address: 10.31.158.194
+    snmp_profile: airos_8

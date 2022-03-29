@@ -1,0 +1,6 @@
+---
+
+location: k12_haus4
+role: ap
+model: "tplink_cpe210-v1"
+int_port: eth0

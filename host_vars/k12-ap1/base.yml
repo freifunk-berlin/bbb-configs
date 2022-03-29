@@ -1,0 +1,7 @@
+---
+
+location: k12
+role: ap
+model: "tplink_archer-c5-v1"
+
+wireless_profile: freifunk_default
