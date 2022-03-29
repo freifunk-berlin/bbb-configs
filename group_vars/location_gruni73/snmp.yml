@@ -1,0 +1,10 @@
+---
+
+snmp_devices:
+  - hostname: gruni73-sama
+    address: 10.31.156.5
+    snmp_profile: airos_8
+
+  - hostname: gruni73-zwingli
+    address: 10.31.156.6
+    snmp_profile: airos_8
