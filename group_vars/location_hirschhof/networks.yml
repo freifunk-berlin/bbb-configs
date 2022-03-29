@@ -1,0 +1,74 @@
+---
+ipv6_prefix: '2001:bf7:760:2c00::/56'
+
+# got following prefixes:
+# Router:  10.31.159.0/24
+# --DHCP:  10.31.159.0/25
+# --MESH:  10.31.159.128/26
+# --MGMT:  10.31.159.192/26
+
+networks:
+# DHCP
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.159.0/25
+    ipv6_subprefix: 0
+    assignments:
+      hirschhof-core: 1
+      hirschhof-k12: 2
+
+# MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.31.159.128/32
+    ipv6_subprefix: -1
+    mesh_ap: hirschhof-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+# MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.31.159.129/32
+    ipv6_subprefix: -2
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: hirschhof-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+# MESH - 2.4 GHz 802.11s - K12
+  - vid: 22
+    role: mesh
+    name: mesh_k12
+    prefix: 10.31.159.130/32
+    ipv6_subprefix: -2
+    mesh_ap: hirschhof-k12
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+# MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.159.192/26
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      #10.31.159.193/32
+      hirschhof-core: 1
+      #10.31.159.194/32
+      hirschhof-k12: 2
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hirschhof-core: 36-40
+
+location__channel_assignments_11g_standard__to_merge:
+  hirschhof-core: 13-20
+  hirschhof-k12: 13-20
