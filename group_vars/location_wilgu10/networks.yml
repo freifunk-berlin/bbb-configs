@@ -64,7 +64,6 @@ networks:
     assignments:
       wilgu10-core: 1
       wilgu10-printer: 2
-      wilgu10-nas: 3
     untagged: true
 
   - vid: 50
@@ -74,7 +73,7 @@ networks:
     ipv6_subprefix: 50
     assignments:
       wilgu10-core: 1
-
+      wilgu10-gf: 2
 location__channel_assignments_11a_standard__to_merge:
   wilgu10-core: 52-80
   wilgu10-int: 36-80
