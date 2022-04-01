@@ -131,7 +131,9 @@ config rule
 	option name		'{{ rule['name'] }}'
 	option src		uplink
 	option dest		freifunk
+  {% if 'dst' in rule %}
 	option dest_ip		'{{ rule['dst'] }}'
+  {% endif %}
   {% if 'src' in rule %}
 	option src_ip		'{{ rule['src'] }}'
   {% endif %}
