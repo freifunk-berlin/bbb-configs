@@ -4,12 +4,3 @@ target: octeon/generic
 # Somehow OpenWRT has messed up the name of resulting imagebuilder
 # for target octeon. Fixing it here
 imagebuilder: https://downloads.openwrt.org/{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}/targets/{{ target }}/openwrt-imagebuilder-{{ openwrt_version ~ '-' if openwrt_version != 'snapshot' else '' }}octeon.Linux-x86_64.tar.xz
-
-
-#switch_ports: 6
-#switch_int_port: 0
-#switch_ignore_ports: [5]
-## WAN port is hardwired to VLAN2. ignore
-
-#int_port: eth0
-#
