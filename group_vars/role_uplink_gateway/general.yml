@@ -81,6 +81,10 @@ inbound_allow:
     dst_port: 22
   - name: 'e16host'
     dst: 2001:bf7:760:2532::/64
+  - name: 'prometheus-poc'
+    proto: tcp
+    src: 2a04:d480:2c02:b::/64
+    dst_port: 9100
 #  - name: Rule Description (mandatory)
 #    dst: Destination IP (mandatory)
 #    src: Source IP
