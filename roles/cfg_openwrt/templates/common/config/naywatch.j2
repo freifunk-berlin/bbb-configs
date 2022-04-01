@@ -20,6 +20,8 @@ config naywatch general
 {% endif %}
     list save_cmd           'dmesg'
     list save_cmd           'logread'
-    list save_cmd           'swconfig dev switch0 show'
+{% if switch_ports is defined %}
+	list save_cmd           'swconfig dev switch0 show'
+{% endif %}
 
 {% endif %}
