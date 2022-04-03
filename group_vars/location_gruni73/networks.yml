@@ -93,3 +93,12 @@ networks:
     mesh_iface: mesh
     mesh_metric_lqm:
       - default 0.4 # penalty on wild meshing
+
+
+location__channel_assignments_11g_standard__to_merge:
+  gruni73-nf-sw-2ghz: 6-20
+  gruni73-nf-o-2ghz: 13-20
+
+location__channel_assignments_11a_standard__to_merge:
+  gruni73-nf-w-5ghz: 36-20
+  gruni73-nf-so-5ghz: 40-20
