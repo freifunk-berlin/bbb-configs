@@ -101,4 +101,4 @@ location__channel_assignments_11g_standard__to_merge:
 
 location__channel_assignments_11a_standard__to_merge:
   gruni73-nf-w-5ghz: 36-20
-  gruni73-nf-so-5ghz: 40-20
+  gruni73-nf-so-5ghz: 50-20
