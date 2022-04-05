@@ -96,7 +96,7 @@ networks:
 
 
 location__channel_assignments_11g_standard__to_merge:
-  gruni73-nf-sw-2ghz: 6-20
+  gruni73-nf-sw-2ghz: 1-20
   gruni73-nf-o-2ghz: 13-20
 
 location__channel_assignments_11a_standard__to_merge:
