@@ -1,0 +1,10 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% if ubnt_manager|default([])|length > 0 %}
+{% for device in ubnt_manager %}
+config device '{{ device['name'] | replace('-','_') }}'
+	option target '{{ device['target'] }}'
+	option username '{{ device['username'] }}'
+	option password '{{ device['password'] }}'
+
+{% endfor %}
+{% endif %}

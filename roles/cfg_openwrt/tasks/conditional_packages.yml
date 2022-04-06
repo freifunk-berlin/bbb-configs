@@ -12,6 +12,13 @@
     - airos_dfs_reset|default([])|length > 0
     - role == 'corerouter'
 
+- name: "Add ubnt-manager and monitoring if configured"
+  set_fact:
+    packages: "{{ packages + ['ubnt-manager'] + ['prometheus-node-exporter-lua-ubnt-manager'] }}"
+  when:
+    - ubnt_manager|default([])|length > 0
+    - role == 'corerouter'
+
 - name: "Add tunnelmanager if configured"
   set_fact:
     packages: "{{ packages + ['falter-berlin-tunnelmanager'] }}"
