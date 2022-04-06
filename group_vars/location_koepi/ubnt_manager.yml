@@ -1,0 +1,19 @@
+---
+
+ubnt_manager:
+  - name: koepi-emma
+    target: 10.31.102.3
+    username: "ubnt"
+    password: "file:/root/pwd"
+
+  # no longer used
+  #- name: koepi-rhnk
+  #  target: 10.31.102.4
+  #  username: "ubnt"
+  #  password: "file:/root/pwd"
+
+  - name: koepi-simeon
+    target: 10.31.102.5
+    username: "ubnt"
+    password: "file:/root/pwd"
+    
