@@ -1,0 +1,37 @@
+---
+
+ubnt_manager:
+  - name: emma-nno-5ghz
+    target: 10.31.11.20
+    username: "ubnt"
+    password: "file:/root/pwd"
+
+  - name: emma-ono-5ghz
+    target: 10.31.11.21
+    username: "ubnt"
+    password: "file:/root/pwd"
+
+  - name: emma-oso-5ghz
+    target: 10.31.11.24
+    username: "ubnt"
+    password: "file:/root/pwd"
+
+  - name: emma-sso-5ghz
+    target: 10.31.11.25
+    username: "ubnt"
+    password: "file:/root/pwd"
+
+  - name: emma-wsw-5ghz
+    target: 10.31.11.22
+    username: "ubnt"
+    password: "file:/root/pwd"
+
+  - name: emma-wnw-5ghz
+    target: 10.31.11.23
+    username: "ubnt"
+    password: "file:/root/pwd"
+
+  - name: emma-nnw-5ghz
+    target: 10.31.11.19
+    username: "ubnt"
+    password: "file:/root/pwd"
