@@ -1,0 +1,85 @@
+---
+ipv6_prefix: "2001:bf7:840:900::/56"
+
+# Wuhli got following prefixes:
+# Router: 10.31.112.0/27
+# --MGMT: 10.31.112.0/28
+# --MESH: 10.31.112.16/28
+# --DHCP: 10.31.162.128/25 
+
+networks:
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.162.128/25
+    ipv6_subprefix: 0
+    assignments:
+      wuhli-core: 1
+
+  - vid: 20
+    role: mesh
+    name: mesh_n_5g
+    prefix: 10.31.112.24/32
+    ipv6_subprefix: -1
+    mesh_ap: wuhli-n-nf-5g
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 21
+    role: mesh
+    name: mesh_o_5g
+    prefix: 10.31.112.25/32
+    ipv6_subprefix: -2
+    mesh_ap: wuhli-o-nf-5g
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 22
+    role: mesh
+    name: mesh_s_5g
+    prefix: 10.31.112.26/32
+    ipv6_subprefix: -3
+    mesh_ap: wuhli-s-nf-5g
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 23
+    role: mesh
+    name: mesh_w_5g
+    prefix: 10.31.112.27/32
+    ipv6_subprefix: -4
+    mesh_ap: wuhli-w-nf-5g
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 41
+    name: prdhcp
+    role: ext
+    untagged: true
+    tunnel_wan_ip: 192.168.178.2/24
+    tunnel_wan_gw: 192.168.178.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.112.16/28
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.112.0/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      wuhli-core: 1
+      wuhli-poe: 2
+      # we need to stay below 15 chars
+      wuhli-n-nf-5ghz: 14
+      wuhli-o-nf-5ghz: 13
+      wuhli-s-nf-5ghz: 12
+      wuhli-w-nf-5ghz: 11
+
+location__channel_assignments_11a_standard__to_merge:
+  wuhli-n-nf-5g: 36-20
+  wuhli-o-nf-5g: 40-20
+  wuhli-s-nf-5g: 44-20
+  wuhli-w-nf-5g: 48-20

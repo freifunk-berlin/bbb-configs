@@ -1,0 +1,13 @@
+{% if (networks | selectattr('tunnel_wan_ip', 'defined') | count > 0) and (openwrt_version == 'snapshot') %}
+{% set TCP_HEADER_SIZE = 20 %}
+{% set IPV4_HEADER_SIZE = 20 %}
+{% set IPV6_HEADER_SIZE = 40 %}
+{% set min_mtu = ([1412] + (networks | selectattr('tunnel_mtu', 'defined') | map(attribute='tunnel_mtu') | list)) | min | int %}
+{% set ipv4_mss = min_mtu - TCP_HEADER_SIZE - IPV4_HEADER_SIZE %}
+{% set ipv6s_mss = min_mtu - TCP_HEADER_SIZE - IPV6_HEADER_SIZE %}
+chain wg_maxseg {
+    type filter hook forward priority -1; policy accept;
+	oifname "wg_*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }
+	iifname "wg_*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }
+}
+{% endif %}
