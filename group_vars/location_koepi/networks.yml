@@ -79,3 +79,6 @@ location__channel_assignments_11g_standard__to_merge:
   koepi-ap3: 1-20
   koepi-ap4: 6-20
   koepi-ap5: 1-20
+
+# Special vlan config:
+# koepi-ap5 40: 0t 1t 2 3 4t
