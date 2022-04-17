@@ -33,3 +33,6 @@ networks:
       kub-core: 1
       kub-simeon: 2
       kub-ap1: 14
+
+# Special vlan config:
+# - kub-ap1 vlan 40: 0t 1t 2 3 4
