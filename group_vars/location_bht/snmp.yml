@@ -37,6 +37,6 @@ snmp_devices:
     address: 192.168.190.119
     snmp_profile: airos_8
 
-  - hostname: bht-fardf
+  - hostname: bht-west
     address: 192.168.190.128
     snmp_profile: airos_8
