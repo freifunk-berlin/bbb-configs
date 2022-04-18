@@ -44,4 +44,9 @@ networks:
       huette-ap1: 2
 
 location__channel_assignments_11a_standard__to_merge:
-  huette-ap1: 40-20
+  huette-core: 36-40-19 # 19 dBm + 4 dBi gain = 23 dBm (with standard antenna)
+  huette-ap1: 44-40-8   # 8 dBm + 15 dBi gain = 23 dBm (with UMA-D antenna)
+
+location__channel_assignments_11g_standard__to_merge:
+  huette-core: 13-20-18 # 18 dBm + 2 dBi gain = 20 dBm (with standard antenna)
+  huette-ap1: 13-20-13 # 13 dBm + 10 dBi gain = 23 dBm (with UMA-D antenna)
