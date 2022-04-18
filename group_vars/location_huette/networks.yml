@@ -50,3 +50,14 @@ location__channel_assignments_11a_standard__to_merge:
 location__channel_assignments_11g_standard__to_merge:
   huette-core: 13-20-18 # 18 dBm + 2 dBi gain = 20 dBm (with standard antenna)
   huette-ap1: 13-20-13 # 13 dBm + 10 dBi gain = 23 dBm (with UMA-D antenna)
+
+#
+# Devolo Powerline adapters:
+# - huette-plc1 fe80::babe:f4ff:feae:746a%eth0
+# - huette-plc2 fe80::babe:f4ff:feae:7384%eth0
+#
+# Their web interfaces can be reached by SSH port forwarding:
+# - ssh -L '8080:[fe80::babe:f4ff:feae:7384%eth0]:80' root@huette-core.olsr
+# - firefox localhost:8080
+# - curl localhost:8080/assets/data.cfl
+#
