@@ -22,7 +22,6 @@ networks:
     ipv6_subprefix: 0
     assignments:
       huette15-core: 1
-      huette15-vm: 5
 
   - vid: 42
     role: mgmt
@@ -32,7 +31,6 @@ networks:
     ipv6_subprefix: 1
     assignments:
       huette15-core: 1
-      huette15-vm: 2
 
 location__channel_assignments_11a_standard__to_merge:
   huette15-core: 40-20
