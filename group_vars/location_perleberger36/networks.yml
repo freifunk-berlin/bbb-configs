@@ -1,0 +1,103 @@
+---
+ipv6_prefix: "2001:bf7:750:3300::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_lan
+    prefix: 10.36.243.192/32
+    ipv6_subprefix: -1
+
+  - vid: 101
+    role: mesh
+    name: mesh_strom2a
+    prefix: 10.36.243.160/30
+    ipv6_subprefix: -2
+    assignments:
+      perleberger36-core: 1
+      perleberger36-strom2a: 2
+
+  - vid: 102
+    role: mesh
+    name: mesh_tu
+    prefix: 10.36.243.164/30
+    ipv6_subprefix: -3
+    assignments:
+      perleberger36-core: 1
+      perleberger36-tu: 2
+
+  - vid: 103
+    role: mesh
+    name: mesh_bht
+    prefix: 10.36.243.168/30
+    ipv6_subprefix: -4
+    assignments:
+      perleberger36-core: 1
+      perleberger36-bht: 2
+
+  - vid: 104
+    role: mesh
+    name: mesh_scherer8
+    prefix: 10.36.243.172/30
+    ipv6_subprefix: -5
+    assignments:
+      perleberger36-core: 1
+      perleberger36-scherer8: 2
+
+  - vid: 201
+    role: mesh
+    name: turm_5ghz_nw
+    prefix: 10.36.243.176/30
+    ipv6_subprefix: -6
+    assignments:
+      perleberger36-core: 1
+      perleberger36-turm-5ghz-nw: 2
+
+  - vid: 202
+    role: mesh
+    name: turm_5ghz_o
+    prefix: 10.36.243.180/30
+    ipv6_subprefix: -7
+    assignments:
+      perleberger36-core: 1
+      perleberger36-turm-5ghz-o: 2
+
+  - vid: 203
+    role: mesh
+    name: turm_5ghz_sw
+    prefix: 10.36.243.184/30
+    ipv6_subprefix: -8
+    assignments:
+      perleberger36-core: 1
+      perleberger36-turm-5ghz-sw: 2
+
+  - vid: 11
+    role: dhcp
+    prefix: 10.36.244.0/24
+    ipv6_subprefix: 0
+    untagged: true
+    inbound_filtering: false
+    enforce_client_isolation: false
+    assignments:
+      perleberger36-core: 1
+
+  - vid: 50
+    role: mgmt
+    prefix: 10.36.243.128/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      perleberger36-core: 1
+      perleberger36-dachboden-erx1: 2
+      perleberger36-dachboden-erx2: 2
+      perleberger36-turm-erx1: 2
+      perleberger36-turm-erx2: 2
+      perleberger36-turm-2ghz-nw: 2
+      perleberger36-turm-2ghz-no: 2
+      perleberger36-turm-2ghz-o: 2
+      perleberger36-turm-2ghz-s: 2
+      perleberger36-turm-2ghz-so: 2
+      perleberger36-turm-2ghz-sw: 2
+      perleberger36-hof-2ghz-n: 2
+      perleberger36-hof-2ghz-s: 2
