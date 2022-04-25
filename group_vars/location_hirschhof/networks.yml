@@ -17,7 +17,6 @@ networks:
     ipv6_subprefix: 0
     assignments:
       hirschhof-core: 1
-      hirschhof-k12: 2
 
 # MESH - 5 GHz 802.11s
   - vid: 20
@@ -47,7 +46,7 @@ networks:
     role: mesh
     name: mesh_k12
     prefix: 10.31.159.130/32
-    ipv6_subprefix: -2
+    ipv6_subprefix: -3
     mesh_ap: hirschhof-k12
     mesh_radio: 11g_standard
     mesh_iface: mesh
