@@ -2,4 +2,9 @@
 
 location: k12
 role: ap
-model: "tplink_cpe510-v1"
+model: "mikrotik_sxtsq-5-ac"
+
+# eth0 mac needs to be properly set
+# cat /sys/firmware/mikrotik/hard_config/mac_base
+mac_override:
+  eth0: 08:55:31:EA:E3:32
