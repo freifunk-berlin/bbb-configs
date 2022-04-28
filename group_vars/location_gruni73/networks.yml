@@ -24,6 +24,7 @@ networks:
 # local nearfield aps 5ghz
       gruni73-nf-w-5ghz: 13
       gruni73-nf-so-5ghz: 14
+      gruni73-nf-sw-5ghz: 15
 
   - vid: 40
     role: dhcp
@@ -93,6 +94,17 @@ networks:
     mesh_iface: mesh
     mesh_metric_lqm:
       - default 0.4 # penalty on wild meshing
+  - vid: 20
+    role: mesh
+    name: mesh_11s_sw5
+    prefix: 10.31.156.42/32
+    ipv6_subprefix: -11
+    mesh_metric: 1024
+    mesh_ap: gruni73-nf-sw-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric_lqm:
+      - default 0.4 # penalty on wild meshing
 
 
 location__channel_assignments_11g_standard__to_merge:
@@ -100,5 +112,6 @@ location__channel_assignments_11g_standard__to_merge:
   gruni73-nf-o-2ghz: 13-20
 
 location__channel_assignments_11a_standard__to_merge:
-  gruni73-nf-w-5ghz: 36-20
-  gruni73-nf-so-5ghz: 50-20
+  gruni73-nf-w-5ghz: 132-20
+  gruni73-nf-so-5ghz: 136-20
+  gruni73-nf-sw-5ghz: 140-20
