@@ -1,5 +1,4 @@
 {% for i in ssh_keys %}
-# {{ i['comment'] }}
-{{ i['key']}}
+{{ i['key'].split()[0] }} {{ i['key'].split()[1] }} {{ i['comment'] }}
 {% endfor %}
 
