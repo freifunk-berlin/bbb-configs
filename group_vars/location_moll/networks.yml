@@ -1,0 +1,93 @@
+---
+ipv6_prefix: "2001:bf7:750:5200::/56"
+
+# moll got following prefixes:
+# Router: 10.31.162.96/27
+# --MGMT: 10.31.162.96/28
+# --MESH: 10.31.162.112/28
+# --DHCP: 10.31.163.0/24
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_dummy
+    prefix: 10.31.162.116/32
+    ipv6_subprefix: -1
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.163.0/24
+    ipv6_subprefix: 0
+    assignments:
+      moll-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.162.96/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      moll-core: 1
+      moll-poe: 2
+      moll-router: 3
+      
+      # aps
+      moll-ap1: 5
+      moll-ap2: 6
+      moll-ap3: 7
+      moll-ap4: 8
+      moll-ap5: 9
+      moll-ap6: 10
+
+  - vid: 50
+    name: vod
+    role: ext
+    #tunnel_wan_ip: 192.168.178.2/24
+    #tunnel_wan_gw: 192.168.178.1
+    #tunnel_connections: 1
+    #tunnel_timeout: 600
+    #tunnel_mesh_prefix_ipv4: 10.31.162.112/32
+    #tunnel_up_script_args: '10.31.162.112/32 500 0.5'
+
+  - vid: 51
+    name: tel
+    role: ext
+    tunnel_wan_ip: 192.168.178.3/24
+    tunnel_wan_gw: 192.168.178.1
+    tunnel_connections: 1
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.162.113/32
+
+  - vid: 52
+    name: otwo
+    role: ext
+    tunnel_wan_ip: 192.168.178.4/24
+    tunnel_wan_gw: 192.168.178.1
+    tunnel_connections: 1
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.162.114/32
+    tunnel_up_script_args: '10.31.162.114/32 500 0.5'
+
+location__channel_assignments_11a_standard__to_merge:
+  moll-core: 36-20
+  moll-ap1: 40-20
+  moll-ap2: 44-20
+  moll-ap3: 48-20
+  # south room
+  moll-ap4: 48-20
+  moll-ap5: 44-20
+  moll-ap6: 40-20
+
+
+location__channel_assignments_11g_standard__to_merge:
+  moll-core: 1-20
+  moll-ap1: 6-20
+  moll-ap2: 9-20
+  moll-ap3: 13-20
+  # south room
+  moll-ap4: 13-20
+  moll-ap5: 9-20
+  moll-ap6: 6-20

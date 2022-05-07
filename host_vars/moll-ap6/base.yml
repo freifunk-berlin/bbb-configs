@@ -1,0 +1,10 @@
+---
+
+location: moll
+role: ap
+model: "avm_fritzbox-7530"
+
+wireless_profile: moll
+
+port_untag:
+  52: [1]
