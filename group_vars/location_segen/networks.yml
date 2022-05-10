@@ -1,0 +1,188 @@
+---
+# IPv4 10.31.6.0/24
+# IPv4 10.31.66.0/24
+# IPv6 2001:bf7:760:1000::/56
+
+# DHCP: 10.31.66.0/24
+# MGMT: 10.31.6.0/26
+# MESH: 10.31.6.64/26
+
+ipv6_prefix: "2001:bf7:760:1000::/56"
+
+networks:
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.6.0/26
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      segen-core: 1
+      segen-switch: 2
+
+      # bbb links
+      segen-saarbr: 10
+      segen-f2a: 11
+      segen-mabb: 12
+      segen-sw: 13
+      segen-bht: 14
+      segen-k12: 15
+      segen-no: 16
+      segen-wsee: 17
+      
+      # airos
+      segen-n-5ghz: 20
+      segen-o-5ghz: 21
+      segen-s-5ghz: 22
+      segen-w-5ghz: 23
+
+      # nf
+      segen-n-nf-2ghz: 24
+      segen-o-nf-2ghz: 25
+      segen-s-nf-2ghz: 26
+      segen-w-nf-2ghz: 27
+
+  - vid: 10
+    role: dhcp
+    prefix: 10.31.66.0/24
+    ipv6_subprefix: 0
+    untagged: true
+    inbound_filtering: false
+    enforce_client_isolation: false
+    assignments:
+      segen-core: 1
+
+  - vid: 101
+    role: mesh
+    name: mesh_saarbr
+    prefix: 10.31.6.64/32
+    ipv6_subprefix: -1
+    mesh_metric: 128
+    ptp: true
+
+  - vid: 102
+    role: mesh
+    name: mesh_f2a
+    prefix: 10.31.6.65/32
+    ipv6_subprefix: -2
+    mesh_metric: 1024
+    mesh_metric_lqm:
+      - default 0.3
+
+  - vid: 103
+    role: mesh
+    name: mesh_mabb
+    prefix: 10.31.6.66/32
+    ipv6_subprefix: -3
+
+  - vid: 104
+    role: mesh
+    name: mesh_sw
+    prefix: 10.31.6.67/32
+    ipv6_subprefix: -4
+
+  - vid: 105
+    role: mesh
+    name: mesh_bht
+    prefix: 10.31.6.68/32
+    ipv6_subprefix: -5
+
+  - vid: 106
+    role: mesh
+    name: mesh_k12
+    prefix: 10.31.6.69/32
+    ipv6_subprefix: -6
+
+  - vid: 107
+    role: mesh
+    name: mesh_no
+    prefix: 10.31.6.70/32
+    ipv6_subprefix: -7
+
+  - vid: 108
+    role: mesh
+    name: mesh_wsee
+    prefix: 10.31.6.71/32
+    ipv6_subprefix: -8
+
+
+  # 11s mesh 2ghz
+  - vid: 201
+    role: mesh
+    name: mesh_11s_n2
+    prefix: 10.31.6.72/32
+    ipv6_subprefix: -9
+    mesh_metric: 1024
+    mesh_ap: segen-n-nf-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+    mac_override: f0:9f:c2:0f:79:31
+
+  - vid: 202
+    role: mesh
+    name: mesh_11s_o2
+    prefix: 10.31.6.73/32
+    ipv6_subprefix: -10
+    mesh_metric: 1024
+    mesh_ap: segen-o-nf-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+    mac_override: f0:9f:c2:0f:79:32
+
+  - vid: 203
+    role: mesh
+    name: mesh_11s_s2
+    prefix: 10.31.6.74/32
+    ipv6_subprefix: -11
+    mesh_metric: 1024
+    mesh_ap: segen-s-nf-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+    mac_override: f0:9f:c2:0f:79:33
+
+  - vid: 204
+    role: mesh
+    name: mesh_11s_w2
+    prefix: 10.31.6.75/32
+    ipv6_subprefix: -12
+    mesh_metric: 1024
+    mesh_ap: segen-w-nf-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+    mac_override: f0:9f:c2:0f:79:34
+
+
+  # 5ghz sector mesh
+  - vid: 211
+    role: mesh
+    name: mesh_n5
+    prefix: 10.31.6.76/32
+    ipv6_subprefix: -13
+    mesh_metric: 1024
+
+  - vid: 212
+    role: mesh
+    name: mesh_o5
+    prefix: 10.31.6.77/32
+    ipv6_subprefix: -14
+    mesh_metric: 1024
+
+  - vid: 213
+    role: mesh
+    name: mesh_s5
+    prefix: 10.31.6.78/32
+    ipv6_subprefix: -15
+    mesh_metric: 1024
+
+  - vid: 214
+    role: mesh
+    name: mesh_w5
+    prefix: 10.31.6.79/32
+    ipv6_subprefix: -16
+    mesh_metric: 1024
+
+location__channel_assignments_11g_standard__to_merge:
+  segen-n-nf-2ghz: 13-20
+  segen-o-nf-2ghz: 13-20
+  segen-s-nf-2ghz: 13-20
+  segen-w-nf-2ghz: 13-20
