@@ -2,41 +2,41 @@
 
 snmp_devices:
   - hostname: bht-segen
-    address: 192.168.190.111
+    address: 10.31.166.5
     snmp_profile: airos_8
 
   - hostname: bht-perleberger36
-    address: 192.168.190.112
+    address: 10.31.166.6
     snmp_profile: airos_8
 
   - hostname: bht-scherer8
-    address: 192.168.190.113
+    address: 10.31.166.7
     snmp_profile: airos_8
 
   - hostname: bht-nord
-    address: 192.168.190.114
+    address: 10.31.166.8
     snmp_profile: airos_6
 
   - hostname: bht-chris
-    address: 192.168.190.115
+    address: 10.31.166.9
     snmp_profile: airos_6
 
   - hostname: bht-jup
-    address: 192.168.190.116
+    address: 10.31.166.10
     snmp_profile: airos_6
 
   - hostname: bht-ost
-    address: 192.168.190.117
+    address: 10.31.166.11
     snmp_profile: airos_6
 
   - hostname: bht-sued
-    address: 192.168.190.118
+    address: 10.31.166.12
     snmp_profile: airos_6
 
   - hostname: bht-fardf
-    address: 192.168.190.119
+    address: 10.31.166.13
     snmp_profile: airos_8
 
   - hostname: bht-west
-    address: 192.168.190.128
+    address: 10.31.166.14
     snmp_profile: airos_8

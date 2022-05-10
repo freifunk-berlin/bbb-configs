@@ -79,7 +79,7 @@ networks:
 
   - vid: 102
     role: mgmt
-    prefix: 192.168.190.0/24
+    prefix: 10.31.166.0/27
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
@@ -87,13 +87,13 @@ networks:
       bht-core: 1
       bht-er1: 2
       bht-er2: 3
-      bht-segen: 111
-      bht-perleberger36: 112
-      bht-scherer8: 113
-      bht-nord: 114
-      bht-chris: 115
-      bht-jup: 116
-      bht-ost: 117
-      bht-sued: 118
-      bht-fardf: 119
-      bht-west: 128
+      bht-segen: 5
+      bht-perleberger36: 6
+      bht-scherer8: 7
+      bht-nord: 8
+      bht-chris: 9
+      bht-jup: 10
+      bht-ost: 11
+      bht-sued: 12
+      bht-fardf: 13
+      bht-west: 14
