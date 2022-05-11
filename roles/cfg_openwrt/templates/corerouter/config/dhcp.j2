@@ -27,6 +27,7 @@ config dhcp 'dhcp_{{ name }}'
 	option leasetime '5m'
 	option start '2'
 	option limit '{{ network['prefix'] | ipaddr('size') -3 }}'
+	list dhcp_option '119,olsr'
     {% else %}
 	option dhcpv4 'disabled'
     {% endif %}
