@@ -17,7 +17,7 @@ config system
 
 config timeserver 'ntp'
         option enabled '1'
-        option enable_server '0'
+        option enable_server '{{ (role == 'corerouter' or role  == 'uplink_gateway') | int }}'
 {% for ntp_server in ntp_servers %}
         list server '{{ ntp_server }}'
 {% endfor %}
