@@ -25,6 +25,8 @@ networks:
     mesh_ap: borussia-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_lqm:
+      - default 0.3
 
   - vid: 41
     name: prdhcp
