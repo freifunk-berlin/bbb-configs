@@ -1,16 +1,28 @@
 ---
 ipv6_prefix: 2001:bf7:830:8300::/56
 
+# ipv4: 10.31.166.248/29
+# mgmt: 10.31.166.248/30
+# mesh: 10.31.166.252/30
+
 uplink:
   ifname: lan0
   ipv4: 176.74.57.19/31
   ipv6: 2a04:d480:1c01::1/127
 
+mgmt:
+  ifname: lan3.42
+  ipv4: 10.31.166.249/30
+  ipv6: 2001:bf7:830:8300::/64
+
+# .249 gw
+# .250 ohlauer-emma
+
 mesh_links:
   - name: mesh_emma
     ifname: lan3
-    ipv4: 10.31.11.101/29
-    ipv6: 2001:bf7:830:8300::/128
+    ipv4: 10.31.166.252/32
+    ipv6: 2001:bf7:830:8301::/128
     metric: 256
     ptp: true
 
@@ -23,10 +35,10 @@ tunnel_metric: 1024
 # Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
 # 2001:bf7:830:8300::/56 is the base prefix
 
-wireguard_base_prefix_ipv6: 2001:bf7:830:8301::/64
+wireguard_base_prefix_ipv6: 2001:bf7:830:8302::/64
 wireguard_base_prefix_ipv4: 10.31.140.0/24
 
-gre_base_prefix: 2001:bf7:830:8302::/64
+gre_base_prefix: 2001:bf7:830:8303::/64
 
 # gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
 gre_tunnel_alias: ohlauer
