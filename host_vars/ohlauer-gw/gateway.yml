@@ -20,7 +20,7 @@ mgmt:
 
 mesh_links:
   - name: mesh_emma
-    ifname: lan3
+    ifname: lan3.10
     ipv4: 10.31.166.252/32
     ipv6: 2001:bf7:830:8301::/128
     metric: 256
