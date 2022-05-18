@@ -21,6 +21,13 @@ networks:
     ipv6_subprefix: -2
     ptp: true
 
+  - vid: 12
+    role: mesh
+    name: mesh_emma
+    prefix: 10.31.157.3/32
+    ipv6_subprefix: -8
+    ptp: true
+
   - vid: 20
     role: mesh
     name: mesh_core_2ghz
@@ -72,4 +79,5 @@ networks:
       gub37-core: 1
       gub37-sama: 2
       gub37-zwingli: 3
+      gub37-emma: 4
       gub37-hof-n-5: 5
