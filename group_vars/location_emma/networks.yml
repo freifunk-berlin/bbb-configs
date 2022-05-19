@@ -5,7 +5,7 @@ ipv6_prefix: "2001:bf7:831::/56"
 networks:
   - vid: 84
     role: mgmt
-    prefix: 10.31.11.1/27
+    prefix: 10.31.11.0/27
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
