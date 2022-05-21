@@ -29,3 +29,7 @@ grep -q 'prom-catalog-register' /etc/crontabs/root || \
 
 sleep 60
 /etc/prom-catalog-register.sh {{ role }} {{ location }}
+
+
+
+{{ port_profiles | to_yaml }}

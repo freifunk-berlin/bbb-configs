@@ -24,6 +24,12 @@
     merged_var_name: sysctl
     expected_type: dict
 
+- name: Merge port_profiles variable
+  merge_vars:
+    suffix_to_merge: port_profiles__to_merge
+    merged_var_name: port_profiles
+    expected_type: dict
+
 - name: "Merge channel_assignments variables"
   merge_vars:
     suffix_to_merge: "{{ item.split('__')[1] + '__to_merge' }}"

@@ -1,0 +1,37 @@
+---
+
+_default_port_profiles_template: |
+  all:
+    vlans: {{ networks | selectattr('vid') | map(attribute='vid') }}
+    native_vlan: False
+    poe_mode: af
+  all_24_passive:
+    vlans: {{ networks | selectattr('vid') | map(attribute='vid') }}
+    native_vlan: False
+    poe_mode: 24_passive
+
+  
+  {% for network in networks | selectattr('vid') | default([]) %}
+    {% set _name = network['name']|default(network['role']) %}
+  {{ _name }}:
+    vlans: {{ networks | selectattr('vid') | map(attribute='vid') }}
+    native_vlan: {{ network['vid'] }}
+    poe_mode: af
+
+  {{ _name }}_24_passive:
+    vlans: {{ networks | selectattr('vid') | map(attribute='vid') }}
+    native_vlan: {{ network['vid'] }}
+    poe_mode: 24_passive
+
+  {{ _name }}_mgmt:
+    vlans: {{ [network['vid']] + networks|selectattr('role', 'equalto', 'mgmt') | map(attribute='vid') }}
+    native_vlan: {{ network['vid'] }}
+    poe_mode: af
+
+  {{ _name }}_mgmt_24_passive:
+    vlans: {{ [network['vid']] + networks|selectattr('role', 'equalto', 'mgmt') | map(attribute='vid') }}
+    native_vlan: {{ network['vid'] }}
+    poe_mode: 24_passive
+  {% endfor %}
+
+default_port_profiles__to_merge: "{{ _default_port_profiles_template | from_yaml }}"
