@@ -9,23 +9,31 @@
 
   {% set channel_assignments = hostvars[inventory_hostname]['channel_assignments_' + wd['name']] %}
   {% set channel_assignment = (channel_assignments[inventory_hostname] | default(channel_assignments['default'])).split('-') %}
-  {% set channel = channel_assignment[0] %}
+  {% set channel = channel_assignment[0] | int %}
   {% set bandwidth = channel_assignment[1] %}
   {% set txpower = channel_assignment[2]|default(False) %}
 
+  {% if channel < 36 %}
+  {% set maxtxpower = 20 %}
+  {% elif channel < 52 %}
+  {% set maxtxpower = 23 %}
+  {% elif channel < 100 %}
+  {% set maxtxpower = 20 %}
+  {% else %}
+  {% set maxtxpower = 26 %}
+  {% endif %}
 
 # Radio: {{ wd['name'] }}
 config wifi-device '{{ wd_id }}'
 	option type 'mac80211'
 	option hwmode '{{ wd['hwmode'] }}'
 	option path '{{ wd['path'] }}'
-  {% if 'antenna_gain' in wd %}
-	option antenna_gain '{{ wd['antenna_gain'] }}'
-  {% endif %}
 	option htmode 'VHT{{ bandwidth }}'
 	option channel '{{ channel }}'
   {% if txpower %}
 	option txpower '{{ txpower }}'
+  {% elif 'antenna_gain' in wd %}
+	option txpower '{{ maxtxpower - wd['antenna_gain'] }}'
   {% endif %}
   {% if 'beacon_int' in wd_config %}
 	option beacon_int '{{ wd_config['beacon_int'] }}'
