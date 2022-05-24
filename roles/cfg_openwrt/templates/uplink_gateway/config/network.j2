@@ -3,7 +3,6 @@ config interface 'loopback'
 	option proto 'static'
 	option ipaddr '127.0.0.1'
 	option netmask '255.0.0.0'
-	option dns '{{ dns_servers | join(' ') }}'
 {% if ipv6_prefix is defined %}
 	option ip6addr '{{ ipv6_prefix }}'
 {% endif %}
