@@ -48,7 +48,7 @@ table bridge client_isolation {
     {% endif %}
 	chain PREROUTING_{{ name }} {
 		type filter hook prerouting priority 0; policy accept;
-		iif {{ uplink }} accept
+		{{'iif' if role == 'ap' else 'iifname' }} {{ uplink }} accept
 		iifname {{ wifi }} ether daddr $bc ether daddr set $gw
 		iifname {{ wifi }} ether daddr $mc6 ether daddr set $gw
 		iifname {{ wifi }} ether daddr $gw accept
