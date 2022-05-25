@@ -12,7 +12,7 @@ config dnsmasq
 	option localservice '1'
 	option noping '{{ dhcp_no_ping|int if dhcp_no_ping is defined else 1 }}'
 	option quietdhcp '1'
-	option cachesize '{{ dns_cache_size | default(1500) }}'
+	option cachesize '{{ dns_cache_size | default(10000) }}'
 {% for _dns_server in dns_servers %}
         list server '{{ _dns_server }}'
 {% endfor %}
