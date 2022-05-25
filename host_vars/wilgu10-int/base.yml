@@ -2,6 +2,7 @@
 
 location: wilgu10
 role: ap
-model: "linksys_e8450-ubi"
+model: "avm_fritzbox-7530"
+openwrt_version: "22.03-SNAPSHOT"
 
 wireless_profile: wilgu10
