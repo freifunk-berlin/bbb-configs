@@ -3,7 +3,7 @@ target: ath79/generic
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"
-  - "kmod-ath10k-smallbuffers ath10k-firmware-qca988x"
+  - "kmod-ath10k ath10k-firmware-qca988x"
 
 int_port: eth0
 
