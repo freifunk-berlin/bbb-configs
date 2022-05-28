@@ -31,6 +31,9 @@ networks:
       zwingli-ost-nf-5ghz: 15
       zwingli-sued-nf-5ghz: 16
       zwingli-west-nf-5ghz: 17
+# dome inside church
+      zwingli-dome-1: 18
+      zwingli-dome-2: 19
 # 5ghz sectors
       zwingli-nord-5ghz: 20
       zwingli-ost-5ghz: 21
@@ -198,3 +201,12 @@ networks:
     mesh_iface: mesh
     mesh_metric_lqm:
       - default 0.4 # penalty on wild meshing
+
+
+location__channel_assignments_11a_standard__to_merge:
+  zwingli-dome-1: 52-80
+  zwingli-dome-2: 36-80
+
+location__channel_assignments_11g_standard__to_merge:
+  zwingli-dome-1: 1-20
+  zwingli-dome-2: 13-20
