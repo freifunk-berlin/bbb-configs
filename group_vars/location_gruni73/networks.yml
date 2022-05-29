@@ -18,13 +18,10 @@ networks:
 # 5ghz uplink
       gruni73-sama: 5
       gruni73-zwingli: 6
-# local nearfield aps 2ghz
-      gruni73-nf-sw-2ghz: 10
-      gruni73-nf-o-2ghz: 11
 # local nearfield aps 5ghz
-      gruni73-nf-w-5ghz: 13
-      gruni73-nf-so-5ghz: 14
-      gruni73-nf-sw-5ghz: 15
+      gruni73-nf-o-5ghz: 13
+      gruni73-nf-s-5ghz: 14
+      gruni73-nf-w-5ghz: 15
 
   - vid: 40
     role: dhcp
@@ -36,82 +33,42 @@ networks:
       gruni73-core: 1
 
 # 10.31.156.32/27 Mesh Prefix (32)
-  - vid: 10
-    role: mesh
-    name: mesh_sama
-    prefix: 10.31.156.32/32
-    ipv6_subprefix: -1
-  - vid: 11
-    role: mesh
-    name: mesh_zwingli
-    prefix: 10.31.156.33/32
-    ipv6_subprefix: -2
-
-  # 11s mesh 2ghz
-  - vid: 15
-    role: mesh
-    name: mesh_11s_sw2
-    prefix: 10.31.156.37/32
-    ipv6_subprefix: -6
-    mesh_metric: 1024
-    mesh_ap: gruni73-nf-sw-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-    mesh_metric_lqm:
-      - default 0.4 # penalty on wild meshing
-  - vid: 16
-    role: mesh
-    name: mesh_11s_o2
-    prefix: 10.31.156.38/32
-    ipv6_subprefix: -7
-    mesh_metric: 1024
-    mesh_ap: gruni73-nf-o-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-    mesh_metric_lqm:
-      - default 0.4 # penalty on wild meshing
-
   # 11s mesh 5ghz
   - vid: 18
     role: mesh
-    name: mesh_11s_w5
+    name: mesh_11s_o5
     prefix: 10.31.156.40/32
-    ipv6_subprefix: -9
+    ipv6_subprefix: -6
     mesh_metric: 1024
-    mesh_ap: gruni73-nf-w-5ghz
+    mesh_ap: gruni73-nf-o-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
       - default 0.4 # penalty on wild meshing
   - vid: 19
     role: mesh
-    name: mesh_11s_so5
+    name: mesh_11s_s5
     prefix: 10.31.156.41/32
-    ipv6_subprefix: -10
+    ipv6_subprefix: -7
     mesh_metric: 1024
-    mesh_ap: gruni73-nf-so-5ghz
+    mesh_ap: gruni73-nf-s-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
       - default 0.4 # penalty on wild meshing
   - vid: 20
     role: mesh
-    name: mesh_11s_sw5
+    name: mesh_11s_w5
     prefix: 10.31.156.42/32
-    ipv6_subprefix: -11
+    ipv6_subprefix: -8
     mesh_metric: 1024
-    mesh_ap: gruni73-nf-sw-5ghz
+    mesh_ap: gruni73-nf-w-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
       - default 0.4 # penalty on wild meshing
 
-
-location__channel_assignments_11g_standard__to_merge:
-  gruni73-nf-sw-2ghz: 1-20
-  gruni73-nf-o-2ghz: 13-20
-
 location__channel_assignments_11a_standard__to_merge:
-  gruni73-nf-w-5ghz: 132-20
-  gruni73-nf-so-5ghz: 136-20
-  gruni73-nf-sw-5ghz: 140-20
+  gruni73-nf-o-5ghz: 136-20-14 # EIRP 30dB - Antenna 19dB + Cable loss 3dB = 14dB
+  gruni73-nf-s-5ghz: 36-20-7 # EIRP 23dB - Antenna 19dB + Cable loss 3dB = 7dB
+  gruni73-nf-w-5ghz: 140-20-14 # EIRP 30dB - Antenna 19dB + Cable loss 3dB = 14dB
