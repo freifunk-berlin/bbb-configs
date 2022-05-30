@@ -1,7 +1,0 @@
----
-
-location: b90gruene
-role: corerouter
-model: "x86-64"
-
-image_search_pattern: "*-ext4-combined.img*"
