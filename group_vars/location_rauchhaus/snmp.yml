@@ -1,6 +1,5 @@
 ---
 
-
 snmp_devices:
   - hostname: rauchhaus-emma
     address: 10.31.98.226

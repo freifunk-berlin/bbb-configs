@@ -27,16 +27,14 @@ networks:
     assignments:
       rauchhaus-core: 1
       rauchhaus-emma: 2
-      rauchhaus-basement137: 10
-      rauchhaus-floor0north135: 11
-      rauchhaus-floor0south136: 12
-      rauchhaus-floor1north133: 13
-      rauchhaus-floor1south134: 14
-      rauchhaus-floor2north132: 15
+      rauchhaus-floor0north135: 10
+      rauchhaus-floor0south136: 11
+      rauchhaus-floor1north133: 12
+      rauchhaus-floor1south134: 13
+      rauchhaus-floor2north132: 14
 
 location__channel_assignments_11a_standard__to_merge:
   rauchhaus-core: 36-20
-  rauchhaus-basement137: 48-20
   rauchhaus-floor0north135: 36-20
   rauchhaus-floor0south136: 48-20
   rauchhaus-floor1north133: 36-20
@@ -45,7 +43,6 @@ location__channel_assignments_11a_standard__to_merge:
 
 location__channel_assignments_11g_standard__to_merge:
   rauchhaus-core: 1-20
-  rauchhaus-basement137: 6-20
   rauchhaus-floor0north135: 11-20
   rauchhaus-floor0south136: 1-20
   rauchhaus-floor1north133: 6-20
