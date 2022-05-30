@@ -1,7 +1,0 @@
----
-
-location: xhain
-role: corerouter
-model: "bananapi_bpi-r64"
-
-wireless_profile: freifunk_default
