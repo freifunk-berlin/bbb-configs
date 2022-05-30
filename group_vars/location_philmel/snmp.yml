@@ -1,11 +1,20 @@
 ---
 
-
 snmp_devices:
-  - hostname: philmel-nord
-    address: 10.230.2.161
-    snmp_profile: airos_6
+  - hostname: philmel-rhnk
+    address: 10.230.2.3
+    snmp_profile: af60
 
+  - hostname: philmel-ak36
+    address: 10.230.2.4
+    snmp_profile: airos_8
+
+  - hostname: philmel-nord-5ghz
+    address: 10.230.2.5
+    snmp_profile: airos_8
+
+
+# TODO BELOW
   - hostname: philmel-ost
     address: 10.230.2.165
     snmp_profile: airos_6
@@ -17,14 +26,6 @@ snmp_devices:
   - hostname: philmel-west
     address: 10.230.2.173
     snmp_profile: airos_6
-
-  - hostname: philmel-rhnk
-    address: 10.230.2.177
-    snmp_profile: airos_6
-
-  - hostname: philmel-ak36
-    address: 10.230.2.181
-    snmp_profile: airos_8
 
   - hostname: philmel-autobahn
     address: 10.230.2.185

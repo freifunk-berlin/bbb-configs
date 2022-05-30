@@ -1,6 +1,10 @@
 ---
 ipv6_prefix: "2001:bf7:820:1500::/56"
 
+# MGMT Network: 10.230.2.0/28
+# Mesh Network: 10.230.2.16/29 (-23)
+
+
 networks:
   - vid: 2
     role: dhcp
@@ -12,15 +16,7 @@ networks:
     assignments:
       philmel-core: 1
 
-  - vid: 10
-    role: mesh
-    name: mesh_nord
-    prefix: 10.230.2.160/30 # Peers: sgfrd21-core; 10.36.154.41/29 ???
-    ipv6_subprefix: -1
-    assignments:
-      philmel-core: 2
-      philmel-nord: 1
-
+  # TODO START
   - vid: 11
     role: mesh
     name: mesh_ost
@@ -48,6 +44,34 @@ networks:
       philmel-core: 2
       philmel-west: 1
 
+  - vid: 21
+    role: mesh
+    name: vaterhaus
+    prefix: 10.230.2.188/30 # NO PEERS
+    ipv6_subprefix: -5
+    assignments:
+      philmel-core: 2
+      philmel-vaterhaus: 1
+
+  - vid: 20
+    role: mesh
+    name: mesh_autobahn
+    prefix: 10.230.2.184/30 # NO PEERS
+    ipv6_subprefix: -7
+    assignments:
+      philmel-core: 2
+      philmel-autobahn: 1
+
+  # TODO END
+
+  - vid: 10
+    role: mesh
+    name: mesh_nord_5ghz
+    prefix: 10.230.2.18/32
+    ipv6_subprefix: -1
+    mesh_metric: 1024
+    #mesh_metric_lqm: ['default 0.3']
+
   - vid: 14 
     role: mesh
     name: mesh_rhnk
@@ -63,7 +87,7 @@ networks:
     ipv6_subprefix: -6
     ptp: true
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.3']
+    mesh_metric_lqm: ['default 0.3'] # prefer rhnk link
 
 
 
@@ -79,44 +103,6 @@ networks:
       philmel-rhnk: 3
       philmel-ak36: 4
       philmel-nord-5ghz: 5
-      # ..14
-
+      philmel-nord-5ghz-old: 14 # TODO roedel: migrate Link to new link
       #      philmel-nord-m2: 2 #
-
-_deprecated_links:
-  - vid: 21
-    role: mesh
-    name: vaterhaus
-    prefix: 10.230.2.188/30
-    ipv6_subprefix: -5
-    assignments:
-      philmel-core: 2
-      philmel-vaterhaus: 1
-
-  - vid: 20
-    role: mesh
-    name: mesh_autobahn
-    prefix: 10.230.2.184/30
-    ipv6_subprefix: -7
-    assignments:
-      philmel-core: 2
-      philmel-autobahn: 1
-
-  - vid: 14 
-    role: mesh
-    name: mesh_rhnk
-    prefix: 10.230.2.176/30
-    ipv6_subprefix: -5
-    assignments:
-      philmel-core: 2
-      philmel-rhnk: 1
-
-  - vid: 19
-    role: mesh
-    name: mesh_ak36
-    prefix: 10.230.2.180/30
-    ipv6_subprefix: -6
-    assignments:
-      philmel-core: 2
-      philmel-ak36: 1
 
