@@ -7,18 +7,16 @@ networks:
     name: mesh_philmel
     prefix: 10.230.3.10/32
     ipv6_subprefix: -10
+    mesh_metric: 128
+    ptp: true
 
   - vid: 11
     role: mesh
     name: mesh_rhxb
     prefix: 10.230.3.11/32
     ipv6_subprefix: -11
-
-  - vid: 12
-    role: mesh
-    name: mesh_zwingli
-    prefix: 10.230.3.12/32
-    ipv6_subprefix: -12
+    mesh_metric: 128
+    ptp: true
 
   - vid: 13
     role: mesh
@@ -31,32 +29,9 @@ networks:
     name: mesh_emma
     prefix: 10.230.3.15/32
     ipv6_subprefix: -15
-
-  - vid: 16
-    role: mesh
-    name: mesh_koelln
-    prefix: 10.230.3.16/32
-    ipv6_subprefix: -16
-
-  - vid: 17
-    role: mesh
-    name: mesh_fhain
-    prefix: 10.230.3.17/32
-    ipv6_subprefix: -17
-    mesh_metric_lqm:
-    - 10.31.7.149 0.2 # make sure emma is uplink and not f2a
-
-  - vid: 20
-    role: mesh
-    name: mesh_nnw
-    prefix: 10.230.3.20/32
-    ipv6_subprefix: -20
-
-  - vid: 21
-    role: mesh
-    name: mesh_wnw
-    prefix: 10.230.3.21/32
-    ipv6_subprefix: -21
+    ptp: true
+    mesh_metric: 512
+    mesh_metric_lqm: ['default 0.7'] # prefer rhxb link
 
   - vid: 22
     role: mesh
@@ -76,23 +51,12 @@ networks:
     prefix: 10.230.3.24/32
     ipv6_subprefix: -24
 
-  - vid: 25
-    role: mesh
-    name: mesh_ssw
-    prefix: 10.36.91.25/32
-    ipv6_subprefix: -25
-
-  - vid: 26
-    role: mesh
-    name: mesh_nno
-    prefix: 10.36.91.26/32
-    ipv6_subprefix: -26
-
   - vid: 30
     role: mesh
     name: mesh_u1
     prefix: 10.36.91.30/32
     ipv6_subprefix: -30
+
 
   - vid: 40
     role: dhcp
@@ -137,3 +101,54 @@ networks:
       rhnk-oso: 24
       rhnk-ssw: 25
       rhnk-nno: 26
+
+
+
+
+
+
+  # TODO: DISMANTLE!!!
+  - vid: 12 # NO-PEERS
+    role: mesh
+    name: mesh_zwingli
+    prefix: 10.230.3.12/32
+    ipv6_subprefix: -12
+
+
+  - vid: 16 # NO-PEERS
+    role: mesh
+    name: mesh_koelln
+    prefix: 10.230.3.16/32
+    ipv6_subprefix: -16
+
+  - vid: 17 # NO-PEERS
+    role: mesh
+    name: mesh_fhain
+    prefix: 10.230.3.17/32
+    ipv6_subprefix: -17
+    mesh_metric_lqm:
+    - 10.31.7.149 0.2 # make sure emma is uplink and not f2a
+
+  - vid: 20 # NO-PEERS
+    role: mesh
+    name: mesh_nnw
+    prefix: 10.230.3.20/32
+    ipv6_subprefix: -20
+
+  - vid: 21 # NO-PEERS
+    role: mesh
+    name: mesh_wnw
+    prefix: 10.230.3.21/32
+    ipv6_subprefix: -21
+
+  - vid: 25 # NO-PEERS
+    role: mesh
+    name: mesh_ssw
+    prefix: 10.36.91.25/32
+    ipv6_subprefix: -25
+
+  - vid: 26 # NO-PEERS
+    role: mesh
+    name: mesh_nno
+    prefix: 10.36.91.26/32
+    ipv6_subprefix: -26
