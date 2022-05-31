@@ -14,7 +14,7 @@ dhcp_no_ping: false
 networks:
   - vid: 10
     role: mesh
-    name: mesh_ipb
+    name: mesh_l105
     prefix: 10.31.126.128/32
     ipv6_subprefix: -1
     mesh_metric: 128
@@ -37,8 +37,8 @@ networks:
     ptp: true
 
   - vid: 13
-    role: mesh
-    name: mesh_emmaus
+    role: mesh # NO-PEERS
+    name: mesh_emma
     prefix: 10.31.126.131/32
     ipv6_subprefix: -4
     ptp: true
@@ -77,14 +77,14 @@ networks:
     ipv6_subprefix: -7
 
   - vid: 22
-    role: mesh
+    role: mesh # NO-PEERS
     name: mesh_sw_5ghz
     prefix: 10.31.126.137/32
     ipv6_subprefix: -8
 
   - vid: 23
     role: mesh
-    name: mesh_so_5ghz
+    name: mesh_so_5ghz # NO-PEERS
     prefix: 10.31.126.138/32
     ipv6_subprefix: -9
 
@@ -116,10 +116,10 @@ networks:
       rhxb-cloudkey: 3
 
       #p2p
-      rhxb-ipb: 4
+      rhxb-l105: 4
       rhxb-flughafen: 5
       rhxb-manstein: 6
-      rhxb-emmaus: 7
+      rhxb-emma: 7
       rhxb-rhnk: 8
       rhxb-technikmuseum: 9
 

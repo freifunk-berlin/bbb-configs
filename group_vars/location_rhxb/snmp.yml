@@ -11,11 +11,11 @@ snmp_devices:
 
   - hostname: rhxb-manstein
     address: 10.31.126.6
-    snmp_profile: airos_8
+    snmp_profile: airos_6
 
-  - hostname: rhxb-emmaus
+  - hostname: rhxb-emma
     address: 10.31.126.7
-    snmp_profile: airos_8
+    snmp_profile: airos_6
 
   - hostname: rhxb-rhnk
     address: 10.31.126.8
