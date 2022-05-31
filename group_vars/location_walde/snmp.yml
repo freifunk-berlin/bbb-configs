@@ -1,0 +1,6 @@
+---
+
+snmp_devices:
+  - hostname: walde-emma
+    address: 10.31.92.1
+    snmp_profile: airos_8
