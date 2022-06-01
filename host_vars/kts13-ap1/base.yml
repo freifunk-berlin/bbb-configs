@@ -1,0 +1,8 @@
+---
+
+location: kts13
+role: ap
+model: "mikrotik_sxtsq-5-ac"
+
+mac_override:
+  eth0: 2C:C8:1B:8A:95:2E
