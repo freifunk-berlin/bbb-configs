@@ -1,0 +1,6 @@
+---
+
+snmp_devices:
+  - hostname: dragon-rhxb
+    address: 10.31.92.98
+    snmp_profile: airos_6
