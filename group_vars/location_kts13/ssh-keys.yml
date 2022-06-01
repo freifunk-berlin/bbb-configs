@@ -1,0 +1,4 @@
+---
+location__ssh_keys__to_merge:
+  - comment: pktpls@systemli.org
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVY2XHiLDXbj7TGWtUpKEb8+qKw/DrkiVbLiyvyRaCi pktpls@systemli.org
