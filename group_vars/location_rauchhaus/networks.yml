@@ -18,6 +18,17 @@ networks:
     assignments:
       rauchhaus-core: 1
 
+  - vid: 41
+    role: dhcp
+    name: home
+    no_corerouter_dns_record: true
+    inbound_filtering: true
+    enforce_client_isolation: false
+    prefix: 10.31.169.128/25
+    ipv6_subprefix: 1
+    assignments:
+      rauchhaus-core: 1
+
   - vid: 42
     role: mgmt
     prefix: 10.31.98.224/27
@@ -27,6 +38,7 @@ networks:
     assignments:
       rauchhaus-core: 1
       rauchhaus-emma: 2
+      rauchhaus-xdorf: 3
       rauchhaus-floor0north135: 10
       rauchhaus-floor0south136: 11
       rauchhaus-floor1north133: 12

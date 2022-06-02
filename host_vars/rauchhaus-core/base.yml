@@ -4,4 +4,4 @@ location: rauchhaus
 role: corerouter
 model: "tplink_tl-wdr4900-v1"
 
-wireless_profile: freifunk_default
+wireless_profile: rauchhaus
