@@ -32,6 +32,7 @@ networks:
       emma-wnw-5ghz: 23
       emma-oso-5ghz: 24
       emma-sso-5ghz: 25
+      emma-agym: 26
 
   - vid: 40
     role: dhcp
@@ -41,6 +42,12 @@ networks:
     enforce_client_isolation: true
     assignments:
       emma-core: 1
+
+  - vid: 11
+    role: mesh
+    name: mesh_agym
+    prefix: 10.31.11.48/32
+    ipv6_subprefix: -17
 
   - vid: 21
     role: mesh
