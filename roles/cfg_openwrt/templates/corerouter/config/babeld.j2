@@ -8,11 +8,17 @@ config general
 	option 'ubus_bindings' 'true'
 
   {% for network in networks | selectattr('role', 'equalto', 'mesh') | selectattr('ipv6_subprefix') %}
+    {% set _ifname = network['name'] if 'name' in network else network['role'] %}
 config interface
-	option 'ifname' '{{ network['name'] if 'name' in network else network['role'] }}'
-	option 'rxcost' '{{ network['mesh_metric'] if 'mesh_metric' in network else '512' }}'
+	option 'ifname' '{{ _ifname }}'
 	option 'split_horizon' '{{ (network['ptp'] if 'ptp' in network else false ) | string | lower }}'
-	option 'link_quality' '{{ network.get('link_quality_based_metric', true) | string }}'
+	option 'link_quality' '{{ network.get('link_quality_based_metric', true) | string | lower }}'
+	option 'rxcost' '{{ '256' if network.get('link_quality_based_metric', true) else '96' }}'
+
+config filter
+	option 'type' 'in'
+	option 'if' '{{ _ifname }}'
+	option 'action' 'metric {{ network.get('mesh_metric', 512) }}'
 
   {% endfor -%}
 
