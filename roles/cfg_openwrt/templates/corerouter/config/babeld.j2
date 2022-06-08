@@ -12,6 +12,7 @@ config interface
 	option 'ifname' '{{ network['name'] if 'name' in network else network['role'] }}'
 	option 'rxcost' '{{ network['mesh_metric'] if 'mesh_metric' in network else '512' }}'
 	option 'split_horizon' '{{ (network['ptp'] if 'ptp' in network else false ) | string | lower }}'
+	option 'link_quality' '{{ network.get('link_quality_based_metric', true) | string }}'
 
   {% endfor -%}
 

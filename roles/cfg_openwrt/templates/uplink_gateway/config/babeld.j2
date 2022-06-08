@@ -13,6 +13,7 @@ config interface
 	option 'ifname' '{{ interface['name'] }}'
 	option 'rxcost' '{{ interface['metric'] }}'
 	option 'split_horizon' '{{ (interface['ptp'] if 'ptp' in interface else false ) | string | lower }}'
+	option 'link_quality' '{{ interface.get('link_quality_based_metric', true) | string | lower }}'
 
 {% endfor %}
 
