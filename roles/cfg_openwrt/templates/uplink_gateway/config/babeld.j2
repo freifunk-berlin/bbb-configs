@@ -11,9 +11,14 @@ config interface
 {% for interface in mesh_links|default([]) %}
 config interface
 	option 'ifname' '{{ interface['name'] }}'
-	option 'rxcost' '{{ interface['metric'] }}'
+	option 'rxcost' '{{ '256' if interface.get('link_quality_based_metric', true) else '96' }}'
 	option 'split_horizon' '{{ (interface['ptp'] if 'ptp' in interface else false ) | string | lower }}'
 	option 'link_quality' '{{ interface.get('link_quality_based_metric', true) | string | lower }}'
+
+config filter
+       option 'type' 'in'
+       option 'if' '{{ interface['name'] }}'
+       option 'action' 'metric {{ interface.get('mesh_metric', 512) }}'
 
 {% endfor %}
 
