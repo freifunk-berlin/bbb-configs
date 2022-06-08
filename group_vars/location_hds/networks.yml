@@ -15,7 +15,7 @@ networks:
   - vid: 105
     role: mesh
     name: mesh_nord
-    prefix: 10.36.166.121/30
+    prefix: 10.36.166.141/30
     ipv6_subprefix: -1
     assignments:
       hds-core: 1
@@ -24,7 +24,7 @@ networks:
   - vid: 106
     role: mesh
     name: mesh_sabr
-    prefix: 10.36.166.125/30
+    prefix: 10.36.166.137/30
     ipv6_subprefix: -2
     assignments:
       hds-core: 1
@@ -51,9 +51,3 @@ networks:
       hds-sama: 2
     ptp: true
 
-# Not in use?
-#  - vid: 200
-#    role: mesh
-#    name: mesh_lan
-#    prefix: 10.36.166.141/32
-#    ipv6_subprefix: -5
