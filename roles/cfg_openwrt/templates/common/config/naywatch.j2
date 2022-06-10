@@ -9,14 +9,14 @@ config naywatch general
 {% for network in networks | default([]) %}
     {% set name = network['name'] if 'name' in network else network['role'] %}
     {% if network['role'] == 'mgmt' or (role == 'corerouter' and network['role'] == 'mesh') %}
-    list interface  '{{ name }}'
+    list interface          '{{ name }}'
     {% endif %}
 {% endfor %}
 {% for interface in mesh_links|default([]) %}
-    list interface  '{{ interface['ifname'] }}'
+    list interface          '{{ interface['name'] }}'
 {% endfor %}
 {% if mgmt is defined %}
-    list interface  '{{ mgmt['ifname'] }}'
+    list interface          '{{ mgmt['name'] | default('mgmt') }}'
 {% endif %}
     list save_cmd           'dmesg'
     list save_cmd           'logread'
