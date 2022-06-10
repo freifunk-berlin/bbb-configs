@@ -84,4 +84,4 @@ gre_base_prefix: 2001:bf7:750:4003::/64
 # gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
 gre_tunnel_alias: ak36
 
-wireless_profile: disabled
+wireless_profile: disable

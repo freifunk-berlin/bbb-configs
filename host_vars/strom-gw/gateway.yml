@@ -56,4 +56,4 @@ wireguard_base_prefix_ipv4: 10.31.164.0/24
 # gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
 gre_tunnel_alias: strom
 
-wireless_profile: disabled
+wireless_profile: disable
