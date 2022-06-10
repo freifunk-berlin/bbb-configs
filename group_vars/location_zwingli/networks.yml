@@ -19,7 +19,6 @@ networks:
       zwingli-rhnk: 4
       zwingli-agym: 5
       zwingli-vaterhaus: 6
-# legacy link to emma
       zwingli-emma: 7
 # local aps 2ghz
       zwingli-nord-nf-2ghz: 10
@@ -102,8 +101,6 @@ networks:
     prefix: 10.31.115.40/32
     ipv6_subprefix: -9
     mesh_metric: 128
-    mesh_metric_lqm:
-      - default 0.3 # Make sure emma/ohlauer is not used as primary uplink
     ptp: true
 
 

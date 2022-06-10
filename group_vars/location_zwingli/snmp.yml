@@ -35,4 +35,4 @@ snmp_devices:
 
   - hostname: zwingli-emma
     address: 10.31.115.7
-    snmp_profile: airos_6
+    snmp_profile: af60
