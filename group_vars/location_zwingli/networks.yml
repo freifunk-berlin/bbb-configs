@@ -16,7 +16,7 @@ networks:
       zwingli-switch: 2
 # af60-lr
       zwingli-sama: 3
-      zwingli-rhnk: 4
+#      zwingli-rhnk: 4
       zwingli-agym: 5
       zwingli-vaterhaus: 6
 # legacy link to emma
@@ -24,12 +24,12 @@ networks:
 # local aps 2ghz
       zwingli-nord-nf-2ghz: 10
       zwingli-ost-nf-2ghz: 11
-      zwingli-sued-nf-2ghz: 12
+#      zwingli-sued-nf-2ghz: 12
       zwingli-west-nf-2ghz: 13
 # local aps 5ghz
       zwingli-nord-nf-5ghz: 14
       zwingli-ost-nf-5ghz: 15
-      zwingli-sued-nf-5ghz: 16
+#      zwingli-sued-nf-5ghz: 16
       zwingli-west-nf-5ghz: 17
 # dome inside church
       zwingli-dome-1: 18
@@ -78,13 +78,13 @@ networks:
     ipv6_subprefix: -5
     mesh_metric: 128
     ptp: true
-  - vid: 15
-    role: mesh
-    name: mesh_rhnk
-    prefix: 10.31.115.37/32
-    ipv6_subprefix: -6
-    mesh_metric: 128
-    ptp: true
+#  - vid: 15
+#    role: mesh
+#    name: mesh_rhnk
+#    prefix: 10.31.115.37/32
+#    ipv6_subprefix: -6
+#    mesh_metric: 128
+#    ptp: true
   - vid: 16
     role: mesh
     name: mesh_agym
@@ -133,17 +133,17 @@ networks:
     mesh_iface: mesh
     mesh_metric_lqm:
       - default 0.4 # penalty on wild meshing
-  - vid: 22
-    role: mesh
-    name: mesh_11s_s2
-    prefix: 10.31.115.43/32
-    ipv6_subprefix: -12
-    mesh_metric: 1024
-    mesh_ap: zwingli-sued-nf-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-    mesh_metric_lqm:
-      - default 0.4 # penalty on wild meshing
+#  - vid: 22
+#    role: mesh
+#    name: mesh_11s_s2
+#    prefix: 10.31.115.43/32
+#    ipv6_subprefix: -12
+#    mesh_metric: 1024
+#    mesh_ap: zwingli-sued-nf-2ghz
+#    mesh_radio: 11g_standard
+#    mesh_iface: mesh
+#    mesh_metric_lqm:
+#      - default 0.4 # penalty on wild meshing
   - vid: 23
     role: mesh
     name: mesh_11s_w2
@@ -179,17 +179,17 @@ networks:
     mesh_iface: mesh
     mesh_metric_lqm:
       - default 0.4 # penalty on wild meshing
-  - vid: 26
-    role: mesh
-    name: mesh_11s_s5
-    prefix: 10.31.115.47/32
-    ipv6_subprefix: -16
-    mesh_metric: 1024
-    mesh_ap: zwingli-sued-nf-5ghz
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
-    mesh_metric_lqm:
-      - default 0.4 # penalty on wild meshing
+#  - vid: 26
+#    role: mesh
+#    name: mesh_11s_s5
+#    prefix: 10.31.115.47/32
+#    ipv6_subprefix: -16
+#    mesh_metric: 1024
+#    mesh_ap: zwingli-sued-nf-5ghz
+#    mesh_radio: 11a_standard
+#    mesh_iface: mesh
+#    mesh_metric_lqm:
+#      - default 0.4 # penalty on wild meshing
   - vid: 27
     role: mesh
     name: mesh_11s_w5
