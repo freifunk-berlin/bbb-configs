@@ -29,7 +29,7 @@ networks:
 # local aps 5ghz
       zwingli-nord-nf-5ghz: 14
       zwingli-ost-nf-5ghz: 15
-#      zwingli-sued-nf-5ghz: 16
+      zwingli-nno-nf-5ghz: 16
       zwingli-west-nf-5ghz: 17
 # dome inside church
       zwingli-dome-1: 18
@@ -206,6 +206,7 @@ networks:
 location__channel_assignments_11a_standard__to_merge:
   zwingli-dome-1: 52-80
   zwingli-dome-2: 36-80
+  zwingli-nno-nf-5ghz: 132-40-18 # EIRP 30dB - Antenna 14dB + Cable loss 2dB = 18dB
 
 location__channel_assignments_11g_standard__to_merge:
   zwingli-dome-1: 1-20
