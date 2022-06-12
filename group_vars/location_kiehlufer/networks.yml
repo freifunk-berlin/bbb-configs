@@ -46,7 +46,7 @@ networks:
     prefix: 10.31.151.116/28
     ipv6_subprefix: -5
     mesh_metric: 2048
-    mesh_ap: kiehlufer-3000
+    mesh_ap: kiehlufer-nf-huette
     mesh_radio: 11a_mesh
     mesh_iface: mesh
 
@@ -67,7 +67,7 @@ networks:
     ipv6_subprefix: 1
     assignments:
       kiehlufer-core: 1
-      kiehlufer-3000: 2
+      kiehlufer-nf-huette: 2
       kiehlufer-rhnk: 3
       kiehlufer-vaterhaus: 4
       kiehlufer-nf-wbp1: 5
@@ -91,8 +91,5 @@ location__channel_assignments_11a_standard__to_merge:
   kiehlufer-nf-wbp2: 40-20
   kiehlufer-nf-wbp3: 44-20
   kiehlufer-nf-wbp4: 48-20
-
-location__channel_assignments_11a_mesh__to_merge:
-  kiehlufer-3000: 100-20
 
 # Channel - Bandwidth - TX Power

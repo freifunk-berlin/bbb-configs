@@ -2,5 +2,4 @@
 
 location: kiehlufer
 role: ap
-model: "avm_fritzrepeater-3000"
-
+model: "ubnt_rocket-5ac-lite"
