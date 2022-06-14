@@ -6,6 +6,8 @@ ipv6_prefix: "2001:bf7:830:a500::/56"
 # --MGMT: 10.230.192.192/27
 # --MESH: 10.230.192.224/27 {as /32}
 # --DHCP: 10.31.155.0/26 
+#
+# The Edgeswitch 10.230.192.194 has a ping-watchdog on the core router on Port 1 - POE Ping Watchdog 10 min 8.8.8.8
 
 networks:
   - vid: 10
