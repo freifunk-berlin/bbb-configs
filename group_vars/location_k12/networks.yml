@@ -122,12 +122,16 @@ networks:
       k12-cpe: 4
       #10.31.158.197/32
       k12-ap2: 5
+      #10.31.158.198/32
+      k12-ap3: 6
+
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
   k12-core: 36-40
   k12-ap1: 36-40
   k12-ap2: 36-40
+  k12-ap3: 48-40
   k12-cpe: 44-40
 
 # AP-id, wifi-channel, bandwidth, txpower
@@ -135,3 +139,4 @@ location__channel_assignments_11g_standard__to_merge:
   k12-core: 13-20
   k12-ap1: 13-20
   k12-ap2: 13-20
+  k12-ap3: 1-20
