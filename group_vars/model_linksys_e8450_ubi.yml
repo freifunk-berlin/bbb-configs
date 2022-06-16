@@ -1,5 +1,5 @@
 ---
-openwrt_version: 22.03.0-rc1
+openwrt_version: 22.03-SNAPSHOT
 feed_version: snapshot
 target: mediatek/mt7622
 
