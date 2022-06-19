@@ -25,3 +25,9 @@ If we need someone to reproduce our setup, the person can just generate the imag
 ## Developers and Maintainers
 
 If you want to use bbb-configs for locations that are not included in bbb-configs yet or to work on a fork of the code yourself then see the [Developers Guide](DEVELOPER.md).
+
+## Support Information
+
+* [Support Chat](https://matrix.to/#/#berlin.freifunk.net:matrix.org): Channel `#berlin.freifunk.net` on **matrix.org**.
+* [E-Mail List](https://lists.berlin.freifunk.net/cgi-bin/mailman/listinfo/berlin): For usage, support, discussions and hardware advise.
+
