@@ -1,33 +1,48 @@
 # FAQ
 
-## How to get started
+## How to get started?
+
+Make sure to install ansible and clone the bbb-configs repository. Then install the requirements using:
 
 ```sh
 pip3 install -r requirements.txt
 ```
 
-## How to spin up a config run (generate only, output path is /tmp/configs/..:
+## How to spin up a config run?
 
 ```sh
 ansible-playbook play.yml
 ```
 
-## How to spin up a config run and generate images
+This will generate config files for all devices for inspection. The output path is `/tmp/ansible-openwrt/configs`.
+
+## How to spin up a config run and image generation?
 
 ```sh
 ansible-playbook play.yml --tags image
 ```
 
-## How to limit image creation to a single location
+The output path for the images is `/tmp/ansible-openwrt/images`.
+
+## How to limit a config and image generation?
 
 ```sh
-ansible-playbook play.yml --limit example-core
-ansible-playbook play.yml --limit example-*
+# config run
+ansible-playbook play.yml --limit example-core # single-device
+ansible-playbook play.yml --limit example-* # location
+ansible-playbook play.yml --limit example-core,example-ap1 # list of specific devices
+
+# config run and image generation
+ansible-playbook play.yml --limit example-core --tags image # single-device
+ansible-playbook play.yml --limit example-* --tags image # location
+ansible-playbook play.yml --limit example-core,example-ap1 --tags image # list of specific devices
 ```
 
 The second command doesn't work in `zsh`. If you encounter that problem consider using `bash` instead, please.
 
-## How to spin up a config run, generate image and flash (Requires IPv6 Connectivity from inside freifunk network, not yet fully working)
+## How to spin up a config run, image generation and flash from inside freifunk network?
+
+NOTE: This requires IPv6 Connectivity from inside the freifunk network and is not yet fully working.
 
 ```sh
 ansible-playbook play.yml --tags flash
@@ -42,15 +57,16 @@ ansible-playbook play.yml --tags flash
 5. Secure the router by setting a root password using SSH or the web interface.
 6. Done!
 
+Have a look at the [Developers Guide](DEVELOPER.md) for more information.
+
 ## How can I mass deploy in the Freifunk Network
 
 ```sh
-
 # Find groups matching our targets to ease selection
 ansible-inventory --graph
 
-# Generate images for all devices
-ansible-playbook play.yml --tags image --limit model_ubnt_nanostation_m5_xm,model_ubnt_nanostation_m5_xw,model_ubnt_nanostation_m2_xm,model_ubnt_nanostation_loco_m2_xm,model_ubnt_nanostation_ac_loco,model_mikrotik_sxtsq_5_ac,model_mikrotik_sxtsq_2_lite
+# Generate images for a list of specific devices
+ansible-playbook play.yml --tags image --limit example-core,example-ap1
 
 # Change into images directory
 cd /tmp/ansible-openwrt/images
