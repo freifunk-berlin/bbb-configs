@@ -1,0 +1,12 @@
+---
+
+snmp_devices:
+  - hostname: f17-emma
+    address: 10.31.167.195
+    snmp_profile: airos_6
+  - hostname: f17-zwingli
+    address: 10.31.167.196
+    snmp_profile: airos_8
+  - hostname: f17-rhnk
+    address: 10.31.167.197
+    snmp_profile: airos_8

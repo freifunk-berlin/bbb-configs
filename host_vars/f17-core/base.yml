@@ -1,0 +1,7 @@
+---
+
+location: f17
+role: corerouter
+model: "tplink_tl-wdr4300-v1"
+
+wireless_profile: disable
