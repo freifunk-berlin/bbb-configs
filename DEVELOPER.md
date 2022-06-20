@@ -1,27 +1,21 @@
-## VLAN-Numbering-Convention
+# Developer Guide
 
-```
-10+ for airmax & co mesh links
-20+ for 11s
-40+ DHCP Clients
-42  MGMT
-```
+This guide explains the directory structure of the project and variables within the config files.
 
-## Variables and structures explained
-
-### group_vars/
+## group_vars/
 
 `group_vars/` holds tree types of resources: the `all/`-directory, location directories and model files.
 
-#### all/
+### all/
 
 This directory holds base configuration options that will be inserted into every router configuration. Each device will get this options, like timezones, DNS-servers, the packagefeed-URL and so on.
 
 There are also files for the standard ssh keys and definitions for the wifi profiles.
 
-#### model_files
+### model_files
 
 These files define how bbb-configs needs to handle different hardware models. This example shows a WDR4900:
+
 ```yml
 ---
 target: "ipq40xx/generic"       # target of router model
@@ -45,11 +39,13 @@ wireless_devices:                       # definitions for the devices radios
 
 For a model using DSA instead of swconfig, you may refer to [`model_ubnt_edgerouter_x_sfp.yml`](https://github.com/Freifunk-Spalter/bbb-configs/blob/master/group_vars/model_ubnt_edgerouter_x_sfp.yml)
 
-#### location-directories
+Note: If you want to create a new model_file you can have a look at `/etc/config/wireless` on a standard OpenWRT install to obtain the path information for the wireless_devices.
+
+### location-directories
 
 When defining a new location, you need to create a directory named like `location_$NAME/`. In that directory goes the location specific configuration. It consists of several files. You can override the variables defined from the `all` directory by creating a file named like that one in `all/` and redefine any variable.
 
-##### general.yml
+#### general.yml
 
 This file might be fairly self-explanatory. Please mind that a contact is mandatory. _If you don't like to give your email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net)_.
 
@@ -62,7 +58,7 @@ contact_email: 'quaccus@example.com'
 contact_email: 'https://config.berlin.freifunk.net/contact/446x/ImZmZnctZV0LTA0Ig.FFbQ8w._ZCA4hFY3zR8MdDVNrv3okqwPU'
 ```
 
-##### owm.yml
+#### owm.yml
 
 This file defines some values to get the location to the [OpenWifiMap](https://openwifimap.net).
 
@@ -73,7 +69,7 @@ latitude: 52.484948320
 longitude: 13.443380903
 ```
 
-##### networks.yml
+#### networks.yml
 
 This file is the most important one of your setup. It defines IP-Addresses, WIFI-Properties, Mesh and so on. Lets have a (shortened) example of a `networks.yml` from the magda-location:
 
@@ -125,18 +121,85 @@ location__channel_assignments_11a_standard__to_merge:
   magda-ap3: 44-20-15
 ```
 
-### host_vars/
+The VLAN ID (vid) usually follow this numbering convention.
 
-The `host-vars`-dir contains one directory for every OpenWrt-device. The directory-name is the routers hostname. Currently, in that directory theres only one file, called `base.yml`. One Example for that file:
+```
+10+ for airmax & co mesh links
+20+ for 11s
+40+ DHCP Clients
+42  MGMT
+```
+
+#### ssh-key.yml
+
+By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys a ssh-key.yml file can be created with additional keys in the following format:
+
+```yml
+---
+location__ssh_keys__to_merge:
+  - comment: John
+    key: ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Keyname
+```
+
+#### snmp.yml
+
+The file holds information about SNMP enabled devices and the corresponding SNMP profiles. The core router will collect and report statistics for the devices.
+
+```yml
+---
+snmp_devices:
+  - hostname: segen-f2a   # hostname
+    address: 10.31.6.11   # static ip of the device
+    snmp_profile: airos_8 # SNMP profile
+
+  - hostname: segen-mabb
+    address: 10.31.6.12
+    snmp_profile: airos_8
+
+  - hostname: segen-sw
+    address: 10.31.6.13
+    snmp_profile: airos_6
+```
+
+#### airos_dfs_reset.yml
+
+The file holds information about airos devices and how to access them. The information is used to initiate a DFS reset within a specific time window after a DFS event was detected.
 
 ```yml
 ---
 
-location: sama                  # locations short name, like def'd in location-directories
-role: corerouter                # devices role. Could either be 'corerouter', 'ap' or 'uplink_gateway'
-model: "avm_fritzbox-7530"      # model name like written in the corresponding file name in group_vars/
+airos_dfs_reset:
+  - name: "segen-f2a"          # name of the device
+    target: "10.31.6.11"       # static ip of the device
+    username: "ubnt"           # root username
+    password: "file:/root/pwd" # location to a password file within the core-router
+    daytime_limit: "2-7"       # time window for DFS reset
 
-wireless_profile: freifunk_default      # activates wifi with freifunk-default-settings on this device by overriding default wireless profile for corerouters, which is the profile disable
+  - name: "segen-mabb"
+    target: "10.31.6.12"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+```
+
+## host_vars/
+
+The `host-vars`-dir contains a host directory for every OpenWrt-device. 
+
+### host-directories
+
+When defining a new device within a location, you need to create a directory named like `example-core/`. The directory-name is the routers hostname. In that directory goes the device specific configuration. It consists of only one file, called `base.yml`.
+
+#### base.yml
+
+```yml
+---
+
+location: sama                     # locations short name, like defined in location-directories
+role: corerouter                   # devices role. Could either be 'corerouter', 'ap' or 'uplink_gateway'
+model: "avm_fritzbox-7530"         # model name like written in the corresponding file name in group_vars/
+
+wireless_profile: freifunk_default # activates wifi with freifunk-default-settings on this device by overriding default wireless profile for corerouters, which is the profile disable
 ```
 
 Some devices use POE-Ports. To enable them, just give the parameter `poe_on` and the port. For example:
@@ -152,10 +215,16 @@ model: "ubnt_nanostation-m5_xm"
 poe_on: [0]
 ```
 
-### inventory/
+Multiple ports can be specified as a list:
+
+```yml
+poe_on: [0,1,2,3]
+```
+
+## inventory/
 
 This is an internal diretory on which you don't need to care about now. If you like to learn mor on it, you might read the `README.md` file inside of it.
 
-### roles/
+## roles/
 
 This directory contains magical ansible-stuff. Unless you want to develop for this system you can safely ignore this.
