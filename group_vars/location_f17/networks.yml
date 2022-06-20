@@ -30,7 +30,7 @@ networks:
 
   - vid: 8
     role: mesh
-    name: mesh_neukoelln
+    name: mesh_rhnk
     prefix: 10.31.167.211/32
     ipv6_subprefix: -3
     ptp: true
@@ -52,7 +52,7 @@ networks:
       f17-street-north: 8
       f17-street-south: 9
 
-  - vid: 40
+  - vid: 3     #  vlan 3 for legacy reasons)
     role: dhcp
     prefix: 10.36.189.0/24
     ipv6_subprefix: 0
