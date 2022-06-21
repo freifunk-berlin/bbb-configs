@@ -1,0 +1,15 @@
+---
+exclude_paths:
+  - .github/
+  - .git
+
+warn_list:
+  - yaml
+  - literal-compare
+  - no-changed-when
+  - command-instead-of-shell
+  - command-instead-of-module
+
+skip_list:
+  - fqcn-builtins
+  - experimental

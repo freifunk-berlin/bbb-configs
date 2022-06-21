@@ -48,7 +48,7 @@ NOTE: This requires IPv6 Connectivity from inside the freifunk network and is no
 ansible-playbook play.yml --tags flash
 ```
 
-## Whats required to bringup a location?
+## What is required to bringup a location?
 
 1. Create a location folder at `/group_vars/` and fill in at least `general.yml`, `networks.yml` and `owm.yml`.
 2. Create a folder for every OpenWrt device at the location under `/host_vars/`. Paste the `base.yml` in there.
@@ -58,6 +58,14 @@ ansible-playbook play.yml --tags flash
 6. Done!
 
 Have a look at the [Developers Guide](DEVELOPER.md) for more information.
+
+## What is required to send in a pull request?
+
+Make sure to test your addition with ansible-lint before sending a pull request by using:
+
+```sh
+ansible-lint
+```
 
 ## How can I mass deploy in the Freifunk Network
 
