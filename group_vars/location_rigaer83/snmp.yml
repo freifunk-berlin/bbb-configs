@@ -4,6 +4,3 @@ snmp_devices:
   - hostname: rigaer83-sama
     address: 10.31.81.83
     snmp_profile: airos_8
-  - hostname: rigaer83-zwingli
-    address: 10.31.81.84
-    snmp_profile: airos_8

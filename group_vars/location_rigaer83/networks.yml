@@ -9,13 +9,6 @@ networks:
     ipv6_subprefix: -1
     ptp: true
 
-  - vid: 11
-    role: mesh
-    name: mesh_rhnk
-    prefix: 10.31.54.227/32
-    ipv6_subprefix: -2
-    ptp: true
-
   - vid: 42
     role: mgmt
     prefix: 10.31.81.80/28
@@ -26,13 +19,6 @@ networks:
       rigaer83-core: 1
       rigaer83-poe: 2
       rigaer83-sama: 3
-      rigaer83-zwingli: 4
-
-      # riagaer83
-      rigaer83-front-5: 9
-      rigaer83-front-2: 8
-      rigaer83-back-5: 7
-      rigaer83-back-2: 6
 
   - vid: 40
     role: dhcp
@@ -42,13 +28,3 @@ networks:
     enforce_client_isolation: true
     assignments:
       rigaer83-core: 1
-
-location__channel_assignments_11a_standard__to_merge:
-  rigaer83-core: 52-80
-  rigaer83-front-5: 36-20
-  rigaer83-back-5:  40-20
-
-location__channel_assignments_11g_standard__to_merge:
-  rigaer83-core: 6-20
-  rigaer83-front-2: 1-20
-  rigaer83-back-2: 13-20
