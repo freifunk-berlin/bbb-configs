@@ -70,9 +70,9 @@ networks:
     prefix: 10.230.2.18/32
     ipv6_subprefix: -1
     mesh_metric: 1024
-    #mesh_metric_lqm: ['default 0.3']
+    # mesh_metric_lqm: ['default 0.3']
 
-  - vid: 14 
+  - vid: 14
     role: mesh
     name: mesh_rhnk
     prefix: 10.230.2.16/32
@@ -89,8 +89,6 @@ networks:
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.3'] # prefer rhnk link
 
-
-
   - vid: 42
     role: mgmt
     prefix: 10.230.2.0/28
@@ -104,5 +102,4 @@ networks:
       philmel-ak36: 4
       philmel-nord-5ghz: 5
       philmel-nord-5ghz-old: 14 # TODO roedel: migrate Link to new link
-      #      philmel-nord-m2: 2 #
-
+      # philmel-nord-m2: 2

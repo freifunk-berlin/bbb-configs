@@ -23,14 +23,14 @@ mesh_links:
   - name: mesh_hds
     ifname: lan0.10
     ipv4: 10.31.83.56/32
-    ipv6: 2001:bf7:760:2200::1/128 
+    ipv6: 2001:bf7:760:2200::1/128
     metric: 128
     ptp: true
 
   - name: mesh_sama
     ifname: lan0.11
     ipv4: 10.31.83.57/32
-    ipv6: 2001:bf7:760:2200::2/128 
+    ipv6: 2001:bf7:760:2200::2/128
     metric: 128
     ptp: true
 
@@ -55,6 +55,6 @@ wireguard_base_prefix_ipv4: 10.31.141.0/24
 
 gre_base_prefix: 2001:bf7:760:2201::/64
 
- 
+
 # gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
 gre_tunnel_alias: saarbrue

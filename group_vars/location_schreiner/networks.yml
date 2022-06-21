@@ -49,7 +49,7 @@ networks:
 #    name: mesh_whatever
 #    prefix: 10.31.97.69/32
 #    ipv6_subprefix: -4
-#- vid: 14
+#  - vid: 14
 #    role: mesh
 #    name: mesh_whateverbla
 #    prefix: 10.31.97.70/32

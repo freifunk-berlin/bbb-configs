@@ -5,7 +5,7 @@ ipv6_prefix: "2001:bf7:830:a500::/56"
 # Router: 10.230.192.192/26
 # --MGMT: 10.230.192.192/27
 # --MESH: 10.230.192.224/27 {as /32}
-# --DHCP: 10.31.155.0/26 
+# --DHCP: 10.31.155.0/26
 #
 # The Edgeswitch 10.230.192.194 has a ping-watchdog on the core router on Port 1 - POE Ping Watchdog 10 min 8.8.8.8
 
@@ -24,7 +24,7 @@ networks:
     prefix: 10.230.192.225/32
     ipv6_subprefix: -2
     mesh_metric_lqm:
-        - default 0.2
+      - default 0.2
 
   - vid: 12
     role: mesh
@@ -35,23 +35,23 @@ networks:
 
   - vid: 13
     role: mesh
-    name: mesh_o    
+    name: mesh_o
     prefix: 10.230.192.227/32
     ipv6_subprefix: -4
 
   - vid: 14
     role: mesh
-    name: mesh_adlershof    
+    name: mesh_adlershof
     prefix: 10.230.192.228/32
     ipv6_subprefix: -5
 
   - vid: 15
     role: mesh
-    name: mesh_cg47    
+    name: mesh_cg47
     prefix: 10.230.192.229/32
     ipv6_subprefix: -6
     mesh_metric_lqm:
-        - default 0.2
+      - default 0.2
 
   - vid: 20
     role: mesh
@@ -71,7 +71,7 @@ networks:
     ipv6_subprefix: 0
     assignments:
       vaterhaus-core: 1
-  
+
   - vid: 42
     role: mgmt
     prefix: 10.230.192.192/27

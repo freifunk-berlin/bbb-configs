@@ -7,7 +7,7 @@ model__packages__to_merge:
 
 switch_ports: 6
 switch_int_port: 0
-switch_ignore_ports: [1,2,3]
+switch_ignore_ports: [1, 2, 3]
 # WAN port is hardwired to VLAN2. ignore
 
 int_port: eth0

@@ -1,9 +1,8 @@
 ---
 
-
 snmp_devices:
   - hostname: simeon-mgh
-    address: 10.31.104.131 
+    address: 10.31.104.131
     snmp_profile: airos_8
 
   - hostname: simeon-nord

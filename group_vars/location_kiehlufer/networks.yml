@@ -29,7 +29,7 @@ networks:
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.2']
     ptp: true
-    
+
   - vid: 20
     role: mesh
     name: mesh_kiehl

@@ -37,8 +37,8 @@ networks:
 location__channel_assignments_11a_standard__to_merge:
   fesev-ap1: 40-40
   fesev-ap2: 48-40
-  fesev-ap4: 40-40 
-#reusing channel 40 because of DFS-bug. AP1 and 4 have a 70m distance (and one building) in between so it should be fine 
+  fesev-ap4: 40-40
+# reusing channel 40 because of DFS-bug. AP1 and 4 have a 70m distance (and one building) in between so it should be fine
 
 location__channel_assignments_11g_standard__to_merge:
   fesev-ap1: 1-20
