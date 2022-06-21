@@ -103,10 +103,6 @@ networks:
       rhnk-nno: 26
 
 
-
-
-
-
   # TODO: DISMANTLE!!!
   - vid: 12 # NO-PEERS
     role: mesh
@@ -127,7 +123,7 @@ networks:
     prefix: 10.230.3.17/32
     ipv6_subprefix: -17
     mesh_metric_lqm:
-    - 10.31.7.149 0.2 # make sure emma is uplink and not f2a
+      - 10.31.7.149 0.2 # make sure emma is uplink and not f2a
 
   - vid: 20 # NO-PEERS
     role: mesh

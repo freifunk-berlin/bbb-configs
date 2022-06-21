@@ -59,9 +59,9 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      #10.31.159.193/32
+      # 10.31.159.193/32
       hirschhof-core: 1
-      #10.31.159.194/32
+      # 10.31.159.194/32
       hirschhof-k12: 2
 
 # AP-id, wifi-channel, bandwidth, txpower

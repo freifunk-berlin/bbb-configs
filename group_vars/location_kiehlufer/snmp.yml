@@ -12,4 +12,3 @@ snmp_devices:
   - hostname: kiehlufer-vaterhaus
     address: 10.31.82.212
     snmp_profile: airos_8
-

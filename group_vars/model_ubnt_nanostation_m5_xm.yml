@@ -17,4 +17,3 @@ poe_ports:
   - name: PoE Passthrough
     gpio_pin: 8
     value: 0
-

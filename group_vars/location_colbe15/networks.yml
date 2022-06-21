@@ -35,7 +35,7 @@ networks:
 
   - vid: 42
     role: mgmt
-    prefix: 10.31.84.192/28 
+    prefix: 10.31.84.192/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1

@@ -14,7 +14,6 @@ ipv6_prefix: '2001:bf7:830:8d00::/56'
 # 10.31.99.0/24 / can be proably dismantled
 
 
-
 networks:
   - vid: 10
     role: mesh

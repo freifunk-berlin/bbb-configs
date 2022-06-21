@@ -40,7 +40,6 @@ wireguard_wg_tmp_key: false
 gre_metric: 64
 
 
-
 ## FIREWALL SECTION
 
 
@@ -63,8 +62,6 @@ untracked_flows_tcp_ack_burst: 2500
 # Rate Limit for packets with RST flag set
 untracked_flows_tcp_rst_rate: 1000
 untracked_flows_tcp_rst_burst: 500
-
-
 
 
 # Inbound is filtered by default

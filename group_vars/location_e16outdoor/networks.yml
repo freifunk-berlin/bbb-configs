@@ -63,9 +63,9 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      #10.31.142.49/32
+      # 10.31.142.49/32
       e16outdoor-core: 1
-      #10.31.142.50/32
+      # 10.31.142.50/32
       e16outdoor-segen: 2
 
 # AP-id, wifi-channel, bandwidth, txpower

@@ -66,7 +66,7 @@ networks:
     prefix: 10.31.11.36/32
     ipv6_subprefix: -4
 
-    # uplink via Airfiber 
+    # uplink via Airfiber
   - vid: 41
     role: mesh
     name: mesh_ssw
@@ -80,7 +80,7 @@ networks:
     name: mesh_wsw
     prefix: 10.31.11.38/32
     ipv6_subprefix: -6
-  
+
   - vid: 51
     role: mesh
     name: mesh_wnw

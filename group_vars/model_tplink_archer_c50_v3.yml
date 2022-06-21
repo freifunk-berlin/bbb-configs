@@ -32,4 +32,3 @@ leds:
   - name: wlan5g
     sysfs: green:wlan5g
     trigger: phy1tpt
-

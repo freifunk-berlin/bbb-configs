@@ -50,4 +50,3 @@ networks:
       hds-core: 1
       hds-sama: 2
     ptp: true
-

@@ -4,4 +4,4 @@ location: flughafen
 role: corerouter
 model: "ubnt_edgerouter-x-sfp"
 
-poe_on: [1,2,3,4]
+poe_on: [1, 2, 3, 4]
