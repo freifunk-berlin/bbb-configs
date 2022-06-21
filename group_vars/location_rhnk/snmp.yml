@@ -38,9 +38,9 @@ snmp_devices:
     snmp_profile: airos_8
 
   # down?
-  #- hostname: rhnk-wnw
-  #  address: 10.31.153.21
-  #  snmp_profile: airos_6
+  # - hostname: rhnk-wnw
+  #   address: 10.31.153.21
+  #   snmp_profile: airos_6
 
   - hostname: rhnk-wsw
     address: 10.31.153.22

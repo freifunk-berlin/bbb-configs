@@ -1,7 +1,7 @@
 ---
 
 # L105 got following prefixes:
-# Router: 10.31.127.128/25 2001:bf7:750:3f00::/56 
+# Router: 10.31.127.128/25 2001:bf7:750:3f00::/56
 # --MGMT: 10.31.127.128/27
 # --MESH: 10.31.127.160/27 {as /32}
 # Not Used: 10.31.127.192/26
@@ -31,7 +31,7 @@ mesh_links:
   - name: mesh_rhxb
     ifname: eth1.10
     ipv4: 10.31.127.160/32
-    ipv6: 2001:bf7:750:3f01::1/128 
+    ipv6: 2001:bf7:750:3f01::1/128
     metric: 128
     ptp: true
 
@@ -55,6 +55,6 @@ wireguard_base_prefix_ipv6: 2001:bf7:750:3f02::/64
 wireguard_base_prefix_ipv4: 10.31.143.0/24
 
 gre_base_prefix: 2001:bf7:750:3f03::/64
- 
+
 # gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
 gre_tunnel_alias: l105

@@ -1,7 +1,7 @@
 ---
 # default OpenWRT version to build from unless overridden
 openwrt_version: 21.02-SNAPSHOT
-imagebuilder: https://downloads.openwrt.org/{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}/targets/{{ target }}/openwrt-imagebuilder-{{ openwrt_version ~ '-' if openwrt_version != 'snapshot' else '' }}{{ target|replace('/','-') }}.Linux-x86_64.tar.xz
+imagebuilder: https://downloads.openwrt.org/{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}/targets/{{ target }}/openwrt-imagebuilder-{{ openwrt_version ~ '-' if openwrt_version != 'snapshot' else '' }}{{ target | replace('/','-') }}.Linux-x86_64.tar.xz
 feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/__FEED_VERSION__/packages/__INSTR_SET__/falter"
 
 

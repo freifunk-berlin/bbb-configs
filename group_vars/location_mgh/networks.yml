@@ -29,8 +29,8 @@ networks:
     assignments:
       mgh-core: 1
 
-#location__channel_assignments_11a_standard__to_merge:
+# location__channel_assignments_11a_standard__to_merge:
 #  mgh-core: 36-20-15
 
-#location__channel_assignments_11g_standard__to_merge:
+# location__channel_assignments_11g_standard__to_merge:
 #  mgh-core: 1-20

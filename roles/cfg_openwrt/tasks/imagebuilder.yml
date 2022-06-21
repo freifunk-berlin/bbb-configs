@@ -51,7 +51,7 @@
 
 - name: Extract Instruction set if needed
   set_fact:
-    instr_set: "{{ instr_set_result.stdout_lines|first }}"
+    instr_set: "{{ instr_set_result.stdout_lines | first }}"
   when: 'instr_set is not defined and feed_version is defined'
 
 - name: Insert falter feed
@@ -79,7 +79,7 @@
     argv:
       - "make"
       - "image"
-      - "PROFILE={{ override_target|default(model) }}"
+      - "PROFILE={{ override_target | default(model) }}"
       - "PACKAGES={{ packages | join(' ') }}"
       - "DISABLED_SERVICES={{ disabled_services | join(' ') }}"
       - "FILES={{ config_path }}"
@@ -88,7 +88,7 @@
 - name: Clear imagedir
   file:
     state: absent
-    path: "{{ image_dir}}"
+    path: "{{ image_dir }}"
 
 - name: (Re)-Create image dir
   file:

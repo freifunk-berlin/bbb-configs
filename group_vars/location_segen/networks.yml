@@ -29,7 +29,7 @@ networks:
       segen-k12: 15
       segen-no: 16
       segen-wsee: 17
-      
+
       # airos
       segen-n-5ghz: 20
       segen-o-5ghz: 21

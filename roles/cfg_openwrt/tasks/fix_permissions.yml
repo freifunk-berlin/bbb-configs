@@ -21,4 +21,3 @@
     mode: "755"
   ignore_errors: true
   when: role != "uplink_gateway"
-

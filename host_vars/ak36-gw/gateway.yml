@@ -80,7 +80,7 @@ wireguard_base_prefix_ipv6: 2001:bf7:750:4002::/64
 wireguard_base_prefix_ipv4: 10.31.145.0/24
 gre_base_prefix: 2001:bf7:750:4003::/64
 
- 
+
 # gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
 gre_tunnel_alias: ak36
 
