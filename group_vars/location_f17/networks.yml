@@ -1,39 +1,44 @@
 ---
 
-# 10.31.167.192/27
-#	- 10.31.167.192/28 - 10.31.167.207/28  (management network)
-#	- 10.31.167.208/28 - 10.31.167.223/28  (for announcing)
-# 2001:bf7:830:b000::/56
-#	- 2001:bf7:830:b000::/57               (management network)
-#	- 2001:bf7:830:b080::/57               (for announcing)
-
-# DHCP:
-# 10.36.189.0/24
-# 2001:bf7:830:6600::/56
+# alloc: 10.31.167.192/27
+#	 mgmt: 10.31.167.192/28
+#  mesh: 10.31.167.208/28
+#  dhcp: 10.36.189.0/24
 
 ipv6_prefix: "2001:bf7:830:b000::/56"
 
 networks:
-  - vid: 6
+  - vid: 10
     role: mesh
     name: mesh_emma
-    prefix: 10.31.167.209/32
+    prefix: 10.31.167.208/32
     ipv6_subprefix: -1
     ptp: true
 
-  - vid: 7
+  - vid: 11
     role: mesh
     name: mesh_zwingli
-    prefix: 10.31.167.210/32
+    prefix: 10.31.167.209/32
     ipv6_subprefix: -2
     ptp: true
 
-  - vid: 8
+  - vid: 12
     role: mesh
     name: mesh_rhnk
-    prefix: 10.31.167.211/32
+    prefix: 10.31.167.210/32
     ipv6_subprefix: -3
     ptp: true
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.36.189.0/24
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      f17-core: 1
+      f17-gw: 2
+      f17-bunker: 3
 
   - vid: 42
     role: mgmt
@@ -46,17 +51,8 @@ networks:
       f17-switch: 2
       f17-emma: 3
       f17-zwingli: 4
-      f17-neukoelln: 5
-      f17-hofnorth: 6
-      f17-hofsouth: 7
+      f17-rhnk: 5
+      f17-hof-north: 6
+      f17-hof-south: 7
       f17-street-north: 8
       f17-street-south: 9
-
-  - vid: 3     #  vlan 3 for legacy reasons)
-    role: dhcp
-    prefix: 10.36.189.0/24
-    ipv6_subprefix: 0
-    inbound_filtering: true
-    enforce_client_isolation: true
-    assignments:
-      f17-core: 1
