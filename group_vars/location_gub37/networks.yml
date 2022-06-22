@@ -58,7 +58,7 @@ networks:
     mesh_iface: mesh
     mesh_metric_lqm: ['default 0.3']
 
-# 10.31.157.32/27
+  # 10.31.157.32/27
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -68,7 +68,7 @@ networks:
     assignments:
       gub37-core: 1
 
-# 10.31.157.64/26
+  # 10.31.157.64/26
   - vid: 42
     role: mgmt
     prefix: 10.31.157.64/26

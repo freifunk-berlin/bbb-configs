@@ -61,7 +61,7 @@ wireless_profiles:
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
         radio: [11a_standard, 11g_standard, 11a_mesh]
-        mcast_rate: 12000 # inzwischen 16000?
+        mcast_rate: 12000                              # inzwischen 16000?
         mesh_fwding: 0
         ifname_hint: mesh
 
@@ -105,7 +105,7 @@ wireless_profiles:
       - radio: 11a_standard
         legacy_rates: false
         country: DE
-        beacon_int: 25 # fix frequent disconnects with iwlwifi sta
+        beacon_int: 25          # fix frequent disconnects with iwlwifi sta
 
       - radio: 11g_standard
         legacy_rates: false

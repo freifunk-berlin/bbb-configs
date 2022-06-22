@@ -6,7 +6,7 @@
 ipv6_prefix: '2001:bf7:830:ab00::/56'
 
 networks:
-# 10.31.161.8/29
+  # 10.31.161.8/29
   - vid: 10
     role: mesh
     name: mesh_sama
@@ -14,7 +14,7 @@ networks:
     ipv6_subprefix: -1
     ptp: true
 
-# 10.31.161.16/28
+  # 10.31.161.16/28
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -24,7 +24,7 @@ networks:
     assignments:
       sama27-core: 1
 
-# 10.31.161.0/29
+  # 10.31.161.0/29
   - vid: 42
     role: mgmt
     prefix: 10.31.161.0/29

@@ -12,7 +12,7 @@ ipv6_prefix: '2001:bf7:760:2500::/56'
 dhcp_no_ping: false
 
 networks:
-# DHCP with filtering and isolation
+  # DHCP with filtering and isolation
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -23,7 +23,7 @@ networks:
     assignments:
       e16-core: 1
 
-# DHCP without filtering and isolation
+  # DHCP without filtering and isolation
   - vid: 50
     role: dhcp
     name: e16host
@@ -33,7 +33,7 @@ networks:
     assignments:
       e16-core: 1
 
-# MESH - 5 GHz 802.11s
+  # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
     name: mesh_11s_5ghz
@@ -43,7 +43,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-# MESH - 2.4 GHz 802.11s
+  # MESH - 2.4 GHz 802.11s
   - vid: 21
     role: mesh
     name: mesh_11s_2ghz
@@ -56,14 +56,14 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-# MESH - LAN
+  # MESH - LAN
   - vid: 10
     role: mesh
     name: mesh_lan
     prefix: 10.31.137.50/32
     ipv6_subprefix: -3
 
-# MGMT
+  # MGMT
   - vid: 42
     role: mgmt
     prefix: 10.31.137.56/29

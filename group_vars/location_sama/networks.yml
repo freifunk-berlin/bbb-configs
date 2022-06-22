@@ -12,12 +12,12 @@ networks:
       sama-core: 1
       sama-poe-1: 2
       sama-poe-2: 3
-# 6-15 (Local APs)
+      # 6-15 (Local APs)
       sama-nord-nf-5ghz: 10
       sama-ost-nf-5ghz: 11
       sama-sued-nf-5ghz: 12
       sama-west-nf-5ghz: 13
-# 16-31 (BBB)
+      # 16-31 (BBB)
       sama-nord-5ghz: 20
       sama-ost-5ghz: 21
       sama-sued-5ghz: 22
@@ -35,7 +35,7 @@ networks:
       sama-core: 1
 
 
-# 10.31.79.176/28 Mesh Prefix (16)
+  # 10.31.79.176/28 Mesh Prefix (16)
   - vid: 10
     role: mesh
     name: mesh_nord

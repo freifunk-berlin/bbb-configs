@@ -37,7 +37,7 @@ networks:
     ptp: true
 
   - vid: 13
-    role: mesh # NO-PEERS
+    role: mesh                       # NO-PEERS
     name: mesh_emma
     prefix: 10.31.126.131/32
     ipv6_subprefix: -4
@@ -77,14 +77,14 @@ networks:
     ipv6_subprefix: -7
 
   - vid: 22
-    role: mesh # NO-PEERS
+    role: mesh                       # NO-PEERS
     name: mesh_sw_5ghz
     prefix: 10.31.126.137/32
     ipv6_subprefix: -8
 
   - vid: 23
     role: mesh
-    name: mesh_so_5ghz # NO-PEERS
+    name: mesh_so_5ghz               # NO-PEERS
     prefix: 10.31.126.138/32
     ipv6_subprefix: -9
 
@@ -105,7 +105,7 @@ networks:
 
   - vid: 42
     name: mgmt
-    role: dhcp # we wanna do dhcp for the access points
+    role: dhcp                       # we wanna do dhcp for the access points
     prefix: 10.31.126.0/25
     gateway: 1
     dns: 1

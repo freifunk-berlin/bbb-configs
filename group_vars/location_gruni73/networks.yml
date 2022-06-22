@@ -15,10 +15,10 @@ networks:
     assignments:
       gruni73-core: 1
       gruni73-switch: 2
-# 5ghz uplink
+      # 5ghz uplink
       gruni73-sama: 5
       gruni73-zwingli: 6
-# local nearfield aps 5ghz
+      # local nearfield aps 5ghz
       gruni73-nf-o-5ghz: 13
       gruni73-nf-s-5ghz: 14
       gruni73-nf-w-5ghz: 15
@@ -32,7 +32,7 @@ networks:
     assignments:
       gruni73-core: 1
 
-# 10.31.156.32/27 Mesh Prefix (32)
+  # 10.31.156.32/27 Mesh Prefix (32)
   # 11s mesh 5ghz
   - vid: 18
     role: mesh
@@ -44,7 +44,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
-      - default 0.4 # penalty on wild meshing
+      - default 0.4                    # penalty on wild meshing
   - vid: 19
     role: mesh
     name: mesh_11s_s5
@@ -55,7 +55,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
-      - default 0.4 # penalty on wild meshing
+      - default 0.4                    # penalty on wild meshing
   - vid: 20
     role: mesh
     name: mesh_11s_w5
@@ -66,9 +66,9 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
-      - default 0.4 # penalty on wild meshing
+      - default 0.4                    # penalty on wild meshing
 
 location__channel_assignments_11a_standard__to_merge:
-  gruni73-nf-o-5ghz: 136-20-14 # EIRP 30dB - Antenna 19dB + Cable loss 3dB = 14dB
-  gruni73-nf-s-5ghz: 36-20-7 # EIRP 23dB - Antenna 19dB + Cable loss 3dB = 7dB
-  gruni73-nf-w-5ghz: 140-20-14 # EIRP 30dB - Antenna 19dB + Cable loss 3dB = 14dB
+  gruni73-nf-o-5ghz: 136-20-14                          # EIRP 30dB - Antenna 19dB + Cable loss 3dB = 14dB
+  gruni73-nf-s-5ghz: 36-20-7                            # EIRP 23dB - Antenna 19dB + Cable loss 3dB = 7dB
+  gruni73-nf-w-5ghz: 140-20-14                          # EIRP 30dB - Antenna 19dB + Cable loss 3dB = 14dB

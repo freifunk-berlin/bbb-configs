@@ -63,7 +63,7 @@
 - name: Add falter feed key
   copy:
     src: "files/packagefeed_master.pub"
-    dest: "{{ imagebuild_dir }}/keys/61a078a38408e710" # matches fingerprint
+    dest: "{{ imagebuild_dir }}/keys/61a078a38408e710"  # matches fingerprint
   when: 'feed_version is defined'
 
 - name: Disable Signature verification if required

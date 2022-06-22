@@ -25,7 +25,7 @@ networks:
     ipv6_subprefix: 1
     assignments:
       rigaer78-core: 1
-      rigaer78-poe: 2 # reserved
+      rigaer78-poe: 2          # reserved
       rigaer78-sama: 3
       rigaer78-zwingli: 4
       # aps

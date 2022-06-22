@@ -14,7 +14,7 @@ snmp_devices:
     snmp_profile: airos_8
 
 
-# TODO BELOW
+  # TODO BELOW
   - hostname: philmel-ost
     address: 10.230.2.165
     snmp_profile: airos_6

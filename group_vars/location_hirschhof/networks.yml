@@ -8,7 +8,7 @@ ipv6_prefix: '2001:bf7:760:2c00::/56'
 # --MGMT:  10.31.159.192/26
 
 networks:
-# DHCP
+  # DHCP
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -18,7 +18,7 @@ networks:
     assignments:
       hirschhof-core: 1
 
-# MESH - 5 GHz 802.11s
+  # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
     name: mesh_5ghz
@@ -28,7 +28,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-# MESH - 2.4 GHz 802.11s
+  # MESH - 2.4 GHz 802.11s
   - vid: 21
     role: mesh
     name: mesh_2ghz
@@ -41,7 +41,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-# MESH - 2.4 GHz 802.11s - K12
+  # MESH - 2.4 GHz 802.11s - K12
   - vid: 22
     role: mesh
     name: mesh_k12
@@ -51,7 +51,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-# MGMT
+  # MGMT
   - vid: 42
     role: mgmt
     prefix: 10.31.159.192/26

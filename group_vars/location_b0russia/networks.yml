@@ -26,7 +26,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
-      - default 0.3 # use wireguard as uplink
+      - default 0.3           # use wireguard as uplink
 
   - vid: 42
     role: mgmt

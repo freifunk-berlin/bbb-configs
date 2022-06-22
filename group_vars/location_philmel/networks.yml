@@ -20,7 +20,7 @@ networks:
   - vid: 11
     role: mesh
     name: mesh_ost
-    prefix: 10.230.2.164/30 # Peers: Area51, delbrueck66; 10.230.52.245/30 ???
+    prefix: 10.230.2.164/30   # Peers: Area51, delbrueck66; 10.230.52.245/30 ???
     ipv6_subprefix: -2
     assignments:
       philmel-core: 2
@@ -29,7 +29,7 @@ networks:
   - vid: 12
     role: mesh
     name: mesh_sued
-    prefix: 10.230.2.168/30 # Peers: kranold18, GSBS2
+    prefix: 10.230.2.168/30   # Peers: kranold18, GSBS2
     ipv6_subprefix: -3
     assignments:
       philmel-core: 2
@@ -37,7 +37,7 @@ networks:
 
   - vid: 13
     role: mesh
-    name: mesh_west # Peers: emser97
+    name: mesh_west           # Peers: emser97
     prefix: 10.230.2.172/30
     ipv6_subprefix: -4
     assignments:
@@ -47,7 +47,7 @@ networks:
   - vid: 21
     role: mesh
     name: vaterhaus
-    prefix: 10.230.2.188/30 # NO PEERS
+    prefix: 10.230.2.188/30   # NO PEERS
     ipv6_subprefix: -5
     assignments:
       philmel-core: 2
@@ -56,7 +56,7 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_autobahn
-    prefix: 10.230.2.184/30 # NO PEERS
+    prefix: 10.230.2.184/30   # NO PEERS
     ipv6_subprefix: -7
     assignments:
       philmel-core: 2
@@ -87,7 +87,7 @@ networks:
     ipv6_subprefix: -6
     ptp: true
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.3'] # prefer rhnk link
+    mesh_metric_lqm: ['default 0.3']  # prefer rhnk link
 
   - vid: 42
     role: mgmt
@@ -101,5 +101,5 @@ networks:
       philmel-rhnk: 3
       philmel-ak36: 4
       philmel-nord-5ghz: 5
-      philmel-nord-5ghz-old: 14 # TODO roedel: migrate Link to new link
+      philmel-nord-5ghz-old: 14  # TODO roedel: migrate Link to new link
       # philmel-nord-m2: 2

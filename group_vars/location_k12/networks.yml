@@ -8,7 +8,7 @@ ipv6_prefix: '2001:bf7:760:2a00::/56'
 # --MGMT:  10.31.158.192/26
 
 networks:
-# DHCP
+  # DHCP
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -18,7 +18,7 @@ networks:
     assignments:
       k12-core: 1
 
-# MESH - 5 GHz 802.11s
+  # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
     name: mesh_5ghz
@@ -28,7 +28,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-# MESH - 2.4 GHz 802.11s
+  # MESH - 2.4 GHz 802.11s
   - vid: 21
     role: mesh
     name: mesh_2ghz
@@ -41,7 +41,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-# MESH - 5 GHz 802.11s - ap1
+  # MESH - 5 GHz 802.11s - ap1
   - vid: 22
     role: mesh
     name: mesh_ap1_5
@@ -51,7 +51,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-# MESH - 2.4 GHz 802.11s - ap1
+  # MESH - 2.4 GHz 802.11s - ap1
   - vid: 23
     role: mesh
     name: mesh_ap1_2
@@ -64,7 +64,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-# MESH - 5 GHz 802.11s - cpe
+  # MESH - 5 GHz 802.11s - cpe
   - vid: 24
     role: mesh
     name: mesh_cpe
@@ -74,14 +74,14 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-# MESH - segen
+  # MESH - segen
   - vid: 11
     role: mesh
     name: mesh_segen
     prefix: 10.31.158.133/32
     ipv6_subprefix: -6
 
-# MESH - 5 GHz 802.11s - ap2
+  # MESH - 5 GHz 802.11s - ap2
   - vid: 25
     role: mesh
     name: mesh_ap2_5
@@ -91,7 +91,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-# MESH - 2.4 GHz 802.11s - ap1
+  # MESH - 2.4 GHz 802.11s - ap1
   - vid: 26
     role: mesh
     name: mesh_ap2_2
@@ -104,7 +104,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-# MGMT
+  # MGMT
   - vid: 42
     role: mgmt
     prefix: 10.31.158.192/26
