@@ -1,0 +1,15 @@
+---
+# This extends the default yaml-lint conf by adjusting some options.
+
+extends: default
+
+rules:
+  comments:
+    level: error
+  comments-indentation:
+    level: error
+  document-start:
+    level: error
+  line-length:
+    max: 2048
+    level: warning

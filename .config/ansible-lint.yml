@@ -4,7 +4,6 @@ exclude_paths:
   - .git
 
 warn_list:
-  - yaml
   - literal-compare
   - no-changed-when
   - command-instead-of-shell
@@ -13,3 +12,4 @@ warn_list:
 skip_list:
   - fqcn-builtins
   - experimental
+  - yaml
