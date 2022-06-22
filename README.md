@@ -10,6 +10,12 @@ The provision of a router works by generating the necessary OpenWrt configs and 
 
 Using bbb-configs is quite simple. The TL;DR version for anyone not wanting to read the [FAQ](FAQ.md) is:
 
+    pip3 install -r requirements.txt
+    ./generate-images.sh    
+
+or
+
+    pip3 install -r requirements.txt
     ansible-playbook play.yml --limit location-* --tags image
 
 ## How it Works
