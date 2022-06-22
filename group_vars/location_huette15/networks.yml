@@ -33,7 +33,7 @@ networks:
       huette15-core: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  huette15-core: 44-40-8 # 8 dBm + 15 dBi gain = 23 dBm (with UMA-D antenna)
+  huette15-core: 44-40-8                               # 8 dBm + 15 dBi gain = 23 dBm (with UMA-D antenna)
 
 location__channel_assignments_11g_standard__to_merge:
-  huette15-core: 13-20-13 # 13 dBm + 10 dBi gain = 23 dBm (with UMA-D antenna)
+  huette15-core: 13-20-13                              # 13 dBm + 10 dBi gain = 23 dBm (with UMA-D antenna)

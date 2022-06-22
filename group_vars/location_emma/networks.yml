@@ -15,11 +15,11 @@ networks:
       emma-switch-so: 3
       emma-switch-sw: 4
       emma-switch-nw: 5
-#     emma-nno-2ghz: 10
+      # emma-nno-2ghz: 10
       emma-ono-2ghz: 11
       emma-oso-2ghz: 12
       emma-sso-2ghz: 13
-#     emma-ssw-2ghz: 14
+      # emma-ssw-2ghz: 14
       emma-wsw-2ghz: 15
       emma-wnw-2ghz: 16
       emma-nnw-2ghz: 17
@@ -66,7 +66,7 @@ networks:
     prefix: 10.31.11.36/32
     ipv6_subprefix: -4
 
-    # uplink via Airfiber
+  # uplink via Airfiber
   - vid: 41
     role: mesh
     name: mesh_ssw

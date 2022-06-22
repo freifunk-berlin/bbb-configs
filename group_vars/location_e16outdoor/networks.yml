@@ -8,7 +8,7 @@ ipv6_prefix: '2001:bf7:760:2700::/56'
 # --MGMT:  10.31.142.48/28
 
 networks:
-# DHCP
+  # DHCP
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -18,7 +18,7 @@ networks:
     assignments:
       e16outdoor-core: 1
 
-# MESH - 5 GHz 802.11s
+  # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
     name: mesh_11s_5ghz
@@ -28,7 +28,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-# MESH - 2.4 GHz 802.11s
+  # MESH - 2.4 GHz 802.11s
   - vid: 21
     role: mesh
     name: mesh_11s_2ghz
@@ -41,21 +41,21 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-# MESH - LAN
+  # MESH - LAN
   - vid: 10
     role: mesh
     name: mesh_lan
     prefix: 10.31.142.34/32
     ipv6_subprefix: -3
 
-# MESH - segen
+  # MESH - segen
   - vid: 11
     role: mesh
     name: mesh_segen
     prefix: 10.31.142.35/32
     ipv6_subprefix: -4
 
-# MGMT
+  # MGMT
   - vid: 42
     role: mgmt
     prefix: 10.31.142.48/28

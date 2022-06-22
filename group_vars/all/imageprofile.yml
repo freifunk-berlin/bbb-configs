@@ -20,7 +20,7 @@ all__packages__to_merge:
   - -wpad-basic
   - -wpad-basic-wolfssl
   - hostapd-wolfssl
-  - ip6tables # Its not pulled in by default anymore bc fw4
+  - ip6tables                  # Its not pulled in by default anymore bc fw4
   - nftables
   - kmod-nft-bridge
   - -ppp

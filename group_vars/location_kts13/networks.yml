@@ -52,4 +52,4 @@ networks:
     tunnel_mesh_prefix_ipv4: '10.31.166.192/28'
 
 location__channel_assignments_11a_standard__to_merge:
-  kts13-ap1: 36-40-7 # 7 dBm + 16 dBi gain = 23 dBm
+  kts13-ap1: 36-40-7                                   # 7 dBm + 16 dBi gain = 23 dBm

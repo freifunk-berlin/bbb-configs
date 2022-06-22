@@ -31,7 +31,7 @@ networks:
     ipv6_subprefix: -15
     ptp: true
     mesh_metric: 512
-    mesh_metric_lqm: ['default 0.7'] # prefer rhxb link
+    mesh_metric_lqm: ['default 0.7']  # prefer rhxb link
 
   - vid: 22
     role: mesh
@@ -69,7 +69,7 @@ networks:
 
   - vid: 42
     role: mgmt
-    prefix: 10.31.153.0/27 # 10.230.3.1/29 # 10.31.152.128/27
+    prefix: 10.31.153.0/27  # 10.230.3.1/29 # 10.31.152.128/27
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
@@ -77,7 +77,7 @@ networks:
       rhnk-core: 1
       rhnk-poe1: 2
       rhnk-poe2: 3
-      rhnk-tplink-poe: 4 # default ip: 192.168.0.1
+      rhnk-tplink-poe: 4    # default ip: 192.168.0.1
 
       # client access
       rhnk-platz: 9
@@ -95,7 +95,7 @@ networks:
 
       # 5 GHz Sector
       rhnk-nnw: 20
-      rhnk-wnw: 21 # down? old ip: 10.31.152.141
+      rhnk-wnw: 21  # down? old ip: 10.31.152.141
       rhnk-wsw: 22
       rhnk-ono: 23
       rhnk-oso: 24
@@ -104,46 +104,46 @@ networks:
 
 
   # TODO: DISMANTLE!!!
-  - vid: 12 # NO-PEERS
+  - vid: 12                 # NO-PEERS
     role: mesh
     name: mesh_zwingli
     prefix: 10.230.3.12/32
     ipv6_subprefix: -12
 
 
-  - vid: 16 # NO-PEERS
+  - vid: 16                 # NO-PEERS
     role: mesh
     name: mesh_koelln
     prefix: 10.230.3.16/32
     ipv6_subprefix: -16
 
-  - vid: 17 # NO-PEERS
+  - vid: 17                 # NO-PEERS
     role: mesh
     name: mesh_fhain
     prefix: 10.230.3.17/32
     ipv6_subprefix: -17
     mesh_metric_lqm:
-      - 10.31.7.149 0.2 # make sure emma is uplink and not f2a
+      - 10.31.7.149 0.2     # make sure emma is uplink and not f2a
 
-  - vid: 20 # NO-PEERS
+  - vid: 20                 # NO-PEERS
     role: mesh
     name: mesh_nnw
     prefix: 10.230.3.20/32
     ipv6_subprefix: -20
 
-  - vid: 21 # NO-PEERS
+  - vid: 21                 # NO-PEERS
     role: mesh
     name: mesh_wnw
     prefix: 10.230.3.21/32
     ipv6_subprefix: -21
 
-  - vid: 25 # NO-PEERS
+  - vid: 25                 # NO-PEERS
     role: mesh
     name: mesh_ssw
     prefix: 10.36.91.25/32
     ipv6_subprefix: -25
 
-  - vid: 26 # NO-PEERS
+  - vid: 26                 # NO-PEERS
     role: mesh
     name: mesh_nno
     prefix: 10.36.91.26/32
