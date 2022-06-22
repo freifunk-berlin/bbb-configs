@@ -19,6 +19,8 @@ networks:
       rigaer83-core: 1
       rigaer83-poe: 2
       rigaer83-sama: 3
+      rigaer83-back-nf-5ghz: 14
+      rigaer83-middle-nf-5ghz: 13
 
   - vid: 40
     role: dhcp
@@ -28,3 +30,7 @@ networks:
     enforce_client_isolation: true
     assignments:
       rigaer83-core: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  rigaer83-back-nf-5ghz: 36-20
+  rigaer83-middle-nf-5gh: 40-20
