@@ -61,10 +61,11 @@ Have a look at the [Developers Guide](DEVELOPER.md) for more information.
 
 ## What is required to send in a pull request?
 
-Make sure to test your addition with ansible-lint before sending a pull request by using:
+Make sure to test your addition with yamllint and ansible-lint before sending a pull request by using:
 
 ```sh
-ansible-lint
+yamllint -d .config/yaml-lint.yml .
+ansible-lint -c .config/ansible-lint.yml
 ```
 
 ## How can I mass deploy in the Freifunk Network
