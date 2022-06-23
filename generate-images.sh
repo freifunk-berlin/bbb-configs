@@ -86,7 +86,7 @@ select location in "${locations[@]}"
       node=${file/#$prefix}
       node=${node%"$suffix"}
       nodes[i++]="$node"
-    done < <(grep -rnwlZ './host_vars/' -e "location: $location$" | sort -z)
+    done < <(grep -rnwlZ './host_vars/' -e "location: ${location//_/-}$" | sort -z)
     nodelist=$(IFS=, ; echo "${nodes[*]}")
 
     # generate images
