@@ -10,7 +10,7 @@
 
 - name: "Transfer image to remote host:"
   changed_when: false
-  command: scp -o StrictHostKeyChecking=no {{ image }} {{ ansible_user }}@[{{ ansible_ssh_host }}]:/tmp/
+  command: scp -O -o StrictHostKeyChecking=no {{ image }} {{ ansible_user }}@[{{ ansible_ssh_host }}]:/tmp/
 
 - name: "Launch Sysupgrade"
   changed_when: false
