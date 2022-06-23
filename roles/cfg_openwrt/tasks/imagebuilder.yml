@@ -3,7 +3,7 @@
   file:
     path: "{{ imagebuilder_dir }}"
     state: directory
-  run_once: yes
+  run_once: true
 
 - name: set destination path for imagebuilder
   set_fact:
@@ -94,7 +94,7 @@
   file:
     state: directory
     path: "{{ image_dir }}"
-  run_once: yes
+  run_once: true
 
 - name: Write build log to output dir
   copy:
