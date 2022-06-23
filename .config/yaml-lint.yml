@@ -13,3 +13,4 @@ rules:
   line-length:
     max: 2048
     level: warning
+  truthy: disable
