@@ -3,7 +3,7 @@
   set_fact:
     packages: "{{ packages + ['irqbalance'] }}"
   when:
-    - multicore|default(false)|bool == true
+    - multicore|default(false)|bool
 
 - name: "Add airos-dfs-reset if configured"
   set_fact:

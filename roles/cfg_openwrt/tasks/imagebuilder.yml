@@ -10,12 +10,9 @@
     imagebuilder_path: "{{ imagebuilder_dir }}/{{ imagebuilder | basename }}"
 
 - name: Download Imagebuilder if upstream is newer
-  command:
-    chdir: "{{ imagebuilder_dir }}"
-    argv:
-      - "wget"
-      - "-N"
-      - "{{ imagebuilder }}"
+  get_url:
+    url: "{{ imagebuilder }}"
+    dest: "{{ imagebuilder_dir }}"
   when: '"http" in imagebuilder'
 
 - name: Copy Local Imagebuilder
@@ -74,6 +71,7 @@
   when: 'imagebuilder_disable_signature_check is defined and imagebuilder_disable_signature_check'
 
 - name: Run Imagebuilder
+  changed_when: false
   command:
     chdir: "{{ imagebuild_dir }}"
     argv:
