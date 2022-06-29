@@ -1,6 +1,5 @@
 #!/bin/sh
-# shellcheck shell=dash disable=SC2169
-
+# shellcheck shell=dash disable=SC2169,SC2181,SC3010,SC3014
 log() {
     local msg="$1"
     logger -t prom-catalog-register -s "$msg"
@@ -26,6 +25,7 @@ log "Retrieving IPv6 Address"
 
 ownip="$(wget -qO- https://ipv6.icanhazip.com)"
 
+# Todo: Fix SC2181
 if [ $? -ne 0 ]; then
   log "Error while retrieving IPv6 Address - Check Connectivity?!"
   exit
@@ -42,6 +42,7 @@ for _port in $PORTS; do
   curl -d"{\"labels\":{\"hostname\":\"$hostname\",\"role\":\"$role\",\"location\":\"$location\"},\"targets\":[\"[$ownip]:$_port\"],\"hostname\":\"$hostname\"}" \
       -H'Content-Type: application/json' \
       "$URL"
+  # Todo: Fix SC2181
   if [ $? -eq 0 ]; then
     log "..success"
   else
