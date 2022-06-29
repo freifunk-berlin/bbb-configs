@@ -1,0 +1,31 @@
+---
+
+snmp_devices:
+
+  - hostname: perleberger36-strom2a
+    address: 10.36.243.162
+    snmp_profile: airos_8
+
+  - hostname: perleberger36-tu
+    address: 10.36.243.166
+    snmp_profile: airos_8
+
+  - hostname: perleberger36-bht
+    address: 10.36.243.170
+    snmp_profile: airos_8
+
+  - hostname: perleberger36-scherer8
+    address: 10.36.243.174
+    snmp_profile: airos_8
+
+  - hostname: perleberger36-turm-5ghz-nw
+    address: 10.36.243.178
+    snmp_profile: airos_8
+
+  - hostname: perleberger36-turm-5ghz-o
+    address: 10.36.243.182
+    snmp_profile: airos_8
+
+  - hostname: perleberger36-turm-5ghz-sw
+    address: 10.36.243.186
+    snmp_profile: airos_8
