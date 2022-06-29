@@ -47,6 +47,15 @@
     - -iperf3
     - -opkg
 
+- name: "Remove or replace monitoring packages that scrape macs"
+  set_fact:
+    packages: "{{ packages + [ item ] }}"
+  when: extended_privacy | default(false)
+  loop:
+    - -prometheus-node-exporter-lua-hostapd_stations
+    - -prometheus-node-exporter-lua-hostapd_ubus_stations
+    - -prometheus-node-exporter-lua-wifi_stations
+
 - name: "Add ip-bridge if dsa target"
   set_fact:
     packages: "{{ packages + ['ip-bridge'] }}"
