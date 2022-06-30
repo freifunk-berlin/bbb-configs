@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck shell=dash disable=SC2169
 
 log() {
     local msg="$1"
@@ -41,10 +42,10 @@ for _port in $PORTS; do
   curl -d"{\"labels\":{\"hostname\":\"$hostname\",\"role\":\"$role\",\"location\":\"$location\"},\"targets\":[\"[$ownip]:$_port\"],\"hostname\":\"$hostname\"}" \
       -H'Content-Type: application/json' \
       "$URL"
-  if [ $? -eq 0 ]; then    
+  if [ $? -eq 0 ]; then
     log "..success"
-  else                                 
+  else
     log "Error while registering"
-  exit                                                  
-fi  
+  exit
+fi
 done
