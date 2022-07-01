@@ -1,14 +1,15 @@
 ---
 
 snmp_devices:
-  - hostname: kiehlufer-emma
-    address: 10.31.82.210
-    snmp_profile: airos_6
 
   - hostname: kiehlufer-rhnk
     address: 10.31.82.211
     snmp_profile: airos_8
 
-  - hostname: kiehlufer-vaterhaus
+  - hostname: kiehlufer-philmel
     address: 10.31.82.212
+    snmp_profile: airos_6
+
+  - hostname: kiehlufer-emma
+    address: 10.31.82.213
     snmp_profile: airos_8
