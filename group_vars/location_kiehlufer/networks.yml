@@ -4,6 +4,7 @@ ipv6_prefix: '2001:bf7:830:8c00::/56'
 
 # Mesh: 10.31.151.112/28
 networks:
+  # DEFAULT gateway - Wave Nano
   - vid: 10
     role: mesh
     name: mesh_rhnk
@@ -11,16 +12,16 @@ networks:
     ipv6_subprefix: -1
     mesh_metric: 1024
     ptp: true
-
+  # gateway - PBE M5 300
   - vid: 11
     role: mesh
-    name: mesh_vaterhaus
+    name: mesh_philmel
     prefix: 10.31.151.113/32
     ipv6_subprefix: -2
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.3']
     ptp: true
-
+  # gateway - Rocket 5AC lite
   - vid: 12
     role: mesh
     name: mesh_emma
@@ -29,7 +30,7 @@ networks:
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.2']
     ptp: true
-
+  # mesh - mikrotik xtsq 5 ac
   - vid: 20
     role: mesh
     name: mesh_kiehl
@@ -57,23 +58,24 @@ networks:
     ipv6_subprefix: 1
     assignments:
       kiehlufer-core: 1
-      kiehlufer-emma: 2
+      kiehlufer-switch: 2
       kiehlufer-rhnk: 3
-      kiehlufer-vaterhaus: 4
-      kiehlufer-nf-wbp1: 5
-      kiehlufer-nf-wbp2: 6
-      kiehlufer-nf-wbp3: 7
-      kiehlufer-nf-wbp4: 8
+      kiehlufer-philmel: 4
+      kiehlufer-emma: 5
+      kiehlufer-nf-wbp1: 6
+      kiehlufer-nf-wbp2: 7
+      kiehlufer-nf-wbp3: 8
+      kiehlufer-nf-wbp4: 9
 
-  - vid: 50
-    untagged: true
-    name: vpn_vdsl
-    role: ext
-    tunnel_wan_ip: 10.0.0.3/26
-    tunnel_wan_gw: 10.0.0.1
-    tunnel_connections: 2
-    tunnel_timeout: 600
-    tunnel_mesh_prefix_ipv4: 10.31.151.120/29
+  # - vid: 50
+  #   untagged: true
+  #   name: vpn_vdsl
+  #   role: ext
+  #   tunnel_wan_ip: 10.0.0.3/26
+  #   tunnel_wan_gw: 10.0.0.1
+  #   tunnel_connections: 2
+  #   tunnel_timeout: 600
+  #   tunnel_mesh_prefix_ipv4: 10.31.151.120/29
 
 location__channel_assignments_11a_standard__to_merge:
   # Channel - Bandwidth - TX Power
