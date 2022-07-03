@@ -5,8 +5,8 @@ case "$1" in
     echo '{}'
     ;;
 --list)
-    HOSTS=$(for i in host_vars/*; do echo -e "$i\c" | awk -F'/' '{print "\""$2"\","}'; done)
-    HOSTS=$(echo $HOSTS | sed 's/\(.*\),/\1 /')
+    HOSTS=$(for i in host_vars/*; do echo -ne "$i\c" | awk -F'/' '{printf "\""$2"\", "}'; done)
+    HOSTS="${HOSTS::-2}"
     cat <<EOF
 {
     "all": {
