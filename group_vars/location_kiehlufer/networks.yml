@@ -67,16 +67,6 @@ networks:
       kiehlufer-nf-wbp3: 8
       kiehlufer-nf-wbp4: 9
 
-  # - vid: 50
-  #   untagged: true
-  #   name: vpn_vdsl
-  #   role: ext
-  #   tunnel_wan_ip: 10.0.0.3/26
-  #   tunnel_wan_gw: 10.0.0.1
-  #   tunnel_connections: 2
-  #   tunnel_timeout: 600
-  #   tunnel_mesh_prefix_ipv4: 10.31.151.120/29
-
 location__channel_assignments_11a_standard__to_merge:
   # Channel - Bandwidth - TX Power
   kiehlufer-nf-wbp1: 48-20
