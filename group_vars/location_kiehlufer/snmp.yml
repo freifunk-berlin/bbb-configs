@@ -16,4 +16,3 @@ snmp_devices:
   - hostname: kiehlufer-emma
     address: 10.31.82.213
     snmp_profile: airos_8
-    
