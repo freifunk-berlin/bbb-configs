@@ -55,16 +55,13 @@ networks:
       koepi-core: 1
       koepi-poe: 2
       koepi-emma: 3
-      koepi-rhnk: 4
-      koepi-simeon: 5
+      koepi-simeon: 4
       koepi-ap1: 10
       koepi-ap2: 11
       koepi-ap3: 12
       koepi-ap4: 13
       koepi-ap5: 14
-      koepi-trailer1: 20
-      koepi-trailer2: 21
-      koepi-front: 22
+      koepi-front: 20
 
 location__channel_assignments_11a_standard__to_merge:
   koepi-ap1: 40-20
