@@ -70,6 +70,10 @@ inbound_allow:
     dst: 2001:bf7:830:8d00::/128
     proto: tcp
     dst_port: 22
+  - name: 'kiehlufer-core SSH'
+    dst: 2001:bf7:830:8c00::/128
+    proto: tcp
+    dst_port: 22
   - name: 'w10host'
     dst: 2001:bf7:860:932::/64
   - name: 'rigaer78-core SSH'
