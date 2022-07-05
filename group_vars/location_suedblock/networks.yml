@@ -11,7 +11,7 @@ networks:
     ipv6_subprefix: 1
     assignments:
       suedblock-core: 1
-      
+
   - vid: 40
     role: dhcp
     prefix: 10.31.172.128/25
