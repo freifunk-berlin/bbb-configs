@@ -11,14 +11,6 @@ snmp_devices:
     address: 10.31.153.11
     snmp_profile: af60
 
-  - hostname: rhnk-zwingli
-    address: 10.31.153.12
-    snmp_profile: af60
-
-  - hostname: rhnk-vaterhaus
-    address: 10.31.153.13
-    snmp_profile: af60
-
   # 5 GHz P2P
   - hostname: rhnk-emma
     address: 10.31.153.15
@@ -28,36 +20,23 @@ snmp_devices:
     address: 10.31.153.16
     snmp_profile: airos_8
 
-  - hostname: rhnk-fhain
-    address: 10.31.153.17
-    snmp_profile: airos_6
-
   # 5 GHz Sector
-  - hostname: rhnk-nnw
+  - hostname: rhnk-no-5ghz
     address: 10.31.153.20
     snmp_profile: airos_8
 
-  # down?
-  # - hostname: rhnk-wnw
-  #   address: 10.31.153.21
-  #   snmp_profile: airos_6
+  - hostname: rhnk-wsw-5ghz
+    address: 10.31.153.21
+    snmp_profile: airos_6
 
-  - hostname: rhnk-wsw
+  - hostname: rhnk-ono-5ghz
     address: 10.31.153.22
     snmp_profile: airos_6
 
-  - hostname: rhnk-ono
+  - hostname: rhnk-ssw-5ghz
     address: 10.31.153.23
-    snmp_profile: airos_6
-
-  - hostname: rhnk-oso
-    address: 10.31.153.24
     snmp_profile: airos_8
 
-  - hostname: rhnk-ssw
-    address: 10.31.153.25
-    snmp_profile: airos_8
-
-  - hostname: rhnk-nno
-    address: 10.31.153.26
-    snmp_profile: airos_6
+  - hostname: rhnk-oso-60ghz
+    address: 10.31.153.23
+    snmp_profile: af60
