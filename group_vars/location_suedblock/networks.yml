@@ -24,8 +24,8 @@ networks:
   - vid: 23
     role: ext
     name: uplink
-    tunnel_wan_ip: 192.168.189.36/24
-    tunnel_wan_gw: 192.168.189.1
+    tunnel_wan_ip: 192.168.178.21/24
+    tunnel_wan_gw: 192.168.178.1
     tunnel_timeout: 600
     tunnel_connections: 2
     tunnel_mesh_prefix_ipv4: 10.31.172.32/28
