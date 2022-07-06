@@ -65,4 +65,4 @@ networks:
 
 location__channel_assignments_11a_standard__to_merge:
   rio-sxt: 36-20
-  rio-ubnt: 40-20
+  rio-ubnt: 40-20-5
