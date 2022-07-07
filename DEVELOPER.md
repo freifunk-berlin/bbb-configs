@@ -116,14 +116,14 @@ networks:
 
 # not part of magda conf, only to illustrate tunnel usage
   - vid: 13
-    untagged: true            # don't tag this vlan - useful if the corerouter is plugged into a normal home router
+    untagged: true            # option to don't tag this vlan - useful if the corerouter is plugged into a normal home router
     name: uplink
     role: ext
-    tunnel_wan_ip: 192.168.1.2/24   # put here the address of the corerouter inside the uplink network
+    tunnel_wan_ip: 192.168.1.2/24   # put here the address and subnet of the corerouter inside the uplink network
     tunnel_wan_gw: 192.168.1.1      # gateway of the uplink network
     tunnel_connections: 2           # default value, number of different tunnels to create
     tunnel_timeout: 600             # timeout in seconds after this the tunnel is destroyed and attempted to be rebuild
-    tunnel_mesh_prefix_ipv4: 10.31.142.120/29   # ip address space for both sides of the tunnel
+    tunnel_mesh_prefix_ipv4: 10.31.142.120/32   # ip address for this side of the tunnel
 
 location__channel_assignments_11a_standard__to_merge:
   # AP-id, wifi-channel, bandwidth, txpower
