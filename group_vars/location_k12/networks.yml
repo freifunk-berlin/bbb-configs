@@ -5,7 +5,8 @@ ipv6_prefix: '2001:bf7:760:2a00::/56'
 # Router:  10.31.158.0/24
 # --DHCP:  10.31.158.0/25
 # --MESH:  10.31.158.128/26
-# --MGMT:  10.31.158.192/26
+# --MGMT:  10.31.158.192/27
+# --UPLK:  10.31.158.224/27
 
 networks:
   # DHCP
@@ -124,6 +125,17 @@ networks:
       k12-ap2: 5
       # 10.31.158.198/32
       k12-ap3: 6
+
+  # UPLK - uplink via Wireguard and local internet connection
+  - vid: 43
+    untagged: true
+    name: uplink
+    role: ext
+    tunnel_wan_ip: 192.168.178.2/24
+    tunnel_wan_gw: 192.168.178.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.158.224/27
 
 
 # AP-id, wifi-channel, bandwidth, txpower
