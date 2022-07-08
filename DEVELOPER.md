@@ -144,7 +144,7 @@ tunnel can be an easy and safe solution. in that case add another vlan to the ne
     tunnel_wan_gw: 192.168.1.1      # gateway of the uplink network
     tunnel_connections: 2           # default value, number of different tunnels to create
     tunnel_timeout: 600             # timeout in seconds after this the tunnel is destroyed and attempted to be rebuild
-    tunnel_mesh_prefix_ipv4: 10.31.142.120/32   # ip address for this side of the tunnel
+    tunnel_mesh_prefix_ipv4: 10.31.142.120/30   # ip subnet to pick addresses for the endpoints of the tunnels
 ```
 
 #### ssh-key.yml
