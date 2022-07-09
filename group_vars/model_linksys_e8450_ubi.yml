@@ -19,3 +19,7 @@ wireless_devices:
     hwmode: 11a
     path: 1a143000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
     ifname_hint: wlan5
+
+sysfs_overrides:
+  - path: /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+    value: 437500
