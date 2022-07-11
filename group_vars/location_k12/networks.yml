@@ -125,6 +125,10 @@ networks:
       k12-ap2: 5
       # 10.31.158.198/32
       k12-ap3: 6
+      # 10.31.158.199/32
+      k12-ap4: 7
+      # 10.31.158.200/32
+      k12-ap5: 8
 
   # UPLK - uplink via Wireguard and local internet connection
   - vid: 43
@@ -144,6 +148,8 @@ location__channel_assignments_11a_standard__to_merge:
   k12-ap1: 36-40
   k12-ap2: 36-40
   k12-ap3: 48-40
+  k12-ap4: 36-40
+  k12-ap5: 40-40
   k12-cpe: 44-40
 
 # AP-id, wifi-channel, bandwidth, txpower
@@ -152,3 +158,5 @@ location__channel_assignments_11g_standard__to_merge:
   k12-ap1: 13-20
   k12-ap2: 13-20
   k12-ap3: 1-20
+  k12-ap4: 13-20
+  k12-ap5: 6-20
