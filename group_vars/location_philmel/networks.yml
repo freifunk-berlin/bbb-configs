@@ -1,14 +1,16 @@
 ---
 ipv6_prefix: "2001:bf7:820:1500::/56"
 
+# Complete subnet: 10.230.2.0/24
 # MGMT Network: 10.230.2.0/28
-# Mesh Network: 10.230.2.16/29 (-23)
+# Mesh Network: 10.230.2.16/28 (-23)
+# DHCP Network: 10.230.2.32/28
 
 
 networks:
   - vid: 2
     role: dhcp
-    prefix: 10.230.2.24/29
+    prefix: 10.230.2.32/28
     ipv6_subprefix: 0
     untagged: true
     inbound_filtering: true
@@ -16,78 +18,71 @@ networks:
     assignments:
       philmel-core: 1
 
-  # TODO START
+  - vid: 10
+    role: mesh
+    name: mesh_nord
+    prefix: 10.230.2.17/32
+    ipv6_subprefix: -1
+    mesh_metric: 1024
+
   - vid: 11
     role: mesh
-    name: mesh_ost
-    prefix: 10.230.2.164/30   # Peers: Area51, delbrueck66; 10.230.52.245/30 ???
+    name: mesh_nord_5ac
+    prefix: 10.230.2.18/32
     ipv6_subprefix: -2
-    assignments:
-      philmel-core: 2
-      philmel-ost: 1
+    mesh_metric: 1024
 
   - vid: 12
     role: mesh
-    name: mesh_sued
-    prefix: 10.230.2.168/30   # Peers: kranold18, GSBS2
+    name: mesh_ost            # Peers: Area51, delbrueck66
+    prefix: 10.230.2.19/32
     ipv6_subprefix: -3
-    assignments:
-      philmel-core: 2
-      philmel-sued: 1
+    mesh_metric: 1024
 
   - vid: 13
     role: mesh
-    name: mesh_west           # Peers: emser97
-    prefix: 10.230.2.172/30
+    name: mesh_vaterhaus
+    prefix: 10.230.2.20/32
     ipv6_subprefix: -4
-    assignments:
-      philmel-core: 2
-      philmel-west: 1
-
-  - vid: 21
-    role: mesh
-    name: vaterhaus
-    prefix: 10.230.2.188/30   # NO PEERS
-    ipv6_subprefix: -5
-    assignments:
-      philmel-core: 2
-      philmel-vaterhaus: 1
-
-  - vid: 20
-    role: mesh
-    name: mesh_autobahn
-    prefix: 10.230.2.184/30   # NO PEERS
-    ipv6_subprefix: -7
-    assignments:
-      philmel-core: 2
-      philmel-autobahn: 1
-
-  # TODO END
-
-  - vid: 10
-    role: mesh
-    name: mesh_nord_5ghz
-    prefix: 10.230.2.18/32
-    ipv6_subprefix: -1
     mesh_metric: 1024
-    # mesh_metric_lqm: ['default 0.3']
 
   - vid: 14
     role: mesh
-    name: mesh_rhnk
-    prefix: 10.230.2.16/32
+    name: mesh_sued           # Peers: kranold18, GSBS2
+    prefix: 10.230.2.21/32
     ipv6_subprefix: -5
-    ptp: true
-    mesh_metric: 128
+    mesh_metric: 1024
 
   - vid: 15
     role: mesh
-    name: mesh_ak36
-    prefix: 10.230.2.17/32
+    name: mesh_sued_5ac
+    prefix: 10.230.2.22/32
     ipv6_subprefix: -6
+    mesh_metric: 1024
+
+  - vid: 16
+    role: mesh
+    name: mesh_west           # Peers: emser97
+    prefix: 10.230.2.23/32
+    ipv6_subprefix: -7
+    mesh_metric: 1024
+
+  - vid: 17
+    role: mesh
+    name: mesh_ak36
+    prefix: 10.230.2.24/32
+    ipv6_subprefix: -8
     ptp: true
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.3']  # prefer rhnk link
+
+  - vid: 18
+    role: mesh
+    name: mesh_rhnk
+    prefix: 10.230.2.25/32
+    ipv6_subprefix: -9
+    ptp: true
+    mesh_metric: 128
 
   - vid: 42
     role: mgmt
@@ -97,9 +92,14 @@ networks:
     ipv6_subprefix: 1
     assignments:
       philmel-core: 1
-      philmel-switch: 2
-      philmel-rhnk: 3
-      philmel-ak36: 4
-      philmel-nord-5ghz: 5
-      philmel-nord-5ghz-old: 14  # TODO roedel: migrate Link to new link
-      # philmel-nord-m2: 2
+      philmel-switch1: 2
+      philmel-switch2: 3
+      philmel-rhnk: 4
+      philmel-nord: 5
+      philmel-nord-5ac: 6
+      philmel-ost: 7
+      philmel-vaterhaus: 8
+      philmel-sued: 9
+      philmel-sued-5ac: 10
+      philmel-west: 11
+      philmel-ak36: 12
