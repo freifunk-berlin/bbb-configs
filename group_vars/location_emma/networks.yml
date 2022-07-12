@@ -25,13 +25,13 @@ networks:
       emma-nnw-2ghz: 17
       # airos
       emma-ssw-uplink: 18
-      emma-nnw-5ghz: 19
-      emma-nno-5ghz: 20
-      emma-ono-5ghz: 21
-      emma-wsw-5ghz: 22
-      emma-wnw-5ghz: 23
-      emma-oso-5ghz: 24
-      emma-sso-5ghz: 25
+      emma-nnw-5ghz: 19     # 5775mhz
+      emma-nno-5ghz: 20     # 5810mhz
+      emma-ono-5ghz: 21     # 5675mhz
+      # emma-wsw-5ghz: 22
+      # emma-wnw-5ghz: 23
+      # emma-oso-5ghz: 24
+      # emma-sso-5ghz: 25
 
   - vid: 40
     role: dhcp
