@@ -25,7 +25,7 @@ config filter
 config filter
 	option 'type'	'redistribute'
 	option 'ip'	'{{ ipv6_prefix }}'
-	option 'eq'	'{{ ipv6_prefix | ipaddr('prefix') }}'
+	option 'eq'	'{{ ipv6_prefix | ansible.utils.ipaddr('prefix') }}'
 
 config filter
 	option 'type'   'redistribute'

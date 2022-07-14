@@ -15,6 +15,6 @@ config tunnelmanager '{{ name }}'
 	option down_script '{{ network['tunnel_down_script']|default('/usr/share/tunnelman/down.sh') }}'
   {% for gateway in groups['role_uplink_gateway'] %}
         # {{ gateway }}
-	list tunnel_endpoints '{{ hostvars[gateway]['uplink']['ipv4'] | ipaddr('address') }}'
+	list tunnel_endpoints '{{ hostvars[gateway]['uplink']['ipv4'] | ansible.utils.ipaddr('address') }}'
   {% endfor %}
 {% endfor %}

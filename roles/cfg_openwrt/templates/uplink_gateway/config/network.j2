@@ -11,10 +11,10 @@ config interface 'uplink'
 	option device '{{ uplink['ifname'] }}'
 	option proto 'static'
 	option ipaddr '{{ uplink['ipv4'] }}'
-{% if uplink['ipv4'] | ipaddr('prefix') >= 30 %}
-	option gateway '{{ uplink['ipv4'] | ipaddr('peer') }}'
+{% if uplink['ipv4'] | ansible.utils.ipaddr('prefix') >= 30 %}
+	option gateway '{{ uplink['ipv4'] | ansible.utils.ipaddr('peer') }}'
 {% else %}
-	option gateway '{{ uplink['ipv4'] | ipaddr('1') | ipaddr('address') }}'
+	option gateway '{{ uplink['ipv4'] | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') }}'
 {% endif %}
 {% if 'ipv6' in uplink %}
 	option ip6addr '{{ uplink['ipv6'] }}'
@@ -42,13 +42,13 @@ config interface 'mgmt'
 {% set name = hostvars[gateway]['gre_tunnel_alias'] %}
 config interface '{{ name }}'
 	option proto 'gre'
-	option ipaddr '{{ uplink['ipv4'] | ipaddr('address') }}'
-	option peeraddr '{{ hostvars[gateway]['uplink']['ipv4'] | ipaddr('address') }}'
+	option ipaddr '{{ uplink['ipv4'] | ansible.utils.ipaddr('address') }}'
+	option peeraddr '{{ hostvars[gateway]['uplink']['ipv4'] | ansible.utils.ipaddr('address') }}'
 	option mtu '1476'
 
 config interface '{{ name }}_ip'
 	option proto 'static'
 	option device '@{{ name }}'
-	option ip6addr '{{ gre_base_prefix | nthhost(loop.index) }}/128'
+	option ip6addr '{{ gre_base_prefix | ansible.utils.nthhost(loop.index) }}/128'
 
 {% endfor %}
