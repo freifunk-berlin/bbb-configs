@@ -45,7 +45,7 @@ config forwarding
 config rule
 	option name             "Allow BGP"
 	option src		uplink
-	option src_ip		'{{ uplink['ipv6'] | ipaddr('peer')  }}'
+	option src_ip		'{{ uplink['ipv6'] | ansible.utils.ipaddr('peer')  }}'
 	option proto		tcp
 	option dest_port        179
 	option target		ACCEPT
@@ -55,7 +55,7 @@ config rule
 	option name             "Allow conntrack sync"
 	option src		uplink
 {% for host in groups['role_uplink_gateway'] if host != inventory_hostname %}
-	list src_ip		'{{ hostvars[host]['uplink']['ipv4'] | ipaddr('address')  }}'
+	list src_ip		'{{ hostvars[host]['uplink']['ipv4'] | ansible.utils.ipaddr('address')  }}'
 {% endfor %}
 	option proto		udp
 	option dest_port        {{ conntrackd_port }}

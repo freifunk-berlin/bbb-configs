@@ -10,7 +10,7 @@ config LoadPlugin
 	option services_file '/var/etc/services.olsr'
 {% for network in networks | selectattr('assignments', 'mapping') %}
   {% for host, ip_num in network['assignments'].items() if host != inventory_hostname %}
-	list hosts '{{ network['prefix'] | ipaddr(ip_num) | ipaddr('address') }} {{ host }}'
+	list hosts '{{ network['prefix'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }} {{ host }}'
   {% endfor %}
 {% endfor %}
 
@@ -63,11 +63,11 @@ config Interface
 
 {% endfor %}
 {% for network in networks | rejectattr('role', 'equalto', 'ext') | selectattr('prefix') %}
-  {% if network['prefix'] | ipaddr('prefix') < 32 %}
+  {% if network['prefix'] | ansible.utils.ipaddr('prefix') < 32 %}
 
 # Network: {{ network['name'] if 'name' in network else network['role'] }}
 config Hna4
-	option netmask '{{ network['prefix'] | ipaddr('netmask') }}'
-	option netaddr '{{ network['prefix'] | ipaddr('network') }}'
+	option netmask '{{ network['prefix'] | ansible.utils.ipaddr('netmask') }}'
+	option netaddr '{{ network['prefix'] | ansible.utils.ipaddr('network') }}'
   {% endif %}
 {% endfor %}

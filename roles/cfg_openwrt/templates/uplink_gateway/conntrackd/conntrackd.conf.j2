@@ -5,7 +5,7 @@ Sync {
     }
 
     UDP {
-        IPv4_address {{ uplink['ipv4'] | ipaddr('address') }}
+        IPv4_address {{ uplink['ipv4'] | ansible.utils.ipaddr('address') }}
         IPv4_Destination_Address 127.0.0.1
         Port {{ conntrackd_port }}
         Interface lo

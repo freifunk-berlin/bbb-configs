@@ -39,12 +39,12 @@ config interface '{{ name }}'
     {% endif %}
     {% if 'assignments' in network and inventory_hostname in network['assignments'] %}
 	option proto 'static'
-	option ipaddr '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) }}'
+	option ipaddr '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) }}'
 	{% if role != "corerouter" and 'dns' in network %}
-	option dns '{{ network['prefix'] | ipaddr(network['dns']) | ipaddr('address') }}'
+	option dns '{{ network['prefix'] | ansible.utils.ipaddr(network['dns']) | ansible.utils.ipaddr('address') }}'
         {% endif %}
 	{% if 'gateway' in network and network['assignments'][inventory_hostname] != network['gateway'] %}
-	option gateway '{{ network['prefix'] | ipaddr(network['gateway']) | ipaddr('address') }}'
+	option gateway '{{ network['prefix'] | ansible.utils.ipaddr(network['gateway']) | ansible.utils.ipaddr('address') }}'
         {% endif %}
         {% if role != 'corerouter' and 'ipv6_subprefix' in network %}
 
@@ -61,8 +61,8 @@ config interface '{{ name }}6'
   {% endif %}
   {% if role == 'corerouter' and ipv6_prefix is defined %}
     {% if 'ipv6_subprefix' in network %}
-      {% set subprefix = ipv6_prefix | ipsubnet('64', network['ipv6_subprefix']) %}
-	option ip6addr '{{ subprefix | ipaddr(1) | ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
+      {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
+	option ip6addr '{{ subprefix | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
     {% endif %}
   {% endif %}
 

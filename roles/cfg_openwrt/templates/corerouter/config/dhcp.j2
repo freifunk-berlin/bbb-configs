@@ -30,7 +30,7 @@ config dhcp 'dhcp_{{ name }}'
 	option force '1'
 	option leasetime '5m'
 	option start '2'
-	option limit '{{ network['prefix'] | ipaddr('size') -3 }}'
+	option limit '{{ network['prefix'] | ansible.utils.ipaddr('size') -3 }}'
     {% else %}
 	option dhcpv4 'disabled'
     {% endif %}
@@ -39,7 +39,7 @@ config dhcp 'dhcp_{{ name }}'
 {% if not network.get('no_corerouter_dns_record') %}
 config domain 'frei_funk_{{ name }}'
 	option name 'frei.funk'
-	option ip '{{ network['prefix'] | ipaddr(network['assignments'][inventory_hostname]) | ipaddr('address') }}'
+	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}'
     {% endif %}
 {% endfor %}
 
@@ -55,7 +55,7 @@ config dhcp 'dhcp_{{ name }}'
     {% for assignment in network['assignments'] %}
 config host
 	option name '{{ assignment }}'
-	option ip '{{ network['prefix'] | ipaddr(network['assignments'][assignment]) | ipaddr('address') }}'
+	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][assignment]) | ansible.utils.ipaddr('address') }}'
     {% endfor %}
 {% endfor %}
 

@@ -30,15 +30,15 @@ protocol kernel kernel6 {
 protocol static {
 	ipv6;
 {% for wahlkreis in freifunk_wahlkreis_prefixes %}
-  {% for no in range(0, wahlkreis | ipsubnet(freifunk_wahlkreis_announcement_prefix) | int) %}
-	route {{ wahlkreis | ipsubnet(freifunk_wahlkreis_announcement_prefix, no) }} unreachable;
+  {% for no in range(0, wahlkreis | ansible.utils.ipsubnet(freifunk_wahlkreis_announcement_prefix) | int) %}
+	route {{ wahlkreis | ansible.utils.ipsubnet(freifunk_wahlkreis_announcement_prefix, no) }} unreachable;
   {% endfor %}
 {% endfor %}
 }
 
 protocol bgp {
-	local {{ uplink['ipv6'] | ipaddr('address') }} as {{ local_asn }};
-	neighbor {{ uplink['ipv6'] | ipaddr('peer') }} as {{ peer_asn }};
+	local {{ uplink['ipv6'] | ansible.utils.ipaddr('address') }} as {{ local_asn }};
+	neighbor {{ uplink['ipv6'] | ansible.utils.ipaddr('peer') }} as {{ peer_asn }};
 	ipv6 {
 		import filter default_route;
 		export filter export_aggregates;

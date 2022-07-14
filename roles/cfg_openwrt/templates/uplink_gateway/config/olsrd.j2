@@ -69,7 +69,7 @@ config Interface
 
   {% if mgmt is defined %}
 config Hna4
-	option netmask '{{ mgmt['ipv4'] | ipaddr('netmask') }}'
-	option netaddr '{{ mgmt['ipv4'] | ipaddr('network') }}'
+	option netmask '{{ mgmt['ipv4'] | ansible.utils.ipaddr('netmask') }}'
+	option netaddr '{{ mgmt['ipv4'] | ansible.utils.ipaddr('network') }}'
   {% endif %}
 {% endif %}
