@@ -2,6 +2,7 @@
 ipv6_prefix: "2001:bf7:831::/56"
 
 # Emma got 10.31.11.0/24 as prefix
+
 networks:
   - vid: 84
     role: mgmt
@@ -15,21 +16,14 @@ networks:
       emma-switch-so: 3
       emma-switch-sw: 4
       emma-switch-nw: 5
-      # emma-nno-2ghz: 10
-      emma-ono-2ghz: 11
-      emma-oso-2ghz: 12
-      emma-sso-2ghz: 13
-      # emma-ssw-2ghz: 14
-      emma-wsw-2ghz: 15
-      emma-wnw-2ghz: 16
-      emma-nnw-2ghz: 17
+
       # airos
       emma-ssw-uplink: 18
       emma-nnw-5ghz: 19     # 5775mhz
       emma-nno-5ghz: 20     # 5810mhz
       emma-ono-5ghz: 21     # 5675mhz
       # emma-wsw-5ghz: 22
-      # emma-wnw-5ghz: 23
+      emma-wnw-5ghz: 23
       # emma-oso-5ghz: 24
       # emma-sso-5ghz: 25
 
@@ -66,11 +60,11 @@ networks:
     prefix: 10.31.11.36/32
     ipv6_subprefix: -4
 
-  # uplink via Airfiber
+  # uplink via LHGG 60ad
   - vid: 41
     role: mesh
     name: mesh_ssw
-    prefix: 10.31.11.97/29
+    prefix: 10.31.11.37/32
     ipv6_subprefix: -5
     mesh_metric: 256
     ptp: true
@@ -87,90 +81,8 @@ networks:
     prefix: 10.31.11.39/32
     ipv6_subprefix: -7
 
-  # Segen
   - vid: 52
     role: mesh
     name: mesh_nnw
     prefix: 10.31.11.40/32
     ipv6_subprefix: -8
-
-  # 11s mesh 2ghz
-  - vid: 23
-    role: mesh
-    name: 11s_nno_2
-    prefix: 10.31.11.41/32
-    ipv6_subprefix: -9
-    mesh_metric: 1024
-    mesh_ap: emma-nno-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
-  - vid: 24
-    role: mesh
-    name: 11s_ono_2
-    prefix: 10.31.11.42/32
-    ipv6_subprefix: -10
-    mesh_metric: 1024
-    mesh_ap: emma-ono-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
-  - vid: 33
-    role: mesh
-    name: 11s_oso_2
-    prefix: 10.31.11.43/32
-    ipv6_subprefix: -11
-    mesh_metric: 1024
-    mesh_ap: emma-oso-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
-  - vid: 34
-    role: mesh
-    name: 11s_sso_2
-    prefix: 10.31.11.44/32
-    ipv6_subprefix: -12
-    mesh_metric: 1024
-    mesh_ap: emma-sso-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
-  - vid: 43
-    role: mesh
-    name: 11s_ssw_2
-    prefix: 10.31.11.45/32
-    ipv6_subprefix: -13
-    mesh_metric: 1024
-    mesh_ap: emma-ssw-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
-  - vid: 44
-    role: mesh
-    name: 11s_wsw_2
-    prefix: 10.31.11.46/32
-    ipv6_subprefix: -14
-    mesh_metric: 1024
-    mesh_ap: emma-wsw-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
-  - vid: 53
-    role: mesh
-    name: 11s_wnw_2
-    prefix: 10.31.11.47/32
-    ipv6_subprefix: -15
-    mesh_metric: 1024
-    mesh_ap: emma-wnw-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
-  - vid: 54
-    role: mesh
-    name: 11s_nnw_2
-    prefix: 10.31.11.48/32
-    ipv6_subprefix: -16
-    mesh_metric: 1024
-    mesh_ap: emma-nnw-2ghz
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
