@@ -3,3 +3,5 @@
 location: gub37
 role: ap
 model: "mikrotik_sxtsq-5-ac"
+
+wireless_profile: mesh_only
