@@ -1,16 +1,35 @@
 ---
-ipv6_prefix: '2001:bf7:830:9a00::/56'
 
+# alt, löschen:
+# 2001:bf7:830:9a00::/56
+# 10.31.77.200/30
+# 10.31.77.196/30
+# 10.31.112.192/26
+# 10.31.112.128/27
+# 10.31.77.13
+# 10.31.77.55
+# 10.31.77.56
 
-# Mesh: 10.31.77.200/30
+ipv6_prefix: 2001:bf7:820:700::/56
+
+# mesh: 10.31.82.192/28
+# mgmt: 10.31.107.224/28
+# dhcp: 10.31.166.128/26
 networks:
+
   - vid: 20
     role: mesh
     name: mesh_core
-    prefix: 10.31.77.200/32
+    prefix: 10.31.82.193/32
     ipv6_subprefix: -1
+
+  - vid: 21
+    role: mesh
+    name: mesh_huette
+    prefix: 10.31.82.194/32
+    ipv6_subprefix: -2
     mesh_metric: 1024
-    mesh_ap: huette15-core
+    mesh_ap: huette15-ap1
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -18,22 +37,33 @@ networks:
     role: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.31.112.192/26
+    prefix: 10.31.166.128/26
     ipv6_subprefix: 0
     assignments:
       huette15-core: 1
 
   - vid: 42
     role: mgmt
-    prefix: 10.31.77.196/30
+    prefix: 10.31.107.224/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
       huette15-core: 1
+      huette15-ap1: 2
+
+  - vid: 50
+    role: ext
+    name: easybell
+    untagged: true
+    tunnel_wan_ip: 192.168.178.2/24
+    tunnel_wan_gw: 192.168.178.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.82.192/28
 
 location__channel_assignments_11a_standard__to_merge:
-  huette15-core: 44-40-8                               # 8 dBm + 15 dBi gain = 23 dBm (with UMA-D antenna)
+  huette15-ap1: 44-40-8                               # 8 dBm + 15 dBi gain = 23 dBm (with UMA-D antenna)
 
 location__channel_assignments_11g_standard__to_merge:
-  huette15-core: 13-20-13                              # 13 dBm + 10 dBi gain = 23 dBm (with UMA-D antenna)
+  huette15-ap1: 13-20-13                              # 13 dBm + 10 dBi gain = 23 dBm (with UMA-D antenna)
