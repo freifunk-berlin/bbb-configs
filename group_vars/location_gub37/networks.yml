@@ -81,3 +81,6 @@ networks:
       gub37-zwingli: 3
       gub37-emma: 4
       gub37-hof-n-5: 5
+
+location__channel_assignments_11a_standard__to_merge:
+  gub37-hof-n-5: 36-80-11
