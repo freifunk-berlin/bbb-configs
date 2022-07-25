@@ -2,13 +2,13 @@
 
 airos_dfs_reset:
   - name: "philmel-ak36"
-    target: "10.230.2.4"
+    target: "10.230.2.12"
     username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
-  - name: "philmel-nord-5ghz"
-    target: "10.230.2.5"
+  - name: "philmel-nord-5ac"
+    target: "10.230.2.6"
     username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
