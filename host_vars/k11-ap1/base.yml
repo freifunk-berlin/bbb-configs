@@ -1,0 +1,7 @@
+---
+
+location: k11
+role: ap
+model: "mikrotik_routerboard-wap-g-5hact2hnd"
+
+wireless_profile: freifunk_default

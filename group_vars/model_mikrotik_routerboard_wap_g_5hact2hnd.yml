@@ -2,6 +2,10 @@
 override_target: "mikrotik_routerboard-wap-g-5hact2hnd"
 target: ath79/mikrotik
 
+model__packages__to_merge:
+  - "-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct"
+  - "kmod-ath10k-smallbuffers ath10k-firmware-qca988x"
+
 int_port: eth0
 
 wireless_devices:
