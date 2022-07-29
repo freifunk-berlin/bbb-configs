@@ -1,8 +1,15 @@
 ---
+
+# TODO: delete these old addresses:
+#       - mgmt: 10.31.152.128/27
+#       - nanobridges: 10.230.44.0/29
+
 ipv6_prefix: "2001:bf7:820:1000::/56"
 
+# mgmt: 10.31.153.0/27
+# mesh: 10.230.3.0/26
+# dhcp: 10.230.3.64/26
 networks:
-  # ptp
   - vid: 10
     role: mesh
     name: mesh_philmel
@@ -27,14 +34,6 @@ networks:
     ptp: true
     mesh_metric: 512
     mesh_metric_lqm: ['default 0.7']  # prefer rhxb link
-
-  - vid: 16
-    role: mesh
-    name: mesh_koeln
-    prefix: 10.230.3.16/32
-    ipv6_subprefix: -16
-    # 2 antennas connected
-    ptp: false
 
   - vid: 20
     role: mesh
@@ -66,6 +65,12 @@ networks:
     prefix: 10.230.3.24/32
     ipv6_subprefix: -24
 
+  - vid: 25
+    role: mesh
+    name: mesh_nno_5ghz
+    prefix: 10.230.3.25/32
+    ipv6_subprefix: -25
+
   - vid: 40
     role: dhcp
     prefix: 10.230.3.64/26
@@ -77,28 +82,40 @@ networks:
 
   - vid: 42
     role: mgmt
-    prefix: 10.31.153.0/27  # 10.230.3.1/29 # 10.31.152.128/27
+    prefix: 10.31.153.0/27
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
       rhnk-core: 1
-      rhnk-poe1: 2
-      rhnk-poe2: 3
-      rhnk-poe3: 4
+      rhnk-switch: 2
 
-      # 60 GHz P2P
+      # AirFiber 60-LR, firmware v2.6.0
       rhnk-philmel: 10
+
+      # AirFiber 60-LR, firmware v2.6.0
       rhnk-rhxb: 11
-      rhnk-vaterhaus: 12
 
-      # 5 GHz P2P
+      # Powerbeam 5AC 400 ISO, AirOS 8.7.11
       rhnk-emma: 15
-      rhnk-neukoelln: 16
 
-      # 5 GHz Sector
+      # Rocket 5AC Lite, AirOS 8.7.11
       rhnk-no-5ghz: 20
+
+      # Rocket 5AC Lite, AirOS 8.7.0
       rhnk-wsw-5ghz: 21
+
+      # Nanostation Loco M5, AirOS 6.3.6
       rhnk-ono-5ghz: 22
+
+      # Rocket 5AC Lite, AirOS 8.7.11
       rhnk-ssw-5ghz: 23
+
+      # Wave AP, firmware 3.1.0-beta
       rhnk-oso-60ghz: 24
+
+      # Rocket 5AC Lite
+      rhnk-nno-5ghz: 25
+
+      rhnk-ap1: 29
+      rhnk-platz: 30
