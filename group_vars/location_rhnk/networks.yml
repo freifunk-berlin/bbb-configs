@@ -102,3 +102,9 @@ networks:
       rhnk-ono-5ghz: 22
       rhnk-ssw-5ghz: 23
       rhnk-oso-60ghz: 24
+
+      # Nearfield Access Points
+      rhnk-platz: 30 # TODO: actual assignment unknown
+      rhnk-ap1: 29
+      rhnk-ap2: 28
+      rhnk-ap3: 27

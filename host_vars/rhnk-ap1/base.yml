@@ -1,0 +1,8 @@
+---
+
+location: rhnk
+role: ap
+model: "mikrotik_sxtsq-5-ac" # this host is revision 2 of the device
+
+mac_override:
+  eth0: 2C:C8:1B:6B:E7:31
