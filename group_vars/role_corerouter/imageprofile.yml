@@ -1,6 +1,7 @@
 ---
 role_corerouter__packages__to_merge:
   - babeld
+  - lldpd
   - luci-app-babeld
   - collectd-mod-dhcpleases
   - collectd-mod-olsrd

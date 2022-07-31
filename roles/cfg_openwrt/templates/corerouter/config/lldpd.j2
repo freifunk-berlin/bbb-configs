@@ -1,0 +1,12 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+config lldpd config
+	option enable_cdp 0
+	option enable_fdp 0
+	option enable_sonmp 0
+	option enable_edp 0
+	option lldp_class 4
+	list interface 'loopback'
+{% for network in networks | selectattr('role', 'equalto', 'mesh') %}
+    {% set ifname = network['name'] if 'name' in network else network['role'] %}
+	list interface '{{ ifname }}'
+{% endfor %}
