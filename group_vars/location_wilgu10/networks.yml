@@ -43,6 +43,7 @@ networks:
       wilgu10-int: 2
       wilgu10-east-nf: 3
       wilgu10-west-nf: 4
+      wilgu10-zwingli: 6
       wilgu10-sama: 6
       wilgu10-east-nf-2ghz: 7
 
@@ -74,9 +75,10 @@ networks:
     assignments:
       wilgu10-core: 1
       wilgu10-gf: 2
+
 location__channel_assignments_11a_standard__to_merge:
   wilgu10-core: 52-80
-  wilgu10-int: 36-80
+  wilgu10-int: 132-80
   wilgu10-east-nf: 36-20
   wilgu10-west-nf: 36-20
 
