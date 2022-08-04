@@ -117,5 +117,7 @@ networks:
       # Rocket 5AC Lite
       rhnk-nno-5ghz: 25
 
+      rhnk-ap3: 27
+      rhnk-ap2: 28
       rhnk-ap1: 29
       rhnk-platz: 30
