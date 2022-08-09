@@ -1,7 +1,8 @@
 ---
 exclude_paths:
-  - .github/
-  - .git
+  - ../.github
+  - ../.git
+  - ../venv
 
 warn_list:
   - literal-compare
