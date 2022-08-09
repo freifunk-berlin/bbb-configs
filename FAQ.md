@@ -5,6 +5,8 @@
 Make sure to install ansible and clone the bbb-configs repository. Then install the requirements using:
 
 ```sh
+python3 -m venv venv
+source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
