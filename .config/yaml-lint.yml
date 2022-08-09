@@ -3,6 +3,9 @@
 
 extends: default
 
+ignore: |
+  venv
+
 rules:
   comments:
     level: error
