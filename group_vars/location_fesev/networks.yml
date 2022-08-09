@@ -1,7 +1,11 @@
 ---
+
+# mesh: 10.31.96.216/30
+# dhcp: 10.31.97.128/25
+# mgmt: 10.31.96.240/28
+
 ipv6_prefix: "2001:bf7:860:b00::/56"
 
-# Mesh: 10.31.96.216/30
 networks:
   - vid: 10
     role: mesh
@@ -24,6 +28,9 @@ networks:
       fesev-ap2: 5
       fesev-ap3: 6
       fesev-ap4: 7
+      fesev-ap5: 8
+      fesev-ap6: 9
+      fesev-ap7: 10
 
   - vid: 40
     role: dhcp
@@ -35,20 +42,25 @@ networks:
       fesev-core: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  fesev-ap1: 40-40
-  fesev-ap2: 48-40
-  fesev-ap4: 40-40
-# reusing channel 40 because of DFS-bug. AP1 and 4 have a 70m distance (and one building) in between so it should be fine
+  fesev-ap1: 36-20
+  fesev-ap2: 40-20
+  fesev-ap3: 48-20
+  fesev-ap4: 36-20
+  fesev-ap5: 44-20
+  fesev-ap6: 40-20
+  fesev-ap7: 48-20
 
 location__channel_assignments_11g_standard__to_merge:
-  fesev-ap1: 1-20
-  fesev-ap2: 5-20
-  fesev-ap3: 9-20
+  fesev-ap1: 5-20
+  fesev-ap2: 9-20
   fesev-ap4: 13-20
 
 # channel-bandwith-txpower in dbm
 
-# ap1: north-5ghz
-# ap2: middle-5ghz
-# ap3: neighbours on the west-2ghz
-# ap4: south-5ghz
+# ap1: eap225 north            - 2+5ghz
+# ap2: eap225 middle           - 2+5ghz
+# ap3: nanoM5 neighbours west  - 5ghz
+# ap4: eap225 south            - 2+5ghz
+# ap5: sxtsq5 middle           - 5ghz
+# ap6: sxtsq5 south            - 5ghz
+# ap7: sxtsq5 neighbours south - 5ghz

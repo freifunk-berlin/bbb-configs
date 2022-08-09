@@ -1,0 +1,6 @@
+---
+
+location: fesev
+role: ap
+model: "mikrotik_sxtsq-5-ac"
+# MAC override tbd: device needs to be purchased first
