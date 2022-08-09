@@ -2,6 +2,6 @@
 
 location: f17
 role: corerouter
-model: "tplink_tl-wdr4300-v1"
+model: "mikrotik_routerboard-760igs"
 
 wireless_profile: disable
