@@ -1,0 +1,10 @@
+---
+target: ramips/mt7621
+
+dsa_ports:
+  - sfp
+  - wan
+  - lan2
+  - lan3
+  - lan4
+  - lan5
