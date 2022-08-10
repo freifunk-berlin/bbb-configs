@@ -1,5 +1,5 @@
 ---
-imagebuilder: "https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/ath79/generic/openwrt-imagebuilder-21.02-SNAPSHOT-ath79-generic.Linux-x86_64.tar.xz"
+imagebuilder: "https://downloads.cdn.openwrt.org/releases/21.02-SNAPSHOT/targets/ath79/generic/openwrt-imagebuilder-21.02-SNAPSHOT-ath79-generic.Linux-x86_64.tar.xz"
 feed_version: "1.2.0-snapshot"
 override_target: "ubnt_nanostation-loco-m"
 target: ath79/generic
