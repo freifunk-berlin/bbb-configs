@@ -6,4 +6,4 @@ target__packages__to_merge:
 
 # Somehow OpenWRT has messed up the name of resulting imagebuilder
 # for target octeon. Fixing it here
-imagebuilder: https://downloads.openwrt.org/{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}/targets/{{ target }}/openwrt-imagebuilder-{{ openwrt_version ~ '-' if openwrt_version != 'snapshot' else '' }}octeon.Linux-x86_64.tar.xz
+imagebuilder: https://downloads.cdn.openwrt.org/{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}/targets/{{ target }}/openwrt-imagebuilder-{{ openwrt_version ~ '-' if openwrt_version != 'snapshot' else '' }}octeon.Linux-x86_64.tar.xz
