@@ -11,12 +11,12 @@
 ipv6_prefix: 2001:bf7:750:4000::/56
 
 uplink:
-  ifname: lan2.301
+  ifname: eth0
   ipv4: 77.87.51.11/25
 #  ipv6: ToDo
 
 mgmt:
-  ifname: lan2.42
+  ifname: eth1
   ipv4: 10.31.130.129/27
   ipv6: 2001:bf7:750:4000::/64
 
@@ -34,35 +34,35 @@ mgmt:
 # Mesh Network: 10.31.130.160/27
 mesh_links:
   - name: mesh_philmel
-    ifname: lan2.10
+    ifname: eth2
     ipv4: 10.31.130.160/32
     ipv6: 2001:bf7:750:4001::1/128
     metric: 1024
     ptp: true
 
   - name: mesh_flughafen
-    ifname: lan2.11
+    ifname: eth3
     ipv4: 10.31.130.161/32
     ipv6: 2001:bf7:750:4001::2/128
     metric: 1024
     ptp: true
 
   - name: mesh_dtmb
-    ifname: lan2.12
+    ifname: eth4
     ipv4: 10.31.130.162/32
     ipv6: 2001:bf7:750:4001::3/128
     metric: 1024
     ptp: true
 
   - name: mesh_friedenau
-    ifname: lan2.13
+    ifname: eth5
     ipv4: 10.31.130.163/32
     ipv6: 2001:bf7:750:4001::4/128
     metric: 1024
     ptp: true
 
   - name: mesh_backbone
-    ifname: lan2.198
+    ifname: eth6
     ipv4: 10.31.130.164/32
     ipv6: 2001:bf7:750:4001::5/128
     metric: 1024
