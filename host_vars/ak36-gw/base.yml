@@ -2,7 +2,9 @@
 
 location: ak36
 role: uplink_gateway
-model: "linksys_e8450-ubi"
+model: "x86-64"
+
+image_search_pattern: "*-ext4-combined.img*"
 
 ak36__disabled_services__to_merge:
   - "bird"
