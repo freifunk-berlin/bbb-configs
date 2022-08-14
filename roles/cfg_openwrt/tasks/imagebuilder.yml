@@ -80,12 +80,9 @@
   command:
     chdir: "{{ imagebuild_dir }}"
     argv:
-      - "make"
-      - "image"
-      - "PROFILE={{ override_target | default(model) }}"
-      - "PACKAGES={{ packages | join(' ') }}"
-      - "DISABLED_SERVICES={{ disabled_services | join(' ') }}"
-      - "FILES={{ config_path }}"
+      - "bash"
+      - "-c"
+      - "make image PROFILE='{{ override_target | default(model) }}' PACKAGES='{{ packages | join(' ') }}' DISABLED_SERVICES='{{ disabled_services | join(' ') }}' FILES='{{ config_path }}' 1>&2"
   register: output
 
 - name: Clear imagedir
@@ -101,7 +98,7 @@
 
 - name: Write build log to output dir
   copy:
-    content: "{{ output.stdout }}"
+    content: "{{ output.stderr }}"
     dest: "{{ image_dir }}/{{ inventory_hostname }}.log"
 
 - name: Find output image
