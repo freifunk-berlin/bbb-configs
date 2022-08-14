@@ -1,0 +1,23 @@
+---
+
+location: rixbox
+role: corerouter
+model: ubnt_usw-flex
+
+poemgr_power_budget: 24
+poemgr_ports:
+  # Port 2 is our uplink LiteBeam to RHNK, give it power budget priority
+  - name: lan2
+    port: 3
+    disabled: 0
+  # Simply disable the rest so Port 2 definitely gets all power
+  # TODO: enable these once blocktrron/poemgr#5 is merged
+  - name: lan3
+    port: 2
+    disabled: 1
+  - name: lan4
+    port: 1
+    disabled: 1
+  - name: lan5
+    port: 0
+    disabled: 1
