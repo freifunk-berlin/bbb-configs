@@ -108,6 +108,11 @@
     recurse: true
   register: image_list
 
+- name: Check Imagebuilder result
+  assert:
+    that: image_list.files | length > 0
+    fail_msg: 'No image was built, check log at {{ image_dir }}/{{ inventory_hostname }}.log'
+
 - name: Declare source
   set_fact:
     image_src: "{{ image_list.files | map(attribute='path') | list | first }}"
