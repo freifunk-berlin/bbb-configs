@@ -12,7 +12,7 @@
 - name: Download Imagebuilder if upstream is newer
   get_url:
     url: "{{ imagebuilder }}"
-    dest: "{{ imagebuilder_dir }}"
+    dest: "{{ imagebuilder_dir }}/{{ imagebuilder_filename }}"
   when: '"http" in imagebuilder'
 
 - name: Copy Local Imagebuilder
