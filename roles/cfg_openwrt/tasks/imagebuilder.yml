@@ -1,4 +1,18 @@
 ---
+- name: Create images dir
+  file:
+    state: directory
+    path: "{{ image_dir }}"
+  run_once: true
+- name: Clear old image and logfile
+  file:
+    state: absent
+    path: "{{ item }}"
+  loop:
+    - "{{ image_dir }}/{{ inventory_hostname }}.bin"
+    - "{{ image_dir }}/{{ inventory_hostname }}.img"
+    - "{{ image_dir }}/{{ inventory_hostname }}.log"
+
 - name: Create Download directory
   file:
     path: "{{ imagebuilder_dir }}"
@@ -84,17 +98,6 @@
       - "-c"
       - "make image PROFILE='{{ override_target | default(model) }}' PACKAGES='{{ packages | join(' ') }}' DISABLED_SERVICES='{{ disabled_services | join(' ') }}' FILES='{{ config_path }}' 1>&2"
   register: output
-
-- name: Clear imagedir
-  file:
-    state: absent
-    path: "{{ image_dir }}"
-
-- name: (Re)-Create image dir
-  file:
-    state: directory
-    path: "{{ image_dir }}"
-  run_once: true
 
 - name: Write build log to output dir
   copy:
