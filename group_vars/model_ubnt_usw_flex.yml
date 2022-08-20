@@ -9,9 +9,7 @@ target: ramips/mt7621
 
 # Our partition is only 7360k, not 8m.
 # We actually need to be below 7200k as the next squashfs padding step is 7400k.
-low_flash: true
 model__packages__to_merge:
-  - "-tcpdump-mini"
   - "-curl"
   - "-prometheus-node-exporter-lua"
   - "-prometheus-node-exporter-lua-hostapd_stations"
