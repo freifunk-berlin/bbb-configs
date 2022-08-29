@@ -58,13 +58,14 @@ networks:
     mesh_ap: kiehlufer-nf-wbp3
     mesh_radio: 11a_standard
     mesh_iface: mesh
+  # mesh - rocket 5 ac
   - vid: 23
     role: mesh
-    name: mesh_nf_wbp4
+    name: mesh_huette
     prefix: 10.31.151.118/32
     ipv6_subprefix: -7
     mesh_metric: 2048
-    mesh_ap: kiehlufer-nf-wbp4
+    mesh_ap: kiehlufer-huette
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -92,11 +93,11 @@ networks:
       kiehlufer-nf-wbp1: 6
       kiehlufer-nf-wbp2: 7
       kiehlufer-nf-wbp3: 8
-      kiehlufer-nf-wbp4: 9
+      kiehlufer-huette: 10
 
 location__channel_assignments_11a_standard__to_merge:
   # Channel - Bandwidth - TX Power
   kiehlufer-nf-wbp1: 48-20
   kiehlufer-nf-wbp2: 40-20
   kiehlufer-nf-wbp3: 44-20
-  kiehlufer-nf-wbp4: 36-20
+  kiehlufer-huette: 36-20
