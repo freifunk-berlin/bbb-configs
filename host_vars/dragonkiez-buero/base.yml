@@ -1,0 +1,6 @@
+---
+
+location: dragonkiez-buero
+role: corerouter
+model: "siemens_ws-ap3610"
+wireless_profile: dragonkiez_buero
