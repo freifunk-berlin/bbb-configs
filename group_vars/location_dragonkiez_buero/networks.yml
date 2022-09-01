@@ -1,0 +1,29 @@
+---
+ipv6_prefix: "2001:bf7:830:b300::/56"
+
+# 10.31.177.160/27 2001:bf7:830:b300::/56
+# DHCP: 10.31.177.160/27
+# UPLINK: 10.31.23.112/30
+# MESH: 10.31.19.45 10.31.19.46 10.31.19.47
+
+networks:
+  - vid: 10
+    name: mesh_rhxb
+    role: mesh
+    prefix: 10.31.23.113/30
+    ipv6_subprefix: -1
+    metric: 1024
+    ptp: true
+    assignments:
+      dragonkiez-buero: 1
+      dragonkiez-buero-rhnk: 2
+
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.31.177.161/27
+    ipv6_subprefix: 0
+    assignments:
+      dragonkiez-buero: 1
