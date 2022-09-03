@@ -12,14 +12,14 @@ networks:
     ipv6_subprefix: -1
     mesh_metric: 1024
     ptp: true
-  # gateway - PBE M5 300
+  # gateway - PBE 300 ISO
   - vid: 11
     role: mesh
     name: mesh_philmel
     prefix: 10.31.151.113/32
     ipv6_subprefix: -2
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.3']
+    mesh_metric_lqm: ['default 0.6']
     ptp: true
   # gateway - Rocket 5AC lite
   - vid: 12
@@ -28,7 +28,7 @@ networks:
     prefix: 10.31.151.114/32
     ipv6_subprefix: -3
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.2']
+    mesh_metric_lqm: ['default 0.7']
     ptp: true
   # mesh - mikrotik xtsq 5 ac
   - vid: 20
