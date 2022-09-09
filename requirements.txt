@@ -2,5 +2,5 @@ ansible >= 2.11
 ansible_merge_vars >= 5.0.0
 jmespath >= 0.10.0
 netaddr >= 0.8.0
-ansible-lint >= 6.3.0
+ansible-lint >= 6.5.2
 yamllint >= 1.26.3

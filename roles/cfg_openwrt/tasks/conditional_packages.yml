@@ -28,7 +28,7 @@
 
 - name: "Remove or replace packages on low mem and low flash"
   set_fact:
-    packages: "{{ packages + [ item ] }}"
+    packages: "{{ packages + [item] }}"
   when: low_mem | default(false) or low_flash | default(false)
   loop:
     - -luci-ssl
