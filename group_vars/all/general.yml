@@ -2,10 +2,6 @@
 zonename: 'Europe/Berlin'
 timezone: 'CET-1CEST,M3.5.0,M10.5.0/3'
 
-contact_nickname: 'Freifunk Berlin Maintenance Team'
-contact_email: 'info@berlin.freifunk.net'
-
-
 dns_servers:
   - 46.182.19.48
   - 80.67.169.40
