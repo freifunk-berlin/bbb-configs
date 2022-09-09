@@ -56,9 +56,9 @@ networks:
     role: ext
     name: easybell
     untagged: true
-    tunnel_wan_ip: 192.168.178.2/24
+    tunnel_wan_ip: 192.168.178.178/24
     tunnel_wan_gw: 192.168.178.1
-    tunnel_connections: 2
+    tunnel_connections: 1
     tunnel_timeout: 600
     tunnel_mesh_prefix_ipv4: 10.31.82.192/28
 
