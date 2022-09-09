@@ -2,5 +2,6 @@
 - hosts: all
   connection: local
   gather_facts: false
+  any_errors_fatal: true
   roles:
     - {role: cfg_openwrt}
