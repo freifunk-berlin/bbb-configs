@@ -19,7 +19,7 @@
     state: directory
   run_once: true
 
-- name: set destination path for imagebuilder
+- name: Set destination path for imagebuilder
   set_fact:
     imagebuilder_path: "{{ imagebuilder_dir }}/{{ imagebuilder | basename }}"
 
