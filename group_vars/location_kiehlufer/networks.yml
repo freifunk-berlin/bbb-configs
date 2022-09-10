@@ -30,12 +30,39 @@ networks:
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.7']
     ptp: true
-  # mesh - mikrotik xtsq 5 ac
+  # mesh - all mikrotik xtsq 5 ac
   - vid: 20
     role: mesh
-    name: mesh_kiehl
+    name: mesh_nf_wbp1
     prefix: 10.31.151.115/32
     ipv6_subprefix: -4
+    mesh_metric: 2048
+    mesh_ap: kiehlufer-nf-wbp1
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+  - vid: 21
+    role: mesh
+    name: mesh_nf_wbp2
+    prefix: 10.31.151.116/32
+    ipv6_subprefix: -5
+    mesh_metric: 2048
+    mesh_ap: kiehlufer-nf-wbp2
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+  - vid: 22
+    role: mesh
+    name: mesh_nf_wbp3
+    prefix: 10.31.151.117/32
+    ipv6_subprefix: -6
+    mesh_metric: 2048
+    mesh_ap: kiehlufer-nf-wbp3
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+  - vid: 23
+    role: mesh
+    name: mesh_nf_wbp4
+    prefix: 10.31.151.118/32
+    ipv6_subprefix: -7
     mesh_metric: 2048
     mesh_ap: kiehlufer-nf-wbp4
     mesh_radio: 11a_standard
