@@ -1,0 +1,5 @@
+---
+
+location__ssh_keys__to_merge:
+  - comment: martin@koltonowski.de
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMTjQj0EmyW6KcG83TOyruZ89/BLL+OsjSBY3i5FUHwM martin@martin-ThinkPad-T15-Gen-1
