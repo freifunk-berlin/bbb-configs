@@ -59,9 +59,10 @@ This file might be fairly self-explanatory. Please mind that a contact is mandat
 ---
 contact_name: 'Petrosilius Quaccus'
 contact_nickname: 'Petro'
-contact_email: 'quaccus@example.com'
-# or:
-contact_email: 'https://config.berlin.freifunk.net/contact/446x/ImZmZnctZV0LTA0Ig.FFbQ8w._ZCA4hFY3zR8MdDVNrv3okqwPU'
+# contacts must be a list. Even if only one contact is given
+contacts:
+  - 'quaccus@example.com'
+  - 'https://config.berlin.freifunk.net/contact/446x/ImZmZnctZV0LTA0Ig.FFbQ8w._ZCA4hFY3zR8MdDVNrv3okqwPU'
 ```
 
 #### owm.yml
