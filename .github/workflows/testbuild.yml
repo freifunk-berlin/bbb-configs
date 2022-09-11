@@ -31,7 +31,7 @@ jobs:
           echo "CHANGED_HOSTS=$CHANGED_HOSTS" >> $GITHUB_ENV
           CHANGED_LOCATIONS=$(git diff --diff-filter=d --name-only origin/$BRANCH | grep location_ | awk -F/ '{print $2}' | awk -F_ '{print $2"*"}' | sed -z 's/\n/,/g')
           if [ -z "${CHANGED_LOCATIONS}" ]; then
-            CHANGED_LOCATIONS="sama-core,sama-nord-nf-5ghz,ohlauer-gw"
+            CHANGED_LOCATIONS="sama-core,sama-nord-nf-5ghz,l105-gw"
           fi
           echo "Building for $CHANGED_LOCATIONS"
           echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> $GITHUB_ENV
