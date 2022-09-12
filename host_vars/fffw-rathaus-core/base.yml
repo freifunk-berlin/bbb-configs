@@ -1,0 +1,8 @@
+---
+location: fffw-rathaus
+role: corerouter
+model: "linksys_e8450-ubi"
+#model: tplink_archer-c50-v4
+
+wireless_profile: freifunk_fw
+...

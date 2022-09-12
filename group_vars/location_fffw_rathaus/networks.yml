@@ -1,0 +1,61 @@
+---
+
+# fffw-rathaus
+# MGMT + Devices : 10.30.96.224/27
+# DHCP: 10.30.99.128/25
+
+networks:
+
+  - vid: 10
+    role: mesh
+    name: mesh_nw
+    prefix: 10.30.96.254/32
+    mesh_metric: 1024
+    #ptp: true
+
+  - vid: 11
+    role: mesh
+    name: mesh_o
+    prefix: 10.30.96.253/32
+    mesh_metric: 1024
+
+  - vid: 12
+    role: mesh
+    name: mesh_sw
+    prefix: 10.30.96.252/32
+    mesh_metric: 1024
+
+  - vid: 14
+    role: mesh
+    name: mesh_buero
+    prefix: 10.30.96.251/32
+    mesh_metric: 1024
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.30.96.224/27
+    gateway: 1
+    dns: 1
+    assignments:
+      fffw-rathaus-core: 1
+      fffw-rathaus-switch: 2
+      fffw-rathaus-nw: 3
+      fffw-rathaus-o: 4
+      fffw-rathaus-sw: 5
+      fffw-rathaus-buero: 6
+      #fffw-rathaus-uplink: 7 Uplink im BM-Büro als Client am AP
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.30.99.128/25
+    assignments:
+      fffw-rathaus-core: 1
+
+#location__channel_assignments_11g_standard__to_merge:
+#  # ap-name: Channel  Bandwidth  tx-Power
+#  fffw-rathaus-nno-ap-2ghz: 1-20
+#  fffw-rathaus-nw-ap-2ghz: 6-20
+#  fffw-rathaus-sso-ap-2ghz: 11-20
+#  fffw-rathaus-ono-ap-2ghz: 6-20
+
+...
