@@ -32,7 +32,11 @@ config wifi-device '{{ wd_id }}'
         option hwmode '{{ wd['hwmode'] }}'
   {% endif %}
 	option path '{{ wd['path'] }}'
-	option htmode 'VHT{{ bandwidth }}'
+  {% if 'htmode_prefix' in wd %}
+	option htmode '{{ wd['htmode_prefix'] }}{{ bandwidth }}'
+  {% else %}
+        option htmode 'VHT{{ bandwidth }}'
+  {% endif %}
 	option channel '{{ channel }}'
   {% if txpower %}
 	option txpower '{{ txpower }}'
