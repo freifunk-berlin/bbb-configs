@@ -28,14 +28,16 @@ int_port: eth0              # hardware-device on which swconfig works on
 
 wireless_devices:                       # definitions for the devices radios
   - name: 11a_standard                  # 5GHz radio
-    hwmode: 11a
+    band: 5g
     path: ffe09000.pcie/pci9000:00/9000:00:00.0/9000:01:00.0
     ifname_hint: wlan5
   - name: 11g_standard                  # 2.4GHz radio
-    hwmode: 11g
+    band: 2g
     path: ffe0a000.pcie/pcia000:02/a000:02:00.0/a000:03:00.0
     ifname_hint: wlan2
 ```
+
+Possible values for band are 2g for 2.4 GHz, 5g for 5 GHz, 6g for 6 GHz and 60g for 60 GHz. Band replaces hwmode since 21.02.2.
 
 For a model using DSA instead of swconfig, you may refer to [`model_ubnt_edgerouter_x_sfp.yml`](https://github.com/Freifunk-Spalter/bbb-configs/blob/master/group_vars/model_ubnt_edgerouter_x_sfp.yml)
 

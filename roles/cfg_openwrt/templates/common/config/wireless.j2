@@ -26,7 +26,11 @@
 # Radio: {{ wd['name'] }}
 config wifi-device '{{ wd_id }}'
 	option type 'mac80211'
-	option hwmode '{{ wd['hwmode'] }}'
+  {% if 'band' in wd %}
+	option band '{{ wd['band'] }}'
+  {% elif 'hwmode' in wd %}
+        option hwmode '{{ wd['hwmode'] }}'
+  {% endif %}
 	option path '{{ wd['path'] }}'
 	option htmode 'VHT{{ bandwidth }}'
 	option channel '{{ channel }}'
