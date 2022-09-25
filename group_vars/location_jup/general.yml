@@ -1,3 +1,4 @@
 ---
 contact_nickname: 'Jup'
-contact_email: 'info@jup.berlin'
+contacts:
+  - 'info@jup.berlin'

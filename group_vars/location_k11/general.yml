@@ -1,3 +1,4 @@
 ---
 contact_nickname: 'zander'
-contact_email: 'alexanderjabs@gmx.de'
+contacts:
+  - 'alexanderjabs@gmx.de'

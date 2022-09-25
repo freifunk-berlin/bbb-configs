@@ -1,3 +1,4 @@
 ---
 contact_nickname: 'Linie206 Freifunk AG'
-contact_email: 'l206 [ät] riseup [dot] net'
+contacts:
+  - 'l206 [ät] riseup [dot] net'

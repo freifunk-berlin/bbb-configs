@@ -1,3 +1,4 @@
 ---
 contact_nickname: 'Potse'
-contact_email: 'potse_berlin@riseup.net'
+contacts:
+  - 'potse_berlin@riseup.net'

@@ -1,3 +1,4 @@
 ---
 contact_nickname: 'robertfoss'
-contact_email: 'me [ät] robertfoss [dot] se'
+contacts:
+  - 'me [ät] robertfoss [dot] se'

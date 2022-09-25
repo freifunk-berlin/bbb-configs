@@ -1,4 +1,5 @@
 ---
 
 contact_nickname: 'jammingblub'
-contact_email: 'warnmeldesystem@gmail.com'
+contacts:
+  - 'warnmeldesystem@gmail.com'
