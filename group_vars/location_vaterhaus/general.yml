@@ -1,3 +1,4 @@
 ---
 contact_nickname: 'xayax'
-contact_email: 'ff@xayax.de'
+contacts:
+  - 'ff@xayax.de'

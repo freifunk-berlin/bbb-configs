@@ -1,3 +1,4 @@
 ---
 contact_nickname: 'Linksfraktion Treptow Koepenick'
-contact_email: 'mail@linksfraktion-treptow-koepenick.de'
+contacts:
+  - 'mail@linksfraktion-treptow-koepenick.de'

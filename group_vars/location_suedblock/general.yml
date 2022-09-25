@@ -1,3 +1,4 @@
 ---
 contact_nickname: '365ff'
-contact_email: '365ff [ät] systemli [dot] org'
+contacts:
+  - '365ff [ät] systemli [dot] org'
