@@ -1,5 +1,4 @@
 ---
-openwrt_version: snapshot
 target: ath79/generic
 
 model__packages__to_merge:

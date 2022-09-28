@@ -1,6 +1,4 @@
 ---
-openwrt_version: 22.03-SNAPSHOT
-feed_version: snapshot
 target: mediatek/mt7622
 
 dsa_ports:
