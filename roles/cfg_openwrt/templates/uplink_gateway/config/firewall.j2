@@ -5,6 +5,7 @@ config defaults
 	option output		ACCEPT
 	option forward		REJECT
 
+
 config zone
 	option name		freifunk
 {% for interface in mesh_links|default([]) %}
@@ -21,7 +22,7 @@ config zone
 	option input		ACCEPT
 	option output		ACCEPT
 	option forward		REJECT
-#	option mtu_fix          1 # mss is clamped manually in /etc/firewall.user
+#	option mtu_fix          1 # mss is clamped manually in /etc/custom_fw_includes
 
 config zone
 	option name		uplink
@@ -40,6 +41,24 @@ config forwarding
 config forwarding
 	option src		freifunk
 	option dest		freifunk
+
+# Essential gateway includes
+config include
+	option type 		nftables
+	option path		/etc/custom_fw_includes/chain_prepend_forward_uplink_allow_unestablished_flows
+	option position		chain-prepend
+	option chain 		'forward_uplink'
+
+config include
+	option type 		nftables
+	option path		/etc/custom_fw_includes/chain_prepend_forward_limit_mss
+	option position		chain-prepend
+	option chain 		'forward'
+
+config include
+	option type 		nftables
+	option path		/etc/custom_fw_includes/table_prepend_redirect_samplicator
+	option position		table-prepend
 
 {% if 'ipv6' in uplink %}
 config rule
@@ -148,6 +167,3 @@ config rule
   {% endif %}
 	option target		ACCEPT
 {% endfor %}
-
-config include
-	option	path		'/etc/firewall.user'
