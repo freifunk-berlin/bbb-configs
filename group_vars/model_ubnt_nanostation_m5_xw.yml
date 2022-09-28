@@ -8,7 +8,8 @@ low_mem: true
 
 wireless_devices:
   - name: 11a_standard
-    hwmode: 11a
+    band: 5g
+    htmode_prefix: HT
     path: platform/ahb/18100000.wmac
     ifname_hint: wlan5
     antenna_gain: 12

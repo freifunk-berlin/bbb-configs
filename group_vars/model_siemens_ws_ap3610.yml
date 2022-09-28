@@ -5,10 +5,12 @@ int_port: eth0
 
 wireless_devices:
   - name: 11a_standard
-    hwmode: 11a
+    band: 5g
+    htmode_prefix: HT
     path: pci0000:00/0000:00:11.0
     ifname_hint: wlan5
   - name: 11g_standard
-    hwmode: 11g
+    band: 2g
+    htmode_prefix: HT
     path: pci0000:00/0000:00:12.0
     ifname_hint: wlan2

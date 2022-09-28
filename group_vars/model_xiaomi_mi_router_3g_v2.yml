@@ -8,10 +8,12 @@ dsa_ports:
 
 wireless_devices:
   - name: 11a_standard
-    hwmode: 11a
+    band: 5g
+    htmode_prefix: VHT
     path: 1e140000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
     ifname_hint: wlan5
   - name: 11g_standard
-    hwmode: 11g
+    band: 2g
+    htmode_prefix: HT
     path: 1e140000.pcie/pci0000:00/0000:00:01.0/0000:02:00.0
     ifname_hint: wlan2

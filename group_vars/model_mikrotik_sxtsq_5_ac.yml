@@ -16,7 +16,8 @@ int_port: eth0
 
 wireless_devices:
   - name: 11a_standard
-    hwmode: 11a
+    band: 5g
+    htmode_prefix: VHT
     path: platform/soc/a800000.wifi
     ifname_hint: wlan5
     antenna_gain: 12
