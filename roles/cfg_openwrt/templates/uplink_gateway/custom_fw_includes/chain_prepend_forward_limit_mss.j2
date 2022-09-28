@@ -1,0 +1,19 @@
+{% set TCP_HEADER_SIZE = 20 %}
+{% set IPV4_HEADER_SIZE = 20 %}
+{% set IPV6_HEADER_SIZE = 40 %}
+{% set GRE_HEADER_SIZE = 24 %}
+{% set MTU = 1500 %}
+{% set ipv4_mss = MTU - GRE_HEADER_SIZE - TCP_HEADER_SIZE - IPV4_HEADER_SIZE %}
+{% set ipv6_mss = MTU - GRE_HEADER_SIZE - TCP_HEADER_SIZE - IPV6_HEADER_SIZE %}
+
+# Since traffic *could* always go via the GRE Tunnels we need to ensure
+# it fits.
+# This applies to all directions, because also phyiscal known working links
+# could die. (60G Links during rain are a good example)
+# When the traffic is the rerouted through GRE the connections should continue to work
+
+# only apply to ipv6 for now
+meta nfproto ipv6 tcp flags syn tcp option maxseg size set {{ ipv6_mss }}
+
+#oifname "gre*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }
+
