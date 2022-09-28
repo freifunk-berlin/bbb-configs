@@ -28,8 +28,6 @@ config wifi-device '{{ wd_id }}'
 	option type 'mac80211'
   {% if 'band' in wd %}
 	option band '{{ wd['band'] }}'
-  {% elif 'hwmode' in wd %}
-        option hwmode '{{ wd['hwmode'] }}'
   {% endif %}
 	option path '{{ wd['path'] }}'
   {% if 'htmode_prefix' in wd %}
