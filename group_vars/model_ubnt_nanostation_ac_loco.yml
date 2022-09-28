@@ -9,7 +9,8 @@ int_port: eth0
 
 wireless_devices:
   - name: 11a_standard
-    hwmode: 11a
+    band: 5g
+    htmode_prefix: VHT
     path: pci0000:00/0000:00:00.0
     ifname_hint: wlan5
     antenna_gain: 11
