@@ -78,21 +78,10 @@ select location in "${locations[@]}"
         continue
     fi
 
-    # prepare list of nodes from file search
-    unset nodes i
-    while IFS= read -r -d $'\0' file; do
-      prefix="./host_vars/"
-      suffix="/base.yml"
-      node=${file/#$prefix}
-      node=${node%"$suffix"}
-      nodes[i++]="$node"
-    done < <(grep -rnwlZ './host_vars/' -e "location: ${location//_/-}$" | sort -z)
-    nodelist=$(IFS=, ; echo "${nodes[*]}")
-
     # generate images
-    echo "firmwares for the following devices at $location will be generated:"
-    echo "$nodelist"
-    ansible-playbook play.yml --limit "$nodelist" --tags image && echo "location of generated images: /tmp/ansible-openwrt/images"
+    echo "firmwares for the following location will be generated:"
+    echo "$location"
+    ansible-playbook play.yml --limit "location_$location" --tags image && echo "location of generated images: /tmp/ansible-openwrt/images"
 
     # break the loop
     break
