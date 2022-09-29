@@ -77,8 +77,8 @@ networks:
       wilgu10-gf: 2
 
 location__channel_assignments_11a_standard__to_merge:
-  wilgu10-core: 52-80
-  wilgu10-int: 132-80
+  wilgu10-core: 36-80
+  wilgu10-int: 52-20
   wilgu10-east-nf: 36-20
   wilgu10-west-nf: 36-20
 

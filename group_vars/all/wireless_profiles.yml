@@ -105,7 +105,6 @@ wireless_profiles:
       - radio: 11a_standard
         legacy_rates: false
         country: DE
-        beacon_int: 25          # fix frequent disconnects with iwlwifi sta
 
       - radio: 11g_standard
         legacy_rates: false
