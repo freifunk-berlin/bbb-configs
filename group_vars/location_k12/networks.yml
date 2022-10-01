@@ -164,7 +164,8 @@ networks:
     tunnel_connections: 2
     tunnel_timeout: 600
     tunnel_mesh_prefix_ipv4: 10.31.158.224/27
-
+    # Mesh Prefix, Babel Metric, OLSR LQM
+    tunnel_up_script_args: '10.31.158.224/27 10240 0.25'
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
