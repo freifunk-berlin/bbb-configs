@@ -138,8 +138,8 @@ The VLAN ID (vid) usually follow this numbering convention.
 
 ##### uplink via tunnel
 
-if for some reason you are in need of an uplink via a "normal" internet connection, a wireguard
-tunnel can be an easy and safe solution. in that case add another vlan to the networks.yml
+If for some reason you are in need of an uplink via a "normal" internet connection, a wireguard
+tunnel can be an easy and safe solution. In that case add another vlan to the networks.yml
 
 ```yml
   - vid: 13
@@ -151,15 +151,28 @@ tunnel can be an easy and safe solution. in that case add another vlan to the ne
     tunnel_connections: 2           # default value, number of different tunnels to create
     tunnel_timeout: 600             # timeout in seconds after this the tunnel is destroyed and attempted to be rebuild
     tunnel_mesh_prefix_ipv4: 10.31.142.120/30   # ip subnet to pick addresses for the endpoints of the tunnels
+    tunnel_up_script_args: '10.31.142.120/30 10240 0.25'    # Mesh Prefix, Babel Metric, OLSR LQM
 ```
 
-#### ssh-key.yml
+Note: The values of the Babel Metric and the OLSR LQM influence how the uplink works. If the uplink tunnel is intended as a backup connection, you should set a high value for the babeld metric and a low value for the OLSR LQM as shown in the example.
 
-By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys a ssh-key.yml file can be created with additional keys in the following format:
+
+#### ssh-key.yml and ssh-keys.yml
+
+By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys a `ssh-key.yml` file can be created with additional keys in the following format:
 
 ```yml
 ---
 location__ssh_keys__to_merge:
+  - comment: John
+    key: ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Keyname
+```
+
+If you do not want the ssh-keys within `all/ssh-keys.yml` installed, you can create a `ssh-keys.yml` file that replaces the default file:
+
+```yml
+---
+ssh_keys:
   - comment: John
     key: ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Keyname
 ```
