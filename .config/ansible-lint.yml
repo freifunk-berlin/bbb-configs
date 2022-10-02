@@ -11,6 +11,7 @@ warn_list:
   - command-instead-of-module
 
 skip_list:
+  - fqcn
   - fqcn-builtins
   - experimental
   - yaml
