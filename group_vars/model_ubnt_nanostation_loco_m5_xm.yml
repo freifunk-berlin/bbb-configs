@@ -1,6 +1,8 @@
 ---
 override_target: "ubnt_nanostation-loco-m"
-target: ath79/generic
+
+target: ath79/tiny
+openwrt_version: snapshot
 
 int_port: eth0
 
