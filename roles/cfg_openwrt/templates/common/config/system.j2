@@ -16,9 +16,16 @@ config system
 config timeserver 'ntp'
         option enabled '1'
         option enable_server '{{ (role == 'corerouter' or role  == 'uplink_gateway') | int }}'
+{% if networks is defined %}
+{% set mgmtnetwork = networks | selectattr('role', 'equalto', 'mgmt') | default([], true) | list | first %}
+{% endif %}
+{% if role == 'ap' and mgmtnetwork is defined and 'ntp' in mgmtnetwork %}
+        list server '{{ mgmtnetwork['prefix'] | ansible.utils.ipaddr(mgmtnetwork['ntp']) | ansible.utils.ipaddr('address') }}'
+{% else %}
 {% for ntp_server in ntp_servers %}
         list server '{{ ntp_server }}'
 {% endfor %}
+{% endif %}
 
 {% for led in leds | default([]) %}
 
