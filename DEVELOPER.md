@@ -103,6 +103,7 @@ networks:
     prefix: 10.31.83.112/28
     gateway: 1
     dns: 1
+    ntp: 1                    # used to tell accesspoints to use the ntp server of the core router
     ipv6_subprefix: 1
     assignments:              # assign static(!) addresses from mngt-network to individual devices/interfaces.
       magda-core: 1           # core router gets 1st address. In result it will be reachable at 10.31.83.113
