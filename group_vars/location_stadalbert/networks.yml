@@ -1,0 +1,60 @@
+---
+
+# mesh: 10.31.53.24/29
+# dhcp: 10.31.182.64/26
+# mgmt: 10.31.160.208/28
+
+ipv6_prefix: "2001:bf7:750:5400::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_segen
+    prefix: 10.31.53.25/32
+    ipv6_subprefix: -1
+
+  - vid: 11
+    role: mesh
+    name: mesh_linie
+    prefix: 10.31.53.26/32
+    ipv6_subprefix: -2
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.160.208/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      stadalbert-core: 1
+      stadalbert-switch-ground: 2
+      stadalbert-switch-roof: 3
+      stadalbert-segen: 4
+      stadalbert-linie: 5
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.182.64/26
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      stadalbert-core: 1
+
+  - vid: 50
+    untagged: false
+    name: uplink
+    role: ext
+    tunnel_wan_ip: 192.168.8.2/24
+    tunnel_wan_gw: 192.168.8.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.53.24/29
+
+location__channel_assignments_11a_standard__to_merge:
+  stadalbert-core: 40-40
+
+location__channel_assignments_11g_standard__to_merge:
+  stadalbert-core: 1-20
+
+# channel-bandwith-txpower in dbm
