@@ -1,3 +1,4 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
 # Defaults are configured in /etc/sysctl.d/* and can be customized in this file
 {% for i in sysctl | default({}) %}
 {{ i }}={{ sysctl[i] }}
@@ -5,4 +6,13 @@
 
 {% if 'zram-swap' in packages %}
 vm.swappiness=100
+{% endif %}
+
+{% if role == 'ap' %}
+  {% for network in networks %}
+  {% set port = ('switch0' if dsa_ports is defined else int_port) + '.' + network['vid']|string %}
+  {% if 'ipv6_subprefix' in network and 'assignments' in network and inventory_hostname in network['assignments'] %}
+net.ipv6.conf.{{ port | replace('.', '/') }}.accept_ra=2
+  {% endif %}
+  {% endfor %}
 {% endif %}

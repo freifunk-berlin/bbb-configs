@@ -45,7 +45,6 @@
     - -vnstat
     - -iperf3
     - -opkg
-    - -odhcp6c
 
 - name: "Remove Luci on low mem and low flash"
   set_fact:

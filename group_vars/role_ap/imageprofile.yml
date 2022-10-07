@@ -2,6 +2,7 @@
 role_ap__packages__to_merge:
   - -dnsmasq
   - -odhcpd-ipv6only
+  - -odhcp6c
   - -iptables
   - -ip6tables
   - -firewall

@@ -48,9 +48,11 @@ config interface '{{ name }}'
         {% endif %}
         {% if role != 'corerouter' and 'ipv6_subprefix' in network %}
 
-config interface '{{ name }}6'
-	option device '@{{ name }}'
-	option proto 'dhcpv6'
+# IPv6 Address comes via SLAAC and RA. See sysctl, there it is enabled
+# The reason is to get rid of the userspace daemon
+#config interface '{{ name }}6'
+#	option device '@{{ name }}'
+#	option proto 'dhcpv6'
         {% endif %}
     {% elif role == 'corerouter' and network['role'] == 'mesh' %}
 	option proto 'static'
