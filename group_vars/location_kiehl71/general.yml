@@ -1,3 +1,4 @@
 ---
 contact_nickname: 'jammingblub'
-contact_email: 'koltonowski@protonmail.com'
+contacts:
+  - 'koltonowski@protonmail.com'
