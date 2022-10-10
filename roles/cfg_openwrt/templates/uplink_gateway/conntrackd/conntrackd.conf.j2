@@ -1,6 +1,7 @@
 Sync {
     Mode NOTRACK {
         DisableExternalCache On
+        DisableInternalCache On
         StartupResync on
     }
 
@@ -8,18 +9,20 @@ Sync {
         IPv4_address {{ uplink['ipv4'] | ansible.utils.ipaddr('address') }}
         IPv4_Destination_Address 127.0.0.1
         Port {{ conntrackd_port }}
-        Interface lo
-        SndSocketBuffer 1249280
-        RcvSocketBuffer 1249280
+        Interface {{ uplink['ifname'] }}
+        SndSocketBuffer 10485760
+        RcvSocketBuffer 41943040
         Checksum on
     }
 }
 
 General {
-    HashSize 32768
-    HashLimit 131072
+    HashSize 65536
+    HashLimit 1048576 # should be twice the nf_conntrack sice
     LogFile off
     Syslog on
+    NetlinkBufferSize 20971520
+    NetlinkBufferSizeMaxGrowth 83886080
     UNIX {
         Path /var/run/conntrackd.ctl
     }
