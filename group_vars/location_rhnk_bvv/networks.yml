@@ -1,0 +1,37 @@
+---
+ipv6_prefix: "2001:bf7:820:2100::/56"
+
+# RHNK-BVV got following prefixes:
+# Router: 10.31.183.0/25
+# --MGMT: 10.31.183.64/27
+# --MESH: 10.31.183.96/27
+# --DHCP: 10.31.183.0/26
+
+networks:
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    untagged: true
+    prefix: 10.31.183.0/26
+    ipv6_subprefix: 0
+    assignments:
+      rhnk-bvv-core: 1
+
+  - vid: 20
+    role: mesh
+    name: mesh_core_5ghz
+    prefix: 10.31.183.96/32
+    ipv6_subprefix: -1
+    mesh_ap: rhnk-bvv-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.183.64/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      rhnk-bvv-core: 1
