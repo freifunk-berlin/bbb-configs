@@ -71,6 +71,15 @@ networks:
     prefix: 10.230.3.25/32
     ipv6_subprefix: -25
 
+  - vid: 30
+    role: mesh
+    name: mesh_plat_5ghz
+    prefix: 10.230.3.30/32
+    ipv6_subprefix: -30
+    mesh_ap: rhnk-platz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
   - vid: 40
     role: dhcp
     prefix: 10.230.3.64/26
