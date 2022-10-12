@@ -2,11 +2,12 @@
 ipv6_prefix: '2001:bf7:760:100::/56'
 
 # got following prefixes:
-# Router:  10.31.17.0/24
-# --DHCP:  10.31.17.0/25
-# --MESH:  10.31.17.128/26
-# --MGMT:  10.31.17.192/27
-# --UPLK:  10.31.17.224/27
+# Router:  10.31.185.0/24
+#          2001:bf7:760:100::/56
+# --DHCP:  10.31.185.0/25
+# --MESH:  10.31.185.128/26
+# --MGMT:  10.31.185.192/27
+# --UPLK:  10.31.185.224/27
 
 networks:
   # DHCP
@@ -14,7 +15,7 @@ networks:
     role: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.31.17.0/25
+    prefix: 10.31.185.0/25
     ipv6_subprefix: 0
     assignments:
       k11-core: 1
@@ -23,7 +24,7 @@ networks:
   - vid: 120
     role: mesh
     name: mesh_5ghz
-    prefix: 10.31.17.128/32
+    prefix: 10.31.185.128/32
     ipv6_subprefix: -1
     mesh_ap: k11-core
     mesh_radio: 11a_standard
@@ -33,7 +34,7 @@ networks:
   - vid: 121
     role: mesh
     name: mesh_2ghz
-    prefix: 10.31.17.129/32
+    prefix: 10.31.185.129/32
     ipv6_subprefix: -2
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
@@ -46,7 +47,7 @@ networks:
   - vid: 122
     role: mesh
     name: mesh_ap1_5
-    prefix: 10.31.17.130/32
+    prefix: 10.31.185.130/32
     ipv6_subprefix: -3
     mesh_ap: k11-ap1
     mesh_radio: 11a_standard
@@ -56,7 +57,7 @@ networks:
   - vid: 123
     role: mesh
     name: mesh_ap1_2
-    prefix: 10.31.17.131/32
+    prefix: 10.31.185.131/32
     ipv6_subprefix: -4
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
@@ -68,7 +69,7 @@ networks:
   # MGMT
   - vid: 142
     role: mgmt
-    prefix: 10.31.17.192/26
+    prefix: 10.31.185.192/26
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
