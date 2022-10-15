@@ -1,9 +1,6 @@
 ---
 target: mpc85xx/p1010
 
-# quirk because of https://github.com/openwrt/openwrt/issues/9027
-openwrt_version: 21.02-SNAPSHOT
-
 switch_ports: 6
 switch_int_port: 0
 switch_ignore_ports: []
