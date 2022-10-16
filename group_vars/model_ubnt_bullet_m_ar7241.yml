@@ -1,6 +1,6 @@
 ---
 override_target: "ubnt_bullet-m-ar7241"
-target: ath79/generic
+target: ath79/tiny
 
 int_port: eth0
 
