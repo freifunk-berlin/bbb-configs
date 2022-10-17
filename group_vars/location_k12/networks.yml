@@ -154,16 +154,16 @@ networks:
       # 10.31.158.200/32
       k12-ap5: 8
 
-  # UPLK - uplink via Wireguard and local internet connection
-  - vid: 43
-    untagged: true
-    name: uplink
-    role: ext
-    tunnel_wan_ip: 192.168.178.2/24
-    tunnel_wan_gw: 192.168.178.1
-    tunnel_connections: 2
-    tunnel_timeout: 600
-    tunnel_mesh_prefix_ipv4: 10.31.158.224/27
+#  # UPLK - uplink via Wireguard and local internet connection
+#  - vid: 43
+#    untagged: true
+#    name: uplink
+#    role: ext
+#    tunnel_wan_ip: 192.168.178.2/24
+#    tunnel_wan_gw: 192.168.178.1
+#    tunnel_connections: 2
+#    tunnel_timeout: 600
+#    tunnel_mesh_prefix_ipv4: 10.31.158.224/27
 
 
 # AP-id, wifi-channel, bandwidth, txpower
