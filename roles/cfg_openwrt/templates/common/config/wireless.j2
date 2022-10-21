@@ -85,8 +85,14 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
       {% if 'ssid' in iface %}
 	option ssid '{{ iface['ssid'] }}'
       {% endif %}
+      {% if 'hidden' in iface %}
+	option hidden '{{ iface['hidden']|int }}'
+      {% endif %}
       {% if 'ieee80211w' in iface %}
 	option ieee80211w '{{ iface['ieee80211w'] }}'
+      {% endif %}
+      {% if 'owe_transition_ifname_hint' in iface %}
+	option owe_transition_ifname '{{ wd['ifname_hint'] }}-{{ iface['owe_transition_ifname_hint'] }}'
       {% endif %}
       {% if 'isolate' in iface %}
 	option isolate '{{ iface['isolate']|int }}'
