@@ -23,23 +23,18 @@ log "started. Registering with following labels: hostname: $hostname, role: $rol
 
 log "Retrieving IPv6 Address"
 
-ownip="$(wget -qO- https://ipv6.icanhazip.com)"
+mgmtdev=$(ubus call network.interface.mgmt status | jsonfilter -e '@.l3_device')
+mgmtip="$(ip -j -6 addr show "$mgmtdev" scope global | jsonfilter -e '@[*].addr_info[*].local' | head -n1)"
 
-# Todo: Fix SC2181
-if [ $? -ne 0 ]; then
-  log "Error while retrieving IPv6 Address - Check Connectivity?!"
-  exit
-fi
-
-if [[ "$ownip" != "2001:bf7:*" ]]; then
+if [[ "$mgmtip" != "2001:bf7:*" ]]; then
   log "Public IPv6 is not part of freifunk berlin prefix"
   exit
 fi
 
 for _port in $PORTS; do
   # Todo: Check if something is listning on the port (/proc/net/tcp6)
-  log "Registering [$ownip]:$_port with hostname $hostname"
-  curl -d"{\"labels\":{\"hostname\":\"$hostname\",\"role\":\"$role\",\"location\":\"$location\"},\"targets\":[\"[$ownip]:$_port\"],\"hostname\":\"$hostname\"}" \
+  log "Registering [$mgmtip]:$_port with hostname $hostname"
+  curl -d"{\"labels\":{\"hostname\":\"$hostname\",\"role\":\"$role\",\"location\":\"$location\"},\"targets\":[\"[$mgmtip]:$_port\"],\"hostname\":\"$hostname\"}" \
       -H'Content-Type: application/json' \
       "$URL"
   # Todo: Fix SC2181
