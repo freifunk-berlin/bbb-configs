@@ -169,7 +169,7 @@ wireless_profiles:
 
       - mode: ap
         ssid: losWlanosLocos
-        encryption: sae-mixed
+        encryption: sae
         key: 'file:/root/wifi_pass'
         network: prdhcp
         radio: 11a_standard
