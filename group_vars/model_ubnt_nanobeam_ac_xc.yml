@@ -1,0 +1,15 @@
+---
+target: ath79/generic
+
+model__packages__to_merge:
+  - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct -kmod-ath10k-ct-smallbuffers"
+  - "kmod-ath10k ath10k-firmware-qca988x"
+
+int_port: eth0
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: VHT
+    path: pci0000:00/0000:00:00.0
+    ifname_hint: wlan5
