@@ -1,9 +1,5 @@
 ---
 target: octeon/generic
 
-# Since this was fixed upstream this has to be commented out when going > 22.03
-imagebuilder: "https://downloads.cdn.openwrt.org/releases/{{ openwrt_version }}/targets/{{ target }}/openwrt-imagebuilder-{{ openwrt_version }}-octeon.Linux-x86_64.tar.xz"
-
-imagebuilder_filename: "{{ imagebuilder | basename }}"
 target__packages__to_merge:
   - naywatch
