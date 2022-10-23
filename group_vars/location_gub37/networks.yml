@@ -50,10 +50,10 @@ networks:
 
   - vid: 22
     role: mesh
-    name: mesh_hof_n_5
+    name: mesh_hof_s
     prefix: 10.31.157.13/32
     ipv6_subprefix: -5
-    mesh_ap: gub37-hof-n-5
+    mesh_ap: gub37-hof-s
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm: ['default 0.3']
@@ -90,10 +90,10 @@ networks:
       gub37-sama: 2
       gub37-zwingli: 3
       gub37-emma: 4
-      gub37-hof-n-5: 5
+      gub37-hof-s: 5
       gub37-hof-w: 6
 
 
 location__channel_assignments_11a_standard__to_merge:
-  gub37-hof-n-5: 36-80-11
+  gub37-hof-s: 36-80-11
   gub37-hof-w: 36-80-8
