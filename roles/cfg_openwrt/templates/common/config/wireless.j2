@@ -53,6 +53,13 @@ config wifi-device '{{ wd_id }}'
   {% if 'disabled' in wd_config %}
 	option disabled '{{ wd_config['disabled']|int }}'
   {% endif %}
+	option bss_transition '1'
+	option wnm_sleep_mode '1'
+	option time_advertisement '2'
+	option time_zone 'GMT0'
+	option ieee80211k '1'
+	option rrm_neighbor_report '1'
+	option rrm_beacon_report '1'
 
   {% for iface in wd_ifaces %}
     {% set mesh_net = false %}

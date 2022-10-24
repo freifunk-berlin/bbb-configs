@@ -12,6 +12,19 @@
     - airos_dfs_reset|default([])|length > 0
     - role == 'corerouter'
 
+- name: "Add Dawn + Luci app for corerouters"
+  set_fact:
+    packages: "{{ packages + [item] }}"
+  when:
+    - role == 'corerouter' or role == 'ap'
+    - not (low_mem | default(false))
+    - not (low_flash | default(false))
+    - bandsteering | default(false)
+  loop:
+    - dawn
+    - luci-app-dawn
+    - umdns
+
 - name: "Add tunnelmanager if configured"
   set_fact:
     packages: "{{ packages + ['falter-berlin-tunnelmanager'] }}"
