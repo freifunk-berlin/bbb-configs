@@ -31,6 +31,7 @@ networks:
       magda-ap2: 6
       magda-ap3: 7
       magda-ap4: 8
+      magda-ap-remise: 9
 
   - vid: 40
     role: dhcp
@@ -42,9 +43,11 @@ networks:
       magda-core: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  magda-ap1: 36-20
-  magda-ap2: 40-20
+  magda-ap1: 48-20
+  magda-ap2: 36-20
   magda-ap3: 44-20
+  magda-ap-remise: 36-40
+
 
 # channel-bandwith-txpower in dbm
 
@@ -52,3 +55,4 @@ location__channel_assignments_11a_standard__to_merge:
 # ap2: knast - 5ghz
 # ap3: kirche - 5ghz
 # ap4: knast - 2ghz
+# ap-remise: remise via haus netzwerk via media converter - dual band
