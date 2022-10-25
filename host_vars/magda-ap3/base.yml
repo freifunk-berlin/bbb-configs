@@ -6,3 +6,5 @@ model: "mikrotik_sxtsq-5-ac"
 
 mac_override:
   eth0: 08:55:31:54:63:0a
+
+wireless_profile: freifunk_default_owe_transition
