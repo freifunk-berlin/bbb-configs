@@ -56,13 +56,6 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # MESH - LAN
-  - vid: 10
-    role: mesh
-    name: mesh_lan
-    prefix: 10.31.137.50/32
-    ipv6_subprefix: -3
-
   # MGMT
   - vid: 42
     role: mgmt
@@ -76,8 +69,8 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  e16-core: 36-40-19
+  e16-core: 44-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  e16-core: 13-20-17
+  e16-core: 13-20

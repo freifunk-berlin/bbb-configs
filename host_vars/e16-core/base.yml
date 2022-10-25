@@ -2,6 +2,6 @@
 
 location: e16
 role: corerouter
-model: "tplink_eap225-outdoor-v1"
+model: "zyxel_nwa55axe"
 
 wireless_profile: freifunk_default
