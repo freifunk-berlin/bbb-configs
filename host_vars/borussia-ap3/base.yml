@@ -4,4 +4,16 @@ location: borussia
 role: ap
 model: "bananapi_bpi-r64"
 
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: platform/18000000.wmac
+    ifname_hint: wlan2
+  - name: 11a_standard # add some mt7615 card
+    band: 5g
+    htmode_prefix: VHT
+    path: 1a145000.pcie/pci0001:00/0001:00:01.0/0001:01:00.0
+    ifname_hint: wlan5
+
 wireless_profile: borussia
