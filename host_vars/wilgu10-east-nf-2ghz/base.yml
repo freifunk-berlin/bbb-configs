@@ -6,5 +6,3 @@ model: "mikrotik_sxtsq-2-lite"
 
 mac_override:
   eth0: 74:4d:28:d6:f9:0b
-
-wireless_profile: freifunk_default_owe_transition

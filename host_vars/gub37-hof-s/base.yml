@@ -3,5 +3,3 @@
 location: gub37
 role: ap
 model: "mikrotik_sxtsq-5-ac"
-
-wireless_profile: freifunk_default_owe_transition
