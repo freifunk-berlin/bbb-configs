@@ -1,0 +1,50 @@
+---
+ipv6_prefix: "2001:bf7:860:d00::/56"
+
+# Prefixes:
+# cafe_wostok_mesh: 10.31.161.152/29
+# cafe_wostok_mgmt: 10.31.107.224/28
+# cafe_wostok_dhcp: 10.31.179.192/26
+
+
+networks:
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.179.192/26
+    ipv6_subprefix: 0
+    assignments:
+      cafe-wostok-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.107.224/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      cafe-wostok-core: 1
+      cafe-wostok-switch: 2
+      cafe-wostok-ap1: 3
+      cafe-wostok-ap2: 4
+      cafe-wostok-ap-front: 4
+
+  - vid: 50
+    untagged: true
+    name: vpn_lte
+    role: ext
+    tunnel_wan_ip: 192.168.0.10/24
+    tunnel_wan_gw: 192.168.0.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.161.156/30
+
+
+location__channel_assignments_11a_standard__to_merge:
+  cafe-wostok-ap1: 44-40
+  cafe-wostok-core: 36-40
+
+location__channel_assignments_11g_standard__to_merge:
+  cafe-wostok-ap1: 1-20
+  cafe-wostok-core: 13-20
