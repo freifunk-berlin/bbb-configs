@@ -3,5 +3,3 @@
 location: wilgu10
 role: ap
 model: "ubnt_nanostation-ac-loco"
-
-wireless_profile: freifunk_default_owe_transition
