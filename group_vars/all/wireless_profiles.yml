@@ -206,13 +206,16 @@ wireless_profiles:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
 
       - mode: ap
-        ssid: colbe15.freifunk.net Encrypted
+        ssid: colbe15.freifunk.net OWE
+        hidden: true
         encryption: owe
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
         ieee80211w: 1
 
       - mode: ap
@@ -246,13 +249,16 @@ wireless_profiles:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
 
       - mode: ap
-        ssid: berlin.freifunk.net Encrypted
+        ssid: berlin.freifunk.net OWE
+        hidden: true
         encryption: owe
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
         ieee80211w: 1
 
       - mode: ap
@@ -286,13 +292,16 @@ wireless_profiles:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
 
       - mode: ap
-        ssid: berlin.freifunk.net Encrypted
+        ssid: berlin.freifunk.net OWE
+        hidden: true
         encryption: owe
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
         ieee80211w: 1
 
       - mode: ap
@@ -319,13 +328,16 @@ wireless_profiles:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
 
       - mode: ap
-        ssid: berlin.freifunk.net Encrypted
+        ssid: berlin.freifunk.net OWE
+        hidden: true
         encryption: owe
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
         ieee80211w: 1
 
       - mode: ap
