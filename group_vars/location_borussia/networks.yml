@@ -48,3 +48,16 @@ networks:
       borussia-core: 1
       borussia-ap1: 14
       borussia-ap2: 13
+      borussia-ap3: 12
+
+location__channel_assignments_11a_standard__to_merge:
+  borussia-ap1: 44-20
+  borussia-ap2: 48-20
+  borussia-ap3: 52-20
+  borussia-core: 36-20
+
+location__channel_assignments_11g_standard__to_merge:
+  borussia-ap1: 1-20
+  borussia-ap2: 6-20
+  borussia-ap3: 9-20
+  borussia-core: 13-20
