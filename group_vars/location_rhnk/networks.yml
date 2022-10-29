@@ -71,6 +71,15 @@ networks:
     prefix: 10.230.3.25/32
     ipv6_subprefix: -25
 
+  - vid: 30
+    role: mesh
+    name: mesh_nf_bvv
+    prefix: 10.230.3.30/32
+    ipv6_subprefix: -30
+    mesh_ap: rhnk-nf-bvv
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
   - vid: 40
     role: dhcp
     prefix: 10.230.3.64/26
@@ -120,4 +129,4 @@ networks:
       rhnk-ap3: 27
       rhnk-ap2: 28
       rhnk-ap1: 29
-      rhnk-platz: 30
+      rhnk-nf-bvv: 30
