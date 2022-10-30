@@ -1,7 +1,0 @@
----
-
-location: koepi
-role: ap
-model: "ubnt_nanostation-m5_xm"
-
-poe_on: [0]
