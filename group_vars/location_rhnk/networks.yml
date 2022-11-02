@@ -103,7 +103,7 @@ networks:
     assignments:
       rhnk-core: 1
 
-  - vid: 42
+  - vid: 420
     role: mgmt
     prefix: 10.31.153.0/27
     gateway: 1
