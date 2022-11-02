@@ -24,7 +24,7 @@ log "started. Registering with following labels: hostname: $hostname, role: $rol
 log "Retrieving IPv6 Address"
 
 mgmtdev=$(ubus call network.interface.mgmt status | jsonfilter -e '@.l3_device')
-mgmtip="$(ip -6 addr show "$mgmtdev" scope global | awk '{ match($0, /[0-9a-f:]+\/\d+\s/); ip = substr($0, RSTART, RLENGTH); print ip }' | grep . | head -n1)"
+mgmtip="$(ip -6 addr show "$mgmtdev" scope global | awk '{ match($0, /[0-9a-f:]+\/\d+/); ip = substr($0, RSTART, RLENGTH); print ip }' | grep . | head -n1 | cut -d'/' -f1)"
 
 if [[ "$mgmtip" != "2001:bf7:*" ]]; then
   log "Public IPv6 is not part of freifunk berlin prefix"
