@@ -26,6 +26,20 @@ networks:
     mesh_metric: 128
     ptp: true
 
+  - vid: 12
+    role: mesh
+    name: mesh_philmel60
+    prefix: 10.230.3.12/32
+    ipv6_subprefix: -12
+    ptp: true
+
+  - vid: 13
+    role: mesh
+    name: mesh_richardplatz
+    prefix: 10.230.3.13/32
+    ipv6_subprefix: -13
+    ptp: true
+
   - vid: 15
     role: mesh
     name: mesh_emma
@@ -105,6 +119,12 @@ networks:
       # AirFiber 60-LR, firmware v2.6.0
       rhnk-rhxb: 11
 
+      # Mikrotik Cube 60 Pro (dead)
+      rhnk-philmel-60ghz: 12
+
+      # Mikrotik Cube 60 Pro (dead)
+      rhnk-richardplatz: 13
+
       # Powerbeam 5AC 400 ISO, AirOS 8.7.11
       rhnk-emma: 15
 
@@ -113,9 +133,6 @@ networks:
 
       # Rocket 5AC Lite, AirOS 8.7.0
       rhnk-wsw-5ghz: 21
-
-      # Nanostation Loco M5, AirOS 6.3.6
-      rhnk-ono-5ghz: 22
 
       # Rocket 5AC Lite, AirOS 8.7.11
       rhnk-ssw-5ghz: 23
@@ -126,7 +143,7 @@ networks:
       # Rocket 5AC Lite
       rhnk-nno-5ghz: 25
 
-      rhnk-ap3: 27
-      rhnk-ap2: 28
-      rhnk-ap1: 29
+      rhnk-nf-nw-5ghz: 27
+      rhnk-nf-no-5ghz: 28
+      rhnk-nf-so-5ghz: 29
       rhnk-nf-bvv: 30
