@@ -3,3 +3,5 @@
 location: scharni
 role: ap
 model: "zyxel_nwa50ax"
+
+wireless_profile: freifunk_default_owe_transition
