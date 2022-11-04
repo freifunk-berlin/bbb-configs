@@ -34,6 +34,22 @@ networks:
 
   # 10.31.156.32/27 Mesh Prefix (32)
   # 11s mesh 5ghz
+  - vid: 10
+    role: mesh
+    name: mesh_sama
+    prefix: 10.31.156.32/32
+    ipv6_subprefix: -1
+    mesh_metric: 512
+    ptp: true
+  - vid: 11
+    role: mesh
+    name: mesh_zwingli
+    prefix: 10.31.156.33/32
+    ipv6_subprefix: -2
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.3']
+    # Ignore Uplink two Hops away / requires 0.3 LQM
+    ptp: true
   - vid: 18
     role: mesh
     name: mesh_11s_o5
