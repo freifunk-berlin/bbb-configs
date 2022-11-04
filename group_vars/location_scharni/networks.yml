@@ -24,7 +24,7 @@ networks:
     prefix: 10.31.252.194/32
     ipv6_subprefix: -4
     mesh_metric: 2048
-    mesh_ap: scharni-ap4
+    mesh_ap: scharni-ap3
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -48,18 +48,21 @@ networks:
       scharni-switch: 2
       scharni-sama: 3
       scharni-zwingli: 4
-      scharni-ap1: 30
-      scharni-ap2: 29
-      scharni-ap3: 28
-      scharni-ap4: 27
+      scharni-ap-kneipe: 10
+      scharni-ap-keller: 11
+      scharni-ap1: 12 # dachboden 1
+      scharni-ap2: 13 # dachboden 2
+      scharni-ap3: 14 # dachboden 3
 
 location_scharni__channel_assignments_11a_standard__to_merge:
-  scharni-ap1: 44-40
-  scharni-ap2: 44-40
-  scharni-ap3: 36-40
-  scharni-ap4: 36-20
+  scharni-ap1: 40-20
+  scharni-ap2: 44-20
+  scharni-ap3: 36-20
+  scharni-ap-kneipe: 36-40
+  scharni-ap-keller: 48-20
 
 location_scharni__channel_assignments_11g_standard__to_merge:
   scharni-ap1: 11-20
   scharni-ap2: 6-20
-  scharni-ap3: 1-20
+  scharni-ap-kneipe: 1-20
+  scharni-ap-keller: 6-20

@@ -2,4 +2,7 @@
 
 location: scharni
 role: ap
-model: "tplink_eap225-outdoor-v1"
+model: "mikrotik_sxtsq-5-ac"
+
+mac_override:
+  eth0: 48:8f:5a:b9:83:82
