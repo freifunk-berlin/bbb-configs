@@ -50,9 +50,9 @@ networks:
       scharni-zwingli: 4
       scharni-ap-kneipe: 10
       scharni-ap-keller: 11
-      scharni-ap1: 12 # dachboden 1
-      scharni-ap2: 13 # dachboden 2
-      scharni-ap3: 14 # dachboden 3
+      scharni-ap1: 12  # dachboden 1
+      scharni-ap2: 13  # dachboden 2
+      scharni-ap3: 14  # dachboden 3
 
 location_scharni__channel_assignments_11a_standard__to_merge:
   scharni-ap1: 40-20
