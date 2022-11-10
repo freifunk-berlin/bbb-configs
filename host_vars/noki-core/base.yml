@@ -3,4 +3,4 @@ location: noki
 role: corerouter
 model: "netgear_wax202"
 
-wireless_profile: freifunk_default
+wireless_profile: freifunk_default_owe_transition
