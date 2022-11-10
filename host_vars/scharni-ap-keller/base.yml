@@ -3,5 +3,3 @@
 location: scharni
 role: ap
 model: "tplink_eap225-outdoor-v1"
-
-wireless_profile: freifunk_default_owe_transition
