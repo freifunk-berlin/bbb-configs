@@ -1,0 +1,27 @@
+---
+openwrt_version: snapshot
+target: ipq40xx/generic
+override_target: "avm_fritzbox-4040"
+
+model__packages__to_merge:
+  - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"
+  - "kmod-ath10k ath10k-firmware-qca4019"
+
+dsa_ports:
+  - lan1
+  - lan2
+  - lan3
+  - lan4
+  - wan
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: VHT
+    path: platform/soc/a800000.wifi
+    ifname_hint: wlan5
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: platform/soc/a000000.wifi
+    ifname_hint: wlan2
