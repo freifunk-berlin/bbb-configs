@@ -4,4 +4,4 @@ location: e16outdoor
 role: corerouter
 model: "tplink_eap225-outdoor-v1"
 
-wireless_profile: freifunk_default_owe_transition
+wireless_profile: freifunk_default
