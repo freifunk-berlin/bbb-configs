@@ -5,14 +5,12 @@ config system
         option ttylogin '0'
         option log_size '64'
         option urandom_seed '0'
+        option compat_version '9.9' # hardcoded to a bbb-configs exclusive version identifier, matches patch in image builder, because we dont retain device config.
 {% if role == 'corerouter' or role  == 'uplink_gateway' %}
 	option latitude '{{ latitude|default(0) }}'
 	option longitude '{{ longitude|default(0) }}'
 	option altitude '60.000000000000000'
 	option location '{{ location_nice|default(location) }}'
-{% endif %}
-{% if dsa_ports is defined %}
-	option compat_version '{{ compat_version }}'
 {% endif %}
 
 config timeserver 'ntp'

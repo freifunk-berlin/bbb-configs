@@ -38,5 +38,3 @@ all_sysctl__to_merge:
 
   # especially on low mem devices this is important
   vm.min_free_kbytes: 1024
-
-compat_version: 1.0
