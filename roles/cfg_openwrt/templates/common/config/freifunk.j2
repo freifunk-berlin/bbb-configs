@@ -12,7 +12,7 @@ config public 'contact'
 {% if contact_email is defined %}
 	{{ contact_email_depr | mandatory('The option "contact_email" in location/general.yml is deprecated. Please rename that flag to "contacts" and make sure to transform it into to a list.') }}
 {% elif community is true and contacts is undefined %}
-	option mail 'info+{{ inventory_hostname }}@berlin.freifunk.net'
+	option mail 'info+{{ location }}@berlin.freifunk.net'
 {% else %}
 {% for contact in contacts | mandatory('Please add at least one contact information via the contacts-flag in location/general.yml. Fellow Freifunkas need to be able to contact you in case they want to mesh with you!') %}
 	list contact '{{ contact }}'
