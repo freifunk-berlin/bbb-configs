@@ -1,0 +1,35 @@
+---
+ipv6_prefix: "2001:bf7:750:5600::/56"
+
+# Halle got following prefixes:
+# Router: 10.31.184.64/27
+# --MGMT: 10.31.184.64/28
+# --MESH: 10.31.184.80/28
+# --DHCP: 10.31.186.0/26
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_rhxb
+    prefix: 10.31.184.80/32
+    ipv6_subprefix: -1
+
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.186.0/26
+    ipv6_subprefix: 0
+    assignments:
+      halle-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.184.64/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      halle-core: 1
+      halle-rhxb: 2
