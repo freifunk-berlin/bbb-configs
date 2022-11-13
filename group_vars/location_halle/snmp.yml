@@ -1,0 +1,6 @@
+---
+
+snmp_devices:
+  - hostname: halle-rhxb
+    address: 10.31.184.66
+    snmp_profile: airos_8
