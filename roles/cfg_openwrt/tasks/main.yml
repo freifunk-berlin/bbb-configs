@@ -54,6 +54,21 @@
     - poemgr_ports is defined
   tags: always
 
+- name: "Make sure /lib/firmware is present"
+  file:
+    dest: "{{ config_path }}/lib/firmware/ath10k"
+    state: directory
+    recurse: true
+  when: ath10k_ct_fwcfg is defined
+  tags: always
+
+- name: "Configure ath10k-ct driver"
+  copy:
+    dest: "{{ config_path }}/lib/firmware/ath10k/fwcfg-{{ item.id }}.txt"
+    content: "{{ item.config }}"
+  loop: "{{ ath10k_ct_fwcfg | default([]) }}"
+  tags: always
+
 - name: Include fix_permissions.yml
   include_tasks:
     file: fix_permissions.yml

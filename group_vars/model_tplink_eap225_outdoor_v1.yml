@@ -1,10 +1,6 @@
 ---
 target: ath79/generic
 
-model__packages__to_merge:
-  - "-kmod-ath10k-ct -ath10k-firmware-qca9888-ct"
-  - "kmod-ath10k-smallbuffers ath10k-firmware-qca9888"
-
 int_port: eth0
 
 wireless_devices:
@@ -18,3 +14,12 @@ wireless_devices:
     htmode_prefix: HT
     path: platform/ahb/18100000.wmac
     ifname_hint: wlan2
+
+
+ath10k_ct_fwcfg:
+  - id: pci-0000:00:00.0
+    config: |
+      vdevs = 4
+      peers = 96
+      active_peers = 96
+      stations = 96
