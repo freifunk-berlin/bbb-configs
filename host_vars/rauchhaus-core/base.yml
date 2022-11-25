@@ -2,6 +2,6 @@
 
 location: rauchhaus
 role: corerouter
-model: "tplink_tl-wdr4900-v1"
+model: "tplink_archer-c7-v5"
 
 wireless_profile: rauchhaus
