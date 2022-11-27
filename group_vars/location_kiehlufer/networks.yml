@@ -93,6 +93,7 @@ networks:
       kiehlufer-nf-wbp1: 6
       kiehlufer-nf-wbp2: 7
       kiehlufer-nf-wbp3: 8
+      kiehlufer-nf-wbp4: 9
       kiehlufer-huette: 10
 
 location__channel_assignments_11a_standard__to_merge:
