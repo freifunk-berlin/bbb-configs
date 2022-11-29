@@ -1,0 +1,6 @@
+---
+
+snmp_devices:
+  - hostname: dragonkiez-dorfplatz-rhxb
+    address: 10.31.34.46
+    snmp_profile: airos_8
