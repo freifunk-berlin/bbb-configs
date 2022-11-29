@@ -1,0 +1,65 @@
+---
+ipv6_prefix: "2001:bf7:830:b3c0::/58"
+
+# 10.31.177.160/27
+# Dragonerareal 2001:bf7:830:b300::/56
+#   Buero      2001:bf7:830:b300::/58
+#   Dorfplatz  2001:bf7:830:b340::/58
+#   clubmiami  2001:bf7:830:b380::/58
+#   Adlerhalle 2001:bf7:830:b3c0::/58
+# DHCP: 10.31.187.128/25
+# UPLINK: 10.31.34.44/30
+# 802.11s MESH:
+#   core 10.31.23.28 10.31.23.32
+
+networks:
+  - vid: 10
+    name: mesh_rhxb
+    role: mesh
+    prefix: 10.31.34.44/30
+    ipv6_subprefix: -1
+    metric: 1024
+    ptp: true
+    assignments:
+      dragonkiez-adlerhalle: 1
+      dragonkiez-adlerhalle-rhxb: 2
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.31.187.128/25
+    ipv6_subprefix: 0
+    assignments:
+      dragonkiez-adlerhalle: 1
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.31.23.28/32
+    ipv6_subprefix: -2
+    mesh_ap: dragonkiez-adlerhalle
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.31.23.32/32
+    ipv6_subprefix: -3
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: dragonkiez-adlerhalle
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  dragonkiez-adlerhalle: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  dragonkiez-adlerhalle: 13-20
