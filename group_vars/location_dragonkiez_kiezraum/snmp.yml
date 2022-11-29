@@ -1,6 +1,6 @@
 ---
 
 snmp_devices:
-  - hostname: dragonkiez-rhxb
+  - hostname: dragonkiez-kiezraum-rhxb
     address: 10.31.92.226
     snmp_profile: airos_6
