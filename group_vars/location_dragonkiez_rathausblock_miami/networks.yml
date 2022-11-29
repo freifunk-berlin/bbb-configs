@@ -1,0 +1,95 @@
+---
+ipv6_prefix: "2001:bf7:830:b380::/58"
+
+# Dragonerareal 2001:bf7:830:b300::/56
+#   Buero      2001:bf7:830:b300::/58
+#   Dorfplatz  2001:bf7:830:b340::/58
+#   clubmiami  2001:bf7:830:b380::/58
+#   Adlerhalle 2001:bf7:830:b3c0::/58
+# DHCP: 10.31.187.0/25
+# UPLINK: 10.31.30.32/30
+# 802.11s MESH:
+#   ap1 10.31.30.24 10.31.30.25
+#   ap2 10.31.30.26 10.31.30.27
+
+networks:
+  - vid: 10
+    name: mesh_rhxb
+    role: mesh
+    prefix: 10.31.30.32/30
+    ipv6_subprefix: -1
+    metric: 1024
+    ptp: true
+    assignments:
+      dragonkiez-rathausblock-miami: 1
+      dragonkiez-rathausblock-miami-rhxb: 2
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.31.187.0/25
+    ipv6_subprefix: 0
+    gateway: 1
+    dns: 1
+    assignments:
+      dragonkiez-rathausblock-miami: 1
+      dragonkiez-rathausblock-miami-ap1: 2
+      dragonkiez-rathausblock-miami-ap2: 3
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz_ap1
+    prefix: 10.31.30.24/32
+    ipv6_subprefix: -2
+    mesh_ap: dragonkiez-rathausblock-miami-ap1
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz_ap1
+    prefix: 10.31.30.25/32
+    ipv6_subprefix: -3
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: dragonkiez-rathausblock-miami-ap1
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 5 GHz 802.11s AP1
+  - vid: 22
+    role: mesh
+    name: mesh_5ghz_ap2
+    prefix: 10.31.30.26/32
+    ipv6_subprefix: -4
+    mesh_ap: dragonkiez-rathausblock-miami-ap2
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s AP1
+  - vid: 23
+    role: mesh
+    name: mesh_2ghz_ap2
+    prefix: 10.31.30.27/32
+    ipv6_subprefix: -5
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: dragonkiez-rathausblock-miami-ap2
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  dragonkiez-rathausblock-miami-ap1: 36-40
+  dragonkiez-rathausblcok-miami-ap2: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  dragonkiez-rathausblock-miami-ap1: 13-20
+  dragonkiez-rathausblcok-miami-ap2: 13-20
