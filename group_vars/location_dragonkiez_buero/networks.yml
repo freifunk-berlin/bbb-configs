@@ -21,7 +21,7 @@ networks:
     ptp: true
     assignments:
       dragonkiez-buero: 1
-      dragonkiez-buero-rhnk: 2
+      dragonkiez-buero-rhxb: 2
 
   - vid: 40
     role: dhcp
