@@ -89,6 +89,7 @@ networks:
   - vid: 10                   # vlan-id
     role: mesh                # what this vlan does (mesh vs. dhcp)
     name: mesh_sama
+    ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for point to point connections by ignoring the hidden node problem
     prefix: 10.31.83.60/32    # single ipv4-address for meshing
     ipv6_subprefix: -1        # take an address from the back of the IPv6-block
 
