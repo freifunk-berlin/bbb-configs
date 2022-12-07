@@ -8,7 +8,8 @@ This guide explains the directory structure of the project and variables within 
 
 ### all/
 
-This directory holds base configuration options that will be inserted into every router configuration. Each device will get this options, like timezones, DNS-servers, the packagefeed-URL and so on.
+This directory holds base configuration options that will be inserted into every router configuration. Each device will
+get this options, like timezones, DNS-servers, the packagefeed-URL and so on.
 
 There are also files for the standard ssh keys and definitions for the wifi profiles.
 
@@ -39,21 +40,27 @@ wireless_devices:                       # definitions for the devices radios
     ifname_hint: wlan2
 ```
 
-Possible values for band are 2g for 2.4 GHz, 5g for 5 GHz, 6g for 6 GHz and 60g for 60 GHz. Band replaces hwmode since 21.02.2.
+Possible values for band are 2g for 2.4 GHz, 5g for 5 GHz, 6g for 6 GHz and 60g for 60 GHz.
+Band replaces hwmode since 21.02.2.
 
-Possible values for htmode_prefix are HT (802.11n), VHT (802.11ac) and HE (802.11ax). The htmode_prefix setting corresponds with the htmode option.
+Possible values for htmode_prefix are HT (802.11n), VHT (802.11ac) and HE (802.11ax).
+The htmode_prefix setting corresponds with the htmode option.
 
 For a model using DSA instead of swconfig, you may refer to [`model_ubnt_edgerouter_x_sfp.yml`](https://github.com/Freifunk-Spalter/bbb-configs/blob/master/group_vars/model_ubnt_edgerouter_x_sfp.yml)
 
-Note: If you want to create a new model_file you can have a look at `/etc/config/wireless` on a standard OpenWRT install to obtain the path information for the wireless_devices.
+Note: If you want to create a new model_file you can have a look at `/etc/config/wireless` on a standard OpenWRT
+install to obtain the path information for the wireless_devices.
 
 ### location-directories
 
-When defining a new location, you need to create a directory named like `location_$NAME/`. In that directory goes the location specific configuration. It consists of several files. You can override the variables defined from the `all` directory by creating a file named like that one in `all/` and redefine any variable.
+When defining a new location, you need to create a directory named like `location_$NAME/`. In that directory goes the
+location specific configuration. It consists of several files. You can override the variables defined from the `all`
+directory by creating a file named like that one in `all/` and redefine any variable.
 
 #### general.yml
 
-This file might be fairly self-explanatory. Please mind that a contact is mandatory. _If you don't like to give your email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net)_.
+This file might be fairly self-explanatory. Please mind that a contact is mandatory. _If you don't like to give your
+email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net)_.
 
 ```yml
 ---
@@ -78,13 +85,18 @@ longitude: 13.443380903
 
 #### networks.yml
 
-This file is the most important one of your setup. It defines IP-Addresses, WIFI-Properties, Mesh and so on. Lets have a (shortened) example of a `networks.yml` from the magda-location:
+This file is the most important one of your setup. It defines IP-Addresses, WIFI-Properties, Mesh and so on. Lets have
+a (shortened) example of a `networks.yml` from the magda-location:
 
 ```yml
 ---
+
+# mesh: 10.31.83.60/30	      # add a overview of all reserved adresses at the top as a comment
+# dhcp: 10.31.83.192/26
+# mgmt: 10.31.83.112/28
+
 ipv6_prefix: "2001:bf7:860::/56"
 
-# Mesh: 10.31.83.60/30
 networks:
   - vid: 10                   # vlan-id
     role: mesh                # what this vlan does (mesh vs. dhcp)
@@ -158,18 +170,20 @@ tunnel can be an easy and safe solution. In that case add another vlan to the ne
 ```
 
 The values of the Babel Metric and the OLSR LQM influence how the uplink works. If the uplink tunnel is intended
-as a backup connection, and you see traffic flow through the tunnel, you should set a higher value for the babeld metric
-and a lower value for the OLSR LQM. The lowest possible LQM value is 0.2. Below that value the uplink will not work.
+as a backup connection, and you see traffic flow through the tunnel, you should set a higher value for the babeld
+metric and a lower value for the OLSR LQM. The lowest possible LQM value is 0.2. Below that value the uplink will
+not work.
 
 If there are routes via the tunnels the following command will show a non empty result, when run on the node
-`(echo /routes | nc 127.0.0.1 9090) | grep '"networkInterface": "wg_'`. In this case you should adjust the link metrics for
-uplinks that should only act as backup connection.
+`(echo /routes | nc 127.0.0.1 9090) | grep '"networkInterface": "wg_'`. In this case you should adjust the link metrics
+for uplinks that should only act as backup connection.
 
 If you have multiple uplinks and want one to be prefered, set different link metrics for the different uplinks.
 
 #### ssh-key.yml and ssh-keys.yml
 
-By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys a `ssh-key.yml` file can be created with additional keys in the following format:
+By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys a 
+`ssh-key.yml` file can be created with additional keys in the following format:
 
 ```yml
 ---
@@ -178,7 +192,8 @@ location__ssh_keys__to_merge:
     key: ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Keyname
 ```
 
-If you do not want the ssh-keys within `all/ssh-keys.yml` installed, you can create a `ssh-keys.yml` file that replaces the default file:
+If you do not want the ssh-keys within `all/ssh-keys.yml` installed, you can create a `ssh-keys.yml` file that replaces
+the default file:
 
 ```yml
 ---
@@ -189,7 +204,8 @@ ssh_keys:
 
 #### snmp.yml
 
-The file holds information about SNMP enabled devices and the corresponding SNMP profiles. The core router will collect and report statistics for the devices.
+The file holds information about SNMP enabled devices and the corresponding SNMP profiles. The core router will collect
+and report statistics for the devices.
 
 ```yml
 ---
@@ -209,7 +225,8 @@ snmp_devices:
 
 #### airos_dfs_reset.yml
 
-The file holds information about airos devices and how to access them. The information is used to initiate a DFS reset within a specific time window after a DFS event was detected.
+The file holds information about airos devices and how to access them. The information is used to initiate a DFS reset
+within a specific time window after a DFS event was detected.
 
 ```yml
 ---
@@ -234,7 +251,9 @@ The `host-vars`-dir contains a host directory for every OpenWrt-device.
 
 ### host-directories
 
-When defining a new device within a location, you need to create a directory named like `example-core/`. The directory-name is the routers hostname. In that directory goes the device specific configuration. It consists of only one file, called `base.yml`.
+When defining a new device within a location, you need to create a directory named like `example-core/`.
+The directory-name is the routers hostname. In that directory goes the device specific configuration.
+It consists of only one file, called `base.yml`.
 
 #### base.yml
 
@@ -269,7 +288,8 @@ poe_on: [0,1,2,3]
 
 ## inventory/
 
-This is an internal diretory on which you don't need to care about now. If you like to learn mor on it, you might read the `README.md` file inside of it.
+This is an internal diretory on which you don't need to care about now. If you like to learn mor on it, you might read
+the `README.md` file inside of it.
 
 ## roles/
 
