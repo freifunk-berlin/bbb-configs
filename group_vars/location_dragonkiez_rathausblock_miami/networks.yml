@@ -40,7 +40,7 @@ networks:
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
-    name: mesh_5ghz_ap1
+    name: mesh5_ap1
     prefix: 10.31.30.24/32
     ipv6_subprefix: -2
     mesh_ap: dragonkiez-rathausblock-miami-ap1
@@ -50,7 +50,7 @@ networks:
   # MESH - 2.4 GHz 802.11s
   - vid: 21
     role: mesh
-    name: mesh_2ghz_ap1
+    name: mesh2_ap1
     prefix: 10.31.30.25/32
     ipv6_subprefix: -3
     # make mesh_metric(s) for 2GHz worse than 5GHz
@@ -63,7 +63,7 @@ networks:
   # MESH - 5 GHz 802.11s AP1
   - vid: 22
     role: mesh
-    name: mesh_5ghz_ap2
+    name: mesh5_ap2
     prefix: 10.31.30.26/32
     ipv6_subprefix: -4
     mesh_ap: dragonkiez-rathausblock-miami-ap2
@@ -73,7 +73,7 @@ networks:
   # MESH - 2.4 GHz 802.11s AP1
   - vid: 23
     role: mesh
-    name: mesh_2ghz_ap2
+    name: mesh2_ap2
     prefix: 10.31.30.27/32
     ipv6_subprefix: -5
     # make mesh_metric(s) for 2GHz worse than 5GHz
