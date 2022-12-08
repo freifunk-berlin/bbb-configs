@@ -63,7 +63,7 @@ networks:
   # MESH - 5 GHz 802.11s AP1
   - vid: 22
     role: mesh
-    name: mesh_5ghz_ap1
+    name: mesh5_ap1
     prefix: 10.31.28.246/32
     ipv6_subprefix: -4
     mesh_ap: dragonkiez-dorfplatz-ap1
@@ -73,7 +73,7 @@ networks:
   # MESH - 2.4 GHz 802.11s AP1
   - vid: 23
     role: mesh
-    name: mesh_2ghz_ap1
+    name: mesh2_ap1
     prefix: 10.31.28.247/32
     ipv6_subprefix: -5
     # make mesh_metric(s) for 2GHz worse than 5GHz
