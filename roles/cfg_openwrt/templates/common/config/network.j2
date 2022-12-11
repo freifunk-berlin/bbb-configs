@@ -63,8 +63,13 @@ config interface '{{ name }}'
   {% endif %}
   {% if role == 'corerouter' and ipv6_prefix is defined %}
     {% if 'ipv6_subprefix' in network %}
-      {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
-	option ip6addr '{{ subprefix | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
+      {% set subprefix = ipv6_prefix | ipsubnet('60', network['ipv6_subprefix']) %}
+      {% if name == 'dhcp' %}
+	option ip6addr '{{ subprefix | ipaddr(1) | ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
+	option delegate '1'
+      {% else %}
+	option ip6addr '{{ subprefix | ipaddr(1) | ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
+      {% endif %}
     {% endif %}
   {% endif %}
 
