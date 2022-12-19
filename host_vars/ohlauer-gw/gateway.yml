@@ -1,9 +1,8 @@
 ---
 ipv6_prefix: 2001:bf7:830:8300::/56
 
-# ipv4: 10.31.166.248/29
-# mgmt: 10.31.166.248/30
-# mesh: 10.31.166.252/30
+# mgmt: 10.31.166.248/29
+# mesh: 10.31.11.96/29
 
 uplink:
   ifname: lan0
@@ -12,16 +11,17 @@ uplink:
 
 mgmt:
   ifname: lan3.42
-  ipv4: 10.31.166.249/30
+  ipv4: 10.31.166.249/29
   ipv6: 2001:bf7:830:8300::/64
 
 # .249 gw
-# .250 ohlauer-emma
+# .250 switch
+# .251 ohlauer-emma
 
 mesh_links:
   - name: mesh_emma
     ifname: lan3.10
-    ipv4: 10.31.166.252/32
+    ipv4: 10.31.11.96/32
     ipv6: 2001:bf7:830:8301::/128
     metric: 256
     ptp: true
