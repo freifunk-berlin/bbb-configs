@@ -1,5 +1,13 @@
 ---
 snmp_devices:
+  - hostname: emma-ohlauer
+    address: 10.31.11.18
+    snmp_profile: mikrotik_60g
+
+  - hostname: ohlauer-emma
+    address: 10.31.166.251
+    snmp_profile: mikrotik_60g
+
   - hostname: emma-nno-5ghz
     address: 10.31.11.20
     snmp_profile: airos_8
