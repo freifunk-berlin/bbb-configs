@@ -6,7 +6,6 @@ ipv6_prefix: "2001:bf7:820:1500::/56"
 # Mesh Network: 10.230.2.16/28 (-23)
 # DHCP Network: 10.230.2.32/28
 
-
 networks:
   - vid: 2
     role: dhcp
@@ -18,35 +17,37 @@ networks:
     assignments:
       philmel-core: 1
 
+  # northeast mesh 5GHz ac
   - vid: 10
     role: mesh
-    name: mesh_nord
+    name: mesh_no_5ghz         # Peers: kiehlufer-core
     prefix: 10.230.2.17/32
     ipv6_subprefix: -1
     mesh_metric: 1024
 
+  # northwest mesh 5GHz ac
   - vid: 11
     role: mesh
-    name: mesh_nord_5ac
+    name: mesh_nw_5ghz          # Peers: liegewiese, sgfrd-core
     prefix: 10.230.2.18/32
     ipv6_subprefix: -2
     mesh_metric: 1024
 
-  - vid: 12
+   - vid: 12
     role: mesh
     name: mesh_ost            # Peers: Area51, delbrueck66
     prefix: 10.230.2.19/32
     ipv6_subprefix: -3
     mesh_metric: 1024
 
-  - vid: 13
+   - vid: 13
     role: mesh
     name: mesh_vaterhaus
     prefix: 10.230.2.20/32
     ipv6_subprefix: -4
     mesh_metric: 1024
 
-  - vid: 14
+   - vid: 14
     role: mesh
     name: mesh_sued           # Peers: kranold18, GSBS2
     prefix: 10.230.2.21/32
@@ -55,7 +56,7 @@ networks:
 
   - vid: 15
     role: mesh
-    name: mesh_sued_5ac
+    name: mesh_sued_5ghz
     prefix: 10.230.2.22/32
     ipv6_subprefix: -6
     mesh_metric: 1024
@@ -66,7 +67,7 @@ networks:
     prefix: 10.230.2.23/32
     ipv6_subprefix: -7
     mesh_metric: 1024
-
+  
   - vid: 17
     role: mesh
     name: mesh_ak36
@@ -75,7 +76,7 @@ networks:
     ptp: true
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.3']  # prefer rhnk link
-
+  
   - vid: 18
     role: mesh
     name: mesh_rhnk
@@ -83,6 +84,14 @@ networks:
     ipv6_subprefix: -9
     ptp: true
     mesh_metric: 128
+
+  - vid: 19
+    role: mesh
+    name: mesh_nw_60ghz
+    prefix: 10.230.2.26/32
+    ipv6_subprefix: -10
+    ptp: true
+    mesh_metric: 1024
 
   - vid: 42
     role: mgmt
@@ -92,14 +101,18 @@ networks:
     ipv6_subprefix: 1
     assignments:
       philmel-core: 1
-      philmel-switch1: 2
-      philmel-switch2: 3
+      philmel-switch-1: 2
+      philmel-switch-2: 3
       philmel-rhnk: 4
-      philmel-nord: 5
-      philmel-nord-5ac: 6
-      philmel-ost: 7
+      philmel-no-5ghz: 5
+      philmel-nw-5ghz: 6
+      philmel-ost-legacy: 7
       philmel-vaterhaus: 8
-      philmel-sued: 9
-      philmel-sued-5ac: 10
-      philmel-west: 11
+      philmel-sued-legacy: 9
+      philmel-sued-5ghz: 10
       philmel-ak36: 12
+      philmel-west-legacy: 11
+      philmel-nw-60ghz: 14
+
+
+
