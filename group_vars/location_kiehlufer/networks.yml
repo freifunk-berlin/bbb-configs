@@ -78,7 +78,7 @@ networks:
     assignments:
       kiehlufer-core: 1
 
-  - vid: 42
+  - vid: 421
     role: mgmt
     prefix: 10.31.82.208/28
     gateway: 1
