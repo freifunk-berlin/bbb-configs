@@ -51,6 +51,17 @@ networks:
     assignments:
       elsekiehl-core: 1
 
+  # WIREGUARD
+  - vid: 50
+    name: prdhcp
+    role: ext
+    untagged: true
+    tunnel_wan_ip: 192.168.178.2/24
+    tunnel_wan_gw: 192.168.178.1
+    tunnel_connections: 2
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.179.40/29
+
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
   elsekiehl-core: 36-20
