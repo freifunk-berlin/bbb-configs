@@ -28,8 +28,10 @@ mgmt:
 # .134 ak36-dtmb
 # .135 ak36-friedenau
 # .135 ak36-m2
-# .136
+# .136 ak36-rhnk
 # .137
+# ...
+# .158
 
 # Mesh Network: 10.31.130.160/27
 mesh_links:
@@ -66,6 +68,13 @@ mesh_links:
     ipv4: 10.31.130.164/32
     ipv6: 2001:bf7:750:4001::5/128
     metric: 1024
+    ptp: true
+
+  - name: mesh_rhnk
+    ifname: eth7
+    ipv4: 10.31.130.165/32
+    ipv6: 2001:bf7:750:4001::6/128
+    metric: 256
     ptp: true
 
 # Downlink IPv4 is in net announced by emma.
