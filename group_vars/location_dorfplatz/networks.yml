@@ -40,6 +40,7 @@ networks:
       dorfplatz-ap1: 14
       dorfplatz-ap2: 13
       dorfplatz-ap3: 12
+      dorfplatz-keimzelle: 11
 
 location__channel_assignments_11a_standard__to_merge:
   dorfplatz-ap1: 36-20
