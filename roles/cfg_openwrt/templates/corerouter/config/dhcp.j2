@@ -18,6 +18,15 @@ config dnsmasq
         list server '{{ _dns_server }}'
 {% endfor %}
 
+{% for network in networks | selectattr('role', 'equalto', 'mgmt') %}
+  {% for host, ip_num in network['assignments'].items() %}
+config domain '{{ host | replace('-', '_') }}_olsr'
+	option name '{{ host }}.olsr'
+	option ip '{{ network['prefix'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }}'
+
+  {% endfor %}
+{% endfor %}
+
 {% for network in networks | rejectattr('role', 'in', ['ext', 'mesh']) %}
     {% set name = network['name'] if 'name' in network else network['role'] %}
 
