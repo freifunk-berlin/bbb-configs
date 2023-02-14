@@ -20,6 +20,7 @@ all__packages__to_merge:
   - vnstat
   - -wpad-basic
   - -wpad-basic-wolfssl
+  - -wpad-basic-mbedtls
   - hostapd-wolfssl
   - ip6tables                  # Its not pulled in by default anymore bc fw4
   - nftables
@@ -28,6 +29,7 @@ all__packages__to_merge:
   - -ppp-mod-pppoe
 
 all_luci_base__packages__to_merge:
+  - -libustream-mbedtls
   - libustream-wolfssl
   - px5g-wolfssl
   - uhttpd
