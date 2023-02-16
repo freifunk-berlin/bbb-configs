@@ -1,17 +1,59 @@
 ---
 ipv6_prefix: "2001:bf7:820:e00::/56"
 
-# Klunker got following prefixes: 10.31.71.144/28
-# --MGMT: 10.31.71.144/29
+# Klunker got following prefixes:
+# --MGMT: 10.31.191.176/28
 # --MESH: 10.31.71.152/29
 # --DHCP: 10.31.178.0/25
 
 networks:
+  # PtP mesh to Rathaus Neukölln 60GHz
+  # Mikrotik CubeSA
   - vid: 10
     role: mesh
     name: mesh_rhnk
     prefix: 10.31.71.152/32
     ipv6_subprefix: -1
+    ptp: true
+
+  # PtP mesh down south 60GHz
+  # Airfiber 60LR Link to philmel church
+  - vid: 11
+    role: mesh
+    name: mesh_philmel
+    prefix: 10.31.71.153/32
+    ipv6_subprefix: -2
+    ptp: true
+
+  # AP1 down Isarstrasse 5GHz
+  # directing south-southeast
+  - vid: 12
+    role: mesh
+    name: mesh_sse
+    prefix: 10.31.71.154/32
+    ipv6_subprefix: -3
+    mesh_ap: klunker-nf-sse-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # mesh down Erlanger Str. 5GHz
+  # directing north-northwest
+  - vid: 13
+    role: mesh
+    name: mesh_nnw
+    prefix: 10.31.71.155/32
+    ipv6_subprefix: -4
+    mesh_ap: klunker-nf-nnw-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # 5GHz backup link to rhnk sector
+  - vid: 14
+    role: mesh
+    name: mesh_rhnk_5ghz
+    prefix: 10.31.71.156/32
+    ipv6_subprefix: -5
+    ptp: true
 
   - vid: 40
     role: dhcp
@@ -24,11 +66,20 @@ networks:
 
   - vid: 42
     role: mgmt
-    prefix: 10.31.71.144/29
+    prefix: 10.31.191.176/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
       klunker-core: 1
-      klunker-poe: 2
+      klunker-switch: 2
       klunker-rhnk: 3
+      klunker-philmel: 4
+      klunker-rhnk-5ghz: 5
+      klunker-nf-nnw-5ghz: 6
+      klunker-nf-sse-5ghz: 7
+      klunker-ap-bibliothek-5ghz: 8
+
+location__channel_assignments_11a_standard__to_merge:
+  klunker-nf-sse-5ghz: 36-20
+  klunker-nf-nnw-5ghz: 44-20
