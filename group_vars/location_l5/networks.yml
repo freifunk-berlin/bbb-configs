@@ -1,0 +1,47 @@
+---
+
+# 10.31.161.160/29 - mgmt
+# 10.31.191.160/29 - mesh
+# 10.31.194.0/25 - dhcp
+
+ipv6_prefix: "2001:bf7:830:b600::/56"
+
+networks:
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.31.194.0/25
+    ipv6_subprefix: -1
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      l5-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.161.160/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      l5-core: 1
+      l5-switch: 2
+      l5-nf-w: 3
+      l5-nf-o: 4
+
+  - vid: 50
+    role: ext
+    name: wireguard
+    tunnel_wan_ip: 192.168.0.2/24
+    tunnel_wan_gw: 192.168.0.1
+    tunnel_connections: 1
+    tunnel_timeout: 600
+    tunnel_mtu: 1400
+    tunnel_mesh_prefix_ipv4: 10.31.191.160/29
+    untagged: true
+
+location__channel_assignments_11a_standard__to_merge:
+  l5-core: 36-20
+  l5-nf-o: 40-20
+  l5-nf-w: 44-20

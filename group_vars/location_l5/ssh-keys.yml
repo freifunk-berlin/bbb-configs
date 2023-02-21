@@ -1,0 +1,6 @@
+---
+location__ssh_keys__to_merge:
+  - comment: Hener
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEST9QsXtphN7BYb5p9FhxZTxvoWkICfRWC54SN/QHII
+  - comment: Lino
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaljQHr4Nj6veeDi51BZjy/a3WXP
