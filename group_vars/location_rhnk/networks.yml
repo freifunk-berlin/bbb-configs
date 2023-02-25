@@ -26,6 +26,7 @@ networks:
     mesh_metric: 128
     ptp: true
 
+  # TODO: remove me, i'm not used anymore
   - vid: 12
     role: mesh
     name: mesh_philmel60
@@ -38,6 +39,13 @@ networks:
     name: mesh_richardplatz
     prefix: 10.230.3.13/32
     ipv6_subprefix: -13
+    ptp: true
+
+  - vid: 14
+    role: mesh
+    name: mesh_klunker60
+    prefix: 10.230.3.14/32
+    ipv6_subprefix: -14
     ptp: true
 
   - vid: 15
@@ -60,12 +68,6 @@ networks:
     name: mesh_wsw_5
     prefix: 10.230.3.21/32
     ipv6_subprefix: -21
-
-  - vid: 22
-    role: mesh
-    name: mesh_ono_5
-    prefix: 10.230.3.22/32
-    ipv6_subprefix: -22
 
   - vid: 23
     role: mesh
@@ -94,6 +96,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
+  # TODO: remove me, rhnk-bvv link is only 2ghz
   - vid: 30
     role: mesh
     name: mesh_nf_bvv
@@ -102,6 +105,24 @@ networks:
     mesh_ap: rhnk-nf-bvv
     mesh_radio: 11a_standard
     mesh_iface: mesh
+
+  - vid: 31
+    role: mesh
+    name: mesh_nf_nw
+    prefix: 10.230.3.27/32
+    ipv6_subprefix: -31
+
+  - vid: 32
+    role: mesh
+    name: mesh_nf_no
+    prefix: 10.230.3.28/32
+    ipv6_subprefix: -32
+
+  - vid: 33
+    role: mesh
+    name: mesh_nf_so
+    prefix: 10.230.3.29/32
+    ipv6_subprefix: -33
 
   - vid: 40
     role: dhcp
@@ -128,11 +149,14 @@ networks:
       # AirFiber 60-LR, firmware v2.6.0
       rhnk-rhxb: 11
 
-      # Mikrotik Cube 60 Pro (dead)
+      # Mikrotik Cube 60 Pro - TODO: remove me, i'm not used
       rhnk-philmel-60ghz: 12
 
-      # Mikrotik Cube 60 Pro (dead)
+      # Mikrotik Cube 60 Pro
       rhnk-richardplatz: 13
+
+      # Mikrotik Cube 60 Pro
+      rhnk-klunker-60ghz: 14
 
       # Powerbeam 5AC 400 ISO, AirOS 8.7.11
       rhnk-emma: 15
@@ -152,7 +176,15 @@ networks:
       # Rocket 5AC Lite
       rhnk-nno-5ghz: 25
 
+      # SXTsq 5 ac
       rhnk-nf-nw-5ghz: 27
+
+      # SXTsq 5 ac
       rhnk-nf-no-5ghz: 28
+
+      # SXTsq 5 ac
       rhnk-nf-so-5ghz: 29
+
+      # EAP225-Outdoor with UMA-D antenna
+      # TODO: set explicit txpower to account for increased antenna gain
       rhnk-nf-bvv: 30
