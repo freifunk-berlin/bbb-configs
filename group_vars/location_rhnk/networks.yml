@@ -94,6 +94,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
+  # TODO: remove me, rhnk-bvv link is only 2ghz
   - vid: 30
     role: mesh
     name: mesh_nf_bvv
@@ -141,50 +142,52 @@ networks:
     ipv6_subprefix: 1
     assignments:
       rhnk-core: 1
+
+      # Mikrotik CRS328-24P-4S+RM - SwitchOS 2.13
       rhnk-switch: 2
 
-      # AirFiber 60-LR, firmware v2.6.0
+      # AirFiber 60-LR - firmware v2.6.0
       rhnk-philmel: 10
 
-      # AirFiber 60-LR, firmware v2.6.0
+      # AirFiber 60-LR - firmware v2.6.0
       rhnk-rhxb: 11
 
-      # Mikrotik Cube 60 Pro (dead)
+      # Mikrotik Cube 60 Pro - RouterOS 7.7
       rhnk-richardplatz: 13
 
-      # Mikrotik Cube 60 Pro, RouterOS 7.7
+      # Mikrotik Cube 60 Pro - RouterOS 7.7
       rhnk-klunker-60ghz: 14
 
-      # Powerbeam 5AC 400 ISO, AirOS 8.7.11
+      # Powerbeam 5AC 400 ISO - AirOS 8.7.11
       rhnk-emma: 15
 
-      # Rocket 5AC Lite, AirOS 8.7.11
+      # Rocket 5AC Lite - AirOS 8.7.11
       rhnk-no-5ghz: 20
 
-      # Rocket 5AC Lite, AirOS 8.7.0
+      # Rocket 5AC Lite - AirOS 8.7.11
       rhnk-wsw-5ghz: 21
 
-      # Wave AP, firmware 3.1.1
+      # Wave AP - firmware 3.1.1
       rhnk-wsw-60ghz: 22
 
-      # Rocket 5AC Lite, AirOS 8.7.11
+      # Rocket 5AC Lite - AirOS 8.7.11
       rhnk-ssw-5ghz: 23
 
-      # Wave AP, firmware 3.1.0-beta
+      # Wave AP - firmware 3.1.0-rc
       rhnk-oso-60ghz: 24
 
-      # Rocket 5AC Lite
+      # Rocket 5AC Lite - AirOS 8.7.11
       rhnk-nno-5ghz: 25
 
-      # SXTsq 5 ac, OpenWrt (dead)
+      # SXTsq 5 ac - OpenWrt - dead
       rhnk-nf-nw-5ghz: 27
 
-      # SXTsq 5 ac, OpenWrt
+      # SXTsq 5 ac - OpenWrt
       rhnk-nf-no-5ghz: 28
 
-      # SXTsq 5 ac, OpenWrt
+      # SXTsq 5 ac - OpenWrt
       rhnk-nf-so-5ghz: 29
 
-      # EAP225-Outdoor, OpenWrt, with UMA-D antenna
+      # EAP225-Outdoor - OpenWrt - with UMA-D antenna
       # TODO: set explicit txpower to account for increased antenna gain
       rhnk-nf-bvv: 30
