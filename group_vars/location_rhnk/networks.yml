@@ -26,18 +26,18 @@ networks:
     mesh_metric: 128
     ptp: true
 
-  - vid: 12
-    role: mesh
-    name: mesh_philmel60
-    prefix: 10.230.3.12/32
-    ipv6_subprefix: -12
-    ptp: true
-
   - vid: 13
     role: mesh
     name: mesh_richardplatz
     prefix: 10.230.3.13/32
     ipv6_subprefix: -13
+    ptp: true
+
+  - vid: 14
+    role: mesh
+    name: mesh_klunker60
+    prefix: 10.230.3.14/32
+    ipv6_subprefix: -14
     ptp: true
 
   - vid: 15
@@ -150,10 +150,10 @@ networks:
       rhnk-rhxb: 11
 
       # Mikrotik Cube 60 Pro (dead)
-      rhnk-philmel-60ghz: 12
-
-      # Mikrotik Cube 60 Pro (dead)
       rhnk-richardplatz: 13
+
+      # Mikrotik Cube 60 Pro, RouterOS 7.7
+      rhnk-klunker-60ghz: 14
 
       # Powerbeam 5AC 400 ISO, AirOS 8.7.11
       rhnk-emma: 15
