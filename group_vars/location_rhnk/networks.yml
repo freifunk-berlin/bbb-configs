@@ -63,7 +63,7 @@ networks:
 
   - vid: 22
     role: mesh
-    name: mesh_ono_5
+    name: mesh_wsw_60
     prefix: 10.230.3.22/32
     ipv6_subprefix: -22
 
@@ -163,6 +163,9 @@ networks:
 
       # Rocket 5AC Lite, AirOS 8.7.0
       rhnk-wsw-5ghz: 21
+
+      # Wave AP, firmware 3.1.1
+      rhnk-wsw-60ghz: 22
 
       # Rocket 5AC Lite, AirOS 8.7.11
       rhnk-ssw-5ghz: 23
