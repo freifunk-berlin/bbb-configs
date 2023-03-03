@@ -4,19 +4,8 @@ location: rixbox
 role: corerouter
 model: ubnt_usw-flex
 
+# We use Ubiquiti 802.11af-to-passive converters on all ports.
+# They neogotiate more power than they actually draw,
+# so we need to increase poemgr's power budget.
+# Without this increase, devices will be not powered up randomly.
 poemgr_power_budget: 24
-poemgr_ports:
-  # Port 2 is our uplink LiteBeam to RHNK
-  - name: lan2
-    port: 3
-    disabled: 0
-  # and the rest is APs
-  - name: lan3
-    port: 2
-    disabled: 0
-  - name: lan4
-    port: 1
-    disabled: 0
-  - name: lan5
-    port: 0
-    disabled: 0
