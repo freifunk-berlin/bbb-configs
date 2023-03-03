@@ -2,14 +2,13 @@
 
 # Factory flash instructions:
 # https://github.com/openwrt/openwrt/commit/a9839697896c4fdf8c44a06bbce466ce52493069
+#
+# OpenWrt vs. vendor firmware:
+# - enables both CPU cores, vendor only the first
+# - one 14720k partition, vendor two 7360k partitions
 
 target: ramips/mt7621
-
-# Our partition is only 7360k, not 8m.
-# We actually need to be below 7200k as the next squashfs padding step is 7400k.
-model__packages__to_merge:
-  # TODO reinstate this package once it's fixed in 1.3.0-snapshot feed
-  - "-luci-app-falter-owm-ant"
+openwrt_version: snapshot
 
 dsa_ports:
   - lan1
