@@ -67,6 +67,6 @@ networks:
       rixbox-rhnk: 5
 
 location__channel_assignments_11a_standard__to_merge:
-  rixbox-ap1: 36-20
-  rixbox-ap2: 40-20
-  rixbox-ap3: 44-20
+  rixbox-ap1: 44-20
+  rixbox-ap2: 48-20
+  rixbox-ap3: 40-20
