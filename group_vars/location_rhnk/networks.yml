@@ -105,13 +105,6 @@ networks:
     mesh_iface: mesh
 
   # TODO: change me so i match the IP address
-  - vid: 31
-    role: mesh
-    name: mesh_nf_nw
-    prefix: 10.230.3.27/32
-    ipv6_subprefix: -31
-
-  # TODO: change me so i match the IP address
   - vid: 32
     role: mesh
     name: mesh_nf_no
@@ -178,9 +171,6 @@ networks:
 
       # Rocket 5AC Lite - AirOS 8.7.11
       rhnk-nno-5ghz: 25
-
-      # SXTsq 5 ac - OpenWrt - dead
-      rhnk-nf-nw-5ghz: 27
 
       # SXTsq 5 ac - OpenWrt
       rhnk-nf-no-5ghz: 28
