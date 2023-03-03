@@ -18,28 +18,28 @@ networks:
 
   - vid: 20
     role: mesh
-    name: mesh_ap1
+    name: mesh_nf_nw
     ipv6_subprefix: -20
     prefix: 10.31.160.242/32
-    mesh_ap: rixbox-ap1
+    mesh_ap: rixbox-nf-nw
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
   - vid: 21
     role: mesh
-    name: mesh_ap2
+    name: mesh_nf_no
     ipv6_subprefix: -21
     prefix: 10.31.160.243/32
-    mesh_ap: rixbox-ap2
+    mesh_ap: rixbox-nf-no
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
   - vid: 22
     role: mesh
-    name: mesh_ap3
+    name: mesh_nf_sw
     ipv6_subprefix: -22
     prefix: 10.31.160.244/32
-    mesh_ap: rixbox-ap3
+    mesh_ap: rixbox-nf-sw
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -60,13 +60,12 @@ networks:
     prefix: 10.31.154.112/28
     assignments:
       rixbox-core: 1
-      rixbox-ap1: 2
-      rixbox-ap2: 3
-      rixbox-ap3: 4
-      # AirOS LiteBeam RHNK
-      rixbox-rhnk: 5
+      rixbox-nf-nw: 2
+      rixbox-nf-no: 3
+      rixbox-nf-sw: 4
+      rixbox-rhnk: 5  # AirOS 8.7.11
 
 location__channel_assignments_11a_standard__to_merge:
-  rixbox-ap1: 44-20
-  rixbox-ap2: 48-20
-  rixbox-ap3: 40-20
+  rixbox-nf-nw: 44-20
+  rixbox-nf-no: 48-20
+  rixbox-nf-sw: 40-20
