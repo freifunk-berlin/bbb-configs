@@ -2,6 +2,19 @@
 
 location: stadalbert
 role: corerouter
-model: "avm_fritzbox-4040"
+model: ubnt_usw-flex
 
-wireless_profile: freifunk_default
+poemgr_power_budget: 24
+poemgr_ports:
+  - name: lan2
+    port: 3
+    disabled: 0
+  - name: lan3
+    port: 2
+    disabled: 0
+  - name: lan4
+    port: 1
+    disabled: 0
+  - name: lan5
+    port: 0
+    disabled: 0

@@ -4,3 +4,5 @@ location__ssh_keys__to_merge:
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEST9QsXtphN7BYb5p9FhxZTxvoWkICfRWC54SN/QHII Laptop
   - comment: Lino
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaljQHr4Nj6veeDi51BZjy/a3WXPmH8SLePB/s/owNy noxil@systemli.org
+  - comment: mcky
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILXio9GhSIzZpA4LY7ZC0XZe2e4k9reaQ4C2LWEB79bT mkyhos@protonmail.com
