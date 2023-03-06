@@ -1,8 +1,9 @@
 ---
 
-# mesh: 10.31.53.24/29
-# dhcp: 10.31.182.64/26
-# mgmt: 10.31.160.208/28
+# mesh:   10.31.53.24/29
+# dhcp:   10.31.182.64/26
+# prdhcp: 10.31.211.0/27
+# mgmt:   10.31.160.208/28
 
 ipv6_prefix: "2001:bf7:750:5400::/56"
 
@@ -19,18 +20,14 @@ networks:
     prefix: 10.31.53.26/32
     ipv6_subprefix: -2
 
-  - vid: 42
-    role: mgmt
-    prefix: 10.31.160.208/28
-    gateway: 1
-    dns: 1
-    ipv6_subprefix: 1
-    assignments:
-      stadalbert-core: 1
-      stadalbert-switch-ground: 2
-      stadalbert-switch-roof: 3
-      stadalbert-segen: 4
-      stadalbert-linie: 5
+  - vid: 20
+    role: mesh
+    name: nf_roof_mesh
+    prefix: 10.31.201.250/32
+    ipv6_subprefix: -3
+    mesh_ap: stadalbert-nf-roof
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
 
   - vid: 40
     role: dhcp
@@ -41,20 +38,39 @@ networks:
     assignments:
       stadalbert-core: 1
 
-  - vid: 50
-    untagged: false
-    name: uplink
-    role: ext
-    tunnel_wan_ip: 192.168.8.2/24
-    tunnel_wan_gw: 192.168.8.1
-    tunnel_connections: 2
-    tunnel_timeout: 600
-    tunnel_mesh_prefix_ipv4: 10.31.53.24/29
+  - vid: 41
+    role: dhcp
+    name: prdhcp
+    prefix: 10.31.211.0/27
+    ipv6_subprefix: 1
+    inbound_filtering: true
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+    assignments:
+      stadalbert-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.160.208/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 2
+    assignments:
+      stadalbert-core: 1
+      stadalbert-switch-ground: 2
+      # stadalbert-switch-roof: 3 -> no longer needed
+      stadalbert-segen: 4
+      stadalbert-linie: 5
+      stadalbert-nf-cafej: 6
+      stadalbert-nf-kueche: 7
+      stadalbert-nf-roof: 8
 
 location__channel_assignments_11a_standard__to_merge:
-  stadalbert-core: 40-40
+  stadalbert-nf-cafej: 44-40
+  stadalbert-nf-kueche: 40-20
+  stadalbert-nf-roof: 36-20
 
 location__channel_assignments_11g_standard__to_merge:
-  stadalbert-core: 1-20
+  stadalbert-nf-cafej: 1-20
 
 # channel-bandwith-txpower in dbm
