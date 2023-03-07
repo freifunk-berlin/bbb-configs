@@ -1,9 +1,22 @@
 ---
 ipv6_prefix: "2001:bf7:750:4a00::/56"
-
-# mesh_prefix: 10.31.147.224/29
+# mesh: 10.31.147.224/29
+# mgmt: 10.31.146.128/26
+# dhcp: 10.31.147.0/25
 
 networks:
+  - vid: 20
+    role: mesh
+    name: w_nf_5ghz
+    prefix: 10.31.147.225/32
+    ipv6_subprefix: -1
+    mesh_ap: habersaath-w-nf-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric: 1024
+    mesh_metric_lqm:
+      - default 0.12   # Penalty so local uplink is preferred
+
   - vid: 42
     role: mgmt
     prefix: 10.31.146.128/26
@@ -15,9 +28,6 @@ networks:
       habersaath-sw-a: 2
       habersaath-sw-b: 3
       habersaath-sw-c: 4
-      habersaath-sw-d: 5
-      habersaath-60g-local: 6
-      habersaath-60g-neigh: 7
       habersaath-ap-a1: 12
       habersaath-ap-a2: 13
       habersaath-ap-a3: 14
@@ -36,12 +46,7 @@ networks:
       habersaath-ap-c4: 27
       habersaath-ap-c5: 28
       habersaath-ap-c6: 29
-      habersaath-ap-d1: 30
-      habersaath-ap-d2: 31
-      habersaath-ap-d3: 32
-      habersaath-ap-d4: 33
-      habersaath-ap-d5: 34
-      habersaath-ap-d6: 35
+      habersaath-w-nf-5ghz: 30
 
   - vid: 40
     role: dhcp
@@ -60,17 +65,8 @@ networks:
     tunnel_wan_gw: 192.168.2.1
     tunnel_connections: 1
     tunnel_timeout: 600
-    tunnel_mesh_prefix_ipv4: 10.31.147.224/30
-
-  - vid: 51
-    name: vpn_neigh
-    role: ext
-    tunnel_wan_ip: 192.168.0.2/24
-    tunnel_wan_gw: 192.168.0.1
-    tunnel_connections: 1
-    tunnel_timeout: 600
-    tunnel_mtu: 1400
-    tunnel_mesh_prefix_ipv4: 10.31.147.228/30
+    tunnel_mesh_prefix_ipv4: 10.31.147.224/29
+    tunnel_up_script_args: '10.31.147.224/29 128 1.0 --'  # babel 128, olsr lqm 1.0 -> Prioritise the local Uplink
 
 location__channel_assignments_11a_standard__to_merge:
   habersaath-ap-a1: 36-20
@@ -91,12 +87,6 @@ location__channel_assignments_11a_standard__to_merge:
   habersaath-ap-c4: 48-20
   habersaath-ap-c5: 36-20
   habersaath-ap-c6: 40-20
-  habersaath-ap-d1: 44-20
-  habersaath-ap-d2: 48-20
-  habersaath-ap-d3: 36-20
-  habersaath-ap-d4: 40-20
-  habersaath-ap-d5: 44-20
-  habersaath-ap-d6: 48-20
 
 location__channel_assignments_11g_standard__to_merge:
   habersaath-ap-a1: 1-20
@@ -117,9 +107,3 @@ location__channel_assignments_11g_standard__to_merge:
   habersaath-ap-c4: 13-20
   habersaath-ap-c5: 1-20
   habersaath-ap-c6: 5-20
-  habersaath-ap-d1: 9-20
-  habersaath-ap-d2: 13-20
-  habersaath-ap-d3: 1-20
-  habersaath-ap-d4: 5-20
-  habersaath-ap-d5: 9-20
-  habersaath-ap-d6: 13-20
