@@ -3,7 +3,6 @@
 location: wuhli
 role: ap
 model: "mikrotik_sxtsq-5-ac"
-wireless_profile: freifunk_legacy
 
 mac_override:
   eth0: 2c:c8:1b:8a:95:b4
