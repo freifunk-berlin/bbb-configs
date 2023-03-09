@@ -5,10 +5,8 @@ model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"
   - "kmod-ath10k ath10k-firmware-qca4019"
 
-switch_ports: 6
+switch_ports: 5
 switch_int_port: 0
-switch_ignore_ports: [5]
-# WAN port is hardwired to VLAN2. ignore
 
 int_port: eth0
 
