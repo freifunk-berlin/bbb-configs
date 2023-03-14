@@ -3,8 +3,6 @@ target: mpc85xx/p1010
 
 switch_ports: 6
 switch_int_port: 0
-switch_ignore_ports: []
-
 int_port: eth0
 
 wireless_devices:

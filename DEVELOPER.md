@@ -19,13 +19,13 @@ These files define how bbb-configs needs to handle different hardware models. Th
 
 ```yml
 ---
-target: "ipq40xx/generic"       # target of router model
+target: "ipq40xx/generic"               # target of router model
 
-switch_ports: 6             # number of physical ports + one (CPU)
-switch_int_port: 0          # port-id of the CPU
-switch_ignore_ports: []     # omit ports, that exist in software but not in hardware (i.e. MikroTik SXTsq 5ac)
+switch_ports: 6                         # number of physical ports + one (CPU)
+switch_int_port: 0                      # port-id of the CPU
+switch_ignore_ports: [1, 2, 3, 4]       # omit ports, that exist in software but not in hardware (i.e. MikroTik SXTsq 5ac)
 
-int_port: eth0              # hardware-device on which swconfig works on
+int_port: eth0                          # hardware-device on which swconfig works on
 
 wireless_devices:                       # definitions for the devices radios
   - name: 11a_standard                  # 5GHz radio
