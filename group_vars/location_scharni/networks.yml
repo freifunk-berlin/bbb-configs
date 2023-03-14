@@ -50,6 +50,7 @@ networks:
       scharni-switch: 2
       scharni-sama: 3
       scharni-zwingli: 4
+      scharni-ap-gastwg: 9
       scharni-ap-kneipe: 10
       scharni-ap-keller: 11
       scharni-ap1: 12  # dachboden 1
