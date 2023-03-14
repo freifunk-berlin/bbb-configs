@@ -3,6 +3,7 @@
   file:
     state: directory
     path: "{{ config_path }}/etc/rc.d"
+    mode: "755"
 
 - name: Enable replace_secrets symlink
   file:

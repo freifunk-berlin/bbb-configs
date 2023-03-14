@@ -3,6 +3,7 @@
   file:
     state: directory
     path: "{{ image_dir }}"
+    mode: "755"
   run_once: true
 - name: Clear old image and logfile
   file:
@@ -17,6 +18,7 @@
   file:
     path: "{{ imagebuilder_dir }}"
     state: directory
+    mode: "755"
   run_once: true
 
 - name: Set destination path for imagebuilder
@@ -27,6 +29,7 @@
   get_url:
     url: "{{ imagebuilder }}"
     dest: "{{ imagebuilder_dir }}/{{ imagebuilder_filename }}"
+    mode: "644"
   when: '"http" in imagebuilder'
 
 - name: Copy Local Imagebuilder
@@ -36,6 +39,7 @@
       - "{{ imagebuilder }}"
       - "{{ imagebuilder_dir }}"
   when: '"http" not in imagebuilder'
+  changed_when: true
 
 - name: Clear workdir
   file:
@@ -46,6 +50,7 @@
   file:
     state: directory
     path: "{{ imagebuild_dir }}"
+    mode: "755"
 
 - name: Extract imagebuilder
   unarchive:
@@ -59,6 +64,7 @@
     cmd: grep -oP 'CONFIG_TARGET_ARCH_PACKAGES="\K[^"]+' .config
   register: instr_set_result
   when: 'instr_set is not defined and feed_version is defined'
+  changed_when: false
 
 - name: Extract Instruction set if needed
   set_fact:
@@ -80,6 +86,7 @@
   copy:
     src: "files/packagefeed_master.pub"
     dest: "{{ imagebuild_dir }}/keys/61a078a38408e710"  # matches fingerprint
+    mode: "preserve"
   when: 'feed_version is defined and keydir.stat.exists'
 
 - name: Disable Signature verification if required
@@ -109,6 +116,7 @@
   copy:
     content: "{{ output.stderr }}"
     dest: "{{ image_dir }}/{{ inventory_hostname }}.log"
+    mode: "preserve"
 
 - name: Find output image
   find:
@@ -134,3 +142,4 @@
   copy:
     src: "{{ image_src }}"
     dest: "{{ image }}"
+    mode: "preserve"

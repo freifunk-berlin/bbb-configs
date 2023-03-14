@@ -30,6 +30,7 @@
   file:
     path: "{{ config_path }}"
     state: directory
+    mode: "755"
   tags: always
 
 - name: Include render_etc.yml
@@ -50,6 +51,7 @@
   template:
     src: "{{ role_path }}/templates/common/config/poemgr.j2"
     dest: "{{ config_path }}/etc/config/poemgr"
+    mode: "644"
   when:
     - poemgr_ports is defined
   tags: always
@@ -66,6 +68,7 @@
   copy:
     dest: "{{ config_path }}/lib/firmware/ath10k/fwcfg-{{ item.id }}.txt"
     content: "{{ item.config }}"
+    mode: "644"
   loop: "{{ ath10k_ct_fwcfg | default([]) }}"
   tags: always
 

@@ -13,11 +13,9 @@
   file:
     path: "{{ config_path }}/etc/prom-catalog-register.sh"
     mode: "755"
-  ignore_errors: true
 
 - name: Set permission for replace_secrets script
   file:
     path: "{{ config_path }}/etc/init.d/replace_secrets"
     mode: "755"
-  ignore_errors: true
   when: role != "uplink_gateway"
