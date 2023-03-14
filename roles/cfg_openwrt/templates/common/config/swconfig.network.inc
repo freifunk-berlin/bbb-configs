@@ -8,7 +8,7 @@ config switch
 
   {% for network in networks %}
     {% set portmapping = [] %}
-    {% for port in range(switch_ports)|list|difference(switch_ignore_ports) %}
+    {% for port in range(switch_ports)|list|difference(switch_ignore_ports|default([])) %}
       {% set tagged = not network.get('untagged') or port == switch_int_port %}
       {{ portmapping.append(port|string + ("t" if tagged else "")) }}
     {%- endfor %}

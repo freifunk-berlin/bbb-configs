@@ -3,7 +3,6 @@ target: ath79/generic
 
 switch_ports: 5
 switch_int_port: 0
-switch_ignore_ports: []
 
 int_port: eth0
 
