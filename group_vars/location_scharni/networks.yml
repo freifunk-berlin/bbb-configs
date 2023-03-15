@@ -9,7 +9,7 @@ networks:
     ipv6_subprefix: -2
     # prefer zwingli uplink because it provides better performance
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.7']
+    mesh_metric_lqm: ['default 0.5']
     ptp: true
 
   - vid: 11
