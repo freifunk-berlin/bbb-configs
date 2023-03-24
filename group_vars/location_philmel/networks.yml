@@ -75,11 +75,11 @@ networks:
     ipv6_subprefix: -8
     ptp: true
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.3']  # prefer rhnk link
+    mesh_metric_lqm: ['default 0.3']  # prefer klunker link
 
   - vid: 18
     role: mesh
-    name: mesh_rhnk
+    name: mesh_klunker
     prefix: 10.230.2.25/32
     ipv6_subprefix: -9
     ptp: true
@@ -103,7 +103,7 @@ networks:
       philmel-core: 1
       philmel-switch-1: 2
       philmel-switch-2: 3
-      philmel-rhnk: 4
+      philmel-klunker: 4
       philmel-no-5ghz: 5
       philmel-nw-5ghz: 6
       philmel-ost-legacy: 7
