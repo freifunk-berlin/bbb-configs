@@ -22,6 +22,7 @@ networks:
       sama-ost-5ghz: 21
       sama-sued-5ghz: 22
       sama-west-5ghz: 23
+      sama-sued-60ghz: 26
       sama-zwingli: 29
       sama-saarbruecker: 30
 
@@ -70,6 +71,12 @@ networks:
     ipv6_subprefix: -6
     mesh_metric: 128
     ptp: true
+  - vid: 16
+    role: mesh
+    name: mesh_s60
+    prefix: 10.31.79.182/32
+    ipv6_subprefix: -7
+    mesh_metric: 128
 
 location__channel_assignments_11a_standard__to_merge:
   sama-nord-nf-5ghz: 36-20
@@ -81,4 +88,23 @@ location__channel_assignments_11a_standard__to_merge:
 # channel-bandwith-txpower in dbm
 # Back to Back channel is reused
 # - Hopefully rf-Shield performs :)
-# Due to heavy reflections due to Vogelgitter nothing performs
+#
+
+# Switch 1
+# 1: core
+# 3: sama-sued-5ghz
+# 4: sama-west-5ghz
+# 5: sama-sued-nf-5ghz
+# 6: sama-west-nf-5ghz
+# 7: --
+# 8: sama-saarbruecker
+
+# Switch 2
+# 1: core
+# 2: --
+# 3: samai-nord-5ghz
+# 4: sama-ost-5ghz
+# 5: sama-nord-nf-5ghz
+# 6: sama-ost-nf-5ghz
+# 7: sama-sued-60ghz
+# 8: sama-zwingli
