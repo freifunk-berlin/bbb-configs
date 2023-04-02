@@ -3,4 +3,4 @@ ansible_merge_vars >= 5.0.0
 jmespath >= 1.0.1
 netaddr >= 0.8.0
 ansible-lint >= 6.5.2
-yamllint >= 1.27.1
+yamllint >= 1.30.0
