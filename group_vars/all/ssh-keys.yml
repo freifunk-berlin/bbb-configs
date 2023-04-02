@@ -20,3 +20,5 @@ all__ssh_keys__to_merge:
     key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrd/XPIyvM+hrtM+mDt+xgGR2F4C118UwfibgTaSXGv9TE6d1XebXoTwKH5WKLhtoJLkJIKLbOgAsss2BbTIoDtEa02mJcGkGPE+8m6Z+u6EwP0jZxcuQa89i8vmSr9X4UeMzX8X1Ws0aC9JazksdIzLVzFDZaqUBGFDhF1npTWvkZB5njJIRKpE+VX+EsiLO3CtnTcG1n/xPTBRg54iMiO5mA6nv0fwyj+V82I4Zadv96SP5EVWn3IkeVe9SUxxooR6wiH0n8NRSg1BOa9jAhLgH9ybsPNX/GW6cE9CiY7wqWslkQd1vMWnnDhz3USY6utEdvhmPxgZfxH9QSjZHrtEkRM2VhDHZNdLgVR1jmNk372ymal9T1mWNpY/TRRJbagetUNhSInNMm8ZWJbfTHoV0X+IrOnjYMw5n5hMZV9fSguudahaRB8Jt6uojz7NUANh9aMq/Rm+QSw0LPYFUX/UO0gpHPjBHoj8QFOlEoCGcyTT+vJj0oA1C/uIeeuLc= elektra@t61
   - comment: pktpls+bbb@systemli.org
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVY2XHiLDXbj7TGWtUpKEb8+qKw/DrkiVbLiyvyRaCi pktpls+bbb@systemli.org
+  - comment: Noki
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjIgJKflHEYOIdskwalr83PflhPmFkrAebP2bUkOE11 Noki
