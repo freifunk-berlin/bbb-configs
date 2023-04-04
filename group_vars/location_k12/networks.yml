@@ -105,26 +105,26 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # MESH - 5 GHz 802.11s - ap5
+  # MESH - 5 GHz 802.11s - ap4
   - vid: 27
     role: mesh
-    name: mesh_ap5_5
+    name: mesh_ap4_5
     prefix: 10.31.158.136/32
     ipv6_subprefix: -9
-    mesh_ap: k12-ap5
+    mesh_ap: k12-ap4
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  # MESH - 2.4 GHz 802.11s - ap5
+  # MESH - 2.4 GHz 802.11s - ap4
   - vid: 28
     role: mesh
-    name: mesh_ap5_2
+    name: mesh_ap4_2
     prefix: 10.31.158.137/32
     ipv6_subprefix: -10
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
-    mesh_ap: k12-ap5
+    mesh_ap: k12-ap4
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
@@ -151,8 +151,6 @@ networks:
       k12-ap3: 6
       # 10.31.158.199/32
       k12-ap4: 7
-      # 10.31.158.200/32
-      k12-ap5: 8
 
 #  # UPLK - uplink via Wireguard and local internet connection
 #  - vid: 43
@@ -173,7 +171,6 @@ location__channel_assignments_11a_standard__to_merge:
   k12-ap2: 36-40
   k12-ap3: 48-40
   k12-ap4: 36-40
-  k12-ap5: 36-40
   k12-cpe: 44-40
 
 # AP-id, wifi-channel, bandwidth, txpower
@@ -183,4 +180,3 @@ location__channel_assignments_11g_standard__to_merge:
   k12-ap2: 13-20
   k12-ap3: 1-20
   k12-ap4: 13-20
-  k12-ap5: 13-20
