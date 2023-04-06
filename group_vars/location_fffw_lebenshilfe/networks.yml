@@ -1,55 +1,73 @@
 ---
+ipv6_prefix: "2001:bf7:800:f00::/56"  # aus Berlin
+
+# got following prefixes:
+# Router: ###.###.##.##
+# --DHCP: 10.30.99.0/25
+# --MESH: 10.30.96.32/29
+# --MGMT: 10.30.96.40/29
+
+# --UPLK: 10.31.40.124/30 # config-wizard aus Berlin
 
 networks:
 
-  - vid: 10
+  - vid: 20
     role: mesh
     name: mesh_nno
     prefix: 10.30.96.43/32
+    ipv6_subprefix: -1
     mesh_metric: 1024
     mesh_ap: fffw-lebenshilfe-nno-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  - vid: 11
+  - vid: 21
     role: mesh
     name: mesh_nw
     prefix: 10.30.96.44/32
+    ipv6_subprefix: -2
     mesh_metric: 1024
     mesh_ap: fffw-lebenshilfe-nw-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  - vid: 12
+  - vid: 22
     role: mesh
     name: mesh_sso
     prefix: 10.30.96.45/32
+    ipv6_subprefix: -3
     mesh_metric: 1024
     mesh_ap: fffw-lebenshilfe-sso-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  - vid: 13
+  - vid: 23
     role: mesh
     name: mesh_ono
     prefix: 10.30.96.46/32
+    ipv6_subprefix: -4
     mesh_metric: 1024
     mesh_ap: fffw-lebenshilfe-ono-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  - vid: 14
-    role: mesh
-    name: mesh_uplink
-    prefix: 10.30.96.47/32
-    mesh_metric: 1024
-    mesh_iface: mesh
+  - vid: 50
+    untagged: true                  # option to don't tag this vlan - useful if the corerouter is plugged into a normal home router
+    name: uplink
+    role: ext
+    tunnel_wan_ip: 172.22.1.250/29  # put here the address and subnet of the corerouter inside the uplink network
+    tunnel_wan_gw: 172.22.1.254     # gateway of the uplink network
+    tunnel_connections: 2           # default value, number of different tunnels to create
+    tunnel_timeout: 600             # timeout in seconds after this the tunnel is destroyed and attempted to be rebuild
+    tunnel_mesh_prefix_ipv4: 10.31.40.124/30            # ip subnet to pick addresses for the endpoints of the tunnels
+    tunnel_up_script_args: '10.31.40.124/30 12800 1.0'  # Mesh Prefix, Babel Metric, OLSR LQM (optional, these values are the default)
 
   - vid: 42
     role: mgmt
     prefix: 10.30.96.32/28
     gateway: 1
     dns: 1
+    ipv6_subprefix: 1
     assignments:
       fffw-lebenshilfe-core: 1
       # fffw-lebenshilfe-switch: 2
@@ -61,6 +79,7 @@ networks:
   - vid: 40
     role: dhcp
     prefix: 10.30.99.0/25
+    ipv6_subprefix: 0
     assignments:
       fffw-lebenshilfe-core: 1
 
