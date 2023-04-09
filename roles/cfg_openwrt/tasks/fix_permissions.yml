@@ -9,11 +9,6 @@
     path: "{{ config_path }}/etc/dropbear/authorized_keys"
     mode: "600"
 
-- name: Set permission for prom-catalog-register script
-  file:
-    path: "{{ config_path }}/etc/prom-catalog-register.sh"
-    mode: "755"
-
 - name: Set permission for replace_secrets script
   file:
     path: "{{ config_path }}/etc/init.d/replace_secrets"
