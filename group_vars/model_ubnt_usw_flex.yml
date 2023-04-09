@@ -8,15 +8,6 @@ target: ramips/mt7621
 # Our partition is only 7360k, not 8m.
 # We actually need to be below 7200k as the next squashfs padding step is 7400k.
 model__packages__to_merge:
-  - "-curl"
-  - "-prometheus-node-exporter-lua"
-  - "-prometheus-node-exporter-lua-hostapd_stations"
-  - "-prometheus-node-exporter-lua-hostapd_ubus_stations"
-  - "-prometheus-node-exporter-lua-netstat"
-  - "-prometheus-node-exporter-lua-openwrt"
-  - "-prometheus-node-exporter-lua-snmp6"
-  - "-prometheus-node-exporter-lua-wifi"
-  - "-prometheus-node-exporter-lua-wifi_stations"
   # TODO reinstate this package once it's fixed in 1.3.0-snapshot feed
   - "-luci-app-falter-owm-ant"
 

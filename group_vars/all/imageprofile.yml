@@ -40,17 +40,5 @@ all_luci_base__packages__to_merge:
   - luci-proto-ipv6
   - rpcd-mod-rrdns
 
-all_prompoc__packages__to_merge:
-  - curl
-  - prometheus-node-exporter-lua
-  - prometheus-node-exporter-lua-netstat
-  - prometheus-node-exporter-lua-openwrt
-  - prometheus-node-exporter-lua-snmp6
-  - prometheus-node-exporter-lua-wifi
-  # Remove them due to privacy implications
-  # - prometheus-node-exporter-lua-hostapd_stations
-  # - prometheus-node-exporter-lua-hostapd_ubus_stations
-  # - prometheus-node-exporter-lua-wifi_stations
-
 all_disabled_services__to_merge:
   - "olsrd6"
