@@ -18,6 +18,7 @@
   when:
     - networks is defined
     - networks | selectattr('tunnel_wan_ip', 'defined') | count > 0
+    - role == 'corerouter'
 
 - name: "Add zram-swap on low mem and big flash"
   set_fact:
