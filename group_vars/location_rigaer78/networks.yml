@@ -25,15 +25,29 @@ networks:
     ipv6_subprefix: 1
     assignments:
       rigaer78-core: 1
-      rigaer78-poe: 2          # reserved
+      rigaer78-poe: 2
       rigaer78-sama: 3
       rigaer78-zwingli: 4
+
       # aps
       rigaer78-east-5ghz: 30
       rigaer78-east-2ghz: 29
       rigaer78-west-5ghz: 28
       rigaer78-west-2ghz: 27
       rigaer78-eap225: 26
+
+      # house-installation
+      rigaer78-back-switch: 20
+      rigaer78-back-floor-4-right: 19
+      rigaer78-back-floor-4-left: 18
+      rigaer78-back-floor-3-right: 17
+      rigaer78-back-floor-3-left: 16
+      rigaer78-back-floor-2-guestroom: 15
+      rigaer78-back-floor-2-kitchen: 14
+      rigaer78-back-floor-2-left: 13
+      rigaer78-back-floor-1-right: 12
+      rigaer78-back-floor-1-left: 11
+      rigaer78-back-floor-0-garage: 10
 
   - vid: 40
     role: dhcp
@@ -49,7 +63,31 @@ location__channel_assignments_11g_standard__to_merge:
   rigaer78-east-2ghz: 1-20
   rigaer78-west-2ghz: 6-20
 
+  # house installation
+  rigaer78-back-floor-4-right: 1-20
+  rigaer78-back-floor-4-left: 11-20
+  rigaer78-back-floor-3-right: 6-20
+  rigaer78-back-floor-3-left: 1-20
+  rigaer78-back-floor-2-guestroom: 11-20
+  rigaer78-back-floor-2-kitchen: 6-20
+  rigaer78-back-floor-2-left: 1-20
+  rigaer78-back-floor-1-right: 11-20
+  rigaer78-back-floor-1-left: 6-20
+  rigaer78-back-floor-0-garage: 1-20
+
 location__channel_assignments_11a_standard__to_merge:
   rigaer78-eap225: 36-20
   rigaer78-east-5ghz: 40-20
   rigaer78-west-5ghz: 44-20
+
+  # house installation
+  rigaer78-back-floor-4-right: 40-20
+  rigaer78-back-floor-4-left: 36-20
+  rigaer78-back-floor-3-right: 48-20
+  rigaer78-back-floor-3-left: 44-20
+  rigaer78-back-floor-2-guestroom: 40-20
+  rigaer78-back-floor-2-kitchen: 36-20
+  rigaer78-back-floor-2-left: 48-20
+  rigaer78-back-floor-1-right: 44-20
+  rigaer78-back-floor-1-left: 40-20
+  rigaer78-back-floor-0-garage: 36-20
