@@ -1,4 +1,0 @@
----
-ssh_keys__to_merge:
-  - comment: a
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsJ6QK89IjstG4Hq7L7nVthlZAEBVWHdnb6TxFwzjtL a@E34329K0
