@@ -25,6 +25,8 @@ all__packages__to_merge:
   - ip6tables                  # Its not pulled in by default anymore bc fw4
   - nftables
   - kmod-nft-bridge
+  - ethtool
+  - iwinfo
   - -ppp
   - -ppp-mod-pppoe
 
