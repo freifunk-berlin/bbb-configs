@@ -7,40 +7,40 @@ feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/__FEED_VE
 
 
 all__packages__to_merge:
-  - mtr
-  - tcpdump
-  - iperf3
   - collectd-mod-interface
   - collectd-mod-iwinfo
   - collectd-mod-load
   - collectd-mod-memory
+  - collectd-mod-network
   - collectd-mod-ping
   - collectd-mod-uptime
-  - collectd-mod-network
-  - vnstat
-  - -wpad-basic
-  - -wpad-basic-wolfssl
-  - -wpad-basic-mbedtls
+  - ethtool
   - hostapd-wolfssl
   - ip6tables                  # Its not pulled in by default anymore bc fw4
-  - nftables
-  - kmod-nft-bridge
-  - ethtool
+  - iperf3
   - iwinfo
+  - kmod-nft-bridge
+  - mtr
+  - nftables
+  - tcpdump
+  - vnstat
   - -ppp
   - -ppp-mod-pppoe
+  - -wpad-basic
+  - -wpad-basic-mbedtls
+  - -wpad-basic-wolfssl
 
 all_luci_base__packages__to_merge:
-  - -libustream-mbedtls
+  - libiwinfo-lua
   - libustream-wolfssl
+  - luci-mod-admin-full
+  - luci-proto-ipv6
+  - luci-theme-bootstrap
   - px5g-wolfssl
+  - rpcd-mod-rrdns
   - uhttpd
   - uhttpd-mod-ubus
-  - luci-mod-admin-full
-  - luci-theme-bootstrap
-  - libiwinfo-lua
-  - luci-proto-ipv6
-  - rpcd-mod-rrdns
+  - -libustream-mbedtls
 
 all_disabled_services__to_merge:
   - "olsrd6"
