@@ -27,6 +27,13 @@
     - low_mem | default(false)
     - not (low_flash | default(false))
 
+- name: "Add debugging-packages on core-routers"
+  set_fact:
+    packages: "{{ packages + ['mosh-server', 'tmux', 'ip'] }}"
+  when:
+    - not (low_flash | default(false))
+    - role == 'corerouter'
+
 - name: "Remove or replace packages on low mem and low flash"
   set_fact:
     packages: "{{ packages + [item] }}"
@@ -46,6 +53,8 @@
     - -vnstat
     - -iperf3
     - -opkg
+    - -ethtool
+    - -iwinfo
 
 - name: "Remove Luci on low mem and low flash"
   set_fact:
