@@ -3,3 +3,7 @@
 location: rigaer78
 role: ap
 model: "avm_fritzbox-7530"
+
+# only useful in combination with port_untag patch that is not upstream
+port_untag:
+  40: [2, 3, 4]
