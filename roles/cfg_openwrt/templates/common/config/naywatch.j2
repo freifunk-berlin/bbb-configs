@@ -5,7 +5,7 @@ config naywatch general
     option check_interval   '30'
     option watchdog_timeout '120'
     option use_watchdog     '0'
-    option save_logs        '1'
+    option save_logs        '0'
 {% for network in networks | default([]) %}
     {% set name = network['name'] if 'name' in network else network['role'] %}
     {% if network['role'] == 'mgmt' or (role == 'corerouter' and network['role'] == 'mesh') %}
@@ -17,11 +17,6 @@ config naywatch general
 {% endfor %}
 {% if mgmt is defined %}
     list interface          '{{ mgmt['name'] | default('mgmt') }}'
-{% endif %}
-    list save_cmd           'dmesg'
-    list save_cmd           'logread'
-{% if switch_ports is defined %}
-	list save_cmd           'swconfig dev switch0 show'
 {% endif %}
 
 {% endif %}
