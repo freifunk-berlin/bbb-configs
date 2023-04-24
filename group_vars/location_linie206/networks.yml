@@ -1,8 +1,19 @@
 ---
+
+# mesh: 10.31.68.72/29
+# dhcp: 10.31.149.0/25
+# mgmt: 10.31.149.128/27
+
 ipv6_prefix: "2001:bf7:750:4b00::/56"
 
-# Mesh: 10.31.147.232/29
 networks:
+
+  - vid: 10
+    role: mesh
+    name: mesh_adalbert
+    prefix: 10.31.68.72/32
+    ipv6_subprefix: -1
+    ptp: true
 
   - vid: 42
     role: mgmt
@@ -12,16 +23,17 @@ networks:
     ipv6_subprefix: 1
     assignments:
       linie206-core: 1
-      linie206-switch1: 2
-      linie206-switch2: 3
-      linie206-ap1: 4
-      linie206-ap2: 5
-      linie206-ap3: 6
-      linie206-ap4: 7
-      linie206-ap5: 8
-      linie206-ap6: 9
-      linie206-ap7: 10
-      linie206-ap8: 11
+      linie206-sw-attic: 2
+      linie206-sw-staircase: 3
+      linie206-nf-wohnzimmer: 4
+      linie206-nf-o-5ghz: 5
+      linie206-nf-w-5ghz: 6
+      linie206-nf-s-5ghz: 7
+      linie206-nf-so-5ghz: 8
+      linie206-nf-so-2ghz: 9
+      # linie206-ap7: 10 broken
+      linie206-nf-w-2ghz: 11
+      linie206-stadalbert: 12
 
   - vid: 40
     role: dhcp
@@ -32,13 +44,13 @@ networks:
     assignments:
       linie206-core: 1
 
-  - vid: 23
+  - vid: 50
     role: ext
     name: uplink
     tunnel_wan_ip: 192.168.178.223/24
     tunnel_wan_gw: 192.168.178.1
     tunnel_timeout: 600
-    tunnel_connections: 2
+    tunnel_connections: 1
     tunnel_mesh_prefix_ipv4: 10.31.153.96/28
 
 location__channel_assignments_11a_standard__to_merge:
@@ -54,14 +66,4 @@ location__channel_assignments_11g_standard__to_merge:
   linie206-ap7: 9-20
   linie206-ap8: 13-20
 
-
 # channel-bandwith-txpower in dbm
-
-# ap1: wohnzimmer - 2 + 5ghz
-# ap2: linienstraße west - 5ghz
-# ap3: linienstraße ost - 5ghz
-# ap4: alter garnisonfriedhof - 5ghz
-# ap5: kleine rosenthaler straße - 5ghz
-# ap6: linienstraße west - 2,4 ghz
-# ap7: linienstraße ost - 2,4 ghz
-# ap8: kleine rosenthaler straße - 2,4ghz
