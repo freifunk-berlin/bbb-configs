@@ -34,6 +34,7 @@ networks:
     mesh_ap: huette15-ap1
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.1']
 
   - vid: 40
     role: dhcp
@@ -73,7 +74,8 @@ networks:
     tunnel_wan_gw: 192.168.177.1
     tunnel_connections: 1
     tunnel_timeout: 600
-    tunnel_mesh_prefix_ipv4: 10.31.184.10/32
+    # tunnel_mesh_prefix_ipv4: 10.31.184.10/32
+    tunnel_up_script_args: '10.31.184.10/32 128 1.0 --'  # babel 128, olsr lqm 1.0
 
 location__channel_assignments_11a_standard__to_merge:
   # 8 dBm + 15 dBi gain = 23 dBm (with UMA-D antenna)
