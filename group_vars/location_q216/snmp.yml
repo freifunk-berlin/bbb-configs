@@ -1,0 +1,6 @@
+---
+
+snmp_devices:
+  - hostname: q216-tierpark
+    address: 10.31.201.243
+    snmp_profile: airos_8

@@ -1,0 +1,75 @@
+---
+
+# 10.31.201.192/26
+# 10.31.201.240/29 - mgmt
+# 10.31.201.248/29 - mesh
+# 10.31.201.224/28 - prdhcp
+# 10.31.201.192/27 - dhcp
+ipv6_prefix: 2001:bf7:860:e00::/56
+
+networks:
+
+  - vid: 10
+    role: mesh
+    name: mesh_tierpark
+    prefix: 10.31.201.249/32
+    ipv6_subprefix: -10
+
+  - vid: 20
+    role: mesh
+    name: nf_s_mesh
+    prefix: 10.31.201.250/32
+    ipv6_subprefix: -20
+    mesh_ap: q216-nf-s
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.31.201.192/27
+    ipv6_subprefix: -40
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      q216-core: 1
+
+  - vid: 41
+    role: dhcp
+    name: prdhcp
+    prefix: 10.31.201.224/28
+    ipv6_subprefix: -41
+    inbound_filtering: true
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+    assignments:
+      q216-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.201.240/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      q216-core: 1
+      q216-switch: 2
+      q216-tierpark: 3
+      q216-nf-s: 4
+
+  - vid: 50
+    role: ext
+    name: lte
+    tunnel_wan_ip: 192.168.2.2/24
+    tunnel_wan_gw: 192.168.2.1
+    tunnel_connections: 1
+    tunnel_timeout: 600
+    tunnel_mtu: 1400
+    tunnel_mesh_prefix_ipv4: 10.31.201.248/29
+
+location__channel_assignments_11a_standard__to_merge:
+  q216-core: 44-40
+  q216-nf-s: 36-20
+
+location__channel_assignments_11g_standard__to_merge:
+  q216-core: 13-20
