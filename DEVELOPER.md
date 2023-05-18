@@ -11,7 +11,7 @@ This guide explains the directory structure of the project and variables within 
 This directory holds base configuration options that will be inserted into every router configuration. Each device will
 get this options, like timezones, DNS-servers, the packagefeed-URL and so on.
 
-There are also files for the standard ssh keys and definitions for the wifi profiles.
+There are also files for the standard ssh keys and definitions for the Wi-Fi profiles.
 
 ### model_files
 
@@ -91,7 +91,7 @@ a (shortened) example of a `networks.yml` from the magda-location:
 ```yml
 ---
 
-# mesh: 10.31.83.60/30	      # add a overview of all reserved adresses at the top as a comment
+# mesh: 10.31.83.60/30        # add a overview of all reserved adresses at the top as a comment
 # dhcp: 10.31.83.192/26
 # mgmt: 10.31.83.112/28
 
@@ -144,11 +144,12 @@ location__channel_assignments_11a_standard__to_merge:
 
 The VLAN ID (vid) usually follow this numbering convention.
 
-```
+```yml
 10+ for airmax & co mesh links
 20+ for 11s
 40+ DHCP Clients
 42  MGMT
+50  Wireguardtunnel
 ```
 
 ##### uplink via tunnel
@@ -157,7 +158,7 @@ If for some reason you are in need of an uplink via a "normal" internet connecti
 tunnel can be an easy and safe solution. In that case add another vlan to the networks.yml
 
 ```yml
-  - vid: 13
+  - vid: 50
     untagged: true            # option to don't tag this vlan - useful if the corerouter is plugged into a normal home router
     name: uplink
     role: ext
@@ -182,7 +183,7 @@ If you have multiple uplinks and want one to be prefered, set different link met
 
 #### ssh-key.yml and ssh-keys.yml
 
-By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys a 
+By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys a
 `ssh-key.yml` file can be created with additional keys in the following format:
 
 ```yml
@@ -247,7 +248,7 @@ airos_dfs_reset:
 
 ## host_vars/
 
-The `host-vars`-dir contains a host directory for every OpenWrt-device. 
+The `host-vars`-dir contains a host directory for every OpenWrt-device.
 
 ### host-directories
 
