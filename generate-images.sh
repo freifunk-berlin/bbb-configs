@@ -59,8 +59,8 @@ select location in "${locations[@]}"
     # check all configurations files with ansible-lint
     if [[ "$REPLY" == lint ]]
     then
-        yamllint -d .config/yaml-lint.yml .
-        ansible-lint -c .config/ansible-lint.yml
+        yamllint -d .github/linters/.yaml-lint.yml .
+        ansible-lint -c .github/linters/.ansible-lint.yml
         break
     fi
 

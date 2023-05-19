@@ -1,0 +1,7 @@
+---
+
+location: rotelilly
+role: corerouter
+model: "mikrotik_wap-ac"
+
+wireless_profile: freifunk_default

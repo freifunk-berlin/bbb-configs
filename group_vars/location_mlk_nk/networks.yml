@@ -1,0 +1,100 @@
+---
+
+ipv6_prefix: '2001:bf7:820:2500::/56'
+# ipv4: 10.31.69.0/25
+# mgmt: 10.31.69.0/27
+# mesh: 10.31.69.32/27
+# dhcp: 10.31.69.64/26
+
+networks:
+  # DEFAULT gateway - SXTsq5ac
+  - vid: 10
+    role: mesh
+    name: mesh_rhnk
+    prefix: 10.31.69.32/32
+    ipv6_subprefix: -1
+    mesh_metric: 1024
+    mesh_ap: mlk-nk-rhnk
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+  # gateway - Nano Station M5
+  - vid: 11
+    role: mesh
+    name: mesh_zwingli
+    prefix: 10.31.69.33/32
+    ipv6_subprefix: -2
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.6']
+    ptp: true
+  # gateway - Rocket 5AC lite
+  - vid: 12
+    role: mesh
+    name: mesh_emma
+    prefix: 10.31.69.34/32
+    ipv6_subprefix: -3
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.7']
+    ptp: true
+  # mesh nf - all Nano Station M2
+  - vid: 20
+    role: mesh
+    name: mesh_nf_wbp1
+    prefix: 10.31.69.35/32
+    ipv6_subprefix: -4
+    mesh_metric: 2048
+    mesh_ap: mlk-nk-nf-wbp1
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+  - vid: 21
+    role: mesh
+    name: mesh_nf_wbp2
+    prefix: 10.31.69.36/32
+    ipv6_subprefix: -5
+    mesh_metric: 2048
+    mesh_ap: mlk-nk-nf-wbp2
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+  - vid: 22
+    role: mesh
+    name: mesh_nf_wbp3
+    prefix: 10.31.69.37/32
+    ipv6_subprefix: -6
+    mesh_metric: 2048
+    mesh_ap: mlk-nk-nf-wbp3
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.69.64/26
+    ipv6_subprefix: 0
+    assignments:
+      mlk-nk-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.69.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      mlk-nk-core: 1
+      mlk-nk-switch: 2
+      mlk-nk-rhnk: 3
+      mlk-nk-zwingli: 4
+      mlk-nk-emma: 5
+      mlk-nk-nf-wbp1: 6
+      mlk-nk-nf-wbp2: 7
+      mlk-nk-nf-wbp3: 8
+
+location__channel_assignments_11a_standard__to_merge:
+  # Channel - Bandwidth - TX Power
+  mlk-nk-rhnk: 36-20
+
+location__channel_assignments_11g_standard__to_merge:
+  # Channel - Bandwidth - TX Power
+  mlk-nk-nf-wbp1: 1-20
+  mlk-nk-nf-wbp2: 6-20
+  mlk-nk-nf-wbp3: 11-20
