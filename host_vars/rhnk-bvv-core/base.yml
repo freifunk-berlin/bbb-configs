@@ -1,7 +1,0 @@
----
-
-location: rhnk_bvv
-role: corerouter
-model: "tplink_eap225-outdoor-v1"
-
-wireless_profile: freifunk_default
