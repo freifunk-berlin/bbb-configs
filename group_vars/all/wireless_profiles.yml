@@ -56,7 +56,7 @@ wireless_profiles:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
 
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
@@ -91,7 +91,7 @@ wireless_profiles:
       #   network: dhcp
       #   radio: [11a_standard, 11g_standard]
       #   ifname_hint: ffowe
-      #   ieee80211w: 1
+      #   ieee80211w: 2
 
       - mode: mesh
         mesh_id: Mesh-Freifunk
@@ -127,7 +127,7 @@ wireless_profiles:
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
         owe_transition_ifname_hint: ff
-        ieee80211w: 1
+        ieee80211w: 2
 
       - mode: ap
         ssid: losWlanosLocos
@@ -176,7 +176,7 @@ wireless_profiles:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
 
       - mode: ap
         ssid: colbe15-home.freifunk.net
@@ -216,7 +216,7 @@ wireless_profiles:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
 
       - mode: ap
         ssid: Free-Cookies
@@ -256,7 +256,7 @@ wireless_profiles:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
 
       - mode: ap
         ssid: koepi
@@ -289,7 +289,7 @@ wireless_profiles:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
 
       - mode: ap
         ssid: rauchhaus
@@ -340,7 +340,7 @@ wireless_profiles:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
       - mode: ap
         ssid: khof-test
         encryption: sae-mixed
