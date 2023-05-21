@@ -55,6 +55,8 @@ jobs:
         uses: github/super-linter@v5
         env:
           VALIDATE_ALL_CODEBASE: false
+          # Disable JSCPD as we have a lot of duplication by design
+          VALIDATE_JSCPD: false
           # Change to 'master' if your main branch differs
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
