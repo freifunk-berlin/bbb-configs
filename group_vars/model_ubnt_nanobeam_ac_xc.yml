@@ -1,5 +1,6 @@
 ---
 target: ath79/generic
+openwrt_version: 22.03-SNAPSHOT
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct -kmod-ath10k-ct-smallbuffers"

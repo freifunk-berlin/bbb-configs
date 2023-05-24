@@ -1,5 +1,6 @@
 ---
 target: ath79/generic
+openwrt_version: 22.03-SNAPSHOT
 
 # PoE port is eth1, 2nd port is eth0
 # override port in host_vars if required

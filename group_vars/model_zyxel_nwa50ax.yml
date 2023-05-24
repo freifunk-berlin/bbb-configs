@@ -1,5 +1,6 @@
 ---
 target: ramips/mt7621
+openwrt_version: 22.03-SNAPSHOT
 
 int_port: lan
 

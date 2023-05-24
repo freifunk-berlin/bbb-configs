@@ -1,5 +1,6 @@
 ---
 target: octeon/generic
+openwrt_version: 22.03-SNAPSHOT
 
 target__packages__to_merge:
   - naywatch

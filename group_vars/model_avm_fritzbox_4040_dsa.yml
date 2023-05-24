@@ -1,5 +1,4 @@
 ---
-openwrt_version: snapshot
 target: ipq40xx/generic
 override_target: "avm_fritzbox-4040"
 
