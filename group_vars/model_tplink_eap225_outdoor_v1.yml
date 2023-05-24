@@ -1,6 +1,5 @@
 ---
 target: ath79/generic
-openwrt_version: 22.03-SNAPSHOT
 
 int_port: eth0
 
