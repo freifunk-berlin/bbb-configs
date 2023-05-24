@@ -8,7 +8,6 @@
 # - one 14720k partition, vendor two 7360k partitions
 
 target: ramips/mt7621
-openwrt_version: snapshot
 
 dsa_ports:
   - lan1

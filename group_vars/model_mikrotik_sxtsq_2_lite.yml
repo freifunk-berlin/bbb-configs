@@ -1,6 +1,7 @@
 ---
 override_target: "mikrotik_routerboard-lhg-2nd"
 target: ath79/mikrotik
+openwrt_version: 22.03-SNAPSHOT
 
 int_port: eth0
 

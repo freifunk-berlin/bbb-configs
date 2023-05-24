@@ -1,8 +1,6 @@
 ---
 target: ramips/mt7621
 
-openwrt_version: snapshot
-
 dsa_ports:
   - wan
   - lan1

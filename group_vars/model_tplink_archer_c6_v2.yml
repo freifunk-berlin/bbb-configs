@@ -1,5 +1,6 @@
 ---
 target: ath79/generic
+openwrt_version: 22.03-SNAPSHOT
 
 switch_ports: 7
 switch_int_port: 0

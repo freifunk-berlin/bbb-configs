@@ -1,5 +1,6 @@
 ---
 target: mpc85xx/p1010
+openwrt_version: 22.03-SNAPSHOT
 
 switch_ports: 6
 switch_int_port: 0

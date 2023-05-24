@@ -1,5 +1,4 @@
 ---
-openwrt_version: snapshot
 target: ipq40xx/mikrotik
 
 model__packages__to_merge:
