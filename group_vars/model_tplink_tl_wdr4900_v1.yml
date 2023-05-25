@@ -1,10 +1,12 @@
 ---
 target: mpc85xx/p1010
-openwrt_version: 22.03-SNAPSHOT
 
-switch_ports: 6
-switch_int_port: 0
-int_port: eth0
+dsa_ports:
+  - wan
+  - lan1
+  - lan2
+  - lan3
+  - lan4
 
 wireless_devices:
   - name: 11a_standard
