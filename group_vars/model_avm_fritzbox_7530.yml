@@ -1,15 +1,15 @@
 ---
 target: ipq40xx/generic
-openwrt_version: 22.03-SNAPSHOT
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"
   - "kmod-ath10k ath10k-firmware-qca4019"
 
-switch_ports: 5
-switch_int_port: 0
-
-int_port: eth0
+dsa_ports:
+  - lan1
+  - lan2
+  - lan3
+  - lan4
 
 wireless_devices:
   - name: 11a_standard
