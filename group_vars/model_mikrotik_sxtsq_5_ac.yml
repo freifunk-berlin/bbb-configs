@@ -1,19 +1,12 @@
 ---
 target: ipq40xx/mikrotik
-openwrt_version: 22.03-SNAPSHOT
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"
   - "kmod-ath10k ath10k-firmware-qca4019"
 
-# Somehow this doesnt work properly anymore
-# switch_disable_vlan: true
-
-switch_ports: 6
-switch_int_port: 0
-switch_ignore_ports: [1, 2, 3, 4]
-
-int_port: eth0
+dsa_ports:
+  - lan
 
 wireless_devices:
   - name: 11a_standard
