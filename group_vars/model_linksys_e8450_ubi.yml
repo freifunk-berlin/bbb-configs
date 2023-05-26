@@ -1,6 +1,5 @@
 ---
 target: mediatek/mt7622
-openwrt_version: 22.03-SNAPSHOT
 
 dsa_ports:
   - wan
