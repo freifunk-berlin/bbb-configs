@@ -56,6 +56,10 @@ networks:
     assignments:
       wilgu10-core: 1
 
+    # Workaround for broken roaming
+    # https://github.com/openwrt/openwrt/issues/11650
+    mac_table_aging_time: 2
+
   - vid: 41
     name: prdhcp
     role: dhcp
@@ -66,6 +70,10 @@ networks:
       wilgu10-core: 1
       wilgu10-printer: 2
     untagged: true
+
+    # Workaround for broken roaming
+    # https://github.com/openwrt/openwrt/issues/11650
+    mac_table_aging_time: 2
 
   - vid: 50
     role: dhcp
