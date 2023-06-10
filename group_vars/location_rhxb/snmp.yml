@@ -25,6 +25,10 @@ snmp_devices:
     address: 10.31.126.9
     snmp_profile: airos_6
 
+  - hostname: rhxb-dragon
+    address: 10.31.126.17
+    snmp_profile: airos_8
+
   - hostname: rhxb-no-5ghz
     address: 10.31.126.10
     snmp_profile: airos_6

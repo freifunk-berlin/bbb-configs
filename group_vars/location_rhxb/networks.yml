@@ -64,35 +64,41 @@ networks:
     ipv6_subprefix: -7
     ptp: true
 
+  - vid: 17
+    role: mesh
+    name: mesh_dragon
+    prefix: 10.31.126.140/32
+    ipv6_subprefix: -8
+
   - vid: 20
     role: mesh
     name: mesh_no_5ghz
     prefix: 10.31.126.135/32
-    ipv6_subprefix: -6
+    ipv6_subprefix: -20
 
   - vid: 21
     role: mesh
     name: mesh_nw_5ghz
     prefix: 10.31.126.136/32
-    ipv6_subprefix: -7
+    ipv6_subprefix: -21
 
   - vid: 22
     role: mesh                       # NO-PEERS
     name: mesh_sw_5ghz
     prefix: 10.31.126.137/32
-    ipv6_subprefix: -8
+    ipv6_subprefix: -22
 
   - vid: 23
     role: mesh
     name: mesh_so_5ghz               # NO-PEERS
     prefix: 10.31.126.138/32
-    ipv6_subprefix: -9
+    ipv6_subprefix: -23
 
   - vid: 24
     role: mesh
     name: mesh_nw_ac
     prefix: 10.31.126.139/32
-    ipv6_subprefix: -10
+    ipv6_subprefix: -24
 
   - vid: 40
     role: dhcp
@@ -122,6 +128,7 @@ networks:
       rhxb-emma: 7
       rhxb-rhnk: 8
       rhxb-technikmuseum: 9
+      rhxb-dragon: 17
 
       # antenna 5ghz
       rhxb-no-5ghz: 10
