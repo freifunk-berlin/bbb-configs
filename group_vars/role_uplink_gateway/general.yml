@@ -37,6 +37,10 @@ wireguard_wg_pub: '/etc/wireguard/wg.pub'
 # If it is set wireguard_wg_key and wireguard_wg_pub are not used.
 wireguard_wg_tmp_key: false
 
+## TUNNELDIGGER SECTION
+tunneldigger_mtu_list: [1446,1438,1422,1396,1346,1280]
+tunneldigger_port: 8942
+
 gre_metric: 64
 
 
