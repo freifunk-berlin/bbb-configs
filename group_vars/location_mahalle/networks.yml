@@ -1,0 +1,67 @@
+---
+
+# 10.31.179.112/29 - mgmt
+# 10.31.179.120/29 - mesh
+# 10.31.208.128/25 - dhcp
+
+ipv6_prefix: "2001:bf7:830:bb00::/56"
+
+networks:
+
+  - vid: 20
+    role: mesh
+    name: mesh_mahalle_w
+    prefix: 10.31.179.120/32
+    ipv6_subprefix: -2
+    mesh_ap: mahalle-nf-w
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric: 1024
+
+  - vid: 21
+    role: mesh
+    name: mesh_mahalle_o
+    prefix: 10.31.179.121/32
+    ipv6_subprefix: -1
+    mesh_ap: mahalle-nf-o
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric: 1024
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.31.208.128/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      mahalle-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.179.112/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      mahalle-core: 1
+      mahalle-switch: 2
+      mahalle-nf-w: 3
+      mahalle-nf-o: 4
+
+  - vid: 50
+    role: uplink
+    name: wireguard
+    tunnel_wan_ip: 192.168.178.2/24
+    tunnel_wan_gw: 192.168.178.1
+    tunnel_connections: 1
+    tunnel_timeout: 600
+    tunnel_mtu: 1400
+    tunnel_mesh_prefix_ipv4: 10.31.179.122/29
+    untagged: true
+
+location__channel_assignments_11a_standard__to_merge:
+  mahalle-core: 36-20
+  mahalle-nf-o: 40-20
+  mahalle-nf-w: 44-20
