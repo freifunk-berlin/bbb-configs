@@ -1,0 +1,4 @@
+---
+location__ssh_keys__to_merge:
+  - comment: Lino
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaljQHr4Nj6veeDi51BZjy/a3WXP
