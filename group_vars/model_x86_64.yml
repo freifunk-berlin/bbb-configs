@@ -2,6 +2,5 @@
 
 target: x86/64
 override_target: generic
-openwrt_version: 22.03-SNAPSHOT
 
 int_port: eth0
