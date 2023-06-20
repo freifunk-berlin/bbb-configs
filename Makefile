@@ -1,6 +1,6 @@
 lint: deps
-	yamllint -d .config/yaml-lint.yml .
-	ansible-lint -c .config/ansible-lint.yml
+	yamllint -d .github/linters/.yaml-lint.yml .
+	ansible-lint -c .github/linters/.ansible-lint.yml
 
 configs: deps lint
 	time ansible-playbook play.yml
