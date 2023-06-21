@@ -46,7 +46,7 @@ Band replaces hwmode since 21.02.2.
 Possible values for htmode_prefix are HT (802.11n), VHT (802.11ac) and HE (802.11ax).
 The htmode_prefix setting corresponds with the htmode option.
 
-For a model using DSA instead of swconfig, you may refer to [`model_ubnt_edgerouter_x_sfp.yml`](https://github.com/Freifunk-Spalter/bbb-configs/blob/master/group_vars/model_ubnt_edgerouter_x_sfp.yml)
+For a model using DSA instead of swconfig, you may refer to [`model_ubnt_edgerouter_x_sfp.yml`](https://github.com/freifunk-berlin/bbb-configs/blob/master/group_vars/model_ubnt_edgerouter_x_sfp.yml)
 
 Note: If you want to create a new model_file you can have a look at `/etc/config/wireless` on a standard OpenWRT
 install to obtain the path information for the wireless_devices.

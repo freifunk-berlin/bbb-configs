@@ -39,5 +39,5 @@ If you want to use bbb-configs for locations that are not included in bbb-config
 ## Support Information
 
 * [Support Chat](https://matrix.to/#/#berlin.freifunk.net:matrix.org): Channel `#berlin.freifunk.net` on **matrix.org**.
-* [E-Mail List](https://lists.berlin.freifunk.net/cgi-bin/mailman/listinfo/berlin): For usage, support, discussions and hardware advise.
+* [Mailing List](https://lists.berlin.freifunk.net/cgi-bin/mailman/listinfo/berlin): For usage, support, discussions and hardware advise.
 
