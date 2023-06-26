@@ -1,6 +1,0 @@
----
-location__ssh_keys__to_merge:
-  - comment: Noki
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjIgJKflHEYOIdskwalr83PflhPmFkrAebP2bUkOE11 Noki
-  - comment: schmars
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVY2XHiLDXbj7TGWtUpKEb8+qKw/DrkiVbLiyvyRaCi pktpls@systemli.org
