@@ -2,6 +2,6 @@
 
 location: kts13
 role: corerouter
-model: "avm_fritzbox-7530_dsa"
+model: "avm_fritzbox-7530"
 
 wireless_profile: disable
