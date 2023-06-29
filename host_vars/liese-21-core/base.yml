@@ -1,0 +1,11 @@
+---
+
+location: liese-21
+role: corerouter
+model: ubnt_usw-flex
+
+# We use Ubiquiti 802.11af-to-passive converters on all ports.
+# They neogotiate more power than they actually draw,
+# so we need to increase poemgr's power budget.
+# Without this increase, devices will be not powered up randomly.
+poemgr_power_budget: 24
