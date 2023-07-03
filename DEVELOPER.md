@@ -262,7 +262,7 @@ It consists of only one file, called `base.yml`.
 ---
 
 location: sama                     # locations short name, like defined in location-directories
-role: corerouter                   # devices role. Could either be 'corerouter', 'ap' or 'uplink_gateway'
+role: corerouter                   # devices role. Could either be 'corerouter', 'ap' or 'gateway'
 model: "avm_fritzbox-7530"         # model name like written in the corresponding file name in group_vars/
 
 wireless_profile: freifunk_default # activates wifi with freifunk-default-settings on this device by overriding default wireless profile for corerouters, which is the profile disable

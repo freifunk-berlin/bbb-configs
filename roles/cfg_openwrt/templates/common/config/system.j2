@@ -6,7 +6,7 @@ config system
         option log_size '64'
         option urandom_seed '0'
         option compat_version '9.9' # hardcoded to a bbb-configs exclusive version identifier, matches patch in image builder, because we dont retain device config.
-{% if role == 'corerouter' or role  == 'uplink_gateway' %}
+{% if role == 'corerouter' or role  == 'gateway' %}
 	option latitude '{{ latitude|default(0) }}'
 	option longitude '{{ longitude|default(0) }}'
 	option altitude '60.000000000000000'
@@ -15,7 +15,7 @@ config system
 
 config timeserver 'ntp'
         option enabled '1'
-        option enable_server '{{ (role == 'corerouter' or role  == 'uplink_gateway') | int }}'
+        option enable_server '{{ (role == 'corerouter' or role  == 'gateway') | int }}'
 {% if networks is defined %}
 {% set mgmtnetwork = networks | selectattr('role', 'equalto', 'mgmt') | default([], true) | list | first %}
 {% endif %}

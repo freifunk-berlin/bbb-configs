@@ -1,5 +1,5 @@
 ---
 
 location: strom
-role: uplink_gateway
+role: gateway
 model: "tplink_tl-wdr4900-v1"
