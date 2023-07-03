@@ -1,5 +1,5 @@
 ---
 
 location: ohlauer
-role: uplink_gateway
+role: gateway
 model: "ubnt_edgerouter-4"

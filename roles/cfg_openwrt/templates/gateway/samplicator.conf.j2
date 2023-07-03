@@ -1,0 +1,1 @@
+127.0.0.1:{% for host in groups['role_gateway'] if host != inventory_hostname %} {{ hostvars[host]['uplink']['ipv4'] | ansible.utils.ipaddr('address')  }}/{{conntrackd_port }}{% endfor %}

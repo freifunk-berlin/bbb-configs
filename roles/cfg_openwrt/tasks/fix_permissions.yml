@@ -13,4 +13,4 @@
   file:
     path: "{{ config_path }}/etc/init.d/replace_secrets"
     mode: "755"
-  when: role != "uplink_gateway"
+  when: role != "gateway"
