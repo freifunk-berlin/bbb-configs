@@ -58,7 +58,7 @@ networks:
       q216-nf-s: 4
 
   - vid: 50
-    role: ext
+    role: uplink
     name: lte
     tunnel_wan_ip: 192.168.2.2/24
     tunnel_wan_gw: 192.168.2.1

@@ -42,7 +42,7 @@ networks:
       kts13-ap1: 2
 
   - vid: 50
-    role: ext
+    role: uplink
     name: otwo
     untagged: true
     tunnel_wan_ip: '192.168.254.2/24'

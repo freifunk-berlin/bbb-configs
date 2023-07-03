@@ -31,7 +31,7 @@ networks:
       l5-nf-o: 4
 
   - vid: 50
-    role: ext
+    role: uplink
     name: wireguard
     tunnel_wan_ip: 192.168.0.2/24
     tunnel_wan_gw: 192.168.0.1

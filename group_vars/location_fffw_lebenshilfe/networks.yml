@@ -54,7 +54,7 @@ networks:
   - vid: 50
     untagged: true                  # option to don't tag this vlan - useful if the corerouter is plugged into a normal home router
     name: uplink
-    role: ext
+    role: uplink
     tunnel_wan_ip: 172.22.1.250/29  # put here the address and subnet of the corerouter inside the uplink network
     tunnel_wan_gw: 172.22.1.254     # gateway of the uplink network
     tunnel_connections: 2           # default value, number of different tunnels to create

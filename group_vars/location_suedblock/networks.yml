@@ -22,7 +22,7 @@ networks:
       suedblock-core: 1
 
   - vid: 23
-    role: ext
+    role: uplink
     name: uplink
     untagged: true
     tunnel_wan_ip: 192.168.188.22/24

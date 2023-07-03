@@ -88,7 +88,7 @@ networks:
       huette15-desktop: 4
 
   - vid: 50
-    role: ext
+    role: uplink
     name: uplink
     tunnel_wan_ip: 192.168.177.177/24
     tunnel_wan_gw: 192.168.177.1

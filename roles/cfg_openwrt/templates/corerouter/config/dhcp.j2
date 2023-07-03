@@ -27,7 +27,7 @@ config domain '{{ host | replace('-', '_') }}_olsr'
   {% endfor %}
 {% endfor %}
 
-{% for network in networks | rejectattr('role', 'in', ['ext', 'mesh']) %}
+{% for network in networks | rejectattr('role', 'in', ['uplink', 'mesh']) %}
     {% set name = network['name'] if 'name' in network else network['role'] %}
 
 config dhcp 'dhcp_{{ name }}'
@@ -54,7 +54,7 @@ config domain 'frei_funk_{{ name }}'
     {% endif %}
 {% endfor %}
 
-{% for network in networks | selectattr('role','in', ['ext', 'mesh']) %}
+{% for network in networks | selectattr('role','in', ['uplink', 'mesh']) %}
     {% set name = network['name'] if 'name' in network else network['role'] %}
 config dhcp 'dhcp_{{ name }}'
 	option interface '{{ name }}'

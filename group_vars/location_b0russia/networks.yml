@@ -40,7 +40,7 @@ networks:
   - vid: 50
     untagged: true
     name: uplink
-    role: ext
+    role: uplink
     tunnel_wan_ip: 192.168.2.2/24
     tunnel_wan_gw: 192.168.2.1
     tunnel_connections: 2

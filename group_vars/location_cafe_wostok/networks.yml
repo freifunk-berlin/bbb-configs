@@ -30,7 +30,7 @@ networks:
   - vid: 50
     untagged: true
     name: easybell
-    role: ext
+    role: uplink
     tunnel_wan_ip: 192.168.0.10/24
     tunnel_wan_gw: 192.168.0.1
     tunnel_connections: 1
