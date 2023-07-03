@@ -30,7 +30,7 @@ networks:
 
   - vid: 41
     name: prdhcp
-    role: ext
+    role: uplink
     untagged: true
     tunnel_wan_ip: 10.0.0.2/24
     tunnel_wan_gw: 10.0.0.1

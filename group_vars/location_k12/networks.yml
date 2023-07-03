@@ -156,7 +156,7 @@ networks:
 #  - vid: 43
 #    untagged: true
 #    name: uplink
-#    role: ext
+#    role: uplink
 #    tunnel_wan_ip: 192.168.178.2/24
 #    tunnel_wan_gw: 192.168.178.1
 #    tunnel_connections: 2

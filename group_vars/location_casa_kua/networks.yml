@@ -18,7 +18,7 @@ networks:
 
   - vid: 41
     name: prdhcp
-    role: ext
+    role: uplink
     untagged: true
     tunnel_wan_ip: 192.168.178.2/24
     tunnel_wan_gw: 192.168.178.1

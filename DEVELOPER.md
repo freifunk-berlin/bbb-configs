@@ -161,7 +161,7 @@ tunnel can be an easy and safe solution. In that case add another vlan to the ne
   - vid: 50
     untagged: true            # option to don't tag this vlan - useful if the corerouter is plugged into a normal home router
     name: uplink
-    role: ext
+    role: uplink
     tunnel_wan_ip: 192.168.1.2/24   # put here the address and subnet of the corerouter inside the uplink network
     tunnel_wan_gw: 192.168.1.1      # gateway of the uplink network
     tunnel_connections: 2           # default value, number of different tunnels to create
