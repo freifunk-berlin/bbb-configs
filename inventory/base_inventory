@@ -1,18 +1,83 @@
 #!/usr/bin/env bash
 
+# This one complained about an instance where double-quotes would lead to
+# incorrect behaviour (`for i in $(seq ...)`).
+# - SC2086: Double quote to prevent globbing and word splitting.
+# shellcheck disable=SC2086
+
+set -e
+# set -x
+
+# Example location file at locations/pktpls.yml
+# ---
+# location: pktpls
+# var: value-from-location
+# hosts:
+#   - hostname: pktpls-core
+#     role: corerouter
+#     var: value-from-host
+#
+
 case "$1" in
 --host)
-    echo '{}'
+    query="$2"
+    # Location names may contain `-`, so we try all alternatives, starting at the longest
+    parts="$(echo "$query" | grep -o '-' | wc -l)"
+    for i in $(seq 1 $parts | sort -r) ; do
+        tryloc="$(echo "$query" | cut -d'-' -f"-$i")"
+        locyml="locations/$tryloc.yml"
+        echo "info: trying $locyml" >&2
+        if [ -f "$locyml" ] ; then
+            # Location vars is location.yml without the hosts array.
+            locvars="$(yq -M -c 'del(.hosts)' "$locyml")"
+            # Host vars is the matching object from the hosts array.
+            # TODO: check that .location value matches filename
+            hostvars="$(yq -M -c '.hosts[] | select(.hostname == "'"$query"'")' "$locyml")"
+            if [ -z "$hostvars" ] ; then
+                echo "error: host $query not found in $locyml" >&2
+                exit 1
+            else
+                echo "info: host $query found in $locyml" >&2
+                # Host vars override location vars.
+                # And put host vars first in output.
+                # TODO: do merging?
+                echo "$hostvars $locvars $hostvars" | jq -M -s add
+                exit 0
+            fi
+        fi
+    done
+    # Also look in Ansible's default location
+    echo "info: trying host_vars/$query/" >&2
+    if [ -d "host_vars/$query" ] ; then
+        echo "info: host $query found in host_vars/$query/" >&2
+        echo "{}"
+        exit 0
+    fi
+    echo "error: host $query not found" >&2
+    exit 1
     ;;
 --list)
-    HOSTS=$(for i in host_vars/*; do echo -ne "$i\c" | awk -F'/' '{printf "\""$2"\", "}'; done)
+    HOSTS=$(
+        echo "info: trying locations/*.yml" >&2
+        # TODO: check that .location value matches filename
+        # TODO: check that hostname matches location name
+        for h in $(yq -M -r '.hosts[].hostname' locations/*.yml) ; do
+            echo -n '"'"$h"'", '
+        done
+        # Also look in Ansible's default location
+        echo "info: trying host_vars/*" >&2
+        for h in host_vars/* ; do
+            echo -ne "$h\c" | awk -F'/' '{printf "\""$2"\", "}'
+        done)
     HOSTS="${HOSTS::-2}"
     cat <<EOF
-{
-    "all": {
-	"hosts": [ $HOSTS ]
-    }
-}
+{ "all": { "hosts": [ $HOSTS ] } }
 EOF
+    exit 0
+    ;;
+*)
+    echo "error: unknown parameters: $*" >&2
+    exit 1
     ;;
 esac
+
