@@ -1,4 +1,4 @@
-{% if (networks | selectattr('tunnel_wan_ip', 'defined') | count > 0) and ((openwrt_version == 'snapshot') or ('22.03' in openwrt_version)) %}
+{% if (networks | selectattr('tunnel_wan_ip', 'defined') | count > 0) %}
 {% set TCP_HEADER_SIZE = 20 %}
 {% set IPV4_HEADER_SIZE = 20 %}
 {% set IPV6_HEADER_SIZE = 40 %}
