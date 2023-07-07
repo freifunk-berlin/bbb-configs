@@ -28,10 +28,17 @@ networks:
     ipv6_subprefix: -8
     ptp: true
 
+  - vid: 13
+    role: mesh
+    name: mesh_sama_60g
+    prefix: 10.31.157.100/32
+    ipv6_subprefix: -9
+    ptp: true
+
   - vid: 20
     role: mesh
     name: mesh_core_2ghz
-    prefix: 10.31.157.100/32
+    prefix: 10.31.157.110/32
     ipv6_subprefix: -3
     mesh_ap: gub37-core
     mesh_radio: 11g_standard
@@ -41,7 +48,7 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_core_5ghz
-    prefix: 10.31.157.101/32
+    prefix: 10.31.157.111/32
     ipv6_subprefix: -4
     mesh_ap: gub37-core
     mesh_radio: 11a_standard
@@ -51,7 +58,7 @@ networks:
   - vid: 22
     role: mesh
     name: mesh_hof_s
-    prefix: 10.31.157.102/32
+    prefix: 10.31.157.112/32
     ipv6_subprefix: -5
     mesh_ap: gub37-hof-s
     mesh_radio: 11a_standard
@@ -92,6 +99,7 @@ networks:
       gub37-emma: 4
       gub37-hof-s: 5
       gub37-hof-w: 6
+      gub37-sama-60g: 7
 
 
 location__channel_assignments_11a_standard__to_merge:
