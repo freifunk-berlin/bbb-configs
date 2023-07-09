@@ -1,6 +1,6 @@
 ---
 
-wireless_profiles:
+all__wireless_profiles__to_merge:
   - name: disable
     devices:
       - radio: 11a_standard
