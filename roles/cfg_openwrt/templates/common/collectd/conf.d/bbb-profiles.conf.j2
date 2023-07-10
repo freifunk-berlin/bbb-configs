@@ -1,0 +1,209 @@
+
+LoadPlugin snmp
+<Plugin snmp>
+
+    <Data "af60_sys_uptime">
+        Type "uptime"
+        TypeInstance "days"
+        Table false
+        Scale 1.15740740741e-07
+        Values ".1.3.6.1.2.1.1.3.0"
+    </Data>
+    <Data "af60_rf_freq">
+        Type "frequency"
+        TypeInstance "Frequency (MHz)"
+        Table false
+        Values ".1.3.6.1.4.1.41112.1.11.1.1.2.1"
+    </Data>
+    <Data "af60_rf_sta_distance">
+        PluginInstance "distance"
+        Type "gauge"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.11.1.3.1.14"
+        Values ".1.3.6.1.4.1.41112.1.11.1.3.1.15"
+    </Data>
+    <Data "af60_rf_sta_signal">
+        Type "signal_power"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.11.1.3.1.14"
+        Values ".1.3.6.1.4.1.41112.1.11.1.3.1.3"
+    </Data>
+    <Data "af60_rf_sta_snr">
+        Type "snr"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.11.1.3.1.14"
+        Values ".1.3.6.1.4.1.41112.1.11.1.3.1.4"
+    </Data>
+    <Data "af60_rf_sta_rx_capacity">
+        Type "bitrate"
+        PluginInstance "rx"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.11.1.3.1.14"
+        Scale 1000
+        Values ".1.3.6.1.4.1.41112.1.11.1.3.1.7"
+    </Data>
+    <Data "af60_rf_sta_tx_capacity">
+        Type "bitrate"
+        PluginInstance "tx"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.11.1.3.1.14"
+        Scale 1000
+        Values ".1.3.6.1.4.1.41112.1.11.1.3.1.8"
+    </Data>
+
+    <Data "airos_6_sys_uptime">
+        Type "uptime"
+        TypeInstance "days"
+        Table false
+        Scale 1.15740740741e-07
+        Values ".1.3.6.1.2.1.1.3.0"
+    </Data>
+    <Data "airos_6_rf_freq">
+        Type "frequency"
+        TypeInstance "Frequency (MHz)"
+        Table false
+        Values ".1.3.6.1.4.1.41112.1.4.1.1.4.1"
+    </Data>
+    <Data "airos_6_rf_sta_signal">
+        Type "signal_power"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.3.1"
+    </Data>
+    <Data "airos_6_rf_sta_noise">
+        Type "signal_noise"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.4.1"
+    </Data>
+    <Data "airos_6_rf_sta_distance">
+        PluginInstance "distance"
+        Type "gauge"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.5.1"
+    </Data>
+    <Data "airos_6_rf_sta_ccq">
+        Type "signal_quality"
+        Table true
+        TypeInstancePrefix "CCQ (%)  "
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.6.1"
+    </Data>
+    <Data "airos_6_rf_sta_rx_capacity">
+        Type "bitrate"
+        PluginInstance "tx"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Scale 1000
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.11.1"
+    </Data>
+    <Data "airos_6_rf_sta_tx_capacity">
+        Type "bitrate"
+        PluginInstance "tx"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Scale 1000
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.12.1"
+    </Data>
+
+    <Data "airos_8_sys_uptime">
+        Type "uptime"
+        TypeInstance "days"
+        Table false
+        Scale 1.15740740741e-07
+        Values ".1.3.6.1.2.1.1.3.0"
+    </Data>
+    <Data "airos_8_rf_freq">
+        Type "frequency"
+        TypeInstance "Frequency (MHz)"
+        Table false
+        Values ".1.3.6.1.4.1.41112.1.4.1.1.4.1"
+    </Data>
+    <Data "airos_8_rf_sta_distance">
+        PluginInstance "distance"
+        Type "gauge"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.5.1"
+    </Data>
+    <Data "airos_8_rf_sta_signal">
+        Type "signal_power"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.3.1"
+    </Data>
+    <Data "airos_8_rf_sta_cinr">
+        Type "snr"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.16.1"
+    </Data>
+    <Data "airos_8_rf_sta_rx_capacity">
+        Type "bitrate"
+        PluginInstance "rx"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Scale 1000
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.18.1"
+    </Data>
+    <Data "airos_8_rf_sta_tx_capacity">
+        Type "bitrate"
+        PluginInstance "tx"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Scale 1000
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.17.1"
+    </Data>
+    <Data "airos_8_rf_sta_tx_latency">
+        Type "latency"
+        Table true
+        TypeInstanceOID ".1.3.6.1.4.1.41112.1.4.7.1.2.1"
+        Values ".1.3.6.1.4.1.41112.1.4.7.1.20.1"
+    </Data>
+
+    <Data "mikrotik_60g_sys_uptime">
+        Type "uptime"
+        TypeInstance "days"
+        Table false
+        Scale 1.15740740741e-07
+        Values ".1.3.6.1.2.1.1.3.0"
+    </Data>
+    <Data "mikrotik_60g_rf_freq">
+        Type "frequency"
+        TypeInstance "Frequency (MHz)"
+        Table false
+        Values ".1.3.6.1.4.1.14988.1.1.1.8.1.6.1"
+    </Data>
+    <Data "mikrotik_60g_rf_mcs">
+        Type "gauge"
+        TypeInstance "MCS Level"
+        Table false
+        Values ".1.3.6.1.4.1.14988.1.1.1.8.1.7.1"
+    </Data>
+    <Data "mikrotik_60g_rf_quality">
+        Type "signal_quality"
+        TypeInstance "Percent"
+        Table false
+        Values ".1.3.6.1.4.1.14988.1.1.1.8.1.8.1"
+    </Data>
+    <Data "mikrotik_60g_rf_tx_sector">
+        Type "gauge"
+        TypeInstance "TX Sector"
+        Table false
+        Values ".1.3.6.1.4.1.14988.1.1.1.8.1.9.1"
+    </Data>
+    <Data "mikrotik_60g_rf_rssi">
+        Type "signal_power"
+        TypeInstance "RSSI (dBm)"
+        Table false
+        Values ".1.3.6.1.4.1.14988.1.1.1.8.1.12.1"
+    </Data>
+    <Data "mikrotik_60g_rf_phy_rate">
+        Type "bitrate"
+        TypeInstance "TX Bitrate"
+        Scale 1000000
+        Values ".1.3.6.1.4.1.14988.1.1.1.8.1.13.1"
+    </Data>
+
+</Plugin>

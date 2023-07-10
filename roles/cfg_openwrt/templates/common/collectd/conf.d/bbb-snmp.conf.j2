@@ -1,35 +1,45 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 
-{% set profiles = snmp_devices | default([]) | map(attribute='snmp_profile') | list | unique %}
-
-{% if profiles | length > 0 %}
-LoadPlugin snmp
-<Plugin snmp>
-{% endif %}
-
-{%- for profile_name in profiles %}
-  {% for metric_name,metric in collectd_snmp_profiles[profile_name].items() %}
-    <Data "{{ profile_name }}_{{ metric_name }}">
-    {% for opt,val in metric.items() %}
-        {{ opt }} {{ val|string|lower if val|string == 'True' or val|string =='False' or val is number else  "\"" + val|string + "\"" }} 
-    {% endfor %}
-    </Data>
-  {% endfor %}
-{% endfor %}
-
-
-
 {% for device in snmp_devices | default([]) %}
     <Host "{{ device['hostname'] }}">
         Address "{{ device['address'] }}"
         Version 1
         Interval 30
         Community '{{ device['community'] | default('public') }}'
-  {% for metric_name in collectd_snmp_profiles[device['snmp_profile']] %}
-        Collect "{{ device['snmp_profile'] }}_{{ metric_name }}"
-  {% endfor %}
+  {% if device['snmp_profile'] == "af60" %}
+        Collect "af60_sys_uptime"
+        Collect "af60_rf_freq"
+        Collect "af60_rf_sta_distance"
+        Collect "af60_rf_sta_signal"
+        Collect "af60_rf_sta_snr"
+        Collect "af60_rf_sta_rx_capacity"
+        Collect "af60_rf_sta_tx_capacity"
+  {% elif device['snmp_profile'] == "airos_6" %}
+        Collect "airos_6_sys_uptime"
+        Collect "airos_6_rf_freq"
+        Collect "airos_6_rf_sta_signal"
+        Collect "airos_6_rf_sta_noise"
+        Collect "airos_6_rf_sta_distance"
+        Collect "airos_6_rf_sta_ccq"
+        Collect "airos_6_rf_sta_rx_capacity"
+        Collect "airos_6_rf_sta_tx_capacity"
+  {% elif device['snmp_profile'] == "airos_8" %}
+        Collect "airos_8_sys_uptime"
+        Collect "airos_8_rf_freq"
+        Collect "airos_8_rf_sta_distance"
+        Collect "airos_8_rf_sta_signal"
+        Collect "airos_8_rf_sta_cinr"
+        Collect "airos_8_rf_sta_rx_capacity"
+        Collect "airos_8_rf_sta_tx_capacity"
+        Collect "airos_8_rf_sta_tx_latency"
+  {% elif device['snmp_profile'] == "mikrotik_60g" %}
+        Collect "mikrotik_60g_sys_uptime"
+        Collect "mikrotik_60g_rf_freq"
+        Collect "mikrotik_60g_rf_mcs"
+        Collect "mikrotik_60g_rf_quality"
+        Collect "mikrotik_60g_rf_tx_sector"
+        Collect "mikrotik_60g_rf_rssi"
+        Collect "mikrotik_60g_rf_phy_rate"
+  {% endif %}
     </Host>
 {% endfor %}
-{% if profiles | length > 0 %}
-</Plugin>
-{% endif %}
