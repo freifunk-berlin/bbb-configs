@@ -8,6 +8,8 @@ networks:
     prefix: 10.230.23.141/32
     ipv6_subprefix: -1
     ptp: true
+    mesh_metric: 512
+    mesh_metric_lqm: ['default 0.2']
 
   - vid: 112
     role: mesh
@@ -60,7 +62,6 @@ networks:
     name: mesh_fardf
     prefix: 10.230.23.149/32
     ipv6_subprefix: -9
-    mesh_metric_lqm: ['default 0.2']           # prefer moabit uplink
     ptp: true
 
   - vid: 128
