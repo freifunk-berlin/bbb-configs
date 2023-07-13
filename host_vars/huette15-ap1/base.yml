@@ -1,8 +1,0 @@
----
-
-location: huette15
-role: ap
-model: "tplink_eap225-outdoor-v1"
-openwrt_version: snapshot
-
-wireless_profile: freifunk_default
