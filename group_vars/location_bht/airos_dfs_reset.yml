@@ -59,4 +59,4 @@ airos_dfs_reset:
     target: "10.31.166.14"
     username: "root"
     password: "file:/root/pwd.txt"
-    daytime_limit: "2-7"
+    daytime_limit: "0-23"
