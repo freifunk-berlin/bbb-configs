@@ -24,6 +24,7 @@
     imagebuilder_dir: "{{ basedir }}/imagebuilders/"
     imagebuild_dir: "{{ basedir }}/tmp/imagebuild/{{ inventory_hostname }}"
     image_dir: "{{ basedir }}/images/"
+    wikiupdater_dir: "{{ basedir }}/wikiupdater/"
   tags: always
 
 - name: Create directory
@@ -98,3 +99,19 @@
     - never
     - flash
   when: ipv6_prefix is defined
+
+- name: Include wikiupdater
+  include_tasks:
+    file: wikiupdater.yml
+    apply:
+      tags: wiki
+  tags: wiki
+  when: role == "corerouter"
+
+- name: Wikiupdaterinfo
+  ansible.builtin.debug:
+    msg:
+      - Role from your current device is {{ role }}. Wikiupdater needs to be run with the Corerouter.
+      - You might need to change your limit to include the core-router if you dont get the desired output.
+  tags: wiki
+  when: role != "corerouter"
