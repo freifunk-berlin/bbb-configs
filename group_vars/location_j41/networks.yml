@@ -1,0 +1,54 @@
+---
+ipv6_prefix: '2001:bf7:830:bd00::/56'
+
+# got following prefixes:
+# Router: 10.31.41.0/24
+# --MGMT: 10.31.41.0/26
+# --MESH: 10.31.41.64/26
+# --DHCP: 10.31.41.128/25
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.41.128/25
+    ipv6_subprefix: 0
+    assignments:
+      j41-core: 1
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_core_5ghz
+    prefix: 10.31.41.65/32
+    ipv6_subprefix: -1
+    mesh_ap: j41-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - j41-sw
+  - vid: 10
+    role: mesh
+    name: mesh_sw
+    prefix: 10.31.41.66/32
+    ipv6_subprefix: -2
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.41.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      # 10.31.41.1/32
+      j41-core: 1
+      # 10.31.41.2/32
+      j41-switch: 2
+      # 10.31.41.3/32
+      j41-sw: 3

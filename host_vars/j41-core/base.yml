@@ -1,0 +1,20 @@
+---
+
+location: j41
+role: corerouter
+model: "ubnt_nanostation-m5_xw"
+
+model__packages__to_merge:
+  - "-tmux"
+  - "-mosh-server"
+  - "-mtr"
+  - "-luci-app-babeld"
+  - "-luci-app-olsr"
+  - "-luci-app-olsr-services"
+  - "-luci-mod-falter"
+  - "-luci-app-falter-owm"
+  - "-luci-app-falter-owm-ant"
+  - "-luci-app-falter-owm-cmd"
+  - "-luci-app-falter-owm-gui"
+
+wireless_profile: freifunk_default
