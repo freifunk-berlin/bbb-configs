@@ -2,6 +2,10 @@
 
 
 snmp_devices:
+  - hostname: wilgu10-zwingli
+    address: 10.36.190.181
+    snmp_profile: airos_8
+
   - hostname: wilgu10-sama
     address: 10.36.190.182
-    snmp_profile: airos_8
+    snmp_profile: af60
