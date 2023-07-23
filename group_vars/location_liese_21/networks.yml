@@ -1,0 +1,56 @@
+---
+
+# mesh: 10.31.174.8/29
+# dhcp: 10.31.211.64/26
+# mgmt: 10.31.137.48/28
+
+ipv6_prefix: "2001:bf7:860:f00::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_magda
+    prefix: 10.31.174.8/32
+    ipv6_subprefix: -10
+
+  - vid: 11
+    role: mesh
+    name: mesh_n_5ghz
+    prefix: 10.31.174.9/32
+    ipv6_subprefix: -11
+
+  - vid: 20
+    role: mesh
+    name: mesh_n_nf_5ghz
+    prefix: '10.31.174.10/32'
+    ipv6_subprefix: -20
+    mesh_ap: liese-21-n-nf-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.211.64/26
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      liese-21-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.137.48/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      liese-21-core: 1
+      liese-21-magda: 2
+      liese-21-n-5ghz: 3
+      liese-21-n-nf-5ghz: 4
+
+# location__channel_assignments_11a_standard__to_merge:
+
+# location__channel_assignments_11g_standard__to_merge:
+
+# channel-bandwith-txpower in dbm
