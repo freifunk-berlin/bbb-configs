@@ -86,7 +86,7 @@ networks:
       gub37-core: 1
 
   # 10.31.157.0/26
-  - vid: 432
+  - vid: 433
     role: mgmt
     prefix: 10.31.157.0/26
     gateway: 1
