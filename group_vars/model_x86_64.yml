@@ -2,5 +2,8 @@
 
 target: x86/64
 override_target: generic
+image_search_pattern: "*-ext4-combined.img*"
 
 int_port: eth0
+
+wireless_profile: disable
