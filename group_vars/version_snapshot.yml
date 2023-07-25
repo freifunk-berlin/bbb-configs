@@ -1,2 +1,3 @@
 ---
-feed_version: snapshot
+# Don't use falter master, breaking changes are expected at the moment (7/2023)
+feed_version: 1.4.0-snapshot
