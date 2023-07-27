@@ -1,0 +1,96 @@
+---
+location: ilr
+location_nice: ILR @ TU Berlin, Marchstraße 12, Charlottenburg
+latitude: 52.515186022
+longitude: 13.323658705
+contact_nickname: 'Martin'
+contacts:
+  - 'https://config.berlin.freifunk.net/contact/7187/Imlsci1jb3JlIg.ZMBJNQ.CSDDgrcP1SQFmuFjEH6FyuCA40I'
+
+hosts:
+  - hostname: ilr-core
+    role: corerouter
+    model: "ubnt_usw-flex"
+    # We use Ubiquiti 802.11af-to-passive converters on all ports.
+    # They neogotiate more power than they actually draw,
+    # so we need to increase poemgr's power budget.
+    # Without this increase, devices will be not powered up randomly.
+    poemgr_power_budget: 24
+
+snmp_devices:
+  - hostname: ilr-teufb
+    address: 10.31.214.26
+    snmp_profile: af60
+
+  - hostname: ilr-perleb
+    address: 10.31.214.27
+    snmp_profile: airos_8
+
+# ROUTER: 10.31.214.0/27
+# --DHCP: 10.31.214.0/28
+# --MESH: 10.31.214.16/29
+# --MGMT: 10.31.214.24/29
+
+ipv6_prefix: "2001:bf7:800:1200::/56"
+
+networks:
+  - vid: 10
+    untagged: true
+    role: mesh
+    name: mesh_teufb
+    ptp: true
+    prefix: 10.31.214.16/32
+    ipv6_subprefix: -10
+    # WARNING: Custom port config {1t,2u,3u,4u,5t}
+
+  - vid: 11
+    role: mesh
+    name: mesh_perleb
+    ptp: true
+    prefix: 10.31.214.17/32
+    ipv6_subprefix: -11
+
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.31.214.18/32
+    ipv6_subprefix: -20
+    mesh_ap: ilr-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.31.214.19/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: ilr-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.214.0/28
+    ipv6_subprefix: 0
+    assignments:
+      ilr-core: 1
+    # WARNING: Custom port config {1u,2t,3t,4t,5u}
+
+  - vid: 435
+    role: mgmt
+    prefix: 10.31.214.24/29
+    gateway: 1
+    dns: 1
+    ntp: 1
+    ipv6_subprefix: 1
+    assignments:
+      ilr-core: 1
+      ilr-teufb: 2
+      ilr-perleb: 3
+
+location__ssh_keys__to_merge:
+  - comment: kian FFAG
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE463xXlTla0ewJIte7HtYgNfIuAFIoLv0rAy9N+QFbn gosling@campus.tu-berlin.de
