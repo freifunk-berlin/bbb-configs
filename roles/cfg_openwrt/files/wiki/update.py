@@ -112,7 +112,7 @@ def login_at_api(login_token):
         "format": "json",
     }
 
-    s.get(url=API_URL, params=params_login)
+    s.post(url=API_URL, data=params_login)
 
 
 def fetch_csrf_token():
@@ -148,15 +148,15 @@ def edit_section(article_title, section_number, csrf_token, new_text):
     if data.get("edit").get("nochange") == "":
         print(
             (
-                "SKIPPED: The Wiki article was already up to date."
-                "No changes were made. See: {WIKI_URL}/{data.get('edit').get('title')}"
+                f"SKIPPED: The Wiki article was already up to date."
+                f"No changes were made. See: {WIKI_URL}/{data.get('edit').get('title')}"
             )
         )
     else:
         print(
             (
-                "UPDATED: The wiki article was successfully updated."
-                "Check the results at: {WIKI_URL}/{data.get('edit').get('title')}"
+                f"UPDATED: The wiki article was successfully updated."
+                f"Check the results at: {WIKI_URL}/{data.get('edit').get('title')}"
             )
         )
 
