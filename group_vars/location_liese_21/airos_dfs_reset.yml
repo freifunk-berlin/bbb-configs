@@ -1,0 +1,9 @@
+---
+
+airos_dfs_reset:
+
+  - name: "liese-21-n-5ghz"
+    target: "10.31.137.51"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "0-23"
