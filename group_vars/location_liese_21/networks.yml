@@ -49,8 +49,8 @@ networks:
       liese-21-n-5ghz: 3
       liese-21-n-nf-5ghz: 4
 
-# location__channel_assignments_11a_standard__to_merge:
-
+location__channel_assignments_11a_standard__to_merge:
+  liese-21-n-nf-5ghz: 100-40
 # location__channel_assignments_11g_standard__to_merge:
 
 # channel-bandwith-txpower in dbm
