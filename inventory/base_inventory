@@ -1,21 +1,76 @@
 #!/usr/bin/env bash
 
-# This one complained about an instance where double-quotes would lead to
-# incorrect behaviour (`for i in $(seq ...)`).
-# - SC2086: Double quote to prevent globbing and word splitting.
 # shellcheck disable=SC2086
+#
+# SC2086: Double quote to prevent globbing and word splitting.
+# - This one complained about an instance where double-quotes would lead to
+#   incorrect behaviour (`for i in $(seq ...)`). We do want the word splitting.
 
 set -e
 # set -x
 
-# Example location file at locations/pktpls.yml
-# ---
+# Ansible inventory script for bbb-configs location files
+#
+# By default, Ansible isn't well suited for how we organize hosts and locations.
+# We want one complete file for every location, which consists of one or more
+# hosts with various roles as well as shared and individual config data.
+# Ansible on the other hand starts at the "host vars" and then
+# uses the "keyed groups" plugin to merge multiple stages of "group vars".
+# For our case, this results in an amount of files that can feel overwhelming.
+#
+# This inventory script allows for complete single location files while
+# at the same time being compatible with Ansible's host vars and group vars.
+# Note that certain shared and common config data is still loaded using
+# keyed groups and group vars where it makes sense (e.g. role and model).
+#
+# Ansible expects this script to respond to `--host <hostname>` and `--list`.
+# For more information on inventory scripts, see:
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/script_inventory.html
+#
+# With `--host <hostname>``, if no matching host is found in locations/*.yml,
+# we then look in Ansible's default host_vars/ directory.
+#
+# With `--list`, we scan both locations/ and host_vars/.
+#
+# Data for hosts in host_vars/ is constructed by Ansible:
+# 1. Combine the data from all files in host_vars/<hostname>/
+# 2. Add keyed_groups as specified in inventory/
+# 3. Merge the data from all related groups in group_vars/<hostname>/
+#
+# Data for a specific host in locations/ is constructed as follows:
+# 1. Copy the location data into a new object, ignore the `.hosts` array
+# 2. Merge the array entry from `.hosts` with a matching `.hostname` value,
+#    with shallow merge only at the moment
+# 3. Add keyed_groups as specified in inventory/
+# 4. Merge the data from all related groups in group_vars/<hostname>/
+#
+# For example:
+#
 # location: pktpls
-# var: value-from-location
 # hosts:
 #   - hostname: pktpls-core
 #     role: corerouter
-#     var: value-from-host
+#     string: host-var-has-precedence
+#     object: { two: 456 }
+#     array: [ bar ]
+# string: will-be-overridden
+# object: { one: 123 }
+# array: [ foo ]
+#
+# results in:
+#
+# {
+#   "location": "pktpls",
+#   "hostname": "pktpls-core",
+#   "role": "corerouter",
+#   "string": "host-var-has-precedence",
+#   "object": {
+#     "two": 456
+#   },
+#   "array": [
+#     "bar"
+#   ]
+# }
 #
 
 case "$1" in
@@ -26,7 +81,6 @@ case "$1" in
     for i in $(seq 1 $parts | sort -r) ; do
         tryloc="$(echo "$query" | cut -d'-' -f"-$i")"
         locyml="locations/$tryloc.yml"
-        echo "info: trying $locyml" >&2
         if [ -f "$locyml" ] ; then
             # Location vars is location.yml without the hosts array.
             locvars="$(yq -M -c 'del(.hosts)' "$locyml")"
@@ -37,19 +91,15 @@ case "$1" in
                 echo "error: host $query not found in $locyml" >&2
                 exit 1
             else
-                echo "info: host $query found in $locyml" >&2
-                # Host vars override location vars.
-                # And put host vars first in output.
-                # TODO: do merging?
+                # Host vars override location vars, and host vars are first in output.
+                # TODO: do merging? for now we use ansible's merge_vars plugin
                 echo "$hostvars $locvars $hostvars" | jq -M -s add
                 exit 0
             fi
         fi
     done
     # Also look in Ansible's default location
-    echo "info: trying host_vars/$query/" >&2
     if [ -d "host_vars/$query" ] ; then
-        echo "info: host $query found in host_vars/$query/" >&2
         echo "{}"
         exit 0
     fi
@@ -58,14 +108,12 @@ case "$1" in
     ;;
 --list)
     HOSTS=$(
-        echo "info: trying locations/*.yml" >&2
         # TODO: check that .location value matches filename
         # TODO: check that hostname matches location name
         for h in $(yq -M -r '.hosts[].hostname' locations/*.yml) ; do
             echo -n '"'"$h"'", '
         done
         # Also look in Ansible's default location
-        echo "info: trying host_vars/*" >&2
         for h in host_vars/* ; do
             echo -ne "$h\c" | awk -F'/' '{printf "\""$2"\", "}'
         done)
