@@ -60,3 +60,37 @@ location__channel_assignments_11g_standard__to_merge:
   rauchhaus-floor1north133: 6-20
   rauchhaus-floor1south134: 11-20
   rauchhaus-floor2north132: 1-20
+
+location__wireless_profiles__to_merge:
+  - name: rauchhaus
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 1
+
+      - mode: ap
+        ssid: rauchhaus
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass'
+        network: home
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: home

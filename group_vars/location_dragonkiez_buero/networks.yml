@@ -32,3 +32,21 @@ networks:
     ipv6_subprefix: 0
     assignments:
       dragonkiez-buero: 1
+
+location__wireless_profiles__to_merge:
+  - name: dragonkiez_buero
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+
+    ifaces:
+      - mode: ap
+        ssid: kiezraum2.berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
