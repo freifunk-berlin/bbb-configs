@@ -64,7 +64,7 @@ config dhcp 'dhcp_{{ name }}'
 
 {% for network in networks | selectattr('role','equalto','dhcp') %}
     {% for assignment in network['assignments'] %}
-config host
+config domain
 	option name '{{ assignment }}'
 	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][assignment]) | ansible.utils.ipaddr('address') }}'
     {% endfor %}
@@ -75,3 +75,26 @@ config odhcpd 'odhcpd'
 	option leasefile '/tmp/hosts/odhcpd'
 	option leasetrigger '/usr/sbin/odhcpd-update'
 	option loglevel '4'
+
+{% for dhcp_static_lease in dhcp_static_leases | default([]) %}
+{% if dhcp_static_lease['name'] is defined and dhcp_static_lease['mac'] is defined and dhcp_static_lease['ip'] is defined %}
+config host
+        option name '{{ dhcp_static_lease['name'] }}'
+        option mac '{{ dhcp_static_lease['mac'] }}'
+        option ip '{{ dhcp_static_lease['ip'] }}'
+    {% if dhcp_static_lease['dns'] is defined %}
+        option dns '{{ dhcp_static_lease['dns'] }}'
+    {% endif %}
+
+{% endif %}
+{% endfor %}
+
+# TODO: check that host names are not repeated from the assignments list and throw an error otherwise; make sure to compare hostname and IPv4/IPv6 for this
+{% for dhcp_custom_domain_name in dhcp_custom_domain_names | default([]) %}
+{% if dhcp_custom_domain_name['name'] is defined and dhcp_custom_domain_name['ip'] is defined %}
+config domain
+        option name '{{ dhcp_custom_domain_name['name'] }}'
+        option ip '{{ dhcp_custom_domain_name['ip'] }}'
+
+{% endif %}
+{% endfor %}

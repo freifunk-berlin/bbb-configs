@@ -246,6 +246,56 @@ airos_dfs_reset:
     daytime_limit: "2-7"
 ```
 
+#### dhcp.yml
+
+This optional file allows to set static dhcp leases and custom domain names. The syntax is as follows:
+
+```yml
+---
+dhcp_static_leases:
+  - name: hostname1
+    mac: AA:AA:AA:AA:AA:AA
+    ip: 10.10.10.1
+  - name: hostname2
+    mac: BB:BB:BB:BB:BB:BB
+    ip: 10.10.10.2
+    dns: 1
+  - name: webcam1
+    mac: CC:CC:CC:CC:CC:CC
+    ip: 10.10.10.3
+    dns: 1
+    olsrd_nameservice: 1
+  - name: webcam2
+    mac: DD:DD:DD:DD:DD:DD
+    ip: 10.10.10.4
+    dns: 1
+    olsrd_nameservice: 1
+
+dhcp_custom_domain_names:
+  - name: unifi
+    ip: 10.10.10.2
+```
+
+A hostname, mac address and ip is required. The option `dns: 1` ensures that the entry is added without the `.lan` suffix.
+The option `olsrd_nameservice` also announces the host via the olsrd nameservice, which is useful for olsrd services.
+
+#### olsrd.yml
+
+This optional file allows to announce services via olsrd. The syntax is as follows:
+
+```yml
+---
+olsrd_services:
+  - name: Webcam 1
+    protocol: tcp
+    url: http://webcam1.olsr:80/
+  - name: Webcam 2
+    protocol: tcp
+    url: http://webcam2.olsr:80/
+```
+
+The name, protocol and URL are mandatory. The name has a length constraint of 75 characters. Special chars should not be used.
+
 ## host_vars/
 
 The `host-vars`-dir contains a host directory for every OpenWrt-device.
