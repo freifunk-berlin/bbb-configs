@@ -46,3 +46,45 @@ networks:
 location__channel_assignments_11a_standard__to_merge:
   colbe15-core: 48-20
   colbe15-ap1: 36-20
+
+location__wireless_profiles__to_merge:
+  - name: colbe15
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+
+    ifaces:
+      - mode: ap
+        ssid: colbe15.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: colbe15.freifunk.net Encrypted
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 1
+
+      - mode: ap
+        ssid: colbe15-home.freifunk.net
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass'
+        network: home
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: home
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh

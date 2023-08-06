@@ -87,3 +87,56 @@ location__channel_assignments_11g_standard__to_merge:
   wilgu10-core: 6-20-3
   wilgu10-int: 1-20-3
   wilgu10-east-nf-2ghz: 13-20
+
+location__wireless_profiles__to_merge:
+  - name: wilgu10
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 1
+
+      - mode: ap
+        ssid: losWlanosLocos
+        encryption: sae
+        key: 'file:/root/wifi_pass'
+        network: prdhcp
+        radio: 11a_standard
+        ifname_hint: pr
+
+      - mode: ap
+        ssid: losWlanosLocos_legacy
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass'
+        network: prdhcp
+        radio: 11g_standard
+        ifname_hint: pr
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
