@@ -26,7 +26,7 @@ mgmt:
 # .131 mesh_rhxb
 # .132 mesh_tu
 
-# Mesh Network: 10.31.83.56/30
+# Mesh Network: 10.31.127.160/27
 mesh_links:
   - name: mesh_rhxb
     ifname: eth1.10
@@ -39,6 +39,13 @@ mesh_links:
     ifname: eth1.11
     ipv4: 10.31.127.161/32
     ipv6: 2001:bf7:750:3f01::2/128
+    metric: 128
+    ptp: true
+
+  - name: mesh_bbbvpn
+    ifname: eth1.32
+    ipv4: 10.31.127.162/32
+    ipv6: 2001:bf7:750:3f01::3/128
     metric: 128
     ptp: true
 
