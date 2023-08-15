@@ -1,8 +1,9 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {% for network in networks | selectattr('tunnel_wan_ip', 'defined') %}
   {% set name = network['name'] if 'name' in network else network['role'] %}
+  {% set bridge_name = 'br-' + name %}
 config tunnelmanager '{{ name }}'
-	option interface 'br-{{ name }}'
+	option interface '{{ (bridge_name if bridge_name | length <= 15) | mandatory('The generated inteface name exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') }}'
 	option namespace '{{ network['tunnel_namespace']|default(name) }}'
 	option mtu '{{ network['tunnel_mtu']|default(1412) }}'
 	option uplink_ip '{{ network['tunnel_wan_ip'] }}'
