@@ -27,9 +27,10 @@ mgmt:
 # .133 ak36-flughafen
 # .134 ak36-dtmb
 # .135 ak36-friedenau
-# .135 ak36-m2
 # .136 ak36-rhnk
-# .137
+# .137 hypervisor (strange)
+# .138 ak36-philmel60
+# .139 ak36-teufelsberg
 # ...
 # .158
 
@@ -76,6 +77,20 @@ mesh_links:
     ipv6: 2001:bf7:750:4001::6/128
     metric: 256
     ptp: true
+
+  # - name: mesh_teufel
+  #   ifname: eth8
+  #   ipv4: 10.31.130.166/32
+  #   ipv6: 2001:bf7:750:4001::7/128
+  #   metric: 1024
+  #   ptp: true
+
+  # - name: mesh_phil60
+  #   ifname: eth9
+  #   ipv4: 10.31.130.167/32
+  #   ipv6: 2001:bf7:750:4001::8/128
+  #   metric: 1024
+  #   ptp: true
 
 # Downlink IPv4 is in net announced by emma.
 
