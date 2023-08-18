@@ -143,7 +143,7 @@ location__wireless_profiles__to_merge:
         ieee80211w: 1
       - mode: ap
         ssid: khof-test
-        encryption: sae-mixed
+        encryption: psk2
         key: 'file:/root/wifi_pass'
         network: prdhcp
         radio: [11a_standard, 11g_standard]
