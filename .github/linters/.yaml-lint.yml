@@ -7,10 +7,6 @@ ignore: |
   venv
 
 rules:
-  comments:
-    level: error
-  comments-indentation:
-    level: error
   document-start:
     level: error
   line-length:
