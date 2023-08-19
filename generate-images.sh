@@ -1,11 +1,19 @@
 #!/bin/bash
-# prepare options list from directory search
+# prepare options list by searching through group_vars/ and locations/
 unset locations i
-while IFS= read -r -d $'\0' directory; do
-  prefix="./group_vars/location_"
-  location=${directory/#$prefix}
+for location in $({
+  while IFS= read -r -d $'\0' file; do
+    prefix="./locations/"
+    l=${file/#$prefix}
+    echo "${l%.yml}"
+  done < <(find ./locations/ -name "*.yml" -print0)
+  while IFS= read -r -d $'\0' directory; do
+    prefix="./group_vars/location_"
+    echo "${directory/#$prefix}"
+  done < <(find ./group_vars/ -maxdepth 1 -type d -name "location_*" -print0)
+} | sort); do
   locations[i++]="$location"
-done < <(find ./group_vars/ -maxdepth 1 -type d -name "location_*" -print0 | sort -z)
+done
 
 # show menu
 echo "Usage:
@@ -79,9 +87,9 @@ select location in "${locations[@]}"
     fi
 
     # generate images
-    echo "firmwares for the following location will be generated:"
-    echo "$location"
-    ansible-playbook play.yml --limit "location_$location" --tags image && echo "location of generated images: ./tmp/images"
+    echo "firmwares for the following location will be generated: $location"
+    echo 'executing: ansible-playbook play.yml --limit "'"$location"'-*" --tags image'
+    ansible-playbook play.yml --limit "$location-*" --tags image && echo "location of generated images: ./tmp/images"
 
     # break the loop
     break
