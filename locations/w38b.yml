@@ -1,0 +1,131 @@
+---
+location: w38b
+location_nice: Weserstraße 38B
+latitude: 52.508692407
+longitude: 13.468487263
+contact_nickname: 'Noki'
+contacts:
+  - '@noki-:matrix.org'
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+
+hosts:
+  - hostname: w38b-core
+    role: corerouter
+    model: "netgear_wax202"
+    wireless_profile: freifunk_default
+  - hostname: w38b-ap1
+    role: ap
+    model: "zyxel_nwa55axe"
+    wireless_profile: freifunk_default
+
+ipv6_prefix: '2001:bf7:830:bc00::/56'
+
+# got following prefixes:
+# Router: 10.31.212.0/24
+# --MGMT: 10.31.212.0/27
+# --MESH: 10.31.212.32/27
+# --UPLK: 10.31.212.64/27
+# --DHCP: 10.31.212.96/27 (HOST)
+# --DHCP: 10.31.212.128/25
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.212.128/25
+    ipv6_subprefix: 0
+    assignments:
+      w38b-core: 1
+
+  # DHCP (HOST) without filtering and isolation
+  - vid: 41
+    role: dhcp
+    name: w38b_host
+    prefix: 10.31.212.96/27
+    ipv6_subprefix: -41
+    assignments:
+      w38b-core: 1
+
+  # MESH - Nanostation M5 XW
+  - vid: 11
+    role: mesh
+    name: mesh_ns
+    prefix: 10.31.212.33/32
+    ipv6_subprefix: -11
+
+  # MESH - 5 GHz 802.11s ap1
+  - vid: 20
+    role: mesh
+    name: mesh_ap1_5g
+    prefix: 10.31.212.34/32
+    ipv6_subprefix: -20
+    mesh_ap: w38b-ap1
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s ap1
+  - vid: 21
+    role: mesh
+    name: mesh_ap1_2g
+    prefix: 10.31.212.35/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    # mesh_metric: 1024
+    # mesh_metric_lqm: ['default 0.8']
+    mesh_ap: w38b-ap1
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - LAN
+  - vid: 30
+    role: mesh
+    name: mesh_lan
+    prefix: 10.31.212.36/32
+    ipv6_subprefix: -30
+    ptp: true
+    # make mesh_metric(s) bad
+    mesh_metric: 12000
+    mesh_metric_lqm: ['default 0.2']
+
+  # UPLK - Wireguard Uplink Tunnels
+  - vid: 50
+    name: uplink
+    role: uplink
+    tunnel_wan_ip: 192.168.189.250/24
+    tunnel_wan_gw: 192.168.189.1
+    tunnel_connections: 1
+    tunnel_timeout: 600
+    tunnel_mesh_prefix_ipv4: 10.31.212.64/27
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.212.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      # 10.31.212.1/32
+      w38b-core: 1
+      # 10.31.212.2/32
+      w38b-ap1: 2
+      # 10.31.212.3/32
+      w38b-ns: 3
+      # 10.31.212.4/32
+      w38b-wave-lr: 4
