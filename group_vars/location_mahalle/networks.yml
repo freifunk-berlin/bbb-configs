@@ -10,7 +10,7 @@ networks:
 
   - vid: 20
     role: mesh
-    name: mesh_mahalle_w
+    name: mahalle_w
     prefix: 10.31.179.120/32
     ipv6_subprefix: -2
     mesh_ap: mahalle-nf-w
@@ -20,7 +20,7 @@ networks:
 
   - vid: 21
     role: mesh
-    name: mesh_mahalle_o
+    name: mahalle_o
     prefix: 10.31.179.121/32
     ipv6_subprefix: -1
     mesh_ap: mahalle-nf-o
