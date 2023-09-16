@@ -29,13 +29,13 @@ hosts:
 
   - hostname: huette15-core
     role: corerouter
-    model: "avm_fritzbox-4040"
-    wireless_profile: freifunk_default
+    model: zyxel_nwa50ax
+    wireless_profile: huette15
 
   - hostname: huette15-ap1
     role: ap
     model: "tplink_eap225-outdoor-v1"
-    wireless_profile: freifunk_default
+    wireless_profile: huette15
 
 networks:
 
@@ -104,3 +104,39 @@ location__channel_assignments_11a_standard__to_merge:
 location__channel_assignments_11g_standard__to_merge:
   # 13 dBm + 10 dBi gain = 23 dBm (with UMA-D antenna)
   huette15-ap1: 13-20-13
+
+location__wireless_profiles__to_merge:
+  - name: huette15
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11a_mesh
+        legacy_rates: false
+        country: DE
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 1
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
