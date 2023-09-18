@@ -11,7 +11,6 @@ config interface
 {% for interface in mesh_links|default([]) %}
 config interface
 	option 'ifname' '{{ interface['name'] }}'
-	option 'rxcost' '{{ '256' if interface.get('link_quality_based_metric', true) else '96' }}'
 	option 'split_horizon' '{{ (interface['ptp'] if 'ptp' in interface else false ) | string | lower }}'
 	option 'link_quality' '{{ interface.get('link_quality_based_metric', true) | string | lower }}'
 
@@ -25,8 +24,13 @@ config filter
 {% for gateway in groups['role_gateway'] | difference([inventory_hostname]) %}
 config interface
 	option 'ifname' '{{ hostvars[gateway]['gre_tunnel_alias'] }}'
-	option 'rxcost' '{{ gre_metric }}'
 	option 'split_horizon' 'true'
+
+config filter
+       option 'type' 'in'
+       option 'if' '{{ hostvars[gateway]['gre_tunnel_alias'] }}'
+       option 'action' 'metric {{ gre_metric }}'
+
 {% endfor %}
 
 config interface
