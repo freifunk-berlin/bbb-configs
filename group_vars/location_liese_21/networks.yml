@@ -21,7 +21,7 @@ networks:
 
   - vid: 20
     role: mesh
-    name: mesh_n_nf_5ghz
+    name: n_nf_5ghz
     prefix: '10.31.174.10/32'
     ipv6_subprefix: -20
     mesh_ap: liese-21-n-nf-5ghz
