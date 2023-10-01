@@ -1,0 +1,7 @@
+---
+
+location: wuhlipunks
+role: ap
+model: "ubnt_powerbeam-m5-xw"
+
+wireless_profile: mesh_only

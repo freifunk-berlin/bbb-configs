@@ -80,8 +80,6 @@ inbound_allow:
     dst: 2001:bf7:830:9d00::/128
     proto: tcp
     dst_port: 22
-  - name: 'e16host'
-    dst: 2001:bf7:760:2532::/64
   - name: 'prometheus-poc'
     proto: tcp
     src: 2a04:d480:2c02:b::/64
