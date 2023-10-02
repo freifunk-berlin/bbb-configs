@@ -22,6 +22,20 @@ config filter
 
   {% endfor -%}
 
+  {% for tunnel in networks | selectattr('role', 'equalto', 'tunnel') %}
+config interface
+	option 'ifname' '{{ tunnel['ifname'] }}'
+	option 'split_horizon' 'true'
+
+config filter
+	option 'type' 'in'
+	option 'if' '{{ tunnel['ifname'] }}'
+	option 'ip' '::/0'
+	option 'eq' '0'
+	option 'action' 'metric {{ tunnel['mesh_metric']|default(512) }}'
+
+  {% endfor %}
+
 config filter
 	option 'type'	'redistribute'
 	option 'ip'	'{{ ipv6_prefix }}'

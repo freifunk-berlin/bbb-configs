@@ -2,7 +2,7 @@ config device
 	option type 'bridge'
 	option name 'switch0'
 
-{% for network in networks %}
+{% for network in networks | selectattr('vid', 'defined') %}
   {% set portmapping = [] %}
   {% for port in dsa_ports %}
     {% set tagged = not network.get('untagged') %}

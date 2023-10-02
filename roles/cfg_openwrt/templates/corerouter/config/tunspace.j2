@@ -1,0 +1,31 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% for uplink in networks | selectattr('role', 'equalto', 'uplink') %}
+  {% set name = uplink['name'] if 'name' in uplink else 'uplink' %}
+
+config tunspace "tunspace"
+  option uplink_netns "{{ name }}"
+  option uplink_ifname "br-{{ name }}"
+  option maintenance_interval 60
+  option debug 1
+{% endfor %}
+
+{% for tunnel in networks | selectattr('role', 'equalto', 'tunnel') %}
+config wg-interface
+  option ifname "{{ tunnel['ifname'] }}"
+  option ipv6 "fe80::2/64"
+  option ipv4 "{{ tunnel['prefix'] }}"
+  option mtu {{ tunnel['mtu'] }}
+  option port {{ tunnel['wireguard_port'] }}
+  option keyfile "/etc/tunspace/{{ tunnel['ifname'] }}.key"
+  option disabled 0
+
+{% endfor %}
+
+{% for gateway in groups['role_gateway'] %}
+config wg-server
+  option name "{{ gateway }}"
+  option url "https://{{ hostvars[gateway]['uplink']['ipv4'] | ansible.utils.ipaddr('address') }}/ubus"
+  option check_cert 0
+  option disabled 0
+
+{% endfor %}

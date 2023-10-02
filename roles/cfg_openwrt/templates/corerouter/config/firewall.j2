@@ -21,6 +21,7 @@ config zone 'zone_freifunk'
 	list network '{{ name }}'
 	{% endfor %}
 	list device 'wg_+'
+	list device 'ts_+'
 
 {% for i in l3_networks | selectattr('inbound_filtering') %}
 config zone 'zone_{{ i['name'] }}'

@@ -71,3 +71,14 @@ config Hna4
 	option netaddr '{{ network['prefix'] | ansible.utils.ipaddr('network') }}'
   {% endif %}
 {% endfor %}
+
+{% for tunnel in networks | selectattr('role', 'equalto', 'tunnel') %}
+config Interface
+	option interface '{{ tunnel['ifname'] }}'
+	option Mode 'ether'
+		{% for lqm in tunnel['mesh_metric_lqm']|default([]) %}
+	list LinkQualityMult '{{ lqm }}'
+		{% endfor %}
+	option ignore 0
+
+{% endfor %}
