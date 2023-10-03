@@ -1,4 +1,39 @@
 ---
+location: k12-haus4
+location_nice: 'Kastanienallee 12'
+latitude: 52.53949585878101
+longitude: 13.40898110911928
+contact_nickname: 'zander'
+contacts:
+  - 'alexanderjabs@gmx.de'
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+
+hosts:
+  - hostname: k12-haus4-core
+    role: corerouter
+    model: "tplink_archer-c5-v1"
+    wireless_profile: freifunk_default
+  - hostname: k12-haus4-garten
+    role: ap
+    model: "tplink_archer-c5-v1"
+    wireless_profile: freifunk_default
+  - hostname: k12-haus4-hirschhof
+    role: ap
+    model: "tplink_cpe210-v1"
+    int_port: eth0
+    wireless_profile: freifunk_default
+
 ipv6_prefix: '2001:bf7:760:2b00::/56'
 
 # got following prefixes:
@@ -23,7 +58,7 @@ networks:
     role: mesh
     name: mesh_5ghz
     prefix: 10.31.157.160/32
-    ipv6_subprefix: -1
+    ipv6_subprefix: -20
     mesh_ap: k12-haus4-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -33,7 +68,7 @@ networks:
     role: mesh
     name: mesh_2ghz
     prefix: 10.31.157.161/32
-    ipv6_subprefix: -2
+    ipv6_subprefix: -21
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
@@ -46,7 +81,7 @@ networks:
     role: mesh
     name: mesh_hirsch
     prefix: 10.31.157.162/32
-    ipv6_subprefix: -3
+    ipv6_subprefix: -22
     mesh_ap: k12-haus4-hirschhof
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -56,7 +91,7 @@ networks:
     role: mesh
     name: mesh_11s_g5
     prefix: 10.31.157.163/32
-    ipv6_subprefix: -4
+    ipv6_subprefix: -23
     mesh_ap: k12-haus4-garten
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -66,7 +101,7 @@ networks:
     role: mesh
     name: mesh_11s_g2
     prefix: 10.31.157.164/32
-    ipv6_subprefix: -5
+    ipv6_subprefix: -24
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
