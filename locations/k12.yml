@@ -1,4 +1,59 @@
 ---
+location: k12
+location_nice: 'Kastanienallee 12'
+latitude: 52.53936534993554
+longitude: 13.409738833169316
+contact_nickname: 'zander'
+contacts:
+  - 'alexanderjabs@gmx.de'
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+
+hosts:
+  - hostname: k12-core
+    role: corerouter
+    model: "tplink_archer-c5-v1"
+    wireless_profile: freifunk_default
+  - hostname: k12-cpe
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    # eth0 mac needs to be properly set
+    # cat /sys/firmware/mikrotik/hard_config/mac_base
+    mac_override:
+      eth0: 08:55:31:EA:E3:32
+    wireless_profile: freifunk_default
+  - hostname: k12-ap1
+    role: ap
+    model: "tplink_archer-c5-v1"
+    wireless_profile: freifunk_default
+  - hostname: k12-ap2
+    role: ap
+    model: "tplink_archer-c7-v5"
+    wireless_profile: freifunk_default
+  - hostname: k12-ap3
+    role: ap
+    model: "tplink_tl-wdr4300-v1"
+    wireless_profile: freifunk_default
+  - hostname: k12-ap4
+    role: ap
+    model: "tplink_archer-c5-v1"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: k12-segen
+    address: 10.31.158.194
+    snmp_profile: airos_8
+
 ipv6_prefix: '2001:bf7:760:2a00::/56'
 
 # got following prefixes:
@@ -19,12 +74,19 @@ networks:
     assignments:
       k12-core: 1
 
+  # MESH - segen
+  - vid: 11
+    role: mesh
+    name: mesh_segen
+    prefix: 10.31.158.133/32
+    ipv6_subprefix: -11
+
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
     name: mesh_5ghz
     prefix: 10.31.158.128/32
-    ipv6_subprefix: -1
+    ipv6_subprefix: -20
     mesh_ap: k12-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -34,7 +96,7 @@ networks:
     role: mesh
     name: mesh_2ghz
     prefix: 10.31.158.129/32
-    ipv6_subprefix: -2
+    ipv6_subprefix: -21
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
@@ -47,7 +109,7 @@ networks:
     role: mesh
     name: mesh_ap1_5
     prefix: 10.31.158.130/32
-    ipv6_subprefix: -3
+    ipv6_subprefix: -22
     mesh_ap: k12-ap1
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -57,7 +119,7 @@ networks:
     role: mesh
     name: mesh_ap1_2
     prefix: 10.31.158.131/32
-    ipv6_subprefix: -4
+    ipv6_subprefix: -23
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
@@ -70,24 +132,17 @@ networks:
     role: mesh
     name: mesh_cpe
     prefix: 10.31.158.132/32
-    ipv6_subprefix: -5
+    ipv6_subprefix: -24
     mesh_ap: k12-cpe
     mesh_radio: 11a_standard
     mesh_iface: mesh
-
-  # MESH - segen
-  - vid: 11
-    role: mesh
-    name: mesh_segen
-    prefix: 10.31.158.133/32
-    ipv6_subprefix: -6
 
   # MESH - 5 GHz 802.11s - ap2
   - vid: 25
     role: mesh
     name: mesh_ap2_5
     prefix: 10.31.158.134/32
-    ipv6_subprefix: -7
+    ipv6_subprefix: -25
     mesh_ap: k12-ap2
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -97,7 +152,7 @@ networks:
     role: mesh
     name: mesh_ap2_2
     prefix: 10.31.158.135/32
-    ipv6_subprefix: -8
+    ipv6_subprefix: -26
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
@@ -110,7 +165,7 @@ networks:
     role: mesh
     name: mesh_ap4_5
     prefix: 10.31.158.136/32
-    ipv6_subprefix: -9
+    ipv6_subprefix: -27
     mesh_ap: k12-ap4
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -120,7 +175,7 @@ networks:
     role: mesh
     name: mesh_ap4_2
     prefix: 10.31.158.137/32
-    ipv6_subprefix: -10
+    ipv6_subprefix: -28
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
@@ -162,7 +217,6 @@ networks:
 #    tunnel_connections: 2
 #    tunnel_timeout: 600
 #    tunnel_mesh_prefix_ipv4: 10.31.158.224/27
-
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

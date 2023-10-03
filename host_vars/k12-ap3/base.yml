@@ -1,7 +1,0 @@
----
-
-location: k12
-role: ap
-model: "tplink_tl-wdr4300-v1"
-
-wireless_profile: freifunk_default
