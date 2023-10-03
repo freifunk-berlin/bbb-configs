@@ -1,4 +1,34 @@
 ---
+location: hirschhof
+location_nice: 'Oderberger Str. 19'
+latitude: 52.539836581339266
+longitude: 13.408204867248921
+contact_nickname: 'zander'
+contacts:
+  - 'alexanderjabs@gmx.de'
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+
+hosts:
+  - hostname: hirschhof-core
+    role: corerouter
+    model: "tplink_archer-c5-v1"
+    wireless_profile: freifunk_default
+  - hostname: hirschhof-k12
+    role: ap
+    model: "tplink_cpe210-v1"
+    wireless_profile: freifunk_default
+
 ipv6_prefix: '2001:bf7:760:2c00::/56'
 
 # got following prefixes:
@@ -23,7 +53,7 @@ networks:
     role: mesh
     name: mesh_5ghz
     prefix: 10.31.159.128/32
-    ipv6_subprefix: -1
+    ipv6_subprefix: -20
     mesh_ap: hirschhof-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -33,7 +63,7 @@ networks:
     role: mesh
     name: mesh_2ghz
     prefix: 10.31.159.129/32
-    ipv6_subprefix: -2
+    ipv6_subprefix: -21
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
@@ -46,7 +76,7 @@ networks:
     role: mesh
     name: mesh_k12
     prefix: 10.31.159.130/32
-    ipv6_subprefix: -3
+    ipv6_subprefix: -22
     mesh_ap: hirschhof-k12
     mesh_radio: 11g_standard
     mesh_iface: mesh
