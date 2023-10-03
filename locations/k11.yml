@@ -1,4 +1,34 @@
 ---
+location: k11
+location_nice: 'Kastanienallee 11'
+latitude: 52.53927888761163
+longitude: 13.410245770672406
+contact_nickname: 'zander'
+contacts:
+  - 'alexanderjabs@gmx.de'
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+
+hosts:
+  - hostname: k11-core
+    role: corerouter
+    model: "tplink_archer-c7-v2"
+    wireless_profile: freifunk_default
+  - hostname: k11-ap1
+    role: ap
+    model: "mikrotik_routerboard-wap-g-5hact2hnd"
+    wireless_profile: freifunk_default
+
 ipv6_prefix: '2001:bf7:760:100::/56'
 
 # got following prefixes:
@@ -11,7 +41,7 @@ ipv6_prefix: '2001:bf7:760:100::/56'
 
 networks:
   # DHCP
-  - vid: 140
+  - vid: 40
     role: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
@@ -21,21 +51,21 @@ networks:
       k11-core: 1
 
   # MESH - 5 GHz 802.11s
-  - vid: 120
+  - vid: 20
     role: mesh
     name: mesh_5ghz
     prefix: 10.31.185.128/32
-    ipv6_subprefix: -1
+    ipv6_subprefix: -20
     mesh_ap: k11-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
   # MESH - 2.4 GHz 802.11s
-  - vid: 121
+  - vid: 21
     role: mesh
     name: mesh_2ghz
     prefix: 10.31.185.129/32
-    ipv6_subprefix: -2
+    ipv6_subprefix: -21
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
@@ -44,21 +74,21 @@ networks:
     mesh_iface: mesh
 
   # MESH - 5 GHz 802.11s - ap1
-  - vid: 122
+  - vid: 22
     role: mesh
     name: mesh_ap1_5
     prefix: 10.31.185.130/32
-    ipv6_subprefix: -3
+    ipv6_subprefix: -22
     mesh_ap: k11-ap1
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
   # MESH - 2.4 GHz 802.11s - ap1
-  - vid: 123
+  - vid: 23
     role: mesh
     name: mesh_ap1_2
     prefix: 10.31.185.131/32
-    ipv6_subprefix: -4
+    ipv6_subprefix: -23
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
@@ -67,7 +97,7 @@ networks:
     mesh_iface: mesh
 
   # MGMT
-  - vid: 142
+  - vid: 42
     role: mgmt
     prefix: 10.31.185.192/26
     gateway: 1
