@@ -23,7 +23,6 @@ networks:
       sama-sued-5ghz: 22
       sama-west-5ghz: 23
       sama-sued-60ghz: 26
-      sama-zwingli: 29
       sama-saarbruecker: 30
 
   - vid: 40
@@ -64,13 +63,6 @@ networks:
     ipv6_subprefix: -5
     mesh_metric: 128
     ptp: true
-  - vid: 15
-    role: mesh
-    name: mesh_zwingli
-    prefix: 10.31.79.181/32
-    ipv6_subprefix: -6
-    mesh_metric: 128
-    ptp: true
   - vid: 16
     role: mesh
     name: mesh_s60
@@ -107,4 +99,4 @@ location__channel_assignments_11a_standard__to_merge:
 # 5: sama-nord-nf-5ghz
 # 6: sama-ost-nf-5ghz
 # 7: sama-sued-60ghz
-# 8: sama-zwingli
+# 8: --
