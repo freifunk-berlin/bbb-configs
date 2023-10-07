@@ -43,6 +43,7 @@ networks:
   # DHCP
   - vid: 40
     role: dhcp
+    untagged: true
     inbound_filtering: true
     enforce_client_isolation: true
     prefix: 10.31.185.0/25
@@ -104,9 +105,9 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # 10.31.17.193/32
+      # 10.31.185.193/32
       k11-core: 1
-      # 10.31.17.194/32
+      # 10.31.185.194/32
       k11-ap1: 2
 
 # AP-id, wifi-channel, bandwidth, txpower
