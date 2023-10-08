@@ -5,3 +5,8 @@ role: corerouter
 model: "avm_fritzbox-7530"
 
 wireless_profile: disable
+
+host__packages__to_merge:
+  - -tunnelmanager
+  - tunspace
+  - wireguard-tools
