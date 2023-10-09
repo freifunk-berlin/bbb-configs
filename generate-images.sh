@@ -44,14 +44,14 @@ select location in "${locations[@]}"
     # generate all images if selected
     if [[ "$REPLY" == all ]] 
     then
-        ansible-playbook play.yml --tags image && echo "location of generated images: /tmp/ansible-openwrt/images"
+        ansible-playbook play.yml --tags image && echo "location of generated images: ./tmp/images"
         break
     fi
 
     # delete old directories and get rid of artifacts
     if [[ "$REPLY" == clean ]]
     then
-        [ -d "/tmp/ansible-openwrt/" ] && rm -r /tmp/ansible-openwrt/
+        [ -d "./tmp/" ] && rm -r ./tmp/
         echo "tmp directory was deleted..."
         continue
     fi
@@ -81,7 +81,7 @@ select location in "${locations[@]}"
     # generate images
     echo "firmwares for the following location will be generated:"
     echo "$location"
-    ansible-playbook play.yml --limit "location_$location" --tags image && echo "location of generated images: /tmp/ansible-openwrt/images"
+    ansible-playbook play.yml --limit "location_$location" --tags image && echo "location of generated images: ./tmp/images"
 
     # break the loop
     break

@@ -20,7 +20,7 @@
 - name: Create /etc directories for template output
   tags: always
   file:
-    path: "{{ config_path }}/etc/{{ item.path }}"
+    path: "{{ configs_dir }}/etc/{{ item.path }}"
     state: directory
     mode: "755"
   loop: "{{ lookup('community.general.filetree', role_path + '/templates/' + role) }}"
@@ -31,7 +31,7 @@
 - name: Create /etc directories for static files
   tags: always
   file:
-    path: "{{ config_path }}/etc/{{ item.path }}"
+    path: "{{ configs_dir }}/etc/{{ item.path }}"
     state: directory
     mode: "755"
   loop: "{{ lookup('community.general.filetree', role_path + '/files/' + role) }}"
@@ -43,7 +43,7 @@
   tags: always
   template:
     src: "{{ item.root }}/{{ item.path }}"
-    dest: "{{ config_path }}/etc/{{ item.path | regex_replace('.j2$', '') }}"
+    dest: "{{ configs_dir }}/etc/{{ item.path | regex_replace('.j2$', '') }}"
     mode: "644"
   loop: "{{ lookup('community.general.filetree', role_path + '/templates/' + role) }}"
   when: item.path is regex('\.j2$')
@@ -54,7 +54,7 @@
   tags: always
   copy:
     src: "{{ item.root }}/{{ item.path }}"
-    dest: "{{ config_path }}/etc/{{ item.path }}"
+    dest: "{{ configs_dir }}/etc/{{ item.path }}"
     mode: "preserve"
   loop: "{{ lookup('community.general.filetree', role_path + '/files/' + role) }}"
   when: (not item.path is regex('\.j2$')) and (item.state == 'file' or item.state == 'link')

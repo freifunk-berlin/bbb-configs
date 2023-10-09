@@ -46,4 +46,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: ansibleimages
-          path: /tmp/ansible-openwrt/images
+          path: ./tmp/images
