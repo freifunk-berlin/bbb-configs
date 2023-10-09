@@ -49,7 +49,7 @@ If you updated certain locations you can automaticly updating their wikiarticle 
     ansible-playbook play.yml --tags wiki
 This works by automaticly replacing semantic values in the coresponding article resulting in the placeholders throughout the article being replaced with the new values. For an example you can have a look at the [wikiarticle of Fesev](https://wiki.freifunk.net/Berlin:Standorte:Fesev).
 To add this option to your wikiarticle add a section called "Konfiguration" and replace all values that you want to automaticly change as you can see in the example-article. If you want to add a new location you can start with [this template](https://wiki.freifunk.net/Berlin:Standorte:Template).
-Please note that for the first time you have to copy the wikiupdateroutput from /tmp/ansible-openwrt/wikiupdater/ into your acrticle or set the coordinates manually.
+Please note that for the first time you have to copy the wikiupdateroutput from ./tmp/wikiupdater/ into your acrticle or set the coordinates manually.
 
 ## Support Information
 

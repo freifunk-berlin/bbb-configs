@@ -2,12 +2,12 @@
 - name: Create rc.d directory
   file:
     state: directory
-    path: "{{ config_path }}/etc/rc.d"
+    path: "{{ configs_dir }}/etc/rc.d"
     mode: "755"
 
 - name: Enable replace_secrets symlink
   file:
     src: "../init.d/replace_secrets"
-    dest: "{{ config_path }}/etc/rc.d/S15replace_secrets"
+    dest: "{{ configs_dir }}/etc/rc.d/S15replace_secrets"
     state: link
   when: role == "corerouter" or role == "ap"

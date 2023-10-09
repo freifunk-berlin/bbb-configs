@@ -2,7 +2,7 @@
 - name: Create images dir
   file:
     state: directory
-    path: "{{ image_dir }}"
+    path: "{{ images_dir }}"
     mode: "755"
   run_once: true
 - name: Clear old image and logfile
@@ -10,25 +10,25 @@
     state: absent
     path: "{{ item }}"
   loop:
-    - "{{ image_dir }}/{{ inventory_hostname }}.bin"
-    - "{{ image_dir }}/{{ inventory_hostname }}.img"
-    - "{{ image_dir }}/{{ inventory_hostname }}.log"
+    - "{{ images_dir }}/{{ inventory_hostname }}.bin"
+    - "{{ images_dir }}/{{ inventory_hostname }}.img"
+    - "{{ images_dir }}/{{ inventory_hostname }}.log"
 
 - name: Create Download directory
   file:
-    path: "{{ imagebuilder_dir }}"
+    path: "{{ dl_dir }}"
     state: directory
     mode: "755"
   run_once: true
 
 - name: Set destination path for imagebuilder
   set_fact:
-    imagebuilder_path: "{{ imagebuilder_dir }}/{{ imagebuilder | basename }}"
+    imagebuilder_path: "{{ dl_dir }}/{{ imagebuilder | basename }}"
 
 - name: Download Imagebuilder if upstream is newer
   get_url:
     url: "{{ imagebuilder }}"
-    dest: "{{ imagebuilder_dir }}/{{ imagebuilder_filename }}"
+    dest: "{{ dl_dir }}/{{ imagebuilder_filename }}"
     mode: "644"
   when: '"http" in imagebuilder'
 
@@ -37,30 +37,30 @@
     argv:
       - "cp"
       - "{{ imagebuilder }}"
-      - "{{ imagebuilder_dir }}"
+      - "{{ dl_dir }}"
   when: '"http" not in imagebuilder'
   changed_when: true
 
 - name: Clear workdir
   file:
     state: absent
-    path: "{{ imagebuild_dir }}"
+    path: "{{ build_dir }}"
 
 - name: (Re)-Create workdir
   file:
     state: directory
-    path: "{{ imagebuild_dir }}"
+    path: "{{ build_dir }}"
     mode: "755"
 
 - name: Extract imagebuilder
   unarchive:
     src: "{{ imagebuilder_path }}"
-    dest: "{{ imagebuild_dir }}"
+    dest: "{{ build_dir }}"
     extra_opts: ['--strip=1']
 
 - name: Read instruction set
   shell:
-    chdir: "{{ imagebuild_dir }}"
+    chdir: "{{ build_dir }}"
     cmd: grep -oP 'CONFIG_TARGET_ARCH_PACKAGES="\K[^"]+' .config
   register: instr_set_result
   when: 'instr_set is not defined and feed_version is defined'
@@ -73,54 +73,54 @@
 
 - name: Insert falter feed
   lineinfile:
-    path: "{{ imagebuild_dir }}/repositories.conf"
+    path: "{{ build_dir }}/repositories.conf"
     line: "{{ feed | replace('__INSTR_SET__', instr_set) | replace('__FEED_VERSION__', feed_version) }}"
   when: 'feed_version is defined'
 
 - name: Define Key-Dir
   stat:
-    path: "{{ imagebuild_dir }}/keys/"
+    path: "{{ build_dir }}/keys/"
   register: keydir
 
 - name: Add falter feed key
   copy:
     src: "files/packagefeed_master.pub"
-    dest: "{{ imagebuild_dir }}/keys/61a078a38408e710"  # matches fingerprint
+    dest: "{{ build_dir }}/keys/61a078a38408e710"  # matches fingerprint
     mode: "preserve"
   when: 'feed_version is defined and keydir.stat.exists'
 
 - name: Disable Signature verification if required
   lineinfile:
-    path: "{{ imagebuild_dir }}/repositories.conf"
+    path: "{{ build_dir }}/repositories.conf"
     line: "option check_signature"
     state: "absent"
   when: 'imagebuilder_disable_signature_check is defined and imagebuilder_disable_signature_check'
 
 - name: Override compat_version check to bbb-configs exclusive value 9.9
   lineinfile:
-    path: "{{ imagebuild_dir }}/include/image-commands.mk"
+    path: "{{ build_dir }}/include/image-commands.mk"
     search_string: "compat_version=$(if $(DEVICE_COMPAT_VERSION),$(DEVICE_COMPAT_VERSION),1.0)"
     line: "compat_version=9.9"
 
 - name: Run Imagebuilder
   changed_when: false
   command:
-    chdir: "{{ imagebuild_dir }}"
+    chdir: "{{ build_dir }}"
     argv:
       - "bash"
       - "-c"
-      - "make image PROFILE='{{ override_target | default(model) }}' PACKAGES='{{ packages | join(' ') }}' DISABLED_SERVICES='{{ disabled_services | join(' ') }}' FILES='{{ config_path }}' 1>&2"
+      - "make image PROFILE='{{ override_target | default(model) }}' PACKAGES='{{ packages | join(' ') }}' DISABLED_SERVICES='{{ disabled_services | join(' ') }}' FILES='{{ configs_dir }}' 1>&2"
   register: output
 
 - name: Write build log to output dir
   copy:
     content: "{{ output.stderr }}"
-    dest: "{{ image_dir }}/{{ inventory_hostname }}.log"
+    dest: "{{ images_dir }}/{{ inventory_hostname }}.log"
     mode: "preserve"
 
 - name: Find output image
   find:
-    paths: "{{ imagebuild_dir }}/bin/"
+    paths: "{{ build_dir }}/bin/"
     patterns: "{{ image_search_pattern }}"
     recurse: true
   register: image_list
@@ -128,7 +128,7 @@
 - name: Check Imagebuilder result
   assert:
     that: image_list.files | length > 0
-    fail_msg: 'No image was built, check log at {{ image_dir }}/{{ inventory_hostname }}.log'
+    fail_msg: 'No image was built, check log at {{ images_dir }}/{{ inventory_hostname }}.log'
 
 - name: Declare source
   set_fact:
@@ -136,7 +136,7 @@
 
 - name: Declare target
   set_fact:
-    image: "{{ image_dir }}/{{ inventory_hostname }}{{ image_src | splitext | last }}"
+    image: "{{ images_dir }}/{{ inventory_hostname }}{{ image_src | splitext | last }}"
 
 - name: Copy Image to Image dir
   copy:

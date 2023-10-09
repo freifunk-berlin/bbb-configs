@@ -15,21 +15,21 @@
 
 - name: Prepare some variables (1)
   set_fact:
-    basedir: /tmp/ansible-openwrt
+    basedir: "{{ playbook_dir }}/tmp"
   tags: always
 
 - name: Prepare some variables
   set_fact:
-    config_path: "{{ basedir }}/configs/{{ inventory_hostname }}"
-    imagebuilder_dir: "{{ basedir }}/imagebuilders/"
-    imagebuild_dir: "{{ basedir }}/tmp/imagebuild/{{ inventory_hostname }}"
-    image_dir: "{{ basedir }}/images/"
+    configs_dir: "{{ basedir }}/configs/{{ inventory_hostname }}"
+    dl_dir: "{{ basedir }}/dl/"
+    build_dir: "{{ basedir }}/build/{{ inventory_hostname }}"
+    images_dir: "{{ basedir }}/images/"
     wikiupdater_dir: "{{ basedir }}/wikiupdater/"
   tags: always
 
 - name: Create directory
   file:
-    path: "{{ config_path }}"
+    path: "{{ configs_dir }}"
     state: directory
     mode: "755"
   tags: always
@@ -51,7 +51,7 @@
 - name: Add poemgr config if poemgr target
   template:
     src: "{{ role_path }}/templates/common/config/poemgr.j2"
-    dest: "{{ config_path }}/etc/config/poemgr"
+    dest: "{{ configs_dir }}/etc/config/poemgr"
     mode: "644"
   when:
     - poemgr_ports is defined
@@ -59,7 +59,7 @@
 
 - name: "Make sure /lib/firmware is present"
   file:
-    dest: "{{ config_path }}/lib/firmware/ath10k"
+    dest: "{{ configs_dir }}/lib/firmware/ath10k"
     state: directory
     recurse: true
   when: ath10k_ct_fwcfg is defined
@@ -67,7 +67,7 @@
 
 - name: "Configure ath10k-ct driver"
   copy:
-    dest: "{{ config_path }}/lib/firmware/ath10k/fwcfg-{{ item.id }}.txt"
+    dest: "{{ configs_dir }}/lib/firmware/ath10k/fwcfg-{{ item.id }}.txt"
     content: "{{ item.config }}"
     mode: "644"
   loop: "{{ ath10k_ct_fwcfg | default([]) }}"
