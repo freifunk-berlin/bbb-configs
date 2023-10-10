@@ -31,7 +31,6 @@ hosts:
   - hostname: k12-haus4-hirschhof
     role: ap
     model: "tplink_cpe210-v1"
-    int_port: eth0
     wireless_profile: freifunk_default
 
 ipv6_prefix: '2001:bf7:760:2b00::/56'
