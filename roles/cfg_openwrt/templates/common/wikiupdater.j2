@@ -39,14 +39,14 @@
     {% set contacts_output = [] %}
     {% for contact in contacts %}
         {% if (contact | regex_search('^#.*\:.*\..*')) %}
-            {% do contacts_output.append('https://matrix.to/'+contact) %}
+            {% do contacts_output.append('https://matrix.to/#/'+contact) %}
         {% else %}
             {% do contacts_output.append(contact) %}
         {% endif %}
     {% endfor %}
     {% do wi.ki.update({'Ansprechpartner Kontakt': contacts_output})%}
 {% else %}
-    {% do wi.ki.update({'Ansprechpartner Kontakt': 'info'+location+'@berlin.freifunk.net'})%}
+    {% do wi.ki.update({'Ansprechpartner Kontakt': 'info+'+location+'@berlin.freifunk.net'})%}
 {% endif %}
 
 {# Processing vars from network.yml #}

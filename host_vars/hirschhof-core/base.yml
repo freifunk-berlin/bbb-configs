@@ -1,7 +1,0 @@
----
-
-location: hirschhof
-role: corerouter
-model: "tplink_archer-c5-v1"
-
-wireless_profile: freifunk_default

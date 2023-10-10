@@ -3,9 +3,14 @@ zonename: 'Europe/Berlin'
 timezone: 'CET-1CEST,M3.5.0,M10.5.0/3'
 
 dns_servers:
-  - 46.182.19.48
+  # dns3.digitalcourage.de @ hetzner falkenstein
+  - 2a01:4f8:251:554::2
+  - 5.9.164.112
+  # ns1.fdn.fr @ gitoyen paris
+  - 2001:910:800::40
   - 80.67.169.40
-  - 194.150.168.168
+  # dns.as250.net anycast (l105 broken)
+  #- 194.150.168.168
 
 ntp_servers:
   - 0.openwrt.pool.ntp.org
