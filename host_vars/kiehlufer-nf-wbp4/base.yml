@@ -2,4 +2,9 @@
 
 location: kiehlufer
 role: ap
-model: "tplink_cpe210-v1"
+model: "mikrotik_sxtsq-5-ac"
+
+wireless_profile: mesh_only
+
+mac_override:
+  eth0: 08:55:31:b1:3c:01

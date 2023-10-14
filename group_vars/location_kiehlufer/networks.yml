@@ -74,9 +74,9 @@ networks:
     name: mesh_nf_wbp4
     prefix: 10.31.151.119/32
     ipv6_subprefix: -8
-    mesh_metric: 4098
+    mesh_metric: 2048
     mesh_ap: kiehlufer-nf-wbp4
-    mesh_radio: 11g_standard
+    mesh_radio: 11a_standard
     mesh_iface: mesh
 
   - vid: 40
@@ -111,4 +111,5 @@ location__channel_assignments_11a_standard__to_merge:
   kiehlufer-nf-wbp1: 48-20
   kiehlufer-nf-wbp2: 40-20
   kiehlufer-nf-wbp3: 44-20
+  kiehlufer-nf-wbp4: 165-40
   kiehlufer-huette: 36-20
