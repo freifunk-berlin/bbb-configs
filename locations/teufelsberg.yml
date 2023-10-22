@@ -1,0 +1,135 @@
+---
+
+location: teufelsberg
+location_nice: Teufelsberg
+latitude: 52.49800
+longitude: 13.24052
+community: true
+
+# 10.31.213.0/24
+# --MGMT: 10.31.213.0/26
+# --MESH: 10.31.213.64/26
+# --DHCP: 10.31.213.128/25
+ipv6_prefix: "2001:bf7:800:1000::/56"
+
+hosts:
+
+  - hostname: teufelsberg-core
+    role: corerouter
+    model: linksys_e8450-ubi
+    wireless_profile: freifunk_default
+
+  - hostname: teufelsberg-ap1
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    mac_override: {eth0: dc:2c:6e:91:08:19}
+    wireless_profile: freifunk_default
+
+  - hostname: teufelsberg-ap2
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    mac_override: {eth0: dc:2c:6e:91:0f:66}
+    wireless_profile: freifunk_default
+
+  - hostname: teufelsberg-ap3
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    mac_override: {eth0: 2c:c8:1b:6a:ce:f1}
+    wireless_profile: freifunk_default
+
+  - hostname: teufelsberg-ap4
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    mac_override: {eth0: dc:2c:6e:c4:2c:91}
+    wireless_profile: freifunk_default
+
+networks:
+
+  - vid: 10
+    role: mesh
+    name: mesh_ak36
+    prefix: 10.31.213.64/32
+    ipv6_subprefix: -1
+
+  - vid: 11
+    role: mesh
+    name: mesh_westhaf
+    prefix: 10.31.213.65/32
+    ipv6_subprefix: -2
+
+  - vid: 12
+    role: mesh
+    name: mesh_ilr
+    prefix: 10.31.213.66/32
+    ipv6_subprefix: -3
+
+  - vid: 20
+    role: mesh
+    name: mesh_ap1
+    prefix: 10.31.213.67/32
+    ipv6_subprefix: -4
+    mesh_ap: teufelsberg-ap1
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 21
+    role: mesh
+    name: mesh_ap2
+    prefix: 10.31.213.68/32
+    ipv6_subprefix: -5
+    mesh_ap: teufelsberg-ap2
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 22
+    role: mesh
+    name: mesh_ap3
+    prefix: 10.31.213.69/32
+    ipv6_subprefix: -6
+    mesh_ap: teufelsberg-ap3
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 23
+    role: mesh
+    name: mesh_ap4
+    prefix: 10.31.213.70/32
+    ipv6_subprefix: -7
+    mesh_ap: teufelsberg-ap4
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.213.128/25
+    ipv6_subprefix: 0
+    assignments:
+      teufelsberg-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.213.0/26
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      teufelsberg-core: 1
+      teufelsberg-switch: 2
+      teufelsberg-ap1: 3
+      teufelsberg-ap2: 4
+      teufelsberg-ap3: 5
+      teufelsberg-ap4: 6
+      teufelsberg-ak36: 7
+      teufelsberg-ilr: 8
+      teufelsberg-westhafen: 9
+
+location__channel_assignments_11a_standard__to_merge:
+  # all APs on channel 36 for now, to allow meshing for standard Falter APs
+  # TODO: Change this once the installation is more optimized
+  teufelsberg-core: 40-20
+  teufelsberg-ap1: 36-20
+  teufelsberg-ap2: 36-20
+  teufelsberg-ap3: 36-20
+  teufelsberg-ap4: 36-20
