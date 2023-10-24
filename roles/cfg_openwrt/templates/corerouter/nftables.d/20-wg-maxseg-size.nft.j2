@@ -2,7 +2,7 @@
 {% set TCP_HEADER_SIZE = 20 %}
 {% set IPV4_HEADER_SIZE = 20 %}
 {% set IPV6_HEADER_SIZE = 40 %}
-{% set min_mtu = ([1412] + (networks | selectattr('tunnel_mtu', 'defined') | map(attribute='tunnel_mtu') | list)) | min | int %}
+{% set min_mtu = ([1280] + (networks | selectattr('tunnel_mtu', 'defined') | map(attribute='tunnel_mtu') | list)) | min | int %}
 {% set ipv4_mss = min_mtu - TCP_HEADER_SIZE - IPV4_HEADER_SIZE %}
 {% set ipv6_mss = min_mtu - TCP_HEADER_SIZE - IPV6_HEADER_SIZE %}
 chain wg_maxseg {
