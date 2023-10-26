@@ -24,6 +24,7 @@ hosts:
     role: corerouter
     model: "tplink_archer-c5-v1"
     wireless_profile: freifunk_default
+    wifi_roaming: true
   - hostname: k12-cpe
     role: ap
     model: "mikrotik_sxtsq-5-ac"
@@ -32,22 +33,27 @@ hosts:
     mac_override:
       eth0: 08:55:31:EA:E3:32
     wireless_profile: freifunk_default
+    wifi_roaming: true
   - hostname: k12-ap1
     role: ap
     model: "tplink_archer-c5-v1"
     wireless_profile: freifunk_default
+    wifi_roaming: true
   - hostname: k12-ap2
     role: ap
     model: "tplink_archer-c7-v5"
     wireless_profile: freifunk_default
+    wifi_roaming: true
   - hostname: k12-ap3
     role: ap
     model: "tplink_tl-wdr4300-v1"
     wireless_profile: freifunk_default
+    wifi_roaming: true
   - hostname: k12-ap4
     role: ap
     model: "tplink_archer-c5-v1"
     wireless_profile: freifunk_default
+    wifi_roaming: true
 
 snmp_devices:
   - hostname: k12-segen
