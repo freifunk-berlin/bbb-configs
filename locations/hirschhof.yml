@@ -24,10 +24,12 @@ hosts:
     role: corerouter
     model: "tplink_archer-c5-v1"
     wireless_profile: freifunk_default
+    wifi_roaming: true
   - hostname: hirschhof-k12
     role: ap
     model: "tplink_cpe210-v1"
     wireless_profile: freifunk_default
+    wifi_roaming: true
 
 ipv6_prefix: '2001:bf7:760:2c00::/56'
 
