@@ -155,28 +155,29 @@ The VLAN ID (vid) usually follow this numbering convention.
 ##### uplink via tunnel
 
 If for some reason you are in need of an uplink via a "normal" internet connection, a wireguard
-tunnel can be an easy and safe solution. In that case add another vlan to the networks.yml
+tunnel can be an easy and safe solution. In that case you can add one or more tunnel networks:
 
 ```yml
-  - vid: 50
-    untagged: true            # option to don't tag this vlan - useful if the corerouter is plugged into a normal home router
-    name: uplink
-    role: uplink
-    tunnel_wan_ip: 192.168.1.2/24   # put here the address and subnet of the corerouter inside the uplink network
-    tunnel_wan_gw: 192.168.1.1      # gateway of the uplink network
-    tunnel_connections: 2           # default value, number of different tunnels to create
-    tunnel_timeout: 600             # timeout in seconds after this the tunnel is destroyed and attempted to be rebuild
-    tunnel_mesh_prefix_ipv4: 10.31.142.120/30   # ip subnet to pick addresses for the endpoints of the tunnels
-    tunnel_up_script_args: '10.31.142.120/30 12800 0.4'    # Mesh Prefix, Babel Metric, OLSR LQM (optional, these values are the default)
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.142.120/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.142.121/32
+    wireguard_port: 51821
 ```
 
-The values of the Babel Metric and the OLSR LQM influence how the uplink works. If the uplink tunnel is intended
+The values of the Babel Metric and the OLSR LQM are optional and influence how the uplink works. If the uplink tunnel is intended
 as a backup connection, and you see traffic flow through the tunnel, you should set a higher value for the babeld
 metric and a lower value for the OLSR LQM. The lowest possible LQM value is 0.2. Below that value the uplink will
 not work.
 
 If there are routes via the tunnels the following command will show a non empty result, when run on the node
-`(echo /routes | nc 127.0.0.1 9090) | grep '"networkInterface": "wg_'`. In this case you should adjust the link metrics
+`(echo /routes | nc 127.0.0.1 9090) | grep '"networkInterface": "ts_'`. In this case you should adjust the link metrics
 for uplinks that should only act as backup connection.
 
 If you have multiple uplinks and want one to be prefered, set different link metrics for the different uplinks.
