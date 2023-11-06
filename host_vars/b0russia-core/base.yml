@@ -5,3 +5,8 @@ role: corerouter
 model: "linksys_e8450-ubi"
 
 wireless_profile: mesh_only
+
+host__packages__to_merge:
+  - -tunnelmanager
+  - tunspace
+  - wireguard-tools

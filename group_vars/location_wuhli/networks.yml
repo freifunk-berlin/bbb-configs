@@ -53,15 +53,15 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  - vid: 41
-    name: prdhcp
-    role: uplink
+  - vid: 50
     untagged: true
-    tunnel_wan_ip: 192.168.178.2/24
-    tunnel_wan_gw: 192.168.178.1
-    tunnel_connections: 2
-    tunnel_timeout: 600
-    tunnel_mesh_prefix_ipv4: 10.31.112.16/28
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.112.16/32
+    wireguard_port: 51820
 
   - vid: 42
     role: mgmt
