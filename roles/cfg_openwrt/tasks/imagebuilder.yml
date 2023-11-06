@@ -102,6 +102,11 @@
     search_string: "compat_version=$(if $(DEVICE_COMPAT_VERSION),$(DEVICE_COMPAT_VERSION),1.0)"
     line: "compat_version=9.9"
 
+- name: Patch image.mk to fix temporary breakage
+  patch:
+    src: "0001-image-fix-image-generation-within-ImageBuilder.patch"
+    dest: "{{ imagebuild_dir }}/include/image.mk"
+
 - name: Run Imagebuilder
   changed_when: false
   command:
