@@ -1,0 +1,45 @@
+From cfadbc090c3f2f886eecb20b0272a32de4b74194 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20=C5=A0tetiar?= <ynezz@true.cz>
+Date: Mon, 6 Nov 2023 08:52:24 +0000
+Subject: [PATCH] image: fix image generation within ImageBuilder
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Changes introduced in commit d604a07225c5 ("build: add CycloneDX SBOM
+JSON support") broke ImageBuilder:
+
+  Cannot open '/openwrt-imagebuilder-ath79-generic.Linux-x86_64/tmp/.packageinfo': No such file or directory
+
+So lets fix it by wrapping the BOM generation behind condition of IB
+feature check.
+
+Fixes: #13881
+Fixes: d604a07225c5 ("build: add CycloneDX SBOM JSON support")
+Signed-off-by: Petr Štetiar <ynezz@true.cz>
+(cherry picked from commit c4259a658673cc1a02ed17bfa8e94de17de00ad2)
+---
+ include/image.mk | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/image.mk b/include/image.mk
+index 3d5d6c1613..62e05b2567 100644
+--- a/include/image.mk
++++ b/include/image.mk
+@@ -277,11 +277,13 @@ endef
+ define Image/Manifest
+ 	$(call opkg,$(TARGET_DIR_ORIG)) list-installed > \
+ 		$(BIN_DIR)/$(IMG_PREFIX)$(if $(PROFILE_SANITIZED),-$(PROFILE_SANITIZED)).manifest
++ifndef IB
+ 	$(if $(CONFIG_JSON_CYCLONEDX_SBOM), \
+ 		$(SCRIPT_DIR)/package-metadata.pl imgcyclonedxsbom \
+ 		$(TMP_DIR)/.packageinfo \
+ 		$(BIN_DIR)/$(IMG_PREFIX)$(if $(PROFILE_SANITIZED),-$(PROFILE_SANITIZED)).manifest > \
+ 		$(BIN_DIR)/$(IMG_PREFIX)$(if $(PROFILE_SANITIZED),-$(PROFILE_SANITIZED)).bom.cdx.json)
++endif
+ endef
+ 
+ define Image/gzip-ext4-padded-squashfs
+-- 
+2.41.0
+
