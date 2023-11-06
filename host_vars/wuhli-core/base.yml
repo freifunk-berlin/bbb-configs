@@ -5,3 +5,8 @@ role: corerouter
 model: "tplink_tl-wdr4900-v1"
 
 wireless_profile: freifunk_default
+
+host__packages__to_merge:
+  - -tunnelmanager
+  - tunspace
+  - wireguard-tools
