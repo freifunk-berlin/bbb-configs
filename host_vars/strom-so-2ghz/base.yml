@@ -1,7 +1,0 @@
----
-
-location: strom
-role: ap
-model: "ubnt_nanostation-m2_xm"
-
-wireless_profile: disable
