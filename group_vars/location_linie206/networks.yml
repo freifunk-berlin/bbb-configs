@@ -46,12 +46,12 @@ networks:
 
   - vid: 50
     role: uplink
-    name: uplink
-    tunnel_wan_ip: 192.168.178.223/24
-    tunnel_wan_gw: 192.168.178.1
-    tunnel_timeout: 600
-    tunnel_connections: 1
-    tunnel_mesh_prefix_ipv4: 10.31.153.96/28
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.153.96/32
+    wireguard_port: 51820
 
 location__channel_assignments_11a_standard__to_merge:
   linie206-ap1: 36-40
