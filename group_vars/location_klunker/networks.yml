@@ -48,12 +48,13 @@ networks:
     mesh_iface: mesh
 
   # 5GHz backup link to rhnk sector
-  - vid: 14
-    role: mesh
-    name: mesh_rhnk_5ghz
-    prefix: 10.31.71.156/32
-    ipv6_subprefix: -5
-    ptp: true
+  # disabled for now 2023/11
+  # - vid: 14
+  #  role: mesh
+  #  name: mesh_rhnk_5ghz
+  #  prefix: 10.31.71.156/32
+  #  ipv6_subprefix: -5
+  #  ptp: true
 
   - vid: 40
     role: dhcp
@@ -75,7 +76,7 @@ networks:
       klunker-switch: 2
       klunker-rhnk: 3
       klunker-philmel: 4
-      klunker-rhnk-5ghz: 5
+      # klunker-rhnk-5ghz: 5
       klunker-nf-nnw-5ghz: 6
       klunker-nf-sse-5ghz: 7
       klunker-ap-bibliothek-5ghz: 8
