@@ -106,8 +106,6 @@
   patch:
     src: "0001-image-fix-image-generation-within-ImageBuilder.patch"
     dest: "{{ imagebuild_dir }}/include/image.mk"
-  when:
-    - 'openwrt_version == "snapshot" or openwrt_version.startswith("23.")'
 
 - name: Run Imagebuilder
   changed_when: false
