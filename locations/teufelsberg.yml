@@ -63,6 +63,24 @@ networks:
     prefix: 10.31.213.66/32
     ipv6_subprefix: -3
 
+  - vid: 13
+    role: mesh
+    name: mesh_nw
+    prefix: 10.31.213.71/32
+    ipv6_subprefix: -8
+
+  - vid: 14
+    role: mesh
+    name: mesh_nord
+    prefix: 10.31.213.72/32
+    ipv6_subprefix: -9
+    
+  - vid: 15
+    role: mesh
+    name: mesh_ono
+    prefix: 10.31.213.73/32
+    ipv6_subprefix: -10
+
   - vid: 20
     role: mesh
     name: mesh_ap1
@@ -124,6 +142,9 @@ networks:
       teufelsberg-ak36: 7
       teufelsberg-ilr: 8
       teufelsberg-westhafen: 9
+      teufelsberg-nw: 10
+      teufeldberg-nord: 11
+      teufelsberg-ono: 12
 
 location__channel_assignments_11a_standard__to_merge:
   # all APs on channel 36 for now, to allow meshing for standard Falter APs
