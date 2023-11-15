@@ -20,9 +20,9 @@ networks:
       zwingli-agym: 5
       zwingli-vaterhaus: 6
       # legacy link to emma
-      zwingli-emma: 7
+      # zwingli-emma: 7
       # local aps 2ghz
-      zwingli-nord-nf-2ghz: 10
+      # zwingli-nord-nf-2ghz: 10 (defect)
       zwingli-ost-nf-2ghz: 11
       # zwingli-sued-nf-2ghz: 12
       zwingli-west-nf-2ghz: 13
@@ -30,9 +30,9 @@ networks:
       zwingli-nord-nf-5ghz: 14
       zwingli-ost-nf-5ghz: 15
       zwingli-nno-nf-5ghz: 16
-      zwingli-west-nf-5ghz: 17
+      # zwingli-west-nf-5ghz: 17 (defect)
       # dome inside church
-      zwingli-dome-1: 18
+      # zwingli-dome-1: 18 (defect)
       zwingli-dome-2: 19
       # 5ghz sectors
       zwingli-nord-5ghz: 20
