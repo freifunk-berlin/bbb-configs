@@ -13,12 +13,16 @@ networks:
     name: mesh_emma
     prefix: 10.31.134.16/32
     ipv6_subprefix: -1
+    mesh_metric: 2024
+    mesh_metric_lqm: ['default 0.25']
+    ptp: true
 
   - vid: 11
     role: mesh
     name: mesh_simeon
     prefix: 10.31.134.17/32
     ipv6_subprefix: -2
+    ptp: true
 
   - vid: 20
     role: mesh
