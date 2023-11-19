@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2002
+# shellcheck disable=SC2004
 # shellcheck disable=SC2015
 
 # TODO: check for podman version
@@ -82,25 +84,25 @@ gunzip -c "$imgdir"/openwrt-*-generic-ext4-rootfs.img.gz > "$vmdir/rootfs.img"
 
 netmask() {
   local mask=$((0xffffffff << (32 - $1))); shift
-  local ip n
-  for n in 1 2 3 4; do
+  local ip
+  for _ in 1 2 3 4; do
     ip=$((mask & 0xff))${ip:+.}$ip
     mask=$((mask >> 8))
   done
-  echo $ip
+  echo "$ip"
 }
 
 nth_ip() {
-  IFS=". /" read -r i1 i2 i3 i4 mask <<< $1
-  IFS=" ." read -r m1 m2 m3 m4 <<< $(netmask $mask)
+  IFS=". /" read -r i1 i2 i3 i4 mask <<< "$1"
+  IFS=" ." read -r m1 m2 m3 m4 <<< "$(netmask "$mask")"
   printf "%d.%d.%d.%d\n" "$((i1 & m1))" "$((i2 & m2))" "$((i3 & m3))" "$(($2 + (i4 & m4)))"
 }
 
 mgmtnet="$(cat "locations/$location.yml" | yq -r '.networks[] | select(.role == "mgmt") | .prefix')"
-vmipn="$(cat "locations/$location.yml" | yq -r '.networks[] | select(.role == "mgmt") | .assignments["'$host'"]')"
+vmipn="$(cat "locations/$location.yml" | yq -r '.networks[] | select(.role == "mgmt") | .assignments["'"$host"'"]')"
 maxipn="$(cat "locations/$location.yml" | yq -r '.networks[] | select(.role == "mgmt") | .assignments | to_entries | max_by(.value) | .value')"
-vmip="$(nth_ip "$mgmtnet" $vmipn)"
-cnip="$(nth_ip "$mgmtnet" $(($maxipn + 1)))"
+vmip="$(nth_ip "$mgmtnet" "$vmipn")"
+cnip="$(nth_ip "$mgmtnet" "$(("$maxipn" + 1))")"
 
 # firecracker definition of our openwrt VM
 cat << EOF > "$vmdir/vmconfig.json"
