@@ -13,7 +13,7 @@ Usage: ./vm.sh <location> [<imagedir>]
     location  - Name of a BBB location config file stored at location/<location>.yml.
     imagedir  - Image output directory of BBB-Configs, where *-generic-kernel.img
                 and *-generic-ext4-rootfs.img images for <location> can be found.
-                Default: /tmp/ansible-openwrt/tmp/imagebuild/<location>-core/bin/targets/x86/64
+                Default: ./tmp/build/<location>-core/bin/targets/x86/64
 
 This script starts a Firecracker micro VM for a given BBB-Configs location's corerouter.
 The VM starts very fast, doesn't need root permissions, and gives access to its console.
@@ -66,11 +66,11 @@ set -o pipefail
 [ -n "$1" ] && location="$1" || usage
 host="$(cat "locations/$location.yml" | yq -r '.hosts[] | select(.role == "corerouter") | .hostname')"
 
-[ -n "$2" ] && imgdir="$4" || imgdir="/tmp/ansible-openwrt/tmp/imagebuild/$host/bin/targets/x86/64"
+[ -n "$2" ] && imgdir="$4" || imgdir="./tmp/build/$host/bin/targets/x86/64"
 
 # get kernel and rootfs
 
-vmdir="/tmp/ansible-openwrt/vm/$host"
+vmdir="./tmp/vm/$host"
 mkdir -p "$vmdir"
 
 wget -nv -O "$vmdir/extract-vmlinux.sh" https://raw.githubusercontent.com/torvalds/linux/master/scripts/extract-vmlinux
@@ -197,4 +197,4 @@ echo "Done."
 #
 # https://docs.podman.io/en/latest/markdown/podman-run.1.html#network-mode-net
 #
-# podman run -it --rm --name="pktpls-core" -v "/tmp/ansible-openwrt/vm/pktpls-core:/vmdir:Z" --user=root --userns=keep-id --device=/dev/kvm --device=/dev/net/tun --security-opt="label=disable" --cap-add=NET_ADMIN --cap-add=NET_RAW --network=pasta docker.io/library/alpine:3.18
+# podman run -it --rm --name="pktpls-core" -v "./tmp/vm/pktpls-core:/vmdir:Z" --user=root --userns=keep-id --device=/dev/kvm --device=/dev/net/tun --security-opt="label=disable" --cap-add=NET_ADMIN --cap-add=NET_RAW --network=pasta docker.io/library/alpine:3.18
