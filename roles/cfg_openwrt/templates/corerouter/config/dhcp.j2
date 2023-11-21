@@ -27,7 +27,7 @@ config domain '{{ host | replace('-', '_') }}_olsr'
   {% endfor %}
 {% endfor %}
 
-{% for network in networks | rejectattr('role', 'in', ['uplink', 'mesh', 'tunnel']) %}
+{% for network in networks | rejectattr('role', 'in', ['uplink', 'mesh', 'tunnel', 'ext']) %}
     {% set name = network['name'] if 'name' in network else network['role'] %}
 
 config dhcp 'dhcp_{{ name }}'
