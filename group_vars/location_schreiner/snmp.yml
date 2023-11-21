@@ -9,10 +9,10 @@ snmp_devices:
     address: 10.31.97.99
     snmp_profile: airos_6
 
-  - hostname: schreiner-client-1
+  - hostname: schreiner-ap-5ghz
     address: 10.31.97.101
     snmp_profile: airos_6
 
-  - hostname: schreiner-client-2
+  - hostname: schreiner-ap-2ghz
     address: 10.31.97.102
     snmp_profile: airos_6
