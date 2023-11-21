@@ -1,6 +1,5 @@
 ---
 target: ath79/generic
-openwrt_version: 22.03-SNAPSHOT
 low_flash: true
 
 switch_ports: 6
