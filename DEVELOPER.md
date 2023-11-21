@@ -2,6 +2,10 @@
 
 This guide explains the directory structure of the project and variables within the config files.
 
+## locations/
+
+`locations/` holds a single file format for locations as an alternative to the old way of using `groups_vars/` and `host_vars/`. Instead everything is simply written into a single file named `$LOCATIONNAME.yml`.
+
 ## group_vars/
 
 `group_vars/` holds tree types of resources: the `all/`-directory, location directories and model files.
