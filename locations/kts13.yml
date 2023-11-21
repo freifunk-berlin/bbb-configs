@@ -1,4 +1,33 @@
 ---
+location: kts13
+location_nice: Karpfenteichstraße 13
+latitude: 52.48232
+longitude: 13.46545
+contact_nickname: 'Packet Please'
+contacts:
+  - 'pktpls@systemli.org'
+
+location__ssh_keys__to_merge:
+  - comment: pktpls@systemli.org
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVY2XHiLDXbj7TGWtUpKEb8+qKw/DrkiVbLiyvyRaCi pktpls@systemli.org
+
+hosts:
+
+  - hostname: kts13-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: disable
+    host__packages__to_merge:
+      - -tunnelmanager
+      - tunspace
+      - wireguard-tools
+
+  - hostname: kts13-ap1
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2C:C8:1B:8A:95:2E
+
 ipv6_prefix: '2001:bf7:840:c00::/56'
 
 # mesh: 10.31.166.192/28
