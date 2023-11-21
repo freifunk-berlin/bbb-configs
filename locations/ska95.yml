@@ -37,13 +37,14 @@ hosts:
   - hostname: ska95-cortile
     role: ap
     model: ubnt_bullet-m-ar7241
+
 networks:
   - vid: 10
     role: mesh
     name: mesh_emma
     prefix: 10.31.8.16/32
     ipv6_subprefix: -1
- 
+
   - vid: 40
     role: dhcp
     inbound_filtering: true
