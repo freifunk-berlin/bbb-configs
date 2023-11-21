@@ -1,11 +1,31 @@
 ---
+location: cafe-wostok
+location_nice: Café Wostok
+latitude: 52.502551833570074
+longitude: 13.494059451810992
+contacts:
+  - "#freifunk-cafewostok:matrix.org"
+
+hosts:
+
+  - hostname: cafe-wostok-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    host__packages__to_merge:
+      - -tunnelmanager
+      - tunspace
+      - wireguard-tools
+
+  - hostname: cafe-wostok-ap1
+    role: ap
+    model: "zyxel_nwa50ax"
+
 ipv6_prefix: "2001:bf7:860:d00::/56"
 
 # Prefixes:
 # cafe_wostok_mesh: 10.31.161.152/29
 # cafe_wostok_mgmt: 10.31.107.224/28
 # cafe_wostok_dhcp: 10.31.179.192/26
-
 
 networks:
   - vid: 40
