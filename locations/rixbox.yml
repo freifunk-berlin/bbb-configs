@@ -1,4 +1,52 @@
 ---
+location: rixbox
+location_nice: Rixbox Espresso & Food
+latitude: 52.47890
+longitude: 13.43802
+# https://wiki.freifunk.net/Berlin:Standorte:Rixbox
+contact_nickname: 'Packet Please'
+contacts:
+  - 'pktpls@systemli.org'
+
+location__ssh_keys__to_merge:
+  - comment: martin@koltonowski.de
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRiZkLdeg7pBS4m37vnDX1A9+iQ+Eim1A0XACSa5qfE martin@koltonowski.de
+  - comment: pktpls+bbb@systemli.org
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVY2XHiLDXbj7TGWtUpKEb8+qKw/DrkiVbLiyvyRaCi pktpls+bbb@systemli.org
+
+hosts:
+
+  - hostname: rixbox-core
+    role: corerouter
+    model: ubnt_usw-flex
+    # We use Ubiquiti 802.11af-to-passive converters on all ports.
+    # They neogotiate more power than they actually draw,
+    # so we need to increase poemgr's power budget.
+    # Without this increase, devices will be not powered up randomly.
+    poemgr_power_budget: 24
+
+  - hostname: rixbox-nf-no
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    mac_override:
+      eth0: 2c:c8:1b:8a:97:20
+
+  - hostname: rixbox-nf-nw
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    mac_override:
+      eth0: 2c:c8:1b:8a:96:ca
+
+  - hostname: rixbox-nf-sw
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    mac_override:
+      eth0: 2c:c8:1b:8a:96:d8
+
+snmp_devices:
+  - hostname: rixbox-rhnk
+    address: 10.31.154.117
+    snmp_profile: airos_8
 
 # TODO: delete these old addresses:
 #       - mesh: 10.230.3.164/...
