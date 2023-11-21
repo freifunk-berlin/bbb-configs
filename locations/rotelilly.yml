@@ -1,4 +1,27 @@
 ---
+location: rotelilly
+location_nice: Kiezladen Rote Lilly
+latitude: 52.46869
+longitude: 13.43329
+contact_nickname: Stadtteilkomitee Neukölln
+contacts:
+  - https://www.instagram.com/stadtteilkomitee_neukoelln
+  - noc@stadtfunk.net
+
+location__ssh_keys__to_merge:
+  - comment: roedel
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCgzAZJhT/SyYJQCAye6b8G1ZHjSScXphdqHqkSxtZ0Zqc/iK8qwOsOHuRz44EV+o7udpwbMGbBmX6qbDKoUP/i3aGsTzkLwRhyEvAE7i9HB2WT1s0O6wqb6y9jCTwCSESRbQLFEdCgvuNZS62Lgn/koqM/DLWhLKO43Z0ua4R06oTdA1MabaAUXVzD9p4dm4GGAl2YNE0/co6E+g5UNWs9s1tWV9ZYyyTKp/v5J9jZArc/NACuGQQUx2qLyAplcSEzcj/3Am8gVMUzjzL17lrZevLdCh7PKt8ch3qzPVDH1MnE0moFWF41cTMMb8YBfpo7O78DlqumsQVowICgNHXIE4XMwqvRe2UawWdHEdkGrE40glwzGwPTrIxSsf5xszJRvQ9Rj8i0UTt9k5rh91dNqtMEvPpnLnzr2n+C8j4ozFrkyignHMkgtHD38Vx6+E5ZvZF8GLiRqVmYyT9anhQb0Kd3xJDf7JutYVAJ7eKl31koAjAz+k4MMhkCws051M= roedel
+
+hosts:
+
+  - hostname: rotelilly-core
+    role: corerouter
+    model: "mikrotik_wap-ac"
+    wireless_profile: freifunk_default
+    host__packages__to_merge:
+      - -tunnelmanager
+      - tunspace
+      - wireguard-tools
 
 # 10.31.198.0/25
 # 10.31.198.0/28 - mgmt
