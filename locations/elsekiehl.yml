@@ -1,4 +1,35 @@
 ---
+location: elsekiehl
+location_nice: Kiehlufer
+latitude: 52.484168992301946
+longitude: 13.447140363909915
+contact_nickname: 'jammingblub'
+contacts:
+  - 'koltonowski@protonmail.com'
+
+location__ssh_keys__to_merge:
+  - comment: martin@koltonowski.de
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMTjQj0EmyW6KcG83TOyruZ89/BLL+OsjSBY3i5FUHwM martin@martin-ThinkPad-T15-Gen-1
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+
+hosts:
+
+  - hostname: elsekiehl-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
 ipv6_prefix: '2001:bf7:820:1800::/56'
 
 # Elsekiehl got following prefixes:
