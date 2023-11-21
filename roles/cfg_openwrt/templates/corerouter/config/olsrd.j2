@@ -62,7 +62,7 @@ config Interface
   {% endfor %}
 
 {% endfor %}
-{% for network in networks | rejectattr('role', 'equalto', 'uplink') | selectattr('prefix') %}
+{% for network in networks | rejectattr('role', 'in', ['uplink','ext']) | selectattr('prefix') %}
   {% if network['prefix'] | ansible.utils.ipaddr('prefix') < 32 %}
 
 # Network: {{ network['name'] if 'name' in network else network['role'] }}
