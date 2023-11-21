@@ -72,7 +72,7 @@
 - name: "Remove Luci on low mem and low flash"
   set_fact:
     packages: "{{ packages + ['-' + item] }}"
-  when: low_mem | default(false) or low_flash | default(false)
+  when: (low_mem | default(false) or low_flash | default(false)) and role != "corerouter"
   loop: "{{ all_luci_base__packages__to_merge }}"
 
 
