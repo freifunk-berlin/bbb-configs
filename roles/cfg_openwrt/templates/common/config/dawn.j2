@@ -1,6 +1,6 @@
+{% if wifi_roaming | default(false) %}
 {% set network_mgmt = networks | selectattr('role', 'equalto', 'mgmt') | first %}
 {% set mgmt_broadcast = network_mgmt['prefix'] | ansible.utils.ipaddr('broadcast') %}
-{% if wifi_roaming | default(false) %}
 config local
 	option loglevel '0'
 
