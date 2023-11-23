@@ -43,6 +43,52 @@ hosts:
     mac_override: {eth0: dc:2c:6e:c4:2c:91}
     wireless_profile: freifunk_default
 
+snmp_devices:
+
+  - hostname: teufelsberg-ak36
+    address: 10.31.213.7
+    snmp_profile: af60
+
+  - hostname: teufelsberg-ilr
+    address: 10.31.213.8
+    snmp_profile: af60
+
+  # - hostname: teufelsberg-westhafen
+  #   address: 10.31.213.9
+  #   snmp_profile: af60
+
+  # - hostname: teufelsberg-nw
+  #   address: 10.31.213.10
+  #   snmp_profile: airos_8
+
+  - hostname: teufelsberg-nord
+    address: 10.31.213.11
+    snmp_profile: airos_8
+
+  # - hostname: teufelsberg-ono
+  #   address: 10.31.213.12
+  #   snmp_profile: airos_8
+
+airos_dfs_reset:
+
+  # - name: "teufelsberg-nw"
+  #   target: "10.31.213.10"
+  #   username: "ubnt"
+  #   password: "/root/pwd.txt"
+  #   daytime_limit: "2-7"
+
+  - name: "teufelsberg-nord"
+    target: "10.31.213.11"
+    username: "ubnt"
+    password: "/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  # - name: "teufelsberg-ono12"
+  #   target: "10.31.213.10"
+  #   username: "ubnt"
+  #   password: "/root/pwd.txt"
+  #   daytime_limit: "2-7"
+
 networks:
 
   - vid: 10
