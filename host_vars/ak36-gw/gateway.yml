@@ -35,6 +35,7 @@ mgmt:
 # .158
 
 # Mesh Network: 10.31.130.160/27
+# Not listed here: strom-gw 10.31.130.190/32
 mesh_links:
   - name: mesh_philmel
     ifname: eth2
