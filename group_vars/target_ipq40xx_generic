@@ -1,8 +1,20 @@
 ---
 
-# Add naywatch due to ipq40xx ethernet instabilities
 target__packages__to_merge:
+  # Work around ipq40xx ethernet instabilities
   - naywatch
+  # Use OpenSSL because WolfSSL and MbedTLS are broken on ipq40xx
+  - -wpad-basic
+  - -wpad-basic-mbedtls
+  - -wpad-basic-wolfssl
+  - -hostapd-wolfssl
+  - -hostapd-mbedtls
+  - -libustream-mbedtls
+  - -libustream-wolfssl
+  - -px5g-mbedtls
+  - -px5g-wolfssl
+  - libustream-openssl
+  - hostapd-openssl
 
 multicore: true
 
