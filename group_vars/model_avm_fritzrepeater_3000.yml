@@ -1,6 +1,5 @@
 ---
 target: ipq40xx/generic
-openwrt_version: 22.03-SNAPSHOT
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"
