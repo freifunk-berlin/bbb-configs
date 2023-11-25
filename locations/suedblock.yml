@@ -1,4 +1,24 @@
 ---
+location: suedblock
+location_nice: Suedblock
+latitude: 52.498599118
+longitude: 13.416844010
+contact_nickname: '365ff'
+contacts:
+  - '365ff [ät] systemli [dot] org'
+
+location__ssh_keys__to_merge:
+  - comment: narfpeng
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIONSKWdP3O0EHQei5tLZwCzpXC1CxGVh3FsN1GVJ/c+d id@narf.peng
+
+hosts:
+
+  - hostname: suedblock-core
+    role: corerouter
+    model: "tplink_tl-wdr3600-v1"
+    wireless_profile: freifunk_default
+    dhcp_no_ping: false
+
 ipv6_prefix: "2001:bf7:830:b100::/56"
 
 networks:
