@@ -54,7 +54,8 @@ jobs:
         run: |
           ansible-playbook play.yml --tags wiki --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
 
-      - name: Store build output
+      - if: github.event.action == 'pull_request'
+        name: Store build output
         uses: actions/upload-artifact@v1
         with:
           name: ansibleimages
