@@ -7,12 +7,6 @@ contact_nickname: L5 Kollektiv
 contacts:
   - noc@stadtfunk.net
 
-location__ssh_keys__to_merge:
-  - comment: Hener
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEST9QsXtphN7BYb5p9FhxZTxvoWkICfRWC54SN/QHII
-  - comment: Lino
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaljQHr4Nj6veeDi51BZjy/a3WXP
-
 hosts:
 
   - hostname: l5-core
@@ -27,12 +21,14 @@ hosts:
   - hostname: l5-nf-o
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    # TODO: mac_override
+    mac_override:
+      eth0: dc:2c:6e:c4:1d:49
 
   - hostname: l5-nf-w
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    # TODO: mac_override
+    mac_override:
+      eth0: dc:2c:6e:c4:35:e9
 
 # 10.31.161.160/29 - mgmt
 # 10.31.191.160/29 - mesh
