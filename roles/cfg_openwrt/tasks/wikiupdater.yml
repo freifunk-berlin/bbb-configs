@@ -8,7 +8,7 @@
 - name: wikiupdater | Generate outputfiles
   template:
     src: "templates/common/wikiupdater.j2"
-    dest: "{{ wikiupdater_dir }}/{{ group_names[0] | split('_') | last }}.txt"
+    dest: "{{ wikiupdater_dir }}/{{ location }}.txt"
     mode: "644"
 
 - name: wikiupdater | Update article
