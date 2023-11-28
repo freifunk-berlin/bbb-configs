@@ -47,17 +47,17 @@ jobs:
       - name: Print the event that triggered the workflow
         run: echo "The event that triggered the workflow was ${{ github.event_name }}"
 
-      - if: ${{ github.event.action == 'pull_request' }}
+      - if: ${{ github.event_name == 'pull_request' }}
         name: Build changed locations
         run: |
           ansible-playbook play.yml --tags image --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
 
-      - if: ${{ github.event.action == 'push' }}
+      - if: ${{ github.event_name == 'push' }}
         name: Update wiki.freifunk.net
         run: |
           ansible-playbook play.yml --tags wiki --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
 
-      - if: ${{ github.event.action == 'pull_request' }}
+      - if: ${{ github.event_name == 'pull_request' }}
         name: Store build output
         uses: actions/upload-artifact@v1
         with:
