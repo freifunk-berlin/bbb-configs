@@ -44,9 +44,8 @@ jobs:
           echo "Building for $CHANGED_LOCATIONS"
           echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> "$GITHUB_ENV"
 
-      - name: Print github.event.action
-        run: |
-          echo "$github.event.action"
+      - name: Print the event that triggered the workflow
+        run: echo "The event that triggered the workflow was ${{ github.event_name }}"
 
       - if: ${{ github.event.action == 'pull_request' }}
         name: Build changed locations
