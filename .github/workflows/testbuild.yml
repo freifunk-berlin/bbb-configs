@@ -1,9 +1,9 @@
 ---
 name: Test Build
-on: 
+on:
   push:
     branches:
-      - testbuild-wikiupdater 
+      - testbuild-wikiupdater
   pull_request:
     branches:
       - master
