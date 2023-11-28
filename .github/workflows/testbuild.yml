@@ -44,6 +44,10 @@ jobs:
           echo "Building for $CHANGED_LOCATIONS"
           echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> "$GITHUB_ENV"
 
+      - name: Print github.event.action
+        run: |
+          echo "$github.event.action"
+
       - if: ${{ github.event.action == 'pull_request' }}
         name: Build changed locations
         run: |
