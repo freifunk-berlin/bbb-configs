@@ -44,17 +44,17 @@ jobs:
           echo "Building for $CHANGED_LOCATIONS"
           echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> "$GITHUB_ENV"
 
-      - if: github.event.action == 'pull_request'
+      - if: ${{ github.event.action == 'pull_request' }}
         name: Build changed locations
         run: |
           ansible-playbook play.yml --tags image --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
 
-      - if: github.event.action == 'push'
+      - if: ${{ github.event.action == 'push' }}
         name: Update wiki.freifunk.net
         run: |
           ansible-playbook play.yml --tags wiki --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
 
-      - if: github.event.action == 'pull_request'
+      - if: ${{ github.event.action == 'pull_request' }}
         name: Store build output
         uses: actions/upload-artifact@v1
         with:
