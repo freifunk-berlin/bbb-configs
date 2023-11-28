@@ -92,13 +92,14 @@
 {# Printing wi.ki #}
 
 {# Makro for handling the print of lists#}
+{# converting everything to strings as github actions where otherwise complaining#}
 {% macro print(key,value)%}
     {% if value|type_debug == 'list'-%}
         {% for i in value -%}
-            |{{key}} = {{i}}
+            |{{key}} = {{i|string}}
         {% endfor %}
     {% else -%}
-        |{{key}} = {{value}}
+        |{{key}} = {{value|string}}
     {% endif %}
 {% endmacro %}
 
