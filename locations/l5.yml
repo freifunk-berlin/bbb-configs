@@ -17,7 +17,7 @@ hosts:
 
   - hostname: l5-core
     role: corerouter
-    model: "avm_fritzbox-4040"
+    model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
     host__packages__to_merge:
       - -tunnelmanager
