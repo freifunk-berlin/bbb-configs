@@ -10,42 +10,43 @@ contacts:
 location__ssh_keys__to_merge:
   - comment: martin@koltonowski.de
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRiZkLdeg7pBS4m37vnDX1A9+iQ+Eim1A0XACSa5qfE martin@koltonowski.de
-  - comment: pktpls@systemli.org
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVY2XHiLDXbj7TGWtUpKEb8+qKw/DrkiVbLiyvyRaCi pktpls@systemli.org
 
 hosts:
-
   - hostname: huette-core
     role: corerouter
-    model: "tplink_eap225-outdoor-v1"
+    model: "zyxel_nwa55axe"
     wireless_profile: freifunk_default
-
-  - hostname: huette-ap1
-    role: ap
-    model: "tplink_eap225-outdoor-v1"
 
 ipv6_prefix: '2001:bf7:830:2600::/56'
 
-# Mesh: 10.31.114.0/28
+# got following prefixes:
+# Router:
+# --DHCP:  10.31.113.128/25
+# --MESH:  10.31.114.0/28
+# --MGMT:  10.31.112.112/28
+
 networks:
+  # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
-    name: mesh_core
-    prefix: 10.31.114.0/32
-    ipv6_subprefix: -1
-    mesh_metric: 1024
+    name: mesh_11s_5ghz
+    prefix: 10.31.114.1/32
+    ipv6_subprefix: -20
     mesh_ap: huette-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
+  # MESH - 2.4 GHz 802.11s
   - vid: 21
     role: mesh
-    name: mesh_huette
-    prefix: 10.31.114.1/32
-    ipv6_subprefix: -2
+    name: mesh_11s_2ghz
+    prefix: 10.31.114.2/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
-    mesh_ap: huette-ap1
-    mesh_radio: 11a_standard
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: huette-core
+    mesh_radio: 11g_standard
     mesh_iface: mesh
 
   - vid: 40
@@ -65,23 +66,9 @@ networks:
     ipv6_subprefix: 1
     assignments:
       huette-core: 1
-      huette-ap1: 2
 
 location__channel_assignments_11a_standard__to_merge:
-  huette-core: 36-40-19                                # 19 dBm + 4 dBi gain = 23 dBm (with standard antenna)
-  huette-ap1: 44-40-8                                  # 8 dBm + 15 dBi gain = 23 dBm (with UMA-D antenna)
+  huette-core: 36-40
 
 location__channel_assignments_11g_standard__to_merge:
-  huette-core: 13-20-18                                # 18 dBm + 2 dBi gain = 20 dBm (with standard antenna)
-  huette-ap1: 13-20-13                                 # 13 dBm + 10 dBi gain = 23 dBm (with UMA-D antenna)
-
-#
-# Devolo Powerline adapters:
-# - huette-plc1 fe80::babe:f4ff:feae:746a%eth0
-# - huette-plc2 fe80::babe:f4ff:feae:7384%eth0
-#
-# Their web interfaces can be reached by SSH port forwarding:
-# - ssh -L '8080:[fe80::babe:f4ff:feae:7384%eth0]:80' root@huette-core.olsr
-# - firefox localhost:8080
-# - curl localhost:8080/assets/data.cfl
-#
+  huette-core: 13-20
