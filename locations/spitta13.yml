@@ -1,0 +1,133 @@
+---
+location: spitta13
+location_nice: Spittastraße 13
+latitude: 52.5049824
+longitude: 13.4795961
+contacts:
+  - '#spitta13:matrix.org'
+
+# ALL:  10.31.232.128/25
+# DHCP: 10.31.232.128/26
+# MGMT: 10.31.232.192/27
+# MESH: 10.31.232.224/27
+
+hosts:
+
+  - hostname: spitta13-core
+    role: corerouter
+    model: "zyxel_nwa55axe"
+    wireless_profile: freifunk_default
+
+  - hostname: spitta13-nf-o
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+
+  - hostname: spitta13-nf-w
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+
+snmp_devices:
+  - hostname: spitta13-zwingli
+    address: 10.31.232.195
+    snmp_profile: airos_8
+
+  - hostname: spitta13-ost
+    address: 10.31.232.195
+    snmp_profile: airos_8
+
+airos_dfs_reset:
+  - name: "spitta-ost"
+    target: "10.31.232.196"
+    username: "ubnt"
+    password: "/root/pwd.txt"
+    daytime_limit: "3-6"
+
+ipv6_prefix: "2001:bf7:860:1100::/56"
+
+networks:
+
+  # Powerbeam  (PBE-5AC-ISO-Gen2)
+  - vid: 10
+    role: mesh
+    name: mesh_zwingli
+    prefix: 10.31.232.224/32
+    ipv6_subprefix: -10
+
+  # Lite AP (LAP-GPS)
+  - vid: 11
+    role: mesh
+    name: mesh_ost
+    prefix: 10.31.232.225/32
+    ipv6_subprefix: -11
+
+  - vid: 20
+    role: mesh
+    name: mesh_core_2ghz
+    prefix: 10.31.232.226/32
+    ipv6_subprefix: -20
+    mesh_ap: spitta13-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 21
+    role: mesh
+    name: mesh_core_5ghz
+    prefix: 10.31.232.227/32
+    ipv6_subprefix: -21
+    mesh_ap: spitta13-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 22
+    role: mesh
+    name: mesh_nf_w
+    prefix: 10.31.232.228/32
+    ipv6_subprefix: -22
+    mesh_ap: spitta13-nf-w
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 23
+    role: mesh
+    name: mesh_nf_o
+    prefix: 10.31.232.229/32
+    ipv6_subprefix: -23
+    mesh_ap: spitta13-nf-o
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.31.232.128/26
+    ipv6_subprefix: -40
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      spitta13-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.232.192/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      spitta13-core: 1
+      spitta13-switch: 2
+      spitta13-zwingli: 3
+      spitta13-ost: 4
+      spitta13-nf-w: 5
+      spitta13-nf-o: 6
+
+location__channel_assignments_11a_standard__to_merge:
+  spitta13-core: 44-20
+  spitta13-nf-o: 40-20
+  spitta13-nf-w: 36-20
+
+location__channel_assignments_11g_standard__to_merge:
+  spitta13-core: 1-20
+
+location__ssh_keys__to_merge:
+  - comment: neko
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCl2bCyIfDLZR5CQx7DqihqL2f9/2S6AeEHh8b4q6mdv9uatd0dIJqzmBnk/jJW4oTztK0EE7rWwVH+fNFtbMA020xSofrGMpbjvIs3ZiJa6ZBvKg6uZxzZaVAXGtVah98PqZhj9TGoG3msJE0U7Vlu6ha2g0T1j97kxSch+U0/iJNaiuR0ZBSFAA7+oJjEx+yIyC0f8+aM5L+IhMEl8U/bVp9Y5c5JoEIDozCJ4sOK8AL1d1wuCMM31wq9IEYHk+2DF4iRQGZZvgjumiROOEhv20jNkw2rvyEtx4winjC/72E/szL4OEa4yNNeTIINADYBInr0BPk4Tf4qSD7Y9wW5 neko
