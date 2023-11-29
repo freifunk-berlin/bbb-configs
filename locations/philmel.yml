@@ -1,4 +1,20 @@
 ---
+location: philmel
+location_nice: Philipp-Melanchthon-Kirche
+model: "linksys_e8450-ubi"
+latitude: 52.465881
+longitude: 13.434112
+
+contact_nickname: 'roedel'
+contacts:
+  - '@roedel:matrix.org'
+
+hosts:
+  - hostname: philmel-core
+    role: corerouter
+    model: "linksys_e8450-ubi"
+    wireless_profile: freifunk_default
+
 ipv6_prefix: "2001:bf7:820:1500::/56"
 
 # Complete subnet: 10.230.2.0/24

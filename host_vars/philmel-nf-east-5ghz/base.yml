@@ -1,0 +1,8 @@
+---
+
+location: philmel
+role: ap
+model: "mikrotik_sxtsq-5-ac"
+mac_override:
+  eth0: cc:2d:e0:9c:4f:00
+wireless_profile: philmel_nf_east

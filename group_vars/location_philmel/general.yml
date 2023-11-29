@@ -1,2 +1,5 @@
 ---
 community: true
+contact_nickname: 'roedel'
+contacts:
+  - '@roedel:matrix.org'
