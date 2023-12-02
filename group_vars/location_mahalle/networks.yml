@@ -52,14 +52,19 @@ networks:
 
   - vid: 50
     role: uplink
-    name: wireguard
-    tunnel_wan_ip: 192.168.178.2/24
-    tunnel_wan_gw: 192.168.178.1
-    tunnel_connections: 1
-    tunnel_timeout: 600
-    tunnel_mtu: 1400
-    tunnel_mesh_prefix_ipv4: 10.31.179.122/29
     untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.179.122/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.179.123/32
+    wireguard_port: 51821
 
 location__channel_assignments_11a_standard__to_merge:
   mahalle-core: 36-20
