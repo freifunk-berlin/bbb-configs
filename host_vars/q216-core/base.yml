@@ -1,6 +1,10 @@
 ---
-
 location: q216
 role: corerouter
 model: "linksys_e8450-ubi"
 wireless_profile: q216
+
+host__packages__to_merge:
+      - -tunnelmanager
+      - tunspace
+      - wireguard-tools
