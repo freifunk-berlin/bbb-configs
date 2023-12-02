@@ -15,7 +15,7 @@ hosts:
 
   - hostname: suedblock-core
     role: corerouter
-    model: "tplink_tl-wdr3600-v1"
+    model: "avm_fritzbox-4040"
     wireless_profile: freifunk_default
     dhcp_no_ping: false
     host__packages__to_merge:
