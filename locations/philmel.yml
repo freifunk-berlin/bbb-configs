@@ -4,7 +4,6 @@ location_nice: Philipp-Melanchthon-Kirche
 model: "linksys_e8450-ubi"
 latitude: 52.465881
 longitude: 13.434112
-
 contact_nickname: 'roedel'
 contacts:
   - '@roedel:matrix.org'
@@ -14,6 +13,58 @@ hosts:
     role: corerouter
     model: "linksys_e8450-ubi"
     wireless_profile: freifunk_default
+  - hostname: philmel-nf-east-5ghz 
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+    eth0: cc:2d:e0:9c:4f:00
+    wireless_profile: philmel_nf_east
+  - hostname: philmel-nf-west-5ghz 
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+    eth0: cc:2d:e0:9c:4f:00
+    wireless_profile: philmel_nf_west
+
+snmp_devices:
+  - hostname: philmel-rhnk
+    address: 10.230.2.4
+    snmp_profile: af60
+  - hostname: philmel-nord-5ghz
+    address: 10.230.2.6
+    snmp_profile: airos_8
+  - hostname: philmel-ost
+    address: 10.230.2.7
+    snmp_profile: airos_6
+  - hostname: philmel-vaterhaus
+    address: 10.230.2.8
+    snmp_profile: airos_8
+  - hostname: philmel-sued
+    address: 10.230.2.9
+    snmp_profile: airos_6
+  - hostname: philmel-sued-5ac
+    address: 10.230.2.10
+    snmp_profile: airos_8
+  - hostname: philmel-west
+    address: 10.230.2.11
+    snmp_profile: airos_6
+  - hostname: philmel-ak36
+    address: 10.230.2.12
+    snmp_profile: airos_8
+
+# TODO: Add all devices and
+# change naming
+airos_dfs_reset:
+  - name: "philmel-ak36"
+    target: "10.230.2.12"
+    username: "ubnt"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+  - name: "philmel-nord-5ac"
+    target: "10.230.2.6"
+    username: "ubnt"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
 
 ipv6_prefix: "2001:bf7:820:1500::/56"
 
@@ -32,7 +83,6 @@ networks:
     enforce_client_isolation: true
     assignments:
       philmel-core: 1
-
   # northeast mesh 5GHz ac
   - vid: 10
     role: mesh
@@ -40,7 +90,6 @@ networks:
     prefix: 10.230.2.17/32
     ipv6_subprefix: -1
     mesh_metric: 1024
-
   # northwest mesh 5GHz ac
   - vid: 11
     role: mesh
@@ -48,14 +97,12 @@ networks:
     prefix: 10.230.2.18/32
     ipv6_subprefix: -2
     mesh_metric: 1024
-
   - vid: 12
     role: mesh
     name: mesh_ost            # Peers: Area51, delbrueck66
     prefix: 10.230.2.19/32
     ipv6_subprefix: -3
     mesh_metric: 1024
-
   - vid: 13
     role: mesh
     name: mesh_nf_east
@@ -65,28 +112,24 @@ networks:
     mesh_ap: philmel-nf-east-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
-
   - vid: 14
     role: mesh
     name: mesh_sued           # Peers: kranold18, GSBS2
     prefix: 10.230.2.21/32
     ipv6_subprefix: -5
     mesh_metric: 1024
-
   - vid: 15
     role: mesh
     name: mesh_sued_5ghz
     prefix: 10.230.2.22/32
     ipv6_subprefix: -6
     mesh_metric: 1024
-
   - vid: 16
     role: mesh
     name: mesh_west
     prefix: 10.230.2.23/32
     ipv6_subprefix: -7
     mesh_metric: 1024
-
   - vid: 17
     role: mesh
     name: mesh_ak36
@@ -95,7 +138,6 @@ networks:
     ptp: true
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.2']  # prefer klunker link
-
   - vid: 18
     role: mesh
     name: mesh_klunker
@@ -103,7 +145,6 @@ networks:
     ipv6_subprefix: -9
     ptp: true
     mesh_metric: 128
-
   - vid: 19
     role: mesh
     name: mesh_nw_60ghz  # peers: sgfrd-core
@@ -111,7 +152,6 @@ networks:
     ipv6_subprefix: -10
     ptp: true
     mesh_metric: 1024
-
   - vid: 20
     role: mesh
     name: mesh_nf_south
@@ -121,7 +161,6 @@ networks:
     mesh_ap: philmel-nf-south-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh_nf_south
-
   - vid: 42
     role: mgmt
     prefix: 10.230.2.0/28

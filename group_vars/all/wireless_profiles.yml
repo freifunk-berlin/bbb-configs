@@ -315,10 +315,10 @@ all__wireless_profiles__to_merge:
   - name: philmel_nf_south
     devices:
       - radio: 11a_standard
-        legacy_rates: false
+        legacy_rates: true
         country: DE
       - radio: 11g_standard
-        legacy_rates: false
+        legacy_rates: true
         country: DE
       - radio: 11a_mesh
         legacy_rates: false
