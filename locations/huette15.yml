@@ -29,17 +29,12 @@ hosts:
 
   - hostname: huette15-core
     role: corerouter
-    model: zyxel_nwa50ax
-    wireless_profile: huette15
+    model: "x86-64"
+    wireless_profile: disable
     host__packages__to_merge:
       - -tunnelmanager
       - tunspace
       - wireguard-tools
-
-  - hostname: huette15-ap1
-    role: ap
-    model: "tplink_eap225-outdoor-v1"
-    wireless_profile: huette15
 
 networks:
 
@@ -48,17 +43,6 @@ networks:
     name: mesh_core
     prefix: 10.31.184.8/32
     ipv6_subprefix: 20
-
-  - vid: 21
-    role: mesh
-    name: mesh_huette
-    prefix: 10.31.184.9/32
-    ipv6_subprefix: 21
-    mesh_metric: 1024
-    mesh_ap: huette15-ap1
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.1']
 
   - vid: 40
     role: dhcp
@@ -88,8 +72,6 @@ networks:
     assignments:
       huette15-core: 1
       huette15-switch: 2
-      huette15-ap1: 3
-      huette15-desktop: 4
 
   - vid: 50
     role: uplink
@@ -105,47 +87,3 @@ networks:
     mtu: 1280
     prefix: 10.31.184.11/32
     wireguard_port: 51821
-
-location__channel_assignments_11a_standard__to_merge:
-  # 8 dBm + 15 dBi gain = 23 dBm (with UMA-D antenna)
-  huette15-ap1: 44-40-8
-
-location__channel_assignments_11g_standard__to_merge:
-  # 13 dBm + 10 dBi gain = 23 dBm (with UMA-D antenna)
-  huette15-ap1: 13-20-13
-
-location__wireless_profiles__to_merge:
-  - name: huette15
-    devices:
-      - radio: 11a_standard
-        legacy_rates: false
-        country: DE
-      - radio: 11g_standard
-        legacy_rates: false
-        country: DE
-      - radio: 11a_mesh
-        legacy_rates: false
-        country: DE
-    ifaces:
-      - mode: ap
-        ssid: berlin.freifunk.net
-        encryption: none
-        network: dhcp
-        radio: [11a_standard, 11g_standard]
-        ifname_hint: ff
-        owe_transition_ifname_hint: ffowe
-      - mode: ap
-        ssid: berlin.freifunk.net OWE
-        hidden: true
-        encryption: owe
-        network: dhcp
-        radio: [11a_standard, 11g_standard]
-        ifname_hint: ffowe
-        owe_transition_ifname_hint: ff
-        ieee80211w: 1
-      - mode: mesh
-        mesh_id: Mesh-Freifunk-Berlin
-        radio: [11a_standard, 11g_standard, 11a_mesh]
-        mcast_rate: 12000
-        mesh_fwding: 0
-        ifname_hint: mesh
