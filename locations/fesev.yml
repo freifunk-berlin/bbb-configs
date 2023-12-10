@@ -43,11 +43,6 @@ hosts:
     mac_override:
       eth0: 2C:C8:1B:8A:96:0A
 
-  - hostname: fesev-ap7
-    role: ap
-    model: "mikrotik_sxtsq-5-ac"
-    # MAC override tbd: device needs to be purchased first
-
 snmp_devices:
   - hostname: fesev-sama
     address: 10.31.96.243
@@ -83,7 +78,6 @@ networks:
       fesev-ap4: 7
       fesev-ap5: 8
       fesev-ap6: 9
-      fesev-ap7: 10
 
   - vid: 40
     role: dhcp
