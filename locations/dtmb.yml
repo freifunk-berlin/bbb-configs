@@ -47,7 +47,7 @@ snmp_devices:
 
 ipv6_prefix: "2001:bf7:750:3400::/56"
 
-# Rhxb got following prefixes:
+# DTMB got following prefixes:
 # Router: 10.31.131.0/25
 # --MGMT: 10.31.131.0/27
 # --MESH: 10.31.131.32/27 {as /32}
