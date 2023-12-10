@@ -25,6 +25,10 @@ snmp_devices:
     address: 10.31.201.243
     snmp_profile: airos_8
 
+  - hostname: q216-spitta
+    address: 10.31.201.245
+    snmp_profile: airos_8
+
 ssh_keys:  # to stop merging other ssh-keys
   - comment: Hener
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEST9QsXtphN7BYb5p9FhxZTxvoWkICfRWC54SN/QHII
@@ -43,6 +47,12 @@ networks:
     name: mesh_tierpark
     prefix: 10.31.201.249/32
     ipv6_subprefix: -10
+
+  - vid: 10
+    role: mesh
+    name: mesh_spitta
+    prefix: 10.31.201.251/32
+    ipv6_subprefix: -11
 
   - vid: 20
     role: mesh
@@ -85,6 +95,7 @@ networks:
       q216-switch: 2
       q216-tierpark: 3
       q216-nf-s: 4
+      q216-spitta: 5
 
   - vid: 50
     role: uplink
