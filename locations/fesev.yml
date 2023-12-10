@@ -1,5 +1,58 @@
 ---
 
+location: fesev
+location_nice: Siegfriedstraße 183
+latitude: 52.5196117669
+longitude: 13.4988631290
+contact_nickname: 'Fes e.V. Freifunk AG'
+contacts:
+  - 'fesev+freifunk@systemli.org'
+
+hosts:
+
+  - hostname: fesev-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
+  - hostname: fesev-ap1
+    role: ap
+    model: "tplink_eap225-outdoor-v1"
+
+  - hostname: fesev-ap2
+    role: ap
+    model: "tplink_eap225-outdoor-v1"
+
+  - hostname: fesev-ap3
+    role: ap
+    model: "ubnt_nanostation_m5_xm"
+
+  - hostname: fesev-ap4
+    role: ap
+    model: "tplink_eap225-outdoor-v1"
+
+  - hostname: fesev-ap5
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2C:C8:1B:8A:95:E8
+
+  - hostname: fesev-ap6
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2C:C8:1B:8A:96:0A
+
+  - hostname: fesev-ap7
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    # MAC override tbd: device needs to be purchased first
+
+snmp_devices:
+  - hostname: fesev-sama
+    address: 10.31.96.243
+    snmp_profile: airos_8
+
 # mesh: 10.31.96.216/30
 # dhcp: 10.31.97.128/25
 # mgmt: 10.31.96.240/28
