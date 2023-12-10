@@ -1,4 +1,59 @@
 ---
+
+location: chris
+location_nice: Christophorus Kirche
+latitude: 52.541461
+longitude: 13.267025
+community: true
+
+hosts:
+
+  - hostname: chris-core
+    role: corerouter
+    model: "tplink_tl-wdr4900-v1"
+    wireless_profile: freifunk_default
+
+  - hostname: chris-n-2ghz
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+  - hostname: chris-o-2ghz
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+  - hostname: chris-s-2ghz
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+  - hostname: chris-w-2ghz
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+snmp_devices:
+  - hostname: chris-bht
+    address: 10.230.18.3
+    snmp_profile: airos_6
+
+  - hostname: chris-tub
+    address: 10.230.18.4
+    snmp_profile: airos_6
+
+  - hostname: chris-n-5ghz
+    address: 10.230.18.5
+    snmp_profile: airos_6
+
+  - hostname: chris-o-5ghz
+    address: 10.230.18.6
+    snmp_profile: airos_6
+
+  - hostname: chris-s-5ghz
+    address: 10.230.18.7
+    snmp_profile: airos_6
+
+  - hostname: chris-w-5ghz
+    address: 10.230.18.8
+    snmp_profile: airos_6
+
 ipv6_prefix: "2001:bf7:790::/56"
 
 networks:
