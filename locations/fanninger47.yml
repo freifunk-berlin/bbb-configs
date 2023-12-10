@@ -1,0 +1,125 @@
+---
+location: fanninger47
+location_nice: Rooftop, Fanningerstr 47, 10365 Berlin
+latitude: 52.51410
+longitude: 13.49858
+contacts:
+  - '#fanninger47:matrix.org'
+
+hosts:
+
+  - hostname: fanninger47-core
+    role: corerouter
+    model: "avm_fritzbox-4040"
+    wireless_profile: freifunk_default
+
+  - hostname: fanninger47-nf-n
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: dc:2c:6e:90:fd:bf}
+
+  - hostname: fanninger47-nf-o
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: dc:2c:6e:91:10:54}
+
+  - hostname: fanninger47-nf-w
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: dc:2c:6e:91:0f:88}
+
+snmp_devices:
+  - hostname: fanninger47-liese21
+    address: 10.31.232.195
+    snmp_profile: airos_8
+
+ipv6_prefix: "2001:bf7:860:1100::/56"
+# ALL:  10.31.233.0/26
+# DHCP: 10.31.233.32/27
+# MGMT: 10.31.233.0/28
+# MESH: 10.31.233.16/28
+
+networks:
+
+  # Nanobeam
+  - vid: 10
+    role: mesh
+    name: mesh_liese
+    prefix: 10.31.233.16/32
+    ipv6_subprefix: -10
+
+  # Mesh via LAN with Interkosmos
+  - vid: 11
+    role: mesh
+    name: mesh_ik
+    prefix: 10.31.233.17/32
+    ipv6_subprefix: -11
+    mesh_metric_lqm: ['default 0.8'] # prefer mesh into the bbb via liese
+
+
+  - vid: 20
+    role: mesh
+    name: mesh_nf_n
+    prefix: 10.31.233.18/32
+    ipv6_subprefix: -20
+    mesh_ap: fanninger47-nf-n
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.8'] # prefer mesh into the bbb via liese
+
+  - vid: 21
+    role: mesh
+    name: mesh_nf_o
+    prefix: 10.31.233.19/32
+    ipv6_subprefix: -21
+    mesh_ap: fanninger47-nf-o
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.8'] # prefer mesh into the bbb via liese
+
+
+  - vid: 22
+    role: mesh
+    name: mesh_nf_w
+    prefix: 10.31.233.20/32
+    ipv6_subprefix: -22
+    mesh_ap: fanninger47-nf-w
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.8'] # prefer mesh into the bbb via liese
+
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.31.233.32/27
+    ipv6_subprefix: -40
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      fanninger47-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.233.0/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      fanninger47-core: 1
+      fanninger47-switch: 2
+      fanninger47-switch-ik: 3
+      fanninger47-spitta: 4
+      fanninger47-nf-n: 5
+      fanninger47-nf-o: 6
+      fanninger47-nf-w: 7
+
+location__channel_assignments_11a_standard__to_merge:
+  fanninger47-core: 40-40
+
+location__channel_assignments_11g_standard__to_merge:
+  fanninger47-core: 13-20
+
+location__ssh_keys__to_merge:
+  - comment: neko
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCl2bCyIfDLZR5CQx7DqihqL2f9/2S6AeEHh8b4q6mdv9uatd0dIJqzmBnk/jJW4oTztK0EE7rWwVH+fNFtbMA020xSofrGMpbjvIs3ZiJa6ZBvKg6uZxzZaVAXGtVah98PqZhj9TGoG3msJE0U7Vlu6ha2g0T1j97kxSch+U0/iJNaiuR0ZBSFAA7+oJjEx+yIyC0f8+aM5L+IhMEl8U/bVp9Y5c5JoEIDozCJ4sOK8AL1d1wuCMM31wq9IEYHk+2DF4iRQGZZvgjumiROOEhv20jNkw2rvyEtx4winjC/72E/szL4OEa4yNNeTIINADYBInr0BPk4Tf4qSD7Y9wW5 neko
