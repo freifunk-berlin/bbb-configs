@@ -1,4 +1,24 @@
 ---
+location: colbe15
+location_nice: Colbe15
+latitude: 52.513189
+longitude: 13.464245
+community: true
+
+hosts:
+
+  - hostname: colbe15-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: colbe15
+
+  - hostname: colbe15-ap1
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 08:55:31:14:36:d7
+    wireless_profile: colbe15
+
 ipv6_prefix: "2001:bf7:830:8b00::/56"
 
 networks:
