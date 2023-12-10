@@ -1,10 +1,38 @@
 ---
-ipv6_prefix: "2001:bf7:830:a800::/56"
+
+location: casa_kua
+location_nice: Casa Kuà
+latitude: 52.50134038554727
+longitude: 13.42292022730152
+community: true
+
+hosts:
+
+  - hostname: casa_kua-core
+    role: corerouter
+    model: "glinet_gl-b1300"
+    host__packages__to_merge:
+          - -tunnelmanager
+          - tunspace
+          - wireguard-tools
+
+  - hostname: casa_kua-ap1
+    role: ap
+    model: "ubnt_unifiac-lite"
+
+  - hostname: casa_kua-ap2
+    role: ap
+    model: "ubnt_unifiac-lite"
+
+  - hostname: casa_kua-ap3
+    role: ap
+    model: "ubnt_unifiac-lite"
 
 # Casa Kua got following prefixes:
 # --MGMT: 10.31.89.72/29
 # --MESH: 10.31.89.64/30
 # --DHCP: 10.31.154.128/25
+ipv6_prefix: "2001:bf7:830:a800::/56"
 
 networks:
   - vid: 40
