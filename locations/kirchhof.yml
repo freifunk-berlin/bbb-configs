@@ -27,10 +27,6 @@ hosts:
     role: corerouter
     model: avm_fritzbox-4040
     wireless_profile: disable
-    host__packages__to_merge:
-      - -tunnelmanager
-      - tunspace
-      - wireguard-tools
 
   - hostname: kirchhof-nf-vorne
     role: ap

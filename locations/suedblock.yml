@@ -18,10 +18,6 @@ hosts:
     model: "avm_fritzbox-4040"
     wireless_profile: freifunk_default
     dhcp_no_ping: false
-    host__packages__to_merge:
-      - -tunnelmanager
-      - tunspace
-      - wireguard-tools
 
 ipv6_prefix: "2001:bf7:830:b100::/56"
 

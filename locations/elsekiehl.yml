@@ -29,10 +29,6 @@ hosts:
     role: corerouter
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
-    host__packages__to_merge:
-      - -tunnelmanager
-      - tunspace
-      - wireguard-tools
 
 ipv6_prefix: '2001:bf7:820:1800::/56'
 

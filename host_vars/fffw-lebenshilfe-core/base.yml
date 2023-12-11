@@ -4,8 +4,3 @@ role: corerouter
 model: "avm_fritzbox-7530"
 
 wireless_profile: freifunk_fw
-
-host__packages__to_merge:
-  - -tunnelmanager
-  - tunspace
-  - wireguard-tools
