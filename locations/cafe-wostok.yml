@@ -11,10 +11,6 @@ hosts:
   - hostname: cafe-wostok-core
     role: corerouter
     model: "avm_fritzbox-7530"
-    host__packages__to_merge:
-      - -tunnelmanager
-      - tunspace
-      - wireguard-tools
 
   - hostname: cafe-wostok-ap1
     role: ap

@@ -3,8 +3,3 @@
 location: habersaath
 role: corerouter
 model: "linksys_e8450-ubi"
-
-host__packages__to_merge:
-  - -tunnelmanager
-  - tunspace
-  - wireguard-tools
