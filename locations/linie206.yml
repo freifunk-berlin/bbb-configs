@@ -1,5 +1,48 @@
 ---
 
+location: linie206
+location_nice: Linienstraße 206
+latitude: 52.5288992
+longitude: 13.4028556
+contact_nickname: 'Linie206 Freifunk AG'
+contacts:
+  - 'l206 [ät] riseup [dot] net'
+
+hosts:
+
+  - hostname: linie206-core
+    role: corerouter
+    model: "linksys_e8450-ubi"
+    wireless_profile: freifunk_default
+
+  - hostname: linie206-nf-o-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+
+  - hostname: linie206-nf-s-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+
+  - hostname: linie206-nf-so-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+
+  - hostname: linie206-nf-w-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+
+  - hostname: linie206-nf-so-2ghz
+    role: ap
+    model: "mikrotik_sxtsq-2-lite"
+
+  - hostname: linie206-nf-w-2ghz
+    role: ap
+    model: "mikrotik_sxtsq-2-lite"
+
+  - hostname: linie206-nf-wohnzimmer
+    role: ap
+    model: "tplink_archer-a7-v5"
+
 # mesh: 10.31.68.72/29
 # dhcp: 10.31.149.0/25
 # mgmt: 10.31.149.128/27
