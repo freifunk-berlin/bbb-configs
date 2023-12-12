@@ -1,5 +1,20 @@
 ---
 
+location: ak36
+location_nice: Alboinkontor
+latitude: 52.46558
+longitude: 13.369589
+community: true
+
+hosts:
+
+  - hostname: ak36-gw
+    role: gateway
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined.img*"
+    ak36__disabled_services__to_merge:
+      - "bird"
+
 # AK36 got following prefixes:
 # Router: 10.31.130.128/26 2001:bf7:750:4000::/56
 # --MGMT: 10.31.130.128/27
