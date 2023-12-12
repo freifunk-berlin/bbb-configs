@@ -1,5 +1,63 @@
 ---
 
+location: stadalbert
+location_nice: Torstr. 168
+latitude: 52.52867
+longitude: 13.39561
+contact_nickname: 'StAdalbert-FreifunkTeam'
+contacts:
+ - 'noc@stadtfunk.net'
+
+hosts:
+
+  - hostname: stadalbert-core
+    role: corerouter
+    model: ubnt_usw-flex
+    poemgr_power_budget: 24
+    poemgr_ports:
+      - name: lan2
+        port: 3
+        disabled: 0
+      - name: lan3
+        port: 2
+        disabled: 0
+      - name: lan4
+        port: 1
+        disabled: 0
+      - name: lan5
+        port: 0
+        disabled: 0
+
+  - hostname: stadalbert-nf-cafej
+    role: ap
+    model: "avm_fritzbox-4040"
+    wireless_profile: stadalbert
+
+  - hostname: stadalbert-nf-kueche
+    role: ap
+    model: "avm_fritzbox-4040"
+
+  - hostname: stadalbert-nf-roof
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+
+snmp_devices:
+  - hostname: stadalbert-segen
+    address: 10.31.160.212
+    snmp_profile: airos_8
+
+  - hostname: stadalbert-linie
+    address: 10.31.160.213
+    snmp_profile: mikrotik_60g
+
+location__ssh_keys__to_merge:
+  - comment: Hener
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEST9QsXtphN7BYb5p9FhxZTxvoWkICfRWC54SN/QHII Laptop
+  - comment: Lino
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaljQHr4Nj6veeDi51BZjy/a3WXPmH8SLePB/s/owNy noxil@systemli.org
+  - comment: mcky
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILXio9GhSIzZpA4LY7ZC0XZe2e4k9reaQ4C2LWEB79bT mkyhos@protonmail.com
+
 # mesh:   10.31.53.24/29
 # dhcp:   10.31.182.64/26
 # prdhcp: 10.31.211.0/27
