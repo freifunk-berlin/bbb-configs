@@ -1,4 +1,54 @@
 ---
+
+location: magda
+location_nice: Magdalenenstraße 19
+latitude: 52.514072806
+longitude: 13.488437533
+contacts:
+  - '#ff-site-magda:matrix.org'
+
+hosts:
+
+  - hostname: magda-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+
+  - hostname: magda-ap-remise
+    role: ap
+    model: "zyxel_nwa50ax"
+
+  - hostname: magda-ap1
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 08:55:31:54:63:1e
+
+  - hostname: magda-ap2
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 08:55:31:54:61:11
+
+  - hostname: magda-ap3
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 08:55:31:54:63:0a
+
+  - hostname: magda-ap4
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+snmp_devices:
+
+  - hostname: magda-sama
+    address: 10.31.83.115
+    snmp_profile: airos_8
+
+  - hostname: magda-ost-5ghz
+    address: 10.31.83.116
+    snmp_profile: airos_8
+
 ipv6_prefix: "2001:bf7:860::/56"
 
 # Mesh: 10.31.83.60/30
