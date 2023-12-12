@@ -1,4 +1,95 @@
 ---
+
+location: sama
+location_nice: Samariterkirche
+latitude: 52.518044835152963
+longitude: 13.466172516345976
+community: true
+
+hosts:
+
+  - hostname: sama-core
+    role: corerouter
+    model: "linksys_e8450-ubi"
+
+  - hostname: sama-nord-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 08:55:31:54:63:18
+
+  - hostname: sama-ost-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 08:55:31:54:63:14
+
+  - hostname: sama-sued-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 08:55:31:54:63:0E
+
+  - hostname: sama-west-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 08:55:31:54:63:06
+
+snmp_devices:
+  - hostname: sama-nord-5ghz
+    address: 10.31.81.20
+    snmp_profile: airos_8
+
+  - hostname: sama-ost-5ghz
+    address: 10.31.81.21
+    snmp_profile: airos_8
+
+  - hostname: sama-sued-5ghz
+    address: 10.31.81.22
+    snmp_profile: airos_8
+
+  - hostname: sama-west-5ghz
+    address: 10.31.81.23
+    snmp_profile: airos_8
+
+  - hostname: sama-sued-60ghz
+    address: 10.31.81.26
+    snmp_profile: af60
+
+  - hostname: saarbruecker-sama
+    address: 10.31.83.52
+    snmp_profile: af60
+
+  - hostname: sama-saarbruecker
+    address: 10.31.81.30
+    snmp_profile: af60
+
+airos_dfs_reset:
+  - name: "sama-nord-5ghz"
+    target: "10.31.81.20"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "sama-ost-5ghz"
+    target: "10.31.81.21"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "sama-sued-5ghz"
+    target: "10.31.81.22"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "sama-west-5ghz"
+    target: "10.31.81.23"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
 ipv6_prefix: "2001:bf7:830:8600::/56"
 
 networks:

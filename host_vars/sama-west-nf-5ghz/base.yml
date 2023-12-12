@@ -1,8 +1,0 @@
----
-
-location: sama
-role: ap
-model: "mikrotik_sxtsq-5-ac"
-
-mac_override:
-  eth0: 08:55:31:54:63:06
