@@ -7,6 +7,7 @@ longitude: 13.4028556
 contact_nickname: 'Linie206 Freifunk AG'
 contacts:
   - 'l206 [ät] riseup [dot] net'
+  - '#freifunk-site-linie206:matrix.riotcat.org'
 
 hosts:
 
