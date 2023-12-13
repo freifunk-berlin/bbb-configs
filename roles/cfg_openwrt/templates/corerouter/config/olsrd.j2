@@ -13,6 +13,17 @@ config LoadPlugin
 	list hosts '{{ network['prefix'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }} {{ host }}'
   {% endfor %}
 {% endfor %}
+# TODO: check that host names are not repeated from the assignments list and throw an error otherwise
+{% for dhcp_static_lease in dhcp_static_leases | default([]) %}
+{% if dhcp_static_lease['name'] is defined and dhcp_static_lease['ip'] is defined and dhcp_static_lease['olsrd_nameservice'] is defined and dhcp_static_lease['olsrd_nameservice'] == 1 %}
+        list hosts '{{ dhcp_static_lease['ip'] }} {{ dhcp_static_lease['name'] }}'
+{% endif %}
+{% endfor %}
+{% for olsrd_service in olsrd_services | default([]) %}
+  {% if olsrd_service['url'] is defined and olsrd_service['protocol'] is defined and olsrd_service['name'] is defined and olsrd_service['url'] | regex_search('.*\\|.*') is none and olsrd_service['protocol'] | regex_search('^(tcp|udp)$') is defined and olsrd_service['name'] | regex_search('^[a-zA-Z0-9 \-]{1,75}$') is defined %}
+        list service '{{ olsrd_service['url'] }}|{{ olsrd_service['protocol'] }}|{{ olsrd_service['name'] }}'
+  {% endif %}
+{% endfor %}
 
 config LoadPlugin
 	option accept '0.0.0.0'
