@@ -16,7 +16,6 @@ hosts:
   - hostname: rhnk-nf-bvv
     role: ap
     model: "tplink_eap225-outdoor-v1"
-    wireless_profile: freifunk_default
 
   - hostname: rhnk-nf-no-5ghz
     role: ap
