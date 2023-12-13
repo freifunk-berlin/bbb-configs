@@ -1,5 +1,77 @@
 ---
 
+location: rhnk
+location_nice: Rathaus Neukoelln
+latitude: 52.481380
+longitude: 13.435078
+community: true
+
+hosts:
+
+  - hostname: rhnk-core
+    role: corerouter
+    model: "linksys_e8450-ubi"
+    wireless_profile: freifunk_default
+
+  - hostname: rhnk-nf-bvv
+    role: ap
+    model: "tplink_eap225-outdoor-v1"
+    wireless_profile: freifunk_default
+
+  - hostname: rhnk-nf-no-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"  # this host is revision 2 of the device
+    mac_override:
+      eth0: 2c:c8:1b:6a:9a:2c
+
+  - hostname: rhnk-nf-so-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"  # this host is revision 2 of the device
+    mac_override:
+      eth0: 2c:c8:1b:6b:e7:31
+
+snmp_devices:
+
+  - hostname: rhnk-philmel
+    address: 10.31.153.10
+    snmp_profile: af60
+
+  - hostname: rhnk-rhxb
+    address: 10.31.153.11
+    snmp_profile: af60
+
+  - hostname: rhnk-emma
+    address: 10.31.153.15
+    snmp_profile: airos_8
+
+  - hostname: rhnk-no-5ghz
+    address: 10.31.153.20
+    snmp_profile: airos_8
+
+  - hostname: rhnk-wsw-5ghz
+    address: 10.31.153.21
+    snmp_profile: airos_8
+
+  - hostname: rhnk-ono-5ghz
+    address: 10.31.153.22
+    snmp_profile: airos_6
+
+  - hostname: rhnk-ssw-5ghz
+    address: 10.31.153.23
+    snmp_profile: airos_8
+
+    # This is indented too far because yamllint complains otherwise
+    # TODO: device not active at the moment
+    # - hostname: rhnk-nno-5ghz
+    #   address: 10.31.153.25
+    #   snmp_profile: airos_8
+
+    # This is indented too far because yamllint complains otherwise
+    # TODO: Wave devices aren't AF60 and can't do SNMP yet
+    # - hostname: rhnk-oso-60ghz
+    #   address: 10.31.153.24
+    #   snmp_profile: af60
+
 # TODO: delete these old addresses:
 #       - mgmt: 10.31.152.128/27
 #       - nanobridges: 10.230.44.0/29
@@ -181,3 +253,9 @@ networks:
       # EAP225-Outdoor - OpenWrt - with UMA-D antenna
       # TODO: set explicit txpower to account for increased antenna gain
       rhnk-nf-bvv: 30
+
+location__ssh_keys__to_merge:
+  - comment: roedel
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCgzAZJhT/SyYJQCAye6b8G1ZHjSScXphdqHqkSxtZ0Zqc/iK8qwOsOHuRz44EV+o7udpwbMGbBmX6qbDKoUP/i3aGsTzkLwRhyEvAE7i9HB2WT1s0O6wqb6y9jCTwCSESRbQLFEdCgvuNZS62Lgn/koqM/DLWhLKO43Z0ua4R06oTdA1MabaAUXVzD9p4dm4GGAl2YNE0/co6E+g5UNWs9s1tWV9ZYyyTKp/v5J9jZArc/NACuGQQUx2qLyAplcSEzcj/3Am8gVMUzjzL17lrZevLdCh7PKt8ch3qzPVDH1MnE0moFWF41cTMMb8YBfpo7O78DlqumsQVowICgNHXIE4XMwqvRe2UawWdHEdkGrE40glwzGwPTrIxSsf5xszJRvQ9Rj8i0UTt9k5rh91dNqtMEvPpnLnzr2n+C8j4ozFrkyignHMkgtHD38Vx6+E5ZvZF8GLiRqVmYyT9anhQb0Kd3xJDf7JutYVAJ7eKl31koAjAz+k4MMhkCws051M= roedel
+  - comment: pktpls+bbb@systemli.org
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVY2XHiLDXbj7TGWtUpKEb8+qKw/DrkiVbLiyvyRaCi pktpls+bbb@systemli.org
