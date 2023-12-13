@@ -1,12 +1,48 @@
 ---
+
+location: strom
+location_nice: Stromstraße 2A
+latitude: 52.523692495967
+longitude: 13.342569613915
+community: true
+
+hosts:
+
+  - hostname: strom-gw
+    role: gateway
+    model: "tplink_tl-wdr4900-v1"
+
+  - hostname: strom-sw-5ghz
+    role: ap
+    model: "ubnt_nanostation-loco-m5_xm"
+    wireless_profile: disable
+
+  - hostname: strom-so-5ghz
+    role: ap
+    model: "ubnt_nanostation-loco-m5_xm"
+    wireless_profile: disable
+
+ipv6_prefix: "2001:bf7:750:2400::/56"
+
+networks:
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.130.64/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 0
+    assignments:
+      strom-so-5ghz: 6
+      strom-sw-5ghz: 7
+      strom-sw-2ghz: 8
+      strom-so-2ghz: 9
+
 # Router: 10.31.130.64/26 2001:bf7:750:2a00::/56
 # --MGMT: 10.31.130.64/27
 # --MESH: 10.31.48.1..10 (except 9) {as /32}
 
 # Disable noping as we use dhcp and static assignments
 # both in mgmt network
-
-ipv6_prefix: 2001:bf7:750:2a00::/56
 
 uplink:
   ifname: eth0.1301

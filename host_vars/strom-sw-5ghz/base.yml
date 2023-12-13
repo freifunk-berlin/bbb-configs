@@ -1,7 +1,0 @@
----
-
-location: strom
-role: ap
-model: "ubnt_nanostation-loco-m5_xm"
-
-wireless_profile: disable
