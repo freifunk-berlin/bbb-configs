@@ -59,11 +59,9 @@ snmp_devices:
     address: 10.31.153.23
     snmp_profile: airos_8
 
-    # This is indented too far because yamllint complains otherwise
-    # TODO: device not active at the moment
-    # - hostname: rhnk-nno-5ghz
-    #   address: 10.31.153.25
-    #   snmp_profile: airos_8
+  - hostname: rhnk-nno-5ghz
+    address: 10.31.153.25
+    snmp_profile: airos_8
 
     # This is indented too far because yamllint complains otherwise
     # TODO: Wave devices aren't AF60 and can't do SNMP yet
