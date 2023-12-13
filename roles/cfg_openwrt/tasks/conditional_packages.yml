@@ -25,12 +25,12 @@
     - luci-app-dawn
     - umdns
 
-- name: "Add tunnelmanager if configured"
+- name: "Add tunspace if configured"
   set_fact:
-    packages: "{{ packages + ['falter-berlin-tunnelmanager'] }}"
+    packages: "{{ packages + ['tunspace','wireguard-tools'] }}"
   when:
     - networks is defined
-    - networks | selectattr('tunnel_wan_ip', 'defined') | count > 0
+    - networks | selectattr('role', 'defined') | selectattr('role','equalto','tunnel') | count > 0
     - role == 'corerouter'
 
 - name: "Add zram-swap on low mem and big flash"

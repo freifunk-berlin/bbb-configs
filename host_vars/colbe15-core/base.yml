@@ -1,7 +1,0 @@
----
-
-location: colbe15
-role: corerouter
-model: "avm_fritzbox-7530"
-
-wireless_profile: colbe15

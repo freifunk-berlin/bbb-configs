@@ -1,7 +1,4 @@
 ---
-
 location: casa_kua
 role: corerouter
 model: "glinet_gl-b1300"
-
-# wireless_profile: casa_kua

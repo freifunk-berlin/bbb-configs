@@ -18,10 +18,6 @@ hosts:
     role: corerouter
     model: "mikrotik_wap-ac"
     wireless_profile: freifunk_default
-    host__packages__to_merge:
-      - -tunnelmanager
-      - tunspace
-      - wireguard-tools
 
 # 10.31.198.0/25
 # 10.31.198.0/28 - mgmt

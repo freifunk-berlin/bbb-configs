@@ -1,0 +1,139 @@
+---
+
+location: q216
+location_nice: Frankfurter Allee 216
+latitude: 52.51091
+longitude: 13.49417
+contact_nickname: Hener
+contacts:
+  - ffhener@proton.me
+
+hosts:
+
+  - hostname: q216-core
+    role: corerouter
+    model: "linksys_e8450-ubi"
+    wireless_profile: q216
+
+  - hostname: q216-nf-s
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: q216-tierpark
+    address: 10.31.201.243
+    snmp_profile: airos_8
+
+  - hostname: q216-spitta
+    address: 10.31.201.245
+    snmp_profile: airos_8
+
+ssh_keys:  # to stop merging other ssh-keys
+  - comment: Hener
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEST9QsXtphN7BYb5p9FhxZTxvoWkICfRWC54SN/QHII
+
+# 10.31.201.192/26
+# 10.31.201.240/29 - mgmt
+# 10.31.201.248/29 - mesh
+# 10.31.201.224/28 - prdhcp
+# 10.31.201.192/27 - dhcp
+ipv6_prefix: 2001:bf7:860:e00::/56
+
+networks:
+
+  - vid: 10
+    role: mesh
+    name: mesh_tierpark
+    prefix: 10.31.201.249/32
+    ipv6_subprefix: -10
+
+  - vid: 11
+    role: mesh
+    name: mesh_spitta
+    prefix: 10.31.201.251/32
+    ipv6_subprefix: -11
+
+  - vid: 20
+    role: mesh
+    name: nf_s_mesh
+    prefix: 10.31.201.250/32
+    ipv6_subprefix: -20
+    mesh_ap: q216-nf-s
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.31.201.192/27
+    ipv6_subprefix: -40
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      q216-core: 1
+
+  - vid: 41
+    role: dhcp
+    name: prdhcp
+    prefix: 10.31.201.224/28
+    ipv6_subprefix: -41
+    inbound_filtering: true
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+    assignments:
+      q216-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.201.240/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      q216-core: 1
+      q216-switch: 2
+      q216-tierpark: 3
+      q216-nf-s: 4
+      q216-spitta: 5
+
+location__channel_assignments_11a_standard__to_merge:
+  q216-core: 44-40
+  q216-nf-s: 36-20
+
+location__channel_assignments_11g_standard__to_merge:
+  q216-core: 13-20
+
+location__wireless_profiles__to_merge:
+  - name: q216
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 1
+
+      - mode: ap
+        ssid: Private Wifi
+        encryption: psk2
+        key: 'file:/root/wifi_pass'
+        network: prdhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: prdhcp

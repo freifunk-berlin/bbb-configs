@@ -1,0 +1,203 @@
+---
+
+location: habersaath
+location_nice: Leerstand Hab-ich-saath
+latitude: 52.53207188797019
+longitude: 13.378598767421284
+community: true
+
+
+hosts:
+  - hostname: habersaath-core
+    role: corerouter
+    model: "linksys_e8450-ubi"
+
+  - hostname: habersaath-w-nf-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+
+  - hostname: habersaath-ap-a1
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-a2
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-a3
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-a4
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-a5
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-a6
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-b1
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-b2
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-b3
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-b4
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-b5
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-b6
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-c1
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-c2
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-c3
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-c4
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-c5
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: habersaath-ap-c6
+    role: ap
+    model: "siemens_ws-ap3610"
+
+ipv6_prefix: "2001:bf7:750:4a00::/56"
+# mesh: 10.31.147.224/29
+# mgmt: 10.31.146.128/26
+# dhcp: 10.31.147.0/25
+
+networks:
+  - vid: 20
+    role: mesh
+    name: w_nf_5ghz
+    prefix: 10.31.147.225/32
+    ipv6_subprefix: -1
+    mesh_ap: habersaath-w-nf-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric: 1024
+    mesh_metric_lqm:
+      - default 0.12   # Penalty so local uplink is preferred
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.146.128/26
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      habersaath-core: 1
+      habersaath-sw-a: 2
+      habersaath-sw-b: 3
+      habersaath-sw-c: 4
+      habersaath-ap-a1: 12
+      habersaath-ap-a2: 13
+      habersaath-ap-a3: 14
+      habersaath-ap-a4: 15
+      habersaath-ap-a5: 16
+      habersaath-ap-a6: 17
+      habersaath-ap-b1: 18
+      habersaath-ap-b2: 19
+      habersaath-ap-b3: 20
+      habersaath-ap-b4: 21
+      habersaath-ap-b5: 22
+      habersaath-ap-b6: 23
+      habersaath-ap-c1: 24
+      habersaath-ap-c2: 25
+      habersaath-ap-c3: 26
+      habersaath-ap-c4: 27
+      habersaath-ap-c5: 28
+      habersaath-ap-c6: 29
+      habersaath-w-nf-5ghz: 30
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.147.0/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      habersaath-core: 1
+
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.147.224/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.147.225/32
+    wireguard_port: 51821
+
+location__channel_assignments_11a_standard__to_merge:
+  habersaath-ap-a1: 36-20
+  habersaath-ap-a2: 40-20
+  habersaath-ap-a3: 44-20
+  habersaath-ap-a4: 48-20
+  habersaath-ap-a5: 36-20
+  habersaath-ap-a6: 40-20
+  habersaath-ap-b1: 44-20
+  habersaath-ap-b2: 48-20
+  habersaath-ap-b3: 36-20
+  habersaath-ap-b4: 40-20
+  habersaath-ap-b5: 44-20
+  habersaath-ap-b6: 48-20
+  habersaath-ap-c1: 36-20
+  habersaath-ap-c2: 40-20
+  habersaath-ap-c3: 44-20
+  habersaath-ap-c4: 48-20
+  habersaath-ap-c5: 36-20
+  habersaath-ap-c6: 40-20
+
+location__channel_assignments_11g_standard__to_merge:
+  habersaath-ap-a1: 1-20
+  habersaath-ap-a2: 5-20
+  habersaath-ap-a3: 9-20
+  habersaath-ap-a4: 13-20
+  habersaath-ap-a5: 1-20
+  habersaath-ap-a6: 5-20
+  habersaath-ap-b1: 9-20
+  habersaath-ap-b2: 13-20
+  habersaath-ap-b3: 1-20
+  habersaath-ap-b4: 5-20
+  habersaath-ap-b5: 9-20
+  habersaath-ap-b6: 13-20
+  habersaath-ap-c1: 1-20
+  habersaath-ap-c2: 5-20
+  habersaath-ap-c3: 9-20
+  habersaath-ap-c4: 13-20
+  habersaath-ap-c5: 1-20
+  habersaath-ap-c6: 5-20

@@ -1,0 +1,173 @@
+---
+
+location: chris
+location_nice: Christophorus Kirche
+latitude: 52.541461
+longitude: 13.267025
+community: true
+
+hosts:
+
+  - hostname: chris-core
+    role: corerouter
+    model: "tplink_tl-wdr4900-v1"
+    wireless_profile: freifunk_default
+
+  - hostname: chris-n-2ghz
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+  - hostname: chris-o-2ghz
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+  - hostname: chris-s-2ghz
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+  - hostname: chris-w-2ghz
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+snmp_devices:
+  - hostname: chris-bht
+    address: 10.230.18.3
+    snmp_profile: airos_6
+
+  - hostname: chris-tub
+    address: 10.230.18.4
+    snmp_profile: airos_6
+
+  - hostname: chris-n-5ghz
+    address: 10.230.18.5
+    snmp_profile: airos_6
+
+  - hostname: chris-o-5ghz
+    address: 10.230.18.6
+    snmp_profile: airos_6
+
+  - hostname: chris-s-5ghz
+    address: 10.230.18.7
+    snmp_profile: airos_6
+
+  - hostname: chris-w-5ghz
+    address: 10.230.18.8
+    snmp_profile: airos_6
+
+ipv6_prefix: "2001:bf7:790::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_bht
+    prefix: 10.230.18.161/32
+    ipv6_subprefix: -1
+    ptp: true
+
+  - vid: 11
+    role: mesh
+    name: mesh_tub
+    prefix: 10.230.18.162/32
+    ipv6_subprefix: -2
+    ptp: true
+
+  - vid: 12
+    role: mesh
+    name: mesh_n_5ghz
+    prefix: 10.230.18.163/32
+    ipv6_subprefix: -3
+
+  - vid: 13
+    role: mesh
+    name: mesh_o_5ghz
+    prefix: 10.230.18.164/32
+    ipv6_subprefix: -4
+
+  - vid: 14
+    role: mesh
+    name: mesh_s_5ghz
+    prefix: 10.230.18.165/32
+    ipv6_subprefix: -5
+
+  - vid: 15
+    role: mesh
+    name: mesh_w_5ghz
+    prefix: 10.230.18.166/32
+    ipv6_subprefix: -6
+
+  - vid: 20
+    role: mesh
+    name: 11s_n_2ghz
+    prefix: 10.230.18.167/32
+    ipv6_subprefix: -7
+    mesh_metric: 1024
+    mesh_ap: chris-n-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 21
+    role: mesh
+    name: 11s_o_2ghz
+    prefix: 10.230.18.169/32
+    ipv6_subprefix: -9
+    mesh_metric: 1024
+    mesh_ap: chris-o-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 22
+    role: mesh
+    name: 11s_s_2ghz
+    prefix: 10.230.18.170/32
+    ipv6_subprefix: -10
+    mesh_metric: 1024
+    mesh_ap: chris-s-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 23
+    role: mesh
+    name: 11s_w_2ghz
+    prefix: 10.230.18.171/32
+    ipv6_subprefix: -11
+    mesh_metric: 1024
+    mesh_ap: chris-w-2ghz
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.36.138.1/24
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      chris-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.230.18.0/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      chris-core: 1
+      chris-switch: 2
+      chris-bht: 3
+      chris-tub: 4
+
+      chris-n-5ghz: 5
+      chris-o-5ghz: 6
+      chris-s-5ghz: 7
+      chris-w-5ghz: 8
+
+      chris-n-2ghz: 10
+      chris-o-2ghz: 11
+      chris-s-2ghz: 12
+      chris-w-2ghz: 13
+
+location__channel_assignments_11g_standard__to_merge:
+  chris-n-2ghz: 1-20
+  chris-o-2ghz: 5-20
+  chris-s-2ghz: 9-20
+  chris-w-2ghz: 13-20

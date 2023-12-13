@@ -18,9 +18,6 @@ hosts:
 location__packages__to_merge:
   - -luci-mod-falter
   - -falter-common
-  - -tunnelmanager
-  - tunspace
-  - wireguard-tools
   - openssh-sftp-server
 
 # 10.31.174.128/26 - pktpls+bbb@systemli.org

@@ -1,0 +1,120 @@
+---
+
+location: fesev
+location_nice: Siegfriedstraße 183
+latitude: 52.5196117669
+longitude: 13.4988631290
+contact_nickname: 'Fes e.V. Freifunk AG'
+contacts:
+  - 'fesev+freifunk@systemli.org'
+
+hosts:
+
+  - hostname: fesev-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+    wifi_roaming: true
+
+  - hostname: fesev-ap1
+    role: ap
+    model: "tplink_eap225-outdoor-v1"
+    wifi_roaming: true
+
+  - hostname: fesev-ap2
+    role: ap
+    model: "tplink_eap225-outdoor-v1"
+    wifi_roaming: true
+
+  - hostname: fesev-ap3
+    role: ap
+    model: "ubnt_nanostation_m5_xm"
+    wifi_roaming: true
+
+  - hostname: fesev-ap4
+    role: ap
+    model: "tplink_eap225-outdoor-v1"
+    wifi_roaming: true
+
+  - hostname: fesev-ap5
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2C:C8:1B:8A:95:E8
+    wifi_roaming: true
+
+  - hostname: fesev-ap6
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2C:C8:1B:8A:96:0A
+    wifi_roaming: true
+
+snmp_devices:
+  - hostname: fesev-sama
+    address: 10.31.96.243
+    snmp_profile: airos_8
+
+# mesh: 10.31.96.216/30
+# dhcp: 10.31.97.128/25
+# mgmt: 10.31.96.240/28
+
+ipv6_prefix: "2001:bf7:860:b00::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_sama
+    prefix: 10.31.96.216/32
+    ipv6_subprefix: -1
+    ptp: true
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.96.240/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      fesev-core: 1
+      fesev-switch: 2
+      fesev-sama: 3
+      fesev-ap1: 4
+      fesev-ap2: 5
+      fesev-ap3: 6
+      fesev-ap4: 7
+      fesev-ap5: 8
+      fesev-ap6: 9
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.97.128/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      fesev-core: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  fesev-ap1: 36-20
+  fesev-ap2: 40-20
+  fesev-ap3: 48-20
+  fesev-ap4: 36-20
+  fesev-ap5: 44-20
+  fesev-ap6: 40-20
+  fesev-ap7: 48-20
+
+location__channel_assignments_11g_standard__to_merge:
+  fesev-ap1: 5-20
+  fesev-ap2: 9-20
+  fesev-ap4: 13-20
+
+# channel-bandwith-txpower in dbm
+
+# ap1: eap225 north            - 2+5ghz
+# ap2: eap225 middle           - 2+5ghz
+# ap3: nanoM5 neighbours west  - 5ghz
+# ap4: eap225 south            - 2+5ghz
+# ap5: sxtsq5 middle           - 5ghz
+# ap6: sxtsq5 south            - 5ghz
+# ap7: sxtsq5 neighbours south - 5ghz
