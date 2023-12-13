@@ -27,7 +27,7 @@
 
 - name: "Add tunspace if configured"
   set_fact:
-    packages: "{{ packages + ['tunspace','wireguard-tools'] }}"
+    packages: "{{ packages + ['tunspace', 'wireguard-tools'] }}"
   when:
     - networks is defined
     - networks | selectattr('role', 'defined') | selectattr('role','equalto','tunnel') | count > 0
