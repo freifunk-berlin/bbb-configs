@@ -43,8 +43,8 @@ networks:
       wilgu10-int: 2
       wilgu10-east-nf: 3
       wilgu10-west-nf: 4
-      wilgu10-zwingli: 5 # rocket 5 ac lite
-      wilgu10-sama: 6 #  af60-lr
+      wilgu10-zwingli: 5  # rocket 5 ac lite
+      wilgu10-sama: 6  # af60-lr
       wilgu10-east-nf-2ghz: 7
 
   - vid: 40
