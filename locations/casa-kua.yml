@@ -11,10 +11,6 @@ hosts:
   - hostname: casa-kua-core
     role: corerouter
     model: "glinet_gl-b1300"
-    host__packages__to_merge:
-      - -tunnelmanager
-      - tunspace
-      - wireguard-tools
 
   - hostname: casa-kua-ap1
     role: ap
