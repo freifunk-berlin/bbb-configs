@@ -1,4 +1,45 @@
 ---
+
+location: klunker
+location_nice: Klunkerkranich
+latitude: 52.4819617
+longitude: 13.4330485
+community: true
+
+hosts:
+
+  - hostname: klunker-core
+    role: corerouter
+    model: "avm_fritzbox-4040"
+    wireless_profile: freifunk_default
+
+  - hostname: klunker-ap-bibliothek-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 08:55:31:14:36:d7
+
+  - hostname: klunker-nf-nnw-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: cc:2d:e0:9c:4d:58
+
+  - hostname: klunker-nf-sse-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: cc:2d:e0:9c:4f:00
+
+snmp_devices:
+  - hostname: klunker-rhnk
+    address: 10.31.191.179
+    snmp_profile: mikrotik_60g
+  - hostname: klunker-philmel
+    address: 10.31.191.180
+    snmp_profile: af60
+
+
 ipv6_prefix: "2001:bf7:820:e00::/56"
 
 # Klunker got following prefixes:
