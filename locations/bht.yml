@@ -1,0 +1,221 @@
+---
+
+location: bht
+location_nice: Berliner Hochschule fuer Technik
+latitude: 52.544407831736
+longitude: 13.352562785148
+contact_nickname: 'Perry'
+contacts:
+  - 'isprotejesvalkata [attt] gmail com'
+
+hosts:
+
+  - hostname: bht-core
+    role: corerouter
+    model: "tplink_tl-wdr4900-v1"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+
+  - hostname: bht-segen
+    address: 10.31.166.5
+    snmp_profile: airos_8
+
+  - hostname: bht-perleberger36
+    address: 10.31.166.6
+    snmp_profile: airos_8
+
+  - hostname: bht-scherer8
+    address: 10.31.166.7
+    snmp_profile: airos_8
+
+  - hostname: bht-nord
+    address: 10.31.166.8
+    snmp_profile: airos_6
+
+  - hostname: bht-chris
+    address: 10.31.166.9
+    snmp_profile: airos_6
+
+  - hostname: bht-jup
+    address: 10.31.166.10
+    snmp_profile: airos_6
+
+  - hostname: bht-ost
+    address: 10.31.166.11
+    snmp_profile: airos_6
+
+  - hostname: bht-sued
+    address: 10.31.166.12
+    snmp_profile: airos_6
+
+  - hostname: bht-fardf
+    address: 10.31.166.13
+    snmp_profile: airos_8
+
+  - hostname: bht-west
+    address: 10.31.166.14
+    snmp_profile: airos_8
+
+iros_dfs_reset:
+  - name: "bht-segen"
+    target: "10.31.166.5"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "bht-perleberger36"
+    target: "10.31.166.6"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "bht-scherer8"
+    target: "10.31.166.7"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "bht-nord"
+    target: "10.31.166.8"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "bht-chris"
+    target: "10.31.166.9"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "bht-jup"
+    target: "10.31.166.10"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "bht-ost"
+    target: "10.31.166.11"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "bht-sued"
+    target: "10.31.166.12"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "bht-fardf"
+    target: "10.31.166.13"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "bht-west"
+    target: "10.31.166.14"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "0-23"
+
+
+ipv6_prefix: "2001:bf7:750:1200::/56"
+
+networks:
+
+  - vid: 111
+    role: mesh
+    name: mesh_segen
+    prefix: 10.230.23.141/32
+    ipv6_subprefix: -1
+    ptp: true
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.2']
+
+  - vid: 112
+    role: mesh
+    name: mesh_perleberger36
+    prefix: 10.230.23.142/32
+    ipv6_subprefix: -2
+    ptp: true
+
+  - vid: 113
+    role: mesh
+    name: mesh_scherer8
+    prefix: 10.230.23.143/32
+    ipv6_subprefix: -3
+    ptp: true
+
+  - vid: 114
+    role: mesh
+    name: mesh_nord
+    prefix: 10.230.23.144/32
+    ipv6_subprefix: -4
+
+  - vid: 115
+    role: mesh
+    name: mesh_chris
+    prefix: 10.230.23.145/32
+    ipv6_subprefix: -5
+    ptp: true
+
+  - vid: 116
+    role: mesh
+    name: mesh_jup
+    prefix: 10.230.23.146/32
+    ipv6_subprefix: -6
+    ptp: true
+
+  - vid: 117
+    role: mesh
+    name: mesh_ost
+    prefix: 10.230.23.147/32
+    ipv6_subprefix: -7
+
+  - vid: 118
+    role: mesh
+    name: mesh_sued
+    prefix: 10.230.23.148/32
+    ipv6_subprefix: -8
+
+  - vid: 119
+    role: mesh
+    name: mesh_fardf
+    prefix: 10.230.23.149/32
+    ipv6_subprefix: -9
+    ptp: true
+
+  - vid: 128
+    role: mesh
+    name: mesh_west
+    prefix: 10.230.23.158/32
+    ipv6_subprefix: -28
+
+  - vid: 104
+    role: dhcp
+    prefix: 10.230.23.152/29
+    ipv6_subprefix: 0
+    untagged: true
+    assignments:
+      bht-core: 1
+
+  - vid: 102
+    role: mgmt
+    prefix: 10.31.166.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      bht-core: 1
+      bht-er1: 2
+      bht-er2: 3
+      bht-segen: 5
+      bht-perleberger36: 6
+      bht-scherer8: 7
+      bht-nord: 8
+      bht-chris: 9
+      bht-jup: 10
+      bht-ost: 11
+      bht-sued: 12
+      bht-fardf: 13
+      bht-west: 14
