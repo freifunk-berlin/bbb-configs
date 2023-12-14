@@ -1,7 +1,0 @@
----
-
-location: koepi
-role: ap
-model: "avm_fritzbox-7530"
-
-wireless_profile: koepi
