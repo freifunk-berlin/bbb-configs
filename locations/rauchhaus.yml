@@ -1,4 +1,49 @@
 ---
+
+location: rauchhaus
+location_nice: rauchhaus
+latitude: 52.50481
+longitude: 13.42436
+community: true
+
+hosts:
+
+  - hostname: rauchhaus-core
+    role: corerouter
+    model: "tplink_archer-c7-v5"
+    wireless_profile: rauchhaus
+
+  - hostname: rauchhaus-floor0north135
+    role: ap
+    model: "tplink_tl-wdr4300-v1"
+    wireless_profile: rauchhaus
+
+  - hostname: rauchhaus-floor0south136
+    role: ap
+    model: "tplink_tl-wdr3600-v1"
+    wireless_profile: rauchhaus
+
+  - hostname: rauchhaus-floor1north133
+    role: ap
+    model: "tplink_tl-wdr4300-v1"
+    wireless_profile: rauchhaus
+
+  - hostname: rauchhaus-floor1south134
+    role: ap
+    model: "tplink_tl-wdr3600-v1"
+    wireless_profile: rauchhaus
+
+  - hostname: rauchhaus-floor2north132
+    role: ap
+    model: "tplink_tl-wdr3600-v1"
+    wireless_profile: rauchhaus
+
+snmp_devices:
+  - hostname: rauchhaus-emma
+    address: 10.31.98.226
+    snmp_profile: airos_8
+
+
 ipv6_prefix: "2001:bf7:830:9200::/56"
 
 networks:
