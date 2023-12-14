@@ -1,7 +1,0 @@
----
-
-location: rio
-role: corerouter
-model: "ubnt_edgerouter-x"
-
-poe_on: []
