@@ -1,4 +1,54 @@
 ---
+
+location: vaterhaus
+location_nice: Vaterhaus
+latitude: 52.4649
+longitude: 13.4852
+contact_nickname: 'xayax'
+contacts:
+  - 'ff@xayax.de'
+
+hosts:
+
+  - hostname: vaterhaus-core
+    role: corerouter
+    model: "mikrotik_routerboard-750gr3"
+
+  - hostname: vaterhaus-n-nf-2ghz
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+    poe_on: []
+
+snmp_devices:
+  - hostname: vaterhaus-zwingli
+    address: 10.230.192.202
+    snmp_profile: af60
+
+  - hostname: vaterhaus-w
+    address: 10.230.192.203
+    snmp_profile: airos_8
+
+    # - hostname: vaterhaus-no
+    #   address: 10.230.192.204
+    #   snmp_profile: mikrotik
+
+  - hostname: vaterhaus-o
+    address: 10.230.192.205
+    snmp_profile: airos_8
+
+  - hostname: vaterhaus-adlershof
+    address: 10.230.192.206
+    snmp_profile: airos_8
+
+  - hostname: vaterhaus-cg47
+    address: 10.230.192.207
+    snmp_profile: airos_8
+
+    # - hostname: vaterhaus-m2no
+    #   address: 10.230.192.208
+    #   snmp_profile: airos_6
+
+
 ipv6_prefix: "2001:bf7:830:a500::/56"
 
 # Vaterhaus got following prefixes:
