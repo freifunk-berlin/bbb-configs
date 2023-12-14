@@ -1,8 +1,0 @@
----
-snmp_devices:
-  - hostname: klunker-rhnk
-    address: 10.31.191.179
-    snmp_profile: mikrotik_60g
-  - hostname: klunker-philmel
-    address: 10.31.191.180
-    snmp_profile: af60
