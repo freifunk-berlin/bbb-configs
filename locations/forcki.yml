@@ -1,4 +1,18 @@
 ---
+
+location: forcki
+location_nice: Forcki
+latitude: 52.519112973573066
+longitude: 13.462383908075621
+community: true
+
+hosts:
+
+  - hostname: forcki-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
 ipv6_prefix: "2001:bf7:830:ac00::/56"
 
 # Forcki got following prefixes:
