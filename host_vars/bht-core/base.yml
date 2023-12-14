@@ -1,7 +1,0 @@
----
-
-location: bht
-role: corerouter
-model: "tplink_tl-wdr4900-v1"
-
-wireless_profile: freifunk_default
