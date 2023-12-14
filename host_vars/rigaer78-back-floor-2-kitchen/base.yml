@@ -1,9 +1,0 @@
----
-
-location: rigaer78
-role: ap
-model: "avm_fritzbox-4040"
-
-# only useful in combination with port_untag patch that is not upstream
-port_untag:
-  40: [lan2, lan3, lan4]
