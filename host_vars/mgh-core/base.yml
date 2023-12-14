@@ -1,7 +1,0 @@
----
-
-location: mgh
-role: corerouter
-model: "ubnt_edgerouter-x-sfp"
-
-poe_on: [2]
