@@ -1,4 +1,31 @@
 ---
+
+location: rhxb
+location_nice: Rathaus Kreuzberg
+latitude: 52.493778
+longitude: 13.385290
+community: true
+
+hosts:
+
+  - hostname: rhxb-core
+    role: corerouter
+    model: "linksys_e8450-ubi"
+    wireless_profile: freifunk_default
+
+airos_dfs_reset:
+  - name: "rhxb-simeon"
+    target: "10.31.126.14"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "rhxb-nw-ac"
+    target: "10.31.126.15"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
 ipv6_prefix: "2001:bf7:830:9f00::/56"
 
 # Rhxb got following prefixes:
