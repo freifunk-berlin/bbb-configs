@@ -1,5 +1,43 @@
 ---
-ipv6_prefix: "2001:bf7:750:3600::/56"
+
+location: koepi
+location_nice: koepi
+latitude: 52.507668
+longitude: 13.426087
+community: true
+
+hosts:
+
+  - hostname: koepi-core
+    role: corerouter
+    model: "bananapi_bpi-r64"
+    ipv6_prefix: "2001:bf7:750:3600::/56"
+
+  - hostname: koepi-ap1
+    role: ap
+    model: "tplink_archer-c50-v3"
+    wireless_profile: koepi
+
+  - hostname: koepi-ap2
+    role: ap
+    model: "tplink_archer-c50-v3"
+    wireless_profile: koepi
+
+  - hostname: koepi-ap3
+    role: ap
+    model: "tplink_tl-wdr4900-v1"
+    wireless_profile: koepi
+
+  - hostname: koepi-ap4
+    role: ap
+    model: "avm_fritzbox-4040"
+    wireless_profile: koepi
+
+  - hostname: koepi-ap5
+    role: ap
+    model: "avm_fritzbox-7530"
+    wireless_profile: koepi
+
 
 networks:
   - vid: 10
@@ -116,3 +154,15 @@ location__wireless_profiles__to_merge:
         network: home
         radio: [11a_standard, 11g_standard]
         ifname_hint: home
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
