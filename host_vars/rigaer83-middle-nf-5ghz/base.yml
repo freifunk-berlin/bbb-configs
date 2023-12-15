@@ -1,8 +1,0 @@
----
-
-location: rigaer83
-role: ap
-model: "mikrotik_sxtsq-5-ac"
-
-mac_override:
-  eth0: 2c:c8:1b:af:2d:d8
