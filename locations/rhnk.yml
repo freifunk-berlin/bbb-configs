@@ -11,7 +11,6 @@ hosts:
   - hostname: rhnk-core
     role: corerouter
     model: "linksys_e8450-ubi"
-    wireless_profile: freifunk_default
 
   - hostname: rhnk-nf-bvv
     role: ap
@@ -30,10 +29,6 @@ hosts:
       eth0: 2c:c8:1b:6b:e7:31
 
 snmp_devices:
-
-  - hostname: rhnk-philmel
-    address: 10.31.153.10
-    snmp_profile: af60
 
   - hostname: rhnk-rhxb
     address: 10.31.153.11
@@ -81,13 +76,6 @@ ipv6_prefix: "2001:bf7:820:1000::/56"
 # mesh: 10.230.3.0/26
 # dhcp: 10.230.3.64/26
 networks:
-  - vid: 10
-    role: mesh
-    name: mesh_philmel
-    prefix: 10.230.3.10/32
-    ipv6_subprefix: -10
-    mesh_metric: 128
-    ptp: true
 
   - vid: 11
     role: mesh
@@ -95,13 +83,6 @@ networks:
     prefix: 10.230.3.11/32
     ipv6_subprefix: -11
     mesh_metric: 128
-    ptp: true
-
-  - vid: 13
-    role: mesh
-    name: mesh_richardplatz
-    prefix: 10.230.3.13/32
-    ipv6_subprefix: -13
     ptp: true
 
   - vid: 14
@@ -216,14 +197,8 @@ networks:
       # Mikrotik CRS328-24P-4S+RM - SwitchOS 2.13
       rhnk-switch: 2
 
-      # AirFiber 60-LR - firmware v2.6.0
-      rhnk-philmel: 10
-
       # AirFiber 60-LR - Firmware 3.3.0-BETA2
       rhnk-rhxb: 11
-
-      # Mikrotik Cube 60 Pro - RouterOS 7.7
-      rhnk-richardplatz: 13
 
       # Mikrotik Cube 60 Pro - RouterOS 7.7
       rhnk-klunker-60ghz: 14
