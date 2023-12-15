@@ -73,6 +73,10 @@ set -e
 # }
 #
 
+mkdir -p tmp/
+[ -f tmp/yj ] || wget -O tmp/yj -nv https://github.com/sclevine/yj/releases/download/v5.1.0/yj-linux-amd64
+chmod +x tmp/yj
+
 case "$1" in
 --host)
     query="$2"
@@ -83,10 +87,10 @@ case "$1" in
         locyml="locations/$tryloc.yml"
         if [ -f "$locyml" ] ; then
             # Location vars is location.yml without the hosts array.
-            locvars="$(yq -M -c 'del(.hosts)' "$locyml")"
+            locvars="$(cat "$locyml" | tmp/yj | jq -r 'del(.hosts)')"
             # Host vars is the matching object from the hosts array.
             # TODO: check that .location value matches filename
-            hostvars="$(yq -M -c '.hosts[] | select(.hostname == "'"$query"'")' "$locyml")"
+            hostvars="$(cat "$locyml" | tmp/yj | jq -r '.hosts[] | select(.hostname == "'"$query"'")')"
             if [ -z "$hostvars" ] ; then
                 echo "error: host $query not found in $locyml" >&2
                 exit 1
@@ -110,8 +114,10 @@ case "$1" in
     HOSTS=$(
         # TODO: check that .location value matches filename
         # TODO: check that hostname matches location name
-        for h in $(yq -M -r '.hosts[].hostname' locations/*.yml) ; do
-            echo -n '"'"$h"'", '
+        for f in locations/*.yml ; do
+            for h in $(cat "$f" | tmp/yj | jq -r '.hosts[].hostname'); do
+                echo -n '"'"$h"'", '
+            done
         done
         # Also look in Ansible's default location
         for h in host_vars/* ; do
