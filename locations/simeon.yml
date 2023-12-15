@@ -1,4 +1,51 @@
 ---
+
+location: simeon
+location_nice: simeon
+latitude: 52.500582
+longitude: 13.406656
+community: true
+
+hosts:
+
+  - hostname: simeon-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+
+  - hostname: simeon-mgh
+    address: 10.31.104.131
+    snmp_profile: airos_8
+
+  - hostname: simeon-nord
+    address: 10.31.104.132
+    snmp_profile: airos_8
+
+  - hostname: simeon-emma
+    address: 10.31.104.133
+    snmp_profile: airos_6
+
+  - hostname: simeon-rhxb
+    address: 10.31.104.134
+    snmp_profile: airos_8
+
+airos_dfs_reset:
+
+  - name: "simeon-mgh"
+    target: "10.31.104.131"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "simeon-nord"
+    target: "10.31.104.132"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+
 ipv6_prefix: "2001:bf7:750:3700::/56"
 
 networks:
