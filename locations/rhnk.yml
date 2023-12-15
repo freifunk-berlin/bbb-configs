@@ -63,11 +63,13 @@ snmp_devices:
     address: 10.31.153.25
     snmp_profile: airos_8
 
-    # This is indented too far because yamllint complains otherwise
-    # TODO: Wave devices aren't AF60 and can't do SNMP yet
-    # - hostname: rhnk-oso-60ghz
-    #   address: 10.31.153.24
-    #   snmp_profile: af60
+  - hostname: rhnk-oso-60ghz
+    address: 10.31.153.24
+    snmp_profile: af60
+
+  - hostname: rhnk-nno-60ghz
+    address: 10.31.153.26
+    snmp_profile: af60
 
 # TODO: delete these old addresses:
 #       - mgmt: 10.31.152.128/27
@@ -154,6 +156,12 @@ networks:
     prefix: 10.230.3.25/32
     ipv6_subprefix: -25
 
+  - vid: 26
+    role: mesh
+    name: mesh_nno_60ghz
+    prefix: 10.230.3.26/32
+    ipv6_subprefix: -26
+
   - vid: 29
     role: mesh
     name: mesh_nf_2g
@@ -211,7 +219,7 @@ networks:
       # AirFiber 60-LR - firmware v2.6.0
       rhnk-philmel: 10
 
-      # AirFiber 60-LR - firmware v2.6.0
+      # AirFiber 60-LR - Firmware 3.3.0-BETA2
       rhnk-rhxb: 11
 
       # Mikrotik Cube 60 Pro - RouterOS 7.7
@@ -229,17 +237,20 @@ networks:
       # Rocket 5AC Lite - AirOS 8.7.11
       rhnk-wsw-5ghz: 21
 
-      # Wave AP - firmware 3.1.1
+      # Airfiber LR - Firmware 3.3.0-BETA2
       rhnk-wsw-60ghz: 22
 
       # Rocket 5AC Lite - AirOS 8.7.11
       rhnk-ssw-5ghz: 23
 
-      # Wave AP - firmware 3.1.0-rc
+      # Wave AP - Firmware 3.3.0-BETA2
       rhnk-oso-60ghz: 24
 
       # Rocket 5AC Lite - AirOS 8.7.11
       rhnk-nno-5ghz: 25
+
+      # Wave AP - Firmware 3.3.0-BETA2
+      rhnk-nno-60ghz: 26
 
       # SXTsq 5 ac - OpenWrt
       rhnk-nf-no-5ghz: 28
