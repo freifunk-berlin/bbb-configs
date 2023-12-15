@@ -77,7 +77,7 @@ networks:
   - vid: 20
     role: mesh
     name: nf_roof_mesh
-    prefix: 10.31.201.250/32
+    prefix: 10.31.53.27/32
     ipv6_subprefix: -3
     mesh_ap: stadalbert-nf-roof
     mesh_radio: 11a_standard
