@@ -1,5 +1,51 @@
 ---
 
+location: ak36
+location_nice: Alboinkontor
+latitude: 52.46558
+longitude: 13.369589
+community: true
+
+hosts:
+
+  - hostname: ak36-gw
+    role: gateway
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined.img*"
+    ak36__disabled_services__to_merge:
+      - "bird"
+
+snmp_devices:
+
+  - hostname: ak36-philmel
+    address: 10.31.130.132
+    snmp_profile: airos_8
+
+  - hostname: ak36-flughafen
+    address: 10.31.130.133
+    snmp_profile: af60
+
+  - hostname: ak36-dtmb
+    address: 10.31.130.134
+    snmp_profile: airos_6
+
+  - hostname: ak36-friedenau
+    address: 10.31.130.135
+    snmp_profile: airos_6
+
+  - hostname: ak36-rhnk
+    address: 10.31.130.136
+    snmp_profile: af60
+
+  - hostname: ak36-philmel60
+    address: 10.31.130.138
+    snmp_profile: af60
+
+  - hostname: ak36-teufelsberg
+    address: 10.31.130.139
+    snmp_profile: af60
+
+
 # AK36 got following prefixes:
 # Router: 10.31.130.128/26 2001:bf7:750:4000::/56
 # --MGMT: 10.31.130.128/27
