@@ -30,7 +30,7 @@ jobs:
           echo "Building for $CHANGED_HOSTS"
           echo "CHANGED_HOSTS=$CHANGED_HOSTS" >> "$GITHUB_ENV"
           CHANGED_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" | grep 'group_vars/location_' | sed 's/group_vars\/\(.*\)\/.*/\1/' | sort | uniq | sed -z 's/\n/,/g;s/,$//')
-          CHANGED_SINGE_FILE_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/master" | grep 'locations/' | sed 's/locations\/\(.*\)\.yml/location_\1/' | sed -z 's/\n/,/g;s/,$//')
+          CHANGED_SINGE_FILE_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/master" | grep 'locations/' | sed 's/locations\/\(.*\)\.yml/location_\1/' | sed -z 's/-/_/g;s/\n/,/g;s/,$//')
           CHANGED_LOCATIONS=${CHANGED_LOCATIONS:+$CHANGED_LOCATIONS,}$CHANGED_SINGE_FILE_LOCATIONS
           if [ -z "${CHANGED_LOCATIONS}" ]; then
             CHANGED_LOCATIONS="sama-core,sama-nord-nf-5ghz,l105-gw"
