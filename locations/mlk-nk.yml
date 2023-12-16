@@ -13,10 +13,6 @@ hosts:
     model: "tplink_tl-wdr4900-v1"
     wireless_profile: freifunk_default
 
-  - hostname: mlk-nk-nf-wbp1
-    role: ap
-    model: "ubnt_nanostation-m2_xm"
-
   - hostname: mlk-nk-nf-wbp2
     role: ap
     model: "ubnt_nanostation-m2_xm"
@@ -31,13 +27,13 @@ hosts:
 
 snmp_devices:
 
-  - hostname: mlk-nk-zwingli
+  - hostname: mlk-nk-nno-5ghz
     address: 10.31.69.4
-    snmp_profile: airos_6
-
-  - hostname: mlk-nk-emma
-    address: 10.31.69.5
     snmp_profile: airos_8
+
+  - hostname: mlk-nk-so-5ghz
+    address: 10.31.69.5
+    snmp_profile: airos_6
 
 
 ipv6_prefix: '2001:bf7:820:2500::/56'
@@ -48,63 +44,55 @@ ipv6_prefix: '2001:bf7:820:2500::/56'
 
 networks:
 
-  # DEFAULT gateway - SXTsq5ac
-  - vid: 10
-    role: mesh
-    name: mesh_rhnk
-    prefix: 10.31.69.32/32
-    ipv6_subprefix: -1
-    mesh_metric: 1024
-    mesh_ap: mlk-nk-rhnk
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
-
-  # gateway - Nano Station M5
+  # Airos and similar - mesh links (VID 10-19)
+  # Powerbeam 5AC 400 - Orientation Zwingli/Sama
   - vid: 11
     role: mesh
-    name: mesh_zwingli
+    name: mesh_nno_5
     prefix: 10.31.69.33/32
-    ipv6_subprefix: -2
+    ipv6_subprefix: -11
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.6']
     ptp: true
 
-  # gateway - Rocket 5AC lite
+  # Nanostation M5 - Airos 6 - Orientation Sonnenallee
   - vid: 12
     role: mesh
-    name: mesh_emma
+    name: mesh_so_5
     prefix: 10.31.69.34/32
-    ipv6_subprefix: -3
+    ipv6_subprefix: -12
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.7']
     ptp: true
 
-  # mesh nf - all Nano Station M2
+  # 802.11s mesh links (VID 20-29)
+  # 802.11s mesh nf - SXTsq5ac - Orientation Rhnk
   - vid: 20
     role: mesh
-    name: mesh_nf_wbp1
+    name: mesh_rhnk
     prefix: 10.31.69.35/32
-    ipv6_subprefix: -4
-    mesh_metric: 2048
-    mesh_ap: mlk-nk-nf-wbp1
-    mesh_radio: 11g_standard
+    ipv6_subprefix: -20
+    mesh_ap: mlk-nk-rhnk
+    mesh_radio: 11a_standard
     mesh_iface: mesh
 
+  # 802.11s Mesh nf - Nano Station M2 - OpenWRT
   - vid: 21
     role: mesh
     name: mesh_nf_wbp2
     prefix: 10.31.69.36/32
-    ipv6_subprefix: -5
+    ipv6_subprefix: -21
     mesh_metric: 2048
     mesh_ap: mlk-nk-nf-wbp2
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
+  # 802.11s Mesh nf - Nano Station M2 - OpenWRT
   - vid: 22
     role: mesh
     name: mesh_nf_wbp3
     prefix: 10.31.69.37/32
-    ipv6_subprefix: -6
+    ipv6_subprefix: -22
     mesh_metric: 2048
     mesh_ap: mlk-nk-nf-wbp3
     mesh_radio: 11g_standard
@@ -129,21 +117,10 @@ networks:
       mlk-nk-core: 1
       mlk-nk-switch: 2
       mlk-nk-rhnk: 3
-      mlk-nk-zwingli: 4
-      mlk-nk-emma: 5
-      mlk-nk-nf-wbp1: 6
+      mlk-nk-nno-5ghz: 4
+      mlk-nk-so-5ghz: 5
       mlk-nk-nf-wbp2: 7
       mlk-nk-nf-wbp3: 8
-
-location__channel_assignments_11a_standard__to_merge:
-  # Channel - Bandwidth - TX Power
-  mlk-nk-rhnk: 36-20
-
-location__channel_assignments_11g_standard__to_merge:
-  # Channel - Bandwidth - TX Power
-  mlk-nk-nf-wbp1: 1-20
-  mlk-nk-nf-wbp2: 6-20
-  mlk-nk-nf-wbp3: 11-20
 
 dns_servers:
   # quad9
