@@ -1,5 +1,4 @@
 ---
-
 location: rhnk
 location_nice: Rathaus Neukoelln
 latitude: 52.481380
@@ -77,6 +76,7 @@ ipv6_prefix: "2001:bf7:820:1000::/56"
 # dhcp: 10.230.3.64/26
 networks:
 
+  # TODO: Clean up VIDs for mesh networks to match convention
   - vid: 11
     role: mesh
     name: mesh_rhxb
@@ -152,7 +152,6 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # TODO: remove me, rhnk-bvv link is only 2ghz
   - vid: 30
     role: mesh
     name: mesh_nf_bvv
@@ -162,19 +161,23 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  # TODO: change me so i match the IP address
   - vid: 32
     role: mesh
     name: mesh_nf_no
     prefix: 10.230.3.28/32
     ipv6_subprefix: -32
+    mesh_ap: rhnk-nf-no-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
 
-  # TODO: change me so i match the IP address
   - vid: 33
     role: mesh
     name: mesh_nf_so
     prefix: 10.230.3.29/32
     ipv6_subprefix: -33
+    mesh_ap: rhnk-nf-so-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
 
   - vid: 40
     role: dhcp
@@ -192,6 +195,7 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
+      # Belkin RT3200 /	Linksys E8450 (UBI)
       rhnk-core: 1
 
       # Mikrotik CRS328-24P-4S+RM - SwitchOS 2.13
@@ -234,8 +238,15 @@ networks:
       rhnk-nf-so-5ghz: 29
 
       # EAP225-Outdoor - OpenWrt - with UMA-D antenna
-      # TODO: set explicit txpower to account for increased antenna gain
       rhnk-nf-bvv: 30
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  rhnk-nf-bvv: 36-20-9
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  rhnk-nf-bvv: 13-20-11
 
 location__ssh_keys__to_merge:
   - comment: roedel
