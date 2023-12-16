@@ -30,17 +30,21 @@ jobs:
           echo "Building for $CHANGED_HOSTS"
           echo "CHANGED_HOSTS=$CHANGED_HOSTS" >> "$GITHUB_ENV"
           CHANGED_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" | grep 'group_vars/location_' | sed 's/group_vars\/\(.*\)\/.*/\1/' | sort | uniq | sed -z 's/\n/,/g;s/,$//')
-          CHANGED_SINGE_FILE_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/master" | grep 'locations/' | sed 's/locations\/\(.*\)\.yml/location_\1/' | sed -z 's/\n/,/g;s/,$//')
+          CHANGED_SINGE_FILE_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" | grep 'locations/' | sed 's/locations\/\(.*\)\.yml/location_\1/' | sed -z 's/\n/,/g;s/,$//')
           CHANGED_LOCATIONS=${CHANGED_LOCATIONS:+$CHANGED_LOCATIONS,}$CHANGED_SINGE_FILE_LOCATIONS
-          if [ -z "${CHANGED_LOCATIONS}" ]; then
-            CHANGED_LOCATIONS="sama-core,sama-nord-nf-5ghz,l105-gw"
+          CHANGED_OTHER=$(git diff --diff-filter=d --name-only "origin/$BRANCH" | grep -xP '(inventory|roles)/.+' | sed -z 's/\n/,/g;s/,$//')
+          if [ -z "${CHANGED_LOCATIONS}" ] && [ -n "${CHANGED_OTHER}" ]; then
+            CHANGED_LOCATIONS="sama-core,sama-nord-5ghz,l105-gw"
           fi
           echo "Building for $CHANGED_LOCATIONS"
           echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> "$GITHUB_ENV"
 
       - name: Build changed locations
         run: |
-          ansible-playbook play.yml --tags image --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
+          if [ -n "${CHANGED_HOSTS}" ] || [ -n "${CHANGED_LOCATIONS}" ] ; then
+            ansible-playbook play.yml --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
+          fi
+          mkdir -p ./tmp/images
 
       - name: Store build output
         uses: actions/upload-artifact@v1
