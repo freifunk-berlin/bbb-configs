@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
 # shellcheck disable=SC2086
+# shellcheck disable=SC2002
 #
 # SC2086: Double quote to prevent globbing and word splitting.
 # - This one complained about an instance where double-quotes would lead to
 #   incorrect behaviour (`for i in $(seq ...)`). We do want the word splitting.
+# SC2002 (style): Useless cat. Consider 'cmd < file | ..' or 'cmd file | ..' instead.
+# - Purely a question of aesthetic preference, I couldn't care less.
 
 set -e
 # set -x
