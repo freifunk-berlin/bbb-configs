@@ -3,44 +3,60 @@ location: philmel
 location_nice: Philipp-Melanchthon-Kirche
 latitude: 52.465881
 longitude: 13.434112
-community: true
+contact_nickname: 'roedel'
+contacts:
+  - '@roedel:matrix.org'
 
 hosts:
+
   - hostname: philmel-core
     role: corerouter
     model: "linksys_e8450-ubi"
-    wireless_profile: freifunk_default
-  - hostname: philmel-nord-m2
+
+  - hostname: philmel-e-nf-5ghz
     role: ap
-    model: "ubnt_nanostation-m2_xm"
-    wireless_profile: freifunk_default
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: dc:2c:6e:c4:35:ed
+
+  - hostname: philmel-s-nf-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: dc:2c:6e:c4:36:53
 
 snmp_devices:
+
   - hostname: philmel-rhnk
     address: 10.230.2.4
     snmp_profile: af60
+
   - hostname: philmel-nord-5ghz
     address: 10.230.2.6
     snmp_profile: airos_8
+
   - hostname: philmel-ost
     address: 10.230.2.7
     snmp_profile: airos_6
-  - hostname: philmel-vaterhaus
-    address: 10.230.2.8
-    snmp_profile: airos_8
+
   - hostname: philmel-sued
     address: 10.230.2.9
     snmp_profile: airos_6
+
   - hostname: philmel-sued-5ac
     address: 10.230.2.10
     snmp_profile: airos_8
+
   - hostname: philmel-west
     address: 10.230.2.11
     snmp_profile: airos_6
+
   - hostname: philmel-ak36
     address: 10.230.2.12
     snmp_profile: airos_8
 
+# TODO: Add all devices and
+# change naming
 airos_dfs_reset:
   - name: "philmel-ak36"
     target: "10.230.2.12"
@@ -53,16 +69,16 @@ airos_dfs_reset:
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
-# got following prefixes:
-# Router: 10.230.2.0/24
-# --MGMT: 10.230.2.0/28
-# --MESH: 10.31.215.32/27 (-23)
-# --DHCP: 10.230.2.32/28
-
 ipv6_prefix: "2001:bf7:820:1500::/56"
 
+# got following prefixes:
+# Complete subnet: 10.230.2.0/24
+# MGMT Network: 10.230.2.0/28
+# Mesh Network: 10.230.2.16/28 (-23)
+# DHCP Network: 10.230.2.32/28
+
 networks:
-  - vid: 2
+  - vid: 40
     role: dhcp
     prefix: 10.230.2.32/28
     ipv6_subprefix: 0
@@ -83,7 +99,7 @@ networks:
   # northwest mesh 5GHz ac
   - vid: 11
     role: mesh
-    name: mesh_nw_5ghz          # Peers: liegewiese, sgfrd-core
+    name: mesh_nw_5ghz          # Peers: liegewiese
     prefix: 10.230.2.18/32
     ipv6_subprefix: -2
     mesh_metric: 1024
@@ -93,13 +109,6 @@ networks:
     name: mesh_ost            # Peers: Area51, delbrueck66
     prefix: 10.230.2.19/32
     ipv6_subprefix: -3
-    mesh_metric: 1024
-
-  - vid: 13
-    role: mesh
-    name: mesh_vaterhaus
-    prefix: 10.230.2.20/32
-    ipv6_subprefix: -4
     mesh_metric: 1024
 
   - vid: 14
@@ -118,7 +127,7 @@ networks:
 
   - vid: 16
     role: mesh
-    name: mesh_west           # Peers: emser97
+    name: mesh_west         # Peers: emser97
     prefix: 10.230.2.23/32
     ipv6_subprefix: -7
     mesh_metric: 1024
@@ -130,7 +139,7 @@ networks:
     ipv6_subprefix: -8
     ptp: true
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.3']  # prefer klunker link
+    mesh_metric_lqm: ['default 0.2']  # prefer klunker link
 
   - vid: 18
     role: mesh
@@ -142,11 +151,31 @@ networks:
 
   - vid: 19
     role: mesh
-    name: mesh_nw_60ghz
+    name: mesh_nw_60ghz  # peers: sgfrd-core
     prefix: 10.230.2.26/32
     ipv6_subprefix: -10
     ptp: true
     mesh_metric: 1024
+
+  - vid: 20
+    role: mesh
+    name: mesh_11a_s5
+    prefix: 10.230.2.27/32
+    ipv6_subprefix: -11
+    mesh_metric: 1024
+    mesh_ap: philmel-s-nf-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 21
+    role: mesh
+    name: mesh_11a_e5
+    prefix: 10.230.2.20/32
+    ipv6_subprefix: -4
+    mesh_metric: 1024
+    mesh_ap: philmel-e-nf-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
 
   - vid: 42
     role: mgmt
@@ -162,12 +191,16 @@ networks:
       philmel-no-5ghz: 5
       philmel-nw-5ghz: 6
       philmel-ost-legacy: 7
-      philmel-vaterhaus: 8
+      philmel-e-nf-5ghz: 8
       philmel-sued-legacy: 9
       philmel-sued-5ghz: 10
       philmel-ak36: 12
-      philmel-west-legacy: 11
+      philmel-s-nf-5ghz: 13
       philmel-nw-60ghz: 14
+
+location__channel_assignments_11a_standard__to_merge:
+  philmel-nf-east-5ghz: 36-20
+  philmel-nf-s-5ghz: 44-20
 
 location__ssh_keys__to_merge:
   - comment: roedel
