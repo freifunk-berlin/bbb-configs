@@ -1,0 +1,139 @@
+---
+
+location: mlk-nk
+location_nice: Martin-Luther-Kirche Neukölln
+latitude: 52.484310005530894
+longitude: 13.43617358853226
+community: true
+
+hosts:
+
+  - hostname: mlk-nk-core
+    role: corerouter
+    model: "tplink_tl-wdr4900-v1"
+    wireless_profile: freifunk_default
+
+  - hostname: mlk-nk-nf-wbp2
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+  - hostname: mlk-nk-nf-wbp3
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+  - hostname: mlk-nk-rhnk
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+
+snmp_devices:
+
+  - hostname: mlk-nk-nno-5ghz
+    address: 10.31.69.4
+    snmp_profile: airos_8
+
+  - hostname: mlk-nk-so-5ghz
+    address: 10.31.69.5
+    snmp_profile: airos_6
+
+
+ipv6_prefix: '2001:bf7:820:2500::/56'
+# ipv4: 10.31.69.0/25
+# mgmt: 10.31.69.0/27
+# mesh: 10.31.69.32/27
+# dhcp: 10.31.69.64/26
+
+networks:
+
+  # Airos and similar - mesh links (VID 10-19)
+  # Powerbeam 5AC 400 - Orientation Zwingli/Sama
+  - vid: 11
+    role: mesh
+    name: mesh_nno_5
+    prefix: 10.31.69.33/32
+    ipv6_subprefix: -11
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.6']
+    ptp: true
+
+  # Nanostation M5 - Airos 6 - Orientation Sonnenallee
+  - vid: 12
+    role: mesh
+    name: mesh_so_5
+    prefix: 10.31.69.34/32
+    ipv6_subprefix: -12
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.7']
+    ptp: true
+
+  # 802.11s mesh links (VID 20-29)
+  # 802.11s mesh nf - SXTsq5ac - Orientation Rhnk
+  - vid: 20
+    role: mesh
+    name: mesh_rhnk
+    prefix: 10.31.69.35/32
+    ipv6_subprefix: -20
+    mesh_ap: mlk-nk-rhnk
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # 802.11s Mesh nf - Nano Station M2 - OpenWRT
+  - vid: 21
+    role: mesh
+    name: mesh_nf_wbp2
+    prefix: 10.31.69.36/32
+    ipv6_subprefix: -21
+    mesh_metric: 2048
+    mesh_ap: mlk-nk-nf-wbp2
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # 802.11s Mesh nf - Nano Station M2 - OpenWRT
+  - vid: 22
+    role: mesh
+    name: mesh_nf_wbp3
+    prefix: 10.31.69.37/32
+    ipv6_subprefix: -22
+    mesh_metric: 2048
+    mesh_ap: mlk-nk-nf-wbp3
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.69.64/26
+    ipv6_subprefix: 0
+    assignments:
+      mlk-nk-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.69.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      mlk-nk-core: 1
+      mlk-nk-switch: 2
+      mlk-nk-rhnk: 3
+      mlk-nk-nno-5ghz: 4
+      mlk-nk-so-5ghz: 5
+      mlk-nk-nf-wbp2: 7
+      mlk-nk-nf-wbp3: 8
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+
+location__ssh_keys__to_merge:
+  - comment: martin@koltonowski.de
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMTjQj0EmyW6KcG83TOyruZ89/BLL+OsjSBY3i5FUHwM martin@martin-ThinkPad-T15-Gen-1

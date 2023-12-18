@@ -14,7 +14,7 @@ Using bbb-configs is quite simple. The TL;DR version for anyone not wanting to r
     python3 -m venv venv
     source venv/bin/activate
     pip3 install -r requirements.txt
-    ./generate-images.sh    
+    ./generate-images.sh
 
 or
 
@@ -49,7 +49,7 @@ If you updated certain locations you can automaticly updating their wikiarticle 
     ansible-playbook play.yml --tags wiki
 This works by automaticly replacing semantic values in the coresponding article resulting in the placeholders throughout the article being replaced with the new values. For an example you can have a look at the [wikiarticle of Fesev](https://wiki.freifunk.net/Berlin:Standorte:Fesev).
 To add this option to your wikiarticle add a section called "Konfiguration" and replace all values that you want to automaticly change as you can see in the example-article. If you want to add a new location you can start with [this template](https://wiki.freifunk.net/Berlin:Standorte:Template).
-Please note that for the first time you have to copy the wikiupdateroutput from ./tmp/wikiupdater/ into your acrticle or set the coordinates manually.
+Please note that for the first time you have to copy the wikiupdateroutput from /tmp/wikiupdater/ into your acrticle or set the coordinates manually.
 
 ## Support Information
 
