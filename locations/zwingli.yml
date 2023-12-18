@@ -12,38 +12,47 @@ hosts:
     role: corerouter
     model: "linksys_e8450-ubi"
     wireless_profile: freifunk_default
+    wifi_roaming: true
 
   - hostname: zwingli-dome-1
     role: ap
-    model: ubnt_unifiac-lite
+    model: tplink_eap225-outdoor-v1
+    wifi_roaming: true
 
   - hostname: zwingli-dome-2
     role: ap
     model: ubnt_unifiac-lite
+    wifi_roaming: true
 
   - hostname: zwingli-nno-nf-5ghz
     role: ap
     model: ubnt_nanostation-m5_xm
+    wifi_roaming: true
 
   - hostname: zwingli-nord-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
+    wifi_roaming: true
 
   - hostname: zwingli-ost-nf-2ghz
     role: ap
     model: ubnt_nanostation-m2_xm
+    wifi_roaming: true
 
   - hostname: zwingli-ost-nf-5ghz
     role: ap
     model: ubnt_nanostation-m5_xm
+    wifi_roaming: true
 
   - hostname: zwingli-west-nf-2ghz
     role: ap
     model: ubnt_nanostation-m2_xm
+    wifi_roaming: true
 
   - hostname: zwingli-west-nf-5ghz
     role: ap
-    model: ubnt_nanostation-m5_xm
+    model: mikrotik_sxtsq-5-ac
+    wifi_roaming: true
 
 airos_dfs_reset:
   - name: "zwingli-nord-5ghz"
@@ -259,10 +268,10 @@ networks:
       zwingli-nord-nf-5ghz: 14
       zwingli-ost-nf-5ghz: 15
       zwingli-nno-nf-5ghz: 16
-      # zwingli-west-nf-5ghz: 17  # defect as of 12/2023
+      zwingli-west-nf-5ghz: 17
 
       # dome inside church
-      # zwingli-dome-1: 18  # defect as of 12/2023
+      # zwingli-dome-1: 18  # defect as of 01/24
       zwingli-dome-2: 19
 
       # 5ghz sectors
