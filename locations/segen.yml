@@ -1,4 +1,110 @@
 ---
+location: segen
+location_nice: Segenskirche
+latitude: 52.53604
+longitude: 13.41198
+contact_nickname: 'Perry'
+contacts:
+  - 'isprotejesvalkata [attt] gmail.com'
+
+hosts:
+
+  - hostname: segen-core
+    role: corerouter
+    model: "ubnt_edgerouter-x-sfp"
+    poe_on: [0, 1, 2, 3]
+
+  - hostname: segen-n-nf-2ghz
+    role: ap
+    model: ubnt_nanostation-m2_xm
+
+  - hostname: segen-o-nf-2ghz
+    role: ap
+    model: ubnt_nanostation-m2_xm
+
+  - hostname: segen-s-nf-2ghz
+    role: ap
+    model: ubnt_nanostation-m2_xm
+
+  - hostname: segen-w-nf-2ghz
+    role: ap
+    model: ubnt_nanostation-m2_xm
+
+snmp_devices:
+  # TODO: Create a Gigabeam LR SNMP profile and use it for segen-saarbr
+  # - hostname: segen-saarbr
+  #   address: 10.31.6.10
+  #   snmp_profile: airos_8
+
+  - hostname: segen-f2a
+    address: 10.31.6.11
+    snmp_profile: airos_8
+
+  - hostname: segen-mabb
+    address: 10.31.6.12
+    snmp_profile: airos_8
+
+  - hostname: segen-sw
+    address: 10.31.6.13
+    snmp_profile: airos_6
+
+  - hostname: segen-bht
+    address: 10.31.6.14
+    snmp_profile: airos_8
+
+  - hostname: segen-k12
+    address: 10.31.6.15
+    snmp_profile: airos_8
+
+  - hostname: segen-no
+    address: 10.31.6.16
+    snmp_profile: airos_6
+
+  - hostname: segen-wsee
+    address: 10.31.6.17
+    snmp_profile: airos_6
+
+  - hostname: segen-n-5ghz
+    address: 10.31.6.20
+    snmp_profile: airos_6
+
+  - hostname: segen-o-5ghz
+    address: 10.31.6.21
+    snmp_profile: airos_6
+
+  - hostname: segen-s-5ghz
+    address: 10.31.6.22
+    snmp_profile: airos_6
+
+  - hostname: segen-w-5ghz
+    address: 10.31.6.23
+    snmp_profile: airos_6
+
+airos_dfs_reset:
+  - name: "segen-f2a"
+    target: "10.31.6.11"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "segen-mabb"
+    target: "10.31.6.12"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "segen-bht"
+    target: "10.31.6.14"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "segen-k12"
+    target: "10.31.6.15"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
 # IPv4 10.31.6.0/24
 # IPv4 10.31.66.0/24
 # IPv6 2001:bf7:760:1000::/56

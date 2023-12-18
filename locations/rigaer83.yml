@@ -1,4 +1,35 @@
 ---
+
+location: rigaer83
+location_nice: Rigaerstraße 83
+latitude: 52.517060
+longitude: 13.461940
+community: true
+
+hosts:
+
+  - hostname: rigaer83-core
+    role: corerouter
+    model: "bananapi_bpi-r64"
+
+  - hostname: rigaer83-back-nf-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2c:c8:1b:8d:7a:d8
+
+  - hostname: rigaer83-middle-nf-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2c:c8:1b:af:2d:d8
+
+snmp_devices:
+  - hostname: rigaer83-sama
+    address: 10.31.81.83
+    snmp_profile: airos_8
+
+
 ipv6_prefix: "2001:bf7:830:8e00::/56"
 
 networks:

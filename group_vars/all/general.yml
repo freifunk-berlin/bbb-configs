@@ -10,7 +10,7 @@ dns_servers:
   - 2001:910:800::40
   - 80.67.169.40
   # dns.as250.net anycast (l105 broken)
-  #- 194.150.168.168
+  # - 194.150.168.168
 
 ntp_servers:
   - 0.openwrt.pool.ntp.org

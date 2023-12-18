@@ -54,7 +54,7 @@ networks:
     assignments:
       ska95-core: 1
 
-  - vid: 41 # Private LAN where private Internet is connected
+  - vid: 41  # Private LAN where private Internet is connected
     role: ext
     name: private
     untagged: true

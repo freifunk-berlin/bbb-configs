@@ -1,7 +1,0 @@
----
-
-location: segen
-role: corerouter
-model: "ubnt_edgerouter-x-sfp"
-
-poe_on: [0, 1, 2, 3]
