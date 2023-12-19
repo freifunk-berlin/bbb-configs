@@ -39,21 +39,12 @@ hosts:
 
 ipv6_prefix: "2001:bf7:840:900::/56"
 
-# Wuhli got following prefixes:
 # Router: 10.31.112.0/27
 # --MGMT: 10.31.112.0/28
 # --MESH: 10.31.112.16/28
 # --DHCP: 10.31.162.128/25
 
 networks:
-  - vid: 40
-    role: dhcp
-    inbound_filtering: true
-    enforce_client_isolation: true
-    prefix: 10.31.162.128/25
-    ipv6_subprefix: 0
-    assignments:
-      wuhli-core: 1
 
   - vid: 20
     role: mesh
@@ -91,15 +82,14 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  - vid: 50
-    untagged: true
-    role: uplink
-
-  - role: tunnel
-    ifname: ts_wg0
-    mtu: 1280
-    prefix: 10.31.112.16/32
-    wireguard_port: 51820
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.162.128/25
+    ipv6_subprefix: 0
+    assignments:
+      wuhli-core: 1
 
   - vid: 42
     role: mgmt
@@ -110,11 +100,20 @@ networks:
     assignments:
       wuhli-core: 1
       wuhli-poe: 2
-      # we need to stay below 15 chars
       wuhli-n-nf-5ghz: 14
       wuhli-o-nf-5ghz: 13
       wuhli-s-nf-5ghz: 12
       wuhli-w-nf-5ghz: 11
+
+  - vid: 50
+    untagged: true
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.112.16/32
+    wireguard_port: 51820
 
 location__channel_assignments_11a_standard__to_merge:
   wuhli-n-nf-5ghz: 48-20
