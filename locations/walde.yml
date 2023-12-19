@@ -1,4 +1,24 @@
 ---
+
+location: walde
+location_nice: Waldemarstrasse 103
+latitude: 52.501329204
+longitude: 13.427798152
+community: true
+
+hosts:
+
+  - hostname: walde-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: walde-emma
+    address: 10.31.92.1
+    snmp_profile: airos_8
+
+
 ipv6_prefix: "2001:bf7:830:b00::/56"
 
 # 10.31.92.0/26 2001:bf7:830:b00::/56
