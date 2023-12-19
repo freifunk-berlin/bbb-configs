@@ -1,4 +1,23 @@
 ---
+
+location: wuhlipunks
+location_nice: Wuhlheide
+latitude: 52.466118
+longitude: 13.537581
+community: true
+
+hosts:
+
+  - hostname: wuhlipunks-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
+  - hostname: wuhlipunks-mesh
+    role: ap
+    model: "ubnt_powerbeam-m5-xw"
+    wireless_profile: mesh_only
+
 ipv6_prefix: "2001:bf7:840:b00::/56"
 
 # Wuhlipunks got following prefixes:
