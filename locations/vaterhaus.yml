@@ -17,7 +17,7 @@ hosts:
   - hostname: vaterhaus-n-nf-2ghz
     role: ap
     model: "ubnt_nanostation-m2_xm"
-    poe_on: []
+    poe_on: [0]
 
 snmp_devices:
   - hostname: vaterhaus-zwingli
