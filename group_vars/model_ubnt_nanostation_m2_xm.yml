@@ -14,3 +14,8 @@ wireless_devices:
     path: pci0000:00/0000:00:00.0
     ifname_hint: wlan2
     antenna_gain: 8
+
+poe_ports:
+  - name: PoE Passthrough
+    gpio_pin: 8
+    value: 0
