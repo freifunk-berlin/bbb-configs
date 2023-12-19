@@ -20,21 +20,12 @@ hosts:
 
 ipv6_prefix: "2001:bf7:840:b00::/56"
 
-# Wuhlipunks got following prefixes:
 # Router: 10.31.173.128/26
 # --MGMT: 10.31.173.128/28
 # --MESH: 10.31.173.144/28
 # --DHCP: 10.31.173.160/27
 
 networks:
-  - vid: 40
-    role: dhcp
-    inbound_filtering: true
-    enforce_client_isolation: true
-    prefix: 10.31.173.160/27
-    ipv6_subprefix: 0
-    assignments:
-      wuhlipunks-core: 1
 
   - vid: 20
     role: mesh
@@ -44,6 +35,15 @@ networks:
     mesh_ap: wuhlipunks-mesh
     mesh_radio: 11a_standard
     mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.173.160/27
+    ipv6_subprefix: 0
+    assignments:
+      wuhlipunks-core: 1
 
   - vid: 42
     role: mgmt
