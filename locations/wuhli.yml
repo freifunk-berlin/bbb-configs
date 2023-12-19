@@ -1,4 +1,42 @@
 ---
+
+location: wuhli
+location_nice: Wuhlheide
+latitude: 52.4644935
+longitude: 13.5360756
+community: true
+
+hosts:
+
+  - hostname: wuhli-core
+    role: corerouter
+    model: "tplink_tl-wdr4900-v1"
+    wireless_profile: freifunk_default
+
+  - hostname: wuhli-n-nf-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2c:c8:1b:8a:95:72
+
+  - hostname: wuhli-o-nf-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2c:c8:1b:8a:96:9c
+
+  - hostname: wuhli-s-nf-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2c:c8:1b:8a:95:a6
+
+  - hostname: wuhli-w-nf-5ghz
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 2c:c8:1b:8a:95:b4
+
 ipv6_prefix: "2001:bf7:840:900::/56"
 
 # Wuhli got following prefixes:
