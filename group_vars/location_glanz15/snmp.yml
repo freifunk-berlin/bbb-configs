@@ -1,7 +1,0 @@
----
-
-
-snmp_devices:
-  - hostname: glanz15-vaterhaus
-    address: 10.31.191.170
-    snmp_profile: airos_8
