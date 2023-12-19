@@ -24,7 +24,7 @@ hosts:
   - hostname: noki-core
     role: corerouter
     model: "dlink_dap-x1860-a1"
-    wireless_profile: freifunk_default
+    wireless_profile: noki
 
 ipv6_prefix: '2001:bf7:830:1000::/56'
 
@@ -34,31 +34,13 @@ ipv6_prefix: '2001:bf7:830:1000::/56'
 # --MESH: 10.31.215.32/27
 # --UPLK: 10.31.215.64/27
 # --DHCP: 10.31.215.96/27 (HOST)
-# --DHCP: 10.31.215.128/25
+# --DHCP: 10.31.215.128/26
+# --DHCP: 10.31.215.192/26 (PRIVATE)
 
 # Disable noping
 dhcp_no_ping: false
 
 networks:
-  # DHCP with filtering and isolation
-  - vid: 40
-    role: dhcp
-    inbound_filtering: true
-    enforce_client_isolation: true
-    prefix: 10.31.215.128/25
-    ipv6_subprefix: 0
-    assignments:
-      noki-core: 1
-
-  # DHCP (HOST) without filtering and isolation
-  - vid: 41
-    role: dhcp
-    name: noki_host
-    prefix: 10.31.215.96/27
-    ipv6_subprefix: 41
-    assignments:
-      noki-core: 1
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
@@ -82,6 +64,32 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
+  # MESH - LAN
+  - vid: 30
+    role: mesh
+    name: mesh_lan
+    prefix: 10.31.215.35/32
+    ipv6_subprefix: -30
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.215.128/26
+    ipv6_subprefix: 0
+    assignments:
+      noki-core: 1
+
+  # DHCP (HOST) without filtering and isolation
+  - vid: 41
+    name: host
+    role: dhcp
+    prefix: 10.31.215.96/27
+    ipv6_subprefix: 41
+    assignments:
+      noki-core: 1
+
   # MGMT
   - vid: 42
     role: mgmt
@@ -91,6 +99,16 @@ networks:
     ipv6_subprefix: 1
     assignments:
       # 10.31.215.1/32
+      noki-core: 1
+
+  # DHCP (PRIVATE)
+  - vid: 43
+    name: private
+    role: dhcp
+    prefix: 10.31.215.192/26
+    ipv6_subprefix: -43
+    inbound_filtering: true
+    assignments:
       noki-core: 1
 
   # UPLK
@@ -112,11 +130,67 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  noki-core: 36-40
+  noki-core: 36-80
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
   noki-core: 13-20
+
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: noki
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11a_mesh
+        legacy_rates: false
+        country: DE
+
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 1
+
+      - mode: ap
+        ssid: noki
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass'
+        network: private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+
+      - mode: ap
+        ssid: noki-host
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass'
+        network: host
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ho
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
 
 # SSH Keys
 ssh_keys:
