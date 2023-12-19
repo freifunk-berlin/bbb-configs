@@ -1,4 +1,33 @@
 ---
+
+location: xdorf
+location_nice: xdorf
+latitude: 52.504855
+longitude: 13.424628
+community: true
+
+hosts:
+
+  - hostname: xdorf-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+
+  - hostname: xdorf-rauchhaus
+    address: 10.31.54.162
+    snmp_profile: airos_6
+
+  - hostname: xdorf-ap1
+    address: 10.31.54.163
+    snmp_profile: airos_6
+
+  - hostname: xdorf-ap2
+    address: 10.31.54.164
+    snmp_profile: airos_6
+
+
 ipv6_prefix: "2001:bf7:830:9000::/56"
 
 networks:
