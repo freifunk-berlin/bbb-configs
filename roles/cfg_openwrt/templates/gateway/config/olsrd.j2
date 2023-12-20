@@ -1,5 +1,4 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
-{% if mesh_links is defined and mesh_links|length>0 %}
 config LoadPlugin
 	option library 'olsrd_arprefresh'
 
@@ -9,6 +8,11 @@ config LoadPlugin
 	option hosts_file '/tmp/hosts/olsr'
 	option latlon_file '/var/run/latlon.js'
 	option services_file '/var/etc/services.olsr'
+{% if  mgmt['assignments'] is defined and mgmt['assignments']|length>0 %}
+  {% for host, ip_num in mgmt['assignments'].items() if host != inventory_hostname %}
+        list hosts '{{ mgmt['ipv4'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }} {{ host }}'
+  {% endfor %}
+{% endif %}
 
 config LoadPlugin
 	option accept '0.0.0.0'
@@ -59,6 +63,7 @@ config InterfaceDefaults
 	option HnaInterval '10.0'
 	option LinkQualityMult 'default 0.2'
 
+{% if mesh_links is defined and mesh_links|length>0 %}
   {% for interface in mesh_links %}
 config Interface
 	option ignore '0'
