@@ -51,6 +51,8 @@ This works by automaticly replacing semantic values in the coresponding article 
 To add this option to your wikiarticle add a section called "Konfiguration" and replace all values that you want to automaticly change as you can see in the example-article. If you want to add a new location you can start with [this template](https://wiki.freifunk.net/Berlin:Standorte:Template).
 Please note that for the first time you have to copy the wikiupdateroutput from /tmp/wikiupdater/ into your acrticle or set the coordinates manually.
 
+Wikiupdater expects an article or a redirect to the article at `wiki.freifunk.net/Berlin:Standorte:$LOCATION` where `$LOCATION` is the name definied in your location file at `locations/$LOCATION.yml`.
+
 ## Support Information
 
 * [Support Chat](https://matrix.to/#/#berlin.freifunk.net:matrix.org): Channel `#berlin.freifunk.net` on **matrix.org**.
