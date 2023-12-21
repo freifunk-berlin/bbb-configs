@@ -43,20 +43,27 @@ s = requests.Session()
 ################
 
 
-def find_wiki_page(node: str):
-    query = (
-        f"{API_URL}?action=ask&query=[[Hat_Knoten%3A%3A{node}]]"
-        "|%3FModification date|sort%3DModification date|order%3Ddesc&format=json"
-    )
-    response = s.get(url=query).json()
-    print(response)
-    results = response.get("query").get("results")
+def find_wiki_page(location: str):
+    try:
+        params = {
+            "action": "parse",
+            "page": f"Berlin:Standorte:{location}",
+            "format": "json",
+        }
+        response = requests.get(url=API_URL, params=params)
+        response.raise_for_status()  # Raise an exception if the request failed
+    except requests.RequestException:
+        raise ValueError(
+            f"An error occurred while searching for the wikipage of {location}."
+        )
 
-    if len(results) == 0:
-        raise ValueError(f"No Wiki article found for the given node name: {node}")
-        exit(1)
+    data = response.json()
 
-    return list(results.values())[0].get("fulltext")
+    if "Weiterleitung nach:" in data["parse"]["text"]["*"]:
+        redirect_target = data["parse"]["links"][0]["*"]
+        return redirect_target
+    else:
+        return location
 
 
 # queries the article and looks for the number of the section
@@ -168,7 +175,10 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-n", "--node", help="node whose wiki article should be edited.", required=True
+        "-l",
+        "--location",
+        help="location whose wiki article should be edited.",
+        required=True,
     )
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--text", help="String which should be posted into section.")
@@ -179,10 +189,10 @@ if __name__ == "__main__":
     #  Paste text to Wiki  #
     ########################
 
-    pagetitle = find_wiki_page(args.node)
+    pagetitle = find_wiki_page(args.location)
     section = find_bbbconfigs_section(pagetitle)
 
-    pagetxt = f"== {section['title']} ==\n\n"  # Text that gets posted into the specific article section
+    pagetxt = f"= {section['title']} =\n\n"  # Text that gets posted into the specific article section
     pagetxt += f"{INTRO}\n\n"
 
     if args.text:

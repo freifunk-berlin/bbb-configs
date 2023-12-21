@@ -12,7 +12,7 @@
     mode: "644"
 
 - name: wikiupdater | Update article
-  script: ../files/wiki/update.py -n "{{ inventory_hostname }}"  --file "{{ wikiupdater_dir }}/{{ group_names[0] | split('_') | last }}.txt"
+  script: ../files/wiki/update.py -l "{{ location }}"  --file "{{ wikiupdater_dir }}/{{ group_names[0] | split('_') | last }}.txt"
   register: wiki_res
   changed_when: '"UPDATED" in wiki_res.stdout'
   args:
