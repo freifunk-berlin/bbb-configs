@@ -105,17 +105,7 @@
     file: wikiupdater.yml
     apply:
       tags: wiki
+  when: inventory_hostname == groups[group_names[0]][0]
   tags:
     - never
     - wiki
-  when: role == "corerouter"
-
-- name: Wikiupdaterinfo
-  ansible.builtin.debug:
-    msg:
-      - Role from your current device is {{ role }}. Wikiupdater needs to be run with the Corerouter.
-      - You might need to change your limit to include the core-router if you dont get the desired output.
-  tags:
-    - never
-    - wiki
-  when: role != "corerouter"
