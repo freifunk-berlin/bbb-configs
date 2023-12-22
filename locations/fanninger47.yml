@@ -54,7 +54,7 @@ networks:
     name: mesh_ik
     prefix: 10.31.233.17/32
     ipv6_subprefix: -11
-    mesh_metric_lqm: ['default 0.8'] # prefer mesh into the bbb via liese
+    mesh_metric_lqm: ['default 0.8']  # prefer mesh into the bbb via liese
 
 
   - vid: 20
@@ -65,7 +65,7 @@ networks:
     mesh_ap: fanninger47-nf-n
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.8'] # prefer mesh into the bbb via liese
+    mesh_metric_lqm: ['default 0.8']  # prefer mesh into the bbb via liese
 
   - vid: 21
     role: mesh
@@ -75,7 +75,7 @@ networks:
     mesh_ap: fanninger47-nf-o
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.8'] # prefer mesh into the bbb via liese
+    mesh_metric_lqm: ['default 0.8']  # prefer mesh into the bbb via liese
 
 
   - vid: 22
@@ -86,7 +86,7 @@ networks:
     mesh_ap: fanninger47-nf-w
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.8'] # prefer mesh into the bbb via liese
+    mesh_metric_lqm: ['default 0.8']  # prefer mesh into the bbb via liese
 
 
   - vid: 40
@@ -109,7 +109,7 @@ networks:
       fanninger47-core: 1
       fanninger47-switch: 2
       fanninger47-switch-ik: 3
-      fanninger47-spitta: 4
+      fanninger47-liese: 4
       fanninger47-nf-n: 5
       fanninger47-nf-o: 6
       fanninger47-nf-w: 7
