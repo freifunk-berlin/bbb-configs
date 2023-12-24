@@ -17,13 +17,13 @@ mgmt:
   ifname: eth0.42
   ipv4: 10.31.130.65/27
   ipv6: 2001:bf7:750:2a00::/64
-
-# .65 gw
-# .66 poe
-# .67 strom-perleberger
-# .68 strom-tub
-# .69 strom-no-5ghz
-# .70 strom-so-5ghz
+  assignments:
+    strom-gw: 1           # .65
+    strom-poe: 2          # .66
+    strom-perleberger: 3  # .67
+    strom-tub: 4          # .68
+    strom-no-5ghz: 5      # .69 
+    strom-so-5ghz: 6      # .70
 
 # Mesh Network: 10.31.130.96/27
 mesh_links:
