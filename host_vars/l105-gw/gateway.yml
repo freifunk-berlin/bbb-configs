@@ -20,11 +20,11 @@ mgmt:
   ifname: eth1.42
   ipv4: 10.31.127.129/29
   ipv6: 2001:bf7:750:3f00::/64
-
-# .129 gw
-# .130 poe
-# .131 mesh_rhxb
-# .132 mesh_tu
+  assignments:
+    l105-gw: 1    # .129
+    l105-poe: 2   # .130 poe
+    l105-rhxb: 3  # .131 mesh_rhxb
+    l105-tu: 4    # .132 mesh_tu
 
 # Mesh Network: 10.31.127.160/27
 mesh_links:

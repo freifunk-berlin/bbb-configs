@@ -13,10 +13,10 @@ mgmt:
   ifname: lan3.42
   ipv4: 10.31.166.249/29
   ipv6: 2001:bf7:830:8300::/64
-
-# .249 gw
-# .250 switch
-# .251 ohlauer-emma
+  assignments:
+    ohlauer-gw: 1      # .249
+    ohlauer-switch: 2  # .250
+    ohlauer-emma: 3    # .251
 
 mesh_links:
   - name: mesh_emma
