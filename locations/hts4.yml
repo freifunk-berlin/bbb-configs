@@ -1,6 +1,6 @@
 ---
 location: hts4
-# This is a router outside of the berlin area, therefore it has no location
+# This location is outside of the berlin area, therefore it has no location
 location_nice:
 latitude:
 longitude:
@@ -23,6 +23,10 @@ dns_servers:
 hosts:
   - hostname: hts4-core
     role: corerouter
+    model: "dlink_dap-x1860-a1"
+    wireless_profile: hts4
+  - hostname: hts4-ap
+    role: ap
     model: "dlink_dap-x1860-a1"
     wireless_profile: hts4
 
@@ -55,6 +59,13 @@ networks:
     assignments:
       hts4-core: 1
 
+  # DHCP with filtering and isolation
+  - vid: 41
+    role: ext
+    name: private
+    no_corerouter_dns_record: true
+    enforce_client_isolation: false
+
   # MGMT
   - vid: 42
     role: mgmt
@@ -65,11 +76,11 @@ networks:
     assignments:
       # 10.31.235.193/32
       hts4-core: 1
+      hts4-ap: 2
 
   # UPLK
   - vid: 50
     role: uplink
-    untagged: true
 
   - role: tunnel
     ifname: ts_wg0
@@ -86,10 +97,12 @@ networks:
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
   hts4-core: 36-80
+  hts4-ap: 52-80
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
   hts4-core: 13-20
+  hts4-ap: 1-20
 
 # Wireless profile
 location__wireless_profiles__to_merge:
@@ -120,6 +133,14 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
         ieee80211w: 1
+
+      - mode: ap
+        ssid: hts4
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass'
+        network: private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
 
 # SSH Keys
 ssh_keys:
