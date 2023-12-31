@@ -1,0 +1,197 @@
+---
+location: gltravel
+# This is a test and mobile travel router based on glinet mt1300
+# it is derrived from the noki config, therefore it has no location
+location_nice:
+latitude:
+longitude:
+contact_nickname: 'Roedel'
+contacts:
+  - '@roedel:matrix.org'
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+
+hosts:
+  - hostname: gltravel-core
+    role: corerouter
+    model: "glinet_gl-mt1300"
+    wireless_profile: gltravel
+
+ipv6_prefix: '2001:bf7:840:1600::/56'
+# got following prefixes:
+# Router: 10.31.176.0/24
+# --MGMT: 10.31.176.0/27
+# --MESH: 10.31.176.32/27
+# --UPLK: 10.31.176.64/27
+# --DHCP: 10.31.176.96/27 (HOST)
+# --DHCP: 10.31.176.128/26
+# --DHCP: 10.31.176.192/26 (PRIVATE)
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.176.33/32
+    ipv6_subprefix: -20
+    mesh_ap: gltravel-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.176.34/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: gltravel-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - LAN
+  - vid: 30
+    role: mesh
+    name: mesh_lan
+    prefix: 10.31.176.35/32
+    ipv6_subprefix: -30
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.176.128/26
+    ipv6_subprefix: 0
+    assignments:
+      gltravel-core: 1
+
+  # DHCP (HOST) without filtering and isolation
+  - vid: 41
+    name: host
+    role: dhcp
+    prefix: 10.31.176.96/27
+    ipv6_subprefix: 41
+    assignments:
+      gltravel-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.176.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      # 10.31.176.1/32
+      gltravel-core: 1
+
+  # DHCP (PRIVATE)
+  - vid: 43
+    name: private
+    role: dhcp
+    prefix: 10.31.176.192/26
+    ipv6_subprefix: -43
+    inbound_filtering: true
+    assignments:
+      gltravel-core: 1
+
+  # UPLK
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.176.35/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.176.36/32
+    wireguard_port: 51821
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  gltravel-core: 36-80
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  gltravel-core: 13-20
+
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: gltravel
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11a_mesh
+        legacy_rates: false
+        country: DE
+
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 1
+
+      - mode: ap
+        ssid: gltravel
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass'
+        network: private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+
+      - mode: ap
+        ssid: gltravel-host
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass'
+        network: host
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ho
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
+
+ssh_keys:
+  - comment: Roedel
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1qxYwiFkvRRx3rrQ4ESjdWzp3EnBKI0doMc/vT5U0H roedel@freifunk
