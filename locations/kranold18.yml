@@ -1,0 +1,122 @@
+---
+location: kranold18
+location_nice: Kranoldstr. 18
+latitude: 52.46577
+longitude: 13.43459
+community: true
+contact_nickname: 'kranold18'
+contacts:
+  - '@roedel:matrix.org'
+
+hosts:
+
+  - hostname: kranold18-core
+    role: corerouter
+    model: 'avm_fritzbox-4040'
+    wireless_profile: kranold18
+
+ipv6_prefix: "2001:bf7:820:2800::/56"
+
+# ALL:  10.31.235.128/27
+# DHCP: 10.31.235.144/28
+# DHCP-1: 10.31.235.144/29
+# DHCP-2: 10.31.235.152/29
+# MGMT: 10.31.235.136/29
+# MESH: 10.31.235.128/28
+networks:
+  - vid: 20
+    role: mesh
+    name: mesh_philmel
+    mesh_ap: kranold18-ap1
+    mesh_radio: 11a_standard
+    prefix: 10.31.235.128/29
+    ipv6_subprefix: -3
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.235.144/29
+    ipv6_subprefix: 0
+    assignments:
+      kranold18-core: 1
+
+  - vid: 41
+    role: dhcp
+    name: home
+    no_corerouter_dns_record: true
+    inbound_filtering: true
+    enforce_client_isolation: false
+    untagged: true
+    prefix: 10.31.235.152/29
+    ipv6_subprefix: 2
+    assignments:
+      kranold18-core: 1
+
+  # ap1 is an nanostation 5 m xm
+  # with original ubi firmware
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.235.136/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      kranold18-core: 1
+      kranold18-ap1: 2
+
+location__wireless_profiles__to_merge:
+  - name: kranold18
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11a_mesh]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 1
+
+      - mode: ap
+        ssid: kranold18-home
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass'
+        network: home
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: home
+
+  - name: kranold18-mesh
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+
+    ifaces:
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: 11a_standard
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
+
+location__channel_assignments_11a_standard__to_merge:
+  kranold18-core: 36-64
+
+location__channel_assignments_11b_standard__to_merge:
+  kranold18-core: 9-20
