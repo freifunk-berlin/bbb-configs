@@ -125,12 +125,12 @@ mesh_links:
     metric: 256
     ptp: true
 
-  # - name: mesh_teufel
-  #   ifname: eth8
-  #   ipv4: 10.31.130.166/32
-  #   ipv6: 2001:bf7:750:4001::7/128
-  #   metric: 1024
-  #   ptp: true
+  - name: mesh_teufel
+    ifname: eth8
+    ipv4: 10.31.130.166/32
+    ipv6: 2001:bf7:750:4001::7/128
+    metric: 1024
+    ptp: true
 
   # - name: mesh_phil60
   #   ifname: eth9
