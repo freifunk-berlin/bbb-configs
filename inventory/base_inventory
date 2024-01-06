@@ -1,134 +1,39 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2086
-# shellcheck disable=SC2002
-#
-# SC2086: Double quote to prevent globbing and word splitting.
-# - This one complained about an instance where double-quotes would lead to
-#   incorrect behaviour (`for i in $(seq ...)`). We do want the word splitting.
-# SC2002 (style): Useless cat. Consider 'cmd < file | ..' or 'cmd file | ..' instead.
-# - Purely a question of aesthetic preference, I couldn't care less.
-
 set -e
 # set -x
 
-# Ansible inventory script for bbb-configs location files
-#
-# By default, Ansible isn't well suited for how we organize hosts and locations.
-# We want one complete file for every location, which consists of one or more
-# hosts with various roles as well as shared and individual config data.
-# Ansible on the other hand starts at the "host vars" and then
-# uses the "keyed groups" plugin to merge multiple stages of "group vars".
-# For our case, this results in an amount of files that can feel overwhelming.
-#
-# This inventory script allows for complete single location files while
-# at the same time being compatible with Ansible's host vars and group vars.
-# Note that certain shared and common config data is still loaded using
-# keyed groups and group vars where it makes sense (e.g. role and model).
-#
-# Ansible expects this script to respond to `--host <hostname>` and `--list`.
-# For more information on inventory scripts, see:
-# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/script_inventory.html
-#
-# With `--host <hostname>``, if no matching host is found in locations/*.yml,
-# we then look in Ansible's default host_vars/ directory.
-#
-# With `--list`, we scan both locations/ and host_vars/.
-#
-# Data for hosts in host_vars/ is constructed by Ansible:
-# 1. Combine the data from all files in host_vars/<hostname>/
-# 2. Add keyed_groups as specified in inventory/
-# 3. Merge the data from all related groups in group_vars/<hostname>/
-#
-# Data for a specific host in locations/ is constructed as follows:
-# 1. Copy the location data into a new object, ignore the `.hosts` array
-# 2. Merge the array entry from `.hosts` with a matching `.hostname` value,
-#    with shallow merge only at the moment
-# 3. Add keyed_groups as specified in inventory/
-# 4. Merge the data from all related groups in group_vars/<hostname>/
-#
-# For example:
-#
-# location: pktpls
-# hosts:
-#   - hostname: pktpls-core
-#     role: corerouter
-#     string: host-var-has-precedence
-#     object: { two: 456 }
-#     array: [ bar ]
-# string: will-be-overridden
-# object: { one: 123 }
-# array: [ foo ]
-#
-# results in:
-#
-# {
-#   "location": "pktpls",
-#   "hostname": "pktpls-core",
-#   "role": "corerouter",
-#   "string": "host-var-has-precedence",
-#   "object": {
-#     "two": 456
-#   },
-#   "array": [
-#     "bar"
-#   ]
-# }
-#
-
-mkdir -p tmp/
-[ -f tmp/yj ] || wget -O tmp/yj -nv https://github.com/sclevine/yj/releases/download/v5.1.0/yj-linux-amd64
-chmod +x tmp/yj
-
 case "$1" in
 --host)
-    query="$2"
-    # Location names may contain `-`, so we try all alternatives, starting at the longest
-    parts="$(echo "$query" | grep -o '-' | wc -l)"
-    for i in $(seq 1 $parts | sort -r) ; do
-        tryloc="$(echo "$query" | cut -d'-' -f"-$i")"
-        locyml="locations/$tryloc.yml"
-        if [ -f "$locyml" ] ; then
-            # Location vars is location.yml without the hosts array.
-            locvars="$(cat "$locyml" | tmp/yj | jq -r 'del(.hosts)')"
-            # Host vars is the matching object from the hosts array.
-            # TODO: check that .location value matches filename
-            hostvars="$(cat "$locyml" | tmp/yj | jq -r '.hosts[] | select(.hostname == "'"$query"'")')"
-            if [ -z "$hostvars" ] ; then
-                echo "error: host $query not found in $locyml" >&2
-                exit 1
-            else
-                # Host vars override location vars, and host vars are first in output.
-                # TODO: do merging? for now we use ansible's merge_vars plugin
-                echo "$hostvars $locvars $hostvars" | jq -M -s add
-                exit 0
-            fi
-        fi
-    done
-    # Also look in Ansible's default location
-    if [ -d "host_vars/$query" ] ; then
-        echo "{}"
-        exit 0
-    fi
-    echo "error: host $query not found" >&2
-    exit 1
+    # No op - won't be called by Ansible anymore because --list contains all data.
+    # See https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#tuning-the-external-inventory-script
+    echo "{}"
+    exit 0
     ;;
 --list)
-    HOSTS=$(
-        # TODO: check that .location value matches filename
-        # TODO: check that hostname matches location name
-        for f in locations/*.yml ; do
-            for h in $(cat "$f" | tmp/yj | jq -r '.hosts[].hostname'); do
-                echo -n '"'"$h"'", '
-            done
-        done
-        # Also look in Ansible's default location
-        for h in host_vars/* ; do
-            echo -ne "$h\c" | awk -F'/' '{printf "\""$2"\", "}'
-        done)
-    HOSTS="${HOSTS::-2}"
+    # Print all location files as consecutive JSON objects.
+    # Later jq -s/--slurp will read these as one top-level array of objects.
+    locjson="$(yq '.' locations/*.yml)"
     cat <<EOF
-{ "all": { "hosts": [ $HOSTS ] } }
+{
+    "all": {
+        "hosts": $(
+            # Print all hostnames from locations/ and host_vars/ directories.
+            ( echo "$locjson" | jq -s -r '.[].hosts[].hostname' \
+              ; find host_vars/* -type d -print0 | xargs -0 -n1 basename ) \
+            | jq -s -R 'split("\n") | map(select(length > 0))'
+        )
+    },
+    "_meta": {
+        "hostvars": $(
+            # Assemble hostvars for all hostnames from locations/ directory.
+            # For hosts defined in host_vars/ they're loaded by Ansible later.
+            echo "$locjson" \
+            | jq -s -c '.[] | . as $locvars | .hosts[] | {(.hostname): (. + ($locvars | del(.hosts)) + .)}' \
+            | jq -s add
+        )
+    }
+}
 EOF
     exit 0
     ;;
@@ -137,4 +42,3 @@ EOF
     exit 1
     ;;
 esac
-
