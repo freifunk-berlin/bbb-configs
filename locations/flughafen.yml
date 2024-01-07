@@ -35,7 +35,7 @@ snmp_devices:
     address: 10.31.131.140
     snmp_profile: airos_6
 
-  - hostname: flughafen-ak36-legacy
+  - hostname: flughafen-sued-5ghz
     address: 10.31.131.141
     snmp_profile: airos_6
 
@@ -102,13 +102,10 @@ networks:
 
   - vid: 15
     role: mesh
-    name: mesh_a36_legacy
+    name: mesh_sued
     prefix: 10.31.131.198/32
     ipv6_subprefix: -7
     ptp: true
-    mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.2']
-    # Ignore Uplink one Hop away / requires 0.2 LQM
 
   - vid: 30
     role: mgmt                   # workaround until we have real p2p role
@@ -149,4 +146,4 @@ networks:
       flughafen-zoll: 10
       flughafen-feld: 11
       flughafen-garten: 12
-      flughafen-ak36-legacy: 13
+      flughafen-sued-5ghz: 13
