@@ -20,12 +20,12 @@ hosts:
     wireless_profile: freifunk_fw
     mac_override:
       eth0: cc:2d:e0:9c:4d:58
-  - hostname: fffw-lebenshilfe-nw-ap-2ghz
-    role: ap
-    model: "mikrotik_sxtsq-2-lite"
-    wireless_profile: freifunk_fw
-    mac_override:
-      eth0: cc:2d:e0:9c:4d:e4
+  # - hostname: fffw-lebenshilfe-nw-ap-2ghz
+  #   role: ap
+  #   model: "mikrotik_sxtsq-2-lite"
+  #   wireless_profile: freifunk_fw
+  #   mac_override:
+  #    eth0: cc:2d:e0:9c:4d:e4
   - hostname: fffw-lebenshilfe-ono-ap-2ghz
     role: ap
     model: "mikrotik_sxtsq-2-lite"
@@ -116,7 +116,7 @@ networks:
     assignments:
       fffw-lebenshilfe-core: 1
       # fffw-lebenshilfe-switch: 2
-      fffw-lebenshilfe-nw-ap-2ghz: 3
+      # fffw-lebenshilfe-nw-ap-2ghz: 3
       fffw-lebenshilfe-nno-ap-2ghz: 4
       fffw-lebenshilfe-sso-ap-2ghz: 5
       fffw-lebenshilfe-ono-ap-2ghz: 6
@@ -131,7 +131,7 @@ networks:
 location__channel_assignments_11g_standard__to_merge:
   # ap-name: Channel  Bandwidth  tx-Power
   fffw-lebenshilfe-nno-ap-2ghz: 1-20
-  fffw-lebenshilfe-nw-ap-2ghz: 6-20
+  # fffw-lebenshilfe-nw-ap-2ghz: 6-20
   fffw-lebenshilfe-sso-ap-2ghz: 11-20
   fffw-lebenshilfe-ono-ap-2ghz: 6-20
 
