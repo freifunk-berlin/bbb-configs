@@ -1,8 +1,0 @@
----
-snmp_devices:
-  - hostname: jup-bht
-    address: 10.31.147.131
-    snmp_profile: airos_6
-  - hostname: jup-segen
-    address: 10.31.147.132
-    snmp_profile: airos_6
