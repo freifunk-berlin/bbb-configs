@@ -1,4 +1,44 @@
 ---
+location: jup
+location_nice: Jup e.V.
+latitude: 52.565840
+longitude: 13.400220
+contact_nickname: 'Jup'
+contacts:
+  - 'info@jup.berlin'
+
+hosts:
+  - hostname: jup-core
+    role: corerouter
+    model: "tplink_tl-wdr4900-v1"
+    wireless_profile: freifunk_default
+  - hostname: jup-m5-ap1
+    role: ap
+    model: "ubnt_nanostation-m5_xm"
+  - hostname: jup-m5-ap2
+    role: ap
+    model: "ubnt_nanostation-m5_xm"
+  - hostname: jup-m2-ap3
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+  - hostname: jup-bullet-ap4
+    role: ap
+    model: "ubnt_bullet-m-ar7241"
+  - hostname: jup-m5-ap5
+    role: ap
+    model: "ubnt_nanostation-m5_xm"
+  - hostname: jup-bar
+    role: ap
+    model: "avm_fritzbox-7530"
+
+snmp_devices:
+  - hostname: jup-bht
+    address: 10.31.147.131
+    snmp_profile: airos_6
+  - hostname: jup-segen
+    address: 10.31.147.132
+    snmp_profile: airos_6
+
 ipv6_prefix: "2001:bf7:760:2600::/56"
 
 # Jup got following prefixes:

@@ -1,7 +1,0 @@
----
-
-location: jup
-role: ap
-model: "ubnt_nanostation-m2_xm"
-
-poe_on: []
