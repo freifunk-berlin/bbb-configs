@@ -88,6 +88,10 @@ inbound_allow:
     dst: '2001:bf7:750:2e00::10/128'
     proto: tcp
     dst_port: 80
+  - name: 'w38b-core host network'
+    dst: 2001:bf7:830:bc02::/64
+  - name: 'noki-core host network'
+    dst: 2001:bf7:830:1029::/64
 #  - name: Rule Description (mandatory)
 #    dst: Destination IP (mandatory)
 #    src: Source IP
