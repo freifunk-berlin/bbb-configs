@@ -92,6 +92,8 @@ inbound_allow:
     dst: 2001:bf7:830:bc02::/64
   - name: 'noki-core host network'
     dst: 2001:bf7:830:1029::/64
+  - name: 'cryptpad.berlin noc@stadtfunk.net'
+    dst: 2001:bf7:750:5b00::/128
 #  - name: Rule Description (mandatory)
 #    dst: Destination IP (mandatory)
 #    src: Source IP
