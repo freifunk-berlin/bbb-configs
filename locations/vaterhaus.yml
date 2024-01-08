@@ -13,6 +13,9 @@ hosts:
   - hostname: vaterhaus-core
     role: corerouter
     model: "mikrotik_routerboard-750gr3"
+    # USBIP packages to manage Meshtastic node (HELTEC V1) connected via USB
+    host__packages__to_merge:
+      - "kmod-usb-ohci usbip-server usbip-client"
 
   - hostname: vaterhaus-n-nf-2ghz
     role: ap

@@ -18,6 +18,9 @@ hosts:
     role: corerouter
     model: linksys_e8450-ubi
     wireless_profile: freifunk_default
+    # USBIP packages to manage Meshtastic node (TLORA V1) connected via USB
+    host__packages__to_merge:
+      - "kmod-usb-ohci usbip-server usbip-client"
 
   - hostname: teufelsberg-ap1
     role: ap
