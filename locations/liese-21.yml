@@ -22,7 +22,8 @@ hosts:
   - hostname: liese-21-n-nf-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    # TODO: Add mac_override
+    mac_override:
+      eth0: dc:2c:6e:91:09:33
 
 snmp_devices:
   - hostname: liese-21-magda
