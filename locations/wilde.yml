@@ -30,15 +30,13 @@ hosts:
 
   - hostname: wilde-nf-n
     role: ap
-    model: "mikrotik_sxtsq-5-ac"
-    wireless_profile: freifunk_default
-    mac_override:
-      eth0: 2c:c8:1b:6b:e5:56
+    model: "tplink_eap225-outdoor-v1"
+    wireless_profile: ap_only
 
   - hostname: wilde-nf-s
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    wireless_profile: freifunk_default
+    wireless_profile: ap_only
     mac_override:
       eth0: 2c:c8:1b:6b:e5:cf
 
@@ -91,5 +89,5 @@ networks:
 location__channel_assignments_11a_standard__to_merge:
   # Channel - Bandwidth - TX Power
   wilde-core: 165-40
-  kiehlufer-nf-n: 36-20
-  kiehlufer-nf-s: 40-20
+  wilde-nf-n: 36-20
+  wilde-nf-s: 40-20
