@@ -59,11 +59,17 @@ def find_wiki_page(location: str):
 
     data = response.json()
 
-    if "Weiterleitung nach:" in data["parse"]["text"]["*"]:
-        redirect_target = data["parse"]["links"][0]["*"]
-        return redirect_target
-    else:
-        return location
+    if "parse" not in data:
+        raise KeyError(f"No Wikiarticle or redirect found. Raw json: {data}")
+
+    try:
+        if "Weiterleitung nach:" in data["parse"]["text"]["*"]:
+            redirect_target = data["parse"]["links"][0]["*"]
+            return redirect_target
+        else:
+            return location
+    except KeyError:
+        raise KeyError(f"No Wikiarticle or redirect found. Raw json: {data}")
 
 
 # queries the article and looks for the number of the section

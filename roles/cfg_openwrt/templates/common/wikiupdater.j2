@@ -7,7 +7,8 @@
 {% do wi.ki.update({
     'Mesh Adressen':[],
     'Mesh Liste':[],
-    'Mesh Anzahl':0
+    'Mesh Anzahl':0,
+    'Wireguard Tunnel':0
     })%}
 
 {# attributes is a list of vars that can be directly printed without any magic #}
@@ -57,9 +58,9 @@
         {% do wi.ki['Mesh Liste'].append(network['vid']~'('~network['name']~')')|default([])%}
         {% do wi.ki['Mesh Adressen'].append(network['prefix'])%}
         {% do wi.ki.update({'Mesh Anzahl': wi.ki['Mesh Anzahl'] + 1 }) %}
-    {% elif network['role'] == 'ext' %}
-        {% do wi.ki.update({'Wireguard Tunnel': network['tunnel_connections']})%}
-        {% do wi.ki['Mesh Adressen'].append(network['tunnel_mesh_prefix_ipv4'])%}
+    {% elif network['role'] == 'tunnel' %}
+        {% do wi.ki.update({'Wireguard Tunnel': wi.ki['Wireguard Tunnel'] + 1})%}
+        {% do wi.ki['Mesh Adressen'].append(network['prefix'])%}
         {# Currently, the only automated way I can say with some certainty that the site is connected to the BBB is with Wireguard #}
         {% do wi.ki.update({'BBB': true })%}
     {% elif network['role'] == 'mgmt'%}
