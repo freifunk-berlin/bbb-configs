@@ -1,4 +1,29 @@
 ---
+location: dragonkiez-rathausblock-miami
+location_nice: Dragonkiez Rathausblock Miami
+latitude: 52.495855798
+longitude: 13.387956619
+community: true
+
+hosts:
+  - hostname: dragonkiez-rathausblock-miami
+    role: corerouter
+    model: "ubnt_edgerouter-x-sfp"
+    poe_on: [0, 1, 2]
+  - hostname: dragonkiez-rathausblock-miami-ap1
+    role: ap
+    model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+  - hostname: dragonkiez-rathausblock-miami-ap2
+    role: ap
+    model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: dragonkiez-rathausblock-miami-rhxb
+    address: 10.31.30.34
+    snmp_profile: airos_8
+
 ipv6_prefix: "2001:bf7:830:b380::/58"
 
 # Dragonerareal 2001:bf7:830:b300::/56

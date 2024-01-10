@@ -1,7 +1,0 @@
----
-
-location: dragonkiez-rathausblock-miami
-role: ap
-model: "ubnt_unifiac-mesh"
-
-wireless_profile: freifunk_default
