@@ -1,6 +1,0 @@
----
-
-snmp_devices:
-  - hostname: dragonkiez-plangarage-rhxb
-    address: 10.31.92.98
-    snmp_profile: airos_6
