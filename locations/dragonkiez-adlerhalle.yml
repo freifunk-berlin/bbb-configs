@@ -1,4 +1,21 @@
 ---
+location: dragonkiez-adlerhalle
+location_nice: Dragonkiez Adlerhalle
+latitude: 52.495065429
+longitude: 13.387666941
+community: true
+
+hosts:
+  - hostname: dragonkiez-adlerhalle
+    role: corerouter
+    model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: dragonkiez-adlerhalle-rhxb
+    address: 10.31.34.46
+    snmp_profile: airos_8
+
 ipv6_prefix: "2001:bf7:830:b3c0::/58"
 
 # 10.31.177.160/27
