@@ -1,4 +1,24 @@
 ---
+location: dragonkiez-dorfplatz
+location_nice: Dragonkiezdorfplatz
+latitude: 52.495457349
+longitude: 13.386079073
+community: true
+
+hosts:
+  - hostname: dragonkiez-dorfplatz
+    role: corerouter
+    model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+  - hostname: dragonkiez-dorfplatz-ap1
+    role: ap
+    model: "siemens_ws-ap3610"
+
+snmp_devices:
+  - hostname: dragonkiez-dorfplatz-rhxb
+    address: 10.31.28.250
+    snmp_profile: airos_8
+
 ipv6_prefix: "2001:bf7:830:b340::/58"
 
 # 10.31.177.160/27
