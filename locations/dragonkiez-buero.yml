@@ -1,4 +1,21 @@
 ---
+location: dragonkiez-buero
+location_nice: Dragonkiezbuero
+latitude: 52.494722496
+longitude: 13.387774229
+community: true
+
+hosts:
+  - hostname: dragonkiez-buero
+    role: corerouter
+    model: "siemens_ws-ap3610"
+    wireless_profile: dragonkiez_buero
+
+snmp_devices:
+  - hostname: dragonkiez-buero-rhxb
+    address: 10.31.23.114
+    snmp_profile: airos_8
+
 ipv6_prefix: "2001:bf7:830:b300::/58"
 
 # 10.31.177.160/27

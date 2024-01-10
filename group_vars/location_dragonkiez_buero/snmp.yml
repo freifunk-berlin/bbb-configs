@@ -1,6 +1,0 @@
----
-
-snmp_devices:
-  - hostname: dragonkiez-buero-rhxb
-    address: 10.31.23.114
-    snmp_profile: airos_8
