@@ -1,6 +1,0 @@
----
-
-snmp_devices:
-  - hostname: dragonkiez-rathausblock-miami-rhxb
-    address: 10.31.30.34
-    snmp_profile: airos_8
