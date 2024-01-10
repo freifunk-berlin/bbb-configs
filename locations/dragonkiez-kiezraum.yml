@@ -1,4 +1,21 @@
 ---
+location: dragonkiez-kiezraum
+location_nice: Dragonkiez Kiezraum
+latitude: 52.494807413
+longitude: 13.387511373
+community: true
+
+hosts:
+  - hostname: dragonkiez-kiezraum
+    role: corerouter
+    model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: dragonkiez-kiezraum-rhxb
+    address: 10.31.92.226
+    snmp_profile: airos_6
+
 ipv6_prefix: "2001:bf7:830:ad00::/56"
 
 # 10.31.92.192/26 2001:bf7:830:ad00::/56

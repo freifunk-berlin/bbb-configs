@@ -1,7 +1,0 @@
----
-
-location: dragonkiez-kiezraum
-role: corerouter
-model: "ubnt_unifiac-mesh"
-
-wireless_profile: freifunk_default
