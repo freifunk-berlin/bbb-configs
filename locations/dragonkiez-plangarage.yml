@@ -1,4 +1,21 @@
 ---
+location: dragonkiez-plangarage
+location_nice: Dragonkiez Plangarage
+latitude: 52.49550240409573
+longitude: 13.38777191534464
+community: true
+
+hosts:
+  - hostname: dragonkiez-plangarage
+    role: corerouter
+    model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: dragonkiez-plangarage-rhxb
+    address: 10.31.92.98
+    snmp_profile: airos_6
+
 ipv6_prefix: "2001:bf7:830:3000::/56"
 
 # 10.31.92.64/26 2001:bf7:830:3000::/56
