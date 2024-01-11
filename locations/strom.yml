@@ -2,15 +2,31 @@
 
 location: strom
 location_nice: Stromstraße 2A
-latitude: 52.523692495967
-longitude: 13.342569613915
+latitude: 52.523268237
+longitude: 13.342632651
 community: true
 
 hosts:
 
   - hostname: strom-gw
     role: gateway
-    model: "tplink_tl-wdr4900-v1"
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined.img*"
+
+snmp_devices:
+
+  - hostname: strom-perleberger
+    address: 10.31.130.67
+    snmp_profile: airos_8
+
+  - hostname: strom-tub
+    address: 10.31.130.68
+    snmp_profile: airos_6
+
+  - hostname: strom-no-5ghz
+    address: 10.31.130.69
+    snmp_profile: airos_6
+
 
 # Router: 10.31.130.64/26 2001:bf7:750:2a00::/56
 # --MGMT: 10.31.130.64/27
@@ -40,22 +56,33 @@ mgmt:
 
 # Mesh Network: 10.31.130.96/27
 mesh_links:
-  - name: mesh_tu
+  - name: mesh_tub
     ifname: eth0.1308
     ipv4: 10.31.48.1/32
     ipv6: 2001:bf7:750:2a01::/128
-    metric: 128
-    ptp: true
 
   - name: mesh_perl
     ifname: eth0.1310
     ipv4: 10.31.48.2/32
     ipv6: 2001:bf7:750:2a02::/128
     metric: 128
+
+  # This interface is IPv4 only
+  - name: mesh_bbbvpn
+    ifname: eth0.1312
+    ipv4: 10.31.48.3/32
+    # ipv6: 2001:bf7:750:2a03::/128
+    metric: 1024
     ptp: true
 
-sgw: "1000000 1000000"
+  - name: mesh_no
+    ifname: eth0.1399
+    ipv4: 10.31.48.4/32
+    ipv6: 2001:bf7:750:2a04::/128
+
+
 # OLSR Announce SmartGateway
+sgw: "1000000 1000000"
 
 tunnel_metric: 1024
 

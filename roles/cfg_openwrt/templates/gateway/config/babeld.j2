@@ -9,6 +9,7 @@ config interface
 	option 'ignore' 'true'
 
 {% for interface in mesh_links|default([]) %}
+{% if interface['ipv6'] is defined %}
 config interface
 	option 'ifname' '{{ interface['name'] }}'
 	option 'rxcost' '{{ '256' if interface.get('link_quality_based_metric', true) else '96' }}'
@@ -20,6 +21,7 @@ config filter
        option 'if' '{{ interface['name'] }}'
        option 'action' 'metric {{ interface.get('mesh_metric', 512) }}'
 
+{% endif %}
 {% endfor %}
 
 {% for gateway in groups['role_gateway'] | difference([inventory_hostname]) %}

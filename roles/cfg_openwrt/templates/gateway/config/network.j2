@@ -25,7 +25,9 @@ config interface '{{ interface['name'] }}'
 	option device '{{ interface['ifname'] }}'
 	option proto 'static'
 	option ipaddr '{{ interface['ipv4'] }}'
+{% if interface['ipv6'] is defined %}
 	option ip6addr '{{ interface['ipv6'] }}'
+{% endif %}
 {% endfor %}
 
 {% if mgmt is defined %}
