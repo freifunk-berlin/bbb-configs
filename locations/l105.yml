@@ -1,5 +1,20 @@
 ---
 
+location: l105
+location_nice: Lützowstraße 105
+latitude: 52.502040
+longitude: 13.369420
+community: true
+
+hosts:
+
+  - hostname: l105-gw
+    role: gateway
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined.img*"
+    l105__disabled_services__to_merge:
+      - "bird"
+
 # L105 got following prefixes:
 # Router: 10.31.127.128/25 2001:bf7:750:3f00::/56
 # --MGMT: 10.31.127.128/27
@@ -14,7 +29,7 @@ ipv6_prefix: 2001:bf7:750:3f00::/56
 uplink:
   ifname: eth0
   ipv4: 77.87.49.8/28
-#  ipv6: ToDo
+  # ipv6: ToDo
 
 mgmt:
   ifname: eth1.42
@@ -51,12 +66,12 @@ mesh_links:
 
 # Downlink IPv4 is in net announced by emma.
 
-sgw: "1000000 1000000"
 # OLSR Announce SmartGateway
+sgw: "1000000 1000000"
 
-tunnel_metric: 1024
 # Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
 # 2001:bf7:760:2200::/56 is the base prefix
+tunnel_metric: 1024
 
 wireguard_base_prefix_ipv6: 2001:bf7:750:3f02::/64
 wireguard_base_prefix_ipv4: 10.31.143.0/24
