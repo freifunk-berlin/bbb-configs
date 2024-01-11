@@ -10,7 +10,8 @@ hosts:
 
   - hostname: strom-gw
     role: gateway
-    model: "tplink_tl-wdr4900-v1"
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined.img*"
 
 # Router: 10.31.130.64/26 2001:bf7:750:2a00::/56
 # --MGMT: 10.31.130.64/27
@@ -54,8 +55,14 @@ mesh_links:
     metric: 128
     ptp: true
 
-sgw: "1000000 1000000"
+  # This interface is IPv4 only
+  - name: mesh_bbbvpn
+    ifname: eth0.1312
+    ipv4: 10.31.48.3/32
+    ptp: true
+
 # OLSR Announce SmartGateway
+sgw: "1000000 1000000"
 
 tunnel_metric: 1024
 
