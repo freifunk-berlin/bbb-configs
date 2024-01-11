@@ -1,4 +1,17 @@
 ---
+
+location: saarbruecker
+location_nice: Saarbrücker
+latitude: 52.5283930134242
+longitude: 13.41561550087894
+community: true
+
+hosts:
+
+  - hostname: saarbruecker-gw
+    role: gateway
+    model: "ubnt_edgerouter-4"
+
 ipv6_prefix: 2001:bf7:760:2201::/56
 
 uplink:
@@ -42,18 +55,17 @@ mesh_links:
 
 # Downlink IPv4 is in net announced by emma.
 
-sgw: "1000000 1000000"
 # OLSR Announce SmartGateway
+sgw: "1000000 1000000"
 
-tunnel_metric: 1024
 # Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
 # 2001:bf7:760:2200::/56 is the base prefix
+tunnel_metric: 1024
 
 wireguard_base_prefix_ipv6: 2001:bf7:760:2202::/64
 wireguard_base_prefix_ipv4: 10.31.141.0/24
 
 gre_base_prefix: 2001:bf7:760:2201::/64
-
 
 # gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
 gre_tunnel_alias: saarbrue
