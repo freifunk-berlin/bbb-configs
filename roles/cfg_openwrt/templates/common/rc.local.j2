@@ -22,9 +22,14 @@ sed -i '/^ \/etc/d' /usr/lib/opkg/status
 echo {{ override['value'] }} > {{ override['path'] }}
 {% endfor%}
 
-
 {% if role == 'corerouter' or role == 'gateway' %}
 # make sure mld listener reports are frequently sent on
 # gateways and core routers
 /etc/force_mcast_mld_reports.sh &
 {% endif %}
+
+{% for cmd in rclocal | default([]) %}
+{{ cmd }}
+{% endfor %}
+
+exit 0

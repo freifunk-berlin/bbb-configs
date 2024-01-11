@@ -30,6 +30,12 @@
     merged_var_name: sysctl
     expected_type: dict
 
+- name: Merge rclocal variable
+  merge_vars:
+    suffix_to_merge: rclocal__to_merge
+    merged_var_name: rclocal
+    expected_type: list
+
 - name: "Merge channel_assignments variables"
   merge_vars:
     suffix_to_merge: "{{ item.split('__')[1] + '__to_merge' }}"
