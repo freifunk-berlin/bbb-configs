@@ -1,4 +1,17 @@
 ---
+
+location: ohlauer
+location_nice: Ohlauer
+latitude: 52.49378703855491
+longitude: 13.42969238683751
+community: true
+
+hosts:
+
+  - hostname: ohlauer-gw
+    role: gateway
+    model: "ubnt_edgerouter-4"
+
 ipv6_prefix: 2001:bf7:830:8300::/56
 
 # mgmt: 10.31.166.248/29
@@ -28,12 +41,12 @@ mesh_links:
 
 # Downlink IPv4 is in net announced by emma.
 
-sgw: "100000 100000"
 # OLSR Announce SmartGateway
+sgw: "100000 100000"
 
-tunnel_metric: 1024
 # Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
 # 2001:bf7:830:8300::/56 is the base prefix
+tunnel_metric: 1024
 
 wireguard_base_prefix_ipv6: 2001:bf7:830:8302::/64
 wireguard_base_prefix_ipv4: 10.31.140.0/24
