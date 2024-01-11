@@ -60,7 +60,7 @@ mgmt:
     strom-perleberger: 3  # .67
     strom-tub: 4          # .68
     strom-no-5ghz: 5      # .69
-#   strom-so-5ghz: 6        .70 (inactive)
+    # strom-so-5ghz: 6    # .70 (inactive)
 
 # Mesh Network: 10.31.130.96/27
 mesh_links:
@@ -92,12 +92,13 @@ mesh_links:
 # OLSR Announce SmartGateway
 sgw: "1000000 1000000"
 
+# Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
 tunnel_metric: 1024
-
-gre_base_prefix: 2001:bf7:750:2a03::/64
 
 wireguard_base_prefix_ipv6: 2001:bf7:750:2a04::/64
 wireguard_base_prefix_ipv4: 10.31.164.0/24
+
+gre_base_prefix: 2001:bf7:750:2a03::/64
 
 # gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
 gre_tunnel_alias: strom
