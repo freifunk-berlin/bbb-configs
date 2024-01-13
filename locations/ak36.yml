@@ -51,9 +51,6 @@ snmp_devices:
 # --MGMT: 10.31.130.128/27
 # --MESH: 10.31.130.160/27 {as /32}
 
-# Disable noping as we use dhcp and static assignments
-# both in mgmt network
-
 ipv6_prefix: 2001:bf7:750:4000::/56
 
 uplink:
@@ -77,7 +74,9 @@ mgmt:
     # hypervisor: 9       # .137 (strange)
     ak36-philmel60: 10    # .138
     ak36-teufelsberg: 11  # .139
-    # ...
+    # services
+    config: 22            # .150
+    monitor: 23           # .151
     uisp: 30              # .158
 
 # Mesh Network: 10.31.130.160/27
