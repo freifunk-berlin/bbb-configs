@@ -62,7 +62,7 @@ uplink:
   # ipv6: ToDo
 
 mgmt:
-  ifname: eth1
+  ifname: eth1.42
   ipv4: 10.31.130.129/27
   ipv6: 2001:bf7:750:4000::/64
   assignments:
@@ -84,62 +84,53 @@ mgmt:
 # Not listed here: strom-gw 10.31.130.190/32
 mesh_links:
   - name: mesh_philmel
-    ifname: eth2
+    ifname: eth1.10
     ipv4: 10.31.130.160/32
     ipv6: 2001:bf7:750:4001::1/128
     metric: 1024
     ptp: true
 
   - name: mesh_flughafen
-    ifname: eth3
+    ifname: eth1.11
     ipv4: 10.31.130.161/32
     ipv6: 2001:bf7:750:4001::2/128
     metric: 1024
     ptp: true
 
   - name: mesh_dtmb
-    ifname: eth4
+    ifname: eth1.12
     ipv4: 10.31.130.162/32
     ipv6: 2001:bf7:750:4001::3/128
     metric: 1024
     ptp: true
 
   - name: mesh_friedenau
-    ifname: eth5
+    ifname: eth1.13
     ipv4: 10.31.130.163/32
     ipv6: 2001:bf7:750:4001::4/128
     metric: 1024
     ptp: true
 
-  - name: mesh_backbone
-    ifname: eth6
+  - name: mesh_bbbvpn
+    ifname: eth1.198
     ipv4: 10.31.130.164/32
     ipv6: 2001:bf7:750:4001::5/128
     metric: 1024
     ptp: true
 
   - name: mesh_rhnk
-    ifname: eth7
+    ifname: eth1.14
     ipv4: 10.31.130.165/32
     ipv6: 2001:bf7:750:4001::6/128
     metric: 256
     ptp: true
 
   - name: mesh_teufel
-    ifname: eth8
+    ifname: eth1.15
     ipv4: 10.31.130.166/32
     ipv6: 2001:bf7:750:4001::7/128
     metric: 1024
     ptp: true
-
-  # - name: mesh_phil60
-  #   ifname: eth9
-  #   ipv4: 10.31.130.167/32
-  #   ipv6: 2001:bf7:750:4001::8/128
-  #   metric: 1024
-  #   ptp: true
-
-# Downlink IPv4 is in net announced by emma.
 
 # OLSR Announce SmartGateway
 sgw: "1000000 1000000"
