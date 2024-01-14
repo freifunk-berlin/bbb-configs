@@ -24,7 +24,7 @@ config filter
 {% endif %}
 {% endfor %}
 
-{% for gateway in groups['role_gateway'] | difference([inventory_hostname]) %}
+{% for gateway in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
 config interface
 	option 'ifname' '{{ hostvars[gateway]['gre_tunnel_alias'] }}'
 	option 'rxcost' '{{ gre_metric }}'

@@ -22,7 +22,7 @@ config dhcp 'dhcp_{{ link['name'] }}'
 	option ignore '1'
 {% endfor %}
 
-{% for gateway in groups['role_gateway'] | difference([inventory_hostname]) %}
+{% for gateway in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
 {% set name = hostvars[gateway]['gre_tunnel_alias'] %}
 config dhcp 'dhcp_{{ name }}'
 	option interface '{{ name }}'

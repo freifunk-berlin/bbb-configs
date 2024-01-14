@@ -21,7 +21,7 @@ config wg-interface
 
 {% endfor %}
 
-{% for gateway in groups['role_gateway'] %}
+{% for gateway in groups['role_gateway'] | sort %}
 config wg-server
   option name "{{ gateway }}"
   option url "https://{{ hostvars[gateway]['uplink']['ipv4'] | ansible.utils.ipaddr('address') }}/ubus"
