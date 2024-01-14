@@ -40,7 +40,7 @@ config interface 'mgmt'
 
 
 # gre doesnt support _ in name
-{% for gateway in groups['role_gateway'] | difference([inventory_hostname]) %}
+{% for gateway in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
 {% set name = hostvars[gateway]['gre_tunnel_alias'] %}
 config interface '{{ name }}'
 	option proto 'gre'

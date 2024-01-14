@@ -73,7 +73,7 @@ config rule
 config rule
 	option name             "Allow conntrack sync"
 	option src		uplink
-{% for host in groups['role_gateway'] if host != inventory_hostname %}
+{% for host in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
 	list src_ip		'{{ hostvars[host]['uplink']['ipv4'] | ansible.utils.ipaddr('address')  }}'
 {% endfor %}
 	option proto		udp
