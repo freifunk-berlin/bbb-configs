@@ -113,7 +113,8 @@ mesh_links:
   - name: mesh_bbbvpn
     ifname: eth1.198
     ipv4: 10.31.130.164/32
-    ipv6: 2001:bf7:750:4001::5/128
+    # the bbb-vpn setup is ipv4-only for now
+    # ipv6: 2001:bf7:750:4001::5/128
     metric: 1024
     ptp: true
 
