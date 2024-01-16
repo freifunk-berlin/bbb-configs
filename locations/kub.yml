@@ -1,4 +1,28 @@
 ---
+location: kub
+location_nice: KuB e.V. Berlin
+latitude: 52.50263
+longitude: 13.41339
+contact_nickname: 'KuB e.V.'
+contacts:
+  - 'KuB e.V.'
+
+hosts:
+  - hostname: kub-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
+  - hostname: kub-ap1
+    role: ap
+    model: "avm_fritzbox-7530"
+
+snmp_devices:
+  - hostname: kub-simeon
+    address: 10.31.139.2
+    snmp_profile: airos_8
+
+
 ipv6_prefix: "2001:bf7:830:8800::/56"
 
 # Rio-Reiser got following prefixes:
