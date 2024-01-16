@@ -1,8 +1,0 @@
----
-
-location: scharni
-role: ap
-model: "mikrotik_sxtsq-5-ac"
-
-mac_override:
-  eth0: 48:8f:5a:b9:83:82
