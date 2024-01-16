@@ -1,4 +1,18 @@
 ---
+location: grueni
+location_nice: Grueni
+latitude: 52.511488
+longitude: 13.459722
+contacts:
+  - 'me [ät] robertfoss [dot] se'
+
+hosts:
+  - hostname: grueni-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
+
 ipv6_prefix: "2001:bf7:830:9300::/56"
 
 networks:
