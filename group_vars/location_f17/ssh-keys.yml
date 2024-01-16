@@ -1,4 +1,0 @@
----
-ssh_keys__to_merge:
-  - comment: simon
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHwK3f7YB4qmDKgnZ6yKaQlLEdDAFaVbNREiE2gyHwSN simon@imagi
