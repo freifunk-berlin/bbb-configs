@@ -1,4 +1,19 @@
 ---
+location: sonnenblume
+location_nice: Wohngemeinschaft Sonnenblume
+latitude: 52.42718346824063
+longitude: 13.480034395635464
+contact_nickname: 'jammingblub'
+contacts:
+  - 'koltonowski@protonmail.com'
+
+hosts:
+  - hostname: sonnenblume-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
+
 ipv6_prefix: "2001:bf7:830:a200::/56"
 
 # Sonnenblume got following prefixes:
