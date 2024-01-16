@@ -15,6 +15,8 @@ hosts:
     role: gateway
     model: "x86-64"
     image_search_pattern: "*-ext4-combined.img*"
+    host__packages__to_merge:
+      - kmod-mlx5-core
     host__rclocal__to_merge:
       # There's a decades-old TX offload bug in intel gigabit controllers
       # which regularly hangs the card. It gets reset automatically,
