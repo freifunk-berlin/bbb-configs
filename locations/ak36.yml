@@ -37,10 +37,6 @@ snmp_devices:
     address: 10.31.130.136
     snmp_profile: af60
 
-  - hostname: ak36-philmel60
-    address: 10.31.130.138
-    snmp_profile: af60
-
   - hostname: ak36-teufelsberg
     address: 10.31.130.139
     snmp_profile: af60
@@ -72,7 +68,6 @@ mgmt:
     ak36-friedenau: 7     # .135
     ak36-rhnk: 8          # .136
     # hypervisor: 9       # .137 (strange)
-    ak36-philmel60: 10    # .138
     ak36-teufelsberg: 11  # .139
     # services
     config: 22            # .150
