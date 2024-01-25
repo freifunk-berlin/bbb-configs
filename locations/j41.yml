@@ -12,6 +12,10 @@ hosts:
     wireless_profile: freifunk_default
 
 snmp_devices:
+  - hostname: j41-f2a
+    address: 10.31.41.3
+    snmp_profile: airos_6
+
   - hostname: j41-zwingli
     address: 10.31.41.4
     snmp_profile: airos_6
@@ -25,11 +29,14 @@ ipv6_prefix: "2001:bf7:830:bd00::/56"
 # --DHCP: 10.31.41.128/25
 
 networks:
-  # - vid: 10
-  #   role: mesh
-  #   name: mesh_sama
-  #   prefix: 10.31.41.66/32
-  #   ipv6_subprefix: -10
+  - vid: 10
+    role: mesh
+    name: mesh_f2a
+    prefix: 10.31.41.66/32
+    ipv6_subprefix: -10
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.3']
+    ptp: true
 
   - vid: 11
     role: mesh
@@ -46,7 +53,7 @@ networks:
     assignments:
       j41-core: 1
       j41-switch: 2
-      # j41-sama: 3
+      j41-f2a: 3
       j41-zwingli: 4
 
   - vid: 40
@@ -59,7 +66,7 @@ networks:
       j41-core: 1
 
 location__channel_assignments_11g_standard__to_merge:
-  j41-core: 11-20
+  j41-core: 13-20
 
 location__channel_assignments_11a_standard__to_merge:
   j41-core: 36-40
