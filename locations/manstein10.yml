@@ -1,4 +1,36 @@
 ---
+location: manstein10
+location_nice: Manstein10
+latitude: 52.491872
+longitude: 13.366874
+contacts:
+  - '365ff@systemli.org'
+
+hosts:
+  - hostname: manstein10-core
+    role: corerouter
+    model: "tplink_tl-wdr4900-v1"
+    wireless_profile: freifunk_default
+
+  - hostname: manstein10-m2-s
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+  - hostname: manstein10-m2-w
+    role: ap
+    model: "ubnt_nanostation-m2_xm"
+
+  - hostname: manstein10-m5-w
+    role: ap
+    model: "ubnt_nanostation-m5_xm"
+    poe_on: []
+
+snmp_devices:
+  - hostname: manstein10-rhxb
+    address: 10.36.208.4
+    snmp_profile: airos_6
+
+
 # Overall we allocated: 10.31.125.0/24
 # Still unused:
 # - 10.31.125.64/26
@@ -70,3 +102,7 @@ networks:
       manstein10-m5-w: 6
       manstein10-m2-s: 7
       manstein10-m2-w: 8
+
+location__ssh_keys__to_merge:
+  - comment: narfpeng
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIONSKWdP3O0EHQei5tLZwCzpXC1CxGVh3FsN1GVJ/c+d id@narf.peng
