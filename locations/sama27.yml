@@ -1,4 +1,23 @@
 ---
+location: sama27
+location_nice: Sama27
+latitude: 52.5188543341914
+longitude: 13.46564804132173
+contact_nickname: 'robertfoss'
+contacts:
+  - 'me@robertfoss.se'
+
+hosts:
+  - hostname: sama27-core
+    role: corerouter
+    model: "tplink_archer-c7-v2"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: sama27-sama
+    address: 10.31.161.2
+    snmp_profile: airos_8
+
 
 # IPv4 10.31.161.0/27
 # IPv6 2001:bf7:830:ab00::/56

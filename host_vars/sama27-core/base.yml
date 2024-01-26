@@ -1,7 +1,0 @@
----
-
-location: sama27
-role: corerouter
-model: "tplink_archer-c7-v2"
-
-wireless_profile: freifunk_default
