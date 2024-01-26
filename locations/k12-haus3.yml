@@ -40,7 +40,6 @@ networks:
   # DHCP with filtering and isolation
   - vid: 40
     role: dhcp
-    untagged: true
     inbound_filtering: true
     enforce_client_isolation: true
     prefix: 10.31.226.224/27
@@ -74,12 +73,14 @@ networks:
   # MGMT
   - vid: 42
     role: mgmt
+    untagged: true
     prefix: 10.31.226.192/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
       k12-haus3-core: 1
+      k12-sunset: 2
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
