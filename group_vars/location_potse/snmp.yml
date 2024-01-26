@@ -1,5 +1,0 @@
----
-snmp_devices:
-  - hostname: potse-flughafen
-    address: 10.31.130.194
-    snmp_profile: airos_8

@@ -1,4 +1,24 @@
 ---
+location: potse
+location_nice: Potse
+latitude: 52.4835273
+longitude: 13.3902561
+contact_nickname: 'Potse'
+contacts:
+  - 'potse_berlin@riseup.net'
+
+hosts:
+  - hostname: potse-core
+    role: corerouter
+    model: "tplink_tl-wdr4900-v1"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: potse-flughafen
+    address: 10.31.130.194
+    snmp_profile: airos_8
+
+
 ipv6_prefix: "2001:bf7:750:4100::/56"
 
 # Potse got following prefixes:
