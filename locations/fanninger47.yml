@@ -48,13 +48,13 @@ networks:
     prefix: 10.31.233.16/32
     ipv6_subprefix: -10
 
-  # Mesh via LAN with Interkosmos
-  - vid: 11
-    role: mesh
-    name: mesh_ik
-    prefix: 10.31.233.17/32
-    ipv6_subprefix: -11
-    mesh_metric_lqm: ['default 0.8']  # prefer mesh into the bbb via liese
+  # # Mesh via LAN with Interkosmos
+  # - vid: 11
+  #   role: mesh
+  #   name: mesh_ik
+  #   prefix: 10.31.233.17/32
+  #   ipv6_subprefix: -11
+  #   mesh_metric_lqm: ['default 0.8']  # prefer mesh into the bbb via liese
 
 
   - vid: 20
@@ -108,17 +108,20 @@ networks:
     assignments:
       fanninger47-core: 1
       fanninger47-switch: 2
-      fanninger47-switch-ik: 3
+      # fanninger47-switch-ik: 3
       fanninger47-liese: 4
       fanninger47-nf-n: 5
       fanninger47-nf-o: 6
       fanninger47-nf-w: 7
 
 location__channel_assignments_11a_standard__to_merge:
-  fanninger47-core: 40-40
+  fanninger47-core: 40-20
+  fanninger47-nf-n: 48-20
+  fanninger47-nf-o: 44-20
+  fanninger47-nf-w: 36-20
 
 location__channel_assignments_11g_standard__to_merge:
-  fanninger47-core: 13-20
+  fanninger47-core: 1-20
 
 location__ssh_keys__to_merge:
   - comment: neko
