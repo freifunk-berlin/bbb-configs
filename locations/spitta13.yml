@@ -28,6 +28,10 @@ hosts:
     model: "mikrotik_sxtsq-5-ac"
 
 snmp_devices:
+  - hostname: spitta13-switch
+    address: 10.31.232.194
+    snmp_profile: swos
+
   - hostname: spitta13-zwingli
     address: 10.31.232.195
     snmp_profile: airos_8
