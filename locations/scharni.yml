@@ -44,7 +44,7 @@ snmp_devices:
 
   - hostname: scharni-zwingli
     address: 10.31.52.164
-    snmp_profile: airos_6
+    snmp_profile: airos_8
 
 
 ipv6_prefix: '2001:bf7:830:8400::/56'
