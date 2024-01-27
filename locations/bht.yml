@@ -57,7 +57,7 @@ snmp_devices:
     address: 10.31.166.14
     snmp_profile: airos_8
 
-iros_dfs_reset:
+airos_dfs_reset:
   - name: "bht-segen"
     target: "10.31.166.5"
     username: "root"
