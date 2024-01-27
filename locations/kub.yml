@@ -25,7 +25,7 @@ snmp_devices:
 
 ipv6_prefix: "2001:bf7:830:8800::/56"
 
-# Rio-Reiser got following prefixes:
+# KuB got following prefixes:
 # Router: 10.31.139.0/27
 # --MGMT: 10.31.139.0/28
 # --MESH: 10.31.139.16/28
