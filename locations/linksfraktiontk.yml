@@ -15,7 +15,7 @@ hosts:
 
 ipv6_prefix: "2001:bf7:830:a400::/56"
 
-# Rio-Reiser got following prefixes:
+# Linksfraktiontk got following prefixes:
 # Router: 10.31.152.160/27
 # --MGMT: 10.31.152.160/28
 # --MESH: 10.31.152.176/28
