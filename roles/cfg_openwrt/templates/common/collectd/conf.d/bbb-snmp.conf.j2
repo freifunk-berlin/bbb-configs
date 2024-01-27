@@ -11,7 +11,7 @@ LoadPlugin snmp
   {% for metric_name,metric in collectd_snmp_profiles[profile_name].items() %}
     <Data "{{ profile_name }}_{{ metric_name }}">
     {% for opt,val in metric.items() %}
-        {{ opt }} {{ val|string|lower if val|string == 'True' or val|string =='False' or val is number else  "\"" + val|string + "\"" }} 
+        {{ opt }} {{ val|string|lower if val|string == 'True' or val|string =='False' or val is number else  "\"" + val|string + "\"" }}
     {% endfor %}
     </Data>
   {% endfor %}
