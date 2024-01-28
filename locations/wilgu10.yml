@@ -1,4 +1,47 @@
 ---
+location: wilgu10
+location_nice: Wihelm-Guddorf Straße 10
+latitude: 52.511307598350847
+longitude: 13.476963043212891
+altitude: 65
+contacts:
+  - "@simzon:matrix.org"
+
+hosts:
+  - hostname: wilgu10-core
+    role: corerouter
+    model: "linksys_e8450-ubi"
+    wireless_profile: wilgu10
+
+  - hostname: wilgu10-east-nf
+    role: ap
+    model: "ubnt_nanostation-ac-loco"
+
+  - hostname: wilgu10-east-nf-2ghz
+    role: ap
+    model: "mikrotik_sxtsq-2-lite"
+    mac_override:
+      eth0: 74:4d:28:d6:f9:0b
+
+  - hostname: wilgu10-int
+    role: ap
+    model: "linksys_e8450-ubi"
+    wireless_profile: wilgu10
+
+  - hostname: wilgu10-west-nf
+    role: ap
+    model: "ubnt_nanostation-ac-loco"
+
+snmp_devices:
+  - hostname: wilgu10-zwingli
+    address: 10.36.190.181
+    snmp_profile: airos_8
+
+  - hostname: wilgu10-sama
+    address: 10.36.190.182
+    snmp_profile: af60
+
+
 ipv6_prefix: "2001:bf7:860:900::/56"
 
 # Disable noping as we use dhcp and static assignments
@@ -139,3 +182,15 @@ location__wireless_profiles__to_merge:
         mcast_rate: 12000
         mesh_fwding: 0
         ifname_hint: mesh
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001

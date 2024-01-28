@@ -1,8 +1,0 @@
----
-
-location: wilgu10
-role: ap
-model: "mikrotik_sxtsq-2-lite"
-
-mac_override:
-  eth0: 74:4d:28:d6:f9:0b
