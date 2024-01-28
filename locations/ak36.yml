@@ -60,7 +60,6 @@ mgmt:
   ipv6: 2001:bf7:750:4000::/64
   assignments:
     ak36-gw: 1            # .129
-    ak36-poe-rack: 2      # .130
     ak36-poe-roof: 3      # .131
     ak36-philmel: 4       # .132
     ak36-flughafen: 5     # .133
