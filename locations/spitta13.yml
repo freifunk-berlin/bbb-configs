@@ -1,8 +1,8 @@
 ---
 location: spitta13
-location_nice: Spittastraße 13
-latitude: 52.5049824
-longitude: 13.4795961
+location_nice: Rooftop, Spittastraße 13, 10317 Berlin
+latitude: 52.50503
+longitude: 13.47959
 contacts:
   - '#spitta13:matrix.org'
 
