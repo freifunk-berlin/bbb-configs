@@ -1,4 +1,40 @@
 ---
+location: gruni73
+location_nice: Grünberger Str. 73
+latitude: 52.51147321097473
+longitude: 13.459692494247243
+altitude: 63
+contact_nickname: 'robertfoss'
+contacts:
+  - 'me [ät] robertfoss [dot] se'
+
+hosts:
+  - hostname: gruni73-core
+    role: corerouter
+    model: "linksys_e8450-ubi"
+    wireless_profile: freifunk_default
+
+  - hostname: gruni73-nf-o-5ghz
+    role: ap
+    model: "ubnt_rocket-5ac-lite"
+
+  - hostname: gruni73-nf-s-5ghz
+    role: ap
+    model: "ubnt_rocket-5ac-lite"
+
+  - hostname: gruni73-nf-w-5ghz
+    role: ap
+    model: "ubnt_rocket-5ac-lite"
+
+snmp_devices:
+  - hostname: gruni73-sama
+    address: 10.31.156.5
+    snmp_profile: airos_8
+
+  - hostname: gruni73-zwingli
+    address: 10.31.156.6
+    snmp_profile: airos_8
+
 
 # IPv4 10.31.156.0/24
 # IPv6 2001:bf7:830:a600::/56
