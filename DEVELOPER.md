@@ -283,6 +283,9 @@ These files define how bbb-configs needs to handle different hardware models. Th
 ```yml
 ---
 target: "ipq40xx/generic"               # target of router model
+brand_nice: TP-Link                     # brand from the router in human readable form
+model_nice: Archer C7                   # model from the router in human readable form
+version_nice: v2                        # version from the router in human readable form, not always present
 
 switch_ports: 6                         # number of physical ports + one (CPU)
 switch_int_port: 0                      # port-id of the CPU
