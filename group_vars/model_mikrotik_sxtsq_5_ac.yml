@@ -1,5 +1,7 @@
 ---
 target: ipq40xx/mikrotik
+brand_nice: MikroTik
+model_nice: SXTsq 5 ac
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"

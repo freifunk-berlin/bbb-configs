@@ -1,6 +1,8 @@
 ---
 target: ramips/mt7621
 openwrt_version: 22.03-SNAPSHOT
+brand_nice: Ubiquiti
+model_nice: UniFi 6 Lite
 
 dsa_ports:
   - lan

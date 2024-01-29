@@ -1,6 +1,8 @@
 ---
 override_target: "mikrotik_routerboard-lhg-2nd"
 target: ath79/mikrotik
+brand_nice: MikroTik
+model_nice: SXTsq Lite2
 
 int_port: eth0
 

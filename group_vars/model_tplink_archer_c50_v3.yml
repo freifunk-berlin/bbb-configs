@@ -1,5 +1,8 @@
 ---
 target: ramips/mt76x8
+brand_nice: TP-Link
+model_nice: Archer C50
+version_nice: v3
 
 switch_ports: 7
 switch_int_port: 6

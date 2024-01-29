@@ -1,5 +1,7 @@
 ---
 target: ramips/mt7621
+brand_nice: NETGEAR
+model_nice: WAX202
 
 dsa_ports:
   - wan

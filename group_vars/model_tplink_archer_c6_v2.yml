@@ -1,5 +1,8 @@
 ---
 target: ath79/generic
+brand_nice: TP-Link
+model_nice: Archer C6
+version_nice: v2
 
 switch_ports: 7
 switch_int_port: 0

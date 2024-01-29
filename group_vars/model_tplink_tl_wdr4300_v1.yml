@@ -1,5 +1,8 @@
 ---
 target: ath79/generic
+brand_nice: TP-Link
+model_nice: WDR4300
+version_nice: v1
 
 switch_ports: 6
 switch_int_port: 0

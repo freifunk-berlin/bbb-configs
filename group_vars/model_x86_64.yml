@@ -1,8 +1,8 @@
 ---
-
 target: x86/64
 override_target: generic
 image_search_pattern: "*-ext4-combined.img*"
+model_nice: 32-/64-bit Computer
 
 int_port: eth0
 

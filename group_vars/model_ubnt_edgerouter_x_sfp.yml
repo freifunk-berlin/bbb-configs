@@ -1,5 +1,7 @@
 ---
 target: ramips/mt7621
+brand_nice: Ubiquiti
+model_nice: EdgeRouter X SFP
 
 dsa_ports:
   - eth0

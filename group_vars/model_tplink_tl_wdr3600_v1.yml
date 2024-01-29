@@ -1,5 +1,9 @@
 ---
 target: ath79/generic
+brand_nice: TP-Link
+model_nice: WDR3600
+version_nice: v1
+
 low_flash: true
 
 switch_ports: 6

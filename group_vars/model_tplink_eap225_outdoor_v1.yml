@@ -1,5 +1,8 @@
 ---
 target: ath79/generic
+brand_nice: TP-Link
+model_nice: EAP225
+version_nice: v1
 
 int_port: eth0
 

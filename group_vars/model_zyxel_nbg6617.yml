@@ -1,5 +1,7 @@
 ---
 target: ipq40xx/generic
+brand_nice: ZyXEL
+model_nice: NBG6617
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"

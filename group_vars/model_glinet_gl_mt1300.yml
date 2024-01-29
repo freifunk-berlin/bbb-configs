@@ -1,5 +1,8 @@
 ---
 target: ramips/mt7621
+brand_nice: GL.iNet
+model_nice: GL-MT1300 (Beryl)
+version_nice: v1
 
 dsa_ports:
   - lan1
