@@ -22,6 +22,10 @@ hosts:
     wireless_profile: freifunk_default
 
 snmp_devices:
+  - hostname: q216-switch
+    address: 10.31.201.242
+    snmp_profile: swos_lite
+
   - hostname: q216-tierpark
     address: 10.31.201.243
     snmp_profile: airos_8
