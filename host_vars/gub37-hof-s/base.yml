@@ -1,7 +1,0 @@
----
-
-location: gub37
-role: ap
-model: "mikrotik_sxtsq-5-ac"
-
-wifi_roaming: true
