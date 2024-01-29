@@ -1,33 +1,63 @@
 ---
-
 location: q216
-location_nice: Frankfurter Allee 216
+location_nice: Frankfurter Allee 216, 10365 Berlin
 latitude: 52.51091
 longitude: 13.49417
+altitude:
+height:
 contact_nickname: Hener
 contacts:
   - ffhener@proton.me
 
 hosts:
-
   - hostname: q216-core
     role: corerouter
     model: "linksys_e8450-ubi"
     wireless_profile: q216
+    assignment: 1
+
+  - hostname: q216-switch
+    role: switch
+    model: "mikrotik_css610"
+    switch_profile: all_tagged # This is a bigger discussion that doesnt need to happen here
+    assignment: 2
+
+  - hostname: q216-tierpark
+    role: ptp-ap
+    ptp: true
+    model: "ubnt_nanobeam_5ac-gen2"
+    direction: ost
+    ssid: #to override ssid | default freifunk-{location}-{direction}-{frequency}
+    password: "file:/root/pwd.txt" # Ideally we have a shared password vault
+                                   # This password can be used for dfs-resets as well. And dfs-reset could use the channel assignments
+    assignment: 3
+
+  - hostname: q216-spitta
+    role: ptp-client
+    model: "ubnt_nanobeam_5ac-gen2"
+    neighbour: spitta13-ost-5ghz
+    poe-passtrough: true
+    vlan-passtrough: {20,40,42}
+    assignment: 4
 
   - hostname: q216-nf-s
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     wireless_profile: freifunk_default
+    assignment: 5
 
-snmp_devices:
-  - hostname: q216-tierpark
-    address: 10.31.201.243
-    snmp_profile: airos_8
+  - hostname: q216-weather-station
+    role: service
+    assignment: 6
 
-  - hostname: q216-spitta
-    address: 10.31.201.245
-    snmp_profile: airos_8
+# snmp_devices:
+#   - hostname: q216-tierpark
+#     address: 10.31.201.243
+#     snmp_profile: airos_8
+
+#   - hostname: q216-spitta
+#     address: 10.31.201.245
+#     snmp_profile: airos_8
 
 ssh_keys:  # to stop merging other ssh-keys
   - comment: Hener
@@ -44,21 +74,23 @@ networks:
 
   - vid: 10
     role: mesh
-    name: mesh_tierpark
+    name: mesh_tierpark # Could be generated per default as well?
+    host: q216-tierpark
     prefix: 10.31.201.249/32
-    ipv6_subprefix: -10
+    #ipv6_subprefix: -10  |Default is just the VID
 
   - vid: 11
     role: mesh
     name: mesh_spitta
+    host: q216-spitta
     prefix: 10.31.201.251/32
-    ipv6_subprefix: -11
+    #ipv6_subprefix: -11
 
   - vid: 20
     role: mesh
     name: nf_s_mesh
     prefix: 10.31.201.250/32
-    ipv6_subprefix: -20
+    #ipv6_subprefix: -20
     mesh_ap: q216-nf-s
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -67,7 +99,7 @@ networks:
     role: dhcp
     name: dhcp
     prefix: 10.31.201.192/27
-    ipv6_subprefix: -40
+    #ipv6_subprefix: -40
     inbound_filtering: true
     enforce_client_isolation: true
     assignments:
@@ -77,7 +109,7 @@ networks:
     role: dhcp
     name: prdhcp
     prefix: 10.31.201.224/28
-    ipv6_subprefix: -41
+    #ipv6_subprefix: -41
     inbound_filtering: true
     enforce_client_isolation: false
     no_corerouter_dns_record: true
@@ -89,16 +121,17 @@ networks:
     prefix: 10.31.201.240/29
     gateway: 1
     dns: 1
-    ipv6_subprefix: 1
-    assignments:
-      q216-core: 1
-      q216-switch: 2
-      q216-tierpark: 3
-      q216-nf-s: 4
-      q216-spitta: 5
+    #ipv6_subprefix: 1
+    # assignments:     | Instead of assignments we use hosts
+    #   q216-core: 1
+    #   q216-switch: 2
+    #   q216-tierpark: 3
+    #   q216-nf-s: 4
+    #   q216-spitta: 5
 
 location__channel_assignments_11a_standard__to_merge:
   q216-core: 44-40
+  q216-tierpark: 128-40
   q216-nf-s: 36-20
 
 location__channel_assignments_11g_standard__to_merge:
