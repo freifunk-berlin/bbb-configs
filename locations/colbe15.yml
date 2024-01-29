@@ -3,6 +3,7 @@ location: colbe15
 location_nice: Colbe15
 latitude: 52.513189
 longitude: 13.464245
+altitude: 50
 community: true
 
 hosts:

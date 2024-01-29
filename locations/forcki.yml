@@ -4,6 +4,7 @@ location: forcki
 location_nice: Forckenbeckplatz, 10249 Berlin
 latitude: 52.519112973573066
 longitude: 13.462383908075621
+altitude: 60
 community: true
 
 hosts:

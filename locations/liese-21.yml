@@ -4,6 +4,7 @@ location: liese-21
 location_nice: Frankfurter Allee 218
 latitude: 52.511259
 longitude: 13.49598
+altitude: 93
 contact_nickname: 'Hener'
 contacts:
   - 'ffhener@proton.me'

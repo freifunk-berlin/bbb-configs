@@ -3,6 +3,7 @@ location: k12
 location_nice: 'Kastanienallee 12, Haus 2'
 latitude: 52.53936534993554
 longitude: 13.409738833169316
+altitude: 63
 contact_nickname: 'zander'
 contacts:
   - 'alexanderjabs@gmx.de'

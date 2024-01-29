@@ -3,6 +3,8 @@ location: dragonkiez-kiezraum
 location_nice: Dragonkiez Kiezraum
 latitude: 52.494807413
 longitude: 13.387511373
+altitude: 35
+height: 2
 community: true
 
 hosts:

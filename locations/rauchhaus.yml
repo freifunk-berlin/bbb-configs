@@ -4,6 +4,7 @@ location: rauchhaus
 location_nice: rauchhaus
 latitude: 52.50481
 longitude: 13.42436
+altitude: 47
 community: true
 
 hosts:

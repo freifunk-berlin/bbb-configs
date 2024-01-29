@@ -3,6 +3,7 @@ location: zwingli
 location_nice: Zwinglikirche, Rudolfstraße 14, 10245 Berlin
 latitude: 52.5035417
 longitude: 13.4547472
+altitude: 77
 community: true
 
 hosts:

@@ -3,6 +3,7 @@ location: kts13
 location_nice: Karpfenteichstraße 13
 latitude: 52.48232
 longitude: 13.46545
+altitude: 37
 contact_nickname: 'Packet Please'
 contacts:
   - 'pktpls@systemli.org'

@@ -3,6 +3,7 @@ location: potse
 location_nice: Potse
 latitude: 52.4835273
 longitude: 13.3902561
+altitude: 51
 contact_nickname: 'Potse'
 contacts:
   - 'potse_berlin@riseup.net'

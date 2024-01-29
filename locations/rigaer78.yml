@@ -3,6 +3,7 @@ location: rigaer78
 location_nice: Rigaerstraße 78
 latitude: 52.516646
 longitude: 13.464282
+altitude: 56
 community: true
 
 snmp_devices:

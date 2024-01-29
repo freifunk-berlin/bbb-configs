@@ -3,6 +3,7 @@ location: l5
 location_nice: Lenaustraße 5
 latitude: 52.48995
 longitude: 13.42552
+altitude: 36
 contact_nickname: L5 Kollektiv
 contacts:
   - noc@stadtfunk.net

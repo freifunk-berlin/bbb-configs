@@ -4,6 +4,7 @@ location: teufelsberg
 location_nice: Teufelsberg
 latitude: 52.49800
 longitude: 13.24052
+altitude: 151
 community: true
 
 # 10.31.213.0/24

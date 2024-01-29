@@ -4,6 +4,7 @@ location: huette15
 location_nice: Huette15
 latitude: 52.485032
 longitude: 13.447244
+altitude: 42
 contact_nickname: 'Packet Please'
 contacts:
   - 'pktpls@systemli.org'

@@ -26,9 +26,11 @@ location: magda # a string with the name of the location
 This part defines general values that are used e.g. in [Hopglass](https://hopglass.berlin.freifunk.net) and [OpenWifiMap](https://openwifimap.net).
 
 ```yml
-location_nice: roof top, Example-Street 24, 10573 Berlin        # any string that describes your location. It should contain an address.
+location_nice: roof top, Street 42, 10573 Berlin  # any string that describes your location. It should contain an address.
 latitude: 52.484948320
 longitude: 13.443380903
+altitude: 42                                      # in meter above sea level
+height: 13                                        # in meter above ground level
 ```
 
 ### contact details

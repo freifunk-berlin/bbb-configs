@@ -4,6 +4,7 @@ location: l105
 location_nice: Lützowstraße 105
 latitude: 52.502040
 longitude: 13.369420
+altitude: 62
 community: true
 
 hosts:
