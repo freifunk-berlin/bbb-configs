@@ -17,6 +17,9 @@ hosts:
       - "bird"
 
 snmp_devices:
+  - hostname: ak36-poe-roof
+    address: 10.31.130.131
+    snmp_profile: swos
 
   - hostname: ak36-philmel
     address: 10.31.130.132
