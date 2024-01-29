@@ -56,6 +56,10 @@ snmp_devices:
     address: 10.31.96.243
     snmp_profile: airos_8
 
+  - hostname: fesev-switch
+    address: 10.31.96.242
+    snmp_profile: edgeswitch
+
 # mesh: 10.31.96.216/30
 # dhcp: 10.31.97.128/25
 # mgmt: 10.31.96.240/28
