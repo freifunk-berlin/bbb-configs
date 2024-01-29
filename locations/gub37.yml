@@ -1,4 +1,38 @@
 ---
+location: gub37
+location_nice: gub37
+latitude: 52.51026648385623
+longitude: 13.45044163873424
+altitude: 54
+contact_nickname: 'robertfoss'
+contacts:
+  - 'me@robertfoss.se'
+
+hosts:
+  - hostname: gub37-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+    wifi_roaming: true
+
+  - hostname: gub37-hof-s
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    wifi_roaming: true
+
+  - hostname: gub37-hof-w
+    role: ap
+    model: "ubnt_nanostation-ac-loco"
+
+snmp_devices:
+  - hostname: gub37-sama-60g
+    address: 10.31.157.7
+    snmp_profile: af60
+
+  - hostname: gub37-zwingli
+    address: 10.31.157.3
+    snmp_profile: airos_8
+
 
 # IPv4 10.31.157.0/25
 # IPv6 2001:bf7:830:a700::/56
