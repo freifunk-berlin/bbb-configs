@@ -4,6 +4,7 @@ location: rigaer83
 location_nice: Rigaerstraße 83
 latitude: 52.517060
 longitude: 13.461940
+altitude: 58
 community: true
 
 hosts:

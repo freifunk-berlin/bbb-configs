@@ -3,6 +3,7 @@ location: j41
 location_nice: Jessnerstraße 41
 latitude: 52.51047588
 longitude: 13.47179912
+altitude: 58
 community: true
 
 hosts:

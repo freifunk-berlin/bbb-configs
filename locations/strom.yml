@@ -4,6 +4,7 @@ location: strom
 location_nice: Stromstraße 2A
 latitude: 52.523268237
 longitude: 13.342632651
+altitude: 55
 community: true
 
 hosts:

@@ -4,6 +4,7 @@ location: agym
 location_nice: Andreas Gymnasium
 latitude: 52.514169
 longitude: 13.433311
+altitude: 67
 community: true
 
 hosts:

@@ -3,6 +3,7 @@ location: rhnk
 location_nice: Rathaus Neukoelln
 latitude: 52.481380
 longitude: 13.435078
+altitude: 90
 community: true
 
 hosts:

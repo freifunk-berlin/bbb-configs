@@ -4,6 +4,7 @@ location: mlk-nk
 location_nice: Martin-Luther-Kirche Neukölln
 latitude: 52.484310005530894
 longitude: 13.43617358853226
+altitude: 64
 community: true
 
 hosts:

@@ -3,6 +3,7 @@ location: cafe-wostok
 location_nice: Café Wostok
 latitude: 52.502551833570074
 longitude: 13.494059451810992
+altitude: 32
 contacts:
   - "#freifunk-cafewostok:matrix.org"
 

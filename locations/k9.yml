@@ -3,6 +3,7 @@ location: k9
 location_nice: Kinzig9
 latitude: 52.51378093260403
 longitude: 13.466068518122656
+altitude: 60
 contact_nickname: 'K9 Freifunk Team'
 contacts:
   - 'freifunk@kinzig9.de'
