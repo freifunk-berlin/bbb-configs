@@ -1,5 +1,7 @@
 ---
 target: ramips/mt7621
+brand_nice: MikroTik
+model_nice: hEX
 
 dsa_ports:
   - wan

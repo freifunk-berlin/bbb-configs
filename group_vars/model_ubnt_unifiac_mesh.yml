@@ -1,5 +1,7 @@
 ---
 target: ath79/generic
+brand_nice: Ubiquiti
+model_nice: UniFi AC Mesh
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"

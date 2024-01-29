@@ -1,5 +1,7 @@
 ---
 target: octeon/generic
+brand_nice: Ubiquiti
+model_nice: EdgeRouter 4
 
 target__packages__to_merge:
   - naywatch

@@ -1,5 +1,8 @@
 ---
 target: ramips/mt7621
+brand_nice: D-Link
+model_nice: DAP-X1860
+version_nice: A1
 
 int_port: lan
 

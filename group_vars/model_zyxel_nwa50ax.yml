@@ -1,5 +1,7 @@
 ---
 target: ramips/mt7621
+brand_nice: ZyXEL
+model_nice: NWA50AX
 
 int_port: lan
 

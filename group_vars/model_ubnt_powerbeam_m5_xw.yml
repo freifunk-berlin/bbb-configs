@@ -1,5 +1,8 @@
 ---
 target: ath79/generic
+brand_nice: Ubiquiti
+model_nice: Powerbeam M5
+version_nice: XW
 
 int_port: eth0
 

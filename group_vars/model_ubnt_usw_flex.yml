@@ -8,6 +8,8 @@
 # - one 14720k partition, vendor two 7360k partitions
 
 target: ramips/mt7621
+brand_nice: Ubiquiti
+model_nice: USW-Flex
 
 dsa_ports:
   - lan1

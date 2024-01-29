@@ -1,5 +1,7 @@
 ---
 target: mediatek/mt7622
+brand_nice: Belkin
+model_nice: RT3200
 
 dsa_ports:
   - wan

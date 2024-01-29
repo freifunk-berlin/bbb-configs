@@ -2,6 +2,9 @@
 override_target: "ubnt_nanostation-m"
 target: ath79/tiny
 openwrt_version: 22.03-SNAPSHOT
+brand_nice: Ubiquiti
+model_nice: Nanostation M5
+version_nice: XM
 
 int_port: eth1
 

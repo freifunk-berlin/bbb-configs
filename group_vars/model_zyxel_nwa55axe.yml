@@ -1,6 +1,7 @@
 ---
 target: ramips/mt7621
-
+brand_nice: ZyXEL
+model_nice: NWA55AXE
 int_port: lan
 
 wireless_devices:

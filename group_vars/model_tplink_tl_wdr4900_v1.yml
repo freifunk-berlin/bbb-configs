@@ -1,5 +1,8 @@
 ---
 target: mpc85xx/p1010
+brand_nice: TP-Link
+model_nice: WDR4900
+version_nice: v1
 
 dsa_ports:
   - wan

@@ -1,5 +1,7 @@
 ---
 target: mediatek/mt7622
+brand_nice: Sinovoip
+model_nice: Banana Pi R64
 
 dsa_ports:
   - wan

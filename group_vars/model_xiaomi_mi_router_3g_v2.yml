@@ -1,5 +1,8 @@
 ---
 target: ramips/mt7621
+brand_nice: Xiaomi
+model_nice: MiWiFi 3G
+version_nice: v2
 
 dsa_ports:
   - eth0

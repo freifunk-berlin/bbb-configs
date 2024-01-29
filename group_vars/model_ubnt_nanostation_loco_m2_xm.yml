@@ -1,6 +1,9 @@
 ---
 override_target: "ubnt_nanostation-loco-m"
 target: ath79/tiny
+brand_nice: Ubiquiti
+model_nice: Nanostation Loco M2
+version_nice: XM
 
 int_port: eth0
 
