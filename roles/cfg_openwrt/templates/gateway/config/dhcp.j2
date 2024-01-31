@@ -10,7 +10,11 @@ config dnsmasq
 	option readethers '1'
 	option localservice '1'
 	option quietdhcp '1'
-	list notinterface '{{ uplink['ifname'] }}'
+  {% if (dsa_ports is defined) or (switch_ports|default(0) > 0) %}
+    {% set ifname = ('switch0' if dsa_ports is defined else int_port) + '.' + network['vid']|string %}
+  {% else %}
+    {% set ifname = ((int_port) + '.' + network['vid']|string if not network.get('untagged') else (int_port)) %}
+  {% endif %}	list notinterface '{{ ifname }}'
 {% for _dns_server in dns_servers %}
         list server '{{ _dns_server }}'
 {% endfor %}

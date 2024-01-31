@@ -5,13 +5,13 @@ config defaults
 	option output		ACCEPT
 	option forward		REJECT
 
-
+{% set mesh_networks = networks | selectattr('role', 'equalto', 'mesh') %}
 config zone
 	option name		freifunk
-{% for interface in mesh_links|default([]) %}
+{% for interface in mesh_networks|default([]) %}
 	list   network		'{{ interface['name'] }}'
 {% endfor %}
-{% if mgmt is defined %}
+{% if networks | selectattr('role', 'equalto', 'mgmt') is defined %}
 	list   network		'mgmt'
 {% endif %}
 {% if sgw is defined and sgw %}
@@ -30,7 +30,7 @@ config zone
 	option input		REJECT
 	option output		ACCEPT
 	option forward		REJECT
-{% if mesh_links is defined and mesh_links|length > 0 %}
+{% if networks | selectattr('role', 'equalto', 'mesh') is defined %}
         option masq		1
 {% endif %}
 
@@ -60,11 +60,12 @@ config include
 	option path		/etc/custom_fw_includes/table_prepend_redirect_samplicator
 	option position		table-prepend
 
-{% if 'ipv6' in uplink %}
+{% set uplink_network = networks | selectattr('role', 'equalto', 'uplink') | first %}
+{% if uplink_network is defined and 'ipv6' in uplink_network %}
 config rule
 	option name             "Allow BGP"
 	option src		uplink
-	option src_ip		'{{ uplink['ipv6'] | ansible.utils.ipaddr('peer')  }}'
+	option src_ip		'{{ uplink_network['ipv6'] | ansible.utils.ipaddr('peer')  }}'
 	option proto		tcp
 	option dest_port        179
 	option target		ACCEPT
