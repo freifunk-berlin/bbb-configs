@@ -49,7 +49,7 @@ hosts:
 
   - hostname: rigaer78-back-floor-3-left
     role: ap
-    model: "avm_fritzbox-4040"
+    model: "siemens_ws-ap3610"
     port_untag: {40: [lan1, lan2, lan3]}
 
   - hostname: rigaer78-back-floor-3-right
