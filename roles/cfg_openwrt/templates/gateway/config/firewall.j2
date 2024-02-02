@@ -107,6 +107,12 @@ config rule
 	option dest_port	'{{ wireguard_port_start }}':'{{ wireguard_port_end }}'
 	option target		ACCEPT
 
+config rule
+	option name		"Allow iperf3"
+	option src		uplink
+	option dest_port	5201
+	option target		ACCEPT
+
 # Allow essential incoming IPv6 ICMP traffic
 config rule
 	option name		Allow-ICMPv6-Input
