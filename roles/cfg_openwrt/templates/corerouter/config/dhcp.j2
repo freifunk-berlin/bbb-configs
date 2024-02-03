@@ -37,6 +37,9 @@ config dhcp 'dhcp_{{ name }}'
 	option dhcpv6 'disabled'
     {% if network['role'] == 'dhcp' %}
 	option dhcpv4 'server'
+        {% if 'ipv6_subprefix' in network %}
+        option dhcpv6 'server'
+        {% endif %}
 	option force '1'
 	option leasetime '5m'
 	option start '2'
