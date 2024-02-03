@@ -33,7 +33,7 @@ snmp_devices:
     snmp_profile: airos_8
 
   - hostname: spitta13-ost
-    address: 10.31.232.195
+    address: 10.31.232.196
     snmp_profile: airos_8
 
 airos_dfs_reset:
