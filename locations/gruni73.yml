@@ -27,6 +27,10 @@ hosts:
     model: "ubnt_rocket-5ac-lite"
 
 snmp_devices:
+  - hostname: gruni73-switch
+    address: 10.31.156.2
+    snmp_profile: edgeswitch
+
   - hostname: gruni73-sama
     address: 10.31.156.5
     snmp_profile: airos_8
