@@ -13,6 +13,10 @@ hosts:
     wireless_profile: freifunk_default
 
 snmp_devices:
+  - hostname: j41-switch
+    address: 10.31.41.2
+    snmp_profile: edgeswitch
+
   - hostname: j41-f2a
     address: 10.31.41.3
     snmp_profile: airos_6
