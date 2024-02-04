@@ -15,6 +15,10 @@ hosts:
     wireless_profile: freifunk_default
 
 snmp_devices:
+  - hostname: agym-switch-roof
+    address: 10.230.89.2
+    snmp_profile: edgeswitch
+
   - hostname: agym-zwingli
     address: 10.230.89.4
     snmp_profile: af60
