@@ -37,6 +37,10 @@ hosts:
     model: "avm_fritzbox-4040"
 
 snmp_devices:
+  - hostname: dorfplatz-poe-switch
+    address: 10.31.75.34
+    snmp_profile: edgeswitch
+
   - hostname: dorfplatz-sama
     address: 10.31.75.35
     snmp_profile: airos_8
