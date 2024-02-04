@@ -1,0 +1,104 @@
+---
+location: fffw-touribuero
+location_nice: Tourismusbüro, Mühlenstraße 1, 15517 Fürstenwalde
+latitude: 52.358277000000000
+longitude: 14.063384000000000
+contact_nickname: 'akira25'
+contacts:
+  - 'huefamm@web.de'
+
+# dns_servers:
+#   # quad9
+#   - 9.9.9.10
+#   # - 149.112.112.112
+#   - 2620:fe::fe
+#   - 2620:fe::9
+
+hosts:
+  - hostname: fffw-touribuero
+    role: corerouter
+    model: "tplink_wr842_v3"
+    wireless_profile: freifunk_fw
+
+ipv6_prefix: '2001:bf7:800:1500::/56'
+# got following prefixes:
+# Router: 10.31.242.192/26
+# --MGMT: 10.31.242.192/28
+# --MESH: 10.31.242.228/29
+# --UPLK: 10.31.242.232/29
+# --DHCP: 10.31.242.224/27
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.242.228/32
+    ipv6_subprefix: -20
+    # for dual-band make mesh_metric(s) for 2GHz worse than 5GHz
+    # mesh_metric: 1024
+    # mesh_metric_lqm: ['default 0.8']
+    mesh_ap: fffw-touribuero
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - LAN
+  # - vid: 30
+    # role: mesh
+    # name: mesh_lan
+    # prefix: 10.31.215.35/32
+    # ipv6_subprefix: -30
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.242.224/27
+    ipv6_subprefix: 0
+    assignments:
+      fffw-touribuero: 1
+
+  # DHCP (HOST) without filtering and isolation
+  # - vid: 41
+  #   name: host
+  #   role: dhcp
+  #   prefix: 10.31.215.96/27
+  #   ipv6_subprefix: 41
+  #   assignments:
+  #     noki-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.242.192/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      fffw-touribuero: 1
+
+  # UPLK
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.242.232/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.242.233/32
+    wireguard_port: 51821
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  fffw-touribuero: 13-20
