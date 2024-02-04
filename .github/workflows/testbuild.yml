@@ -34,7 +34,7 @@ jobs:
 
       - name: Determine changed locations
         run: |
-          DEBUG_GIT_DIFF=$(git diff)
+          DEBUG_GIT_DIFF=$(git diff "origin/$BRANCH")
           echo "git diff is: $DEBUG_GIT_DIFF"
           CHANGED_SINGE_FILE_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" | grep 'locations/' | sed 's/locations\/\(.*\)\.yml/location_\1/' | sed -z 's/-/_/g;s/\n/,/g;s/,$//')
           CHANGED_LOCATIONS=$CHANGED_SINGE_FILE_LOCATIONS
