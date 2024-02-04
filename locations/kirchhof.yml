@@ -7,19 +7,6 @@ longitude: 13.44337
 contact_nickname: Stadtfunk gGmbH
 contacts:
   - noc@stadtfunk.net
-location__ssh_keys__to_merge:
-  - comment: pktpls@systemli.org
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVY2XHiLDXbj7TGWtUpKEb8+qKw/DrkiVbLiyvyRaCi
-  - comment: Hener
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEST9QsXtphN7BYb5p9FhxZTxvoWkICfRWC54SN/QHII
-  - comment: Lino
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaljQHr4Nj6veeDi51BZjy/a3WXP
-
-# 10.31.183.128/28 - mgmt     - vlan 42
-# 10.31.183.144/28 - mesh     - vlan 20, 50
-# 10.31.183.160/27 - privdhcp - vlan 41 untagged
-# 10.31.183.192/26 - dhcp     - vlan 40
-ipv6_prefix: 2001:bf7:820:2300::/56
 
 hosts:
 
@@ -49,6 +36,12 @@ hosts:
     model: mikrotik_sxtsq-5-ac
     mac_override: {eth0: 2c:c8:1b:8a:96:28}
     wireless_profile: freifunk_default
+
+# 10.31.183.128/28 - mgmt     - vlan 42
+# 10.31.183.144/28 - mesh     - vlan 20, 50
+# 10.31.183.160/27 - privdhcp - vlan 41 untagged
+# 10.31.183.192/26 - dhcp     - vlan 40
+ipv6_prefix: 2001:bf7:820:2300::/56
 
 networks:
 
