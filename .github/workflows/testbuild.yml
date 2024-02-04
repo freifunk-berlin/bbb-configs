@@ -47,7 +47,7 @@ jobs:
           echo "Building for $CHANGED_LOCATIONS"
           echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> "$GITHUB_ENV"
 
-      - if: github.event.pull_request.state == open
+      - if: github.event.pull_request.state == 'open'
         name: Build changed locations
         run: |
           if [ -n "${CHANGED_HOSTS}" ] || [ -n "${CHANGED_LOCATIONS}" ] ; then
@@ -61,7 +61,7 @@ jobs:
           ansible-playbook play.yml --tags wiki --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
         continue-on-error: true
 
-      - if: github.event.pull_request.state == open
+      - if: github.event.pull_request.state == 'open'
         name: Store build output
         uses: actions/upload-artifact@v1
         with:
