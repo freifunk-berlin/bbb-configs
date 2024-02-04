@@ -302,7 +302,6 @@ collectd_snmp_profiles:
       Table: true
       Values: .1.3.6.1.2.1.2.2.1.14
 
-
   tplink:
     sys_uptime:
       Type: uptime
