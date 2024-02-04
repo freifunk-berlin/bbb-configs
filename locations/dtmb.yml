@@ -14,6 +14,14 @@ hosts:
     wireless_profile: freifunk_default
 
 snmp_devices:
+  - hostname: dtmb-sw1
+    address: 10.31.131.2
+    snmp_profile: edgeswitch
+
+  - hostname: dtmb-sw2
+    address: 10.31.131.3
+    snmp_profile: edgeswitch
+
   - hostname: dtmb-ak36
     address: 10.31.131.10
     snmp_profile: airos_6
