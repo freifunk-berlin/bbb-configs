@@ -9,7 +9,6 @@ contacts:
   - noc@stadtfunk.net
 
 hosts:
-
   - hostname: l5-core
     role: corerouter
     model: "avm_fritzbox-4040"
@@ -27,6 +26,11 @@ hosts:
     mac_override:
       eth0: dc:2c:6e:c4:35:e9
 
+snmp_devices:
+  - hostname: l5-switch
+    address: 10.31.161.162
+    snmp_profile: edgeswitch
+
 # 10.31.161.160/29 - mgmt
 # 10.31.191.160/29 - mesh
 # 10.31.194.0/25 - dhcp
@@ -34,7 +38,6 @@ hosts:
 ipv6_prefix: "2001:bf7:830:b600::/56"
 
 networks:
-
   - vid: 40
     role: dhcp
     name: dhcp
