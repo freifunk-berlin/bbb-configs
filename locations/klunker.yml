@@ -1,5 +1,4 @@
 ---
-
 location: klunker
 location_nice: Klunkerkranich
 latitude: 52.4819617
@@ -8,7 +7,6 @@ altitude: 63
 community: true
 
 hosts:
-
   - hostname: klunker-core
     role: corerouter
     model: "avm_fritzbox-4040"
@@ -33,9 +31,14 @@ hosts:
       eth0: cc:2d:e0:9c:4f:00
 
 snmp_devices:
+  - hostname: klunker-switch
+    address: 10.31.191.178
+    snmp_profile: edgeswitch
+
   - hostname: klunker-rhnk
     address: 10.31.191.179
     snmp_profile: mikrotik_60g
+
   - hostname: klunker-philmel
     address: 10.31.191.180
     snmp_profile: af60
