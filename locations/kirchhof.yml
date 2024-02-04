@@ -37,6 +37,11 @@ hosts:
     mac_override: {eth0: 2c:c8:1b:8a:96:28}
     wireless_profile: freifunk_default
 
+snmp_devices:
+  - hostname: kirchhof-switch
+    address: 10.31.147.130
+    snmp_profile: edgeswitch
+
 # 10.31.183.128/28 - mgmt     - vlan 42
 # 10.31.183.144/28 - mesh     - vlan 20, 50
 # 10.31.183.160/27 - privdhcp - vlan 41 untagged
