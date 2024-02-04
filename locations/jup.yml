@@ -13,29 +13,40 @@ hosts:
     role: corerouter
     model: "tplink_tl-wdr4900-v1"
     wireless_profile: freifunk_default
+
   - hostname: jup-m5-ap1
     role: ap
     model: "ubnt_nanostation-m5_xm"
+
   - hostname: jup-m5-ap2
     role: ap
     model: "ubnt_nanostation-m5_xm"
+
   - hostname: jup-m2-ap3
     role: ap
     model: "ubnt_nanostation-m2_xm"
+
   - hostname: jup-bullet-ap4
     role: ap
     model: "ubnt_bullet-m-ar7241"
+
   - hostname: jup-m5-ap5
     role: ap
     model: "ubnt_nanostation-m5_xm"
+
   - hostname: jup-bar
     role: ap
     model: "avm_fritzbox-7530"
 
 snmp_devices:
+  - hostname: jup-poe
+    address: 10.31.147.130
+    snmp_profile: edgeswitch
+
   - hostname: jup-bht
     address: 10.31.147.131
     snmp_profile: airos_6
+
   - hostname: jup-segen
     address: 10.31.147.132
     snmp_profile: airos_6
