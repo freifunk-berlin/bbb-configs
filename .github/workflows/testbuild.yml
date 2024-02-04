@@ -26,6 +26,7 @@ jobs:
       - name: Install dependencies
         run: pip3 install -r requirements.txt --upgrade pip
 
+# TODO: use GITHUB_REF_NAME https://docs.github.com/en/actions/learn-github-actions/variables
       - name: Determine branch name
         run: |
           BRANCH="${GITHUB_BASE_REF#refs/heads/}"
