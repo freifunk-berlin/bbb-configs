@@ -274,3 +274,58 @@ collectd_snmp_profiles:
       TypeInstanceOID: .1.3.6.1.2.1.2.2.1.2
       Table: true
       Values: .1.3.6.1.2.1.2.2.1.14
+
+  edgerouter:
+    sys_uptime:
+      Type: uptime
+      TypeInstance: days
+      Table: false
+      Scale: 1.15740740741e-07 # TODO: Check scale
+      Values: 1.3.6.1.2.1.25.1.1.0
+
+    if_oper_status:
+      Type: gauge
+      TypeInstanceOID: 1.3.6.1.2.1.2.2.1.2
+      Table: true
+      Values: .1.3.6.1.2.1.2.2.1.8
+
+    if_speed:
+      Type: gauge
+      TypeInstanceOID: .1.3.6.1.2.1.2.2.1.2
+      Table: true
+      Scale: 1000000
+      Values: 1.3.6.1.2.1.2.2.1.5
+
+    if_in_errors:
+      Type: gauge
+      TypeInstanceOID: .1.3.6.1.2.1.2.2.1.2
+      Table: true
+      Values: .1.3.6.1.2.1.2.2.1.14
+
+
+  tplink:
+    sys_uptime:
+      Type: uptime
+      TypeInstance: days
+      Table: false
+      Scale: 1.15740740741e-07 # TODO: check if scale if right. Unit is 1/100th of a second
+      Values: .1.3.6.1.2.1.1.3
+
+    if_oper_status:
+      Type: gauge
+      TypeInstanceOID: .1.3.6.1.2.1.2.2.1.2
+      Table: true
+      Values: 1.3.6.1.2.1.2.2.1.8
+
+    if_speed:
+      Type: gauge
+      TypeInstanceOID: .1.3.6.1.2.1.2.2.1.2
+      Table: true
+      Scale: 1000000
+      Values: 1.3.6.1.2.1.2.2.1.5
+
+    if_in_errors:
+      Type: gauge
+      TypeInstanceOID: .1.3.6.1.2.1.2.2.1.2
+      Table: true
+      Values: .1.3.6.1.2.1.2.2.1.14
