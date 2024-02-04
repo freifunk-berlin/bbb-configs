@@ -3,6 +3,8 @@ location: fffw-touribuero
 location_nice: Tourismusbüro, Mühlenstraße 1, 15517 Fürstenwalde
 latitude: 52.358277000000000
 longitude: 14.063384000000000
+altitude: 44
+height: 1
 contact_nickname: 'akira25'
 contacts:
   - 'huefamm@web.de'
