@@ -52,10 +52,10 @@ networks:
     ptp: true
     mesh_metric: 256
 
-  # MESH - Zwingli
+  # MESH - RHNK
   - vid: 11
     role: mesh
-    name: mesh_zwingli
+    name: mesh_rhnk
     prefix: 10.31.212.34/32
     ipv6_subprefix: -11
     ptp: true
@@ -154,6 +154,9 @@ networks:
       w38b-sama: 3
       # 10.31.212.4/32
       w38b-zwingli: 4
+      # 10.31.212.5/32
+      w38b-rhnk: 5
+
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
