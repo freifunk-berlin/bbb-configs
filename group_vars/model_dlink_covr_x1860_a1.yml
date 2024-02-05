@@ -1,0 +1,21 @@
+---
+target: ramips/mt7621
+brand_nice: D-Link
+model_nice: COVR-X1860
+version_nice: A1
+
+dsa_ports:
+  - internet
+  - ethernet
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: HE
+    path: 1e140000.pcie/pci0000:00/0000:00:01.0/0000:02:00.0+1
+    ifname_hint: wlan5
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HE
+    path: 1e140000.pcie/pci0000:00/0000:00:01.0/0000:02:00.0
+    ifname_hint: wlan2
