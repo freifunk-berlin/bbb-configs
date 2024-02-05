@@ -61,11 +61,6 @@ snmp_devices:
     address: 10.31.11.25
     snmp_profile: airos_8
 
-  # Monitor ohlauer device from emma until monitoring at ohlauer is deployed
-  - hostname: ohlauer-emma
-    address: 10.31.166.251
-    snmp_profile: mikrotik_60g
-
 airos_dfs_reset:
   - name: "emma-oso-5ghz"
     target: "10.31.11.19"
