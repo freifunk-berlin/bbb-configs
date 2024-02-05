@@ -25,6 +25,9 @@ hosts:
       - ethtool -K eth0 tx off rx off
 
 snmp_devices:
+  - hostname: strom-poe
+    address: 10.31.130.66
+    snmp_profile: tplink
 
   - hostname: strom-perleberger
     address: 10.31.130.67
