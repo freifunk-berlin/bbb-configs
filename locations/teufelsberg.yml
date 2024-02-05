@@ -204,7 +204,7 @@ location__channel_assignments_11a_standard__to_merge:
   # all APs on channel 36 for now, to allow meshing for standard Falter APs
   # TODO: Change this once the installation is more optimized
   teufelsberg-core: 40-20
-  teufelsberg-ap1: 36-20
+  teufelsberg-ap1: 44-20
   teufelsberg-ap2: 36-20
   teufelsberg-ap3: 36-20
   teufelsberg-ap4: 36-20
