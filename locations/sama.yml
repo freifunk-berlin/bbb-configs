@@ -38,6 +38,14 @@ hosts:
       eth0: 08:55:31:54:63:06
 
 snmp_devices:
+  - hostname: sama-poe-1
+    address: 10.31.81.2
+    snmp_profile: edgeswitch
+
+  - hostname: sama-poe-2
+    address: 10.31.81.3
+    snmp_profile: edgeswitch
+
   - hostname: sama-nord-5ghz
     address: 10.31.81.20
     snmp_profile: airos_8
@@ -56,10 +64,6 @@ snmp_devices:
 
   - hostname: sama-sued-60ghz
     address: 10.31.81.26
-    snmp_profile: af60
-
-  - hostname: saarbruecker-sama
-    address: 10.31.83.52
     snmp_profile: af60
 
   - hostname: sama-saarbruecker
