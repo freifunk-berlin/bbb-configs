@@ -1,12 +1,6 @@
 ---
 name: Test Build
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [pull_request] # yamllint disable-line rule:truthy
 
 jobs:
   build:
@@ -45,22 +39,14 @@ jobs:
           echo "Building for $CHANGED_LOCATIONS"
           echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> "$GITHUB_ENV"
 
-      - if: ${{ github.event_name == 'pull_request' }}
-        name: Build changed locations
+      - name: Build changed locations
         run: |
           if [ -n "${CHANGED_HOSTS}" ] || [ -n "${CHANGED_LOCATIONS}" ] ; then
             ansible-playbook play.yml --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
           fi
           mkdir -p ./tmp/images
 
-      - if: ${{ github.event_name == 'push' }}
-        name: Update wiki.freifunk.net
-        run: |
-          ansible-playbook play.yml --tags wiki --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
-        continue-on-error: true
-
-      - if: ${{ github.event_name == 'pull_request' }}
-        name: Store build output
+      - name: Store build output
         uses: actions/upload-artifact@v1
         with:
           name: ansibleimages
