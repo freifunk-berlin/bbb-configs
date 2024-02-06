@@ -1,6 +1,6 @@
 ---
 name: Test Build
-on: [pull_request] # yamllint disable-line rule:truthy
+on: [pull_request]  # yamllint disable-line rule:truthy
 
 jobs:
   build:
