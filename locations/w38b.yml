@@ -15,7 +15,7 @@ hosts:
     wifi_roaming: true
   - hostname: w38b-ap1
     role: ap
-    model: "zyxel_nwa55axe"
+    model: "dlink_covr-x1860-a1"
     wireless_profile: w38b
     wifi_roaming: true
 
@@ -23,9 +23,9 @@ snmp_devices:
   - hostname: w38b-sama
     address: 10.31.212.3
     snmp_profile: af60
-  - hostname: w38b-zwingli
+  - hostname: w38b-rhnk
     address: 10.31.212.4
-    snmp_profile: airos_8
+    snmp_profile: af60
 
 # IPs
 ipv6_prefix: '2001:bf7:830:bc00::/56'
@@ -59,6 +59,8 @@ networks:
     prefix: 10.31.212.34/32
     ipv6_subprefix: -11
     ptp: true
+    mesh_metric: 288
+    mesh_metric_lqm: ['default 0.95']
 
   # MESH - 5 GHz 802.11s ap1
   - vid: 20
@@ -104,6 +106,7 @@ networks:
       w38b-core: 1
 
   # DHCP (HOST) without filtering and isolation
+  # 2001:bf7:830:bc02::/64
   - vid: 41
     role: dhcp
     name: host
@@ -153,9 +156,7 @@ networks:
       # 10.31.212.3/32
       w38b-sama: 3
       # 10.31.212.4/32
-      w38b-zwingli: 4
-      # 10.31.212.5/32
-      w38b-rhnk: 5
+      w38b-rhnk: 4
 
 
 # AP-id, wifi-channel, bandwidth, txpower
