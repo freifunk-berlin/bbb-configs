@@ -82,6 +82,7 @@ networks:
       noki-core: 1
 
   # DHCP (HOST) without filtering and isolation
+  # 2001:bf7:830:1029::/64
   - vid: 41
     name: host
     role: dhcp
