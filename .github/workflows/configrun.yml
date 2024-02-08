@@ -1,5 +1,5 @@
 ---
-name: Test Build
+name: Config Run
 on:
   push:
     branches:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Ansible Test Build
+    name: Ansible Config Run
     runs-on: ubuntu-latest
 
     steps:
@@ -50,10 +50,10 @@ jobs:
           if [ -n "${CHANGED_HOSTS}" ] || [ -n "${CHANGED_LOCATIONS}" ] ; then
             ansible-playbook play.yml --limit "${CHANGED_HOSTS:+$CHANGED_HOSTS,}$CHANGED_LOCATIONS"
           fi
-          mkdir -p ./tmp/images
+          mkdir -p ./tmp/configs
 
       - name: Store build output
         uses: actions/upload-artifact@v1
         with:
-          name: ansibleimages
-          path: ./tmp/images
+          name: ansibleconfigs
+          path: ./tmp/configs
