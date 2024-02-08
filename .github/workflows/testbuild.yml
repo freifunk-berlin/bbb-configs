@@ -1,6 +1,12 @@
 ---
 name: Test Build
-on: [pull_request]  # yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
