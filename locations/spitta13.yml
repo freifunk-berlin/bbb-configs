@@ -57,6 +57,7 @@ networks:
     name: mesh_zwingli
     prefix: 10.31.232.224/32
     ipv6_subprefix: -10
+    mesh_metric: 256  # prefer zwingli as uplink
 
   # Lite AP (LAP-GPS)
   - vid: 11
@@ -73,6 +74,8 @@ networks:
     mesh_ap: spitta13-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.3']  # prefer 5 GHz mesh
+    mesh_metric: 1024
 
   - vid: 21
     role: mesh
@@ -82,6 +85,7 @@ networks:
     mesh_ap: spitta13-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.5']  # prefer zwingli as uplink
 
   - vid: 22
     role: mesh
@@ -91,6 +95,7 @@ networks:
     mesh_ap: spitta13-nf-w
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.5']  # prefer zwingli as uplink
 
   - vid: 23
     role: mesh
@@ -100,6 +105,7 @@ networks:
     mesh_ap: spitta13-nf-o
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_lqm: ['default 0.5']  # prefer zwingli as uplink
 
   - vid: 40
     role: dhcp
