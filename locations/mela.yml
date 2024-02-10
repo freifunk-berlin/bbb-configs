@@ -1,8 +1,10 @@
 ---
 location: mela
-location_nice: Melanchthonkirche
+location_nice: Melanchthonkirche, Melanchthonplatz, 13595 Berlin
 latitude: 52.521306576109
 longitude: 13.188832104206
+altitude: 60
+height: 24
 community: true
 
 hosts:
@@ -46,6 +48,12 @@ hosts:
   #   wireless_profile: freifunk_default
 
 snmp_devices:
+  - hostname: mela-switch-hinten
+    address: 10.36.70.2
+    snmp_profile: edgeswitch
+  # - hostname: mela-switch-vorne
+  #   address: 10.36.70.3
+  #   snmp_profile: edgeswitch
   - hostname: mela-nw-5ghz
     address: 10.36.70.4
     snmp_profile: airos_6
