@@ -16,11 +16,15 @@ freifunk-berlin repo https://github.com/freifunk-berlin/falter-wiki-bot.
 #  CONFIG  #
 ############
 
-if not load_dotenv(".env"):
+# Load .env file if it exists
+load_dotenv(".env")
+
+# Check if the environment variables are set
+if not os.getenv("FF_WIKI_USER") or not os.getenv("FF_WIKI_PASSWORD"):
     raise FileNotFoundError(
         (
-            "No .env file found. Please make shure you used example.env as a template"
-            "and filled in your personal credentials."
+            "Environment variables FF_WIKI_USER and FF_WIKI_PASSWORD are not set. "
+            "Please ensure they are set in the GitHub Settings or in your local .env file."
         )
     )
 

@@ -6,7 +6,7 @@ on:  # yamllint disable-line rule:truthy
       - master
 
 jobs:
-  update:
+  update_wiki:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -27,6 +27,9 @@ jobs:
             echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> "$GITHUB_ENV"
 
       - name: Update wiki.freifunk.net
+        env:
+          FF_WIKI_USER: ${{ vars.FF_WIKI_USER }}
+          FF_WIKI_PASSWORD: ${{ secrets.FF_WIKI_PASSWORD }}
         run: |
           if [ -n "${CHANGED_LOCATIONS}" ]; then
             ansible-playbook play.yml --tags wiki --limit "$CHANGED_LOCATIONS" ||true
