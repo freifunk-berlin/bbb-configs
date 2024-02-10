@@ -137,7 +137,7 @@ location__channel_assignments_11a_standard__to_merge:
   spitta13-nf-w: 36-20
 
 location__channel_assignments_11g_standard__to_merge:
-  spitta13-core: 1-20
+  spitta13-core: 13-20
 
 location__ssh_keys__to_merge:
   - comment: neko
