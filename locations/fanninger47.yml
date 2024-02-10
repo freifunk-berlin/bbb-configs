@@ -30,8 +30,12 @@ hosts:
     mac_override: {eth0: dc:2c:6e:91:0f:88}
 
 snmp_devices:
+  - hostname: fanninger47-switch
+    address: 10.31.233.2
+    snmp_profile: routeros
+
   - hostname: fanninger47-liese21
-    address: 10.31.232.195
+    address: 10.31.233.4
     snmp_profile: airos_8
 
 ipv6_prefix: "2001:bf7:860:1100::/56"
