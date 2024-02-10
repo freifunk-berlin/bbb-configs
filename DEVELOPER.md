@@ -125,7 +125,8 @@ networks:
     ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for point to point connections by ignoring the hidden node problem
     prefix: 10.31.83.60/32    # single ipv4-address for meshing
     ipv6_subprefix: -10       # take an address from the back of the IPv6-block. Best practise is to use the same value as the vlan-id to avoid duplicate adresses.
-     mesh_metric_lqm: ['default 0.8'] # link quality multiplier is used to artificially make routes worse, so certain links are preferred. Must be higher then 0.2, otherwise link wont work.
+    mesh_metric_lqm: ['default 0.8'] # link quality multiplier is used to artificially make routes worse for olsr, so certain links are preferred. Must be higher then 0.2, otherwise link wont work. Currently IPv4 routes over it.
+    mesh_metric: 1024         # overrides the default of 512 for for babel similar to the option above. Lower metrics means a route is preffered. Currently IPv6 routes over it.
     untagged: true            # untags the vlan. It is commenly used for tunnel-uplinks
 
   - vid: 11
