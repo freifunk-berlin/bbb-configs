@@ -1,0 +1,27 @@
+---
+target: ath79/generic
+brand_nice: D-Link
+model_nice: DIR-842
+version_nice: C3
+
+model__packages__to_merge:
+  - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"
+  - "kmod-ath10k ath10k-firmware-qca988x"
+
+switch_ports: 7
+switch_int_port: 6
+switch_ignore_ports: [0]
+
+int_port: eth0
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: VHT
+    path: pci0000:00/0000:00:00.0
+    ifname_hint: wlan5
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: platform/ahb/18100000.wmac
+    ifname_hint: wlan2
