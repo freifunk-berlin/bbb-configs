@@ -100,8 +100,8 @@ networks:
   - vid: 12
     role: mesh
     name: mesh_dtmb
-    ipv4: 10.31.130.162/32
-    ipv6: 3
+    prefix: 10.31.130.162/32
+    ipv6_subprefix: 3
     metric: 1024
     ptp: true
 

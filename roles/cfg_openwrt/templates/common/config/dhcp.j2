@@ -1,0 +1,104 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+config dnsmasq
+	option domainneeded '1'
+	option localise_queries '1'
+	option rebind_protection '1'
+	option rebind_localhost '1'
+	option local '/lan/'
+	option domain 'lan'
+	option expandhosts '1'
+	option authoritative '1'
+	option readethers '1'
+	option localservice '1'
+	option noping '{{ dhcp_no_ping|int if dhcp_no_ping is defined else 1 }}'
+	option quietdhcp '1'
+{% for network in networks | default([]) %}
+  {% if network['role'] == 'gateway' %}
+    {% if (dsa_ports is defined) or (switch_ports|default(0) > 0) %}
+      {% set ifname = ('switch0' if dsa_ports is defined else int_port) + '.' + network['vid']|string %}
+  	{% else %}
+      {% set ifname = ((int_port) + '.' + network['vid']|string if not network.get('untagged') else (int_port)) %}
+    {% endif %}	list notinterface '{{ ifname }}'
+  {% elif network['role'] == 'corerouter' %}
+	option cachesize '{{ dns_cache_size | default(10000) }}'
+ 	list server '/olsr/'
+  {% endif %}
+{% endfor %}
+{% for _dns_server in dns_servers %}
+        list server '{{ _dns_server }}'
+{% endfor %}
+
+{% for network in networks | selectattr('role', 'equalto', 'mgmt') %}
+  {% for host, ip_num in network['assignments'].items() %}
+config domain '{{ host | replace('-', '_') }}_olsr'
+	option name '{{ host }}.olsr'
+	option ip '{{ network['prefix'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }}'
+
+  {% endfor %}
+{% endfor %}
+
+{% for network in networks | rejectattr('role', 'in', ['uplink', 'mesh', 'tunnel', 'ext']) %}
+  {% set name = network['name'] if 'name' in network else network['role'] %}
+
+config dhcp 'dhcp_{{ name }}'
+	option ignore '0'
+	option interface '{{ name }}'
+	option ra 'server'
+	option dhcpv6 'disabled'
+  {% if network['role'] == 'dhcp' %}
+	option dhcpv4 'server'
+	option force '1'
+	option leasetime '5m'
+	option start '2'
+	option limit '{{ network['prefix'] | ansible.utils.ipaddr('size') -3 }}'
+        list dhcp_option '121,0.0.0.0/0,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.31.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.36.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.230.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.248.0.0/14,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}'
+  {% else %}
+	option dhcpv4 'disabled'
+  {% endif %}
+
+
+  {% if not network.get('no_corerouter_dns_record') %}
+config domain 'frei_funk_{{ name }}'
+	option name 'frei.funk'
+	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}'
+  {% endif %}
+{% endfor %}
+
+{% for network in networks | selectattr('role','in', ['uplink', 'mesh', 'tunnel']) %}
+  {% set name = network['name'] if 'name' in network else network['role'] %}
+config dhcp 'dhcp_{{ name }}'
+	option interface '{{ name }}'
+	option ignore '1'
+
+{% endfor %}
+
+{% for network in networks | selectattr('role','equalto','dhcp') %}
+  {% for assignment in network['assignments'] %}
+config host
+	option name '{{ assignment }}'
+	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][assignment]) | ansible.utils.ipaddr('address') }}'
+  {% endfor %}
+{% endfor %}
+
+
+{% for network in networks | default([]) %}
+  {% if network['role'] == 'corerouter' %}
+config odhcpd 'odhcpd'
+	option maindhcp '0'
+	option leasefile '/tmp/hosts/odhcpd'
+	option leasetrigger '/usr/sbin/odhcpd-update'
+	option loglevel '4'
+
+  {% elif network['role'] == 'gateway' %}
+config odhcpd 'odhcpd'
+	option ignore '1'
+
+    {% for gateway in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
+      {% set name = hostvars[gateway]['gre_tunnel_alias'] %}
+config dhcp 'dhcp_{{ name }}'
+	option interface '{{ name }}'
+	option ignore '1'
+
+    {% endfor %}
+  {% endif %}
+{% endfor %}
