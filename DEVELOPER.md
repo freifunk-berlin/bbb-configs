@@ -138,7 +138,7 @@ networks:
     role: mgmt                # create a management vlan in which we can reach every device on this site for maintenance
     prefix: 10.31.42.0/28
     gateway: 1
-    dns: 1
+    dns: 1                    # used to tell accesspoints the location of dns server at assignment number n
     ntp: 1                    # used to tell accesspoints to use the ntp server of the core router
     ipv6_subprefix: 1
     assignments:              # assign static(!) addresses from mgmt-network to individual devices/interfaces.
