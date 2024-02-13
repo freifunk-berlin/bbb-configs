@@ -166,14 +166,14 @@ def edit_section(article_title, section_number, csrf_token, new_text):
         print(
             (
                 f"SKIPPED: The Wiki article was already up to date."
-                f"No changes were made. See: {WIKI_URL}/{data.get('edit').get('title')}"
+                f"No changes were made. See: {WIKI_URL}/{requests.utils.quote(data.get('edit').get('title'))}"
             )
         )
     else:
         print(
             (
                 f"UPDATED: The wiki article was successfully updated."
-                f"Check the results at: {WIKI_URL}/{data.get('edit').get('title')}"
+                f"Check the results at: {WIKI_URL}/{requests.utils.quote(data.get('edit').get('title'))}"
             )
         )
 
