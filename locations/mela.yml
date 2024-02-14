@@ -87,7 +87,7 @@ networks:
       mela-core: 1
       # Switches
       mela-switch-hinten: 2
-      # mela-switch-vorn: 3
+      # mela-switch-vorne: 3
       # Ubiquiti APs + Stations
       mela-nw-5ghz: 4
       mela-oso-5ghz: 5
