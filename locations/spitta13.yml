@@ -40,6 +40,10 @@ snmp_devices:
     address: 10.31.232.196
     snmp_profile: airos_8
 
+  - hostname: spitta13-j41
+    address: 10.31.232.199
+    snmp_profile: airos_6
+
 airos_dfs_reset:
   - name: "spitta-ost"
     target: "10.31.232.196"
@@ -65,6 +69,13 @@ networks:
     name: mesh_ost
     prefix: 10.31.232.225/32
     ipv6_subprefix: -11
+
+  # Nanostation (NSM5)
+  - vid: 12
+    role: mesh
+    name: mesh_j41
+    prefix: 10.31.232.230/32
+    ipv6_subprefix: -12
 
   - vid: 20
     role: mesh
@@ -130,6 +141,7 @@ networks:
       spitta13-ost: 4
       spitta13-nf-w: 5
       spitta13-nf-o: 6
+      spitta13-j41: 7
 
 location__channel_assignments_11a_standard__to_merge:
   spitta13-core: 44-20
