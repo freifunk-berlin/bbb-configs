@@ -13,6 +13,9 @@ hosts:
     model: "linksys_e8450-ubi"
     wireless_profile: freifunk_default
     wifi_roaming: true
+    # USBIP packages to manage Meshtastic node (TLORA_V2_1_1P6) connected via USB
+    host__packages__to_merge:
+      - "kmod-usb-ohci usbip-server usbip-client"
 
   - hostname: zwingli-dome-1
     role: ap
