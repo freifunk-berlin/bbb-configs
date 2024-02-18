@@ -52,8 +52,15 @@ jobs:
           fi
           mkdir -p ./tmp/configs
 
+      - name: Create tar from configs folder
+        run: |
+          # create a tar containing the configs, as files with colons might be created which are rejected by upload-artifact
+          # upload-artifact rejects all files that might cause issues with file systems that do not support all characters
+          tar -cvf ./tmp/configs.tar ./tmp/configs/
+
       - name: Store build output
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: ansibleconfigs
-          path: ./tmp/configs
+          path: |
+            ./tmp/configs.tar
