@@ -44,6 +44,11 @@ snmp_devices:
     address: 10.31.98.226
     snmp_profile: airos_8
 
+# 10.31.98.188/32   - mesh-emma
+# 10.31.36.104/32   - mesh-xdorf
+# 10.230.157.128/25 - dhcp
+# 10.31.169.128/25  - privdhcp
+# 10.31.98.224/27   - mgmt
 
 ipv6_prefix: "2001:bf7:830:9200::/56"
 
@@ -53,6 +58,13 @@ networks:
     name: mesh_emma
     prefix: 10.31.98.188/32
     ipv6_subprefix: -1
+    ptp: true
+
+  - vid: 11
+    role: mesh
+    name: mesh_xdorf
+    prefix: 10.31.36.104/32
+    ipv6_subprefix: -2
     ptp: true
 
   - vid: 40
@@ -80,7 +92,7 @@ networks:
     prefix: 10.31.98.224/27
     gateway: 1
     dns: 1
-    ipv6_subprefix: 1
+    ipv6_subprefix: 2
     assignments:
       rauchhaus-core: 1
       rauchhaus-emma: 2
