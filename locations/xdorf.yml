@@ -11,7 +11,7 @@ hosts:
 
   - hostname: xdorf-core
     role: corerouter
-    model: "avm_fritzbox-7530"
+    model: "avm_fritzbox-4040"
     wireless_profile: freifunk_default
 
 snmp_devices:
