@@ -24,6 +24,9 @@ hosts:
     role: corerouter
     model: "dlink_dap-x1860-a1"
     wireless_profile: freifunk_default
+    host__rclocal__to_merge:
+      # Add service announcement for K12 Sunset Webcam
+      - "[ -z \"$(uci show olsrd | grep -F 'k12-sunset.olsr')\" ] && uci add_list olsrd.@LoadPlugin[1].service=\"http://k12-sunset.olsr:80|tcp|K12 Sunset Webcam\" && /etc/init.d/olsrd restart"
 
 ipv6_prefix: '2001:bf7:760:700::/56'
 
