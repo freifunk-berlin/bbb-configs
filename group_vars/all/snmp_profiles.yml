@@ -343,7 +343,7 @@ collectd_snmp_profiles:
       Type: uptime
       TypeInstance: days
       Table: false
-      Scale: 1.15740740741e-07 # TODO: check if scale if right. Unit is 1/100th of a second
+      Scale: 1.15740740741e-07
       Values: .1.3.6.1.2.1.1.3.0
 
     if_oper_status:
