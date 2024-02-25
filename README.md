@@ -43,15 +43,12 @@ If we need someone to reproduce our setup, the person can just generate the imag
 
 If you want to use bbb-configs for locations that are not included in bbb-configs yet or to work on a fork of the code yourself then see the [Developers Guide](DEVELOPER.md).
 
-## Automaticly updating to wiki.freifunk.net
+## Automatically updating to [wiki.freifunk.net](https://wiki.freifunk.net/)
 
-If you updated certain locations you can automaticly updating their wikiarticle using the wikitag:
-    ansible-playbook play.yml --tags wiki
-This works by automaticly replacing semantic values in the coresponding article resulting in the placeholders throughout the article being replaced with the new values. For an example you can have a look at the [wikiarticle of Fesev](https://wiki.freifunk.net/Berlin:Standorte:Fesev).
-To add this option to your wikiarticle add a section called "Konfiguration" and replace all values that you want to automaticly change as you can see in the example-article. If you want to add a new location you can start with [this template](https://wiki.freifunk.net/Berlin:Standorte:Template).
-Please note that for the first time you have to copy the wikiupdateroutput from /tmp/wikiupdater/ into your acrticle or set the coordinates manually.
+By default all articles that follow the convention will be updated automatically when config changes get merged into the main branch.
+To add this option to your wikiarticle add a section called "Konfiguration" and replace all values that you want to automatically change as you can see in [this example-article](https://wiki.freifunk.net/Berlin:Standorte:Fesev). If you want to add a new location you can start with [this template](https://wiki.freifunk.net/Berlin:Standorte:Template).
 
-Wikiupdater expects an article or a redirect to the article at `wiki.freifunk.net/Berlin:Standorte:$LOCATION` where `$LOCATION` is the name definied in your location file at `locations/$LOCATION.yml`.
+Wikiupdater expects an article or a redirect to the article at `wiki.freifunk.net/Berlin:Standorte:$LOCATION` where `$LOCATION` is the location name defined in your file at `locations/$LOCATION.yml`. You can manually run this update by using `--tags wiki` in a ansible config run
 
 ## Support Information
 
