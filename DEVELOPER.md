@@ -70,21 +70,13 @@ Multiple ports can be specified as a list:
 ```
 ### monitoring
 
-All OpenWrt-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make shure SNMP is activated on the properitary device. You can find an overview with all available profiles at `group_vars/all/snmp_profiles.yml`
+All OpenWrt-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make shure SNMP is activated on the proprietary device with the community set to public. You can find an overview with all available profiles at `group_vars/all/snmp_profiles.yml`
 
 ```yml
 snmp_devices:
   - hostname: segen-f2a   # hostname
     address: 10.31.6.11   # static ip of the device
     snmp_profile: airos_8 # SNMP profile
-
-  - hostname: segen-test
-    address: 10.31.6.12
-    snmp_profile: af60
-
-  - hostname: segen-sw
-    address: 10.31.6.13
-    snmp_profile: airos_6
 ```
 
 ### airos dfs reset
@@ -98,23 +90,17 @@ airos_dfs_reset:
     username: "ubnt"           # root username
     password: "file:/root/pwd" # location to a password file within the core-router
     daytime_limit: "2-7"       # time window for DFS reset
-
-  - name: "segen-mabb"
-    target: "10.31.6.12"
-    username: "ubnt"
-    password: "file:/root/pwd"
-    daytime_limit: "2-7"
 ```
 
 ### network
 
-This part defines IP-Addresses, WIFI-Properties, Mesh and so on. Lets have a (shortened) example of a `networks.yml` from the magda-location:
+This part defines IP-Addresses, WIFI-Properties, Mesh and so on.
 
 ```yml
-
-# mesh: 10.31.83.60/30        # add a overview of all reserved adresses at the top as a comment
-# dhcp: 10.31.83.192/26
-# mgmt: 10.31.83.112/28
+# ROUTER: 10.31.42.0/26      # add a overview of all reserved addresses at the top as a comment
+# --MGMT: 10.31.42.0/28
+# --MESH: 10.31.42.16/28
+# --DHCP: 10.31.42.32/27
 
 ipv6_prefix: "2001:bf7:860::/56"
 
@@ -123,44 +109,50 @@ networks:
     role: mesh                # what this vlan does (mesh vs. dhcp)
     name: mesh_sama           # the name has a 12 characters limit. It should only contain lower letters and underscores
     ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for point to point connections by ignoring the hidden node problem
-    prefix: 10.31.83.60/32    # single ipv4-address for meshing
-    ipv6_subprefix: -10       # take an address from the back of the IPv6-block. Best practise is to use the same value as the vlan-id to avoid duplicate adresses.
+    prefix: 10.31.42.16/32    # single ipv4-address for meshing
+    ipv6_subprefix: -10       # take an address from the back of the IPv6-block. Best practice is to use the same value as the vlan-id for everything except dhcp and mgmt to avoid duplicate addresses.
     mesh_metric_lqm: ['default 0.8'] # link quality multiplier is used to artificially make routes worse for olsr, so certain links are preferred. Must be higher then 0.2, otherwise link wont work. Currently IPv4 routes over it.
-    mesh_metric: 1024         # overrides the default of 512 for for babel similar to the option above. Lower metrics means a route is preffered. Currently IPv6 routes over it.
-    untagged: true            # untags the vlan. It is commenly used for tunnel-uplinks
+    mesh_metric: 1024         # overrides the default of 512 for for babel similar to the option above. Lower metrics means a route is preferred. Currently IPv6 routes over it.
+    untagged: true            # untags the vlan. It is commonly used for tunnel-uplinks
 
-  - vid: 11
+  - vid: 20
     role: mesh
-    name: mesh_ost
-    prefix: 10.31.83.61/32
-    ipv6_subprefix: -2
+    name: 11s_n_5g
+    prefix: 10.31.42.17/32
+    ipv6_subprefix: -20
+    mesh_ap: magda-core       # name of the ap that should mesh via 802.11s. Must be the same as in the hosts section above
+    mesh_radio: 11a_standard  # name of the wireless band. Can be 11a_standard for 5 GHz and 11g_standard for 2.4 GHz
+    mesh_iface: mesh
 
   - vid: 40
     role: dhcp                # dhcp server will run on core-router and serve it's network on vid 40
-    prefix: 10.31.83.192/26
+    prefix: 10.31.42.32/27
     ipv6_subprefix: 0
+    inbound_filtering: true   # blocks traffic from outside to the dhcp clients. This helps with client security
+    enforce_client_isolation: true # blocks traffic between clients within this vlan. This helps with client security
+    no_corerouter_dns_record: true # Add this option to every dhcp-network that is not the main one, for example a private dhcp-network
     assignments:              # assign static addresses to devices
       magda-core: 1
 
   - vid: 42
     role: mgmt                # create a management vlan in which we can reach every device on this site for maintenance
-    prefix: 10.31.83.112/28
+    prefix: 10.31.42.0/28
     gateway: 1
     dns: 1
     ntp: 1                    # used to tell accesspoints to use the ntp server of the core router
     ipv6_subprefix: 1
-    assignments:              # assign static(!) addresses from mngt-network to individual devices/interfaces.
+    assignments:              # assign static(!) addresses from mgmt-network to individual devices/interfaces.
       magda-core: 1           # core router gets 1st address. In result it will be reachable at 10.31.83.113
       magda-switch: 2         # 10.31.83.114 ...
       magda-sama: 3           # interface for mesh link to sama def'd at vid-10 (see above) gets 3rd address (for mngt only)
-      magda-ost-5ghz: 4       # mesh link on vid-11
+      magda-ost-5ghz: 4
       magda-ap1: 5
       magda-ap2: 6
       magda-ap3: 7
       magda-ap4: 8
 
 location__channel_assignments_11a_standard__to_merge:
-  # AP-id, wifi-channel, bandwidth, txpower
+  # AP-id, wifi-channel, bandwidth, txpower. Can be empty for default values
   magda-ap1: 36-20-15
   magda-ap2: 40-20-15
   magda-ap3: 44-20-15
@@ -170,7 +162,7 @@ The VLAN ID (vid) usually follow this numbering convention. They should be sorte
 
 ```yml
 10+ for airmax & co mesh links
-20+ for 11s
+20+ for 11s mesh
 40+ DHCP Clients
 42  MGMT
 50  Wireguardtunnel
@@ -192,21 +184,15 @@ tunnel can be an easy and safe solution. In that case you can add one or more tu
     prefix: 10.31.142.120/32
     wireguard_port: 51820
 
-  - role: tunnel
+  - role: tunnel              # only one tunnel is required. Running two makes the failover faster when one breaks
     ifname: ts_wg1
     mtu: 1280
     prefix: 10.31.142.121/32
     wireguard_port: 51821
 ```
 
-The values of the Babel Metric and the OLSR LQM are optional and influence how the uplink works. If the uplink tunnel is intended
-as a backup connection, and you see traffic flow through the tunnel, you should set a higher value for the babeld
-metric and a lower value for the OLSR LQM. The lowest possible LQM value is 0.2. Below that value the uplink will
-not work.
-
 If there are routes via the tunnels the following command will show a non empty result, when run on the node
-`(echo /routes | nc 127.0.0.1 9090) | grep '"networkInterface": "ts_'`. In this case you should adjust the link metrics
-for uplinks that should only act as backup connection.
+`(echo /routes | nc 127.0.0.1 9090) | grep '"networkInterface": "ts_'`. For uplinks that should only act as backup connection you should adjust the link metrics. See the network section for a example of Babel Metric and OLSR LQM.
 
 If you have multiple uplinks and want one to be prefered, set different link metrics for the different uplinks.
 
