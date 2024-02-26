@@ -4,6 +4,8 @@ location: wuhlipunks
 location_nice: Wuhlheide
 latitude: 52.466118
 longitude: 13.537581
+altitude: 32
+height: 5
 community: true
 
 hosts:
