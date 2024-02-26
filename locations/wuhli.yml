@@ -2,8 +2,10 @@
 
 location: wuhli
 location_nice: Wuhlheide
-latitude: 52.4644935
-longitude: 13.5360756
+latitude: 52.465406
+longitude: 13.536190
+altitude: 36
+height: 7
 community: true
 
 hosts:
