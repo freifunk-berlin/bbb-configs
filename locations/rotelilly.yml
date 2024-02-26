@@ -16,7 +16,7 @@ hosts:
 
   - hostname: rotelilly-core
     role: corerouter
-    model: "mikrotik_wap-ac"
+    model: "avm_fritzbox-4040"
     wireless_profile: freifunk_default
 
 # 10.31.198.0/25
