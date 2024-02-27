@@ -148,7 +148,7 @@ location__wireless_profiles__to_merge:
         owe_transition_ifname_hint: ff
         ieee80211w: 1
       - mode: ap
-        ssid: khof-test
+        ssid: khof
         encryption: psk2
         key: 'file:/root/wifi_pass'
         network: prdhcp
