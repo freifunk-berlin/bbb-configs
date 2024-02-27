@@ -71,7 +71,7 @@ def find_wiki_page(location: str):
             redirect_target = data["parse"]["links"][0]["*"]
             return redirect_target
         else:
-            return location
+            return f"Berlin:Standorte:{location}"
     except KeyError:
         raise KeyError(f"No Wikiarticle or redirect found. Raw json: {data}")
 
