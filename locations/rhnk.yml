@@ -15,6 +15,7 @@ hosts:
   - hostname: rhnk-nf-bvv
     role: ap
     model: "tplink_eap225-outdoor-v1"
+    wireless_profile: ap_only
 
   - hostname: rhnk-nf-no-5ghz
     role: ap
@@ -143,24 +144,6 @@ networks:
     name: mesh_nno_60ghz
     prefix: 10.230.3.26/32
     ipv6_subprefix: -26
-
-  - vid: 29
-    role: mesh
-    name: mesh_nf_2g
-    prefix: 10.230.3.29/32
-    ipv6_subprefix: -29
-    mesh_ap: rhnk-nf-bvv
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
-  - vid: 30
-    role: mesh
-    name: mesh_nf_bvv
-    prefix: 10.230.3.30/32
-    ipv6_subprefix: -30
-    mesh_ap: rhnk-nf-bvv
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
 
   - vid: 32
     role: mesh
