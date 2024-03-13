@@ -128,7 +128,7 @@ networks:
     ipv6_subprefix: -11
     assignments:
       gub37-core: 1
-#      gub37-sama: 2
+      gub37-switch: 2
       gub37-zwingli: 3
 #      gub37-emma: 4
       gub37-hof-s: 5
