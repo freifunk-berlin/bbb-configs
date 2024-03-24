@@ -39,6 +39,11 @@ hosts:
     model: "tplink_tl-wdr3600-v1"
     wireless_profile: rauchhaus
 
+  - hostname: rauchhaus-basement
+    role: ap
+    model: "avm_fritzbox-4040"
+    wireless_profile: rauchhaus
+
 snmp_devices:
   - hostname: rauchhaus-emma
     address: 10.31.98.226
@@ -95,13 +100,15 @@ networks:
     ipv6_subprefix: 2
     assignments:
       rauchhaus-core: 1
-      rauchhaus-emma: 2
-      rauchhaus-xdorf: 3
+      rauchhaus-switch: 2
+      rauchhaus-emma: 3
+      rauchhaus-xdorf: 4
       rauchhaus-floor0north135: 10
       rauchhaus-floor0south136: 11
       rauchhaus-floor1north133: 12
       rauchhaus-floor1south134: 13
       rauchhaus-floor2north132: 14
+      rauchhaus-basement: 15
 
 location__channel_assignments_11a_standard__to_merge:
   rauchhaus-core: 36-20
@@ -110,6 +117,7 @@ location__channel_assignments_11a_standard__to_merge:
   rauchhaus-floor1north133: 36-20
   rauchhaus-floor1south134: 48-20
   rauchhaus-floor2north132: 36-20
+  rauchhaus-basement: 44-20
 
 location__channel_assignments_11g_standard__to_merge:
   rauchhaus-core: 1-20
@@ -118,6 +126,7 @@ location__channel_assignments_11g_standard__to_merge:
   rauchhaus-floor1north133: 6-20
   rauchhaus-floor1south134: 11-20
   rauchhaus-floor2north132: 1-20
+  rauchhaus-basement: 6-20
 
 location__wireless_profiles__to_merge:
   - name: rauchhaus
