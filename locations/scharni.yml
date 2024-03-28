@@ -9,7 +9,8 @@ community: true
 hosts:
   - hostname: scharni-core
     role: corerouter
-    model: "zyxel_nbg6617"
+    model: "linksys_e8450-ubi"
+    wireless_profile: freifunk_default
 
   - hostname: scharni-ap-gastwg
     role: ap
