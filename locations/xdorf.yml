@@ -58,6 +58,10 @@ networks:
     ipv6_subprefix: 1
     assignments:
       xdorf-core: 1
+      xdorf-rauchhaus: 2
+      xdorf-ap1: 3
+      xdorf-ap2: 4
+
 
 location__channel_assignments_11a_standard__to_merge:
   xdorf-core: 36-20
