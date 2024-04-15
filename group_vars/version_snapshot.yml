@@ -1,3 +1,5 @@
 ---
 # Don't use falter master, breaking changes are expected at the moment (7/2023)
 feed_version: 1.4.0-snapshot
+
+imagebuilder_filename: "openwrt-imagebuilder-{{ target | replace('/','-') }}.Linux-x86_64.tar.zst"
