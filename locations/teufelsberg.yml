@@ -49,6 +49,10 @@ hosts:
 
 snmp_devices:
 
+  - hostname: teufelsberg-switch
+    address: 10.31.213.2
+    snmp_profile: swos
+
   - hostname: teufelsberg-ak36
     address: 10.31.213.7
     snmp_profile: af60
