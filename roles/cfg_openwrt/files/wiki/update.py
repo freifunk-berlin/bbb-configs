@@ -30,13 +30,6 @@ if not os.getenv("FF_WIKI_USER") or not os.getenv("FF_WIKI_PASSWORD"):
 
 API_URL = "https://wiki.freifunk.net/api.php"
 WIKI_URL = "https://wiki.freifunk.net"
-INTRO = (
-    "<b>Diesen Abschnitt nicht bearbeiten. Änderungen werden automatisch überschrieben!</b>"
-    "<br> Die Konfiguration für diesen Standort wurde mit dem Tool"
-    "[https://github.com/freifunk-berlin/bbb-configs bbb-configs] erstellt."
-    "Der aktuelle Stand der Konfiguration kann dort eingesehen werden."
-    "Teile des Wikiartikels werden mit Hilfe von Semantic Values und Templates automatisch erstellt."
-)
 
 # (Sub)-String that marks a auto-generated bbb-configs section
 SECTION_REGEX = "Konfiguration"
@@ -45,6 +38,18 @@ s = requests.Session()
 ################
 #  FUNCTIOINS  #
 ################
+
+
+def intro(location: str):
+    return (
+        "<b>Diesen Abschnitt nicht bearbeiten. Änderungen werden automatisch überschrieben!</b>"
+        "<br> Die Konfiguration für diesen Standort wurde mit dem Tool "
+        "[https://github.com/freifunk-berlin/bbb-configs bbb-configs] erstellt. "
+        "Der aktuelle Stand der Konfiguration kann dort in der Datei "
+        f"[https://github.com/freifunk-berlin/bbb-configs/blob/master/locations/{location}.yml {location}.yml] "
+        "eingesehen werden. Teile dieses Wikiartikels werden mit Hilfe von Semantic "
+        "Values und Templates automatisch erstellt."
+    )
 
 
 def find_wiki_page(location: str):
@@ -203,7 +208,7 @@ if __name__ == "__main__":
     section = find_bbbconfigs_section(pagetitle)
 
     pagetxt = f"= {section['title']} =\n\n"  # Text that gets posted into the specific article section
-    pagetxt += f"{INTRO}\n\n"
+    pagetxt += f"{intro(args.location)}\n\n"
 
     if args.text:
         pagetxt += args.text
