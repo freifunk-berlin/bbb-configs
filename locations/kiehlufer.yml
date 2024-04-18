@@ -33,7 +33,7 @@ hosts:
 
   - hostname: kiehlufer-huette
     role: ap
-    model: "ubnt_rocket-5ac-lite"
+    model: "zyxel_nwa55axe"
 
   - hostname: kiehlufer-nf-wbp1
     role: ap
@@ -135,17 +135,16 @@ networks:
     mesh_ap: kiehlufer-nf-wbp3
     mesh_radio: 11a_standard
     mesh_iface: mesh
-  # mesh - rocket 5 ac
+  # mesh - Zyxel NWA55AXE 5GHz
   - vid: 23
     role: mesh
-    name: mesh_huette
+    name: mesh_huet_5g
     prefix: 10.31.151.118/32
     ipv6_subprefix: -7
     mesh_metric: 2048
     mesh_ap: kiehlufer-huette
     mesh_radio: 11a_standard
     mesh_iface: mesh
-
   - vid: 24
     role: mesh
     name: mesh_nf_wbp4
@@ -154,6 +153,16 @@ networks:
     mesh_metric: 2048
     mesh_ap: kiehlufer-nf-wbp4
     mesh_radio: 11a_standard
+    mesh_iface: mesh
+  # mesh - Zyxel NWA55AXE 2GHz
+  - vid: 25
+    role: mesh
+    name: mesh_huet_2g
+    prefix: 10.31.151.120/32
+    ipv6_subprefix: -9
+    mesh_metric: 2048
+    mesh_ap: kiehlufer-huette
+    mesh_radio: 11g_standard
     mesh_iface: mesh
 
   - vid: 40
