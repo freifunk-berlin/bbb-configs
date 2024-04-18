@@ -67,7 +67,7 @@ snmp_devices:
 
   - hostname: kiehlufer-rhnk
     address: 10.31.82.211
-    snmp_profile: airos_8
+    snmp_profile: af60
 
   - hostname: kiehlufer-philmel
     address: 10.31.82.212
