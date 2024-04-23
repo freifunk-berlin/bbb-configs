@@ -29,6 +29,10 @@ snmp_devices:
     address: 10.31.11.5
     snmp_profile: edgeswitch
 
+  - hostname: emma-wsw-60ghz
+    address: 10.31.11.17
+    snmp_profile: mikrotik_60g
+
   - hostname: emma-ssw-uplink
     address: 10.31.11.18
     snmp_profile: mikrotik_60g
@@ -60,6 +64,10 @@ snmp_devices:
   - hostname: emma-sso-5ghz
     address: 10.31.11.25
     snmp_profile: airos_8
+
+  - hostname: emma-nnw-60ghz
+    address: 10.31.11.29
+    snmp_profile: mikrotik_60g
 
 airos_dfs_reset:
   - name: "emma-oso-5ghz"
@@ -123,7 +131,9 @@ networks:
       emma-switch-nw: 5
 
       # Router OS
+      emma-wsw-60ghz: 17    # Fenster 4
       emma-ssw-uplink: 18   # Fenster 2
+      emma-nnw-60ghz: 29    # Fenster 5
 
       # Airos 8, 5 GHz
       emma-oso-5ghz: 19     # Fenster 8, 20 MHz, center frequency 5580 MHz
@@ -195,6 +205,20 @@ networks:
     name: mesh_sso
     prefix: 10.31.11.40/32
     ipv6_subprefix: -17
+
+  - vid: 18
+    role: mesh
+    name: mesh_wsw_60ghz
+    prefix: 10.31.11.41/32
+    ipv6_subprefix: -18
+    ptp: true
+
+  - vid: 19
+    role: mesh
+    name: mesh_nnw_60ghz
+    prefix: 10.31.11.42/32
+    ipv6_subprefix: -19
+    ptp: true
 
 location__ssh_keys__to_merge:
   - comment: Vinet
