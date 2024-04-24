@@ -26,7 +26,7 @@ hosts:
 
 snmp_devices:
 
-  - hostname: radbahn-emmaus
+  - hostname: radbahn-emma
     address: 10.31.251.2
     snmp_profile: mikrotik_60g
 
