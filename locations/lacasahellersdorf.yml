@@ -1,0 +1,65 @@
+---
+location: lacasahellersdorf
+location_nice: La Casa Hellersdorf
+latitude: 52.542219539790544
+longitude: 13.617333278311412
+altitude: 32
+contacts:
+  - "#lacasahellersdorf:matrix.org"
+  - https://www.instagram.com/lacasahellersdorf/
+
+hosts:
+  - hostname: lacasahellersdorf-core
+    role: corerouter
+    model: netgear_wax220
+    wireless_profile: freifunk_default
+    mac_override: {eth0: 94:18:65:43:6e:67}
+
+
+ipv6_prefix: 2001:bf7:850:700::/56
+
+# Prefixes:
+# mesh: 10.31.167.96/29
+# mgmt: 10.31.248.224/28
+# dhcp: 10.31.253.0/24
+
+networks:
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.253.0/24
+    ipv6_subprefix: 0
+    assignments:
+      lacasahellersdorf-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.248.224/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      lacasahellersdorf-core: 1
+
+  - vid: 50
+    untagged: true
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.167.96/32
+    wireguard_port: 51820
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
