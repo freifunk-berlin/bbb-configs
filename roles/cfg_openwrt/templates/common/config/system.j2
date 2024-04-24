@@ -36,6 +36,12 @@ config led 'led_{{ led['name'] }}'
 {% if led['port_mask'] is defined %}
         option port_mask '{{ '0x%0x' % led['port_mask'] }}'
 {% endif %}
+{% if led['mode'] is defined %}
+        option mode '{{ led['mode'] }}'
+{% endif %}
+{% if led['dev'] is defined %}
+        option mode '{{ led['dev'] }}'
+{% endif %}
 {% endfor %}
 
 {% for poe in poe_ports | default([]) %}
