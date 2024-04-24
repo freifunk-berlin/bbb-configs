@@ -1,0 +1,34 @@
+---
+target: mediatek/filogic
+brand_nice: NETGEAR
+model_nice: WAX220
+int_port: eth0
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: HE
+    path: platform/soc/18000000.wifi+1
+    ifname_hint: wlan5
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HE
+    path: platform/soc/18000000.wifi
+    ifname_hint: wlan2
+
+leds:
+  - name: LAN
+    sysfs: green:lan
+    trigger: netdev
+    mode: link tx rx
+    dev: eth0
+  - name: WLAN2G
+    sysfs: blue:wlan2g
+    trigger: netdev
+    mode: link tx rx
+    dev: phy0-ap0
+  - name: WLAN5G
+    sysfs: blue:wlan5g
+    trigger: netdev
+    mode: link tx rx
+    dev: phy1-ap0
