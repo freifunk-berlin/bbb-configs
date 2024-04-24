@@ -27,6 +27,7 @@ hosts:
     role: ap
     model: "linksys_e8450-ubi"
     wireless_profile: wilgu10
+    openwrt_version: snapshot
 
   - hostname: wilgu10-west-nf
     role: ap
