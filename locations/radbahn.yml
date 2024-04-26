@@ -43,7 +43,7 @@ networks:
   - vid: 10
     name: mesh_emma
     role: mesh
-    prefix: 10.230.251.65/32
+    prefix: 10.31.251.65/32
     ipv6_subprefix: -10
     ptp: true
 
