@@ -33,10 +33,6 @@ snmp_devices:
     address: 10.31.130.134
     snmp_profile: airos_6
 
-  - hostname: ak36-friedenau
-    address: 10.31.130.135
-    snmp_profile: airos_6
-
   - hostname: ak36-rhnk
     address: 10.31.130.136
     snmp_profile: af60
@@ -68,7 +64,6 @@ mgmt:
     ak36-philmel: 4       # .132
     ak36-flughafen: 5     # .133
     ak36-dtmb: 6          # .134
-    ak36-friedenau: 7     # .135
     ak36-rhnk: 8          # .136
     # hypervisor: 9       # .137 (strange)
     ak36-teufelsberg: 11  # .139
@@ -98,13 +93,6 @@ mesh_links:
     ifname: eth1.12
     ipv4: 10.31.130.162/32
     ipv6: 2001:bf7:750:4001::3/128
-    metric: 1024
-    ptp: true
-
-  - name: mesh_friedenau
-    ifname: eth1.13
-    ipv4: 10.31.130.163/32
-    ipv6: 2001:bf7:750:4001::4/128
     metric: 1024
     ptp: true
 
