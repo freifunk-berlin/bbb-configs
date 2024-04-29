@@ -129,6 +129,11 @@ cat << EOF > "$vmdir/vmconfig.json"
       "host_dev_name": "vmeth0",
       "iface_id": "eth0",
       "guest_mac": "02:fc:00:00:00:06"
+    },
+    {
+      "host_dev_name": "vmeth1",
+      "iface_id": "eth1",
+      "guest_mac": "02:fc:01:00:00:06"
     }
   ]
 }
@@ -152,8 +157,12 @@ ip link set up vmeth0.42
 ip addr add $cnip dev vmeth0.42
 ip route add $mgmtnet dev vmeth0.42
 
+ip tuntap add dev vmeth1 mode tap
+ip link set up vmeth1
+
 brctl addbr wan
 brctl addif wan vmeth0.50
+brctl addif wan vmeth1
 brctl addif wan tap0
 ip link set up wan
 ip route del \`ip r | grep '24 dev tap0'\`
