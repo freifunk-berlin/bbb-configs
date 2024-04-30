@@ -20,10 +20,16 @@ config interface 'loopback'
 
 {% for network in networks | selectattr('vid', 'defined') %}
   {% set name = network['name'] if 'name' in network else network['role'] %}
-  {% if (dsa_ports is defined) or (switch_ports|default(0) > 0) %}
-    {% set port = ('switch0' if dsa_ports is defined else int_port) + '.' + network['vid']|string %}
+  {% set vid = network['vid']|string %}
+  {% set untagged = network.get('untagged') %}
+  {% if 'ifname' in network %}
+    {% set port = network['ifname'] + ('' if untagged else '.' + vid) %}
+  {% elif dsa_ports is defined %}
+    {% set port = 'switch0' + '.' + vid %}
+  {% elif (switch_ports|default(0) > 0) %}
+    {% set port = int_port + '.' + vid %}
   {% else %}
-    {% set port = ((int_port) + '.' + network['vid']|string if not network.get('untagged') else (int_port)) %}
+    {% set port = int_port + ('' if untagged else '.' + vid) %}
   {% endif %}
   {% set bridge_name = 'br-' + name %}
   {% set bridge_needed = name in wifi_networks or network.get('mesh_ap') == inventory_hostname or (role == 'corerouter' and 'tunnel_wan_ip' in network) or (role == 'corerouter' and network['role'] == 'uplink') %}

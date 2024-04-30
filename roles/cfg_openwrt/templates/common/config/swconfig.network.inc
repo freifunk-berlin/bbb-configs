@@ -6,7 +6,7 @@ config switch
 {% else %}
 	option enable_vlan '1'
 
-  {% for network in networks | selectattr('vid', 'defined') %}
+  {% for network in networks | selectattr('vid', 'defined') | selectattr('ifname', 'undefined') %}
     {% set portmapping = [] %}
     {% for port in range(switch_ports)|list|difference(switch_ignore_ports|default([])) %}
       {% set tagged = not network.get('untagged') or port == switch_int_port %}
