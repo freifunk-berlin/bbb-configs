@@ -32,10 +32,10 @@ snmp_devices:
     address: 10.31.251.2
     snmp_profile: mikrotik_60g
 
-# 10.31.251.0/24
-# 10.31.251.0/26   - mgmt
-# 10.31.251.64/26  - mesh
-# 10.31.251.128/25 - dhcp
+# 10.31.248.240/28
+# 10.31.248.240/29 - mgmt
+# 10.31.248.248/29 - mesh
+# 10.31.251.0/24   - dhcp
 ipv6_prefix: 2001:bf7:830:c000::/56
 
 networks:
@@ -43,14 +43,14 @@ networks:
   - vid: 10
     name: mesh_emma
     role: mesh
-    prefix: 10.31.251.65/32
+    prefix: 10.31.248.248/32
     ipv6_subprefix: -10
     ptp: true
 
   - vid: 20
     name: mesh_o_nf2
     role: mesh
-    prefix: 10.31.251.66/32
+    prefix: 10.31.248.249/32
     ipv6_subprefix: -20
     mesh_ap: radbahn-o-nf
     mesh_radio: 11g_standard
@@ -59,7 +59,7 @@ networks:
   - vid: 21
     name: mesh_o_nf5
     role: mesh
-    prefix: 10.31.251.67/32
+    prefix: 10.31.248.250/32
     ipv6_subprefix: -21
     mesh_ap: radbahn-o-nf
     mesh_radio: 11a_standard
@@ -68,7 +68,7 @@ networks:
   - vid: 22
     name: mesh_w_nf2
     role: mesh
-    prefix: 10.31.251.68/32
+    prefix: 10.31.248.251/32
     ipv6_subprefix: -22
     mesh_ap: radbahn-w-nf
     mesh_radio: 11g_standard
@@ -77,7 +77,7 @@ networks:
   - vid: 23
     name: mesh_w_nf5
     role: mesh
-    prefix: 10.31.251.69/32
+    prefix: 10.31.248.252/32
     ipv6_subprefix: -23
     mesh_ap: radbahn-w-nf
     mesh_radio: 11a_standard
@@ -86,7 +86,7 @@ networks:
   - vid: 40
     name: dhcp
     role: dhcp
-    prefix: 10.31.251.128/25
+    prefix: 10.31.251.0/24
     ipv6_subprefix: 0
     assignments:
       radbahn-core: 1
@@ -94,7 +94,7 @@ networks:
   - vid: 42
     name: mgmt
     role: mgmt
-    prefix: 10.31.251.0/26
+    prefix: 10.31.248.240/29
     ipv6_subprefix: 1
     gateway: 1
     dns: 1
