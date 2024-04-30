@@ -54,9 +54,14 @@ networks:
     assignments:
       pktpls-core: 1
 
+  # - vid: 50
+  #   role: uplink
+  #   untagged: false
+
   - vid: 50
+    ifname: eth1
     role: uplink
-    untagged: false
+    untagged: true
 
   - role: tunnel
     ifname: ts_wg0
