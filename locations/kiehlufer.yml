@@ -69,9 +69,9 @@ snmp_devices:
     address: 10.31.82.211
     snmp_profile: af60
 
-  - hostname: kiehlufer-philmel
+  - hostname: kiehlufer-hway
     address: 10.31.82.212
-    snmp_profile: airos_6
+    snmp_profile: mikrotik_60g
 
   - hostname: kiehlufer-emma
     address: 10.31.82.213
@@ -89,14 +89,12 @@ networks:
     ipv6_subprefix: -1
     mesh_metric: 1024
     ptp: true
-  # gateway - PBE 300 ISO
+  # hüttenroder weg - mikrotik 60ghz cube
   - vid: 11
     role: mesh
-    name: mesh_philmel
+    name: mesh_hway
     prefix: 10.31.151.113/32
     ipv6_subprefix: -2
-    mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.6']
     ptp: true
   # gateway - Rocket 5AC lite
   - vid: 12
@@ -184,7 +182,7 @@ networks:
       kiehlufer-core: 1
       kiehlufer-switch: 2
       kiehlufer-rhnk: 3
-      kiehlufer-philmel: 4
+      kiehlufer-hway: 4
       kiehlufer-emma: 5
       kiehlufer-nf-wbp1: 6
       kiehlufer-nf-wbp2: 7
