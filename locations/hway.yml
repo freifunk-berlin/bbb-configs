@@ -1,0 +1,154 @@
+---
+
+location: hway
+location_nice: Hüttenroder Weg
+latitude: 52.485032
+longitude: 13.447244
+altitude: 42
+contact_nickname: 'Stadtfunk gGmbH'
+contacts:
+  - 'noc@stadtfunk.net'
+
+# 10.31.255.192/26
+# - 10.31.255.192/27    dhcp
+# - 10.31.255.224/28    prdhcp
+# - 10.31.255.240/29    mesh
+#   - 10.31.255.240/32  mesh_emma
+#   - 10.31.255.241/32  ts_wg1
+# - 10.31.255.248/29    mgmt
+ipv6_prefix: 2001:bf7:820:2c00::/56
+
+hosts:
+
+  # Thinkcentre M720q, i5-8500T, ??GB RAM, ???GB NVMe
+  # Intel I219 V7 - eth0
+  # ConnectX-4 LX CX4121B - eth1, eth2
+  - hostname: hway-core
+    role: corerouter
+    model: x86-64
+    image_search_pattern: "*-ext4-combined.img*"
+    host__packages__to_merge:
+      - kmod-mlx5-core
+    host__rclocal__to_merge:
+      # There's a decades-old TX offload bug in intel gigabit controllers
+      # which regularly hangs the card. It gets reset automatically,
+      # but still results in regular ~15s downtimes. Disable offloads.
+      - ethtool -K eth0 tx off rx off
+
+  - hostname: hway-ap1
+    role: ap
+    model: zyxel_nwa50ax
+    wireless_profile: hway
+
+  - hostname: hway-ap2
+    role: ap
+    model: mikrotik_wap-ac
+    wireless_profile: hway
+
+snmp_devices:
+
+  - hostname: hway-kiehlufer
+    address: 10.31.255.252
+    snmp_profile: mikrotik_60g
+
+networks:
+
+  - vid: 10
+    role: mesh
+    name: mesh_emma
+    prefix: 10.31.255.240/32
+    ipv6_subprefix: -10
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.255.192/27
+    ipv6_subprefix: -40
+    assignments:
+      hway-core: 1
+
+  - vid: 41
+    role: dhcp
+    name: prdhcp
+    inbound_filtering: true
+    enforce_client_isolation: false
+    prefix: 10.31.255.224/28
+    ipv6_subprefix: -41
+    assignments:
+      hway-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.255.248/29
+    ipv6_subprefix: -42
+    gateway: 1
+    dns: 1
+    assignments:
+      hway-core: 1       # .255.249
+      hway-switch: 2     # .255.250
+      hway-kiehlufer: 3  # .255.251
+      hway-ap1: 4        # .255.252
+      hway-ap2: 5        # .255.253
+
+  - vid: 50
+    ifname: eth1
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.255.241/32
+    wireguard_port: 51820
+
+location__channel_assignments_11a_standard__to_merge:
+  hway-ap1: 36-40
+  hway-ap2: 44-40
+
+location__channel_assignments_11b_standard__to_merge:
+  hway-ap1: 13-20
+  hway-ap2: 9-20
+
+location__wireless_profiles__to_merge:
+  - name: hway
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11a_mesh
+        legacy_rates: false
+        country: DE
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 1
+      - mode: ap
+        ssid: huette-test
+        encryption: psk2
+        key: 'file:/root/wifi_pass'
+        network: prdhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: prdhcp
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
