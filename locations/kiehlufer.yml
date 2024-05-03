@@ -34,22 +34,26 @@ hosts:
   - hostname: kiehlufer-huette
     role: ap
     model: "zyxel_nwa55axe"
+    wireless_profile: kiehlufer5g
 
   - hostname: kiehlufer-nf-wbp1
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    wireless_profile: freifunk_default
     mac_override:
       eth0: 08:55:31:b1:3c:ad
 
   - hostname: kiehlufer-nf-wbp2
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    wireless_profile: freifunk_default
     mac_override:
       eth0: 08:55:31:b1:3c:c3
 
   - hostname: kiehlufer-nf-wbp3
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    wireless_profile: freifunk_default
     mac_override:
       eth0: 08:55:31:b1:3c:e1
 
@@ -152,16 +156,6 @@ networks:
     mesh_ap: kiehlufer-nf-wbp4
     mesh_radio: 11a_standard
     mesh_iface: mesh
-  # mesh - Zyxel NWA55AXE 2GHz
-  - vid: 25
-    role: mesh
-    name: mesh_huet_2g
-    prefix: 10.31.151.120/32
-    ipv6_subprefix: -9
-    mesh_metric: 2048
-    mesh_ap: kiehlufer-huette
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
 
   - vid: 40
     role: dhcp
@@ -197,3 +191,36 @@ location__channel_assignments_11a_standard__to_merge:
   kiehlufer-nf-wbp3: 44-20
   kiehlufer-nf-wbp4: 165-40
   kiehlufer-huette: 36-20
+
+location__wireless_profiles__to_merge:
+  - name: kiehlufer5g
+    devices:
+      - radio: 11a_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+      - radio: 11a_mesh
+        legacy_rates: false
+        country: DE
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard]
+        ifname_hint: ff
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard]
+        ifname_hint: ffowe
+        ieee80211w: 1
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
