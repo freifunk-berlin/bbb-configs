@@ -17,13 +17,11 @@ hosts:
   - hostname: radbahn-o-nf
     role: ap
     model: zyxel_nwa55axe
-    openwrt_version: snapshot
     wireless_profile: radbahn
 
   - hostname: radbahn-w-nf
     role: ap
     model: zyxel_nwa55axe
-    openwrt_version: snapshot
     wireless_profile: radbahn
 
 snmp_devices:
