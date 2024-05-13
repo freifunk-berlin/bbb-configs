@@ -1,0 +1,69 @@
+---
+location: camp3
+location_nice: campfunk.freifunk.net#3
+latitude: 12.00200
+longitude: 13.00400
+community: true
+
+hosts:
+  - hostname: camp3-core
+    role: corerouter
+    model: "glinet_gl-mt1300"
+    wireless_profile: freifunk_default
+    packages__to_merge:
+      - "kmod-usb-net-rndis"
+      - "usb-modeswitch"
+
+# camp3
+# --MGMT: 10.31.0.137/32
+# --DHCP: 10.31.202.192/26
+# --MESH: 10.31.202.72/30
+
+ipv6_prefix: 2001:bf7:750:5900::/56
+
+networks:
+
+  - vid: 20
+    role: mesh
+    name: mesh_camp
+    prefix: 10.31.202.72/32
+    ipv6_subprefix: -20
+    mesh_ap: camp3-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.31.202.192/26
+    ipv6_subprefix: -40
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      camp3-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.0.137/32
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 0
+    assignments:
+      camp3-core: 1
+
+  - vid: 50
+    role: uplink
+    untagged: true
+    ifname: eth1
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.202.73/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.202.74/32
+    wireguard_port: 51821

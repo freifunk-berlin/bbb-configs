@@ -1,0 +1,69 @@
+---
+location: camp5
+location_nice: campfunk.freifunk.net#5
+latitude: 12.00100
+longitude: 13.00200
+community: true
+
+hosts:
+  - hostname: camp5-core
+    role: corerouter
+    model: "glinet_gl-mt1300"
+    wireless_profile: freifunk_default
+    packages__to_merge:
+      - "kmod-usb-net-rndis"
+      - "usb-modeswitch"
+
+# camp5
+# --MGMT: 10.31.0.139/32
+# --DHCP: 10.31.203.64/26
+# --MESH: 10.31.202.80/30
+
+ipv6_prefix: 2001:bf7:750:5d00::/56
+
+networks:
+
+  - vid: 20
+    role: mesh
+    name: mesh_camp
+    prefix: 10.31.202.80/32
+    ipv6_subprefix: -20
+    mesh_ap: camp5-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.31.203.64/26
+    ipv6_subprefix: -40
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      camp5-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.0.139/32
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 0
+    assignments:
+      camp5-core: 1
+
+  - vid: 50
+    role: uplink
+    untagged: true
+    ifname: eth1
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.202.81/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.202.82/32
+    wireguard_port: 51821
