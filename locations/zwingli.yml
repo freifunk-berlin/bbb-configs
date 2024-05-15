@@ -274,7 +274,7 @@ networks:
       zwingli-west-nf-5ghz: 17
 
       # dome inside church
-      # zwingli-dome-1: 18  # defect as of 01/24
+      zwingli-dome-1: 18
       zwingli-dome-2: 19
 
       # 5ghz sectors
