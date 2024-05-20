@@ -171,8 +171,9 @@ networks:
       chris-s-2ghz: 12
       chris-w-2ghz: 13
 
+# Use default channel for all 802.11s links so standard falter nodes can mesh
 location__channel_assignments_11g_standard__to_merge:
-  chris-n-2ghz: 1-20
-  chris-o-2ghz: 5-20
-  chris-s-2ghz: 9-20
+  chris-n-2ghz: 13-20
+  chris-o-2ghz: 13-20
+  chris-s-2ghz: 13-20
   chris-w-2ghz: 13-20
