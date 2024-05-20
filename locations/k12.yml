@@ -71,16 +71,6 @@ ipv6_prefix: '2001:bf7:760:2a00::/56'
 # --UPLK:  10.31.158.224/27
 
 networks:
-  # DHCP
-  - vid: 40
-    role: dhcp
-    inbound_filtering: true
-    enforce_client_isolation: true
-    prefix: 10.31.158.0/25
-    ipv6_subprefix: 0
-    assignments:
-      k12-core: 1
-
   # MESH - segen
   - vid: 11
     role: mesh
@@ -190,6 +180,16 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
+  # DHCP
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.158.0/25
+    ipv6_subprefix: 0
+    assignments:
+      k12-core: 1
 
   # MGMT
   - vid: 42
@@ -214,16 +214,22 @@ networks:
       # 10.31.158.199/32
       k12-ap4: 7
 
-#  # UPLK - uplink via Wireguard and local internet connection
-#  - vid: 43
-#    untagged: true
-#    name: uplink
-#    role: uplink
-#    tunnel_wan_ip: 192.168.178.2/24
-#    tunnel_wan_gw: 192.168.178.1
-#    tunnel_connections: 2
-#    tunnel_timeout: 600
-#    tunnel_mesh_prefix_ipv4: 10.31.158.224/27
+  # UPLK
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.158.224/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.158.225/32
+    wireguard_port: 51821
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
