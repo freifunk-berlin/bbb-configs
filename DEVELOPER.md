@@ -303,6 +303,12 @@ The htmode_prefix setting corresponds with the htmode option.
 
 For a model using DSA instead of swconfig, you may refer to [`model_ubnt_edgerouter_x_sfp.yml`](https://github.com/freifunk-berlin/bbb-configs/blob/master/group_vars/model_ubnt_edgerouter_x_sfp.yml)
 
+To create a new model file for a device with swconfig you can use the following commands to get information about the switch on a standard OpenWRT install:
+
+- `swconfig list` to list all switches e.g. switch0
+- `swconfig dev switch0 help` to get information about the switch
+- `swconfig dev switch0 show` to get information about the state of the switch and ports
+
 Note: If you want to create a new model_file you can have a look at `/etc/config/wireless` on a standard OpenWRT
 install to obtain the path information for the wireless_devices.
 
