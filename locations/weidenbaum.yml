@@ -1,0 +1,116 @@
+---
+location: weidenbaum
+location_nice: Kleingartenkolonie Weidenbaum, Straße 70 Nr. 8+10, 13627 Berlin
+latitude: 52.542224269476314
+longitude: 13.305274844169617
+altitude: 27
+height: 6
+community: true
+
+hosts:
+  - hostname: weidenbaum-core
+    role: corerouter
+    model: "avm_fritzbox-4040"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+
+  - hostname: weidenbaum-bht
+    address: 10.31.204.130
+    snmp_profile: airos_8
+
+  - hostname: weidenbaum-frischauf
+    address: 10.31.204.131
+    snmp_profile: airos_8
+
+airos_dfs_reset:
+  - name: "weidenbaum-frischauf"
+    target: "10.31.204.131"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+ipv6_prefix: "2001:bf7:790:f00::/56"
+
+# got following prefixes:
+# Router:  10.31.204.128/26
+#          2001:bf7:780:a00::/56
+# --MGMT:  10.31.204.128/28
+# --MESH:  10.31.204.144/28
+# --DHCP:  10.31.204.160/27
+
+networks:
+  # MESH - PTMP / PTP Links
+  - vid: 10
+    role: mesh
+    name: mesh_bht
+    prefix: 10.31.204.144/32
+    ipv6_subprefix: -10
+
+  - vid: 11
+    role: mesh
+    name: mesh_frisch
+    prefix: 10.31.204.145/32
+    ipv6_subprefix: -11
+
+  # 802.11s Links
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.204.147/32
+    ipv6_subprefix: -20
+    # make mesh_metric(s) for 5GHz worse than LAN
+    mesh_metric: 768
+    mesh_metric_lqm: ['default 0.75']
+    mesh_ap: weidenbaum-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.204.148/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than LAN and 2GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.5']
+    mesh_ap: weidenbaum-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - LAN
+  # Ubiquiti UniFi AC Mesh - weidenbaum-r0
+  # This is currently Falter but should be converted into
+  # a normal AP at some point. We had UniFi AC Mesh that
+  # got bricked when flashing and we did not want to risk
+  # doing so.
+  - vid: 30
+    role: mesh
+    name: mesh_lan
+    untagged: true
+    prefix: 10.31.204.151/32
+    ipv6_subprefix: -30
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.204.160/27
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      weidenbaum-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.204.128/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      weidenbaum-core: 1       # .129
+      weidenbaum-bht: 2        # .130
+      weidenbaum-frischauf: 3  # .131
