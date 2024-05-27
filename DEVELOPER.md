@@ -70,7 +70,7 @@ Multiple ports can be specified as a list:
 ```
 ### monitoring
 
-All OpenWrt-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make shure SNMP is activated on the proprietary device with the community set to public. You can find an overview with all available profiles at `group_vars/all/snmp_profiles.yml`
+All OpenWrt-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make sure SNMP is activated on the proprietary device with the community set to public. You can find an overview with all available profiles at `group_vars/all/snmp_profiles.yml`
 
 ```yml
 snmp_devices:
@@ -142,14 +142,14 @@ networks:
     ntp: 1                    # used to tell accesspoints to use the ntp server of the core router
     ipv6_subprefix: 1
     assignments:              # assign static(!) addresses from mgmt-network to individual devices/interfaces.
-      magda-core: 1           # core router gets 1st address. In result it will be reachable at 10.31.83.113
-      magda-switch: 2         # 10.31.83.114 ...
-      magda-sama: 3           # interface for mesh link to sama def'd at vid-10 (see above) gets 3rd address (for mngt only)
+      magda-core: 1           # core router gets 1st address. In result it will be reachable at 10.31.42.1
+      magda-switch: 2         # 10.31.42.2 ...
+      magda-sama: 3           # interface for mesh link to sama def'd at vid-10 (see above) gets 3rd address (for mgmt only)
       magda-ost-5ghz: 4
       magda-ap1: 5
       magda-ap2: 6
       magda-ap3: 7
-      magda-ap4: 8
+      magda-ap4: 8            # 10.31.42.8
 
 location__channel_assignments_11a_standard__to_merge:
   # AP-id, wifi-channel, bandwidth, txpower. Can be empty for default values
