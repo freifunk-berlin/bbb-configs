@@ -36,10 +36,6 @@ snmp_devices:
     address: 10.31.131.140
     snmp_profile: airos_6
 
-  - hostname: flughafen-sued-5ghz
-    address: 10.31.131.141
-    snmp_profile: airos_6
-
 airos_dfs_reset:
 
   - name: "flughafen-zoll"
@@ -101,24 +97,18 @@ networks:
     ipv6_subprefix: -6
     ptp: true
 
-  - vid: 15
-    role: mesh
-    name: mesh_sued
-    prefix: 10.31.131.198/32
-    ipv6_subprefix: -7
-    ptp: true
-
-  - vid: 30
-    role: mgmt                   # workaround until we have real p2p role
-    name: lora_gw
-    prefix: 10.36.163.108/30
-    untagged: true               # workaround
-    gateway: 1
-    dns: 1
-    ipv6_subprefix: 2
-    assignments:
-      flughafen-core: 1
-      flughafen-lora: 2
+  # Currently not installed:
+  # - vid: 30
+  #   role: mgmt                   # workaround until we have real p2p role
+  #   name: lora_gw
+  #   prefix: 10.36.163.108/30
+  #   untagged: true               # workaround
+  #   gateway: 1
+  #   dns: 1
+  #   ipv6_subprefix: 2
+  #   assignments:
+  #     flughafen-core: 1
+  #     flughafen-lora: 2
 
   - vid: 40
     role: dhcp
@@ -147,4 +137,3 @@ networks:
       flughafen-zoll: 10
       flughafen-feld: 11
       flughafen-garten: 12
-      flughafen-sued-5ghz: 13
