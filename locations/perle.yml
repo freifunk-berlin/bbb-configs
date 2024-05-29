@@ -1,0 +1,85 @@
+---
+location: perle
+location_nice: Perleberger Str. 51
+latitude: 52.53138
+longitude: 13.34882
+altitude: 42
+height: 16
+community: true
+
+hosts:
+  - hostname: perle-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+    # USBIP packages to manage Meshtastic node connected via USB
+    host__packages__to_merge:
+      - "kmod-usb-ohci usbip-server usbip-client"
+
+snmp_devices:
+
+  - hostname: perle-m5
+    address: 10.31.205.130
+    snmp_profile: airos_6
+
+ipv6_prefix: "2001:bf7:790:f00::/56"
+
+# got following prefixes:
+# Router:  10.31.205.128/27
+#          2001:bf7:750:6800::/56
+# --MGMT:  10.31.205.128/29
+# --MESH:  10.31.205.136/29
+# --DHCP:  10.31.205.144/28
+
+networks:
+  # MESH - PTMP / PTP Links
+  - vid: 10
+    role: mesh
+    name: mesh_perle
+    prefix: 10.31.205.136/32
+    ipv6_subprefix: -10
+
+  # 802.11s Links
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.205.137/32
+    ipv6_subprefix: -20
+    mesh_ap: perle-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.205.138/32
+    ipv6_subprefix: -21
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.5']
+    mesh_ap: perle-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    untagged: true
+    prefix: 10.31.205.144/28
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      perle-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.205.128/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      perle-core: 1      # .129
+      perle-m5: 2        # .130
