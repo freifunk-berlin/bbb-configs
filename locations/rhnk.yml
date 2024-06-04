@@ -138,6 +138,9 @@ networks:
     name: mesh_nno_5ghz
     prefix: 10.230.3.25/32
     ipv6_subprefix: -25
+    # Adjust mesh metric to hermann12-core to prevent using it
+    # as a gateway
+    mesh_metric_lqm: ['10.230.25.5 0.5']
 
   - vid: 26
     role: mesh
