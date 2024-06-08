@@ -50,7 +50,9 @@ networks:
     prefix: 10.31.212.33/32
     ipv6_subprefix: -10
     ptp: true
-    mesh_metric: 256
+    # prefer routing via RHNK over SAMA
+    mesh_metric: 576
+    mesh_metric_lqm: ['default 0.9']
 
   # MESH - RHNK
   - vid: 11
@@ -59,8 +61,7 @@ networks:
     prefix: 10.31.212.34/32
     ipv6_subprefix: -11
     ptp: true
-    mesh_metric: 288
-    mesh_metric_lqm: ['default 0.95']
+    mesh_metric: 256
 
   # MESH - 5 GHz 802.11s
   - vid: 20
