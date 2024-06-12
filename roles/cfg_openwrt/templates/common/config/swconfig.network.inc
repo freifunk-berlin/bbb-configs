@@ -10,6 +10,9 @@ config switch
     {% set portmapping = [] %}
     {% for port in range(switch_ports)|list|difference(switch_ignore_ports|default([])) %}
       {% set tagged = not network.get('untagged') or port == switch_int_port %}
+      {% if port_untag is defined and network['vid'] in port_untag and port in port_untag[network['vid']] %}
+      {% set tagged = false %}
+      {% endif %}
       {{ portmapping.append(port|string + ("t" if tagged else "")) }}
     {%- endfor %}
 
