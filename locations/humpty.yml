@@ -1,0 +1,81 @@
+---
+
+location: humpty
+location_nice: "Obentrautstraße 35, 10963 Berlin"
+latitude: 52.496414
+longitude: 13.38523
+height: 30
+contact_nickname: 'humpty-wrzp'
+contacts:
+  - '@wrzp:matrix.org'
+
+hosts:
+
+  - hostname: humpty-edge-core
+    role: corerouter
+    model: "ubnt_edgerouter-x-sfp"
+    poe_on: [0, 1, 2]
+
+snmp_devices:
+  - hostname: humpty-rhxb
+    address: 10.31.205.162
+    snmp_profile: airos_8
+
+  - hostname: humpty-dtmb
+    address: 10.31.205.163
+    snmp_profile: airos_8
+
+ipv6_prefix: "2001:bf7:830:c300::/56"
+
+# humpty got the following prefixes:
+# Router: 10.31.205.160/27
+# --MGMT: 10.31.205.160/29
+# --MESH: 10.31.205.168/29
+# --DHCP: 10.31.205.176/28
+
+networks:
+  # MESH - rhxb
+  - vid: 10
+    role: mesh
+    name: mesh_rhxb
+    prefix: 10.31.205.168/32
+    ipv6_subprefix: -10
+    ptp: true
+
+  # MESH - dtmb
+  - vid: 11
+    role: mesh
+    name: mesh_dtmb
+    prefix: 10.31.205.169/32
+    ipv6_subprefix: -11
+    ptp: true
+
+  # MESH - LAN
+  - vid: 30
+    role: mesh
+    name: mesh_lan
+    prefix: 10.31.205.170/32
+    ipv6_subprefix: -30
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.205.176/28
+    ipv6_subprefix: 0
+    assignments:
+      humpty-edge-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.205.160/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      humpty-edge-core: 1  # .161
+      humpty-rhxb: 2       # .162
+      humpty-dtmb: 3       # .163
