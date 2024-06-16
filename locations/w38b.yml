@@ -148,6 +148,7 @@ networks:
     ipv6_subprefix: 3
     assignments:
       w38b-core: 1
+      w38b-pve: 2
 
   # MGMT
   - vid: 434
