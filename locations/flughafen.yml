@@ -97,19 +97,6 @@ networks:
     ipv6_subprefix: -6
     ptp: true
 
-  # Currently not installed:
-  # - vid: 30
-  #   role: mgmt                   # workaround until we have real p2p role
-  #   name: lora_gw
-  #   prefix: 10.36.163.108/30
-  #   untagged: true               # workaround
-  #   gateway: 1
-  #   dns: 1
-  #   ipv6_subprefix: 2
-  #   assignments:
-  #     flughafen-core: 1
-  #     flughafen-lora: 2
-
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -126,14 +113,17 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      flughafen-core: 1
-      flughafen-poe: 2
+      flughafen-core: 1      # .129
+      flughafen-poe: 2       # .130
 
-      # 60 ghz
-      flughafen-ak36: 3
-      flughafen-rhxb: 4
+      # 60 GHz
+      flughafen-ak36: 3      # .131
+      flughafen-rhxb: 4      # .132
 
-      # 5 ghz
-      flughafen-zoll: 10
-      flughafen-feld: 11
-      flughafen-garten: 12
+      # 5 GHz
+      flughafen-zoll: 10     # .138
+      flughafen-feld: 11     # .139
+      flughafen-garten: 12   # .140
+
+      # 868 MHz
+      flughafen-lora: 20     # .148
