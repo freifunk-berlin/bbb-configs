@@ -2,15 +2,13 @@
 zonename: 'Europe/Berlin'
 timezone: 'CET-1CEST,M3.5.0,M10.5.0/3'
 
+# TODO: find a second good DNS upstream in Berlin
 dns_servers:
-  # dns3.digitalcourage.de @ hetzner falkenstein
-  - 2a01:4f8:251:554::2
-  - 5.9.164.112
-  # ns1.fdn.fr @ gitoyen paris
-  - 2001:910:800::40
-  - 80.67.169.40
-  # dns.as250.net anycast (l105 broken)
-  # - 194.150.168.168
+  # quad9.net @ megaport l105+ak36
+  - 2620:fe::10
+  - 2620:fe::fe:10
+  - 9.9.9.10
+  - 149.112.112.10
 
 ntp_servers:
   - 0.openwrt.pool.ntp.org
