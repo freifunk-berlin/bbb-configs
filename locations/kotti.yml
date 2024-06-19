@@ -1,0 +1,92 @@
+---
+
+location: kotti
+location_nice: Skalitzer Straße 134, 10999 Berlin
+latitude: 52.49943
+longitude: 13.41860
+altitude: 41
+height: 13
+community: true
+
+hosts:
+
+  - hostname: kotti-core
+    role: corerouter
+    model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: kotti-simeon
+    address: 10.31.167.210
+    snmp_profile: airos_8
+
+ipv6_prefix: 2001:bf7:830:6600::/56
+
+# Kotti has following prefixes:
+# Router: 10.31.167.208/28
+# --MGMT: 10.31.167.208/29
+# --MESH: 10.31.167.216/29
+# --DHCP: 10.248.2.0/26
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_simeon
+    prefix: 10.31.167.216/32
+    ipv6_subprefix: -10
+    ptp: true
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.167.217/32
+    ipv6_subprefix: -20
+    mesh_ap: kotti-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.167.218/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.5']
+    mesh_ap: kotti-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.2.0/26
+    ipv6_subprefix: 0
+    assignments:
+      kotti-core: 1
+
+  - vid: 42
+    name: mgmt
+    role: mgmt
+    prefix: 10.31.167.208/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      kotti-core: 1
+      kotti-simeon: 2
+
+location__channel_assignments_11g_standard__to_merge:
+  # AP-id, wifi-channel, bandwidth, txpower. Can be empty for default values
+  kotti-core: 13-20-7                                # 20 dBm - 16 dBm (Antenne) + 3dBm (Cable loss)
+
+location__channel_assignments_11a_standard__to_merge:
+  # AP-id, wifi-channel, bandwidth, txpower. Can be empty for default values
+  kotti-core: 36-20-10                               # 23 dBm - 16 dBm (Antenne) + 3dBm (Cable loss)
+
+location__ssh_keys__to_merge:
+  - comment: Kian
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/tkIsr6x/qTnNcn5mJP+ucu4dreueQDNvr51AcMXvVMXy9ZqyUFC3WyAJAALfGv08lA/hWKvaBLeqI1JWrWutaGl3m8oI8jjDeA8WnBNYOpGluL0b1EkIAnB09pPehvIowP6PqgPO/m1Iv+FfOrxe3QoCGI4zvlwrC+Pu2SO4PAItr6ksqhRl5UaXrE3vHITxMCDPSa0xGxD1uq7PEg+OaMEVWtOJrcbIlQFlZSLodtrt6tnEDZJoyxfsjSbbjJD73mBnR4VGIsT1+RUmr4NemFtLJ3wDPUYZmJS5nprxnlAmFX8mDdoGeVw5OrSbCAltAXhXdzTb3uOo/kIxoMuiJajep4ZmB73Jsa8YW9CnQhZ4aHBLkhn80QI3OLrm/EWQevzmQejV4ztPCLkZCDklQJxhglzwr+Cj7JeUfQMdI1baMIQG7Z5oOHZqsVnc+HKoYnnZReUDtQH3oQETECoSIL5uEHujaqeMdVqx8NqiZX+093YLftNzyV+GA5TTxRU= kiangosling@Kians-MacBook-Pro.local
