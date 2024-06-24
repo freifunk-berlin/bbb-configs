@@ -250,7 +250,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: Private Wifi
         encryption: psk2
-        key: 'file:/root/wifi_pass'
+        key: 'file:/root/wifi_pass'  # the location of the file containing the wifi password
         network: prdhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: prdhcp
@@ -267,7 +267,7 @@ There are also files for the standard ssh keys and definitions for the Wi-Fi pro
 
 ### model_files
 
-These files define how bbb-configs needs to handle different hardware models. This example shows a WDR4900:
+These files define how bbb-configs needs to handle different hardware models:
 
 ```yml
 ---
@@ -276,11 +276,17 @@ brand_nice: TP-Link                     # brand from the router in human readabl
 model_nice: Archer C7                   # model from the router in human readable form
 version_nice: v2                        # version from the router in human readable form, not always present
 
+# This section is only needed for devices still using swconfig
 switch_ports: 6                         # number of physical ports + one (CPU)
 switch_int_port: 0                      # port-id of the CPU
 switch_ignore_ports: [1, 2, 3, 4]       # omit ports, that exist in software but not in hardware (i.e. MikroTik SXTsq 5ac)
-
 int_port: eth0                          # hardware-device on which swconfig works on
+
+# For DSA use
+dsa_ports:                              # list of ports obtained from boards.json
+  - lan1
+  - lan2
+  - wan
 
 wireless_devices:                       # definitions for the devices radios
   - name: 11a_standard                  # 5GHz radio
@@ -293,17 +299,20 @@ wireless_devices:                       # definitions for the devices radios
     htmode_prefix: VHT
     path: ffe0a000.pcie/pcia000:02/a000:02:00.0/a000:03:00.0
     ifname_hint: wlan2
+
+poe_ports:                              # definitions for the devices poe Ports. You can obtain this info from /etc/boards.json
+  - name: PoE Power Port0
+    gpio_pin: 400
+    value: 0
 ```
 
-Possible values for band are 2g for 2.4 GHz, 5g for 5 GHz, 6g for 6 GHz and 60g for 60 GHz.
+Possible values for `band` are 2g for 2.4 GHz, 5g for 5 GHz, 6g for 6 GHz and 60g for 60 GHz.
 Band replaces hwmode since 21.02.2.
 
-Possible values for htmode_prefix are HT (802.11n), VHT (802.11ac) and HE (802.11ax).
+Possible values for `htmode_prefix` are HT (802.11n), VHT (802.11ac) and HE (802.11ax).
 The htmode_prefix setting corresponds with the htmode option.
 
-For a model using DSA instead of swconfig, you may refer to [`model_ubnt_edgerouter_x_sfp.yml`](https://github.com/freifunk-berlin/bbb-configs/blob/main/group_vars/model_ubnt_edgerouter_x_sfp.yml)
-
-To create a new model file for a device with swconfig you can use the following commands to get information about the switch on a standard OpenWRT install:
+To create a new model file for a device with **swconfig** you can use the following commands to get information about the switch on a standard OpenWRT install:
 
 - `swconfig list` to list all switches e.g. switch0
 - `swconfig dev switch0 help` to get information about the switch
@@ -312,10 +321,13 @@ To create a new model file for a device with swconfig you can use the following 
 Note: If you want to create a new model_file you can have a look at `/etc/config/wireless` on a standard OpenWRT
 install to obtain the path information for the wireless_devices.
 
+For a model using **DSA** instead of swconfig you can obtain the needed information from
+
+`cat /etc/board.json`
 
 ## inventory/
 
-This is an internal diretory on which you don't need to care about now. If you like to learn mor on it, you might read
+This is an internal directory on which you don't need to care about now. If you like to learn mor on it, you might read
 the `README.md` file inside of it.
 
 ## roles/
