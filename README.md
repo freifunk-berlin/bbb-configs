@@ -10,18 +10,22 @@ Maintainers can remotely upgrade sites without having to worry about wrong confi
 ## Getting Started
 
 Using bbb-configs is quite simple. The TL;DR version for anyone not wanting to read the [FAQ](FAQ.md) is:
-
-    python3 -m venv venv
-    source venv/bin/activate
-    pip3 install -r requirements.txt
-    ./generate-images.sh
-
+1. Install dependencies. Depending on your distro you might need to use a different package management system than `apt`.
+```sh
+apt update
+apt install -y jq
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+```
+2. Generate images
+```sh
+./generate-images.sh
+```
 or
-
-    python3 -m venv venv
-    source venv/bin/activate
-    pip3 install -r requirements.txt
-    ansible-playbook play.yml --limit location-* --tags image
+```sh
+ansible-playbook play.yml --limit location-* --tags image
+```
 
 ## How it Works
 
