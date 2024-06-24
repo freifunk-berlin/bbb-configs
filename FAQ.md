@@ -5,6 +5,8 @@
 Make sure to install ansible and clone the bbb-configs repository. Then install the requirements using:
 
 ```sh
+apt update
+apt install -y jq
 python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
@@ -52,12 +54,11 @@ ansible-playbook play.yml --tags flash
 
 ## What is required to bringup a location?
 
-1. Create a location folder at `/group_vars/` and fill in at least `general.yml`, `networks.yml` and `owm.yml`.
-2. Create a folder for every OpenWrt device at the location under `/host_vars/`. Paste the `base.yml` in there.
-3. Run the image creation as shown in the commands above (image will be in `./tmp/images/`).
-4. Flash the image to your router.
-5. Secure the router by setting a root password using SSH or the web interface.
-6. Done!
+1. Create a location file in the `locations` directory. You might want to copy an existing location to make your start more easy.
+2. Run the image creation as shown in the commands above (image will be in `tmp/images` directory).
+3. Flash the image to your router.
+4. Secure the router by setting a root password using SSH or the web interface.
+5. Done!
 
 Have a look at the [Developers Guide](DEVELOPER.md) for more information.
 
@@ -66,8 +67,7 @@ Have a look at the [Developers Guide](DEVELOPER.md) for more information.
 Make sure to test your addition with yamllint and ansible-lint before sending a pull request by using:
 
 ```sh
-yamllint -d .config/yaml-lint.yml .
-ansible-lint -c .config/ansible-lint.yml
+make lint
 ```
 
 ## How can I mass deploy in the Freifunk Network
