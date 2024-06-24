@@ -3,7 +3,7 @@ name: Wikiupdate
 on:  # yamllint disable-line rule:truthy
   push:
     branches:
-      - master
+      - main
 
 jobs:
   update_wiki:
