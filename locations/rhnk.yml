@@ -1,6 +1,6 @@
 ---
 location: rhnk
-location_nice: Rathaus Neukoelln
+location_nice: "Rathaus Neukölln, Karl-Marx-Straße 83, 12043 Berlin"
 latitude: 52.481380
 longitude: 13.435078
 altitude: 90
@@ -10,7 +10,16 @@ hosts:
 
   - hostname: rhnk-core
     role: corerouter
-    model: "linksys_e8450-ubi"
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined.img*"
+    host__packages__to_merge:
+      - kmod-mlx5-core
+    host__rclocal__to_merge:
+      # There's a decades-old TX offload bug in intel gigabit controllers
+      # which regularly hangs the card. It gets reset automatically,
+      # but still results in regular ~15s downtimes. Disable offloads.
+      - ethtool -K eth0 tx off rx off
+
 
   - hostname: rhnk-nf-bvv
     role: ap
@@ -80,6 +89,7 @@ networks:
 
   # TODO: Clean up VIDs for mesh networks to match convention
   - vid: 11
+    ifname: eth1
     role: mesh
     name: mesh_rhxb
     prefix: 10.230.3.11/32
@@ -88,6 +98,7 @@ networks:
     ptp: true
 
   - vid: 14
+    ifname: eth1
     role: mesh
     name: mesh_klunker60
     prefix: 10.230.3.14/32
@@ -95,6 +106,7 @@ networks:
     ptp: true
 
   - vid: 15
+    ifname: eth1
     role: mesh
     name: mesh_emma
     prefix: 10.230.3.15/32
@@ -104,36 +116,42 @@ networks:
     mesh_metric_lqm: ['default 0.7']  # prefer rhxb link
 
   - vid: 20
+    ifname: eth1
     role: mesh
     name: mesh_no_5ghz
     prefix: 10.230.3.20/32
     ipv6_subprefix: -20
 
   - vid: 21
+    ifname: eth1
     role: mesh
     name: mesh_wsw_5
     prefix: 10.230.3.21/32
     ipv6_subprefix: -21
 
   - vid: 22
+    ifname: eth1
     role: mesh
     name: mesh_wsw_60
     prefix: 10.230.3.22/32
     ipv6_subprefix: -22
 
   - vid: 23
+    ifname: eth1
     role: mesh
     name: mesh_ssw_5
     prefix: 10.230.3.23/32
     ipv6_subprefix: -23
 
   - vid: 24
+    ifname: eth1
     role: mesh
     name: mesh_oso_60
     prefix: 10.230.3.24/32
     ipv6_subprefix: -24
 
   - vid: 25
+    ifname: eth1
     role: mesh
     name: mesh_nno_5ghz
     prefix: 10.230.3.25/32
@@ -143,12 +161,14 @@ networks:
     mesh_metric_lqm: ['10.230.25.5 0.5']
 
   - vid: 26
+    ifname: eth1
     role: mesh
     name: mesh_nno_60ghz
     prefix: 10.230.3.26/32
     ipv6_subprefix: -26
 
   - vid: 32
+    ifname: eth1
     role: mesh
     name: mesh_nf_no
     prefix: 10.230.3.28/32
@@ -158,6 +178,7 @@ networks:
     mesh_iface: mesh
 
   - vid: 33
+    ifname: eth1
     role: mesh
     name: mesh_nf_so
     prefix: 10.230.3.29/32
@@ -167,6 +188,7 @@ networks:
     mesh_iface: mesh
 
   - vid: 40
+    ifname: eth1
     role: dhcp
     prefix: 10.230.3.64/26
     ipv6_subprefix: 0
@@ -176,46 +198,47 @@ networks:
       rhnk-core: 1
 
   - vid: 420
+    ifname: eth1
     role: mgmt
     prefix: 10.31.153.0/27
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # Belkin RT3200 /	Linksys E8450 (UBI)
+      # Thinkcentre M720q, i5-8500T, 16GB RAM, 256GB NVMe; Intel I219 V7 - eth0; ConnectX-4 LX CX4121B - eth1, eth2
       rhnk-core: 1
 
-      # Mikrotik CRS328-24P-4S+RM - SwitchOS 2.13
+      # Mikrotik CRS328-24P-4S+RM - SwitchOS
       rhnk-switch: 2
 
-      # AirFiber 60-LR - Firmware 3.3.0-BETA2
+      # AirFiber 60-LR
       rhnk-rhxb: 11
 
-      # Mikrotik Cube 60 Pro - RouterOS 7.7
+      # Mikrotik Cube 60 Pro
       rhnk-klunker-60ghz: 14
 
-      # Powerbeam 5AC 400 ISO - AirOS 8.7.11
+      # Powerbeam 5AC 400 ISO
       rhnk-emma: 15
 
-      # Rocket 5AC Lite - AirOS 8.7.11
+      # Rocket 5AC Lite
       rhnk-no-5ghz: 20
 
-      # Rocket 5AC Lite - AirOS 8.7.11
+      # Rocket 5AC Lite
       rhnk-wsw-5ghz: 21
 
-      # Airfiber LR - Firmware 3.3.0-BETA2
+      # Airfiber LR
       rhnk-wsw-60ghz: 22
 
-      # Rocket 5AC Lite - AirOS 8.7.11
+      # Rocket 5AC Lite
       rhnk-ssw-5ghz: 23
 
-      # Wave AP - Firmware 3.3.0-BETA2
+      # Wave AP
       rhnk-oso-60ghz: 24
 
-      # Rocket 5AC Lite - AirOS 8.7.11
+      # Rocket 5AC Lite
       rhnk-nno-5ghz: 25
 
-      # Wave AP - Firmware 3.3.0-BETA2
+      # Wave LR
       rhnk-nno-60ghz: 26
 
       # SXTsq 5 ac - OpenWrt
