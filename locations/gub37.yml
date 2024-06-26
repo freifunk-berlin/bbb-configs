@@ -25,12 +25,16 @@ hosts:
     model: "ubnt_nanostation-ac-loco"
 
 snmp_devices:
-  - hostname: gub37-sama-60g
-    address: 10.31.157.7
+  - hostname: gub37-zwingli
+    address: 10.31.157.10
+    snmp_profile: airos_8
+
+  - hostname: gub37-emma
+    address: 10.31.157.11
     snmp_profile: af60
 
-  - hostname: gub37-zwingli
-    address: 10.31.157.3
+  - hostname: gub37-sama
+    address: 10.31.157.12
     snmp_profile: airos_8
 
 
@@ -63,7 +67,6 @@ networks:
     ipv6_subprefix: -12
     ptp: true
     mesh_metric_lqm: ['default 0.95']
-
 
   - vid: 20
     role: mesh
@@ -121,7 +124,7 @@ networks:
     prefix: 10.31.157.0/26
     gateway: 1
     dns: 1
-    ipv6_subprefix: -433
+    ipv6_subprefix: 0
     assignments:
       gub37-core: 1
       gub37-switch: 2
