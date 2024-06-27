@@ -147,8 +147,10 @@ networks:
     prefix: 10.31.212.192/26
     ipv6_subprefix: 3
     assignments:
-      w38b-core: 1
-      w38b-pve: 2
+      w38b-core: 1      # 10.31.212.193
+      w38b-switch: 2    # 10.31.212.194
+      w38b-pve: 3       # 10.31.212.195
+      w38b-ds: 4        # 10.31.212.196
 
   # MGMT
   - vid: 434
@@ -158,14 +160,10 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # 10.31.212.1/32
-      w38b-core: 1
-      # 10.31.212.2/32
-      w38b-ap1: 2
-      # 10.31.212.3/32
-      w38b-sama: 3
-      # 10.31.212.4/32
-      w38b-rhnk: 4
+      w38b-core: 1      # 10.31.212.1
+      w38b-ap1: 2       # 10.31.212.2
+      w38b-sama: 3      # 10.31.212.3
+      w38b-rhnk: 4      # 10.31.212.4
 
 
 # AP-id, wifi-channel, bandwidth, txpower
