@@ -65,7 +65,7 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # 10.31.207.1/32
+      # 10.31.202.95
       apothekerteich-core: 1
 
 # only place this ssh-keys
