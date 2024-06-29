@@ -28,3 +28,5 @@ all__ssh_keys__to_merge:
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaljQHr4Nj6veeDi51BZjy/a3WXPmH8SLePB/s/owNy noxil@systemli.org
   - comment: rtznprmpftl
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHZ5H1Y3o30QvU3ohtXiWZUgw9fIGxvW35STG7vICF8O localghost
+  - comment: tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
