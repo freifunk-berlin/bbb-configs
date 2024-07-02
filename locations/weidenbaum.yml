@@ -19,17 +19,6 @@ snmp_devices:
     address: 10.31.204.130
     snmp_profile: airos_8
 
-  - hostname: weidenbaum-frischauf
-    address: 10.31.204.131
-    snmp_profile: airos_8
-
-airos_dfs_reset:
-  - name: "weidenbaum-frischauf"
-    target: "10.31.204.131"
-    username: "ubnt"
-    password: "file:/root/pwd"
-    daytime_limit: "2-7"
-
 ipv6_prefix: "2001:bf7:790:f00::/56"
 
 # got following prefixes:
@@ -46,12 +35,6 @@ networks:
     name: mesh_bht
     prefix: 10.31.204.144/32
     ipv6_subprefix: -10
-
-  - vid: 11
-    role: mesh
-    name: mesh_frisch
-    prefix: 10.31.204.145/32
-    ipv6_subprefix: -11
 
   # 802.11s Links
   # MESH - 5 GHz 802.11s
@@ -113,4 +96,3 @@ networks:
     assignments:
       weidenbaum-core: 1       # .129
       weidenbaum-bht: 2        # .130
-      weidenbaum-frischauf: 3  # .131
