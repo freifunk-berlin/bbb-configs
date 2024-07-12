@@ -1,6 +1,6 @@
 ---
 location: rhnk
-location_nice: Rathaus Neukoelln
+location_nice: "Rathaus Neukölln, Karl-Marx-Straße 83, 12043 Berlin"
 latitude: 52.481380
 longitude: 13.435078
 altitude: 90
@@ -10,7 +10,7 @@ hosts:
 
   - hostname: rhnk-core
     role: corerouter
-    model: "linksys_e8450-ubi"
+    model: "mikrotik_routerboard-750gr3"
 
   - hostname: rhnk-nf-bvv
     role: ap
@@ -66,6 +66,31 @@ snmp_devices:
   - hostname: rhnk-nno-60ghz
     address: 10.31.153.26
     snmp_profile: af60
+
+airos_dfs_reset:
+  - name: "rhnk-no-5ghz"
+    target: "10.31.153.20"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "rhnk-wsw-5ghz"
+    target: "10.31.153.21"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "rhnk-ssw-5ghz"
+    target: "10.31.153.23"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "rhnk-nno-5ghz"
+    target: "10.31.153.25"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
 
 # TODO: delete these old addresses:
 #       - mgmt: 10.31.152.128/27
@@ -182,40 +207,40 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # Belkin RT3200 /	Linksys E8450 (UBI)
+      # Routerboard 750gr3
       rhnk-core: 1
 
-      # Mikrotik CRS328-24P-4S+RM - SwitchOS 2.13
+      # Mikrotik CRS328-24P-4S+RM - SwitchOS
       rhnk-switch: 2
 
-      # AirFiber 60-LR - Firmware 3.3.0-BETA2
+      # AirFiber 60-LR
       rhnk-rhxb: 11
 
-      # Mikrotik Cube 60 Pro - RouterOS 7.7
+      # Mikrotik Cube 60 Pro
       rhnk-klunker-60ghz: 14
 
-      # Powerbeam 5AC 400 ISO - AirOS 8.7.11
+      # Powerbeam 5AC 400 ISO
       rhnk-emma: 15
 
-      # Rocket 5AC Lite - AirOS 8.7.11
+      # Rocket 5AC Lite
       rhnk-no-5ghz: 20
 
-      # Rocket 5AC Lite - AirOS 8.7.11
+      # Rocket 5AC Lite
       rhnk-wsw-5ghz: 21
 
-      # Airfiber LR - Firmware 3.3.0-BETA2
+      # Airfiber LR
       rhnk-wsw-60ghz: 22
 
-      # Rocket 5AC Lite - AirOS 8.7.11
+      # Rocket 5AC Lite
       rhnk-ssw-5ghz: 23
 
-      # Wave AP - Firmware 3.3.0-BETA2
+      # Wave AP
       rhnk-oso-60ghz: 24
 
-      # Rocket 5AC Lite - AirOS 8.7.11
+      # Rocket 5AC Lite
       rhnk-nno-5ghz: 25
 
-      # Wave AP - Firmware 3.3.0-BETA2
+      # Wave LR
       rhnk-nno-60ghz: 26
 
       # SXTsq 5 ac - OpenWrt
