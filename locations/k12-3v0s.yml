@@ -1,28 +1,25 @@
 ---
-location: k12-haus3
-location_nice: 'Haus 3, Kastanienallee 12, 10435 Berlin'
-latitude: 52.53951094884286
-longitude: 13.409447813490967
+location: k12-3v0s
+location_nice: 'Haus4, Kastanienallee 12, 10435 Berlin'
+latitude: 52.53935393039
+longitude: 13.40930967973
 contact_nickname: 'zander'
 contacts:
   - 'alexanderjabs@gmx.de'
 
 hosts:
-  - hostname: k12-haus3-core
+  - hostname: k12-3v0s
     role: corerouter
-    model: "dlink_dap-x1860-a1"
+    model: "dlink_covr-x1860-a1"
     wireless_profile: freifunk_default
-    host__rclocal__to_merge:
-      # Add service announcement for K12 Sunset Webcam
-      - "[ -z \"$(uci show olsrd | grep -F 'k12-sunset.olsr')\" ] && uci add_list olsrd.@LoadPlugin[1].service=\"http://k12-sunset.olsr:80|tcp|K12 Sunset Webcam\" && /etc/init.d/olsrd restart"
 
-ipv6_prefix: '2001:bf7:760:700::/56'
+ipv6_prefix: '2001:bf7:760:1300::/56'
 
 # got following prefixes:
-# Router: 10.31.226.192/26
-# --MGMT: 10.31.226.192/28
-# --MESH: 10.31.226.208/28
-# --DHCP: 10.31.226.224/27
+# Router: 10.31.227.128/26
+# --MGMT: 10.31.227.128/28
+# --MESH: 10.31.227.144/28
+# --DHCP: 10.31.227.160/27
 
 # Disable noping
 dhcp_no_ping: false
@@ -32,9 +29,9 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_5g
-    prefix: 10.31.226.209/32
+    prefix: 10.31.227.144/32
     ipv6_subprefix: -20
-    mesh_ap: k12-haus3-core
+    mesh_ap: k12-3v0s
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -42,12 +39,12 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_2g
-    prefix: 10.31.226.210/32
+    prefix: 10.31.227.145/32
     ipv6_subprefix: -21
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
-    mesh_ap: k12-haus3-core
+    mesh_ap: k12-3v0s
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
@@ -55,32 +52,31 @@ networks:
   - vid: 40
     role: dhcp
     untagged: true
-    inbound_filtering: true
-    enforce_client_isolation: true
-    prefix: 10.31.226.224/27
+    # All devices should be accessible from within the Freifunk network
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.31.227.160/27
     ipv6_subprefix: 0
     assignments:
-      k12-haus3-core: 1
+      k12-3v0s: 1
 
   # MGMT
   - vid: 42
     role: mgmt
-    untagged: true
-    prefix: 10.31.226.192/28
+    prefix: 10.31.227.128/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      k12-haus3-core: 1  # 10.31.226.193
-      k12-sunset: 2      # 10.31.226.194
+      k12-3v0s: 1  # 10.31.227.129
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  k12-haus3-core: 36-40
+  k12-3v0s: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  k12-haus3-core: 13-20
+  k12-3v0s: 13-20
 
 dns_servers:
   # quad9

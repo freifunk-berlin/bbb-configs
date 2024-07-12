@@ -17,7 +17,7 @@ hosts:
 
   - hostname: teufelsberg-core
     role: corerouter
-    model: linksys_e8450-ubi
+    model: "mikrotik_routerboard-750gr3"
     wireless_profile: freifunk_default
     # USBIP packages to manage Meshtastic node (TLORA V1) connected via USB
     host__packages__to_merge:

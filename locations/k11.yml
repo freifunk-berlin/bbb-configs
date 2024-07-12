@@ -1,23 +1,11 @@
 ---
 location: k11
-location_nice: 'Kastanienallee 11'
+location_nice: 'Kastanienallee 11, 10435 Berlin'
 latitude: 52.53927888761163
 longitude: 13.410245770672406
 contact_nickname: 'zander'
 contacts:
   - 'alexanderjabs@gmx.de'
-
-dns_servers:
-  # quad9
-  - 9.9.9.9
-  - 149.112.112.112
-  - 2620:fe::fe
-  - 2620:fe::9
-  # cloudflare
-  - 1.1.1.1
-  - 1.0.0.1
-  - 2606:4700:4700::1111
-  - 2606:4700:4700::1001
 
 hosts:
   - hostname: k11-core
@@ -42,17 +30,6 @@ ipv6_prefix: '2001:bf7:760:100::/56'
 # --UPLK:  10.31.185.224/27
 
 networks:
-  # DHCP
-  - vid: 40
-    role: dhcp
-    untagged: true
-    inbound_filtering: true
-    enforce_client_isolation: true
-    prefix: 10.31.185.0/25
-    ipv6_subprefix: 0
-    assignments:
-      k11-core: 1
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
@@ -99,6 +76,17 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
+  # DHCP
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.185.0/25
+    ipv6_subprefix: 0
+    assignments:
+      k11-core: 1
+
   # MGMT
   - vid: 42
     role: mgmt
@@ -107,10 +95,8 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # 10.31.185.193/32
-      k11-core: 1
-      # 10.31.185.194/32
-      k11-ap1: 2
+      k11-core: 1  # 10.31.185.193
+      k11-ap1: 2   # 10.31.185.194
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
@@ -121,3 +107,15 @@ location__channel_assignments_11a_standard__to_merge:
 location__channel_assignments_11g_standard__to_merge:
   k11-core: 1-20
   k11-ap1: 13-20
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001

@@ -46,7 +46,7 @@ def intro(location: str):
         "<br> Die Konfiguration für diesen Standort wurde mit dem Tool "
         "[https://github.com/freifunk-berlin/bbb-configs bbb-configs] erstellt. "
         "Der aktuelle Stand der Konfiguration kann dort in der Datei "
-        f"[https://github.com/freifunk-berlin/bbb-configs/blob/master/locations/{location}.yml {location}.yml] "
+        f"[https://github.com/freifunk-berlin/bbb-configs/blob/main/locations/{location}.yml {location}.yml] "
         "eingesehen werden. Teile dieses Wikiartikels werden mit Hilfe von Semantic "
         "Values und Templates automatisch erstellt."
     )
