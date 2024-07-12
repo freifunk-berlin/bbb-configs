@@ -1,27 +1,25 @@
 ---
 
-location: Apothekerteich
-location_nice: Apothekerteich-Fiocchi-Config
-latitude: 52.52320
-longitude: 13.77234
-contact_name: 'Hacken Craften Funken e.V.'
+location: hacrafu-fiori
+location_nice: Fiori-Config-Test
+latitude: 52.52743
+longitude: 13.78555
 contact_nickname: 'HaCraFu'
 contacts:
   - 'freifunk@hacrafu.de'
 
 hosts:
 
-  - hostname: apothekerteich-core
+  - hostname: hacrafu-fiori-core
     role: corerouter
-    model: "dlink_covr-x1860-a1"
+    model: "dlink_dap-x1860-a1"
     wireless_profile: freifunk_hacrafu
 
-ipv6_prefix: '2001:bf7:850:b00::/56'
-# Config from Fiocchi
-# dhcp		10.31.204.0/27
-# mesh5		10.31.203.224/32
-# mesh2		10.31.203.225/32
-# mesh-MGMT	10.31.202.95
+ipv6_prefix: '2001:bf7:850:a00::/56'
+# dhcp		10.31.203.192/27
+# mesh5		10.31.202.92/32
+# mesh2		10.31.202.93/32
+# mesh-MGMT	10.31.202.94/32
 
 # Disable noping
 dhcp_no_ping: false
@@ -33,18 +31,18 @@ networks:
     untagged: true
     inbound_filtering: true
     enforce_client_isolation: false
-    prefix: 10.31.204.0/27
+    prefix: 10.31.203.192/27
     ipv6_subprefix: 0
     assignments:
-      apothekerteich-core: 1
+      hacrafu-fiori-core: 1
 
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
     name: mesh_5g
-    prefix: 10.31.203.224/32
+    prefix: 10.31.202.92/32
     ipv6_subprefix: -20
-    mesh_ap: apothekerteich-core
+    mesh_ap: hacrafu-fiori-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -52,22 +50,21 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_2g
-    prefix: 10.31.203.225/32
+    prefix: 10.31.202.93/32
     ipv6_subprefix: -21
-    mesh_ap: apothekerteich-core
+    mesh_ap: hacrafu-fiori-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
   # MGMT                      # create a management vlan in which we can reach every device on this site for maintenance
   - vid: 42
     role: mgmt
-    prefix: 10.31.202.95/32
+    prefix: 10.31.202.94/32
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # 10.31.202.95
-      apothekerteich-core: 1
+      hacrafu-fiori-core: 1
 
 # only place this ssh-keys
 ssh_keys:
