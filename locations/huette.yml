@@ -16,6 +16,15 @@ hosts:
     role: corerouter
     model: "zyxel_nwa55axe"
     wireless_profile: freifunk_default
+    openwrt_version: 23.05.0-rc3
+    host__rclocal__to_merge:
+      - 'cat /etc/crontabs/root | grep reboot 2>/dev/null || echo "15 * * * * reboot" >> /etc/crontabs/root'
+
+dns_servers:
+  - 2620:fe::fe
+  - 2620:fe::9
+  - 9.9.9.9
+  - 149.112.112.112
 
 ipv6_prefix: '2001:bf7:830:2600::/56'
 
