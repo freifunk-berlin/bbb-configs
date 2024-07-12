@@ -199,6 +199,7 @@ networks:
   # DHCP
   - vid: 40
     role: dhcp
+    untagged: true
     inbound_filtering: true
     enforce_client_isolation: true
     prefix: 10.31.158.0/25
@@ -227,7 +228,6 @@ networks:
   # UPLK
   - vid: 50
     role: uplink
-    untagged: true
 
   - role: tunnel
     ifname: ts_wg0
