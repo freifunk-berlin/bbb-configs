@@ -13,25 +13,25 @@ hosts:
     role: corerouter
     model: "linksys_e8450-ubi"
 
-  - hostname: sama-nord-5ghz
+  - hostname: sama-nord-nf-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     mac_override:
       eth0: 08:55:31:54:63:18
 
-  - hostname: sama-ost-5ghz
+  - hostname: sama-ost-nf-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     mac_override:
       eth0: 08:55:31:54:63:14
 
-  - hostname: sama-sued-5ghz
+  - hostname: sama-sued-nf-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     mac_override:
       eth0: 08:55:31:54:63:0E
 
-  - hostname: sama-west-5ghz
+  - hostname: sama-west-nf-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     mac_override:
@@ -108,12 +108,12 @@ networks:
       sama-core: 1
       sama-poe-1: 2
       sama-poe-2: 3
-      # 6-15 (Local APs)
+      # 6-15 (Local APs / OpenWRT)
       sama-nord-nf-5ghz: 10
       sama-ost-nf-5ghz: 11
       sama-sued-nf-5ghz: 12
       sama-west-nf-5ghz: 13
-      # 16-31 (BBB)
+      # 16-31 (BBB / Ubiquiti)
       sama-nord-5ghz: 20
       sama-ost-5ghz: 21
       sama-sued-5ghz: 22
