@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Define file directory and endings
-FILE_DIR="tmp/images"
+WORK_DIR="tmp"
 FILE_ENDINGS=".itb .bin"
 
 # Find files matching the specified endings
 FILES=""
 for ENDING in $FILE_ENDINGS; do
-    FILES="$FILES $(find "$FILE_DIR" -type f -name "*$ENDING")"
+    FILES="$FILES $(find "$WORK_DIR/images" -type f -name "*$ENDING")"
 done
 
 # Sort files based on whether filename contains "core" or not
@@ -26,14 +26,14 @@ SORTED_FILES="$OTHER_FILES $CORE_FILES"
 echo ""
 echo "This script will do the following:"
 echo ""
-echo "- flash all the following hosts with the corresponding firmware files currently present in $FILE_DIR"
+echo "- flash all the following hosts with the corresponding firmware files currently present in $WORK_DIR/images"
 echo "- first flash APs, than core routers based on the naming convention"
 echo "- check the availability of the hosts before and after flashing"
 echo "- ignore keychecking"
-echo "- make sure that at least 16 MB of RAM are available before performing a sysupgrade"
-echo "- delete the local firmware file from disk after flashing"
+echo "- make sure that at least 'image size + 1 MB' of RAM is available before starting a firmware upgrade"
+echo "- delete the local firmware file, build log, build and config files from disk after flashing"
 echo ""
-echo "The following files will be processed:"
+echo "The following firmware files will be flashed:"
 for FILE_PATH in $SORTED_FILES; do
     echo "- $(basename "$FILE_PATH")"
 done
@@ -69,7 +69,7 @@ for FILE_PATH in $SORTED_FILES; do
 
         # Check memory on remote host
         MEMORY=$(ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "root@$HOSTNAME" "free | awk 'NR==2 {print \$4}'")
-        if [ "$MEMORY" -ge $(( $(stat -c %s "$FILE_PATH") / 1024 + 3072 )) ]; then  # File size in KB + 3 MB
+        if [ "$MEMORY" -ge $(( $(stat -c %s "$FILE_PATH") / 1024 + 1024 )) ]; then  # File size in KB + 1 MB
             echo "Memory on $HOSTNAME is sufficient ($MEMORY KB)"
 
             # SCP the file
@@ -91,9 +91,12 @@ for FILE_PATH in $SORTED_FILES; do
                 echo "Waiting for $HOSTNAME to become reachable again..."
                 while ! ping -c 1 "$HOSTNAME" >/dev/null 2>&1; do sleep 1; done
 
-                # Remove local file
-                echo "Removing local file $FILE_PATH"
+                # Remove local files
+                echo "Removing local files for $NODENAME from $WORK_DIR"
                 rm "$FILE_PATH"
+                rm "$WORK_DIR/images/$NODENAME.log"
+                rm -rf "$WORK_DIR/build/$NODENAME"
+                rm -rf "$WORK_DIR/configs/$NODENAME"
             else
                 echo "SCP command failed. Exiting..."
                 exit 1
