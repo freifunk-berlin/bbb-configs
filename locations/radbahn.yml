@@ -18,11 +18,15 @@ hosts:
     role: ap
     model: zyxel_nwa55axe
     wireless_profile: radbahn
+    host__rclocal__to_merge:
+      - 'cat /etc/crontabs/root | grep reboot 2>/dev/null || echo "15 * * * * reboot" >> /etc/crontabs/root && /etc/init.d/cron restart'
 
   - hostname: radbahn-w-nf
     role: ap
     model: zyxel_nwa55axe
     wireless_profile: radbahn
+    host__rclocal__to_merge:
+      - 'cat /etc/crontabs/root | grep reboot 2>/dev/null || echo "45 * * * * reboot" >> /etc/crontabs/root && /etc/init.d/cron restart'
 
 snmp_devices:
 
