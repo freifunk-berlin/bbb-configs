@@ -1,6 +1,6 @@
 ---
-location: parzelle17
-location_nice: Parzelle 17
+location: hdk-17
+location_nice: Heidekampgraben 17
 latitude: 52.478675
 longitude: 13.471268
 community: true
@@ -18,7 +18,7 @@ dns_servers:
   - 2606:4700:4700::1001
 
 hosts:
-  - hostname: parzelle17-core
+  - hostname: hdk-17
     role: corerouter
     model: "dlink_dap-x1860-a1"
     wireless_profile: freifunk_default
@@ -45,7 +45,7 @@ networks:
     prefix: 10.31.207.32/27
     ipv6_subprefix: 0
     assignments:
-      parzelle17-core: 1
+      hdk-17: 1
 
   # MESH - 5 GHz 802.11s
   - vid: 20
@@ -53,7 +53,7 @@ networks:
     name: mesh_5g
     prefix: 10.31.207.16/32
     ipv6_subprefix: -20
-    mesh_ap: parzelle17-core
+    mesh_ap: hdk-17
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -63,7 +63,7 @@ networks:
     name: mesh_2g
     prefix: 10.31.207.17/32
     ipv6_subprefix: -21
-    mesh_ap: parzelle17-core
+    mesh_ap: hdk-17
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
@@ -76,4 +76,4 @@ networks:
     ipv6_subprefix: 1
     assignments:
       # 10.31.207.1/32
-      parzelle17-core: 1
+      hdk-17: 1
