@@ -1,0 +1,76 @@
+---
+location: hdk-54
+location_nice: Heidekampgraben 54
+latitude: 52.47832795
+longitude: 13.47192646
+community: true
+
+hosts:
+  - hostname: hdk-54
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
+ipv6_prefix: '2001:bf7:840:2100::/56'
+
+# Router: 10.248.6.64/26 2001:bf7:840:2100::/56 
+# --MGMT: 10.248.6.64/28
+# --MESH: 10.248.6.80/28
+# --DHCP: 10.248.6.96/27
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.6.96/27
+    ipv6_subprefix: 0
+    assignments:
+      hdk-54: 1
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.248.6.80/32
+    ipv6_subprefix: -20
+    mesh_ap: hdk-54
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.6.81/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: hdk-54
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.6.64/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      # 10.248.6.65/28
+      hdk-54: 1
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hdk-54: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hdk-54: 13-20
