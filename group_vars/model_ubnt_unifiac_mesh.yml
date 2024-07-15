@@ -18,5 +18,5 @@ wireless_devices:
   - name: 11g_standard
     band: 2g
     htmode_prefix: HT
-    path: platform/qca956x_wmac
+    path: platform/ahb/18100000.wmac
     ifname_hint: wlan2
