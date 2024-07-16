@@ -12,6 +12,8 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
+Depending on your system you might need more requirements. If something fails check out [this OpenWRT page](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem).
+
 ## How to spin up a config run?
 
 ```sh
