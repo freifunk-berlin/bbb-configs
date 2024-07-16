@@ -1,14 +1,14 @@
 ---
 location: hdk-64
 location_nice: Heidekampgraben 64
-latitude: 552.4783508
+latitude: 52.4783508
 longitude: 13.47084805
 community: true
 
 hosts:
   - hostname: hdk-64
     role: corerouter
-    model: "comfast_cf-ew72-v1"
+    model: "comfast_cf-ew72"
     wireless_profile: freifunk_default
 
 ipv6_prefix: '2001:bf7:840:2300::/56'
