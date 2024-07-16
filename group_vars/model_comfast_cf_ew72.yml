@@ -1,6 +1,5 @@
 ---
-override_target: "mikrotik_routerboard-lhg-2nd"
-target: ath79/mikrotik
+target: ath79/generic
 brand_nice: COMFAST
 model_nice: CF-EW72
 version_nice: v1
