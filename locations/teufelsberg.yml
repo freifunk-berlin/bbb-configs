@@ -1,16 +1,17 @@
 ---
 
 location: teufelsberg
-location_nice: Teufelsberg
+location_nice: Teufelsberg, Teufelsseechaussee 10, 14193 Berlin
 latitude: 52.49800
 longitude: 13.24052
 altitude: 151
 community: true
 
-# 10.31.213.0/24
+# ROUTER: 10.31.213.0/24
 # --MGMT: 10.31.213.0/26
 # --MESH: 10.31.213.64/26
 # --DHCP: 10.31.213.128/25
+
 ipv6_prefix: "2001:bf7:800:1000::/56"
 
 hosts:
@@ -23,17 +24,17 @@ hosts:
     host__packages__to_merge:
       - "kmod-usb-ohci usbip-server usbip-client"
 
-  - hostname: teufelsberg-ap1
-    role: ap
-    model: mikrotik_sxtsq-5-ac
-    mac_override: {eth0: dc:2c:6e:91:08:19}
-    wireless_profile: freifunk_default
+  # - hostname: teufelsberg-ap1
+  #   role: ap
+  #   model: mikrotik_sxtsq-5-ac
+  #   mac_override: {eth0: dc:2c:6e:91:08:19}
+  #   wireless_profile: freifunk_default
 
-  - hostname: teufelsberg-ap2
-    role: ap
-    model: mikrotik_sxtsq-5-ac
-    mac_override: {eth0: dc:2c:6e:91:0f:66}
-    wireless_profile: freifunk_default
+  # - hostname: teufelsberg-ap2
+  #   role: ap
+  #   model: mikrotik_sxtsq-5-ac
+  #   mac_override: {eth0: dc:2c:6e:91:0f:66}
+  #   wireless_profile: freifunk_default
 
   - hostname: teufelsberg-ap3
     role: ap
@@ -61,29 +62,25 @@ snmp_devices:
     address: 10.31.213.8
     snmp_profile: af60
 
-  # - hostname: teufelsberg-westhafen
-  #   address: 10.31.213.9
-  #   snmp_profile: af60
-
-  # - hostname: teufelsberg-nw
-  #   address: 10.31.213.10
-  #   snmp_profile: airos_8
+  - hostname: teufelsberg-nw
+    address: 10.31.213.10
+    snmp_profile: airos_8
 
   - hostname: teufelsberg-nord
     address: 10.31.213.11
     snmp_profile: airos_8
 
-  # - hostname: teufelsberg-ono
-  #   address: 10.31.213.12
-  #   snmp_profile: airos_8
+  - hostname: teufelsberg-ono
+    address: 10.31.213.12
+    snmp_profile: airos_8
 
 airos_dfs_reset:
 
-  # - name: "teufelsberg-nw"
-  #   target: "10.31.213.10"
-  #   username: "ubnt"
-  #   password: "/root/pwd.txt"
-  #   daytime_limit: "2-7"
+  - name: "teufelsberg-nw"
+    target: "10.31.213.10"
+    username: "ubnt"
+    password: "/root/pwd.txt"
+    daytime_limit: "2-7"
 
   - name: "teufelsberg-nord"
     target: "10.31.213.11"
@@ -91,11 +88,11 @@ airos_dfs_reset:
     password: "/root/pwd.txt"
     daytime_limit: "2-7"
 
-  # - name: "teufelsberg-ono12"
-  #   target: "10.31.213.10"
-  #   username: "ubnt"
-  #   password: "/root/pwd.txt"
-  #   daytime_limit: "2-7"
+  - name: "teufelsberg-ono"
+    target: "10.31.213.10"
+    username: "ubnt"
+    password: "/root/pwd.txt"
+    daytime_limit: "2-7"
 
 networks:
 
@@ -104,12 +101,6 @@ networks:
     name: mesh_ak36
     prefix: 10.31.213.64/32
     ipv6_subprefix: -1
-
-  - vid: 11
-    role: mesh
-    name: mesh_westhaf
-    prefix: 10.31.213.65/32
-    ipv6_subprefix: -2
 
   - vid: 12
     role: mesh
@@ -135,23 +126,23 @@ networks:
     prefix: 10.31.213.73/32
     ipv6_subprefix: -10
 
-  - vid: 20
-    role: mesh
-    name: mesh_ap1
-    prefix: 10.31.213.67/32
-    ipv6_subprefix: -4
-    mesh_ap: teufelsberg-ap1
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
+  # - vid: 20
+  #   role: mesh
+  #   name: mesh_ap1
+  #   prefix: 10.31.213.67/32
+  #   ipv6_subprefix: -4
+  #   mesh_ap: teufelsberg-ap1
+  #   mesh_radio: 11a_standard
+  #   mesh_iface: mesh
 
-  - vid: 21
-    role: mesh
-    name: mesh_ap2
-    prefix: 10.31.213.68/32
-    ipv6_subprefix: -5
-    mesh_ap: teufelsberg-ap2
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
+  # - vid: 21
+  #   role: mesh
+  #   name: mesh_ap2
+  #   prefix: 10.31.213.68/32
+  #   ipv6_subprefix: -5
+  #   mesh_ap: teufelsberg-ap2
+  #   mesh_radio: 11a_standard
+  #   mesh_iface: mesh
 
   - vid: 22
     role: mesh
@@ -189,22 +180,19 @@ networks:
     assignments:
       teufelsberg-core: 1
       teufelsberg-switch: 2
-      teufelsberg-ap1: 3
-      teufelsberg-ap2: 4
-      teufelsberg-ap3: 5
-      teufelsberg-ap4: 6
+      # teufelsberg-ap1: 3
+      # teufelsberg-ap2: 4
+      teufelsberg-ap3: 5  # pointing south
+      teufelsberg-ap4: 6  # point down
       teufelsberg-ak36: 7
       teufelsberg-ilr: 8
-      teufelsberg-westhafen: 9
       teufelsberg-nw: 10
       teufelsberg-nord: 11
       teufelsberg-ono: 12
+      teufelsberg-cam: 13
 
 location__channel_assignments_11a_standard__to_merge:
-  # all APs on channel 36 for now, to allow meshing for standard Falter APs
-  # TODO: Change this once the installation is more optimized
-  teufelsberg-core: 40-20
-  teufelsberg-ap1: 36-20
-  teufelsberg-ap2: 36-20
+  # teufelsberg-ap1: 44-20
+  # teufelsberg-ap2: 48-20
   teufelsberg-ap3: 36-20
-  teufelsberg-ap4: 36-20
+  teufelsberg-ap4: 40-20
