@@ -1,7 +1,7 @@
 ---
 
 location: chris
-location_nice: Christophorus Kirche
+location_nice: 'Christophoruskirche, Schuckertdamm 336-340, 13629 Berlin'
 latitude: 52.541461
 longitude: 13.267025
 altitude: 65
@@ -39,13 +39,13 @@ snmp_devices:
     address: 10.230.18.3
     snmp_profile: airos_6
 
-  - hostname: chris-tub
+  - hostname: chris-teufelsberg
     address: 10.230.18.4
     snmp_profile: airos_6
 
-  - hostname: chris-n-5ghz
-    address: 10.230.18.5
-    snmp_profile: airos_6
+  # - hostname: chris-n-5ghz
+  #   address: 10.230.18.5
+  #   snmp_profile: airos_6
 
   - hostname: chris-o-5ghz
     address: 10.230.18.6
@@ -71,16 +71,16 @@ networks:
 
   - vid: 11
     role: mesh
-    name: mesh_tub
+    name: mesh_tberg
     prefix: 10.230.18.162/32
     ipv6_subprefix: -2
     ptp: true
 
-  - vid: 12
-    role: mesh
-    name: mesh_n_5ghz
-    prefix: 10.230.18.163/32
-    ipv6_subprefix: -3
+  # - vid: 12
+  #   role: mesh
+  #   name: mesh_n_5ghz
+  #   prefix: 10.230.18.163/32
+  #   ipv6_subprefix: -3
 
   - vid: 13
     role: mesh
@@ -159,9 +159,9 @@ networks:
       chris-core: 1
       chris-switch: 2
       chris-bht: 3
-      chris-tub: 4
+      chris-teufelsberg: 4
 
-      chris-n-5ghz: 5
+      # chris-n-5ghz: 5
       chris-o-5ghz: 6
       chris-s-5ghz: 7
       chris-w-5ghz: 8
