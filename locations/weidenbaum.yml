@@ -19,7 +19,7 @@ snmp_devices:
     address: 10.31.204.130
     snmp_profile: airos_8
 
-ipv6_prefix: "2001:bf7:790:f00::/56"
+ipv6_prefix: "2001:bf7:780:a00::/56"
 
 # got following prefixes:
 # Router:  10.31.204.128/26
