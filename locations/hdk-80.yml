@@ -1,0 +1,76 @@
+---
+location: hdk-80
+location_nice: Heidekampgraben 80
+latitude: 52.4783508
+longitude: 13.47084805
+community: true
+
+hosts:
+  - hostname: hdk-80
+    role: corerouter
+    model: "comfast_cf-ew72"
+    wireless_profile: freifunk_default
+
+ipv6_prefix: '2001:bf7:840:2d00::/56'
+
+# Router: 10.248.9.0/26 2001:bf7:840:2d00::/56 
+# --MGMT: 10.248.9.0/28
+# --MESH: 10.248.9.16/28
+# --DHCP: 10.248.9.32/27
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.9.32/27
+    ipv6_subprefix: 0
+    assignments:
+      hdk-80: 1
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.248.9.16/32
+    ipv6_subprefix: -20
+    mesh_ap: hdk-80
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.9.17/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: hdk-80
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.9.0/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      # 10.248.9.1/28
+      hdk-80: 1
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hdk-80: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hdk-80: 13-20
