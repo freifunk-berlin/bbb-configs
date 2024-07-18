@@ -55,6 +55,7 @@ hosts:
   - hostname: zwingli-west-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
+    mac_override: {eth0: dc:2c:6e:91:0f:be}
     wifi_roaming: true
 
 airos_dfs_reset:
