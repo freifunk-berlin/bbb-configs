@@ -1,0 +1,15 @@
+---
+override_target: "avm_fritz7320"
+target: lantiq/xway
+brand_nice: AVM
+model_nice: FRITZ!Box 7320
+
+int_port: eth0
+low_mem: true
+
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: pci0000:00/0000:00:0e.0
+    ifname_hint: wlan2
