@@ -25,6 +25,7 @@ hosts:
   - hostname: mlk-nk-rhnk
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: dc:2c:6e:c4:1d:b4}
 
 snmp_devices:
 
