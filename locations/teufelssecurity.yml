@@ -1,0 +1,65 @@
+---
+
+location: teufelssecurity
+location_nice: Teufelsberg Wachhäuschen
+latitude: 52.49649
+longitude: 13.23970
+altitude: 99
+community: true
+
+# ROUTER: 10.31.243.64/26
+# --MGMT: 10.31.243.64/28
+# --MESH: 10.31.243.80/28
+# --DHCP: 10.31.243.96/27
+ipv6_prefix: "2001:bf7:800:1600::/56"
+
+hosts:
+
+  - hostname: teufelssecurity-core
+    role: corerouter
+    model: mikrotik_wap-ac
+    wireless_profile: freifunk_default
+
+  - hostname: teufelssecurity-ap
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    wireless_profile: freifunk_default
+    mac_override: {eth0: dc:2c:6e:c4:36:35}
+
+networks:
+
+  - vid: 20
+    role: mesh
+    name: mesh_ap
+    prefix: 10.31.243.80/32
+    ipv6_subprefix: -1
+    mesh_ap: teufelssecurity-ap
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.243.96/27
+    ipv6_subprefix: 0
+    assignments:
+      teufelssecurity-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.243.64/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      teufelssecurity-core: 1
+      teufelssecurity-ap: 2
+
+location__channel_assignments_11a_standard__to_merge:
+  teufelssecurity-core: 36-20
+  teufelssecurity-ap: 40-20
+
+location__channel_assignments_11g_standard__to_merge:
+  teufelssecurity-core: 13-20
