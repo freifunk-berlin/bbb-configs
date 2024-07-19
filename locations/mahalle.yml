@@ -19,10 +19,12 @@ hosts:
   - hostname: mahalle-nf-o
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: dc:2c:6e:c4:36:51}
 
   - hostname: mahalle-nf-w
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: dc:2c:6e:c4:2a:0b}
 
 # 10.31.179.112/29 - mgmt
 # 10.31.179.120/29 - mesh
