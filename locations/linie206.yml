@@ -19,26 +19,32 @@ hosts:
   - hostname: linie206-nf-o-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: 08:55:31:ea:e7:76}
 
   - hostname: linie206-nf-s-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: 2c:c8:1b:aa:69:3d}
 
   - hostname: linie206-nf-so-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: 08:55:31:ea:df:2e}
 
   - hostname: linie206-nf-w-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: 2c:c8:1b:aa:63:42}
 
   - hostname: linie206-nf-so-2ghz
     role: ap
     model: "mikrotik_sxtsq-2-lite"
+    mac_override: {eth0: 2c:c8:1b:6e:49:01}
 
   - hostname: linie206-nf-w-2ghz
     role: ap
     model: "mikrotik_sxtsq-2-lite"
+    mac_override: {eth0: 2c:c8:1b:6e:66:69}
 
   - hostname: linie206-nf-wohnzimmer
     role: ap
