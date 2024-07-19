@@ -19,7 +19,6 @@ hosts:
   - hostname: teufelsberg-core
     role: corerouter
     model: "mikrotik_routerboard-750gr3"
-    wireless_profile: freifunk_default
     # USBIP packages to manage Meshtastic node (TLORA V1) connected via USB
     host__packages__to_merge:
       - "kmod-usb-ohci usbip-server usbip-client"
@@ -89,7 +88,7 @@ airos_dfs_reset:
     daytime_limit: "2-7"
 
   - name: "teufelsberg-ono"
-    target: "10.31.213.10"
+    target: "10.31.213.12"
     username: "ubnt"
     password: "/root/pwd.txt"
     daytime_limit: "2-7"
@@ -100,37 +99,37 @@ networks:
     role: mesh
     name: mesh_ak36
     prefix: 10.31.213.64/32
-    ipv6_subprefix: -1
+    ipv6_subprefix: -10
 
   - vid: 12
     role: mesh
     name: mesh_ilr
     prefix: 10.31.213.66/32
-    ipv6_subprefix: -3
+    ipv6_subprefix: -12
 
   - vid: 13
     role: mesh
     name: mesh_nw
-    prefix: 10.31.213.71/32
-    ipv6_subprefix: -8
+    prefix: 10.31.213.67/32
+    ipv6_subprefix: -13
 
   - vid: 14
     role: mesh
     name: mesh_nord
-    prefix: 10.31.213.72/32
-    ipv6_subprefix: -9
+    prefix: 10.31.213.68/32
+    ipv6_subprefix: -14
 
   - vid: 15
     role: mesh
     name: mesh_ono
-    prefix: 10.31.213.73/32
-    ipv6_subprefix: -10
+    prefix: 10.31.213.69/32
+    ipv6_subprefix: -15
 
   # - vid: 20
   #   role: mesh
   #   name: mesh_ap1
-  #   prefix: 10.31.213.67/32
-  #   ipv6_subprefix: -4
+  #   prefix: 10.31.213.74/32
+  #   ipv6_subprefix: -20
   #   mesh_ap: teufelsberg-ap1
   #   mesh_radio: 11a_standard
   #   mesh_iface: mesh
@@ -138,8 +137,8 @@ networks:
   # - vid: 21
   #   role: mesh
   #   name: mesh_ap2
-  #   prefix: 10.31.213.68/32
-  #   ipv6_subprefix: -5
+  #   prefix: 10.31.213.75/32
+  #   ipv6_subprefix: -21
   #   mesh_ap: teufelsberg-ap2
   #   mesh_radio: 11a_standard
   #   mesh_iface: mesh
@@ -147,8 +146,8 @@ networks:
   - vid: 22
     role: mesh
     name: mesh_ap3
-    prefix: 10.31.213.69/32
-    ipv6_subprefix: -6
+    prefix: 10.31.213.76/32
+    ipv6_subprefix: -22
     mesh_ap: teufelsberg-ap3
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -156,8 +155,8 @@ networks:
   - vid: 23
     role: mesh
     name: mesh_ap4
-    prefix: 10.31.213.70/32
-    ipv6_subprefix: -7
+    prefix: 10.31.213.77/32
+    ipv6_subprefix: -23
     mesh_ap: teufelsberg-ap4
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -171,7 +170,7 @@ networks:
     assignments:
       teufelsberg-core: 1
 
-  - vid: 42
+  - vid: 437
     role: mgmt
     prefix: 10.31.213.0/26
     gateway: 1
