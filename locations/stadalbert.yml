@@ -41,6 +41,7 @@ hosts:
   - hostname: stadalbert-nf-roof
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: dc:2c:6e:91:09:09}
 
 snmp_devices:
   - hostname: stadalbert-segen
