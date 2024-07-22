@@ -75,3 +75,7 @@ snmp_devices:
   - hostname: ska95-emma
     address: 10.31.8.2
     snmp_profile: airos_6
+
+location__channel_assignments_11g_standard__to_merge:
+  ska95-schoolyard: 10-20
+  ska95-cortile: 10-20
