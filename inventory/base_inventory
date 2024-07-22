@@ -18,9 +18,8 @@ case "$1" in
 {
     "all": {
         "hosts": $(
-            # Print all hostnames from locations/ and host_vars/ directories.
-            ( echo "$locjson" | jq -s -r '.[].hosts[].hostname' \
-              ; find host_vars/* -type d -print0 | xargs -0 -n1 basename ) \
+            # Get all hostnames from locations/ directory.
+            echo "$locjson" | jq -s -r '.[].hosts[].hostname' \
             | jq -s -R 'split("\n") | map(select(length > 0))'
         )
     },
