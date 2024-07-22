@@ -53,7 +53,7 @@ airos_dfs_reset:
     password: "/root/pwd.txt"
     daytime_limit: "3-6"
 
-ipv6_prefix: "2001:bf7:860:1100::/56"
+ipv6_prefix: "2001:bf7:860:1000::/56"
 
 networks:
 
