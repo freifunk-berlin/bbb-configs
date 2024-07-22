@@ -19,10 +19,11 @@ dns_servers:
   - 2606:4700:4700::1111
   - 2606:4700:4700::1001
 
-# 10.36.8.0/25
+# ROUTER: 10.36.8.0/25
 # --MGMT: 10.31.8.0/28
 # --MESH: 10.31.8.16/28
 # --DHCP: 10.36.8.64/26
+# --FREE: 10.31.8.32/27
 
 ipv6_prefix: "2001:bf7:830:700::/56"
 
@@ -39,12 +40,17 @@ hosts:
     role: ap
     model: ubnt_bullet-m-ar7241
 
+snmp_devices:
+  - hostname: ska95-emma
+    address: 10.31.8.2
+    snmp_profile: airos_6
+
 networks:
   - vid: 10
     role: mesh
     name: mesh_emma
     prefix: 10.31.8.16/32
-    ipv6_subprefix: -1
+    ipv6_subprefix: -10
 
   - vid: 40
     role: dhcp
@@ -71,11 +77,6 @@ networks:
       ska95-emma: 2
       ska95-cortile: 3
       ska95-schoolyard: 4
-
-snmp_devices:
-  - hostname: ska95-emma
-    address: 10.31.8.2
-    snmp_profile: airos_6
 
 location__channel_assignments_11g_standard__to_merge:
   ska95-schoolyard: 10-20
