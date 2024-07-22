@@ -39,7 +39,7 @@ hosts:
 
 snmp_devices:
   - hostname: kirchhof-switch
-    address: 10.31.147.130
+    address: 10.31.183.130
     snmp_profile: edgeswitch
 
 # 10.31.183.128/28 - mgmt     - vlan 42
