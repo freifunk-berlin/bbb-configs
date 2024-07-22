@@ -1,0 +1,17 @@
+---
+name: Check for duplicate IP prefixes
+
+on: [push, pull_request]  # yamllint disable-line rule:truthy
+
+jobs:
+  check-ip-prefix-duplicates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run IP prefix duplicate check
+        run: |
+          ./.github/checks/check-ip-prefix-duplicates.sh
