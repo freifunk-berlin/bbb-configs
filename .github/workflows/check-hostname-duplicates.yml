@@ -1,0 +1,17 @@
+---
+name: Check for duplicate hostnames
+
+on: [push, pull_request]  # yamllint disable-line rule:truthy
+
+jobs:
+  check-hostname-duplicates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run hostname duplicate check
+        run: |
+          ./.github/checks/check-hostname-duplicates.sh
