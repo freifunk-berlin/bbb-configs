@@ -26,6 +26,7 @@ hosts:
     role: ap
     model: ubnt_unifiac-lite
     wifi_roaming: true
+    openwrt_version: 23.05-SNAPSHOT
 
   - hostname: zwingli-nno-nf-5ghz
     role: ap
