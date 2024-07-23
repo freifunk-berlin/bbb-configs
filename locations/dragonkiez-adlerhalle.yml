@@ -8,6 +8,8 @@ height: 2
 community: true
 
 hosts:
+  # TODO: upgrade this host to OpenWrt 23.05, special flash procedure required
+  #       see bbb-configs commit ac0e8e53550fba52136eff27ea0b273e9d3eea8f
   - hostname: dragonkiez-adlerhalle
     role: corerouter
     model: "ubnt_unifiac-mesh"
