@@ -23,7 +23,6 @@ hosts:
   - hostname: hds-ffraum
     role: corerouter
     model: "ubnt_unifiac-pro"
-    openwrt_version: 23.05-SNAPSHOT
     wireless_profile: freifunk_default
 
 snmp_devices:
