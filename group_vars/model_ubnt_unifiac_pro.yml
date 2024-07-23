@@ -1,6 +1,5 @@
 ---
 target: ath79/generic
-openwrt_version: 22.03-SNAPSHOT
 brand_nice: Ubiquiti
 model_nice: UniFi AC Mesh Pro
 
