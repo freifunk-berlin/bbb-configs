@@ -23,7 +23,42 @@ hosts:
   - hostname: hds-ffraum
     role: corerouter
     model: "ubnt_unifiac-pro"
+    openwrt_version: 23.05-SNAPSHOT
     wireless_profile: freifunk_default
+    # this results in a 6402k image (vs. 11202k default)
+    low_flash: true
+    host__packages__to_merge:
+      - -falter-common
+      - -luci-mod-falter
+      - -luci-mod-admin-full
+      - -luci-proto-ipv6
+      - -luci-theme-bootstrap
+      - -luci-app-babeld
+      - -luci-app-olsr
+      - -luci-app-olsr-services
+      - -luci-app-falter-owm
+      - -luci-app-falter-owm-ant
+      - -luci-app-falter-owm-cmd
+      - -luci-app-falter-owm-gui
+      - -libiwinfo-lua
+      - -rpcd-mod-rrdns
+      - -uhttpd
+      - -uhttpd-mod-ubus
+      - -collectd-mod-dhcpleases
+      - -collectd-mod-olsrd
+      - -collectd-mod-conntrack
+      - -collectd-mod-snmp
+      - -collectd-mod-interface
+      - -collectd-mod-iwinfo
+      - -collectd-mod-load
+      - -collectd-mod-memory
+      - -collectd-mod-network
+      - -collectd-mod-ping
+      - -collectd-mod-uptime
+      - -mtr
+      - -iwinfo
+      - -iperf3
+      - -tcpdump
 
 snmp_devices:
   - hostname: hdm-hds
