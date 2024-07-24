@@ -1,0 +1,129 @@
+---
+location: b49
+location_nice: "Badstraße 49, 13357 Berlin"
+latitude: 52.552578266
+longitude: 13.380162120
+contact_nickname: 'Noki'
+contacts:
+  - '@noki-:matrix.org'
+
+hosts:
+  - hostname: b49-core
+    role: corerouter
+    model: "dlink_covr-x1860-a1"
+    wireless_profile: freifunk_default
+    mac_override: {eth0: 0c:0e:76:cf:2e:41}
+
+snmp_devices:
+  - hostname: b49-nanostation
+    address: 10.31.240.2
+    snmp_profile: airos_8
+
+ipv6_prefix: '2001:bf7:830:b500::/56'
+
+# got following prefixes:
+# Router: 10.31.240.0/24
+# --MGMT: 10.31.240.0/27
+# --MESH: 10.31.240.32/27
+# --UPLK: 10.31.240.64/27
+# --DHCP: 10.31.240.96/27 (HOST, UNUSED)
+# --DHCP: 10.31.240.128/26 (PUBLIC)
+# --DHCP: 10.31.240.192/26 (PRIVATE, UNUSED)
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # MESH - Nanostation
+  - vid: 10
+    role: mesh
+    name: mesh_ns_5ac
+    prefix: 10.31.240.32/32
+    ipv6_subprefix: -10
+    ptp: true
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.240.33/32
+    ipv6_subprefix: -20
+    mesh_ap: b49-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.240.34/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: b49-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.240.128/26
+    ipv6_subprefix: 0
+    assignments:
+      b49-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.240.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      b49-core: 1         # 10.31.240.1
+      b49-nanostation: 2  # 10.31.240.2
+
+  # UPLK
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.240.36/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.240.37/32
+    wireguard_port: 51821
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  b49-core: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  b49-core: 13-20
+
+# SSH Keys
+ssh_keys:
+  - comment: Noki
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjIgJKflHEYOIdskwalr83PflhPmFkrAebP2bUkOE11 Noki
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
