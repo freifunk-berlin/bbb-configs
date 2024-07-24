@@ -1,6 +1,0 @@
-{% if (networks | selectattr('tunnel_wan_ip', 'defined') | count > 0) and openwrt_version.startswith('22.') %}
-ip6tables -A forwarding_rule -o wg_+ -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1352
-ip6tables -A forwarding_rule -i wg_+ -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1352
-iptables -A forwarding_rule -o wg_+ -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1372
-iptables -A forwarding_rule -i wg_+ -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1372
-{% endif %}

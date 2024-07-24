@@ -12,9 +12,6 @@ config defaults
 	option forward 'REJECT'
 	option drop_invalid '0'
 
-config include
-	option path '/etc/firewall.user'
-
 config zone 'zone_freifunk'
 	option name 'freifunk'
 	{% for name in zone_freifunk_networks %}
