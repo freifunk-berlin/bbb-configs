@@ -1,6 +1,0 @@
----
-
-location: hds-ffraum
-role: corerouter
-model: "ubnt_unifiac-pro"
-wireless_profile: freifunk_default

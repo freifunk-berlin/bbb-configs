@@ -20,6 +20,7 @@ hosts:
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     wireless_profile: freifunk_default
+    mac_override: {eth0: dc:2c:6e:91:08:1b}
 
 snmp_devices:
   - hostname: q216-switch

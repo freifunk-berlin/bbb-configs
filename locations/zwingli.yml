@@ -26,6 +26,7 @@ hosts:
     role: ap
     model: ubnt_unifiac-lite
     wifi_roaming: true
+    openwrt_version: 23.05-SNAPSHOT
 
   - hostname: zwingli-nno-nf-5ghz
     role: ap
@@ -55,6 +56,7 @@ hosts:
   - hostname: zwingli-west-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
+    mac_override: {eth0: dc:2c:6e:91:0f:be}
     wifi_roaming: true
 
 airos_dfs_reset:

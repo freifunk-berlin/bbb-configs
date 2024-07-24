@@ -9,7 +9,7 @@ config system
 {% if role == 'corerouter' or role  == 'gateway' %}
 	option latitude '{{ latitude|default(0) }}'
 	option longitude '{{ longitude|default(0) }}'
-	option altitude '60.000000000000000'
+	option altitude '{{ altitude|default(60.000000000000000) }}'
 	option location '{{ location_nice|default(location) }}'
 {% endif %}
 

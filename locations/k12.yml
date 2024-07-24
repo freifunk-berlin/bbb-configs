@@ -11,7 +11,7 @@ contacts:
 hosts:
   - hostname: k12-core
     role: corerouter
-    model: "tplink_archer-c5-v1"
+    model: "dlink_covr-x1860-a1"
     wireless_profile: freifunk_default
     wifi_roaming: true
   - hostname: k12-cpe
