@@ -3,11 +3,13 @@ LoadPlugin uptime
 LoadPlugin interface
 
 LoadPlugin ping
+{% for host in collectd_ping_hosts %}
 <Plugin ping>
 	TTL 127
 	Interval 10
-	Host "{{ collectd_ping_host }}"
+	Host "{{ host }}"
 </Plugin>
+{% endfor %}
 
 LoadPlugin memory
 <Plugin memory>
