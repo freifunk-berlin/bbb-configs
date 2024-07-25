@@ -25,12 +25,10 @@ hosts:
     role: corerouter
     model: "dlink_dap-x1860-a1"
     wireless_profile: hts4
-    wifi_roaming: true
   - hostname: hts4-ap
     role: ap
     model: "dlink_dap-x1860-a1"
     wireless_profile: hts4
-    wifi_roaming: true
 
 ipv6_prefix: '2001:bf7:830:bf00::/56'
 
@@ -103,8 +101,8 @@ location__channel_assignments_11a_standard__to_merge:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hts4-core: 13-20
-  hts4-ap: 1-20
+  hts4-core: 1-20
+  hts4-ap: 6-20
 
 # Wireless profile
 location__wireless_profiles__to_merge:
