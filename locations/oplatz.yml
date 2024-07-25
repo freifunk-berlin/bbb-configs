@@ -1,0 +1,77 @@
+---
+location: oplatz
+location_nice: Oplatz Familienfest
+latitude: 52.50206
+longitude: 13.41555
+community: true
+
+
+hosts:
+
+  - hostname: oplatz-core
+    role: corerouter
+    model: ubnt_usw-flex
+    # We use Ubiquiti 802.11af-to-passive converters on all ports.
+    # They neogotiate more power than they actually draw,
+    # so we need to increase poemgr's power budget.
+    # Without this increase, devices will be not powered up randomly.
+    poemgr_power_budget: 24
+
+  - hostname: oplatz-nf-1
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    mac_override:
+      eth0: dc:2c:6e:90:fd:d1
+
+  - hostname: oplatz-nf-2
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    mac_override:
+      eth0: dc:2c:6e:90:fd:db
+
+ipv6_prefix: '2001:bf7:830:b000::/56'
+
+# mgmt: 10.31.244.208/29
+# mesh: 10.31.244.200/30
+# dhcp: 10.248.10.0/24
+networks:
+
+  - vid: 40
+    role: dhcp
+    ipv6_subprefix: 40
+    prefix: 10.248.10.0/24
+    assignments:
+      oplatz-core: 1
+    inbound_filtering: true
+    enforce_client_isolation: true
+
+  - vid: 42
+    role: mgmt
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 42
+    prefix: 10.31.244.208/29
+    assignments:
+      oplatz-core: 1
+      oplatz-nf-1: 2
+      oplatz-nf-2: 3
+
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.244.200/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.244.201/32
+    wireguard_port: 51821
+
+location__channel_assignments_11a_standard__to_merge:
+  oplatz-nf-1: 44-20
+  oplatz-nf-2: 48-20
