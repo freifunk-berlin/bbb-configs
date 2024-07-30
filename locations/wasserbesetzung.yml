@@ -1,0 +1,66 @@
+---
+location: wasserbesetzung
+location_nice: Walsbesetzung nahe tesla Gigafactory
+latitude: 52.40421
+longitude: 13.82020
+altitude: 65
+community: true
+
+hosts:
+
+  - hostname: wasserbesetzung-core
+    role: corerouter
+    model: "tplink_tl-wdr3600-v1"
+    wireless_profile: freifunk_default
+    packages__to_merge:
+      - "kmod-usb-net-rndis"
+      - "usb-modeswitch"
+
+# --DHCP: 10.248.10.0/26
+# --MGMT: 10.31.244.200/30
+# --MESH: 10.31.244.208/30
+
+ipv6_prefix: "2001:bf7:750:6b00::/56"
+
+networks:
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.248.10.0/26
+    ipv6_subprefix: 40
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      wasserbesetzung-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.244.200/30
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 0
+    assignments:
+      wasserbesetzung-core: 1
+
+  - vid: 50
+    role: uplink
+    untagged: true
+    ifname: eth1
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.244.208/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.244.209/32
+    wireguard_port: 51821
+
+location__channel_assignments_11a_standard__to_merge:
+  wasserbesetzung-ap-1a: 36-20
+
+location__channel_assignments_11g_standard__to_merge:
+  wasserbesetzung-ap-1a: 1-20
