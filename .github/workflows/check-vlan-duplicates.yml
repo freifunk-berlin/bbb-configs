@@ -1,0 +1,17 @@
+---
+name: Check for duplicate VIDs and VLAN names
+
+on: [push, pull_request]  # yamllint disable-line rule:truthy
+
+jobs:
+  check-vlan-duplicates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run VID and VLAN name duplicate check
+        run: |
+          ./.github/checks/check-vlan-duplicates.sh
