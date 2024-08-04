@@ -1,0 +1,195 @@
+---
+location: fardf
+location_nice: "Finanzamt Reinickendorf, Eichborndamm 208, 13403 Berlin"
+latitude: 52.5870976
+longitude: 13.324892521
+altitude: 75
+contact_nickname: 'Perry'
+contacts:
+  - 'isprotejesvalkata [attt] gmail.com'
+
+hosts:
+
+  - hostname: fardf-core
+    role: corerouter
+    model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: fardf-switch
+    address: 10.31.54.67
+    snmp_profile: edgeswitch
+
+  - hostname: fardf-bht
+    address: 10.31.54.98
+    snmp_profile: airos_8
+
+  - hostname: fardf-maerkisches
+    address: 10.31.54.106
+    snmp_profile: airos_8
+
+  - hostname: fardf-sange
+    address: 10.31.54.110
+    snmp_profile: airos_8
+
+  - hostname: fardf-nord
+    address: 10.31.54.114
+    snmp_profile: airos_8
+
+  - hostname: fardf-ost
+    address: 10.31.54.118
+    snmp_profile: airos_8
+
+  - hostname: fardf-west
+    address: 10.31.54.122
+    snmp_profile: airos_8
+
+  - hostname: fardf-sued
+    address: 10.31.54.126
+    snmp_profile: airos_8
+
+  - hostname: fardf-rudi
+    address: 10.31.104.214
+    snmp_profile: airos_8
+
+# got following prefixes:
+# Router: 10.31.54.64/26, 10.31.104.212/30
+# --DHCP: 10.31.54.64/27
+# --MESH: 10.31.54.96/27
+# ---101: 10.31.54.96/30    - bht
+# ------: 10.31.54.100/30   - 802.11s Mesh (10.31.54.100/32, 10.31.54.101/32, 10.31.54.102/32, 10.31.54.103/32)
+# ---103: 10.31.54.104/30   - maerkisches
+# ---104: 10.31.54.108/30   - sange
+# ---105: 10.31.54.112/30   - nord
+# ---106: 10.31.54.116/30   - ost
+# ---107: 10.31.54.120/30   - west
+# ---108: 10.31.54.124/30   - sued
+# ---109: 10.31.104.212/30  - rudi
+
+ipv6_prefix: ""
+
+networks:
+  # DHCP
+  - vid: 10
+    role: dhcp
+    prefix: 10.31.54.64/27
+    ipv6_subprefix: 0
+    untagged: true
+    inbound_filtering: false
+    enforce_client_isolation: false
+    # This reflects the current IP configuration
+    gateway: 2
+    dns: 2
+    assignments:
+      fardf-core: 2    # 10.31.54.66 - current core ip
+      fardf-switch: 3  # 10.31.54.67
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.54.100/32
+    ipv6_subprefix: -20
+    mesh_ap: fardf-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.54.101/32
+    ipv6_subprefix: -21
+    mesh_ap: fardf-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MGMT
+  # - vid: 42
+  #   role: mgmt
+  #   prefix:
+  #   gateway: 1
+  #   dns: 1
+  #   ipv6_subprefix: 1
+  #   assignments:
+  #     fardf-core: 1
+
+  # Mesh bht
+  - vid: 101
+    role: mesh
+    name: mesh_bht
+    prefix: 10.31.54.96/30
+    ipv6_subprefix: -1
+    assignments:
+      fardf-core: 1  # 10.31.54.97
+      fardf-bht: 2   # 10.31.54.98
+
+  # Mesh Märkisches Viertel
+  - vid: 103
+    role: mesh
+    name: mesh_maerk
+    prefix: 10.31.54.104/30
+    ipv6_subprefix: -3
+    assignments:
+      fardf-core: 1         # 10.31.54.105
+      fardf-maerkisches: 2  # 10.31.54.106
+
+  # Mesh Sange
+  - vid: 104
+    role: mesh
+    name: mesh_sange
+    prefix: 10.31.54.108/30
+    ipv6_subprefix: -4
+    assignments:
+      fardf-core: 1   # 10.31.54.109
+      fardf-sange: 2  # 10.31.54.110
+
+  # Mesh Nord
+  - vid: 105
+    role: mesh
+    name: mesh_nord
+    prefix: 10.31.54.112/30
+    ipv6_subprefix: -5
+    assignments:
+      fardf-core: 1  # 10.31.54.113
+      fardf-nord: 2  # 10.31.54.114
+
+  # Mesh Ost
+  - vid: 106
+    role: mesh
+    name: mesh_ost
+    prefix: 10.31.54.116/30
+    ipv6_subprefix: -6
+    assignments:
+      fardf-core: 1  # 10.31.54.117
+      fardf-ost: 2   # 10.31.54.118
+
+  # Mesh West
+  - vid: 107
+    role: mesh
+    name: mesh_west
+    prefix: 10.31.54.120/30
+    ipv6_subprefix: -7
+    assignments:
+      fardf-core: 1  # 10.31.54.121
+      fardf-west: 2  # 10.31.54.122
+
+  # Mesh Sued
+  - vid: 108
+    role: mesh
+    name: mesh_sued
+    prefix: 10.31.54.124/30
+    ipv6_subprefix: -8
+    assignments:
+      fardf-core: 1  # 10.31.54.125
+      fardf-sued: 2  # 10.31.54.126
+
+  # Mesh Rudi
+  - vid: 109
+    role: mesh
+    name: mesh_rudi
+    prefix: 10.31.104.212/30
+    ipv6_subprefix: -9
+    assignments:
+      fardf-core: 1  # 10.31.104.213
+      fardf-rudi: 2  # 10.31.104.214
