@@ -1,0 +1,198 @@
+---
+location: fardf
+location_nice: "Finanzamt Reinickendorf, Eichborndamm 208, 13403 Berlin"
+latitude: 52.5870976
+longitude: 13.324892521
+altitude: 75
+community: true
+
+hosts:
+  - hostname: fardf-core
+    role: corerouter
+    model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: fardf-switch
+    address: 10.248.11.130
+    snmp_profile: edgeswitch
+
+  - hostname: fardf-bht
+    address: 10.248.11.131
+    snmp_profile: airos_8
+
+  - hostname: fardf-maerkisches
+    address: 10.248.11.132
+    snmp_profile: airos_8
+
+  - hostname: fardf-sange
+    address: 10.248.11.133
+    snmp_profile: airos_8
+
+  - hostname: fardf-nord
+    address: 10.248.11.134
+    snmp_profile: airos_8
+
+  - hostname: fardf-ost
+    address: 10.248.11.135
+    snmp_profile: airos_8
+
+  - hostname: fardf-sued
+    address: 10.248.11.136
+    snmp_profile: airos_8
+
+  - hostname: fardf-west
+    address: 10.248.11.137
+    snmp_profile: airos_8
+
+airos_dfs_reset:
+  - name: "fardf-maerkisches"
+    target: "10.248.11.132"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "fardf-sange"
+    target: "10.248.11.133"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "fardf-nord"
+    target: "10.248.11.134"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "fardf-ost"
+    target: "10.248.11.135"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "fardf-sued"
+    target: "10.248.11.136"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "fardf-west"
+    target: "10.248.11.137"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+# Got the following prefixes:
+# Router: 10.248.11.128/26
+# --MGMT: 10.248.11.128/28
+# --MESH: 10.248.11.144/28
+# --DHCP: 10.248.11.160/27
+
+ipv6_prefix: "2001:bf7:770:200::/56"
+
+networks:
+  # Mesh bht
+  - vid: 10
+    role: mesh
+    name: mesh_bht
+    prefix: 10.248.11.144/32
+    ipv6_subprefix: -10
+    ptp: true
+
+  # Mesh Märkisches Viertel
+  - vid: 11
+    role: mesh
+    name: mesh_maerk
+    prefix: 10.248.11.145/32
+    ipv6_subprefix: -11
+
+  # Mesh Sange
+  - vid: 12
+    role: mesh
+    name: mesh_sange
+    prefix: 10.248.11.146/32
+    ipv6_subprefix: -12
+
+  # Mesh Nord
+  - vid: 13
+    role: mesh
+    name: mesh_nord
+    prefix: 10.248.11.147/32
+    ipv6_subprefix: -13
+
+  # Mesh Ost
+  - vid: 14
+    role: mesh
+    name: mesh_ost
+    prefix: 10.248.11.148/32
+    ipv6_subprefix: -14
+
+  # Mesh Sued
+  - vid: 15
+    role: mesh
+    name: mesh_sued
+    prefix: 10.248.11.149/32
+    ipv6_subprefix: -15
+
+  # Mesh West
+  - vid: 16
+    role: mesh
+    name: mesh_west
+    prefix: 10.248.11.150/32
+    ipv6_subprefix: -16
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.248.11.151/32
+    ipv6_subprefix: -20
+    mesh_ap: fardf-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.11.152/32
+    ipv6_subprefix: -21
+    mesh_ap: fardf-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.248.11.160/27
+    ipv6_subprefix: 0
+    assignments:
+      fardf-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.11.128/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      fardf-core: 1         # 10.248.11.129 (10m PoE watchdog)
+      fardf-switch: 2       # 10.248.11.130
+      fardf-bht: 3          # 10.248.11.131
+      fardf-maerkisches: 4  # 10.248.11.132
+      fardf-sange: 5        # 10.248.11.133
+      fardf-nord: 6         # 10.248.11.134
+      fardf-ost: 7          # 10.248.11.135
+      fardf-sued: 8         # 10.248.11.136
+      fardf-west: 9         # 10.248.11.137
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  fardf-core: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  fardf-core: 13-20
