@@ -11,13 +11,12 @@ hosts:
   - hostname: pktpls-core
     role: corerouter
     model: "x86-64"
+    openwrt_version: snapshot
 
-# feed: "src/gz openwrt_falter file:///home/user/w/ff/falter-packages/out/openwrt-23.05/x86_64/falter"
+# feed: "src/gz openwrt_falter file:///home/user/w/ff/falter-packages/out/main/x86_64/falter"
 # imagebuilder_disable_signature_check: true
 
 location__packages__to_merge:
-  - -luci-mod-falter
-  - -falter-common
   - openssh-sftp-server
 
 # 10.31.174.128/26 - pktpls+bbb@systemli.org

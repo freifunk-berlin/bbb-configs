@@ -42,7 +42,7 @@
 
 - name: "Add debugging-packages on core-routers"
   set_fact:
-    packages: "{{ packages + ['mosh-server', 'tmux', 'ip'] }}"
+    packages: "{{ packages + ['mosh-server', 'tmux'] }}"
   when:
     - not (low_flash | default(false))
     - role == 'corerouter'

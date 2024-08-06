@@ -18,10 +18,11 @@ all__packages__to_merge:
   - ip6tables                  # Its not pulled in by default anymore bc fw4
   - iperf3
   - iwinfo
+  - ip
   - kmod-nft-bridge
   - mtr
   - nftables
-  - tcpdump
+  - tcpdump-mini
   - vnstat
   - -ppp
   - -ppp-mod-pppoe
