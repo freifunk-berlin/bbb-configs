@@ -1,0 +1,23 @@
+---
+target: "mediatek/filogic"              # target of router model
+brand_nice: GL.iNet                     # brand from the router in human readable form
+model_nice: GL-MT3000                   # model from the router in human readable form
+
+
+# For DSA use
+dsa_ports:                              # list of ports obtained from boards.json
+  - lan
+  - wan
+
+wireless_devices:                       # definitions for the devices radios
+  - name: 11a_standard                  # 5GHz radio
+    band: 5g
+    htmode_prefix: HE
+    path: platform/18000000.wifi+1
+    ifname_hint: wlan5
+  - name: 11g_standard                  # 2.4GHz radio
+    band: 2g
+    htmode_prefix: HE
+    path: platform/18000000.wifi
+    ifname_hint: wlan2
+
