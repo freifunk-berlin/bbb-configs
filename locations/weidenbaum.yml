@@ -11,13 +11,8 @@ hosts:
 
   - hostname: weidenbaum-core
     role: corerouter
-    model: "avm_fritzbox-4040"
-    wireless_profile: freifunk_default
-
-  - hostname: weidenbaum-r0
-    role: ap
     model: "ubnt_unifiac-mesh"
-    openwrt_version: 23.05-SNAPSHOT
+    wireless_profile: freifunk_default
 
 snmp_devices:
 
@@ -66,29 +61,6 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # MESH - 5 GHz 802.11s - r0
-  - vid: 22
-    role: mesh
-    name: mesh_5g_r0
-    prefix: 10.31.204.149/32
-    ipv6_subprefix: -22
-    mesh_ap: weidenbaum-r0
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
-
-  # MESH - 2.4 GHz 802.11s -r0
-  - vid: 23
-    role: mesh
-    name: mesh_2g_r0
-    prefix: 10.31.204.150/32
-    ipv6_subprefix: -23
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.5']
-    mesh_ap: weidenbaum-r0
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
   # DHCP
   - vid: 40
     role: dhcp
@@ -109,4 +81,11 @@ networks:
     assignments:
       weidenbaum-core: 1       # .129
       weidenbaum-bht: 2        # .130
-      weidenbaum-r0: 3         # .131
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  weidenbaum-core: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  weidenbaum-core: 13-20
