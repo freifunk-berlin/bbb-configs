@@ -3,7 +3,6 @@ target: "mediatek/filogic"              # target of router model
 brand_nice: GL.iNet                     # brand from the router in human readable form
 model_nice: GL-MT3000                   # model from the router in human readable form
 
-
 # For DSA use
 dsa_ports:                              # list of ports obtained from boards.json
   - lan
