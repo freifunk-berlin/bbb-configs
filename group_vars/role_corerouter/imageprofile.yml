@@ -1,5 +1,7 @@
 ---
 role_corerouter__packages__to_merge:
+  - bird2
+  - bird2c
   - babeld
   - luci-app-babeld
   - collectd-mod-dhcpleases
