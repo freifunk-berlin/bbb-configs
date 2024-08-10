@@ -2,6 +2,28 @@
 {% set profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first %}
 {% set wifi_networks = profile | json_query('ifaces[].network') | default([], true) %}
 
+
+# Babel inserts into seperate route table, add that to lookup list for IPv6
+config rule6
+	option priority 33000
+        option lookup 'babel-src'
+
+# IPv4 Soft Migration by priotizing Babel over OLSR
+config rule
+	option priority 33100
+	option lookup 'babel-ff'
+
+config rule
+        option priority 33101
+        option lookup 'olsr-ff'
+
+config rule
+	option priority 33200
+	option lookup 'babel-default'
+config rule
+        option priority 33201
+        option lookup 'olsr-default'
+
 config interface 'loopback'
 	option device 'lo'
 	option proto 'static'
