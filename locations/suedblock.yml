@@ -16,7 +16,7 @@ hosts:
 
   - hostname: suedblock-core
     role: corerouter
-    model: "avm_fritzbox-4040"
+    model: "cudy_x6-v1"
     wireless_profile: freifunk_default
     dhcp_no_ping: false
 
