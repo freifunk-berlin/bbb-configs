@@ -14,9 +14,11 @@ hosts:
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
 
+  # Special vlan config:
+  # - kub-ap1 vlan 40: 0t 1t 2 3 4
   - hostname: kub-ap1
     role: ap
-    model: "avm_fritzbox-7530"
+    model: "cudy_x6-v1"
 
 snmp_devices:
   - hostname: kub-simeon
@@ -58,6 +60,3 @@ networks:
       kub-core: 1
       kub-simeon: 2
       kub-ap1: 14
-
-# Special vlan config:
-# - kub-ap1 vlan 40: 0t 1t 2 3 4
