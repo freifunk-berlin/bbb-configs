@@ -13,11 +13,13 @@ hosts:
     model: "netgear_wax202"
     wireless_profile: w38b
     wifi_roaming: true
+    mac_override: {eth0: 34:98:b5:0f:37:5f}
   - hostname: w38b-ap1
     role: ap
     model: "dlink_covr-x1860-a1"
     wireless_profile: w38b
     wifi_roaming: true
+    mac_override: {eth0: 0c:0e:76:cf:2e:3a}
 
 snmp_devices:
   - hostname: w38b-sama
