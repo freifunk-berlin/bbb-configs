@@ -4,7 +4,12 @@ brand_nice: Cudy
 model_nice: X6
 version_nice: v1
 
-int_port: lan
+dsa_ports:
+  - lan1
+  - lan2
+  - lan3
+  - lan4
+  - wan
 
 wireless_devices:
   - name: 11a_standard
