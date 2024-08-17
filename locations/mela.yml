@@ -15,34 +15,27 @@ hosts:
   - hostname: mela-n5
     role: ap
     model: "tplink_cpe510-v1"
-    wireless_profile: freifunk_default
   - hostname: mela-o5
     role: ap
     model: "tplink_cpe510-v1"
-    wireless_profile: freifunk_default
   - hostname: mela-s5
     role: ap
     model: "tplink_cpe510-v1"
   - hostname: mela-n2
     role: ap
     model: "tplink_cpe210-v1"
-    wireless_profile: freifunk_default
   - hostname: mela-o2
     role: ap
     model: "tplink_cpe210-v1"
-    wireless_profile: freifunk_default
   - hostname: mela-s2
     role: ap
     model: "tplink_cpe210-v1"
-    wireless_profile: freifunk_default
   - hostname: mela-w2
     role: ap
     model: "tplink_cpe210-v1"
-    wireless_profile: freifunk_default
   - hostname: mela-kanzel
     role: ap
     model: "tplink_cpe210-v1"
-    wireless_profile: freifunk_default
 
 snmp_devices:
   - hostname: mela-switch-hinten
@@ -142,7 +135,7 @@ networks:
     name: mesh_11s_o5
     prefix: 10.36.70.41/32
     ipv6_subprefix: -25
-    mesh_ap: mela-o2
+    mesh_ap: mela-o5
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
