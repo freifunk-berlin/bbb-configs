@@ -41,6 +41,11 @@ hosts:
     role: ap
     model: "tplink_archer-c5-v1"
     wifi_roaming: true
+  - hostname: k12-h1
+    role: ap
+    model: "dlink_covr-x1860-a1"
+    mac_override: {eth0: a8:63:7d:db:4d:4c}
+    wifi_roaming: true
 
 snmp_devices:
   - hostname: k12-segen
@@ -90,23 +95,23 @@ networks:
   # MESH - 5 GHz 802.11s - ap1
   - vid: 22
     role: mesh
-    name: mesh_ap1_5
+    name: mesh_h1_5
     prefix: 10.31.158.130/32
     ipv6_subprefix: -22
-    mesh_ap: k12-ap1
+    mesh_ap: k12-h1
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
   # MESH - 2.4 GHz 802.11s - ap1
   - vid: 23
     role: mesh
-    name: mesh_ap1_2
+    name: mesh_h1_2
     prefix: 10.31.158.131/32
     ipv6_subprefix: -23
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
-    mesh_ap: k12-ap1
+    mesh_ap: k12-h1
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
@@ -217,6 +222,7 @@ networks:
       k12-ap4: 7    # 10.31.158.199/32
       k12-switch: 8 # 10.31.158.200/32
       k12-2h1s: 9   # 10.31.158.201/32
+      k12-h1: 10    # 10.31.158.202/32
 
   # UPLK
   - vid: 50
