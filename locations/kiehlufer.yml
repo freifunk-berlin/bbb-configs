@@ -28,7 +28,7 @@ hosts:
 
   - hostname: kiehlufer-core
     role: corerouter
-    model: "linksys_e8450-ubi"
+    model: "cudy_x6-v1"
     wireless_profile: freifunk_default
 
   - hostname: kiehlufer-huette
