@@ -16,13 +16,12 @@ hosts:
     wifi_roaming: true
   - hostname: k12-haus4-garten
     role: ap
-    model: "tplink_archer-c5-v1"
-    wireless_profile: freifunk_default
+    model: "dlink_covr-x1860-a1"
+    mac_override: {eth0: a8:63:7d:db:4d:53}
     wifi_roaming: true
   - hostname: k12-haus4-hirschhof
     role: ap
     model: "tplink_cpe210-v1"
-    wireless_profile: freifunk_default
     wifi_roaming: true
 
 ipv6_prefix: '2001:bf7:760:2b00::/56'
