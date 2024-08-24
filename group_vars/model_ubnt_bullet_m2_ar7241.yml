@@ -2,7 +2,7 @@
 override_target: "ubnt_bullet-m-ar7241"
 target: ath79/tiny
 brand_nice: Ubiquiti
-model_nice: Bullet M
+model_nice: Bullet M2
 version_nice: XM
 
 int_port: eth0
