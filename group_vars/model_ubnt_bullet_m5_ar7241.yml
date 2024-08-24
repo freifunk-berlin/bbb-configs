@@ -1,0 +1,18 @@
+---
+override_target: "ubnt_bullet-m-ar7241"
+target: ath79/tiny
+brand_nice: Ubiquiti
+model_nice: Bullet M5
+version_nice: XM
+
+int_port: eth0
+
+low_mem: true
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: HT
+    path: pci0000:00/0000:00:00.0
+    ifname_hint: wlan5
+    antenna_gain: 13
