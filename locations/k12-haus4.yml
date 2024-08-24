@@ -12,6 +12,7 @@ hosts:
     role: corerouter
     model: "dlink_covr-x1860-a1"
     wireless_profile: freifunk_default
+    mac_override: {eth0: 0c:0e:76:cf:21:e5}
     wifi_roaming: true
   - hostname: k12-haus4-garten
     role: ap
