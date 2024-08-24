@@ -19,6 +19,7 @@ hosts:
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     wifi_roaming: true
+    mac_override: {eth0: 64:d1:54:ae:ba:b0}
 
   - hostname: gub37-hof-w
     role: ap

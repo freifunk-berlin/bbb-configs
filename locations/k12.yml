@@ -12,41 +12,34 @@ hosts:
   - hostname: k12-core
     role: corerouter
     model: "dlink_covr-x1860-a1"
+    mac_override: {eth0: a8:63:7d:db:4d:45}
     wireless_profile: freifunk_default
     wifi_roaming: true
   - hostname: k12-cpe
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    # eth0 mac needs to be properly set
-    # cat /sys/firmware/mikrotik/hard_config/mac_base
-    mac_override:
-      eth0: 08:55:31:EA:E3:32
-    wireless_profile: freifunk_default
+    mac_override: {eth0: 08:55:31:ea:e3:32}
     wifi_roaming: true
   - hostname: k12-ap1
     role: ap
     model: "tplink_archer-c5-v1"
-    wireless_profile: freifunk_default
     wifi_roaming: true
   - hostname: k12-ap2
     role: ap
     model: "tplink_archer-c7-v5"
-    wireless_profile: freifunk_default
     wifi_roaming: true
   - hostname: k12-2h1s
     role: ap
     model: "dlink_covr-x1860-a1"
-    wireless_profile: freifunk_default
+    mac_override: {eth0: 0c:0e:76:cf:21:de}
     wifi_roaming: true
   - hostname: k12-ap3
     role: ap
     model: "tplink_tl-wdr4300-v1"
-    wireless_profile: freifunk_default
     wifi_roaming: true
   - hostname: k12-ap4
     role: ap
     model: "tplink_archer-c5-v1"
-    wireless_profile: freifunk_default
     wifi_roaming: true
 
 snmp_devices:
