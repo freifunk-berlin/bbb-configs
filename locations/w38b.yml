@@ -10,15 +10,12 @@ contacts:
 hosts:
   - hostname: w38b-core
     role: corerouter
-    model: "netgear_wax202"
-    wireless_profile: w38b
-    wifi_roaming: true
-    mac_override: {eth0: 34:98:b5:0f:37:5f}
+    model: "ubnt_edgerouter-x"
+    poe_on: []
   - hostname: w38b-ap1
     role: ap
     model: "dlink_covr-x1860-a1"
     wireless_profile: w38b
-    wifi_roaming: true
     mac_override: {eth0: 0c:0e:76:cf:2e:3a}
 
 snmp_devices:
@@ -66,27 +63,27 @@ networks:
     mesh_metric: 256
 
   # MESH - 5 GHz 802.11s
-  - vid: 20
-    role: mesh
-    name: mesh_5g
-    prefix: 10.31.212.35/32
-    ipv6_subprefix: -20
-    mesh_ap: w38b-core
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
+  # - vid: 20
+  #   role: mesh
+  #   name: mesh_5g
+  #   prefix: 10.31.212.35/32
+  #   ipv6_subprefix: -20
+  #   mesh_ap: w38b-core
+  #   mesh_radio: 11a_standard
+  #   mesh_iface: mesh
 
   # MESH - 2.4 GHz 802.11s
-  - vid: 21
-    role: mesh
-    name: mesh_2g
-    prefix: 10.31.212.36/32
-    ipv6_subprefix: -21
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.5']
-    mesh_ap: w38b-core
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
+  # - vid: 21
+  #   role: mesh
+  #   name: mesh_2g
+  #   prefix: 10.31.212.36/32
+  #   ipv6_subprefix: -21
+  #   # make mesh_metric(s) for 2GHz worse than 5GHz
+  #   mesh_metric: 1024
+  #   mesh_metric_lqm: ['default 0.5']
+  #   mesh_ap: w38b-core
+  #   mesh_radio: 11g_standard
+  #   mesh_iface: mesh
 
   # MESH - 5 GHz 802.11s ap1
   - vid: 22
@@ -171,12 +168,12 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  w38b-core: 36-80
-  w38b-ap1: 52-80
+  # w38b-core: 36-80
+  w38b-ap1: 36-80
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  w38b-core: 13-20
+  # w38b-core: 13-20
   w38b-ap1: 13-20
 
 # Wireless profile
@@ -215,7 +212,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: w38b-home
         encryption: sae-mixed
-        key: 'file:/root/wifi-pwd-home'
+        key: 'file:/root/wifi-pwd'
         network: private
         radio: [11a_standard, 11g_standard]
         ifname_hint: pr
