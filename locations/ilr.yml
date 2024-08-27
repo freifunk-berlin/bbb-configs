@@ -65,6 +65,8 @@ hosts:
       - 'config_foreach handle_vlans "bridge-vlan"'
       - ' '
       - 'uci commit network'
+      - 'sync'
+      - 'reload_config'
 
 
 snmp_devices:
