@@ -68,7 +68,7 @@ for FILE_PATH in $SORTED_FILES; do
         echo "Hostname $HOSTNAME is reachable"
 
         # Check memory on remote host
-        MEMORY=$(ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "root@$HOSTNAME" "free | awk 'NR==2 {print \$4}'")
+        MEMORY=$(ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "root@$HOSTNAME" "free | awk 'NR==2 {print \$7}'")
         if [ "$MEMORY" -ge $(( $(stat -c %s "$FILE_PATH") / 1024 + 1024 )) ]; then  # File size in KB + 1 MB
             echo "Memory on $HOSTNAME is sufficient ($MEMORY KB)"
 
