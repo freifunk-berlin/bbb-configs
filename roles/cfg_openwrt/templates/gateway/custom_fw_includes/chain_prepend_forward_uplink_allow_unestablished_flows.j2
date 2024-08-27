@@ -1,3 +1,4 @@
+meta nfproto ipv6 udp sport 53 limit rate {{ untracked_flows_dns_rate }}/second burst {{ untracked_flows_dns_burst }} packets counter accept comment "Allow DNS ratelimited, because resolvers answer quicker than Conntrack sync"
 meta nfproto ipv6 tcp flags & ack == ack limit rate {{ untracked_flows_tcp_ack_rate }}/second burst {{ untracked_flows_tcp_ack_burst }} packets counter accept comment "Allow established connections which not made it in the conntrack sync yet"
 meta nfproto ipv6 tcp flags & rst == rst limit rate {{ untracked_flows_tcp_rst_rate }}/second burst {{ untracked_flows_tcp_rst_burst }} packets counter accept comment "Allow established connections which not made it in the conntrack sync yet"
 meta nfproto ipv6 tcp flags & ack == ack counter accept comment "Limit exceeded ACK"
