@@ -10,14 +10,10 @@ contacts:
 hosts:
   - hostname: k11-core
     role: corerouter
-    model: "tplink_archer-c7-v2"
-    wireless_profile: freifunk_default
-    wifi_roaming: true
-  - hostname: k11-ap1
-    role: ap
     model: "mikrotik_routerboard-wap-g-5hact2hnd"
     wireless_profile: freifunk_default
-    wifi_roaming: true
+    # remove some packages for smaller image size (only 64 MB of memory)
+    low_mem: true
 
 ipv6_prefix: '2001:bf7:760:100::/56'
 
@@ -53,29 +49,6 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # MESH - 5 GHz 802.11s - ap1
-  - vid: 22
-    role: mesh
-    name: mesh_ap1_5
-    prefix: 10.31.185.130/32
-    ipv6_subprefix: -22
-    mesh_ap: k11-ap1
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
-
-  # MESH - 2.4 GHz 802.11s - ap1
-  - vid: 23
-    role: mesh
-    name: mesh_ap1_2
-    prefix: 10.31.185.131/32
-    ipv6_subprefix: -23
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.8']
-    mesh_ap: k11-ap1
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
   # DHCP
   - vid: 40
     role: dhcp
@@ -96,17 +69,14 @@ networks:
     ipv6_subprefix: 1
     assignments:
       k11-core: 1  # 10.31.185.193
-      k11-ap1: 2   # 10.31.185.194
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
   k11-core: 36-40
-  k11-ap1: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  k11-core: 1-20
-  k11-ap1: 13-20
+  k11-core: 13-20
 
 dns_servers:
   # quad9
