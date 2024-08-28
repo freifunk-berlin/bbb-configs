@@ -3,7 +3,7 @@ config system
         option zonename '{{ zonename }}'
         option timezone '{{ timezone }}'
         option ttylogin '0'
-        option log_size '64'
+        option log_size '{{ log_size }}'
         option urandom_seed '0'
         option compat_version '9.9' # hardcoded to a bbb-configs exclusive version identifier, matches patch in image builder, because we dont retain device config.
 {% if role == 'corerouter' or role  == 'gateway' %}
