@@ -13,16 +13,16 @@ contacts:
 # - 10.31.255.192/27    dhcp
 # - 10.31.255.224/28    prdhcp
 # - 10.31.255.240/29    mesh
-#   - 10.31.255.240/32  mesh_emma
-#   - 10.31.255.241/32  ts_wg1
+#   - 10.31.255.240/32  mesh_lan
+#   - 10.31.255.241/32  ts_wg0
 # - 10.31.255.248/29    mgmt
 ipv6_prefix: 2001:bf7:820:2c00::/56
 
 hosts:
 
-  # Thinkcentre M720q, i5-8500T, ??GB RAM, ???GB NVMe
-  # Intel I219 V7 - eth0
-  # ConnectX-4 LX CX4121B - eth1, eth2
+  # Thinkcentre M720q, i5-8500T, 16GB RAM, 1TB NVMe
+  # eth0      - Intel I219 V7
+  # eth1 eth2 - ConnectX-4 Lx CX4121B
   - hostname: hway-core
     role: corerouter
     model: x86-64
@@ -37,13 +37,14 @@ hosts:
 
   - hostname: hway-ap1
     role: ap
+    wireless_profile: hway
     model: zyxel_nwa50ax
-    wireless_profile: hway
-
-  - hostname: hway-ap2
-    role: ap
-    model: mikrotik_wap-ac
-    wireless_profile: hway
+    openwrt_version: snapshot
+    log_size: 1024
+    # imagebuilder: /home/user/w/ff/bbb-configs/openwrt-imagebuilder-ramips-mt7621.Linux-x86_64.tar.zst
+    host__rclocal__to_merge:
+      - "echo 1 > /sys/kernel/debug/ieee80211/phy0/mt76/fw_debug_wm"
+    ssl__packages__to_merge: []
 
 snmp_devices:
 
@@ -55,7 +56,7 @@ networks:
 
   - vid: 10
     role: mesh
-    name: mesh_emma
+    name: mesh_lan
     prefix: 10.31.255.240/32
     ipv6_subprefix: -10
 
@@ -89,7 +90,6 @@ networks:
       hway-switch: 2     # .255.250
       hway-kiehlufer: 3  # .255.251
       hway-ap1: 4        # .255.252
-      hway-ap2: 5        # .255.253
 
   - vid: 50
     ifname: eth1
@@ -104,11 +104,9 @@ networks:
 
 location__channel_assignments_11a_standard__to_merge:
   hway-ap1: 36-40
-  hway-ap2: 44-40
 
 location__channel_assignments_11b_standard__to_merge:
   hway-ap1: 13-20
-  hway-ap2: 9-20
 
 location__wireless_profiles__to_merge:
   - name: hway

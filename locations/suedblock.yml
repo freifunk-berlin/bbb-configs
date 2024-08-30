@@ -20,6 +20,12 @@ hosts:
     wireless_profile: freifunk_default
     dhcp_no_ping: false
     openwrt_version: snapshot
+    # imagebuilder: /home/user/w/ff/bbb-configs/openwrt-imagebuilder-ramips-mt7621.Linux-x86_64.tar.zst
+    log_size: 1024
+    host__rclocal__to_merge:
+      - 'echo 1 > /sys/kernel/debug/ieee80211/phy0/mt76/fw_debug_wm'
+      - 'echo 1 > /sys/kernel/debug/ieee80211/phy1/mt76/fw_debug_wm'
+    ssl__packages__to_merge: []
 
 # 10.248.13.0/24
 # 10.248.13.0/29 - mgmt
