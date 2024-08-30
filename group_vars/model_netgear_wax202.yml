@@ -9,6 +9,10 @@ dsa_ports:
   - lan2
   - lan3
 
+# Mac address can be read with the following command:
+# cat /dev/mtdblock$(grep -w 'Config' /proc/mtd | sed -n 's/^mtd\([0-9]\+\):.*/\1/p') | grep -o 'mac=[^ ]*' | cut -d= -f2
+requires_mac_override: true
+
 wireless_devices:
   - name: 11a_standard
     band: 5g
