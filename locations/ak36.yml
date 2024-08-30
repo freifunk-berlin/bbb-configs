@@ -52,7 +52,7 @@ ipv6_prefix: 2001:bf7:750:4000::/56
 uplink:
   ifname: eth0
   ipv4: 77.87.51.11/25
-  # ipv6: ToDo
+  ipv6: 2001:bf7:b103:1::11/64
 
 mgmt:
   ifname: eth1.42
