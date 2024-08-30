@@ -10,7 +10,7 @@ hosts:
 
   - hostname: rhnk-core
     role: corerouter
-    model: "mikrotik_routerboard-750gr3"
+    model: "linksys_e8450-ubi"
 
   - hostname: rhnk-nf-bvv
     role: ap
