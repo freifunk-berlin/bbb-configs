@@ -94,6 +94,8 @@ inbound_allow:
     dst: 2001:bf7:830:1029::/64
   - name: 'cryptpad.berlin noc@stadtfunk.net'
     dst: 2001:bf7:750:5b00::/128
+  - name: 'radbahn mt76 testing'
+    dst: 2001:bf7:830:c000::/56
 #  - name: Rule Description (mandatory)
 #    dst: Destination IP (mandatory)
 #    src: Source IP
