@@ -13,7 +13,7 @@ hosts:
 
   - hostname: linie206-core
     role: corerouter
-    model: "linksys_e8450-ubi"
+    model: "mikrotik_routerboard-750gr3"
     wireless_profile: freifunk_default
 
   - hostname: linie206-nf-o-5ghz
