@@ -3,6 +3,7 @@ role_uplink_gw__packages__to_merge:
   - -wpad-openssl
   - collectd-mod-conntrack
   - collectd-mod-olsrd
+  - collectd-mod-snmp
   - collectd-mod-snmp6
   - olsrd
   - olsrd-mod-arprefresh
