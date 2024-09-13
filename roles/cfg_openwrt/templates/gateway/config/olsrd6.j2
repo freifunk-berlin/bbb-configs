@@ -1,0 +1,49 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+config LoadPlugin
+	option library 'olsrd_nameservice'
+	option suffix '.olsr6'
+	option hosts_file '/tmp/hosts/olsr6'
+	option latlon_file '/tmp/_unused_olsr6_latlon.js'
+	option services_file '/tmp/_unused_olsr6_services'
+
+config LoadPlugin
+        option accept '::'
+        option ipv6only 'true'
+        option library 'olsrd_jsoninfo'
+        option ignore '0'
+
+config olsrd
+	option IpVersion '6'
+	option FIBMetric 'flat'
+	option AllowNoInt 'yes'
+	option TcRedundancy '2'
+	option NatThreshold '0.75'
+	option LinkQualityAlgorithm 'etx_ff'
+	option SmartGateway 'no'
+	option Pollrate '0.025'
+	option LinkQualityLevel '2'
+	option OlsrPort '698'
+	option Willingness '3'
+	option TosValue '16'
+	option RtTable '666'
+	option RtTableDefault '666'
+
+config InterfaceDefaults
+	option MidValidityTime '500.0'
+	option TcInterval '2.0'
+	option HnaValidityTime '125.0'
+	option HelloValidityTime '125.0'
+	option TcValidityTime '500.0'
+	option MidInterval '50.0'
+	option HelloInterval '15.0'
+	option HnaInterval '30.0'
+
+{% if mesh_links is defined and mesh_links|length>0 %}
+  {% for interface in mesh_links %}
+config Interface
+	option ignore '0'
+	option interface '{{ interface['name'] }}'
+	option Mode '{{ 'ether' if interface.get('ptp') else 'mesh' }}'
+  {% endfor %}
+{% endif %}
+
