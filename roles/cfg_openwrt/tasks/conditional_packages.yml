@@ -44,8 +44,9 @@
   set_fact:
     packages: "{{ packages + ['mosh-server', 'tmux'] }}"
   when:
-    - not (low_flash | default(false))
     - role == 'corerouter'
+    - not (low_mem | default(false))
+    - not (low_flash | default(false))
 
 - name: "Remove or replace packages on low mem and low flash"
   set_fact:
@@ -55,6 +56,8 @@
     - -ethtool
     - -iperf3
     - -iwinfo
+    - -libiwinfo-lua
+    - -collectd-mod-iwinfo
     - -kmod-ipt-core
     - -kmod-ipt-offload
     - -kmod-nf-ipt

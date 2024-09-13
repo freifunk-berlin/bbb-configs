@@ -4,9 +4,9 @@ location_nice: Suedblock
 latitude: 52.498599118
 longitude: 13.416844010
 altitude: 33
-contact_nickname: '365ff'
+contact_nickname: Stadtfunk gGmbH
 contacts:
-  - '365ff [ät] systemli [dot] org'
+  - noc@stadtfunk.net
 
 location__ssh_keys__to_merge:
   - comment: narfpeng
@@ -19,14 +19,25 @@ hosts:
     model: "cudy_x6-v1"
     wireless_profile: freifunk_default
     dhcp_no_ping: false
+    openwrt_version: snapshot
+    # imagebuilder: /home/user/w/ff/bbb-configs/openwrt-imagebuilder-ramips-mt7621.Linux-x86_64.tar.zst
+    log_size: 1024
+    host__rclocal__to_merge:
+      - 'echo 1 > /sys/kernel/debug/ieee80211/phy0/mt76/fw_debug_wm'
+      - 'echo 1 > /sys/kernel/debug/ieee80211/phy1/mt76/fw_debug_wm'
+    ssl__packages__to_merge: []
 
+# 10.248.13.0/24
+# 10.248.13.0/29 - mgmt
+# 10.248.13.8/29 - mesh
+# 10.248.13.128/25 - dhcp
 ipv6_prefix: "2001:bf7:830:b100::/56"
 
 networks:
 
   - vid: 42
     role: mgmt
-    prefix: 10.31.15.196/32
+    prefix: 10.248.13.0/29
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
@@ -35,7 +46,7 @@ networks:
 
   - vid: 40
     role: dhcp
-    prefix: 10.31.172.128/25
+    prefix: 10.248.13.128/25
     ipv6_subprefix: 0
     inbound_filtering: true
     enforce_client_isolation: true
@@ -49,11 +60,11 @@ networks:
   - role: tunnel
     ifname: ts_wg0
     mtu: 1280
-    prefix: 10.31.172.32/32
+    prefix: 10.248.13.8/32
     wireguard_port: 51820
 
   - role: tunnel
     ifname: ts_wg1
     mtu: 1280
-    prefix: 10.31.172.33/32
+    prefix: 10.248.13.9/32
     wireguard_port: 51821

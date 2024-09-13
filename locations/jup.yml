@@ -28,7 +28,7 @@ hosts:
 
   - hostname: jup-bullet-ap4
     role: ap
-    model: "ubnt_bullet-m-ar7241"
+    model: "ubnt_bullet-m2-ar7241"
 
   - hostname: jup-m5-ap5
     role: ap

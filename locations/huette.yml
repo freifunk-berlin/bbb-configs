@@ -16,8 +16,12 @@ hosts:
     role: corerouter
     model: "zyxel_nwa55axe"
     wireless_profile: freifunk_default
+    openwrt_version: snapshot
+    # imagebuilder: /home/user/w/ff/bbb-configs/openwrt-imagebuilder-ramips-mt7621.Linux-x86_64.tar.zst
+    log_size: 1024
     host__rclocal__to_merge:
-      - 'cat /etc/crontabs/root | grep reboot 2>/dev/null || echo "15 * * * * reboot" >> /etc/crontabs/root && /etc/init.d/cron restart'
+      - 'echo 1 > /sys/kernel/debug/ieee80211/phy0/mt76/fw_debug_wm'
+    ssl__packages__to_merge: []
 
 ipv6_prefix: '2001:bf7:830:2600::/56'
 
@@ -39,17 +43,17 @@ networks:
     mesh_iface: mesh
 
   # MESH - 2.4 GHz 802.11s
-  - vid: 21
-    role: mesh
-    name: mesh_11s_2ghz
-    prefix: 10.31.114.2/32
-    ipv6_subprefix: -21
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.8']
-    mesh_ap: huette-core
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
+  # - vid: 21
+  #   role: mesh
+  #   name: mesh_11s_2ghz
+  #   prefix: 10.31.114.2/32
+  #   ipv6_subprefix: -21
+  #   # make mesh_metric(s) for 2GHz worse than 5GHz
+  #   mesh_metric: 1024
+  #   mesh_metric_lqm: ['default 0.8']
+  #   mesh_ap: huette-core
+  #   mesh_radio: 11g_standard
+  #   mesh_iface: mesh
 
   - vid: 40
     role: dhcp

@@ -38,7 +38,7 @@ hosts:
 
   - hostname: ska95-cortile
     role: ap
-    model: ubnt_bullet-m-ar7241
+    model: ubnt_bullet-m2-ar7241
 
 snmp_devices:
   - hostname: ska95-emma

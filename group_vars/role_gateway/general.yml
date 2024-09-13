@@ -55,6 +55,10 @@ gre_metric: 64
 
 conntrackd_port: 3780
 
+# Rate Limit for DNS replies
+untracked_flows_dns_rate: 5000
+untracked_flows_dns_burst: 2500
+
 # Rate Limit for packets with ACK flag set
 untracked_flows_tcp_ack_rate: 5000
 untracked_flows_tcp_ack_burst: 2500
@@ -94,6 +98,8 @@ inbound_allow:
     dst: 2001:bf7:830:1029::/64
   - name: 'cryptpad.berlin noc@stadtfunk.net'
     dst: 2001:bf7:750:5b00::/128
+  - name: 'radbahn mt76 testing'
+    dst: 2001:bf7:830:c000::/56
 #  - name: Rule Description (mandatory)
 #    dst: Destination IP (mandatory)
 #    src: Source IP
