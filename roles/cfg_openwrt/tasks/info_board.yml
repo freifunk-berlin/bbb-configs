@@ -1,0 +1,12 @@
+---
+- name: info board | Generate directory
+  file:
+    path: "{{ info_dir }}"
+    state: directory
+    mode: "731"
+
+- name: info board | Generate outputfiles
+  template:
+    src: "templates/common/info_board.j2"
+    dest: "{{ info_dir }}/{{ location }}.svg"
+    mode: "644"

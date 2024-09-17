@@ -25,6 +25,7 @@
     build_dir: "{{ basedir }}/build/{{ inventory_hostname }}"
     images_dir: "{{ basedir }}/images/"
     wikiupdater_dir: "{{ basedir }}/wikiupdater/"
+    info_dir: "{{ basedir }}/info/"
   tags: always
 
 - name: Create directory
@@ -109,3 +110,12 @@
   tags:
     - never
     - wiki
+
+- name: Include info board
+  include_tasks:
+    file: info_board.yml
+    apply:
+      tags: info
+  tags:
+    - never
+    - info
