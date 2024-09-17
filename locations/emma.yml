@@ -9,8 +9,7 @@ community: true
 hosts:
   - hostname: emma-core
     role: corerouter
-    model: "avm_fritzbox-4040"
-    wireless_profile: freifunk_default
+    model: "mikrotik_routerboard-750gr3"
 
 snmp_devices:
   - hostname: emma-switch-no
