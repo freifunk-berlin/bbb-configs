@@ -205,6 +205,45 @@ If there are routes via the tunnels the following command will show a non empty 
 
 If you have multiple uplinks and want one to be prefered, set different link metrics for the different uplinks.
 
+### uplink over LTE modem
+
+Many LTE USB sticks work as a so called USB CDC Net device. They emulate a standard ethernet device without any need for further configuration.
+
+```yml
+  - vid: 50
+    untagged: true
+    ifname: eth1
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.142.120/32
+    wireguard_port: 51820
+```
+
+Some integrated LTE modems work with the QMI protocol instead, which requires basic configuration of the modem.
+
+```yml
+  - vid: 50
+    untagged: true
+    ifname: wwan0
+    role: uplink
+    uplink_mode: direct
+    wwan:
+      proto: qmi
+      device: /dev/cdc-wdm0
+      apn: internet
+      pdptype: ipv4
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.142.120/32
+    wireguard_port: 51820
+```
+
+
 ### ssh-keys
 
 By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys use this format:
