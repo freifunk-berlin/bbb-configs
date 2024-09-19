@@ -1,0 +1,24 @@
+---
+target: ath79/nand
+openwrt_version: 24.10-SNAPSHOT
+brand_nice: GL.iNet
+model_nice: GL-XE300
+
+switch_ports: 5
+switch_int_port: 0
+switch_ignore_ports: [1, 2, 3]
+
+# VLAN 1 is hardwired, so any untagged VLAN on eth0 must be ID 1.
+# WAN port is a separate device eth1, other VLAN IDs untagged are okay here.
+int_port: eth0
+
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: platform/ahb/18100000.wmac
+    ifname_hint: wlan2
+
+model__packages__to_merge:
+  - kmod-usb-serial-option
+  - picocom
