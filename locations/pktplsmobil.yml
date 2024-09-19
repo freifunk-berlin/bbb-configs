@@ -1,0 +1,100 @@
+---
+
+location: pktplsmobil
+location_nice: Mobilrouter von @pktpls
+contact_nickname: Packet Please
+contacts:
+  - pktpls+bbb@systemli.org
+
+hosts:
+
+  - hostname: pktplsmobil-core
+    role: corerouter
+    model: "glinet_gl-xe300"
+    wireless_profile: pktplsmobil
+
+# 10.248.17.128/25
+# 10.248.17.128/26 prdhcp
+# 10.248.17.192/27 dhcp
+# 10.248.17.224/28 mesh
+# 10.248.17.240/28 mgmt
+ipv6_prefix: 2001:bf7:820:2400::/56
+
+networks:
+
+  # - vid: 40
+  #   role: dhcp
+  #   name: dhcp
+  #   inbound_filtering: true
+  #   enforce_client_isolation: true
+  #   prefix: 10.248.17.192/27
+  #   ipv6_subprefix: -40
+  #   assignments:
+  #     pktplsmobil-core: 1
+
+  - vid: 1
+    untagged: true
+    role: dhcp
+    name: prdhcp
+    inbound_filtering: true
+    enforce_client_isolation: false
+    prefix: 10.248.17.128/26
+    ipv6_subprefix: -41
+    assignments:
+      pktplsmobil-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.17.240/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: -42
+    assignments:
+      pktplsmobil-core: 1
+
+  - vid: 50
+    untagged: true
+    ifname: wwan0
+    role: uplink
+    uplink_mode: direct
+    wwan:
+      proto: qmi
+      device: /dev/cdc-wdm0
+      apn: internet
+      pdptype: ipv4
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.17.224/32
+    wireguard_port: 51820
+
+location__wireless_profiles__to_merge:
+  - name: pktplsmobil
+    devices:
+      - radio: 11g_standard
+        legacy_rates: false
+        country: DE
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11g_standard]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
