@@ -85,6 +85,15 @@ config interface '{{ name }}'
     {% endif %}
   {% endif %}
 
+  {% if 'wwan' in network %}
+config interface 'wwan'
+    {% set wwan = network['wwan'] %}
+  option proto '{{ wwan['proto'] }}'
+  option device '{{ wwan['device'] }}'
+  option apn '{{ wwan['apn'] }}'
+  option pdptype '{{ wwan['pdptype'] }}'
+  {% endif %}
+
   {% if libnetwork.isPortNeeded(network) | from_json and libnetwork.isBridgeNeeded(network) | from_json %}
 config device
 	option name '{{ libnetwork.getBridgeIfname(network) }}'
