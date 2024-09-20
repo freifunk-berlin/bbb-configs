@@ -54,14 +54,14 @@ config interface 'loopback'
     {% set port = int_port + ('' if untagged else '.' + vid) %}
   {% endif %}
   {% set bridge_name = 'br-' + name %}
-  {% set bridge_needed = name in wifi_networks or network.get('mesh_ap') == inventory_hostname or (role == 'corerouter' and 'tunnel_wan_ip' in network) or (role == 'corerouter' and network['role'] == 'uplink') %}
+  {% set bridge_needed = name in wifi_networks or network.get('mesh_ap') == inventory_hostname or (role == 'corerouter' and 'tunnel_wan_ip' in network) or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct') %}
   {% set port_needed = not (role == 'corerouter' and network.get('mesh_ap') == inventory_hostname) %}
 
   {%- if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
      or name in wifi_networks
      or network.get('mesh_ap') == inventory_hostname
      or (role == 'corerouter' and 'tunnel_wan_ip' in network)
-     or (role == 'corerouter' and network['role'] == 'uplink')
+     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct')
      %}
 config interface '{{ name }}'
     {% if port_needed %}

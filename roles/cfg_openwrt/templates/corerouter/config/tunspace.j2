@@ -1,10 +1,13 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {% for uplink in networks | selectattr('role', 'equalto', 'uplink') %}
   {% set name = uplink['name'] if 'name' in uplink else 'uplink' %}
+  {% set mode = uplink['uplink_mode'] if 'uplink_mode' in uplink else 'bridge' %}
+  {% set ifname = uplink['ifname'] if mode == 'direct' else 'br-'+name %}
 
 config tunspace "tunspace"
   option uplink_netns "{{ name }}"
-  option uplink_ifname "br-{{ name }}"
+  option uplink_ifname "{{ ifname }}"
+  option uplink_mode "{{ mode }}"
   option maintenance_interval 60
   option debug 1
 {% endfor %}
