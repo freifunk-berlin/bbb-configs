@@ -16,7 +16,6 @@ config wg-interface
   option ipv4 "{{ tunnel['prefix'] }}"
   option mtu {{ tunnel['mtu'] }}
   option port {{ tunnel['wireguard_port'] }}
-  option keyfile "/etc/tunspace/{{ tunnel['ifname'] }}.key"
   option disabled 0
 
 {% endfor %}
