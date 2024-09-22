@@ -3,9 +3,22 @@
 # Initialize a variable to track if any errors are found
 error_found=0
 
-# Define patterns for location files and model files
-location_files='locations/*.yml'
+# Define patterns for model files
 model_files='group_vars/model_*.yml'
+
+# If location files are passed as arguments, override the default location_files variable
+if [ "$#" -gt 0 ]; then
+  # Treat location_files as an array to handle multiple arguments
+  location_files=("$@")
+else
+  # Use the default pattern if no arguments are passed
+  location_files=(locations/*.yml)
+fi
+
+# If location files are passed as arguments, override the location_files variable
+if [ "$#" -gt 0 ]; then
+  location_files=("$@")
+fi
 
 # Find all models that require a mac_override
 declare -A mac_override_required_models
@@ -22,8 +35,14 @@ for model_file_path in $model_files; do
   mac_override_required_models["$model_name"]=$requires_mac_override
 done
 
-# Find all missing mac_overrides
-for location_file in $location_files; do
+# Find all missing mac_overrides in the provided or all location files
+for location_file in "${location_files[@]}"; do
+  # Check if the file exists (in case only some files were passed in GitHub Action)
+  if [ ! -f "$location_file" ]; then
+    echo "File $location_file does not exist, skipping."
+    continue
+  fi
+
   # Get hosts as a single YAML block to minimize calls to yq
   hosts=$(yq '.hosts' "$location_file")
 
@@ -51,6 +70,8 @@ done
 
 # Exit with a non-zero status code if any errors were found
 if [ "$error_found" -eq 1 ]; then
+  echo "Please look at the model files of the devices missing a mac_override for documentation"
+  echo "about how to read the mac_address from the device."
   exit 1
 else
   echo "No MAC override issues found."

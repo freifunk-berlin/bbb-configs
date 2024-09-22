@@ -12,6 +12,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run mac_override missing check
+      # Get a list of changed files and pass them to the script
+      - name: Get Changed Files and Run mac_override missing check
         run: |
-          ./.github/checks/check-mac-override-missing.sh
+          # Fetch previous commits for comparison
+          git fetch origin main
+
+          # Get list of changed files compared to main branch
+          changed_files=$(git diff --name-only origin/main)
+
+          # Filter out only the location files from the list of changed files
+          location_files=$(echo "$changed_files" | grep -E '^locations/.*\.yml$' || true)
+
+          if [ -z "$location_files" ]; then
+            echo "No location files changed, skipping check."
+            exit 0
+          fi
+
+          # Run the mac_override check script with the filtered location files
+          ./.github/checks/check-mac-override-missing.sh "$location_files"
