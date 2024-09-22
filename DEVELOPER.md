@@ -68,6 +68,15 @@ Multiple ports can be specified as a list:
 ```yml
     poe_on: [0,1,2,3]
 ```
+
+A few devices also require an override to properly set the MAC address. The command to read the address from the device should be documented in the corresponding model file.
+
+Without the `mac_override` these devices will still function, but generate a new MAC address on each boot. This causes the devices to appear multiple times in the devices listing of switches and also changes the link local address of the device as it is based on the MAC address.
+
+```yml
+    mac_override: {eth0: XX:XX:XX:XX:XX:XX}
+```
+
 ### monitoring
 
 All OpenWrt-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make sure SNMP is activated on the proprietary device with the community set to public. You can find an overview with all available profiles at `group_vars/all/snmp_profiles.yml`
