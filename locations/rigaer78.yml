@@ -179,8 +179,8 @@ location__channel_assignments_11g_standard__to_merge:
   rigaer78-west-2ghz: 6-20
 
   # house installation
-  rigaer78-back-front-4-right: 1-20
-  rigaer78-back-front-4-left: 6-20
+  rigaer78-front-floor-4-right: 1-20
+  rigaer78-front-floor-4-left: 6-20
 
   rigaer78-back-floor-4-right: 1-20
   rigaer78-back-floor-4-left: 11-20
@@ -198,8 +198,8 @@ location__channel_assignments_11a_standard__to_merge:
   rigaer78-west-5ghz: 44-20
 
   # house installation
-  rigaer78-back-front-4-right: 40-20
-  rigaer78-back-front-4-left: 36-20
+  rigaer78-front-floor-4-right: 40-20
+  rigaer78-front-floor-4-left: 36-20
 
   rigaer78-back-floor-4-right: 40-20
   rigaer78-back-floor-4-left: 36-20
