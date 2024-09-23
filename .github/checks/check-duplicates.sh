@@ -13,16 +13,17 @@ check_duplicates() {
   local file_pattern="$3"
 
   # Expand the file pattern to a list of files
-  files=$(ls "$file_pattern" 2>/dev/null)
+  # shellcheck disable=SC2206
+  files=($file_pattern)
 
   # Check if any files match the pattern
-  if [ -z "$files" ]; then
+  if [ ${#files[@]} -eq 0 ]; then
     echo "No files matching pattern $file_pattern"
     return
   fi
 
   # Run the yq command with the expanded list of files
-  duplicates=$(yq "$yq_query" "$files" | grep -v -- '---' | tr '[:upper:]' '[:lower:]' | sed 's/["'\'']//g' | sort | uniq -cd)
+  duplicates=$(yq "$yq_query" "${files[@]}" | grep -v -- '---' | tr '[:upper:]' '[:lower:]' | sed 's/["'\'']//g' | sort | uniq -cd)
   if [ -n "$duplicates" ]; then
     echo "Duplicate $description found:"
     echo "$duplicates"
@@ -51,6 +52,11 @@ check_duplicates 'select(.ipv6_prefix != null) | .ipv6_prefix' "ipv6_prefixes" "
 # Check for ipv4_prefix duplicates within networks
 check_duplicates 'select(.networks != null) | .networks[] | select(.prefix != null) | .prefix' "prefix within networks" "$location_files"
 
+# Check for duplicate hosts within 11a channel assignments
+check_duplicates 'select(.location__channel_assignments_11a_standard__to_merge != null) | .location__channel_assignments_11a_standard__to_merge | keys[]' "hosts within 11a channel assignments" "$location_files"
+
+# Check for duplicate hosts within 11g channel assignments
+check_duplicates 'select(.location__channel_assignments_11g_standard__to_merge != null) | .location__channel_assignments_11g_standard__to_merge | keys[]' "hosts within 11g channel assignments" "$location_files"
 
 # Check for duplicates within a single location
 for file in $location_files; do
@@ -61,6 +67,7 @@ for file in $location_files; do
 
   # Check for name duplicates within networks
   check_duplicates 'select(.networks != null) | .networks[] | select(.name != null) | .name' "name within networks" "$file"
+
 done
 
 # Exit with a non-zero status code if any errors were found
