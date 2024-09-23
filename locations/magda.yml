@@ -9,7 +9,6 @@ contacts:
   - '#ff-site-magda:matrix.org'
 
 hosts:
-
   - hostname: magda-core
     role: corerouter
     model: "avm_fritzbox-7530"
@@ -41,7 +40,6 @@ hosts:
     model: "ubnt_nanostation-m2_xm"
 
 snmp_devices:
-
   - hostname: magda-sama
     address: 10.31.83.115
     snmp_profile: airos_8
@@ -49,6 +47,13 @@ snmp_devices:
   - hostname: magda-ost-5ghz
     address: 10.31.83.116
     snmp_profile: airos_8
+
+airos_dfs_reset:
+  - name: "magda-ost-5ghz"
+    target: "10.31.83.116"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
 
 ipv6_prefix: "2001:bf7:860::/56"
 
