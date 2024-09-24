@@ -27,6 +27,9 @@ hosts:
   - hostname: muggel-core
     role: corerouter
     model: avm_fritzbox-4040
+    host__packages__to_merge:
+      - kmod-usb-net-cdc-ether
+      - usb-modeswitch
     wireless_profile: muggel
 
 networks:
@@ -62,6 +65,7 @@ networks:
   # We get at best ~25 Mbps over LTE (Telefonica O2)
   - vid: 50
     untagged: true
+    ifname: eth1
     role: uplink
 
   - role: tunnel
