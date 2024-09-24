@@ -80,17 +80,6 @@ networks:
 location__disabled_services__to_merge:
   - naywatch
 
-# Use OpenSSL to get OWE Transition Mode working.
-# Same variable name as in imageprofile.yml so that we overwrite it.
-ssl__packages__to_merge:
-  - -wpad-basic
-  - -wpad-basic-mbedtls
-  - -wpad-basic-wolfssl
-  - -libustream-mbedtls
-  - libustream-openssl
-  - hostapd-openssl
-  # - px5g-openssl
-
 # Standard open SSID with OWE Transition Mode.
 # For roaming between multiple APs, consider setting 80211w to optional (1).
 location__wireless_profiles__to_merge:
