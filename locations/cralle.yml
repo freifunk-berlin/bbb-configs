@@ -13,18 +13,23 @@ hosts:
     role: corerouter
     model: "avm_fritzbox-4040"
     wireless_profile: freifunk_default
+  - hostname: cralle-west-nf
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    wireless_profile: freifunk_default
+    mac_override: {eth0: dc:11:22:11:22:11}
 
 # 10.31.113.92/30  - mgmt
-# 10.31.113.88/30 - mesh
-# 10.31.245.96/27  - dhcp
+# 10.31.113.88/30 10.31.184.7/32 - mesh
+# 10.248.18.0/25  - dhcp
 
-ipv6_prefix: "2001:bf7:750:6000::/56"
+ipv6_prefix: "2001:bf7:750:7100::/56"
 
 networks:
   - vid: 40
     role: dhcp
     name: dhcp
-    prefix: 10.31.245.96/25
+    prefix: 10.248.18.0/25
     ipv6_subprefix: 40
     inbound_filtering: true
     enforce_client_isolation: true
@@ -33,31 +38,65 @@ networks:
 
   - vid: 42
     role: mgmt
-    prefix: 10.31.113.92/29
+    prefix: 10.31.113.92/30
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
       cralle-core: 1
+      cralle-west-nf: 2
 
   - vid: 50
     role: uplink
     untagged: true
 
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.31.113.88/32
+    ipv6_subprefix: -1
+    mesh_ap: cralle-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.31.113.89/32
+    ipv6_subprefix: -2
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: cralle-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 5 GHz 802.11s west nf
+  - vid: 22
+    role: mesh
+    name: mesh5_w_nf
+    prefix: 10.31.113.90/32
+    ipv6_subprefix: -3
+    mesh_ap: cralle-west-nf
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
   - role: tunnel
     ifname: ts_wg0
     mtu: 1280
-    prefix: 10.31.113.88/32
+    prefix: 10.31.113.91/32
     wireguard_port: 51820
 
   - role: tunnel
     ifname: ts_wg1
     mtu: 1280
-    prefix: 10.31.113.89/32
+    prefix: 10.31.184.7/32
     wireguard_port: 51821
 
 location__channel_assignments_11a_standard__to_merge:
   cralle-core: 36-20
+  cralle-west-nf: 44-20
 
 location__channel_assignments_11g_standard__to_merge:
   cralle-core: 13-20
