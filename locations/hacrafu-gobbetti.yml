@@ -1,0 +1,74 @@
+---
+
+location: hacrafu-gobbetti
+location_nice: Feldstr. 27, 15345 Eggersdorf
+latitude: 52.53614
+longitude: 13.81647
+contact_name: "Hacken Craften Funken e.V."
+contact_nickname: "HaCraFu"
+contacts:
+  - "freifunk@hacrafu.de"
+
+hosts:
+
+  - hostname: hacrafu-gobbetti-core
+    role: corerouter
+    model: "glinet_gl-mt3000"
+    wireless_profile: freifunk_hacrafu
+
+ipv6_prefix: "2001:bf7:850:1c00::/56"
+# dhcp    10.248.17.96/27
+# mesh5   10.31.184.3
+# mesh2   10.31.184.4
+# MGMT    10.31.184.5
+
+# Disable noping
+# dhcp_no_ping: false
+
+networks:
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.184.3/32
+    ipv6_subprefix: -20
+    mesh_ap: hacrafu-gobbetti-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.184.4/32
+    ipv6_subprefix: -21
+    mesh_ap: hacrafu-gobbetti-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.248.17.96/27
+    ipv6_subprefix: 0
+    assignments:
+      hacrafu-gobbetti-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.184.5/32
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      hacrafu-gobbetti-core: 1
+
+# only place this ssh-keys
+ssh_keys:
+  - comment: Tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
