@@ -4,16 +4,17 @@ location: hacrafu-fiocchi
 location_nice: Apothekerteich, Petershagen, Mittelstraße
 latitude: 52.52320
 longitude: 13.77234
-contact_name: 'Hacken Craften Funken e.V.'
-contact_nickname: 'HaCraFu'
+contact_name: "Hacken Craften Funken e.V."
+contact_nickname: "HaCraFu"
 contacts:
-  - 'freifunk@hacrafu.de'
+  - "freifunk@hacrafu.de"
 
 hosts:
   - hostname: hacrafu-fiocchi-core
     role: corerouter
     model: "dlink_covr-x1860-a1"
     wireless_profile: freifunk_hacrafu
+    mac_override: {eth0: a8:63:7d:dc:5b:5f}
 
 ipv6_prefix: "2001:bf7:850:b00::/56"
 # dhcp    10.31.204.0/27
