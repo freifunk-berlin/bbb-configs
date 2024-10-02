@@ -106,6 +106,7 @@ networks:
 
   - vid: 50
     role: uplink
+    untagged: true
 
   - role: tunnel
     ifname: ts_wg0
