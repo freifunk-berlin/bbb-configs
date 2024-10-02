@@ -4,9 +4,9 @@ location_nice: gub37
 latitude: 52.51026648385623
 longitude: 13.45044163873424
 altitude: 54
-contact_nickname: 'robertfoss'
+contact_nickname: "robertfoss"
 contacts:
-  - 'me@robertfoss.se'
+  - "me@robertfoss.se"
 
 hosts:
   - hostname: gub37-core
@@ -38,7 +38,6 @@ snmp_devices:
     address: 10.31.157.12
     snmp_profile: airos_8
 
-
 # IPv4 10.31.157.0/25
 # IPv6 2001:bf7:830:a700::/56
 
@@ -52,7 +51,7 @@ networks:
     prefix: 10.31.157.97/32
     ipv6_subprefix: -10
     ptp: true
-    mesh_metric_lqm: ['default 0.85']
+    mesh_metric_lqm: ["default 0.85"]
 
   - vid: 11
     role: mesh
@@ -67,7 +66,7 @@ networks:
     prefix: 10.31.157.99/32
     ipv6_subprefix: -12
     ptp: true
-    mesh_metric_lqm: ['default 0.90']
+    mesh_metric_lqm: ["default 0.90"]
 
   - vid: 20
     role: mesh
@@ -77,7 +76,7 @@ networks:
     mesh_ap: gub37-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.3']
+    mesh_metric_lqm: ["default 0.3"]
 
   - vid: 21
     role: mesh
@@ -87,7 +86,7 @@ networks:
     mesh_ap: gub37-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.3']
+    mesh_metric_lqm: ["default 0.3"]
 
   - vid: 22
     role: mesh
@@ -97,7 +96,7 @@ networks:
     mesh_ap: gub37-hof-s
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.3']
+    mesh_metric_lqm: ["default 0.3"]
 
   - vid: 23
     role: mesh
@@ -107,7 +106,7 @@ networks:
     mesh_ap: gub37-hof-w
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.3']
+    mesh_metric_lqm: ["default 0.3"]
 
   # 10.31.157.64/27
   - vid: 40
@@ -136,7 +135,6 @@ networks:
       gub37-zwingli: 10
       gub37-emma: 11
       gub37-sama: 12
-
 
 location__channel_assignments_11a_standard__to_merge:
   gub37-hof-s: 36-80-11
