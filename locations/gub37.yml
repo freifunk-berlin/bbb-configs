@@ -6,7 +6,7 @@ longitude: 13.45044163873424
 altitude: 54
 contact_nickname: "robertfoss"
 contacts:
-  - "me@robertfoss.se"
+  - "@robertfoss-:matrix.org"
 
 hosts:
   - hostname: gub37-core
