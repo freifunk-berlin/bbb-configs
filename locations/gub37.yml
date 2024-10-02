@@ -153,12 +153,15 @@ networks:
     dns: 1
     ipv6_subprefix: 0
     assignments:
+      # Core infrastructure
       gub37-core: 1
-      gub37-switch: 2
+      gub37-switch-roof: 2
 
+      # Local APs
       gub37-hof-s: 5
       gub37-hof-w: 6
 
+      # Uplinks
       gub37-zwingli: 10
       gub37-emma: 11
       gub37-sama: 12
