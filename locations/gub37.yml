@@ -123,7 +123,29 @@ networks:
     assignments:
       gub37-core: 1
 
-  # 10.31.157.0/26
+  # DHCP - local public
+  # - Publicly accessible through IPv6 but not IPv4
+  - vid: 50
+    role: dhcp
+    name: local_public
+    prefix: 10.31.157.32/27
+    ipv6_subprefix: -50
+    assignments:
+      gub37-core: 1
+
+  # DHCP - local private
+  # - Not publicly accessible through IPv4 or IPv6
+  - vid: 51
+    role: dhcp
+    name: local_private
+    inbound_filtering: true
+    prefix: 10.31.157.64/27
+    ipv6_subprefix: -51
+    assignments:
+      gub37-core: 1
+      gub37-switch: 2
+      gub37-nas: 3
+
   - vid: 433
     role: mgmt
     prefix: 10.31.157.0/28
