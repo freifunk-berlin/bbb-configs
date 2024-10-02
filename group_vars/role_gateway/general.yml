@@ -100,6 +100,8 @@ inbound_allow:
     dst: 2001:bf7:750:5b00::/128
   - name: 'radbahn mt76 testing'
     dst: 2001:bf7:830:c000::/56
+  - name: 'gub37-core local public network'
+    dst: 2001:bf7:830:a7ce::1/64
 #  - name: Rule Description (mandatory)
 #    dst: Destination IP (mandatory)
 #    src: Source IP
