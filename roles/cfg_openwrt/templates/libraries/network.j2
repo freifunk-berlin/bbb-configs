@@ -1,0 +1,59 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+
+{# Retrieve the layer 3 interface name of a network. #}
+{% macro getIfname(network) %}
+    {% set ifname = "" %}
+    {% if isBridgeNeeded(network) | from_json %}
+        {% set ifname = getBridgeIfname(network) %}
+    {% else %}
+        {% set ifname = getPortIfname(network) %}
+    {% endif %}
+
+{{- (ifname if ifname | length <= 15) | mandatory('The generated interface name exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') -}}
+{% endmacro %}
+
+{# Retrieve the Port Name of a network. This is either a physical vlan subinterface, or the switch vlan subinterface from DSA #}
+{% macro getPortIfname(network) %}
+    {% set vid = network['vid']|string %}
+    {% set untagged = network.get('untagged') %}
+    {% if 'ifname' in network %}
+        {% set port = network['ifname'] + ('' if untagged else '.' + vid) %}
+    {% elif dsa_ports is defined %}
+        {% set port = 'switch0' + '.' + vid %}
+    {% elif (switch_ports|default(0) > 0) %}
+        {% set port = int_port + '.' + vid %}
+    {% else %}
+        {% set port = int_port + ('' if untagged else '.' + vid) %}
+    {% endif %}
+{{- port -}}
+{% endmacro %}
+
+{# Retrieve the bridge interface name of a network. This does not check if a bridge is actually needed #}
+{% macro getBridgeIfname(network) %}
+{{- 'br-' + getUciIfname(network) -}}
+{% endmacro %}
+
+{# Retrieve the UCI/OpenWRT internal name of a network. #}
+{% macro getUciIfname(network) %}
+{{- network['name'] if 'name' in network else network['role'] -}}
+{% endmacro %}
+
+{# Do we need to create a logical bridge for that network to bridge to wireless interface or are we not participating. This does not affect the switch configuration
+ # Warning: returns a bool. Use |from_json filter when calling #}
+{% macro isBridgeNeeded(network) %}
+{{- (getUciIfname(network) in getWirelessNetworks() or network.get('mesh_ap') == inventory_hostname or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct')) | to_json -}}
+{% endmacro %}
+
+{# Do we need to configure a port or is this network only connected local (e.g. Mesh Endpoint on the core router)
+ # Warning: returns a bool. Use |from_json filter when calling #}
+{% macro isPortNeeded(network) %}
+{{- (not (role == 'corerouter' and network.get('mesh_ap') == inventory_hostname)) | to_yaml -}}
+{% endmacro %}
+
+{# Retrieve the networks which shall be bridged to wifi
+ # Returns a list of  bbb-config network name (network['name'])
+ # Warning: returns a list. Use |from_json filter when calling #}
+{% macro getWirelessNetworks() %}
+    {% set selected_wireless_profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first %}
+{{- selected_wireless_profile | json_query('ifaces[].network') | default([], true) | to_json -}}
+{% endmacro %}
