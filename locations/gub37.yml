@@ -89,7 +89,7 @@ networks:
 
   - vid: 20
     role: mesh
-    name: mesh_core_2ghz
+    name: mesh_core_2g
     prefix: 10.31.157.110/32
     ipv6_subprefix: -20
     mesh_ap: gub37-core
@@ -100,7 +100,7 @@ networks:
 
   - vid: 21
     role: mesh
-    name: mesh_core_5ghz
+    name: mesh_core_5g
     prefix: 10.31.157.111/32
     ipv6_subprefix: -21
     mesh_ap: gub37-core
