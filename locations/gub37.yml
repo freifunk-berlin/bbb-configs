@@ -28,6 +28,7 @@ hosts:
   - hostname: gub37-hof-w
     role: ap
     model: "cudy_ap3000outdoor-v1"
+    wifi_roaming: true
 
 snmp_devices:
   - hostname: gub37-switch-roof
