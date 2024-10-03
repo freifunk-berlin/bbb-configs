@@ -145,7 +145,7 @@ networks:
   # - Publicly accessible through IPv6 but not IPv4
   - vid: 50
     role: dhcp
-    name: local_public
+    name: pub
     prefix: 10.31.157.32/27
     ipv6_subprefix: -50
     assignments:
