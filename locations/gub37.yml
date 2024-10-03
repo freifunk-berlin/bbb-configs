@@ -16,19 +16,21 @@ hosts:
   - hostname: gub37-core
     role: corerouter
     model: "glinet_gl-be9300"
-    wireless_profile: freifunk_default
+    wireless_profile: gub37_internal
     wifi_roaming: true
     flow_offload: hw
 
   - hostname: gub37-hof-s
     role: ap
     model: "cudy_ap3000outdoor-v1"
+    wireless_profile: gub37_external
     wifi_roaming: true
     mac_override: {eth0: 64:d1:54:ae:ba:b0}
 
   - hostname: gub37-hof-w
     role: ap
     model: "cudy_ap3000outdoor-v1"
+    wireless_profile: gub37_external
     wifi_roaming: true
 
 snmp_devices:
@@ -202,6 +204,146 @@ networks:
     no_corerouter_dns_record: true
 
 
-location__channel_assignments_11a_standard__to_merge:
-  gub37-hof-s: 36-80-11
-  gub37-hof-w: 36-80-8
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: gub37_external
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: crabwifi
+        hidden: true
+        encryption: sae-mixed
+        key: 'file:/root/wifi-pwd'
+        network: priv
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: cw-pr
+        ieee80211w: 2
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
+
+  - name: gub37_internal
+    ifaces:
+      # Open / WPA2 / sae-mixed are not allowed on 6 GHz (DE) — keep those off 11ax_standard.
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      # OWE on 6 GHz without transition partner (open SSID cannot exist on 6 GHz)
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11ax_standard]
+        ifname_hint: ffowe
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: crabwifi
+        encryption: sae-mixed
+        key: 'file:/root/wifi-pwd'
+        network: priv
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: cw-pr
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: crabwifi
+        encryption: sae
+        key: 'file:/root/wifi-pwd'
+        network: priv
+        radio: [11ax_standard]
+        ifname_hint: cw-6g-pr
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: jackbox
+        hidden: true
+        encryption: psk2
+        key: 'file:/root/wifi-pwd-jackbox'
+        network: priv
+        radio: [11g_standard]
+        ifname_hint: jb-2g-pr
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: crabwifi_2g
+        hidden: true
+        encryption: sae-mixed
+        key: 'file:/root/wifi-pwd'
+        network: priv
+        radio: [11g_standard]
+        ifname_hint: cw-2g-pr
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: crabwifi_5g
+        hidden: true
+        encryption: sae-mixed
+        key: 'file:/root/wifi-pwd'
+        network: priv
+        radio: [11a_standard]
+        ifname_hint: cw-5g-pr
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: crabwifi_public
+        hidden: true
+        encryption: sae-mixed
+        key: 'file:/root/wifi-pwd'
+        network: pub
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: cw-pub
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: crabwifi_public
+        hidden: true
+        encryption: sae
+        key: 'file:/root/wifi-pwd'
+        network: pub
+        radio: [11ax_standard]
+        ifname_hint: cw-6g-pub
+        ieee80211w: 2
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
