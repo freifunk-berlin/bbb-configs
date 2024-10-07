@@ -84,11 +84,9 @@ for FILE_PATH in $SORTED_FILES; do
                 echo "Waiting for $HOSTNAME to become unreachable..."
                 while ping -c 1 "$HOSTNAME" >/dev/null 2>&1; do sleep 1; done
 
-                # Wait for 20 seconds before checking hostname reachability again
-                sleep 20
-
-                # Debug output: Waiting for hostname to become reachable again
+                # Wait 20 seconds and than wait for hostname to become reachable again
                 echo "Waiting for $HOSTNAME to become reachable again..."
+                sleep 20
                 while ! ping -c 1 "$HOSTNAME" >/dev/null 2>&1; do sleep 1; done
 
                 # Remove local files
@@ -114,4 +112,3 @@ done
 # Horizontal line to separate iterations
 echo "----------------------------------------"
 echo "Finished"
-
