@@ -59,9 +59,9 @@ networks:
       gruni73-sama: 5
       gruni73-zwingli: 6
       # local nearfield aps 5ghz
-      gruni73-nf-o-5ghz: 13
-      gruni73-nf-s-5ghz: 14
-      gruni73-nf-w-5ghz: 15
+      gruni73-nf-o-5ghz: 13  # 10m PoE watchdog active for this device due to instability
+      gruni73-nf-s-5ghz: 14  # 10m PoE watchdog active for this device due to instability
+      gruni73-nf-w-5ghz: 15  # 10m PoE watchdog active for this device due to instability
 
   - vid: 40
     role: dhcp
