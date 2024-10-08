@@ -97,3 +97,11 @@ location__channel_assignments_11a_standard__to_merge:
 # location__channel_assignments_11g_standard__to_merge:
 
 # channel-bandwith-txpower in dbm
+
+# PORT CONFIG
+#
+# lan1: poe in
+# lan2: Lite-AP
+# lan3: Nanobeam 5AC + SXTsq5ac
+# lan4: spare
+# lan5: spare
