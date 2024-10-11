@@ -41,11 +41,11 @@ snmp_devices:
 
   - hostname: chris-teufelsberg
     address: 10.230.18.4
-    snmp_profile: airos_6
+    snmp_profile: airos_8
 
-  # - hostname: chris-n-5ghz
-  #   address: 10.230.18.5
-  #   snmp_profile: airos_6
+  - hostname: chris-n-5ghz
+    address: 10.230.18.5
+    snmp_profile: airos_6
 
   - hostname: chris-o-5ghz
     address: 10.230.18.6
@@ -76,11 +76,11 @@ networks:
     ipv6_subprefix: -2
     ptp: true
 
-  # - vid: 12
-  #   role: mesh
-  #   name: mesh_n_5ghz
-  #   prefix: 10.230.18.163/32
-  #   ipv6_subprefix: -3
+  - vid: 12
+    role: mesh
+    name: mesh_n_5ghz
+    prefix: 10.230.18.163/32
+    ipv6_subprefix: -3
 
   - vid: 13
     role: mesh
@@ -161,7 +161,7 @@ networks:
       chris-bht: 3
       chris-teufelsberg: 4
 
-      # chris-n-5ghz: 5
+      chris-n-5ghz: 5
       chris-o-5ghz: 6
       chris-s-5ghz: 7
       chris-w-5ghz: 8
