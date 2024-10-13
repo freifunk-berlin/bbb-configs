@@ -84,6 +84,10 @@ airos_dfs_reset:
     daytime_limit: "2-7"
 
 snmp_devices:
+  - hostname: zwingli-switch
+    address: 10.31.115.2
+    snmp_profile: swos
+
   - hostname: zwingli-nord-5ghz
     address: 10.31.115.20
     snmp_profile: airos_8
