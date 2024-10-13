@@ -30,6 +30,9 @@ hosts:
       eth0: 2c:c8:1b:6b:e7:31
 
 snmp_devices:
+  - hostname: rhnk-switch
+    address: 10.31.153.2
+    snmp_profile: swos
 
   - hostname: rhnk-rhxb
     address: 10.31.153.11
