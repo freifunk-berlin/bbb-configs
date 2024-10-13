@@ -17,9 +17,9 @@ hosts:
     role: ap
     model: "ubnt_nanostation-m2_xm"
 
-  - hostname: manstein10-m2-w
-    role: ap
-    model: "ubnt_nanostation-m2_xm"
+  # - hostname: manstein10-m2-w
+  #   role: ap
+  #   model: "ubnt_nanostation-m2_xm"
 
   - hostname: manstein10-m5-w
     role: ap
@@ -56,14 +56,14 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  - vid: 12
-    role: mesh
-    name: mesh_2ghz_w
-    prefix: 10.31.125.34/32
-    ipv6_subprefix: -3
-    mesh_ap: manstein10-m2-w
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
+  # - vid: 12
+  #  role: mesh
+  #  name: mesh_2ghz_w
+  #  prefix: 10.31.125.34/32
+  #  ipv6_subprefix: -3
+  #  mesh_ap: manstein10-m2-w
+  #  mesh_radio: 11g_standard
+  #  mesh_iface: mesh
 
   - vid: 13
     role: mesh
@@ -98,11 +98,11 @@ networks:
       # airos - bbb
       manstein10-rhxb: 4
       # airos - clients
-      manstein10-m5-loco-s5: 5
+      # manstein10-m5-loco-s5: 5
       # openwrt clients
       manstein10-m5-w: 6
       manstein10-m2-s: 7
-      manstein10-m2-w: 8
+      # manstein10-m2-w: 8
 
 location__ssh_keys__to_merge:
   - comment: narfpeng
