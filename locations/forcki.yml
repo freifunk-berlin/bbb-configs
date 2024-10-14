@@ -26,10 +26,19 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_core_5ghz
-    prefix: 10.31.168.184/32
+    prefix: 10.31.168.178/32
     ipv6_subprefix: -20
     mesh_ap: forcki-core
     mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 21
+    role: mesh
+    name: mesh_core_2ghz
+    prefix: 10.31.168.179/32
+    ipv6_subprefix: -21
+    mesh_ap: forcki-core
+    mesh_radio: 11g_standard
     mesh_iface: mesh
 
   - vid: 40
