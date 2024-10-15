@@ -35,6 +35,7 @@ hosts:
   - hostname: zwingli-nord-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
+    mac_override: {eth0: 2c:c8:1b:88:d4:95}
     wifi_roaming: true
 
   - hostname: zwingli-ost-nf-2ghz
@@ -116,6 +117,10 @@ snmp_devices:
     address: 10.31.115.6
     snmp_profile: af60
 
+  - hostname: zwingli-emma
+    address: 10.31.115.7
+    snmp_profile: af60
+
 ipv6_prefix: "2001:bf7:830:9800::/56"
 # ipv4-prefix: 10.31.115.0/24
 
@@ -151,7 +156,9 @@ networks:
     name: mesh_sama
     prefix: 10.31.115.36/32
     ipv6_subprefix: -5
-    mesh_metric: 128
+    # prefer routing via emma over sama to use ohlauer as gateway)
+    mesh_metric: 320
+    mesh_metric_lqm: ['default 0.85']
     ptp: true
 
   - vid: 16
@@ -176,8 +183,6 @@ networks:
     prefix: 10.31.115.40/32
     ipv6_subprefix: -9
     mesh_metric: 128
-    mesh_metric_lqm:
-      - default 0.3                 # Make sure emma/ohlauer is not used as primary uplink
     ptp: true
 
 
@@ -253,7 +258,7 @@ networks:
     assignments:
       zwingli-core: 1
 
-  - vid: 42
+  - vid: 425
     role: mgmt
     prefix: 10.31.115.0/27
     gateway: 1
@@ -263,10 +268,11 @@ networks:
       zwingli-core: 1
       zwingli-switch: 2
 
-      # af60-lr
+      # af60-lr / wave nano
       zwingli-sama: 3
       zwingli-agym: 5
       zwingli-vaterhaus: 6
+      zwingli-emma: 7
 
       # local aps 2ghz
       zwingli-ost-nf-2ghz: 11
