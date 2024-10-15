@@ -60,20 +60,71 @@ table bridge client_isolation {
   {% endif %}
 {% endfor %}
 
-{% for network in networks | selectattr('role', 'equalto', 'mesh') | selectattr('name','in', network_ifname_map|map(attribute='network')) %}
-  {% set wifi_if = network_ifname_map | selectattr('network', 'equalto', network['name']) | map(attribute='ifname') | first %}
-  {% set set_localrouter = 'localrouter_' + network['name'] %}
-  {% if loop.first %}
+{#
+  Reflection filter
 
-{# Corerouters have no bridge, therefore we need to hook in family inet.
-    See https://wiki.nftables.org/wiki-nftables/index.php/Netfilter_hooks#Netfilter_hooks_into_Linux_networking_packet_flows #}
-{% set type = 'bridge' if role == 'ap' else 'inet' %}
+  We sometimes receive our own packets back. It happens when a location has
+  two or more mesh APs which are badly isolated, use overlapping frequencies,
+  or are aligned to be in each others beam. Can't be prevented 100%, happens.
+  Any suitable obstacle in a single antenna's beam can cause reflections too.
 
+  Reflections were observed in 2021 with old 2 GHz Nanostations at Emmauskirche:
+  https://github.com/freifunk-berlin/bbb-configs/issues/119
 
-table {{ type }} prevent_mesh_reflection
-flush table {{ type }} prevent_mesh_reflection
-table {{ type }} prevent_mesh_reflection {
-  {% endif %}
+  It usually works like this: corerouter transmits a packet over mesh VLAN 123,
+  the respective mesh AP receives it on its bridge and transmits it out over
+  the wifi mesh interface. Another mesh AP at the same location receives
+  the packet on its wifi mesh interface, and through its bridge puts it
+  on mesh VLAN 456, where the same corerouter receives it.
+
+  In our setup all VLAN interfaces on the corerouter share the same MAC address.
+  That means the corerouter receives a packet with its one of its own MAC
+  addresses as as the source address. In more traditional network environments,
+  this would be cause for concern, so Linux complains with a log message:
+
+      switch0: received packet on lan4 with own address as source address
+
+  It's fine in our meshy, non-traditional setup, but two things need consideration:
+
+  1) On the corerouter, reflected packets are purely an issue of asthetics:
+  it can become quite noisy in logread and drown out more important messages.
+
+  2) Infrastructure devices (= switches) between mesh AP and corerouter might
+  get confused about the same MAC address seamingly living on multiple ports.
+  All devices should handle this fine because it's on separate VLANs,
+  but you never know. We've seen all kinds of weird shit on cheap switches.
+
+  So we want to avoid letting these packets back into the location.
+
+  Our filter has nftables learn source MAC addresses from outgoing traffic
+  and reject any incoming packets with a matching source MAC address.
+
+  We do this only on the mesh AP though, because this is where we can prevent
+  the reflected packet from reaching possibly wonky cheap switches.
+  The filter as described works nicely on the mesh AP bridge interface covering
+  the mesh VLAN and the mesh wifi interface.
+
+  On the corerouter however, the filter would only prevent logread noise,
+  and it would need to be more complex as well. Mesh wifi interfaces directly
+  on the corerouter don't require a bridge over the mesh wifi interface since
+  a dedicated VLAN for that mesh direction isn't required. But without
+  a bridge, we somehow ended up blocking not just reflected packets, but also
+  intermittently blocked our mesh neighbours. All kinds of MAC addresses
+  ended up in the filter - not sure why.
+
+  Summary: we filter reflected packets on mesh APs, but where a corerouter
+  meshes on its own, using its own integrated wifi, we tolerate the log noise.
+#}
+{% if role == 'ap' %}
+  {% for network in networks | selectattr('role', 'equalto', 'mesh') | selectattr('name','in', network_ifname_map|map(attribute='network')) %}
+    {% set wifi_if = network_ifname_map | selectattr('network', 'equalto', network['name']) | map(attribute='ifname') | first %}
+    {% set set_localrouter = 'localrouter_' + network['name'] %}
+    {% if loop.first %}
+
+table bridge prevent_mesh_reflection
+flush table bridge prevent_mesh_reflection
+table bridge prevent_mesh_reflection {
+    {% endif %}
 	set {{ set_localrouter }} {
 		type ether_addr
 		size 5
@@ -88,7 +139,8 @@ table {{ type }} prevent_mesh_reflection {
 		iifname {{ wifi_if }} ether saddr @{{ set_localrouter }} counter drop
 
 	}
-  {% if loop.last %}
+    {% if loop.last %}
 }
-  {% endif %}
-{% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
