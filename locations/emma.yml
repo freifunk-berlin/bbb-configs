@@ -217,6 +217,7 @@ networks:
     name: mesh_wsw_60ghz
     prefix: 10.31.11.41/32
     ipv6_subprefix: -18
+    mesh_metric: 128
     ptp: true
 
   - vid: 19
@@ -224,6 +225,7 @@ networks:
     name: mesh_nnw_60ghz
     prefix: 10.31.11.42/32
     ipv6_subprefix: -19
+    mesh_metric: 128
     ptp: true
 
   - vid: 20
