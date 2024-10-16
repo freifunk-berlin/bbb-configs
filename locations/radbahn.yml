@@ -58,6 +58,7 @@ networks:
     prefix: 10.31.248.248/32
     ipv6_subprefix: -10
     ptp: true
+    mesh_metric: 128
 
   - vid: 20
     name: mesh_o_nf2

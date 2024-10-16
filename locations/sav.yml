@@ -84,6 +84,7 @@ networks:
     name: mesh_emma
     prefix: 10.31.174.244/32
     ipv6_subprefix: -10
+    mesh_metric: 128
 
   - vid: 40
     role: dhcp
