@@ -100,12 +100,14 @@ networks:
     name: mesh_ak36
     prefix: 10.31.213.64/32
     ipv6_subprefix: -10
+    mesh_metric: 128
 
   - vid: 12
     role: mesh
     name: mesh_ilr
     prefix: 10.31.213.66/32
     ipv6_subprefix: -12
+    mesh_metric: 128
 
   - vid: 13
     role: mesh

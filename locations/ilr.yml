@@ -94,6 +94,7 @@ networks:
     prefix: 10.31.214.16/32
     ipv6_subprefix: -10
     # WARNING: Custom port config {1t,2u,3u,4u,5t}
+    mesh_metric: 128
 
   - vid: 11
     role: mesh

@@ -120,6 +120,7 @@ networks:
     name: mesh_klunker60
     prefix: 10.230.3.14/32
     ipv6_subprefix: -14
+    mesh_metric: 128
     ptp: true
 
   - vid: 15
@@ -147,6 +148,7 @@ networks:
     role: mesh
     name: mesh_wsw_60
     prefix: 10.230.3.22/32
+    mesh_metric: 128
     ipv6_subprefix: -22
 
   - vid: 23
@@ -159,6 +161,7 @@ networks:
     role: mesh
     name: mesh_oso_60
     prefix: 10.230.3.24/32
+    mesh_metric: 128
     ipv6_subprefix: -24
 
   - vid: 25
@@ -174,6 +177,7 @@ networks:
     role: mesh
     name: mesh_nno_60ghz
     prefix: 10.230.3.26/32
+    mesh_metric: 128
     ipv6_subprefix: -26
 
   - vid: 32

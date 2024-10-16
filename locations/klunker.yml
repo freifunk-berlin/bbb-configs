@@ -60,6 +60,7 @@ networks:
     prefix: 10.31.71.152/32
     ipv6_subprefix: -1
     ptp: true
+    mesh_metric: 128
 
   # PtP mesh down south 60GHz
   # Airfiber 60LR Link to philmel church
@@ -69,6 +70,7 @@ networks:
     prefix: 10.31.71.153/32
     ipv6_subprefix: -2
     ptp: true
+    mesh_metric: 128
 
   # AP1 down Isarstrasse 5GHz
   # directing south-southeast
