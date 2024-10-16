@@ -101,7 +101,7 @@ networks:
     name: mesh_rhnk
     prefix: 10.31.151.112/32
     ipv6_subprefix: -1
-    mesh_metric: 1024
+    mesh_metric: 128
     ptp: true
   # hüttenroder weg - mikrotik 60ghz cube
   - vid: 11
@@ -110,6 +110,7 @@ networks:
     prefix: 10.31.151.113/32
     ipv6_subprefix: -2
     ptp: true
+    mesh_metric: 128
   # gateway - Rocket 5AC lite
   - vid: 12
     role: mesh
