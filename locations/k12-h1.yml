@@ -1,26 +1,26 @@
 ---
-location: k12-3v0s
-location_nice: 'Haus4, Kastanienallee 12, 10435 Berlin'
-latitude: 52.53935393039
-longitude: 13.40930967973
+location: k12-h1
+location_nice: 'Kastanienallee 12, Haus 1'
+latitude: 52.539199815
+longitude: 13.410111666
 contact_nickname: 'zander'
 contacts:
   - 'alexanderjabs@gmx.de'
 
 hosts:
-  - hostname: k12-3v0s
+  - hostname: k12-h1-core
     role: corerouter
     model: "dlink_covr-x1860-a1"
-    mac_override: {eth0: a8:63:7d:b9:46:45}
+    mac_override: {eth0: a8:63:7d:db:4d:4c}
     wireless_profile: freifunk_default
 
-ipv6_prefix: '2001:bf7:760:1300::/56'
+ipv6_prefix: '2001:bf7:760:300::/56'
 
 # got following prefixes:
-# Router: 10.31.227.128/26
-# --MGMT: 10.31.227.128/28
-# --MESH: 10.31.227.144/28
-# --DHCP: 10.31.227.160/27
+# Router: 10.31.226.128/26
+# --MGMT: 10.31.226.128/28
+# --MESH: 10.31.226.144/28
+# --DHCP: 10.31.226.160/27
 
 # Disable noping
 dhcp_no_ping: false
@@ -29,55 +29,62 @@ networks:
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
-    name: mesh_5g
-    prefix: 10.31.227.144/32
+    name: mesh_core_5g
+    prefix: 10.31.226.145/32
     ipv6_subprefix: -20
-    mesh_ap: k12-3v0s
+    mesh_ap: k12-h1-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
   # MESH - 2.4 GHz 802.11s
   - vid: 21
     role: mesh
-    name: mesh_2g
-    prefix: 10.31.227.145/32
+    name: mesh_core_2g
+    prefix: 10.31.226.146/32
     ipv6_subprefix: -21
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
-    mesh_ap: k12-3v0s
+    mesh_ap: k12-h1-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
+
+ # MESH - LAN
+  - vid: 30
+    role: mesh
+    name: mesh_lan
+    prefix: 10.31.226.147/32
+    ipv6_subprefix: -30
+    # adjust mesh_metric(s) to prefer this
+    mesh_metric: 128
 
   # DHCP with filtering and isolation
   - vid: 40
     role: dhcp
-    untagged: true
-    # All devices should be accessible from within the Freifunk network
-    inbound_filtering: false
-    enforce_client_isolation: false
-    prefix: 10.31.227.160/27
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.226.160/27
     ipv6_subprefix: 0
     assignments:
-      k12-3v0s: 1
+      k12-h1-core: 1
 
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.31.227.128/28
+    prefix: 10.31.226.128/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      k12-3v0s: 1  # 10.31.227.129
+      k12-h1-core: 1
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  k12-3v0s: 36-40
+  k12-h1-core: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  k12-3v0s: 13-20
+  k12-h1-core: 13-20
 
 dns_servers:
   # quad9
