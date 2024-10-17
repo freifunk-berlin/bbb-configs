@@ -1,0 +1,188 @@
+---
+location: k12-h2
+location_nice: 'Haus2, Kastanienallee 12, 10435 Berlin'
+latitude: 52.53936534993554
+longitude: 13.409738833169316
+altitude: 63
+contact_nickname: 'zander'
+contacts:
+  - 'alexanderjabs@gmx.de'
+
+hosts:
+  - hostname: k12-h2-core
+    role: corerouter
+    model: "dlink_covr-x1860-a1"
+    mac_override: {eth0: a8:63:7d:db:4d:45}
+    wireless_profile: freifunk_default
+    wifi_roaming: true
+
+  - hostname: k12-h2-cpe
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: 08:55:31:ea:e3:32}
+    wireless_profile: mesh_only
+
+  - hostname: k12-h2-h1n
+    role: ap
+    model: "tplink_tl-wdr4300-v1"
+    wifi_roaming: true
+
+  - hostname: k12-h2-h1s
+    role: ap
+    model: "dlink_covr-x1860-a1"
+    mac_override: {eth0: 0c:0e:76:cf:21:de}
+    wifi_roaming: true
+
+snmp_devices:
+  - hostname: k12-h2-segen
+    address: 10.31.158.195
+    snmp_profile: airos_8
+
+ipv6_prefix: '2001:bf7:760:2a00::/56'
+
+# got following prefixes:
+# Router:  10.31.158.0/24
+# --DHCP:  10.31.158.0/25
+# --MESH:  10.31.158.128/26
+# --MGMT:  10.31.158.192/27
+# --UPLK:  10.31.158.224/27
+
+networks:
+  # MESH - segen
+  - vid: 10
+    role: mesh
+    name: mesh_segen
+    prefix: 10.31.158.128/32
+    ipv6_subprefix: -10
+
+  # MESH - core - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_core_5g
+    prefix: 10.31.158.1129/32
+    ipv6_subprefix: -20
+    mesh_ap: k12-h2-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - core - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_core_2g
+    prefix: 10.31.158.130/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: k12-h2-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 1s - 5 GHz 802.11s
+  - vid: 22
+    role: mesh
+    name: mesh_h1s_5g
+    prefix: 10.31.158.131/32
+    ipv6_subprefix: -22
+    mesh_ap: k12-h2-h1s
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 1s -2.4 GHz 802.11s
+  - vid: 23
+    role: mesh
+    name: mesh_h1s_2g
+    prefix: 10.31.158.132/32
+    ipv6_subprefix: -23
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: k12-h2-h1s
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 5 GHz 802.11s - cpe
+  - vid: 24
+    role: mesh
+    name: mesh_cpe
+    prefix: 10.31.158.133/32
+    ipv6_subprefix: -24
+    mesh_ap: k12-h2-cpe
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - LAN
+  - vid: 30
+    role: mesh
+    name: mesh_lan
+    prefix: 10.31.226.134/32
+    ipv6_subprefix: -30
+    # adjust mesh_metric(s) to prefer this
+    mesh_metric: 128
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.158.0/25
+    ipv6_subprefix: 0
+    assignments:
+      k12-h2-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.158.192/26
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      k12-h2-core: 1    # 10.31.158.193/32
+      k12-h2-switch: 2  # 10.31.158.194/32
+      k12-h2-segen: 3   # 10.31.158.195/32
+      # NF Antennas     # 10.31.158.196/32
+      k12-h2-cpe: 5     # 10.31.158.197/32
+      k12-h2-h1n: 6      # 10.31.158.198/32
+      k12-h2-h1s: 7      # 10.31.158.199/32
+
+  # UPLK
+  - vid: 50
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.158.224/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.158.225/32
+    wireguard_port: 51821
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  k12-h2-core: 36-40
+  k12-h2-h1n: 36-40
+  k12-h2-h1s: 36-40
+  k12-h2-cpe: 44-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  k12-h2-core: 13-20
+  k12-h2-h1n: 13-20
+  k12-h2-h1s: 13-20
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
