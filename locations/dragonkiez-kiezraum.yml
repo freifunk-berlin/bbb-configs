@@ -31,7 +31,6 @@ networks:
     name: mesh_rhxb
     prefix: 10.31.92.240/32
     ipv6_subprefix: -1
-    metric: 1024
     ptp: true
 
   - vid: 40

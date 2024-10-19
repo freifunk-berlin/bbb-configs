@@ -37,7 +37,6 @@ networks:
     role: mesh
     prefix: 10.31.34.44/30
     ipv6_subprefix: -1
-    metric: 1024
     ptp: true
     assignments:
       dragonkiez-adlerhalle: 1
