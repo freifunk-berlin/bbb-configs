@@ -80,21 +80,21 @@ mesh_links:
     ifname: eth1.10
     ipv4: 10.31.130.160/32
     ipv6: 2001:bf7:750:4001::1/128
-    metric: 1024
+    mesh_metric: 1024
     ptp: true
 
   - name: mesh_flughafen
     ifname: eth1.11
     ipv4: 10.31.130.161/32
     ipv6: 2001:bf7:750:4001::2/128
-    metric: 128
+    mesh_metric: 128
     ptp: true
 
   - name: mesh_dtmb
     ifname: eth1.12
     ipv4: 10.31.130.162/32
     ipv6: 2001:bf7:750:4001::3/128
-    metric: 1024
+    mesh_metric: 1024
     ptp: true
 
   - name: mesh_bbbvpn
@@ -102,21 +102,21 @@ mesh_links:
     ipv4: 10.31.130.164/32
     # the bbb-vpn setup is ipv4-only for now
     # ipv6: 2001:bf7:750:4001::5/128
-    metric: 1024
+    mesh_metric: 1024
     ptp: true
 
   - name: mesh_rhnk
     ifname: eth1.14
     ipv4: 10.31.130.165/32
     ipv6: 2001:bf7:750:4001::6/128
-    metric: 128
+    mesh_metric: 128
     ptp: true
 
   - name: mesh_teufel
     ifname: eth1.15
     ipv4: 10.31.130.166/32
     ipv6: 2001:bf7:750:4001::7/128
-    metric: 128
+    mesh_metric: 128
     ptp: true
 
 # OLSR Announce SmartGateway

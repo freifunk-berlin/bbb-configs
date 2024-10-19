@@ -41,7 +41,6 @@ networks:
     role: mesh
     prefix: 10.31.28.248/30
     ipv6_subprefix: -1
-    metric: 1024
     ptp: true
     assignments:
       dragonkiez-dorfplatz: 1
