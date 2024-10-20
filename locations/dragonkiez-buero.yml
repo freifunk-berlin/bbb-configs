@@ -53,10 +53,6 @@ networks:
 
 location__wireless_profiles__to_merge:
   - name: dragonkiez_buero
-    devices:
-      - radio: 11a_standard
-      - radio: 11g_standard
-
     ifaces:
       - mode: ap
         ssid: kiezraum2.berlin.freifunk.net
