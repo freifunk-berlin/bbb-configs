@@ -4,8 +4,13 @@
 # Wifi Config is derived from wireless profile: '{{ wireless_profile }}'
 {% for wd in wireless_devices | default([]) %}
   {% set wd_id = 'radio' + loop.index0|string %}
-  {% set wd_config = profile['devices'] | selectattr('radio', 'contains', wd['name']) | first %}
   {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
+  {% if 'devices' in profile %}
+    {% set wd_config = profile['devices'] | default([]) | selectattr('radio', 'contains', wd['name']) | first %}
+  {% else %}
+    # No config provided, use defaults
+    {% set wd_config = {} %}
+  {% endif %}
 
   {% set channel_assignments = hostvars[inventory_hostname]['channel_assignments_' + wd['name']] %}
   {% set channel_assignment = (channel_assignments[inventory_hostname] | default(channel_assignments['default'])).split('-') %}
