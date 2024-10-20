@@ -23,13 +23,10 @@ all__wireless_profiles__to_merge:
     devices:
       - radio: 11a_standard
         legacy_rates: false
-        country: DE
       - radio: 11g_standard
         legacy_rates: false
-        country: DE
       - radio: 11a_mesh
         legacy_rates: false
-        country: DE
 
     ifaces:
       - mode: mesh
@@ -43,13 +40,10 @@ all__wireless_profiles__to_merge:
     devices:
       - radio: 11a_standard
         legacy_rates: false
-        country: DE
       - radio: 11g_standard
         legacy_rates: false
-        country: DE
       - radio: 11a_mesh
         legacy_rates: false
-        country: DE
 
     ifaces:
       - mode: ap
@@ -71,13 +65,10 @@ all__wireless_profiles__to_merge:
     devices:
       - radio: 11a_standard
         legacy_rates: false
-        country: DE
       - radio: 11g_standard
         legacy_rates: false
-        country: DE
       - radio: 11a_mesh
         legacy_rates: false
-        country: DE
 
     ifaces:
       - mode: ap
@@ -106,13 +97,10 @@ all__wireless_profiles__to_merge:
     devices:
       - radio: 11a_standard
         legacy_rates: false
-        country: DE
       - radio: 11g_standard
         legacy_rates: false
-        country: DE
       - radio: 11a_mesh
         legacy_rates: false
-        country: DE
 
     ifaces:
       - mode: ap
@@ -141,13 +129,10 @@ all__wireless_profiles__to_merge:
     devices:
       - radio: 11a_standard
         legacy_rates: false
-        country: DE
       - radio: 11g_standard
         legacy_rates: false
-        country: DE
       - radio: 11a_mesh
         legacy_rates: false
-        country: DE
 
     ifaces:
       - mode: ap

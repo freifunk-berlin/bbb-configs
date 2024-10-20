@@ -46,6 +46,8 @@ config wifi-device '{{ wd_id }}'
   {% endif %}
   {% if 'country' in wd_config %}
 	option country '{{ wd_config['country'] }}'
+  {% else %}
+	option country 'DE'
   {% endif %}
   {% if 'legacy_rates' in wd_config %}
 	option legacy_rates '{{ wd_config['legacy_rates']|int }}'
