@@ -107,10 +107,6 @@ location__channel_assignments_11g_standard__to_merge:
 # Wireless profile
 location__wireless_profiles__to_merge:
   - name: hts4
-    devices:
-      - radio: 11a_standard
-      - radio: 11g_standard
-
     ifaces:
       - mode: ap
         ssid: Ferienwohnung

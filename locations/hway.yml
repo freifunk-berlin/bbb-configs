@@ -110,10 +110,6 @@ location__channel_assignments_11b_standard__to_merge:
 
 location__wireless_profiles__to_merge:
   - name: hway
-    devices:
-      - radio: 11a_standard
-      - radio: 11g_standard
-      - radio: 11a_mesh
     ifaces:
       - mode: ap
         ssid: berlin.freifunk.net

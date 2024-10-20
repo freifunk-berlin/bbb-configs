@@ -93,10 +93,6 @@ location__channel_assignments_11g_standard__to_merge:
 
 location__wireless_profiles__to_merge:
   - name: ekke
-    devices:
-      - radio: 11a_standard
-      - radio: 11g_standard
-
     ifaces:
       - mode: ap
         ssid: berlin.freifunk.net

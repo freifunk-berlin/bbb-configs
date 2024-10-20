@@ -20,11 +20,6 @@ all__wireless_profiles__to_merge:
         disabled: true
 
   - name: mesh_only
-    devices:
-      - radio: 11a_standard
-      - radio: 11g_standard
-      - radio: 11a_mesh
-
     ifaces:
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
@@ -34,11 +29,6 @@ all__wireless_profiles__to_merge:
         ifname_hint: mesh
 
   - name: ap_only
-    devices:
-      - radio: 11a_standard
-      - radio: 11g_standard
-      - radio: 11a_mesh
-
     ifaces:
       - mode: ap
         ssid: berlin.freifunk.net
@@ -56,11 +46,6 @@ all__wireless_profiles__to_merge:
         ieee80211w: 1
 
   - name: freifunk_default
-    devices:
-      - radio: 11a_standard
-      - radio: 11g_standard
-      - radio: 11a_mesh
-
     ifaces:
       - mode: ap
         ssid: berlin.freifunk.net
@@ -85,11 +70,6 @@ all__wireless_profiles__to_merge:
         ifname_hint: mesh
 
   - name: freifunk_fw
-    devices:
-      - radio: 11a_standard
-      - radio: 11g_standard
-      - radio: 11a_mesh
-
     ifaces:
       - mode: ap
         ssid: fuerstenwalde.freifunk.net
@@ -114,11 +94,6 @@ all__wireless_profiles__to_merge:
         ifname_hint: mesh
 
   - name: freifunk_hacrafu
-    devices:
-      - radio: 11a_standard
-      - radio: 11g_standard
-      - radio: 11a_mesh
-
     ifaces:
       - mode: ap
         ssid: freifunk.hacrafu.de
