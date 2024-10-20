@@ -233,8 +233,12 @@ location__wireless_profiles__to_merge:
 
   - name: foobar
     devices:
-      - radio: 11a_standard
       - radio: 11g_standard
+      - radio: 11a_mesh
+      - radio: 11a_standard
+        disabled: false # Enable radio (default)
+        legacy_rates: false # Disable lower bandwith rates (default)
+        country: 'DE' # Set German country code for radio compliance (default)
 
     ifaces:
       - mode: ap
