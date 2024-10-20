@@ -22,11 +22,8 @@ all__wireless_profiles__to_merge:
   - name: mesh_only
     devices:
       - radio: 11a_standard
-        legacy_rates: false
       - radio: 11g_standard
-        legacy_rates: false
       - radio: 11a_mesh
-        legacy_rates: false
 
     ifaces:
       - mode: mesh
@@ -39,11 +36,8 @@ all__wireless_profiles__to_merge:
   - name: ap_only
     devices:
       - radio: 11a_standard
-        legacy_rates: false
       - radio: 11g_standard
-        legacy_rates: false
       - radio: 11a_mesh
-        legacy_rates: false
 
     ifaces:
       - mode: ap
@@ -64,11 +58,8 @@ all__wireless_profiles__to_merge:
   - name: freifunk_default
     devices:
       - radio: 11a_standard
-        legacy_rates: false
       - radio: 11g_standard
-        legacy_rates: false
       - radio: 11a_mesh
-        legacy_rates: false
 
     ifaces:
       - mode: ap
@@ -96,11 +87,8 @@ all__wireless_profiles__to_merge:
   - name: freifunk_fw
     devices:
       - radio: 11a_standard
-        legacy_rates: false
       - radio: 11g_standard
-        legacy_rates: false
       - radio: 11a_mesh
-        legacy_rates: false
 
     ifaces:
       - mode: ap
@@ -128,11 +116,8 @@ all__wireless_profiles__to_merge:
   - name: freifunk_hacrafu
     devices:
       - radio: 11a_standard
-        legacy_rates: false
       - radio: 11g_standard
-        legacy_rates: false
       - radio: 11a_mesh
-        legacy_rates: false
 
     ifaces:
       - mode: ap

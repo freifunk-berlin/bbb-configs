@@ -234,9 +234,7 @@ location__wireless_profiles__to_merge:
   - name: foobar
     devices:
       - radio: 11a_standard
-        legacy_rates: false
       - radio: 11g_standard
-        legacy_rates: false
 
     ifaces:
       - mode: ap
