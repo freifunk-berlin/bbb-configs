@@ -52,7 +52,7 @@ mesh_links:
 # Downlink IPv4 is in net announced by emma.
 
 # OLSR Announce SmartGateway
-sgw: "100000 100000"
+sgw: "1000000 1000000"
 
 # Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
 # 2001:bf7:830:8300::/56 is the base prefix
