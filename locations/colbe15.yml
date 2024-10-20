@@ -70,10 +70,6 @@ location__channel_assignments_11a_standard__to_merge:
 
 location__wireless_profiles__to_merge:
   - name: colbe15
-    devices:
-      - radio: 11a_standard
-      - radio: 11g_standard
-
     ifaces:
       - mode: ap
         ssid: colbe15.freifunk.net
