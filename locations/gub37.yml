@@ -23,7 +23,7 @@ hosts:
 
   - hostname: gub37-hof-w
     role: ap
-    model: "ubnt_nanostation-ac-loco"
+    model: "cudy_ap3000outdoor-v1"
 
 snmp_devices:
   - hostname: gub37-switch-roof
