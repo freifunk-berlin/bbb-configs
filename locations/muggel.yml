@@ -88,16 +88,6 @@ location__disabled_services__to_merge:
 # For roaming between multiple APs, consider setting 80211w to optional (1).
 location__wireless_profiles__to_merge:
   - name: muggel
-    devices:
-      - radio: 11a_standard
-        legacy_rates: false
-        country: DE
-      - radio: 11g_standard
-        legacy_rates: false
-        country: DE
-      - radio: 11a_mesh
-        legacy_rates: false
-        country: DE
     ifaces:
       - mode: ap
         ssid: berlin.freifunk.net
