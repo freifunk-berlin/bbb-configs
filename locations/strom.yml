@@ -79,14 +79,14 @@ mesh_links:
     ifname: eth0.1310
     ipv4: 10.31.48.2/32
     ipv6: 2001:bf7:750:2a02::/128
-    metric: 128
+    mesh_metric: 128
 
   # This interface is IPv4 only
   - name: mesh_bbbvpn
     ifname: eth0.1312
     ipv4: 10.31.48.3/32
     # ipv6: 2001:bf7:750:2a03::/128
-    metric: 1024
+    mesh_metric: 1024
     ptp: true
 
   - name: mesh_no

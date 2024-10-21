@@ -46,13 +46,13 @@ mesh_links:
     ifname: lan3.10
     ipv4: 10.31.11.96/32
     ipv6: 2001:bf7:830:8301::/128
-    metric: 128
+    mesh_metric: 128
     ptp: true
 
 # Downlink IPv4 is in net announced by emma.
 
 # OLSR Announce SmartGateway
-sgw: "100000 100000"
+sgw: "1000000 1000000"
 
 # Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
 # 2001:bf7:830:8300::/56 is the base prefix

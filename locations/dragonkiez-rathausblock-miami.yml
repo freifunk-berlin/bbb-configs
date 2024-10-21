@@ -45,7 +45,6 @@ networks:
     role: mesh
     prefix: 10.31.30.32/30
     ipv6_subprefix: -1
-    metric: 1024
     ptp: true
     assignments:
       dragonkiez-rathausblock-miami: 1
