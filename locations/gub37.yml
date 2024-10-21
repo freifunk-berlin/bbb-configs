@@ -17,9 +17,9 @@ hosts:
 
   - hostname: gub37-hof-s
     role: ap
-    model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: 64:d1:54:ae:ba:b0}
+    model: "cudy_ap3000outdoor-v1"
     wifi_roaming: true
+    mac_override: {eth0: 64:d1:54:ae:ba:b0}
 
   - hostname: gub37-hof-w
     role: ap
