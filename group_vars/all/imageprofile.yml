@@ -27,15 +27,6 @@ all__packages__to_merge:
   - -ppp
   - -ppp-mod-pppoe
 
-ssl__packages__to_merge:
-  - -wpad-basic
-  - -wpad-basic-mbedtls
-  - -wpad-basic-wolfssl
-  - -libustream-mbedtls
-  - libustream-wolfssl
-  - hostapd-wolfssl
-  - px5g-wolfssl
-
 all_luci_base__packages__to_merge:
   - libiwinfo-lua
   - luci-mod-admin-full
