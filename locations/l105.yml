@@ -75,7 +75,7 @@ mesh_links:
     ifname: eth1.32
     ipv4: 10.31.127.162/32
     ipv6: 2001:bf7:750:3f01::3/128
-    mesh_metric: 128
+    mesh_metric: 1024
     ptp: true
 
 # Downlink IPv4 is in net announced by emma.
