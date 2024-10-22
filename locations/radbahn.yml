@@ -13,6 +13,8 @@ hosts:
   - hostname: radbahn-core
     role: corerouter
     model: ubnt_usw-flex
+    openwrt_version: snapshot
+    ssl__packages__to_merge: []
 
   - hostname: radbahn-o-nf
     role: ap
