@@ -8,7 +8,6 @@
   {% if 'devices' in profile %}
     {% set wd_config = profile['devices'] | default([]) | selectattr('radio', 'contains', wd['name']) | first %}
   {% else %}
-    # No config provided, use defaults
     {% set wd_config = {} %}
   {% endif %}
 
