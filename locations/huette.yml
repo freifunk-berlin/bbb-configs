@@ -18,7 +18,6 @@ hosts:
     wireless_profile: freifunk_default
     openwrt_version: snapshot
     log_size: 1024
-    ssl__packages__to_merge: []
 
 ipv6_prefix: '2001:bf7:830:2600::/56'
 

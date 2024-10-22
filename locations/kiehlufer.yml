@@ -32,7 +32,6 @@ hosts:
     wireless_profile: freifunk_default
     openwrt_version: snapshot
     log_size: 1024
-    ssl__packages__to_merge: []
 
   - hostname: kiehlufer-huette
     role: ap
@@ -40,7 +39,6 @@ hosts:
     wireless_profile: kiehlufer5g
     openwrt_version: snapshot
     log_size: 1024
-    ssl__packages__to_merge: []
 
   - hostname: kiehlufer-nf-wbp1
     role: ap

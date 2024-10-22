@@ -41,7 +41,6 @@ hosts:
     model: zyxel_nwa50ax
     openwrt_version: snapshot
     log_size: 1024
-    ssl__packages__to_merge: []
 
 snmp_devices:
 
