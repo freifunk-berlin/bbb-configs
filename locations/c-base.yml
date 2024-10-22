@@ -63,12 +63,18 @@ networks:
     name: mesh_nf1
     prefix: 10.31.134.113/32
     ipv6_subprefix: -20
+    mesh_ap: c-base-nf-1
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
 
   - vid: 21
     role: mesh
     name: mesh_nf2
     prefix: 10.31.134.114/32
     ipv6_subprefix: -21
+    mesh_ap: c-base-nf-2
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
 
   - vid: 40
     role: dhcp
