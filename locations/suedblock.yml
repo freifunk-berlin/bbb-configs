@@ -21,7 +21,6 @@ hosts:
     dhcp_no_ping: false
     openwrt_version: snapshot
     log_size: 1024
-    ssl__packages__to_merge: []
 
 # 10.248.13.0/24
 # 10.248.13.0/29 - mgmt

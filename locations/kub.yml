@@ -69,7 +69,6 @@ hosts:
       - 'uci commit network'
       - 'sync'
       - 'reload_config'
-    ssl__packages__to_merge: []
 
 snmp_devices:
   - hostname: kub-simeon

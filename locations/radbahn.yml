@@ -14,7 +14,6 @@ hosts:
     role: corerouter
     model: ubnt_usw-flex
     openwrt_version: snapshot
-    ssl__packages__to_merge: []
 
   - hostname: radbahn-o-nf
     role: ap
@@ -26,7 +25,6 @@ hosts:
     host__rclocal__to_merge:
       - 'echo 1 > /sys/kernel/debug/ieee80211/phy0/mt76/fw_debug_wm'
       - 'echo 1 > /sys/kernel/debug/ieee80211/phy1/mt76/fw_debug_wm'
-    ssl__packages__to_merge: []
 
   - hostname: radbahn-w-nf
     role: ap
@@ -38,7 +36,6 @@ hosts:
     host__rclocal__to_merge:
       - 'echo 1 > /sys/kernel/debug/ieee80211/phy0/mt76/fw_debug_wm'
       - 'echo 1 > /sys/kernel/debug/ieee80211/phy1/mt76/fw_debug_wm'
-    ssl__packages__to_merge: []
 
 snmp_devices:
 
