@@ -57,7 +57,7 @@ config wifi-device '{{ wd_id }}'
   {% if 'legacy_rates' in wd_config %}
 	option legacy_rates '{{ wd_config['legacy_rates']|int }}'
   {% else %}
-    option legacy_rates '0'
+	option legacy_rates '0'
   {% endif %}
   {% if 'disabled' in wd_config %}
 	option disabled '{{ wd_config['disabled']|int }}'
