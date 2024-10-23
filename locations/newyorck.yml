@@ -26,6 +26,7 @@ hosts:
   - hostname: newyorck-ap-1e
   - hostname: newyorck-ap-1f
   - hostname: newyorck-ap-1g
+  - hostname: newyorck-ap-1h
   - hostname: newyorck-ap-2a
   - hostname: newyorck-ap-2b
   - hostname: newyorck-ap-2c
@@ -97,6 +98,7 @@ networks:
       newyorck-ap-1e: 9
       newyorck-ap-1f: 10
       newyorck-ap-1g: 11
+      newyorck-ap-1h: 18
       newyorck-ap-2a: 12
       newyorck-ap-2b: 13
       newyorck-ap-2c: 14
@@ -128,6 +130,7 @@ location__channel_assignments_11a_standard__to_merge:
   newyorck-ap-1e: 36-20
   newyorck-ap-1f: 44-20
   newyorck-ap-1g: 48-20
+  newyorck-ap-1h: 36-20
   newyorck-ap-2a: 48-20
   newyorck-ap-2b: 44-20
   newyorck-ap-2c: 36-20
@@ -143,6 +146,7 @@ location__channel_assignments_11g_standard__to_merge:
   newyorck-ap-1e: 1-20
   newyorck-ap-1f: 11-20
   newyorck-ap-1g: 6-20
+  newyorck-ap-1h: 1-20
   newyorck-ap-2a: 6-20
   newyorck-ap-2b: 11-20
   newyorck-ap-2c: 1-20
