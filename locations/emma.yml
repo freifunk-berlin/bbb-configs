@@ -48,10 +48,6 @@ snmp_devices:
     address: 10.31.11.20
     snmp_profile: airos_8
 
-  - hostname: emma-ono-5ghz
-    address: 10.31.11.21
-    snmp_profile: airos_8
-
   - hostname: emma-wsw-5ghz
     address: 10.31.11.22
     snmp_profile: airos_8
@@ -80,11 +76,6 @@ airos_dfs_reset:
     daytime_limit: "2-7"
   - name: "emma-nno-5ghz"
     target: "10.31.11.20"
-    username: "ubnt"
-    password: "/root/pwd.txt"
-    daytime_limit: "2-7"
-  - name: "emma-ono-5ghz"
-    target: "10.31.11.21"
     username: "ubnt"
     password: "/root/pwd.txt"
     daytime_limit: "2-7"
@@ -144,7 +135,6 @@ networks:
       # Airos 8, 5 GHz
       emma-oso-5ghz: 19     # Fenster 8, 20 MHz, center frequency 5580 MHz
       emma-nno-5ghz: 20     # Fenster 6, 20 MHz, center frequency 5600 MHz
-      emma-ono-5ghz: 21     # Fenster 7, 40 MHz, center frequency 5510 MHz
       emma-wsw-5ghz: 22     # Fenster 3, 20 MHz, center frequency 5620 MHz
       emma-wnw-5ghz: 23     # Fenster 4, 40 MHz, center frequency 5550 MHz
       emma-nnw-5ghz: 24     # Fenster 5, 20 MHz, center frequency 5700 MHz
