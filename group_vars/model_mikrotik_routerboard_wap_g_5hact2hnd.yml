@@ -1,6 +1,7 @@
 ---
 override_target: "mikrotik_routerboard-wap-g-5hact2hnd"
 target: ath79/mikrotik
+os: openwrt
 brand_nice: MikroTik
 model_nice: wAP AC
 

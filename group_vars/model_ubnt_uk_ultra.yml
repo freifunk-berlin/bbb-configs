@@ -1,5 +1,6 @@
 ---
 target: "ath79/generic"
+os: openwrt
 brand_nice: Ubiquiti
 model_nice: Swiss Army Knife Ultra
 

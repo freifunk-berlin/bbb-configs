@@ -1,5 +1,6 @@
 ---
 target: ath79/generic
+os: openwrt
 brand_nice: Siemens
 model_nice: WS-AP3610
 

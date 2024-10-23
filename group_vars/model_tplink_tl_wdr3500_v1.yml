@@ -1,5 +1,6 @@
 ---
 target: ath79/generic
+os: openwrt
 brand_nice: TP-Link
 model_nice: WDR3500
 version_nice: v1

@@ -1,5 +1,6 @@
 ---
 target: ramips/mt7621
+os: openwrt
 brand_nice: GL.iNet
 model_nice: GL-MT1300 (Beryl)
 version_nice: v1

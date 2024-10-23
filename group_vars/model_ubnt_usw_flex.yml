@@ -8,6 +8,7 @@
 # - one 14720k partition, vendor two 7360k partitions
 
 target: ramips/mt7621
+os: openwrt
 brand_nice: Ubiquiti
 model_nice: USW-Flex
 

@@ -1,5 +1,6 @@
 ---
 target: mediatek/filogic
+os: openwrt
 brand_nice: NETGEAR
 model_nice: WAX220
 int_port: eth0

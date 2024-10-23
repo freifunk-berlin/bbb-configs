@@ -1,5 +1,6 @@
 ---
 target: mediatek/mt7622
+os: openwrt
 brand_nice: Sinovoip
 model_nice: Banana Pi R64
 

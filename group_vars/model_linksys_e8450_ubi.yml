@@ -1,5 +1,6 @@
 ---
 target: mediatek/mt7622
+os: openwrt
 brand_nice: Belkin
 model_nice: RT3200
 

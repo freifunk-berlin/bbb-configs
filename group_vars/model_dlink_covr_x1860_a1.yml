@@ -1,5 +1,6 @@
 ---
 target: ramips/mt7621
+os: openwrt
 brand_nice: D-Link
 model_nice: COVR-X1860
 version_nice: A1

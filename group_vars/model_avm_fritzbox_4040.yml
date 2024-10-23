@@ -1,5 +1,6 @@
 ---
 target: ipq40xx/generic
+os: openwrt
 brand_nice: AVM
 model_nice: FRITZ!Box 4040
 

@@ -1,5 +1,6 @@
 ---
 target: ramips/mt76x8
+os: openwrt
 brand_nice: TP-Link
 model_nice: Archer C50
 version_nice: v3
