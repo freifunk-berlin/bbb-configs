@@ -28,11 +28,32 @@ ipv6_prefix: "2001:bf7:830:b00::/56"
 # --MESH: 10.31.92.16/28
 
 networks:
+  # MESH - emma
   - vid: 10
     role: mesh
     name: mesh_emma
     prefix: 10.31.92.16/32
     ipv6_subprefix: -1
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.92.17/32
+    ipv6_subprefix: -20
+    mesh_ap: walde-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.92.18/32
+    ipv6_subprefix: -21
+    mesh_ap: walde-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
 
   - vid: 40
     role: dhcp
