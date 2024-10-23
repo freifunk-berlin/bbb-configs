@@ -1,5 +1,6 @@
 ---
 target: ipq40xx/generic
+os: openwrt
 brand_nice: ZyXEL
 model_nice: NBG6617
 

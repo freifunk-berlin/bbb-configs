@@ -1,5 +1,6 @@
 ---
 target: ramips/mt7621
+os: openwrt
 brand_nice: MikroTik
 model_nice: hEX
 

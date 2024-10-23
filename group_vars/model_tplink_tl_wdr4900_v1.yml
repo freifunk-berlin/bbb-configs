@@ -1,5 +1,6 @@
 ---
 target: mpc85xx/p1010
+os: openwrt
 brand_nice: TP-Link
 model_nice: WDR4900
 version_nice: v1

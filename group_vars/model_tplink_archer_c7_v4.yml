@@ -1,5 +1,6 @@
 ---
 target: ath79/generic
+os: openwrt
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"
