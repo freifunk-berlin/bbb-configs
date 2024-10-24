@@ -15,7 +15,7 @@ hosts:
   - hostname: w38b-ap1
     role: ap
     model: "dlink_covr-x1860-a1"
-    wireless_profile: w38b
+    wireless_profile: freifunk_default
     mac_override: {eth0: 0c:0e:76:cf:2e:3a}
 
 snmp_devices:
