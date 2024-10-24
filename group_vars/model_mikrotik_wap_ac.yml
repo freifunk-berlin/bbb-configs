@@ -1,5 +1,6 @@
 ---
 target: ipq40xx/mikrotik
+os: openwrt
 brand_nice: MikroTik
 model_nice: wAP AC
 version_nice: Rev 2 (2022-)

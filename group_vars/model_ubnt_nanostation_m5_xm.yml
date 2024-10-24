@@ -1,6 +1,7 @@
 ---
 override_target: "ubnt_nanostation-m"
 target: ath79/tiny
+os: openwrt
 brand_nice: Ubiquiti
 model_nice: Nanostation M5
 version_nice: XM

@@ -1,5 +1,6 @@
 ---
 target: mediatek/filogic
+os: openwrt
 openwrt_version: snapshot
 brand_nice: Cudy
 model_nice: AP3000 Outdoor v1

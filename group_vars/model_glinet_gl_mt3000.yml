@@ -1,5 +1,6 @@
 ---
 target: "mediatek/filogic"
+os: openwrt
 brand_nice: GL.iNet
 model_nice: GL-MT3000 (Beryl AX)
 
