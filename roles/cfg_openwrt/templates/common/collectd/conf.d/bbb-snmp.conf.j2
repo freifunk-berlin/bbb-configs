@@ -1,6 +1,12 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 
 {% set profiles = snmp_devices | default([]) | map(attribute='snmp_profile') | list | unique %}
+{# collect profiles from new way of writing hosts as well and append them #}
+{% for host in groups[group_names[0]]%}
+  {% if hostvars[host]["snmp_profile"] is defined %}
+    {% do profiles.append(hostvars[host]["snmp_profile"]) %}
+  {% endif %}
+{% endfor %}
 
 {% if profiles | length > 0 %}
 LoadPlugin snmp
@@ -29,6 +35,23 @@ LoadPlugin snmp
         Collect "{{ device['snmp_profile'] }}_{{ metric_name }}"
   {% endfor %}
     </Host>
+{% endfor %}
+{# Add non-openwrt hosts that are defined as hosts as well #}
+{# Only works if mgmt-IPs are defined in the standard way #}
+{% for host in groups[group_names[0]]%}
+  {% if hostvars[host]["snmp_profile"] is defined %}
+    {# Calculate the IP for this host based on the mgmt assignment #}
+    {% set mgmt_network = networks | selectattr('role', 'equalto', 'mgmt') | first %}
+    <Host "{{ host }}">
+            Address "{{ mgmt_network['prefix'] | ansible.utils.ipaddr(mgmt_network['assignments'][host])| ansible.utils.ipaddr('address') }}"
+            Version 1
+            Interval 30
+            Community '{{ host['community'] | default('public') }}'
+      {% for metric_name in collectd_snmp_profiles[hostvars[host]["snmp_profile"]] %}
+            Collect "{{ hostvars[host]["snmp_profile"] }}_{{ metric_name }}"
+      {% endfor %}
+        </Host>
+  {% endif %}
 {% endfor %}
 {% if profiles | length > 0 %}
 </Plugin>
