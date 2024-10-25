@@ -29,7 +29,8 @@ hosts:
 
   - hostname: zwingli-nno-nf-5ghz
     role: ap
-    model: ubnt_nanostation-m5_xm
+    model: mikrotik_sxtsq-5-ac
+    mac_override: {eth0: dc:2c:6e:c4:39:03}
     wifi_roaming: true
 
   - hostname: zwingli-nord-nf-5ghz
