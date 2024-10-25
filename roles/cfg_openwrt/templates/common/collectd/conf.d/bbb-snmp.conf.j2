@@ -1,9 +1,9 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 
-{% set profiles = snmp_devices | default([]) | map(attribute='os') | list | unique %}
+{% set profiles = snmp_devices | default([]) | map(attribute='os') | reject('search', 'openwrt') | list | unique %}
 {# collect profiles from new way of writing hosts as well and append them #}
 {% for host in groups[group_names[0]]%}
-  {% if hostvars[host]["os"] is defined %}
+  {% if hostvars[host]["os"] != "openwrt" %}
     {% do profiles.append(hostvars[host]["os"]) %}
   {% endif %}
 {% endfor %}
@@ -39,7 +39,7 @@ LoadPlugin snmp
 {# Add non-openwrt hosts that are defined as hosts as well #}
 {# Only works if mgmt-IPs are defined in the standard way #}
 {% for host in groups[group_names[0]]%}
-  {% if hostvars[host]["os"] is defined %}
+  {% if hostvars[host]["os"] != "openwrt" %}
     {# Calculate the IP for this host based on the mgmt assignment #}
     {% set mgmt_network = networks | selectattr('role', 'equalto', 'mgmt') | first %}
     <Host "{{ host }}">
