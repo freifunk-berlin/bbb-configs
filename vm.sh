@@ -114,7 +114,7 @@ cat << EOF > "$vmdir/vmconfig.json"
   },
   "boot-source": {
     "kernel_image_path": "./vmlinux",
-    "boot_args": "ro console=ttyS0 noapic reboot=k panic=1 pci=off nomodules random.trust_cpu=on i8042.noaux"
+    "boot_args": "ro console=ttyS0 reboot=k panic=1 pci=off nomodules random.trust_cpu=on i8042.noaux"
   },
   "drives": [
     {
