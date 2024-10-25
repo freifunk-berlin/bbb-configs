@@ -54,14 +54,17 @@ networks:
     ipv6_subprefix: 1
     assignments:
       gruni73-core: 1
+      # There are ping watchdogs setup at the switch that will trigger a power cycle for the devices if they become unreachable.
+      # The time for the watchdogs needs to be quite high so the devices can still be flashed without the need to deactivate the
+      # watchdogs prior to flashing.
       gruni73-switch: 2
       # 5ghz uplink
       gruni73-sama: 5
       gruni73-zwingli: 6
       # local nearfield aps 5ghz
-      gruni73-nf-o-5ghz: 13  # 10m PoE watchdog active for this device due to instability
-      gruni73-nf-s-5ghz: 14  # 10m PoE watchdog active for this device due to instability
-      gruni73-nf-w-5ghz: 15  # 10m PoE watchdog active for this device due to instability
+      gruni73-nf-o-5ghz: 13  # switch has a watchdog (10m) active for this device due to instability
+      gruni73-nf-s-5ghz: 14  # switch has a watchdog (10m) active for this device due to instability
+      gruni73-nf-w-5ghz: 15  # switch has a watchdog (10m) active for this device due to instability
 
   - vid: 40
     role: dhcp

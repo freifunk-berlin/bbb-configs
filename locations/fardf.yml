@@ -179,7 +179,10 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      fardf-core: 1         # 10.248.11.129 (10m PoE watchdog)
+      fardf-core: 1         # 10.248.11.129 -  switch has a watchdog (10m) active for this device
+      # There are ping watchdogs setup at the switch that will trigger a power cycle for the devices if they become unreachable.
+      # The time for the watchdogs needs to be quite high so the devices can still be flashed without the need to deactivate the
+      # watchdogs prior to flashing.
       fardf-switch: 2       # 10.248.11.130
       fardf-bht: 3          # 10.248.11.131
       fardf-maerkisches: 4  # 10.248.11.132
