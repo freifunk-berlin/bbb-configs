@@ -22,7 +22,7 @@ snmp_devices:
 
   - hostname: perle-m5
     address: 10.31.205.130
-    snmp_profile: airos_6
+    os: airos_6
 
 ipv6_prefix: "2001:bf7:750:6800::/56"
 

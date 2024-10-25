@@ -27,11 +27,11 @@ hosts:
 snmp_devices:
   - hostname: rio-emma
     address: 10.31.134.3
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: rio-simeon
     address: 10.31.134.4
-    snmp_profile: airos_6
+    os: airos_6
 
 
 ipv6_prefix: "2001:bf7:830:6700::/56"

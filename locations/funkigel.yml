@@ -20,7 +20,7 @@ snmp_devices:
 
   - hostname: funkigel-frischauf
     address: 10.248.9.194
-    snmp_profile: airos_8
+    os: airos_8
 
 airos_dfs_reset:
   - name: "funkigel-frischauf"

@@ -16,7 +16,7 @@ hosts:
 snmp_devices:
   - hostname: knallt-m42-lb
     address: 10.248.0.114
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: '2001:bf7:760:1700::/56'
 

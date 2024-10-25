@@ -72,11 +72,11 @@ hosts:
 snmp_devices:
   - hostname: ilr-teufb
     address: 10.31.214.26
-    snmp_profile: af60
+    os: af60
 
   - hostname: ilr-perleb
     address: 10.31.214.27
-    snmp_profile: airos_8
+    os: airos_8
 
 # ROUTER: 10.31.214.0/27
 # --DHCP: 10.31.214.0/28

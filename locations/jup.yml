@@ -41,15 +41,15 @@ hosts:
 snmp_devices:
   - hostname: jup-poe
     address: 10.31.147.130
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: jup-bht
     address: 10.31.147.131
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: jup-segen
     address: 10.31.147.132
-    snmp_profile: airos_6
+    os: airos_6
 
 ipv6_prefix: "2001:bf7:760:2600::/56"
 

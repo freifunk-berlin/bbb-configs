@@ -16,43 +16,43 @@ hosts:
 snmp_devices:
   - hostname: dtmb-sw1
     address: 10.31.131.2
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: dtmb-sw2
     address: 10.31.131.3
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: dtmb-ak36
     address: 10.31.131.10
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: dtmb-rhxb
     address: 10.31.131.11
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: dtmb-cbase
     address: 10.31.131.12
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: dtmb-laden
     address: 10.31.131.13
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: dtmb-x
     address: 10.31.131.14
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: dtmb-m2-1
     address: 10.31.131.20
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: dtmb-m2-2
     address: 10.31.131.21
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: dtmb-m2-3
     address: 10.31.131.22
-    snmp_profile: airos_6
+    os: airos_6
 
 ipv6_prefix: "2001:bf7:750:3400::/56"
 

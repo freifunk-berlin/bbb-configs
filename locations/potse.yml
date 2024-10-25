@@ -17,7 +17,7 @@ hosts:
 snmp_devices:
   - hostname: potse-flughafen
     address: 10.31.130.194
-    snmp_profile: airos_8
+    os: airos_8
 
 
 ipv6_prefix: "2001:bf7:750:4100::/56"

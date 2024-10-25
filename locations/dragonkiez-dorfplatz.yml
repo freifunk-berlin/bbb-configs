@@ -19,7 +19,7 @@ hosts:
 snmp_devices:
   - hostname: dragonkiez-dorfplatz-rhxb
     address: 10.31.28.250
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: "2001:bf7:830:b340::/58"
 

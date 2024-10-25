@@ -16,11 +16,11 @@ hosts:
 snmp_devices:
   - hostname: ohlauer-switch
     address: 10.31.166.250
-    snmp_profile: edgerouter
+    os: edgerouter
 
   - hostname: ohlauer-emma
     address: 10.31.166.251
-    snmp_profile: mikrotik_60g
+    os: mikrotik_60g
 
 ipv6_prefix: 2001:bf7:830:8300::/56
 

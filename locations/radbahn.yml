@@ -44,7 +44,7 @@ snmp_devices:
 
   - hostname: radbahn-emma
     address: 10.31.251.2
-    snmp_profile: mikrotik_60g
+    os: mikrotik_60g
 
 # 10.31.248.240/28
 # 10.31.248.240/29 - mgmt

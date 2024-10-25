@@ -24,7 +24,7 @@ hosts:
 snmp_devices:
   - hostname: ekke-switch
     address: 10.31.226.2
-    snmp_profile: routeros
+    os: routeros
 
 # ROUTER: 10.31.226.0/26
 # --MGMT: 10.31.226.0/29

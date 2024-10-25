@@ -73,19 +73,19 @@ hosts:
 snmp_devices:
   - hostname: kiehlufer-switch
     address: 10.31.82.210
-    snmp_profile: swos_lite
+    os: swos_lite
 
   - hostname: kiehlufer-rhnk
     address: 10.31.82.211
-    snmp_profile: af60
+    os: af60
 
   - hostname: kiehlufer-hway
     address: 10.31.82.212
-    snmp_profile: mikrotik_60g
+    os: mikrotik_60g
 
   - hostname: kiehlufer-emma
     address: 10.31.82.213
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: '2001:bf7:830:8c00::/56'
 

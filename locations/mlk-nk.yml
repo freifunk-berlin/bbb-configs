@@ -31,11 +31,11 @@ snmp_devices:
 
   - hostname: mlk-nk-nno-5ghz
     address: 10.31.69.4
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: mlk-nk-so-5ghz
     address: 10.31.69.5
-    snmp_profile: airos_6
+    os: airos_6
 
 
 ipv6_prefix: '2001:bf7:820:2500::/56'

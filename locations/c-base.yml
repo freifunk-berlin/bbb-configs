@@ -28,11 +28,11 @@ hosts:
 snmp_devices:
   - hostname: c-base-switch
     address: 10.31.134.98
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: c-base-mesh-ssw
     address: 10.31.134.101
-    snmp_profile: airos_8
+    os: airos_8
 
 airos_dfs_reset:
   - name: "c-base-mesh-ssw"

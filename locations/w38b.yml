@@ -21,10 +21,10 @@ hosts:
 snmp_devices:
   - hostname: w38b-sama
     address: 10.31.212.3
-    snmp_profile: af60
+    os: af60
   - hostname: w38b-rhnk
     address: 10.31.212.4
-    snmp_profile: af60
+    os: af60
 
 # IPs
 ipv6_prefix: '2001:bf7:830:bc00::/56'

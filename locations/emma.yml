@@ -14,59 +14,59 @@ hosts:
 snmp_devices:
   - hostname: emma-switch-no
     address: 10.31.11.2
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: emma-switch-so
     address: 10.31.11.3
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: emma-switch-sw
     address: 10.31.11.4
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: emma-switch-nw
     address: 10.31.11.5
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: emma-no-60ghz
     address: 10.31.11.10
-    snmp_profile: af60
+    os: af60
 
   - hostname: emma-wsw-60ghz
     address: 10.31.11.17
-    snmp_profile: mikrotik_60g
+    os: mikrotik_60g
 
   - hostname: emma-ssw-uplink
     address: 10.31.11.18
-    snmp_profile: mikrotik_60g
+    os: mikrotik_60g
 
   - hostname: emma-oso-5ghz
     address: 10.31.11.19
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: emma-nno-5ghz
     address: 10.31.11.20
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: emma-wsw-5ghz
     address: 10.31.11.22
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: emma-wnw-5ghz
     address: 10.31.11.23
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: emma-nnw-5ghz
     address: 10.31.11.24
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: emma-sso-5ghz
     address: 10.31.11.25
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: emma-nnw-60ghz
     address: 10.31.11.29
-    snmp_profile: mikrotik_60g
+    os: mikrotik_60g
 
 airos_dfs_reset:
   - name: "emma-oso-5ghz"

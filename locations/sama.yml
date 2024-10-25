@@ -40,35 +40,35 @@ hosts:
 snmp_devices:
   - hostname: sama-poe-1
     address: 10.31.81.2
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: sama-poe-2
     address: 10.31.81.3
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: sama-nord-5ghz
     address: 10.31.81.20
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: sama-ost-5ghz
     address: 10.31.81.21
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: sama-sued-5ghz
     address: 10.31.81.22
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: sama-west-5ghz
     address: 10.31.81.23
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: sama-sued-60ghz
     address: 10.31.81.26
-    snmp_profile: af60
+    os: af60
 
   - hostname: sama-saarbruecker
     address: 10.31.81.30
-    snmp_profile: af60
+    os: af60
 
 airos_dfs_reset:
   - name: "sama-nord-5ghz"

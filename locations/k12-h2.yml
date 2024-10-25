@@ -36,7 +36,7 @@ hosts:
 snmp_devices:
   - hostname: k12-h2-segen
     address: 10.31.158.195
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: '2001:bf7:760:2a00::/56'
 

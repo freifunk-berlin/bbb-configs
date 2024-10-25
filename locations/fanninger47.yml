@@ -32,11 +32,11 @@ hosts:
 snmp_devices:
   - hostname: fanninger47-switch
     address: 10.31.233.2
-    snmp_profile: routeros
+    os: routeros
 
   - hostname: fanninger47-liese21
     address: 10.31.233.4
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: "2001:bf7:860:1100::/56"
 # ALL:  10.31.233.0/26

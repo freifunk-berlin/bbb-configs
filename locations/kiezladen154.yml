@@ -19,7 +19,7 @@ hosts:
 snmp_devices:
   - hostname: kiezladen154-rhnk
     address: 10.248.3.162
-    snmp_profile: airos_8
+    os: airos_8
 
 
 # mgmt: 10.248.3.160/28

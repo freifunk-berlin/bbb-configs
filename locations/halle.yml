@@ -16,7 +16,7 @@ hosts:
 snmp_devices:
   - hostname: halle-rhxb
     address: 10.31.184.66
-    snmp_profile: airos_8
+    os: airos_8
 
 
 ipv6_prefix: "2001:bf7:750:5600::/56"

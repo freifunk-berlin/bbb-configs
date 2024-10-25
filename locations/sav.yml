@@ -76,7 +76,7 @@ hosts:
 snmp_devices:
   - hostname: sav-emma
     address: 10.31.174.242
-    snmp_profile: af60
+    os: af60
 
 networks:
   - vid: 10

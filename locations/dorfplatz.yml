@@ -39,15 +39,15 @@ hosts:
 snmp_devices:
   - hostname: dorfplatz-poe-switch
     address: 10.31.75.34
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: dorfplatz-sama
     address: 10.31.75.35
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: dorfplatz-zwingli
     address: 10.31.75.36
-    snmp_profile: airos_8
+    os: airos_8
 
 
 ipv6_prefix: "2001:bf7:830:8200::/56"

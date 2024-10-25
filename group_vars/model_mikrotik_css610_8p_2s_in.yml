@@ -4,4 +4,4 @@ brand_nice: MikroTik
 model_nice: Cloud Smart Switch
 version_nice: 610-8P-2S+IN
 
-snmp_profile: swos_lite
+os: swos_lite

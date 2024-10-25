@@ -28,7 +28,7 @@ hosts:
 snmp_devices:
   - hostname: rigaer83-sama
     address: 10.31.81.83
-    snmp_profile: airos_8
+    os: airos_8
 
 
 ipv6_prefix: "2001:bf7:830:8e00::/56"

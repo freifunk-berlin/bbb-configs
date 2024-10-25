@@ -18,7 +18,7 @@ snmp_devices:
 
   - hostname: weidenbaum-bht
     address: 10.31.204.130
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: "2001:bf7:780:a00::/56"
 

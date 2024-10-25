@@ -46,7 +46,7 @@ hosts:
 snmp_devices:
   - hostname: rixbox-rhnk
     address: 10.31.154.117
-    snmp_profile: airos_8
+    os: airos_8
 
 # TODO: delete these old addresses:
 #       - mesh: 10.230.3.164/...

@@ -29,15 +29,15 @@ hosts:
 snmp_devices:
 #   - hostname: q216-switch
 #     address: 10.31.201.242
-#     snmp_profile: swos_lite
+#     os: swos_lite
 
   - hostname: q216-tierpark
     address: 10.31.201.243
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: q216-spitta
     address: 10.31.201.245
-    snmp_profile: airos_8
+    os: airos_8
 
 ssh_keys:  # to stop merging other ssh-keys
   - comment: Hener

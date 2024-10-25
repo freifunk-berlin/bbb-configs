@@ -39,17 +39,17 @@ snmp_devices:
   # TL-SG2424
   - hostname: newyorck-switch1
     address: 10.31.155.226
-    snmp_profile: tplink
+    os: tplink
 
   # TL-SG2424
   - hostname: newyorck-switch2
     address: 10.31.155.227
-    snmp_profile: tplink
+    os: tplink
 
   # TL-SG3424P
   - hostname: newyorck-switch3
     address: 10.31.155.228
-    snmp_profile: tplink
+    os: tplink
 
 # PRDHCP: 10.31.247.0/25
 # --DHCP: 10.31.160.0/25

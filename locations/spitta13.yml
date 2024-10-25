@@ -32,19 +32,19 @@ hosts:
 snmp_devices:
   - hostname: spitta13-switch
     address: 10.31.232.194
-    snmp_profile: swos
+    os: swos
 
   - hostname: spitta13-zwingli
     address: 10.31.232.195
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: spitta13-ost
     address: 10.31.232.196
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: spitta13-j41
     address: 10.31.232.199
-    snmp_profile: airos_6
+    os: airos_6
 
 airos_dfs_reset:
   - name: "spitta-ost"

@@ -17,59 +17,59 @@ hosts:
 snmp_devices:
   - hostname: rhxb-switch-roof
     address: 10.31.126.2
-    snmp_profile: "edgeswitch"
+    os: "edgeswitch"
 
   - hostname: rhxb-l105
     address: 10.31.126.4
-    snmp_profile: "af60"
+    os: "af60"
 
   - hostname: rhxb-flughafen
     address: 10.31.126.5
-    snmp_profile: "af60"
+    os: "af60"
 
   - hostname: rhxb-manstein
     address: 10.31.126.6
-    snmp_profile: "airos_6"
+    os: "airos_6"
 
   - hostname: rhxb-emmaus
     address: 10.31.126.7
-    snmp_profile: "airos_6"
+    os: "airos_6"
 
   - hostname: rhxb-rhnk
     address: 10.31.126.8
-    snmp_profile: "af60"
+    os: "af60"
 
   - hostname: rhxb-technikmuseum
     address: 10.31.126.9
-    snmp_profile: "airos_6"
+    os: "airos_6"
 
   - hostname: rhxb-no-5ghz
     address: 10.31.126.10
-    snmp_profile: "airos_6"
+    os: "airos_6"
 
   - hostname: rhxb-nw-5ghz
     address: 10.31.126.11
-    snmp_profile: "airos_6"
+    os: "airos_6"
 
   - hostname: rhxb-sw-5ghz
     address: 10.31.126.12
-    snmp_profile: "airos_6"
+    os: "airos_6"
 
   - hostname: rhxb-5-so
     address: 10.31.126.13
-    snmp_profile: "airos_6"
+    os: "airos_6"
 
   - hostname: rhxb-simeon
     address: 10.31.126.14
-    snmp_profile: "airos_8"
+    os: "airos_8"
 
   - hostname: rhxb-nw-ac
     address: 10.31.126.15
-    snmp_profile: "airos_8"
+    os: "airos_8"
 
   - hostname: rhxb-dragon
     address: 10.31.126.17
-    snmp_profile: "airos_8"
+    os: "airos_8"
 
 
 airos_dfs_reset:

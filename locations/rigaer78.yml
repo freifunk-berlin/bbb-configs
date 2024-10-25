@@ -9,11 +9,11 @@ community: true
 snmp_devices:
   - hostname: rigaer78-sama
     address: 10.31.119.131
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: rigaer78-zwingli
     address: 10.31.119.132
-    snmp_profile: airos_8
+    os: airos_8
 
 hosts:
   - hostname: rigaer78-core

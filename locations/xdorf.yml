@@ -18,15 +18,15 @@ snmp_devices:
 
   - hostname: xdorf-rauchhaus
     address: 10.31.54.162
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: xdorf-ap1
     address: 10.31.54.163
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: xdorf-ap2
     address: 10.31.54.164
-    snmp_profile: airos_6
+    os: airos_6
 
 
 ipv6_prefix: "2001:bf7:830:9000::/56"
