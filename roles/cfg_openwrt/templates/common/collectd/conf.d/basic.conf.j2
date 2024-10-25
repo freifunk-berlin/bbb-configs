@@ -33,7 +33,7 @@ LoadPlugin olsrd
 </Plugin>
 {% endif %}
 
-{% if wireless_devices is defined and wireless_profile != 'disable' %}
+{% if wireless_devices is defined and wireless_profile != 'disable' and low_mem is not true | default (true) and low_flash is not true | default (true) %}
 LoadPlugin iwinfo
 {% endif %}
 
