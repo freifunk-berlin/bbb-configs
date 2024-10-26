@@ -58,8 +58,8 @@ networks:
       teufelssecurity-ap: 2
 
 location__channel_assignments_11a_standard__to_merge:
-  teufelssecurity-core: 36-20
-  teufelssecurity-ap: 40-20
+  teufelssecurity-core: 44-40
+  teufelssecurity-ap: 36-40
 
 location__channel_assignments_11g_standard__to_merge:
   teufelssecurity-core: 13-20
