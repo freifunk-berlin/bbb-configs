@@ -34,9 +34,10 @@ ipv6_prefix: '2001:bf7:830:bc00::/56'
 # --MGMT: 10.31.212.0/27
 # --MESH: 10.31.212.32/27
 # --UPLK: 10.31.212.64/27
-# --DHCP: 10.31.212.96/27 (HOST)
-# --DHCP: 10.31.212.128/26
-# --DHCP: 10.31.212.192/26 (PRIVATE)
+# --DHCP: 10.31.212.96/28   (HOST)
+# --DHCP: 10.31.212.112/28  (PRIVATE-2)
+# --DHCP: 10.31.212.128/26  (FF)
+# --DHCP: 10.31.212.192/26  (PRIVATE-1)
 
 # Disable noping
 dhcp_no_ping: false
@@ -133,15 +134,15 @@ networks:
   - vid: 41
     role: dhcp
     name: host
-    prefix: 10.31.212.96/27
+    prefix: 10.31.212.96/28
     ipv6_subprefix: 2
     assignments:
       w38b-core: 1
 
-  # DHCP (PRIVATE)
+  # DHCP (HOME / PRIVATE-1)
   - vid: 43
     role: dhcp
-    name: private
+    name: private_1
     inbound_filtering: true
     prefix: 10.31.212.192/26
     ipv6_subprefix: 3
@@ -151,6 +152,17 @@ networks:
       w38b-pve: 3       # 10.31.212.195
       w38b-ds: 4        # 10.31.212.196
       w38b-printer: 5   # 10.31.212.197
+
+  # DHCP (IN / PRIVATE-2)
+  - vid: 44
+    role: dhcp
+    name: private_2
+    inbound_filtering: true
+    prefix: 10.31.212.112/28
+    ipv6_subprefix: 3
+    assignments:
+      w38b-core: 1      # 10.31.212.113
+      w38b-ds: 2        # 10.31.212.114
 
   # MGMT
   - vid: 434
@@ -201,10 +213,18 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: w38b-home
         encryption: sae-mixed
-        key: 'file:/root/wifi-pwd'
-        network: private
+        key: 'file:/root/wifi-pwd-home'
+        network: private_1
         radio: [11a_standard, 11g_standard]
         ifname_hint: pr
+
+      - mode: ap
+        ssid: w38b-in
+        encryption: sae-mixed
+        key: 'file:/root/wifi-pwd-in'
+        network: private_2
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: in
 
       - mode: ap
         ssid: w38b-host
