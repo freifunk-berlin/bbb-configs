@@ -155,6 +155,7 @@ networks:
       teufelsberg-nord: 11
       teufelsberg-ono: 12
       teufelsberg-cam: 13
+      teufelsberg-pi: 14
 
 location__channel_assignments_11a_standard__to_merge:
   teufelsberg-o-nf: 44-20
