@@ -152,6 +152,7 @@ networks:
       w38b-pve: 3       # 10.31.212.195
       w38b-ds: 4        # 10.31.212.196
       w38b-printer: 5   # 10.31.212.197
+      w38b-aud: 6       # 10.31.212.198
 
   # DHCP (IN / PRIVATE-2)
   - vid: 44
