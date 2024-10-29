@@ -42,3 +42,16 @@ all_sysctl__to_merge:
 
   # especially on low mem devices this is important
   vm.min_free_kbytes: 1024
+
+
+## Routing Section:
+freifunk_global_prefix: 2001:bf7::/32
+
+# Default mesh metric in inbound direction (rxcost) for normal mesh links
+mesh_metric_default_in: 512
+
+# Default mesh metric in inbound direction (rxcost) for tunnels
+mesh_metric_tunnel_in: 512
+
+# Default mesh metric in inbound direction (rxcost) for adhoc like interfaces
+mesh_metric_adhoc_in: 2048
