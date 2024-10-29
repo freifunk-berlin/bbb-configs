@@ -1,0 +1,105 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% import 'libraries/network.j2' as libnetwork with context %}
+
+
+log syslog all;
+debug protocols all;
+
+#master4 is implicitly created
+ipv6 sadr table v6_main;
+ipv4 table v4_babel_ff;
+ipv4 table v4_babel_default;
+
+protocol device {
+};
+
+protocol direct {
+	interface "lo";
+	ipv6 sadr {
+		table v6_main;
+	};
+}
+
+protocol babel {
+	randomize router id yes;
+	ipv6 sadr {
+		table v6_main;
+		# Import only /56 location aggregates and default routes
+		import where (net.len = 56) || (net = ::/0 from {{ freifunk_global_prefix }} );
+		export filter {
+			if net = {{ ipv6_prefix }} from ::/0 then accept;
+			if source = RTS_BABEL then accept;
+			reject;
+		};
+	};
+	ipv4 {
+		import all;
+		export where source = RTS_BABEL; # For now only advertise routes learned from babel
+	};
+
+	# Mesh interfaces
+{% for nw in networks | selectattr('role', 'equalto', 'mesh') %}
+  {% set default_mesh_metric = mesh_metric_adhoc_in if 'mesh_ap' else mesh_metric_default_in %}
+	interface "{{ libnetwork.getPortIfname(nw) }}" {
+		type wireless;
+		rxcost {{ nw.get('mesh_metric', default_mesh_metric) }};
+	};
+{% endfor %}
+	# Tunnel interfaces provided by tunspace
+{% for nw in networks | selectattr('role', 'equalto', 'tunnel') %}
+	interface "{{ nw.get('ifname') }}" {
+		type wireless;
+		rxcost {{ nw.get('mesh_metric', mesh_metric_tunnel_in) }};
+	};
+{% endfor %}
+}
+
+protocol kernel {
+	ipv6 sadr {
+		table v6_main;
+		import all;
+		export all;
+	};
+	learn all; # Allow learning loopback route
+}
+
+
+
+# Currently not in use but keep for later purposes
+protocol kernel {
+	ipv4 {
+		import none;
+		export none;
+	};
+}
+
+# TODO: Get rid of the following when OLSRD is gone
+protocol kernel {
+	kernel table 10;
+	ipv4 {
+		table v4_babel_ff;
+		import none;
+		export all;
+	};
+}
+
+protocol pipe {
+        table master4;
+	peer table v4_babel_ff;
+	export where net != 0.0.0.0/0;
+}
+
+protocol kernel {
+	kernel table 11;
+	ipv4 {
+		table v4_babel_default;
+		import none;
+		export all;
+	};
+}
+
+protocol pipe {
+        table master4;
+	peer table v4_babel_default;
+	export where net = 0.0.0.0/0;
+}
