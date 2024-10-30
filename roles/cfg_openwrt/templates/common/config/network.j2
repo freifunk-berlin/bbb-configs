@@ -38,7 +38,7 @@ config interface 'loopback'
 {% endif %}
 
 
-{% for network in networks | selectattr('vid', 'defined') %}
+{% for network in networks %}
   {% set name = libnetwork.getUciIfname(network) %}
 
   {%- if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
