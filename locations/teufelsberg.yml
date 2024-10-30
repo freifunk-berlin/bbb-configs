@@ -23,17 +23,17 @@ hosts:
     host__packages__to_merge:
       - "kmod-usb-ohci usbip-server usbip-client"
 
-  - hostname: teufelsberg-ap1
+  - hostname: teufelsberg-o-nf
     role: ap
     model: cudy_ap3000outdoor-v1
     wireless_profile: freifunk_default
 
-  - hostname: teufelsberg-ap2
+  - hostname: teufelsberg-s-nf
     role: ap
     model: cudy_ap3000outdoor-v1
     wireless_profile: freifunk_default
 
-  - hostname: teufelsberg-ap3
+  - hostname: teufelsberg-sw-nf
     role: ap
     model: mikrotik_sxtsq-5-ac
     mac_override: {eth0: 2c:c8:1b:6a:ce:f1}
@@ -121,10 +121,10 @@ networks:
 
   - vid: 22
     role: mesh
-    name: mesh_ap3
+    name: mesh_sw_nf
     prefix: 10.31.213.76/32
     ipv6_subprefix: -22
-    mesh_ap: teufelsberg-ap3
+    mesh_ap: teufelsberg-sw-nf
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -146,9 +146,9 @@ networks:
     assignments:
       teufelsberg-core: 1
       teufelsberg-switch: 2
-      teufelsberg-ap1: 3
-      teufelsberg-ap2: 4
-      teufelsberg-ap3: 5
+      teufelsberg-o-nf: 3
+      teufelsberg-s-nf: 4
+      teufelsberg-sw-nf: 5
       teufelsberg-ak36: 7
       teufelsberg-ilr: 8
       teufelsberg-nw: 10
@@ -157,6 +157,6 @@ networks:
       teufelsberg-cam: 13
 
 location__channel_assignments_11a_standard__to_merge:
-  teufelsberg-ap1: 44-20
-  teufelsberg-ap2: 48-20
-  teufelsberg-ap3: 36-40
+  teufelsberg-o-nf: 44-20
+  teufelsberg-s-nf: 48-20
+  teufelsberg-sw-nf: 36-40
