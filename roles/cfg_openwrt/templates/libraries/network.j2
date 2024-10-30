@@ -1,10 +1,14 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
+{% import 'libraries/wireless.j2' as libwireless with context %}
+
 
 {# Retrieve the layer 3 interface name of a network. #}
 {% macro getIfname(network) %}
     {% set ifname = "" %}
     {% if isBridgeNeeded(network) | from_json %}
         {% set ifname = getBridgeIfname(network) %}
+    {% elif network.get('mesh_ap') == inventory_hostname %}
+        {% set ifname = libwireless.getLocalAdhocIfnameByNetwork(network) %}
     {% else %}
         {% set ifname = getPortIfname(network) %}
     {% endif %}
@@ -41,7 +45,9 @@
 {# Do we need to create a logical bridge for that network to bridge to wireless interface or are we not participating. This does not affect the switch configuration
  # Warning: returns a bool. Use |from_json filter when calling #}
 {% macro isBridgeNeeded(network) %}
-{{- (getUciIfname(network) in getWirelessNetworks() or network.get('mesh_ap') == inventory_hostname or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct')) | to_json -}}
+{{- (getUciIfname(network) in getWirelessNetworks()
+     or (role == 'ap' and network.get('mesh_ap') == inventory_hostname)
+     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct')) | to_json -}}
 {% endmacro %}
 
 {# Do we need to configure a port or is this network only connected local (e.g. Mesh Endpoint on the core router)
