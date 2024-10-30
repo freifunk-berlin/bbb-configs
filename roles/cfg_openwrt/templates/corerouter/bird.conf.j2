@@ -1,7 +1,6 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {% import 'libraries/network.j2' as libnetwork with context %}
 
-
 log syslog all;
 debug protocols all;
 
@@ -40,7 +39,7 @@ protocol babel {
 	# Mesh interfaces
 {% for nw in networks | selectattr('role', 'equalto', 'mesh') %}
   {% set default_mesh_metric = mesh_metric_adhoc_in if 'mesh_ap' else mesh_metric_default_in %}
-	interface "{{ libnetwork.getPortIfname(nw) }}" {
+	interface "{{ libnetwork.getIfname(nw) }}" {
 		type wireless;
 		rxcost {{ nw.get('mesh_metric', default_mesh_metric) }};
 	};
