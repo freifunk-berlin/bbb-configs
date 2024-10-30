@@ -35,9 +35,10 @@ hosts:
     mac_override:
       eth0: 08:55:31:54:63:0a
 
-  - hostname: magda-ap4
-    role: ap
-    model: "ubnt_nanostation-m2_xm"
+  # Replacement needed
+  # - hostname: magda-ap4
+  #   role: ap
+  #   model: "ubnt_nanostation-m2_xm"
 
 snmp_devices:
   - hostname: magda-sama
@@ -89,7 +90,7 @@ networks:
       magda-ap1: 5
       magda-ap2: 6
       magda-ap3: 7
-      magda-ap4: 8
+      # magda-ap4: 8
       magda-ap-remise: 9
 
   - vid: 40
