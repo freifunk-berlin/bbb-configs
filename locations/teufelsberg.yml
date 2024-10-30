@@ -161,3 +161,7 @@ location__channel_assignments_11a_standard__to_merge:
   teufelsberg-o-nf: 44-20
   teufelsberg-s-nf: 48-20
   teufelsberg-sw-nf: 36-40
+
+location__channel_assignments_11g_standard__to_merge:
+  teufelsberg-o-nf: 1-20
+  teufelsberg-s-nf: 13-20
