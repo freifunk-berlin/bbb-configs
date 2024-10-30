@@ -107,6 +107,8 @@ networks:
     name: mesh_cpe
     prefix: 10.31.158.133/32
     ipv6_subprefix: -24
+    # adjust mesh_metric(s) to prefer this route
+    mesh_metric: 256
     mesh_ap: k12-h2-cpe
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -117,7 +119,7 @@ networks:
     name: mesh_lan
     prefix: 10.31.226.134/32
     ipv6_subprefix: -30
-    # adjust mesh_metric(s) to prefer this
+    # adjust mesh_metric(s) to prefer this route
     mesh_metric: 128
 
   # DHCP

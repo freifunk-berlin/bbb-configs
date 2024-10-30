@@ -22,7 +22,7 @@ hosts:
   - hostname: k12-h4-hirschhof
     role: ap
     model: "tplink_cpe210-v1"
-    wifi_roaming: true
+    wireless_profile: mesh_only
 
 ipv6_prefix: '2001:bf7:760:2b00::/56'
 
@@ -120,7 +120,7 @@ location__channel_assignments_11a_standard__to_merge:
 location__channel_assignments_11g_standard__to_merge:
   k12-h4-core: 13-20
   k12-h4-h0s: 13-20
-  k12-h4-hirschhof: 13-20
+  k12-h4-hirschhof: 1-20
 
 dns_servers:
   # quad9
