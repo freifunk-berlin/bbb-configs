@@ -223,7 +223,7 @@ networks:
     name: mesh_11s_n2
     prefix: 10.31.6.72/32
     ipv6_subprefix: -9
-    mesh_metric: 1024
+    mesh_metric: 2048
     mesh_metric_lqm: ['default 0.4']
     mesh_ap: segen-n-nf-2ghz
     mesh_radio: 11g_standard
@@ -234,7 +234,7 @@ networks:
     name: mesh_11s_o2
     prefix: 10.31.6.73/32
     ipv6_subprefix: -10
-    mesh_metric: 1024
+    mesh_metric: 2048
     mesh_metric_lqm: ['default 0.4']
     mesh_ap: segen-o-nf-2ghz
     mesh_radio: 11g_standard
@@ -245,7 +245,7 @@ networks:
     name: mesh_11s_s2
     prefix: 10.31.6.74/32
     ipv6_subprefix: -11
-    mesh_metric: 1024
+    mesh_metric: 2048
     mesh_metric_lqm: ['default 0.4']
     mesh_ap: segen-s-nf-2ghz
     mesh_radio: 11g_standard
@@ -256,7 +256,7 @@ networks:
     name: mesh_11s_w2
     prefix: 10.31.6.75/32
     ipv6_subprefix: -12
-    mesh_metric: 1024
+    mesh_metric: 2048
     mesh_metric_lqm: ['default 0.4']
     mesh_ap: segen-w-nf-2ghz
     mesh_radio: 11g_standard
