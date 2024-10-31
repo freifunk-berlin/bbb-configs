@@ -52,6 +52,30 @@ snmp_devices:
     #   address: 10.230.192.208
     #   snmp_profile: airos_6
 
+airos_dfs_reset:
+  - name: "vaterhaus-w"
+    target: "10.230.192.203"
+    username: "ubnt"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "vaterhaus-o"
+    target: "10.230.192.205"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "vaterhaus-adlershof"
+    target: "10.230.192.206"
+    username: "ubnt"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "vaterhaus-cg47"
+    target: "10.230.192.207"
+    username: "root"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
 
 ipv6_prefix: "2001:bf7:830:a500::/56"
 
