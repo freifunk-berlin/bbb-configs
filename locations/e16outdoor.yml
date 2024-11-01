@@ -29,7 +29,7 @@ hosts:
 snmp_devices:
   - hostname: e16outdoor-segen
     address: 10.31.142.50
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: '2001:bf7:760:2700::/56'
 

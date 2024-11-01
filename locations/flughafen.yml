@@ -18,23 +18,23 @@ snmp_devices:
 
   - hostname: flughafen-ak36
     address: 10.31.131.131
-    snmp_profile: af60
+    os: af60
 
   - hostname: flughafen-rhxb
     address: 10.31.131.132
-    snmp_profile: af60
+    os: af60
 
   - hostname: flughafen-zoll
     address: 10.31.131.138
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: flughafen-feld
     address: 10.31.131.139
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: flughafen-garten
     address: 10.31.131.140
-    snmp_profile: airos_6
+    os: airos_6
 
 airos_dfs_reset:
 

@@ -17,19 +17,19 @@ snmp_devices:
 
   - hostname: schreiner-f2a
     address: 10.31.97.98
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: schreiner-sama
     address: 10.31.97.99
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: schreiner-ap-5ghz
     address: 10.31.97.101
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: schreiner-ap-2ghz
     address: 10.31.97.102
-    snmp_profile: airos_6
+    os: airos_6
 
 
 ipv6_prefix: "2001:bf7:830:9100::/56"

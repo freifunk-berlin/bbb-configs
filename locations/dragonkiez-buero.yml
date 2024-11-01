@@ -16,7 +16,7 @@ hosts:
 snmp_devices:
   - hostname: dragonkiez-buero-rhxb
     address: 10.31.23.114
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: "2001:bf7:830:b300::/58"
 

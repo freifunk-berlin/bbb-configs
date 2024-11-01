@@ -1,6 +1,7 @@
 ---
 override_target: "mikrotik_routerboard-lhg-2nd"
 target: ath79/mikrotik
+os: openwrt
 brand_nice: MikroTik
 model_nice: SXTsq Lite2
 

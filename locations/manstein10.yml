@@ -29,7 +29,7 @@ hosts:
 snmp_devices:
   - hostname: manstein10-rhxb
     address: 10.36.208.4
-    snmp_profile: airos_6
+    os: airos_6
 
 
 # Overall we allocated: 10.31.125.0/24

@@ -17,16 +17,16 @@ hosts:
 snmp_devices:
   - hostname: l105-poe
     address: 10.31.127.130
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: l105-rhxb
     address: 10.31.127.131
-    snmp_profile: af60
+    os: af60
 
   # tub is not existent as of 02/24
   # - hostname: l105-tu
   #   adress: 10.31.127.132
-  #   snmp_profile: af60
+  #   os: af60
 
 
 # L105 got following prefixes:

@@ -33,15 +33,15 @@ hosts:
 snmp_devices:
   - hostname: klunker-switch
     address: 10.31.191.178
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: klunker-rhnk
     address: 10.31.191.179
-    snmp_profile: mikrotik_60g
+    os: mikrotik_60g
 
   - hostname: klunker-philmel
     address: 10.31.191.180
-    snmp_profile: af60
+    os: af60
 
 
 ipv6_prefix: "2001:bf7:820:e00::/56"

@@ -14,7 +14,7 @@ hosts:
 snmp_devices:
   - hostname: rev99-zwingli
     address: 10.31.214.130
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: '2001:bf7:830:be00::/56'
 

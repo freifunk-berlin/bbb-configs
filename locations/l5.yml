@@ -29,7 +29,7 @@ hosts:
 snmp_devices:
   - hostname: l5-switch
     address: 10.31.161.162
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
 # 10.31.161.160/29 - mgmt
 # 10.31.191.160/29 - mesh

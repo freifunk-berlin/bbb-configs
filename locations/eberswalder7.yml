@@ -16,7 +16,7 @@ hosts:
 snmp_devices:
   - hostname: eberswalder7-segen
     address: 10.31.238.194
-    snmp_profile: airos_6
+    os: airos_6
 
 # IPs
 ipv6_prefix: '2001:bf7:760:1600::/56'

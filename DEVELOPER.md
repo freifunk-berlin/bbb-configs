@@ -79,13 +79,13 @@ Without the `mac_override` these devices will still function, but generate a new
 
 ### monitoring
 
-All OpenWrt-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make sure SNMP is activated on the proprietary device with the community set to public. You can find an overview with all available profiles at `group_vars/all/snmp_profiles.yml`
+All OpenWrt-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make sure SNMP is activated on the proprietary device with the community set to public. You can find an overview with all available profiles at `group_vars/all/oss.yml`
 
 ```yml
 snmp_devices:
   - hostname: segen-f2a   # hostname
     address: 10.31.6.11   # static ip of the device
-    snmp_profile: airos_8 # SNMP profile
+    os: airos_8 # SNMP profile
 ```
 
 ### airos dfs reset

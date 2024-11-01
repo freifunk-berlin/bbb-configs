@@ -1,5 +1,6 @@
 ---
 target: x86/64
+os: openwrt
 override_target: generic
 image_search_pattern: "*-ext4-combined.img*"
 model_nice: 32-/64-bit Computer

@@ -13,20 +13,20 @@ hosts:
 snmp_devices:
   - hostname: saarbruecker-sw
     address: 10.31.83.50
-    snmp_profile: edgerouter
+    os: edgerouter
 
   - hostname: saarbruecker-hds
     address: 10.31.83.51
-    snmp_profile: mikrotik_60g
+    os: mikrotik_60g
 
   - hostname: saarbruecker-sama
     address: 10.31.83.52
-    snmp_profile: af60
+    os: af60
 
   # Despite being a 60GHz devices the SNMP-data that is reported is in the same format as the airmax devices
   - hostname: saarbruecker-segen
     address: 10.31.83.53
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: 2001:bf7:760:2201::/56
 

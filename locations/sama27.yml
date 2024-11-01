@@ -17,7 +17,7 @@ hosts:
 snmp_devices:
   - hostname: sama27-sama
     address: 10.31.161.2
-    snmp_profile: airos_8
+    os: airos_8
 
 
 # IPv4 10.31.161.0/27

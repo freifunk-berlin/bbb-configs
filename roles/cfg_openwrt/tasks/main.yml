@@ -12,6 +12,7 @@
     apply:
       tags: always
   tags: always
+  when: os == "openwrt" | default ("openwrt")
 
 - name: Prepare some variables (1)
   set_fact:
@@ -40,6 +41,7 @@
     apply:
       tags: always
   tags: always
+  when: os == "openwrt" | default ("openwrt")
 
 - name: Include add_symlinks.yml
   include_tasks:
@@ -47,6 +49,8 @@
     apply:
       tags: always
   tags: always
+  when: os == "openwrt" | default ("openwrt")
+
 
 - name: Add poemgr config if poemgr target
   template:
@@ -55,6 +59,7 @@
     mode: "644"
   when:
     - poemgr_ports is defined
+    - os == "openwrt" | default ("openwrt")
   tags: always
 
 - name: "Make sure /lib/firmware is present"
@@ -62,7 +67,9 @@
     dest: "{{ configs_dir }}/lib/firmware/ath10k"
     state: directory
     recurse: true
-  when: ath10k_ct_fwcfg is defined
+  when:
+    - ath10k_ct_fwcfg is defined
+    - os == "openwrt" | default ("openwrt")
   tags: always
 
 - name: "Configure ath10k-ct driver"
@@ -71,6 +78,7 @@
     content: "{{ item.config }}"
     mode: "644"
   loop: "{{ ath10k_ct_fwcfg | default([]) }}"
+  when: os == "openwrt" | default ("openwrt")
   tags: always
 
 - name: Include fix_permissions.yml
@@ -78,6 +86,7 @@
     file: fix_permissions.yml
     apply:
       tags: always
+  when: os == "openwrt" | default ("openwrt")
   tags: always
 
 - name: Include image generation
@@ -85,6 +94,7 @@
     file: imagebuilder.yml
     apply:
       tags: always
+  when: os == "openwrt" | default ("openwrt")
   tags:
     - never
     - image

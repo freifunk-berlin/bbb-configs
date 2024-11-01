@@ -33,31 +33,31 @@ hosts:
 snmp_devices:
   - hostname: chris-switch
     address: 10.230.18.2
-    snmp_profile: tplink
+    os: tplink
 
   - hostname: chris-bht
     address: 10.230.18.3
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: chris-teufelsberg
     address: 10.230.18.4
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: chris-n-5ghz
     address: 10.230.18.5
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: chris-o-5ghz
     address: 10.230.18.6
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: chris-s-5ghz
     address: 10.230.18.7
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: chris-w-5ghz
     address: 10.230.18.8
-    snmp_profile: airos_6
+    os: airos_6
 
 ipv6_prefix: "2001:bf7:790::/56"
 

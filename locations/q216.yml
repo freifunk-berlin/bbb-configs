@@ -22,18 +22,22 @@ hosts:
     wireless_profile: freifunk_default
     mac_override: {eth0: dc:2c:6e:91:08:1b}
 
-snmp_devices:
   - hostname: q216-switch
-    address: 10.31.201.242
-    snmp_profile: swos_lite
+    role: switch
+    model: "mikrotik_css610_8p_2s_in"
+
+snmp_devices:
+#   - hostname: q216-switch
+#     address: 10.31.201.242
+#     os: swos_lite
 
   - hostname: q216-tierpark
     address: 10.31.201.243
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: q216-spitta
     address: 10.31.201.245
-    snmp_profile: airos_8
+    os: airos_8
 
 ssh_keys:  # to stop merging other ssh-keys
   - comment: Hener

@@ -24,7 +24,7 @@ hosts:
 snmp_devices:
   - hostname: dragonkiez-rathausblock-miami-rhxb
     address: 10.31.30.34
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: "2001:bf7:830:b380::/58"
 

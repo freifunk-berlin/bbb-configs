@@ -18,7 +18,7 @@ hosts:
 snmp_devices:
   - hostname: kotti-simeon
     address: 10.31.167.210
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: 2001:bf7:830:6600::/56
 

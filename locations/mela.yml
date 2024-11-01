@@ -40,19 +40,19 @@ hosts:
 snmp_devices:
   - hostname: mela-switch-hinten
     address: 10.36.70.2
-    snmp_profile: edgeswitch
+    os: edgeswitch
   - hostname: mela-switch-vorne
     address: 10.36.70.3
-    snmp_profile: edgeswitch
+    os: edgeswitch
   - hostname: mela-nw-5ghz
     address: 10.36.70.4
-    snmp_profile: airos_6
+    os: airos_6
   - hostname: mela-ono-5ghz
     address: 10.36.70.5
-    snmp_profile: airos_6
+    os: airos_6
   - hostname: mela-teufelsberg
     address: 10.36.70.6
-    snmp_profile: airos_8
+    os: airos_8
 
 ipv6_prefix: "2001:bf7:790:f00::/56"
 

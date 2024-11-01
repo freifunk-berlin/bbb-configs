@@ -46,11 +46,11 @@ hosts:
 snmp_devices:
   - hostname: stadalbert-segen
     address: 10.31.160.212
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: stadalbert-linie
     address: 10.31.160.213
-    snmp_profile: mikrotik_60g
+    os: mikrotik_60g
 
 location__ssh_keys__to_merge:
   - comment: mcky

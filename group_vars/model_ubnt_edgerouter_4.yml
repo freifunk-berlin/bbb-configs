@@ -1,5 +1,6 @@
 ---
 target: octeon/generic
+os: openwrt
 brand_nice: Ubiquiti
 model_nice: EdgeRouter 4
 

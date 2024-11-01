@@ -43,7 +43,7 @@ hosts:
 snmp_devices:
   - hostname: ska95-emma
     address: 10.31.8.2
-    snmp_profile: airos_6
+    os: airos_6
 
 networks:
   - vid: 10

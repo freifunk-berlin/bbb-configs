@@ -28,15 +28,15 @@ hosts:
 snmp_devices:
   - hostname: gub37-zwingli
     address: 10.31.157.10
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: gub37-emma
     address: 10.31.157.11
-    snmp_profile: af60
+    os: af60
 
   - hostname: gub37-sama
     address: 10.31.157.12
-    snmp_profile: airos_8
+    os: airos_8
 
 # IPs
 # IPv4 10.31.157.0/25

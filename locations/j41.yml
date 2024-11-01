@@ -15,15 +15,15 @@ hosts:
 snmp_devices:
   - hostname: j41-switch
     address: 10.31.41.2
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: j41-f2a
     address: 10.31.41.3
-    snmp_profile: airos_6
+    os: airos_6
 
   - hostname: j41-zwingli
     address: 10.31.41.4
-    snmp_profile: airos_6
+    os: airos_6
 
 ipv6_prefix: "2001:bf7:830:bd00::/56"
 

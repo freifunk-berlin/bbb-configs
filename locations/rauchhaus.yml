@@ -47,15 +47,15 @@ hosts:
 snmp_devices:
   - hostname: rauchhaus-switch
     address: 10.31.98.226
-    snmp_profile: routeros
+    os: routeros
 
   - hostname: rauchhaus-emma
     address: 10.31.98.227
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: rauchhaus-xdorf
     address: 10.31.98.228
-    snmp_profile: airos_6
+    os: airos_6
 
 # 10.31.98.188/32   - mesh-emma
 # 10.31.36.104/32   - mesh-xdorf

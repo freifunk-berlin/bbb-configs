@@ -15,35 +15,35 @@ hosts:
 snmp_devices:
   - hostname: fardf-switch
     address: 10.248.11.130
-    snmp_profile: edgeswitch
+    os: edgeswitch
 
   - hostname: fardf-bht
     address: 10.248.11.131
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: fardf-maerkisches
     address: 10.248.11.132
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: fardf-sange
     address: 10.248.11.133
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: fardf-nord
     address: 10.248.11.134
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: fardf-ost
     address: 10.248.11.135
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: fardf-sued
     address: 10.248.11.136
-    snmp_profile: airos_8
+    os: airos_8
 
   - hostname: fardf-west
     address: 10.248.11.137
-    snmp_profile: airos_8
+    os: airos_8
 
 airos_dfs_reset:
   - name: "fardf-maerkisches"
