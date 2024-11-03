@@ -32,7 +32,6 @@ all_luci_base__packages__to_merge:
   - luci-mod-admin-full
   - luci-proto-ipv6
   - luci-theme-bootstrap
-  - luci-ssl
   - rpcd-mod-rrdns
   - uhttpd
   - uhttpd-mod-ubus
