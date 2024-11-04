@@ -1,6 +1,6 @@
 ---
 location: k9
-location_nice: Kinzig9
+location_nice: Kinzigstraße 9, 10247 Berlin
 latitude: 52.51378093260403
 longitude: 13.466068518122656
 altitude: 60
@@ -23,6 +23,9 @@ snmp_devices:
     address: 10.31.9.212
     snmp_profile: airos_6
 
+  - hostname: k9-wilgu10
+    address: 10.31.9.213
+    snmp_profile: airos_8
 
 ipv6_prefix: '2001:bf7:830:8d00::/56'
 
@@ -34,48 +37,71 @@ ipv6_prefix: '2001:bf7:830:8d00::/56'
 # - 10.31.9.224/28 - BBB-Mesh
 # - 10.31.9.240/28 - Internal Mesh
 
-
 # 10.31.99.0/24 / can be proably dismantled
 
-
 networks:
+  # MESH - Sama
   - vid: 10
     role: mesh
     name: mesh_sama
     prefix: 10.31.9.224/32
-    ipv6_subprefix: -1
-    mesh_metric: 512
+    ipv6_subprefix: -10
     ptp: true
 
+  # MESH - Zwingli
   - vid: 11
     role: mesh
     name: mesh_zwingli
     prefix: 10.31.9.225/32
-    ipv6_subprefix: -2
+    ipv6_subprefix: -11
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.3']
-    # Ignore Uplink two Hops away / requires 0.3 LQM
+    mesh_metric_lqm: ['default 0.6']
     ptp: true
 
+  # MESH - Wilgu10
   - vid: 12
     role: mesh
     name: mesh_wilgu10
     prefix: 10.31.9.226/32
-    ipv6_subprefix: -3
-    mesh_metric: 512
+    ipv6_subprefix: -12
     ptp: true
 
+  # MESH - LAN via Powerline
   - vid: 20
     role: mesh
     name: mesh_k9int
     prefix: 10.31.9.240/28
-    ipv6_subprefix: -3
+    ipv6_subprefix: -20
     mesh_metric: 64
     mesh_metric_lqm: ['default 0.2']
     # Ignore Uplink one Hop away / requires 0.2 LQM
     assignments:
       k9-core: 1
 
+  # MESH - 5 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.9.227/32
+    ipv6_subprefix: -21
+    mesh_ap: k9-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 22
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.9.228/32
+    ipv6_subprefix: -22
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.5']
+    mesh_ap: k9-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
   - vid: 40
     role: dhcp
     inbound_filtering: true
@@ -85,6 +111,7 @@ networks:
     assignments:
       k9-core: 1
 
+  # MGMT
   - vid: 42
     role: mgmt
     prefix: 10.31.9.208/28
@@ -92,11 +119,11 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      k9-core: 1
-      k9-switch: 2
-      k9-sama: 3
-      k9-zwingli: 4
-      k9-wilgu10: 5
+      k9-core: 1      # 10.31.9.209
+      # k9-switch: 2  # 10.31.9.210
+      k9-sama: 3      # 10.31.9.211
+      k9-zwingli: 4   # 10.31.9.212
+      k9-wilgu10: 5   # 10.31.9.213
 
 location__ssh_keys__to_merge:
   - comment: k9 JuergeN
