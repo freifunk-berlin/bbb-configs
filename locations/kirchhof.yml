@@ -17,30 +17,40 @@ hosts:
 
   - hostname: kirchhof-nf-vorne
     role: ap
-    model: tplink_eap225-outdoor-v1
+    model: zyxel_nwa50ax
     wireless_profile: kirchhof
+    wifi_roaming: true
 
   - hostname: kirchhof-nf-hinten
     role: ap
     model: tplink_eap225-outdoor-v1
     wireless_profile: kirchhof
+    wifi_roaming: true
 
   - hostname: kirchhof-n-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
     mac_override: {eth0: 2c:c8:1b:8a:96:e0}
     wireless_profile: freifunk_default
+    wifi_roaming: true
 
   - hostname: kirchhof-w-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
     mac_override: {eth0: 2c:c8:1b:8a:96:28}
     wireless_profile: freifunk_default
+    wifi_roaming: true
+
+  - hostname: kirchhof-nf-keller
+    role: ap
+    model: tplink_eap225-outdoor-v1
+    wireless_profile: freifunk_default
+    wifi_roaming: true
 
 snmp_devices:
   - hostname: kirchhof-switch
     address: 10.31.183.130
-    snmp_profile: edgeswitch
+    snmp_profile: swos_lite
 
 # 10.31.183.128/28 - mgmt     - vlan 42
 # 10.31.183.144/28 - mesh     - vlan 20, 50
@@ -92,6 +102,7 @@ networks:
       kirchhof-nf-hinten: 5
       kirchhof-n-nf-5ghz: 6
       kirchhof-w-nf-5ghz: 7
+      kirchhof-nf-keller: 8
 
   - vid: 50
     role: uplink
@@ -111,25 +122,27 @@ networks:
 location__channel_assignments_11a_standard__to_merge:
   kirchhof-n-nf-5ghz: 36-20
   kirchhof-w-nf-5ghz: 40-20
-  kirchhof-nf-vorne: 44-20
-  kirchhof-nf-hinten: 36-20
+  kirchhof-nf-vorne: 44-40
+  kirchhof-nf-hinten: 36-40
+  kirchhof-nf-keller: 52-20-3
 
 location__channel_assignments_11b_standard__to_merge:
-  kirchhof-nf-vorne: 13-20
-  kirchhof-nf-hinten: 9-20
+  kirchhof-nf-vorne: 1-20
+  kirchhof-nf-hinten: 6-20
+  kirchhof-keller: 13-20
 
 location__wireless_profiles__to_merge:
   - name: kirchhof
     ifaces:
       - mode: ap
-        ssid: berlin.freifunk.net
+        ssid: khof.freifunk.net
         encryption: none
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
         owe_transition_ifname_hint: ffowe
       - mode: ap
-        ssid: berlin.freifunk.net OWE
+        ssid: khof.freifunk.net OWE
         hidden: true
         encryption: owe
         network: dhcp
