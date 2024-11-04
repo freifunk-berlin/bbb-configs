@@ -1,7 +1,7 @@
 ---
 
 location: bht
-location_nice: Berliner Hochschule fuer Technik
+location_nice: Berliner Hochschule fuer Technik, Luxemburger Straße 10, 13353 Berlin
 latitude: 52.544407831736
 longitude: 13.352562785148
 altitude: 88
@@ -10,13 +10,18 @@ contacts:
   - 'isprotejesvalkata [attt] gmail com'
 
 hosts:
-
   - hostname: bht-core
     role: corerouter
-    model: "tplink_tl-wdr4900-v1"
-    wireless_profile: freifunk_default
+    model: mikrotik_routerboard-750gr3
 
 snmp_devices:
+  - hostname: bht-switch-1
+    address: 10.31.166.2
+    snmp_profile: edgeswitch
+
+  - hostname: bht-switch-2
+    address: 10.31.166.3
+    snmp_profile: edgeswitch
 
   - hostname: bht-segen
     address: 10.31.166.5
@@ -122,85 +127,89 @@ airos_dfs_reset:
 
 ipv6_prefix: "2001:bf7:750:1200::/56"
 
+# ROUTER: 10.230.23.128/27
+# --MESH: 10.230.23.128/28
+# --DHCP: 10.230.23.144/28
+# --MGMT: 10.31.166.0/27
+
 networks:
 
-  - vid: 111
+  - vid: 10
     role: mesh
     name: mesh_segen
-    prefix: 10.230.23.141/32
-    ipv6_subprefix: -1
+    prefix: 10.230.23.128/32
+    ipv6_subprefix: -10
     ptp: true
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.2']
 
-  - vid: 112
+  - vid: 11
     role: mesh
     name: mesh_perleberger36
-    prefix: 10.230.23.142/32
-    ipv6_subprefix: -2
+    prefix: 10.230.23.129/32
+    ipv6_subprefix: -11
     ptp: true
 
-  - vid: 113
+  - vid: 12
     role: mesh
     name: mesh_scherer8
-    prefix: 10.230.23.143/32
-    ipv6_subprefix: -3
+    prefix: 10.230.23.130/32
+    ipv6_subprefix: -12
     ptp: true
 
-  - vid: 114
+  - vid: 13
     role: mesh
     name: mesh_nord
-    prefix: 10.230.23.144/32
-    ipv6_subprefix: -4
+    prefix: 10.230.23.131/32
+    ipv6_subprefix: -13
 
-  - vid: 115
+  - vid: 14
     role: mesh
     name: mesh_chris
-    prefix: 10.230.23.145/32
-    ipv6_subprefix: -5
+    prefix: 10.230.23.132/32
+    ipv6_subprefix: -14
     ptp: true
 
-  - vid: 116
+  - vid: 15
     role: mesh
     name: mesh_jup
-    prefix: 10.230.23.146/32
-    ipv6_subprefix: -6
+    prefix: 10.230.23.133/32
+    ipv6_subprefix: -15
     ptp: true
 
-  - vid: 117
+  - vid: 16
     role: mesh
     name: mesh_ost
-    prefix: 10.230.23.147/32
-    ipv6_subprefix: -7
+    prefix: 10.230.23.134/32
+    ipv6_subprefix: -16
 
-  - vid: 118
+  - vid: 17
     role: mesh
     name: mesh_sued
-    prefix: 10.230.23.148/32
-    ipv6_subprefix: -8
+    prefix: 10.230.23.135/32
+    ipv6_subprefix: -17
 
-  - vid: 119
+  - vid: 18
     role: mesh
     name: mesh_fardf
-    prefix: 10.230.23.149/32
-    ipv6_subprefix: -9
+    prefix: 10.230.23.136/32
+    ipv6_subprefix: -18
     ptp: true
 
-  - vid: 128
+  - vid: 19
     role: mesh
     name: mesh_west
-    prefix: 10.230.23.158/32
-    ipv6_subprefix: -28
+    prefix: 10.230.23.137/32
+    ipv6_subprefix: -19
 
-  - vid: 104
+  - vid: 40
     role: dhcp
-    prefix: 10.230.23.152/29
+    prefix: 10.230.23.144/28
     ipv6_subprefix: 0
-    untagged: true
     assignments:
       bht-core: 1
 
-  - vid: 102
+  - vid: 424
     role: mgmt
     prefix: 10.31.166.0/27
     gateway: 1
@@ -208,8 +217,8 @@ networks:
     ipv6_subprefix: 1
     assignments:
       bht-core: 1
-      bht-er1: 2
-      bht-er2: 3
+      bht-switch-1: 2
+      bht-switch-2: 3
       bht-segen: 5
       bht-perleberger36: 6
       bht-scherer8: 7
