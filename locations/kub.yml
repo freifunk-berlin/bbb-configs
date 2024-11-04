@@ -14,61 +14,11 @@ hosts:
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
 
-  # Special vlan config:
-  # - kub-ap1 vlan 40: 0t 1t 2 3 4
   - hostname: kub-ap1
     role: ap
     model: "cudy_x6-v1"
     openwrt_version: snapshot
     log_size: 1024
-    host__rclocal__to_merge:
-      - '#'
-      - '# This script adjusts the configuration of vlans. This is especially'
-      - '# useful with uswflex and custom port configs'
-      - '#'
-      - ''
-      - '. /lib/functions.sh'
-      - ''
-      - 'handle_vlans() {'
-      - '  # untag the vlans on different ports based on their id'
-      - '  local uci_section="$1"'
-      - ''
-      - '  config_get vlan "$uci_section" vlan'
-      - '  config_get ports "$uci_section" ports'
-      - ''
-      - ''
-      - '  case "$vlan" in'
-      - '    40)'
-      - '      # untag DHCP on LAN 1 and LAN 2'
-      - "      port_config='wan:t lan1 lan2 lan3:t lan4:t'"
-      - '      ;;'
-      - '    *)'
-      - '      # do nothing for the other vlans'
-      - '      printf "Done.\n"'
-      - '      return'
-      - '  esac'
-      - ''
-      - '  # abort if config is applied already'
-      - '  if [ "$ports" = "$port_config" ]; then'
-      - '    printf "Vlan %d applied already.\n" "$vlan"'
-      - '    return'
-      - '  fi'
-      - ''
-      - '  printf "Port number: %d\n" "$vlan"'
-      - '  printf "Port config: %s\n" "$port_config"'
-      - ''
-      - '  printf "Configuring %s... " "$uci_section"'
-      - '  uci_set network "$uci_section" ports "$port_config"'
-      - '  printf "Done.\n"'
-      - '}'
-      - ''
-      - 'config_load network'
-      - ''
-      - 'config_foreach handle_vlans "bridge-vlan"'
-      - ''
-      - 'uci commit network'
-      - 'sync'
-      - 'reload_config'
 
 snmp_devices:
   - hostname: kub-simeon
@@ -113,6 +63,7 @@ networks:
 
   - vid: 40
     role: dhcp
+    untagged: true
     inbound_filtering: true
     enforce_client_isolation: true
     prefix: 10.31.138.128/25
