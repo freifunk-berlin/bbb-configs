@@ -1,0 +1,80 @@
+---
+location: bilgi
+location_nice: Oranienstrasse 45, 10969 Berlin
+latitude: 52.50294
+longitude: 13.41419
+altitude: 41
+height: 1
+contact_nickname: Bilgisaray Kollektiv
+community: true
+
+hosts:
+
+  - hostname: bilgi-core
+    role: corerouter
+    model: "avm_fritzbox-4040"
+    wireless_profile: freifunk_default
+
+# ROUTER: 10.248.23.128/26
+# --MGMT: 10.248.23.128/28
+# --MESH: 10.248.23.144/28
+# --DHCP: 10.248.23.160/27
+
+ipv6_prefix: "2001:bf7:830:cc00::/56"
+
+networks:
+
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.248.23.144/32
+    ipv6_subprefix: -20
+    mesh_ap: bilgi-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric: 1024
+
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.248.23.145/32
+    ipv6_subprefix: -21
+    mesh_ap: bilgi-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+    mesh_metric: 1024
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.248.23.160/27
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      bilgi-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.23.128/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      bilgi-core: 1
+
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.23.146/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.248.23.147/32
+    wireguard_port: 51821
