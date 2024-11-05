@@ -1,0 +1,4 @@
+---
+feed_version: 1.5.0-snapshot
+
+imagebuilder_filename: "openwrt-imagebuilder-24.10-SNAPSHOT-{{ target | replace('/','-') }}.Linux-x86_64.tar.zst"
