@@ -11,7 +11,7 @@ hosts:
   - hostname: pktpls-core
     role: corerouter
     model: "x86-64"
-    openwrt_version: snapshot
+    openwrt_version: 24.10-SNAPSHOT
 
 # feed: "src/gz openwrt_falter file:///home/user/w/ff/falter-packages/out/main/x86_64/falter"
 # imagebuilder_disable_signature_check: true
