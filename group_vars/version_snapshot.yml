@@ -1,4 +1,2 @@
 ---
 feed_version: snapshot
-
-imagebuilder_filename: "openwrt-imagebuilder-{{ target | replace('/','-') }}.Linux-x86_64.tar.zst"
