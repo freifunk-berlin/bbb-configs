@@ -1,7 +1,7 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {% import 'libraries/network.j2' as libnetwork with context %}
 
-log syslog all;
+log syslog {error};
 debug protocols {states};
 
 # Include additional bird config files for runtime extendability
