@@ -155,7 +155,6 @@ networks:
     name: mesh_scherer8
     prefix: 10.230.23.130/32
     ipv6_subprefix: -12
-    ptp: true
 
   - vid: 13
     role: mesh
@@ -168,14 +167,12 @@ networks:
     name: mesh_chris
     prefix: 10.230.23.132/32
     ipv6_subprefix: -14
-    ptp: true
 
   - vid: 15
     role: mesh
     name: mesh_jup
     prefix: 10.230.23.133/32
     ipv6_subprefix: -15
-    ptp: true
 
   - vid: 16
     role: mesh
@@ -194,7 +191,6 @@ networks:
     name: mesh_fardf
     prefix: 10.230.23.136/32
     ipv6_subprefix: -18
-    ptp: true
 
   - vid: 19
     role: mesh
