@@ -36,7 +36,7 @@ echo {{ override['value'] }} > {{ override['path'] }}
 # Change the option "procd_set_param stderr  1" to "0" in the file /etc/init.d/collectd
 # This is needed because airos_6 APs w/o stations resulted in a lot of local log spamming
 # In addition switches without unique port labels have the same problem
-sed -i 's/\(procd_set_param stderr\)[[:space:]]*1/\1  0/' /etc/init.d/collectd
+sed -i 's/\(procd_set_param stderr\)[[:space:]]*1/\1 0/' /etc/init.d/collectd
 {% endif %}
 
 exit 0
