@@ -28,7 +28,7 @@ snmp_devices:
     address: 10.31.83.53
     snmp_profile: airos_8
 
-ipv6_prefix: 2001:bf7:760:2201::/56
+ipv6_prefix: 2001:bf7:760:2200::/56
 
 uplink:
   ifname: lan3
