@@ -66,61 +66,61 @@ snmp_devices:
 airos_dfs_reset:
   - name: "bht-segen"
     target: "10.31.166.5"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "bht-perleberger36"
     target: "10.31.166.6"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "bht-scherer8"
     target: "10.31.166.7"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "bht-nord"
     target: "10.31.166.8"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "bht-chris"
     target: "10.31.166.9"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "bht-jup"
     target: "10.31.166.10"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "bht-ost"
     target: "10.31.166.11"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "bht-sued"
     target: "10.31.166.12"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "bht-fardf"
     target: "10.31.166.13"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "bht-west"
     target: "10.31.166.14"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "0-23"
 
@@ -155,7 +155,6 @@ networks:
     name: mesh_scherer8
     prefix: 10.230.23.130/32
     ipv6_subprefix: -12
-    ptp: true
 
   - vid: 13
     role: mesh
@@ -168,14 +167,12 @@ networks:
     name: mesh_chris
     prefix: 10.230.23.132/32
     ipv6_subprefix: -14
-    ptp: true
 
   - vid: 15
     role: mesh
     name: mesh_jup
     prefix: 10.230.23.133/32
     ipv6_subprefix: -15
-    ptp: true
 
   - vid: 16
     role: mesh
@@ -194,7 +191,6 @@ networks:
     name: mesh_fardf
     prefix: 10.230.23.136/32
     ipv6_subprefix: -18
-    ptp: true
 
   - vid: 19
     role: mesh
