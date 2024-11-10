@@ -1,47 +1,183 @@
-{% if 'ipv6' in uplink %}
-#loglevel syslog all;
-# debug protocols all;
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% set V6_SADR_DEFAULT_ROUTE = '::/0 from ' ~ freifunk_global_prefix %}
+log syslog all;
+debug protocols {states};
 
-filter default_route {
-	if ( net ~ [ ::0/0 ] ) then accept;
-	reject;
-}
+# Include additional bird config files for runtime extendability
+include "/dev/shm/bird_*.conf";
 
-# Attention: Safety measure below!
-# First drop everything which is not in freifunk prefix and a /48
-filter export_aggregates {
-	if ( net !~ [ {{ freifunk_global_prefix }}{{ '{' }}{{ freifunk_wahlkreis_announcement_prefix }},{{ freifunk_wahlkreis_announcement_prefix}}{{ '}' }} ] ) then reject;
-	include "/dev/shm/announcement*.bird.conf";
-	accept;
-}
+protocol device { };
+
+##
+## Kernel <-> Babel tables
+##
+
+ipv6 sadr table v6_main;
+ipv4 table v4_main;
+ipv4 table v4_babel_ff;
+ipv4 table v4_babel_default;
 
 
-
-protocol device {
-}
-
-protocol kernel kernel6 {
-	ipv6 {
+protocol kernel kernel_v6_main {
+	ipv6 sadr {
+		table v6_main;
+		import all;
 		export all;
+	};
+	learn all; # Allow learning loopback route
+}
+
+# Currently not in use due to OLSRD->Babel migration
+# For now babel IPv4 routes land in the subsequent KRTs
+protocol kernel kernel_v4_main {
+	ipv4 {
+		table v4_main;
 		import none;
+		export none;
 	};
 }
 
-protocol static {
-	ipv6;
+protocol kernel kernel_v4_babel_ff {
+	kernel table 10;
+	ipv4 {
+		table v4_babel_ff;
+		import none;
+		export all;
+	};
+}
+
+protocol pipe pipe_v4_main_to_babel_ff {
+	table v4_main;
+	peer table v4_babel_ff;
+	export where net != 0.0.0.0/0;
+	import none;
+}
+
+protocol kernel kernel_v4_babel_default {
+	kernel table 11;
+	ipv4 {
+		table v4_babel_default;
+		import none;
+		export all;
+	};
+}
+
+protocol pipe pipe_v4_main_to_babel_default {
+	table v4_main;
+	peer table v4_babel_default;
+	export where net = 0.0.0.0/0;
+	import none;
+}
+
+##
+## Babel Section
+##
+
+protocol babel babel_mesh {
+	randomize router id yes;
+	ipv6 sadr {
+		table v6_main;
+		# Import only /56 location aggregates and default routes
+		import where net.len = 56 || net = {{ V6_SADR_DEFAULT_ROUTE }};
+		export where source = RTS_BABEL || net = {{ ipv6_prefix }} from ::/0 || net = {{ V6_SADR_DEFAULT_ROUTE }};
+	};
+	ipv4 {
+		table v4_main;
+		import all;
+		export where source = RTS_BABEL; # For now only advertise routes learned from babel
+	};
+
+	# Mesh interfaces
+{% for interface in mesh_links %}
+	interface "{{ interface['ifname'] }}" {
+		type wireless;
+		rxcost {{ interface.get('mesh_metric', mesh_metric_default_in) }};
+	};
+{% endfor %}
+
+	# GRE Tunnels
+{% for gateway in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
+	interface "gre4-{{ hostvars[gateway]['gre_tunnel_alias'] }}" {
+		type wireless;
+		rxcost {{ gre_metric }};
+	};
+{% endfor %}
+
+    # Wireguard tunnel links which are dynamically established
+	interface "wg_*" {
+		type wireless;
+		rxcost {{ mesh_metric_tunnel_in }};
+	};
+}
+
+
+{% if 'ipv6' in uplink %}
+##
+## BGP Section
+##
+ipv6 table v6_bgp_upstream;
+
+# Define local attribute as yet another safetynet to ensure that we dont announce the bgpdisco
+# routes to our upstream which will likely make the internet explode.
+# While that sounds funny that aint a joke - Take it very serious or risk our trust!!
+attribute int really_announce_to_upstream;
+
+
+# Attention. Following rules are redundant for good reasons.
+# 1. Let only pass routes which carry the really_announce_to_upstream route attribute being true
+# 2. Filter for networks we explicitly would like to advertise, configurable through group_vars.
+# Please do not remove those and pay attention, because we are abusing BGP for really funky stuff
+# in our Backbone. Those routes must never reach the internet, otherwise it might break. Not kidding!
+filter bgp_export_aggregates {
+	# See 1.
+	if ! ( defined( really_announce_to_upstream ) && really_announce_to_upstream = 1312 ) then reject;
+
+	# See 2.
+	if net !~ [ {{ freifunk_global_prefix }}{{ '{' }}{{ freifunk_wahlkreis_announcement_prefix }},{{ freifunk_wahlkreis_announcement_prefix}}{{ '}' }} ] then reject;
+
+	# Allow Traffic Engineering on routes which made it until here.
+	include "/dev/shm/announcement*.bird.conf";
+
+	accept;
+}
+
+protocol static static_v6_bgp_upstream {
+	ipv6 { table v6_bgp_upstream; };
 {% for wahlkreis in freifunk_wahlkreis_prefixes %}
   {% for no in range(0, wahlkreis | ansible.utils.ipsubnet(freifunk_wahlkreis_announcement_prefix) | int) %}
-	route {{ wahlkreis | ansible.utils.ipsubnet(freifunk_wahlkreis_announcement_prefix, no) }} unreachable;
+	route {{ wahlkreis | ansible.utils.ipsubnet(freifunk_wahlkreis_announcement_prefix, no) }} unreachable {
+		really_announce_to_upstream = 1312;
+	};
   {% endfor %}
 {% endfor %}
 }
 
-protocol bgp {
+protocol bgp bgp_upstream {
 	local {{ uplink['ipv6'] | ansible.utils.ipaddr('address') }} as {{ local_asn }};
 	neighbor {{ uplink['ipv6'] | ansible.utils.ipaddr('peer') }} as {{ peer_asn }};
 	ipv6 {
-		import filter default_route;
-		export filter export_aggregates;
+		table v6_bgp_upstream;
+		import where net = ::/0;
+		export filter bgp_export_aggregates;
 	};
+}
+
+##
+## Hack to announce create a source specifc default route pointing to BGP Next Hop
+## Details: https://github.com/freifunk-berlin/bbb-configs/issues/1062#issuecomment-2466541315
+##
+ipv6 sadr table v6_default_via_bgp;
+
+protocol static static_v6_default_via_bgp {
+	ipv6 sadr { table v6_default_via_bgp; };
+	igp table v6_bgp_upstream; # Where to lookup recursive resolved next-hop
+	route {{ V6_SADR_DEFAULT_ROUTE }} recursive ::;
+}
+
+protocol pipe pipe_v6_default_via_bgp_to_main {
+	table v6_default_via_bgp;
+	peer table v6_main;
+	export where dest != RTD_UNREACHABLE;
+	import none;
 }
 {% endif %}
