@@ -40,8 +40,9 @@ protocol babel {
 	};
 
 	# Mesh interfaces
+{# metrics for 2 GHz adhoc get a penalty over 5 GHz adhoc so 5 GHz is preferred #}
 {% for nw in networks | selectattr('role', 'equalto', 'mesh') %}
-  {% set default_mesh_metric = mesh_metric_adhoc_in if 'mesh_ap' else mesh_metric_default_in %}
+  {% set default_mesh_metric = hostvars[inventory_hostname].get('mesh_metric_adhoc_' ~ nw.get('mesh_radio'), mesh_metric_default_in) %} 
 	interface "{{ libnetwork.getIfname(nw) }}" {
 		type wireless;
 		rxcost {{ nw.get('mesh_metric', default_mesh_metric) }};
