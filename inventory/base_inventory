@@ -26,7 +26,6 @@ case "$1" in
     "_meta": {
         "hostvars": $(
             # Assemble hostvars for all hostnames from locations/ directory.
-            # For hosts defined in host_vars/ they're loaded by Ansible later.
             echo "$locjson" \
             | jq -s -c '.[] | . as $locvars | .hosts[] | {(.hostname): (. + ($locvars | del(.hosts)) + .)}' \
             | jq -s add
