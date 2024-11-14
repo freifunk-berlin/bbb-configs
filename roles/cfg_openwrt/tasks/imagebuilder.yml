@@ -77,7 +77,7 @@
 - name: Insert falter feed
   lineinfile:
     path: "{{ build_dir }}/repositories.conf"
-    line: "{{ feed | replace('__INSTR_SET__', instr_set) | replace('__FEED_VERSION__', feed_version) }}"
+    line: "{{ feed }}"
   when: 'feed_version is defined'
 
 - name: Define Key-Dir

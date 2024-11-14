@@ -6,7 +6,7 @@ imagebuilder_suffix: zst # Might get overridden for older openwrt versions
 imagebuilder_filename: "openwrt-imagebuilder-{{ openwrt_version }}-{{ target | replace('/', '-') }}.Linux-x86_64.tar.{{ imagebuilder_suffix }}"
 
 imagebuilder: "https://downloads.cdn.openwrt.org/{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}/targets/{{ target }}/{{ imagebuilder_filename }}"
-feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/__FEED_VERSION__/packages/__INSTR_SET__/falter"
+feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/{{ instr_set }}/falter"
 
 
 all__packages__to_merge:
