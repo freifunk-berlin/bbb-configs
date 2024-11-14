@@ -18,7 +18,8 @@ all__packages__to_merge:
   - collectd-mod-ping
   - collectd-mod-uptime
   - ethtool
-  - ip6tables                  # Its not pulled in by default anymore bc fw4
+  - ip6tables-nft                  # Its not pulled in by default anymore bc fw4
+  - iptables-nft
   - iperf3
   - iwinfo
   - ip
