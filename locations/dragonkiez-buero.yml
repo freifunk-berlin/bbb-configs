@@ -18,14 +18,9 @@ snmp_devices:
     address: 10.31.23.114
     snmp_profile: airos_8
 
-ipv6_prefix: "2001:bf7:830:b300::/58"
+ipv6_prefix: "2001:bf7:830:d000::/56"
 
 # 10.31.177.160/27
-# Dragonerareal 2001:bf7:830:b300::/56
-#   Buero               2001:bf7:830:b300::/58
-#   Dorfplatz           2001:bf7:830:b340::/58
-#   Rathausblock Miami  2001:bf7:830:b380::/58
-#   Adlerhalle          2001:bf7:830:b3c0::/58
 # DHCP: 10.31.177.160/27
 # UPLINK: 10.31.23.112/30
 # MESH: 10.31.19.45 10.31.19.46 10.31.19.47
