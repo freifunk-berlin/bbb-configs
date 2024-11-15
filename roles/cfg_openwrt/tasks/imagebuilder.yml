@@ -33,6 +33,8 @@
     mode: "644"
   when: '"http" in imagebuilder'
 
+# For testing purposes the imagebuilder variable can be replaced with a path to a local file.
+# This task takes care of using this file instead of trying to download something
 - name: Copy Local Imagebuilder
   command:
     argv:
