@@ -80,17 +80,12 @@
     line: "{{ feed }}"
   when: 'feed_version is defined'
 
-- name: Define Key-Dir
-  stat:
-    path: "{{ build_dir }}/keys/"
-  register: keydir
-
 - name: Add falter feed key
   copy:
     src: "files/packagefeed_master.pub"
     dest: "{{ build_dir }}/keys/61a078a38408e710"  # matches fingerprint
     mode: "preserve"
-  when: 'feed_version is defined and keydir.stat.exists'
+  when: 'feed_version is defined'
 
 - name: Disable Signature verification if required
   lineinfile:
