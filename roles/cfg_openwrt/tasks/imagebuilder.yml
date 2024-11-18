@@ -74,25 +74,66 @@
     instr_set: "{{ instr_set_result.stdout_lines | first }}"
   when: 'instr_set is not defined and feed_version is defined'
 
-- name: Insert falter feed
+- name: Insert falter OPKG feed
   lineinfile:
     path: "{{ build_dir }}/repositories.conf"
     line: "{{ feed }}"
-  when: 'feed_version is defined'
+  when: 'feed_version is defined and openwrt_version != "snapshot"'
 
-- name: Add falter feed key
+- name: Add falter OPKG feed key
   copy:
     src: "files/packagefeed_master.pub"
     dest: "{{ build_dir }}/keys/61a078a38408e710"  # matches fingerprint
     mode: "preserve"
   when: 'feed_version is defined'
 
-- name: Disable Signature verification if required
+- name: Disable OPKG signature verification if required
   lineinfile:
     path: "{{ build_dir }}/repositories.conf"
     line: "option check_signature"
     state: "absent"
   when: 'imagebuilder_disable_signature_check is defined and imagebuilder_disable_signature_check'
+
+- name: Add falter APK feed
+  lineinfile:
+    path: "{{ build_dir }}/repositories"
+    line: "{{ feed }}"
+  when: 'feed_version is defined and openwrt_version == "snapshot"'
+
+- name: Add falter APK feed to image
+  lineinfile:
+    path: "{{ configs_dir }}/etc/apk/repositories.d/falter.list"
+    line: "{{ feed }}"
+    create: true
+  when: 'feed_version is defined and openwrt_version == "snapshot"'
+
+- name: Add falter APK feed key
+  copy:
+    src: "files/falter.snapshot.pem"
+    dest: "{{ build_dir }}/keys/"
+    mode: "preserve"
+  when: 'feed_version is defined and openwrt_version == "snapshot"'
+
+- name: Add falter APK feed key to image
+  copy:
+    src: "files/falter.snapshot.pem"
+    dest: "{{ configs_dir }}/etc/apk/keys/"
+    mode: "preserve"
+  when: 'feed_version is defined and openwrt_version == "snapshot"'
+
+- name: Add custom APK feed key
+  copy:
+    src: "{{ feed_key }}"
+    dest: "{{ build_dir }}/keys/falter.custom.pem"
+    mode: "preserve"
+  when: 'feed_version is defined and openwrt_version == "snapshot" and feed_key is defined'
+
+- name: Add custom APK feed key to image
+  copy:
+    src: "{{ feed_key }}"
+    dest: "{{ configs_dir }}/etc/apk/keys/falter.custom.pem"
+    mode: "preserve"
+  when: 'feed_version is defined and openwrt_version == "snapshot" and feed_key is defined'
 
 - name: Override compat_version check to bbb-configs exclusive value 9.9
   lineinfile:
