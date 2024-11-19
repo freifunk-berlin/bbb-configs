@@ -108,7 +108,6 @@ networks:
     name: mesh_5ghz
     prefix: 10.31.214.18/32
     ipv6_subprefix: -20
-    mesh_ap: ilr-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -120,7 +119,6 @@ networks:
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.8']
-    mesh_ap: ilr-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
