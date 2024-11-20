@@ -13,6 +13,14 @@ hosts:
     role: corerouter
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
+  - hostname: k9-nf-loge
+    role: ap
+    model: "aruba_ap-303"
+    wireless_profile: freifunk_default
+  - hostname: k9-nf-groessenwahn
+    role: ap
+    model: "aruba_ap-303"
+    wireless_profile: freifunk_default
 
 snmp_devices:
   - hostname: k9-sama
