@@ -46,6 +46,7 @@ networks:
     name: mesh_sama
     prefix: 10.31.9.224/32
     ipv6_subprefix: -1
+    mesh_metric: 128
 
   # MESH - Zwingli
   - vid: 11
@@ -54,7 +55,7 @@ networks:
     prefix: 10.31.9.225/32
     ipv6_subprefix: -2
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.6']
+    mesh_metric_lqm: ['default 0.5']
 
   # DHCP
   - vid: 40
