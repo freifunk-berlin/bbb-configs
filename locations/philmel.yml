@@ -21,6 +21,7 @@ hosts:
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     mac_override: {eth0: dc:2c:6e:c4:36:53}
+    wireless_profile: philmel_nf_s_5ghz
 
   # - hostname: philmel-nf-w-5ghz
   #   role: ap
@@ -107,9 +108,6 @@ airos_dfs_reset:
 # --FREE: 10.230.2.64/26
 # --DHCP: 10.230.2.128/25
 
-# TODO:give back old IP
-# --MESH: 10.31.215.32/27
-
 ipv6_prefix: "2001:bf7:820:1500::/56"
 
 networks:
@@ -195,9 +193,19 @@ networks:
   #   mesh_radio: 11a_standard
   #   mesh_iface: mesh
 
+    # Special VLAN for meshing with GSBS2
+  - vid: 23
+    role: mesh
+    name: xmesh_nf_s_5
+    prefix: 10.230.2.43/32
+    ipv6_subprefix: -23
+    mesh_ap: philmel-nf-s-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
   - vid: 40
     role: dhcp
-    prefix: 10.230.2.32/28
+    prefix: 10.230.2.128/25
     ipv6_subprefix: 0
     untagged: true
     inbound_filtering: true
@@ -205,7 +213,6 @@ networks:
     assignments:
       philmel-core: 1
 
-  # TODO: Change on all devices (mgmt vlan)
   - vid: 438
     role: mgmt
     prefix: 10.230.2.0/27
@@ -234,6 +241,42 @@ location__channel_assignments_11a_standard__to_merge:
   philmel-nf-o-5ghz: 40-20
   philmel-nf-s-5ghz: 36-20
   # philmel-nf-w-5ghz: 44-20
+
+# custom wireless profile due to legacy link on east nf antenna
+location__wireless_profiles__to_merge:
+  - name: philmel_nf_s_5ghz
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: freifunk-bbb-philmel-o
+        encryption: none
+        network: xmesh_nf_s_5
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        ifname_hint: xmesh
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
 
 location__ssh_keys__to_merge:
   - comment: roedel
