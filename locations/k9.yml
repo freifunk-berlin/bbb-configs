@@ -13,11 +13,11 @@ hosts:
     role: corerouter
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
-  - hostname: k9-nf-loge
+  - hostname: k9-ap-loge
     role: ap
     model: "aruba_ap-303"
     wireless_profile: freifunk_default
-  - hostname: k9-nf-groessenwahn
+  - hostname: k9-ap-groessenwahn
     role: ap
     model: "aruba_ap-303"
     wireless_profile: freifunk_default
@@ -89,8 +89,8 @@ networks:
 #      k9-sama: 3      # 10.31.9.211
 #      k9-zwingli: 4   # 10.31.9.212
 #      k9-scharni: 5   # 10.31.9.213
-#      k9-nf-loge: 6   # 10.31.9.214
-#      k9-nf-groessenwahn: 7 # 10.31.9.215
+#      k9-ap-loge: 6   # 10.31.9.214
+#      k9-ap-groessenwahn: 7 # 10.31.9.215
 
   # New MGMT
   - vid: 439
