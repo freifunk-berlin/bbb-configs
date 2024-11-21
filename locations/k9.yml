@@ -25,15 +25,15 @@ hosts:
 snmp_devices:
   - hostname: k9-sama
     address: 10.31.9.211
-    snmp_profile: airos_8
+    snmp_profile: af60
 
   - hostname: k9-zwingli
     address: 10.31.9.212
-    snmp_profile: airos_6
-
-  - hostname: k9-wilgu10
-    address: 10.31.9.213
     snmp_profile: airos_8
+
+  - hostname: k9-scharni
+    address: 10.31.9.213
+    snmp_profile: airos_6
 
 ipv6_prefix: '2001:bf7:830:8d00::/56'
 
@@ -69,7 +69,7 @@ networks:
   # MESH - Wilgu10
   - vid: 12
     role: mesh
-    name: mesh_wilgu10
+    name: mesh_scharni
     prefix: 10.31.9.226/32
     ipv6_subprefix: -12
     ptp: true
@@ -131,7 +131,7 @@ networks:
       # k9-switch: 2  # 10.31.9.210
       k9-sama: 3      # 10.31.9.211
       k9-zwingli: 4   # 10.31.9.212
-      k9-wilgu10: 5   # 10.31.9.213
+      k9-scharni: 5   # 10.31.9.213
       k9-nf-loge: 6   # 10.31.9.214
       k9-nf-groessenwahn: 7 # 10.31.9.215
 
