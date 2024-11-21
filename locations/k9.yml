@@ -104,6 +104,7 @@ networks:
       k9-switch-roof: 2 # uisp-s
       k9-sama: 3 # wave nano
       k9-zwingli: 4
+      k9-scharni: 5
       k9-switch-house: 8 # hpe 2520g-poe
       k9-ap-loge: 9
       k9-ap-hinterhaus: 10
