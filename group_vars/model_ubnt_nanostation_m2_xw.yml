@@ -1,0 +1,29 @@
+---
+override_target: "ubnt_nanostation-m"
+target: ath79/tiny
+brand_nice: Ubiquiti
+model_nice: Ubiquiti Nanostation M2 (XW)
+version_nice: XW
+
+switch_ports: 3
+switch_int_port: 0
+switch_ignore_ports: [1, 2, 3, 4]
+int_port: eth0
+low_mem: false  #XW has 64MB
+
+dsa_ports:
+  - lan
+  - wan
+
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: platform/ahb/18100000.wmac
+    ifname_hint: wlan2
+    antenna_gain: 8
+
+poe_ports:
+  - name: PoE Passthrough
+    gpio_pin: 2
+    value: 0
