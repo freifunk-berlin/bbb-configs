@@ -13,19 +13,21 @@ hosts:
     role: corerouter
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
+  - hostname: k9-ap-loge
+    role: ap
+    model: "TBD"
+  - hostname: k9-ap-hinterhaus
+    role: ap
+    model: "TBD"
 
 snmp_devices:
   - hostname: k9-sama
-    address: 10.31.9.211
-    snmp_profile: airos_8
+    address: 10.31.9.243
+    snmp_profile: af60
 
   - hostname: k9-zwingli
-    address: 10.31.9.212
+    address: 10.31.9.244
     snmp_profile: airos_6
-
-  - hostname: k9-wilgu10
-    address: 10.31.9.213
-    snmp_profile: airos_8
 
 ipv6_prefix: '2001:bf7:830:8d00::/56'
 
@@ -70,6 +72,7 @@ networks:
   # MGMT
   - vid: 42
     role: mgmt
+    name: omgmt
     prefix: 10.31.9.208/28
     gateway: 1
     dns: 1
