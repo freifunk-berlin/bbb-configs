@@ -77,8 +77,7 @@ networks:
     name: mesh_11s_2ghz
     prefix: 10.31.142.33/32
     ipv6_subprefix: -21
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.8']
     mesh_ap: e16outdoor-core
     mesh_radio: 11g_standard

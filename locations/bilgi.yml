@@ -32,7 +32,6 @@ networks:
     mesh_ap: bilgi-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric: 1024
 
   - vid: 21
     role: mesh
@@ -42,7 +41,6 @@ networks:
     mesh_ap: bilgi-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
-    mesh_metric: 1024
 
   - vid: 40
     role: dhcp

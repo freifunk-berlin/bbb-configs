@@ -65,7 +65,6 @@ networks:
     name: mesh_zwingli
     prefix: 10.31.252.193/32
     ipv6_subprefix: -3
-    mesh_metric: 512
     ptp: true
 
   - vid: 20
@@ -73,7 +72,6 @@ networks:
     name: mesh_ap3
     prefix: 10.31.252.194/32
     ipv6_subprefix: -4
-    mesh_metric: 2048
     mesh_ap: scharni-ap3
     mesh_radio: 11a_standard
     mesh_iface: mesh

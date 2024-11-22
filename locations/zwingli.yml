@@ -193,7 +193,6 @@ networks:
     name: mesh_11s_o2
     prefix: 10.31.115.42/32
     ipv6_subprefix: -11
-    mesh_metric: 1024
     mesh_ap: zwingli-ost-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -205,7 +204,6 @@ networks:
     name: mesh_11s_w2
     prefix: 10.31.115.44/32
     ipv6_subprefix: -13
-    mesh_metric: 1024
     mesh_ap: zwingli-west-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -219,7 +217,6 @@ networks:
     name: mesh_11s_n5
     prefix: 10.31.115.45/32
     ipv6_subprefix: -14
-    mesh_metric: 1024
     mesh_ap: zwingli-nord-nf-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -231,7 +228,6 @@ networks:
     name: mesh_11s_o5
     prefix: 10.31.115.46/32
     ipv6_subprefix: -15
-    mesh_metric: 1024
     mesh_ap: zwingli-ost-nf-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -243,7 +239,6 @@ networks:
     name: mesh_11s_w5
     prefix: 10.31.115.48/32
     ipv6_subprefix: -17
-    mesh_metric: 1024
     mesh_ap: zwingli-west-nf-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh

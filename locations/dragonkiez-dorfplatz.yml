@@ -69,8 +69,7 @@ networks:
     name: mesh_2ghz
     prefix: 10.31.28.245/32
     ipv6_subprefix: -3
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.8']
     mesh_ap: dragonkiez-dorfplatz
     mesh_radio: 11g_standard
@@ -92,8 +91,7 @@ networks:
     name: mesh2_ap1
     prefix: 10.31.28.247/32
     ipv6_subprefix: -5
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.8']
     mesh_ap: dragonkiez-dorfplatz-ap1
     mesh_radio: 11g_standard
