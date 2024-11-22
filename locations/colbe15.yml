@@ -28,7 +28,6 @@ networks:
     name: mesh_scharni
     prefix: 10.31.52.237/32
     ipv6_subprefix: -3
-    mesh_metric: 2048
     mesh_ap: colbe15-ap1
     mesh_radio: 11a_standard
     mesh_iface: mesh

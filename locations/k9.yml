@@ -72,7 +72,7 @@ networks:
     name: mesh_k9int
     prefix: 10.31.9.240/28
     ipv6_subprefix: -20
-    mesh_metric: 64
+    mesh_metric: 128
     mesh_metric_lqm: ['default 0.2']
     # Ignore Uplink one Hop away / requires 0.2 LQM
     assignments:
@@ -94,8 +94,7 @@ networks:
     name: mesh_2g
     prefix: 10.31.9.228/32
     ipv6_subprefix: -22
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.5']
     mesh_ap: k9-core
     mesh_radio: 11g_standard

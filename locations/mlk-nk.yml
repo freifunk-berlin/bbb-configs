@@ -53,9 +53,7 @@ networks:
     name: mesh_nno_5
     prefix: 10.31.69.33/32
     ipv6_subprefix: -11
-    mesh_metric: 1024
     mesh_metric_lqm: ['default 0.6']
-    ptp: true
 
   # Nanostation M5 - Airos 6 - Orientation Sonnenallee
   - vid: 12
@@ -63,9 +61,7 @@ networks:
     name: mesh_so_5
     prefix: 10.31.69.34/32
     ipv6_subprefix: -12
-    mesh_metric: 1024
     mesh_metric_lqm: ['default 0.7']
-    ptp: true
 
   # 802.11s mesh links (VID 20-29)
   # 802.11s mesh nf - SXTsq5ac - Orientation Rhnk
@@ -84,7 +80,6 @@ networks:
     name: mesh_nf_wbp2
     prefix: 10.31.69.36/32
     ipv6_subprefix: -21
-    mesh_metric: 2048
     mesh_ap: mlk-nk-nf-wbp2
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -95,7 +90,6 @@ networks:
     name: mesh_nf_wbp3
     prefix: 10.31.69.37/32
     ipv6_subprefix: -22
-    mesh_metric: 2048
     mesh_ap: mlk-nk-nf-wbp3
     mesh_radio: 11g_standard
     mesh_iface: mesh
