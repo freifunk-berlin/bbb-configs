@@ -52,7 +52,7 @@ networks:
     ptp: true
     # prefer routing via RHNK over SAMA
     mesh_metric: 256
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ['default 0.5']
 
   # MESH - RHNK
   - vid: 11
