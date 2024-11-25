@@ -41,7 +41,7 @@ The image compilation takes the variables defined by the hosts and location file
 e.g. some drivers expect network config concerning the distributed switching architecture, and some use the legacy sw-config format. Based on the predefined roles, core-router, access point, and gateway, a customized set of tasks are executed. The last step is to download the correct OpenWrt-Imagebuilder for the host and give it all generated config files.
 The Imagebuilder generates a binary image embedded with the customized config for this one host in the particular location. Flashing this image to a router will set the router after boot directly in the correct operating state. Further, this router will not be able to lose any of its configurations since it is embedded into its image.
 
-If we need someone to reproduce our setup, the person can just generate the image for the involved routers, aka hosts, and provision them. Everyone can reproduce our setup and can work with us on our configurations from all other the world. In the future, it may be possible to abstract the actual router hardware with QEMU opening new interesting use cases.
+If we need someone to reproduce our setup, the person can just generate the image for the involved routers, aka hosts, and provision them. Everyone can reproduce our setup and can work with us on our configurations from all over the world. In the future, it may be possible to abstract the actual router hardware with QEMU opening new interesting use cases.
 
 ## Developers and Maintainers
 
