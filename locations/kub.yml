@@ -17,7 +17,7 @@ hosts:
   - hostname: kub-ap1
     role: ap
     model: "cudy_x6-v1"
-    openwrt_version: snapshot
+    openwrt_version: 24.10-SNAPSHOT
     log_size: 1024
 
 snmp_devices:

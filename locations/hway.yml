@@ -39,7 +39,7 @@ hosts:
     role: ap
     wireless_profile: hway
     model: zyxel_nwa50ax
-    openwrt_version: snapshot
+    openwrt_version: 24.10-SNAPSHOT
     log_size: 1024
 
 snmp_devices:
