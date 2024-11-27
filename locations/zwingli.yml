@@ -159,7 +159,7 @@ networks:
     ipv6_subprefix: -5
     # prefer routing via emma over sama to use ohlauer as gateway)
     mesh_metric: 256
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ['default 0.5']
     ptp: true
 
   - vid: 16
