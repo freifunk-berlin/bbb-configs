@@ -30,14 +30,14 @@ hosts:
     role: corerouter
     model: "cudy_x6-v1"
     wireless_profile: freifunk_default
-    openwrt_version: snapshot
+    openwrt_version: 24.10-SNAPSHOT
     log_size: 1024
 
   - hostname: kiehlufer-huette
     role: ap
     model: "zyxel_nwa55axe"
     wireless_profile: kiehlufer5g
-    openwrt_version: snapshot
+    openwrt_version: 24.10-SNAPSHOT
     log_size: 1024
 
   - hostname: kiehlufer-nf-wbp1
