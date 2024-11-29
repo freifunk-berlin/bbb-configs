@@ -78,7 +78,20 @@ protocol babel babel_mesh {
 	ipv6 sadr {
 		table v6_main;
 		# Import only /56 location aggregates and default routes
-		import where net.len = 56 || net = {{ V6_SADR_DEFAULT_ROUTE }};
+		import filter {
+			if ! (net.len = 56 || net = {{ V6_SADR_DEFAULT_ROUTE }}) then reject;
+{% for interface in mesh_links %}
+			if ifname = "{{ interface['ifname'] }}" then {
+			  babel_metric = babel_metric + {{ interface.get('mesh_metric', mesh_metric_default_in) }};
+			  accept;
+			}
+{% endfor %}
+			if ifname ~ "wg_*" then {
+			  babel_metric = babel_metric + {{ mesh_metric_tunnel_in }};
+			  accept;
+			}
+			accept;
+		};
 		export where source = RTS_BABEL || net = {{ ipv6_prefix }} from ::/0 || net = {{ V6_SADR_DEFAULT_ROUTE }};
 	};
 	ipv4 {
@@ -91,7 +104,6 @@ protocol babel babel_mesh {
 {% for interface in mesh_links %}
 	interface "{{ interface['ifname'] }}" {
 		type wireless;
-		rxcost {{ interface.get('mesh_metric', mesh_metric_default_in) }};
 	};
 {% endfor %}
 
@@ -99,14 +111,14 @@ protocol babel babel_mesh {
 {% for gateway in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
 	interface "gre4-{{ hostvars[gateway]['gre_tunnel_alias'] }}" {
 		type wireless;
-		rxcost {{ gre_metric }};
+		rxcost {{ gre_metric }}; # Keep for now, could be implemented as export filter later
 	};
 {% endfor %}
 
     # Wireguard tunnel links which are dynamically established
 	interface "wg_*" {
 		type wireless;
-		rxcost {{ mesh_metric_tunnel_in }};
+		rxcost {{ mesh_metric_tunnel_in }}; # Keep for now, could be implemented as export filter later
 	};
 }
 
