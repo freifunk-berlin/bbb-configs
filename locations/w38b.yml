@@ -158,7 +158,7 @@ networks:
     name: private_2
     inbound_filtering: true
     prefix: 10.31.212.112/28
-    ipv6_subprefix: 3
+    ipv6_subprefix: 4
     assignments:
       w38b-core: 1      # 10.31.212.113
       w38b-ds: 2        # 10.31.212.114
