@@ -68,6 +68,9 @@ for file in $location_files; do
   # Check for name duplicates within networks
   check_duplicates 'select(.networks != null) | .networks[] | select(.name != null) | .name' "name within networks" "$file"
 
+  # Check for ipv6_subprefix duplicates within networks
+  check_duplicates 'select(.networks != null) | .networks[] | select(.ipv6_subprefix != null) | .ipv6_subprefix' "ipv6_subprefix within networks" "$file"
+
 done
 
 # Exit with a non-zero status code if any errors were found
