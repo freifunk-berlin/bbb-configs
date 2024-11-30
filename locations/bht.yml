@@ -140,6 +140,7 @@ networks:
     prefix: 10.230.23.128/32
     ipv6_subprefix: -10
     ptp: true
+    # Prefer routing via perleberger36 over segen
     mesh_metric: 1024
     mesh_metric_lqm: ['default 0.2']
 
@@ -149,6 +150,9 @@ networks:
     prefix: 10.230.23.129/32
     ipv6_subprefix: -11
     ptp: true
+    # Prefer routing via perleberger36 over segen, chris, mela
+    mesh_metric: 256
+
 
   - vid: 12
     role: mesh
@@ -173,6 +177,9 @@ networks:
     name: mesh_jup
     prefix: 10.230.23.133/32
     ipv6_subprefix: -15
+    # Set metrics similar as for mesh_segen so path via jup is always worse
+    mesh_metric: 1024
+    mesh_metric_lqm: ['default 0.25']
 
   - vid: 16
     role: mesh
