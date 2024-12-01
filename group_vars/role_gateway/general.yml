@@ -37,7 +37,7 @@ wireguard_wg_pub: '/etc/wireguard/wg.pub'
 # If it is set wireguard_wg_key and wireguard_wg_pub are not used.
 wireguard_wg_tmp_key: false
 
-gre_metric: 64
+gre_metric: 256 # Match default RX Cost
 
 
 ## FIREWALL SECTION
