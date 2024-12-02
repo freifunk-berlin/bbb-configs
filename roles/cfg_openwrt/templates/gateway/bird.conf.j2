@@ -97,7 +97,7 @@ protocol babel babel_mesh {
 	};
 	ipv4 {
 		table v4_main;
-		import all;
+		import where ifname !~ "gre4-*"; # Drop IPv4 routes learned via GRE, which remains a rather dirty hack for IPv6
 		export where source = RTS_BABEL || net = 0.0.0.0/0; # Readvertise Babel routes and advertise default route
 	};
 
