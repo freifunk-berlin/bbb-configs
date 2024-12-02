@@ -32,9 +32,10 @@ protocol kernel kernel_v6_main {
 protocol kernel kernel_v4_main {
 	ipv4 {
 		table v4_main;
-		import none;
+		import where net = 0.0.0.0/0; # Import Default Gateway from kernel
 		export none;
 	};
+	learn all;
 }
 
 protocol kernel kernel_v4_babel_ff {
@@ -97,7 +98,7 @@ protocol babel babel_mesh {
 	ipv4 {
 		table v4_main;
 		import all;
-		export where source = RTS_BABEL; # For now only advertise routes learned from babel
+		export where source = RTS_BABEL || net = 0.0.0.0/0; # Readvertise Babel routes and advertise default route
 	};
 
 	# Mesh interfaces
