@@ -97,7 +97,20 @@ protocol babel babel_mesh {
 	};
 	ipv4 {
 		table v4_main;
-		import where ifname !~ "gre4-*"; # Drop IPv4 routes learned via GRE, which remains a rather dirty hack for IPv6
+		import filter {
+			if ifname ~ "gre4-*" then reject;
+{% for interface in mesh_links %}
+			if ifname = "{{ interface['ifname'] }}" then {
+			  babel_metric = babel_metric + {{ interface.get('mesh_metric', mesh_metric_default_in) }};
+			  accept;
+			}
+{% endfor %}
+			if ifname ~ "wg_*" then {
+			  babel_metric = babel_metric + {{ mesh_metric_tunnel_in }};
+			  accept;
+			}
+			accept;
+		};
 		export where source = RTS_BABEL || net = 0.0.0.0/0; # Readvertise Babel routes and advertise default route
 	};
 
