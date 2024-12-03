@@ -25,6 +25,8 @@ role_uplink_gw__packages__to_merge:
   - kmod-ipt-ipopt
   - bird2-babelpatch
   - bird2c
+  - bgpdisco
+  - bgpdisco-plugin-nameservice
   - ip-full
   - gre
   - wireguard-tools
