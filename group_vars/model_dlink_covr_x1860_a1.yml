@@ -4,6 +4,8 @@ brand_nice: D-Link
 model_nice: COVR-X1860
 version_nice: A1
 
+openwrt_version: 24.10-SNAPSHOT
+
 dsa_ports:
   - internet
   - ethernet
