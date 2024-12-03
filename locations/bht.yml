@@ -150,7 +150,7 @@ networks:
     prefix: 10.230.23.129/32
     ipv6_subprefix: -11
     ptp: true
-    # Prefer routing via perleberger36 over segen, chris, mela
+    # Prefer routing via perleberger36 over segen, chris, mela, weidenbaum
     mesh_metric: 256
 
 
@@ -204,6 +204,8 @@ networks:
     name: mesh_west
     prefix: 10.230.23.137/32
     ipv6_subprefix: -19
+    # Prefer routing via perleberger36 over chris, mela, weidenbaum
+    mesh_metric: 1024
 
   - vid: 40
     role: dhcp
