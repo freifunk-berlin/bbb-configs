@@ -83,6 +83,8 @@ networks:
     name: mesh_ono
     prefix: 10.36.70.35/32
     ipv6_subprefix: -12
+    # ensure this link is only used as backup
+    mesh_metric: 2048
 
   # 802.11s Mesh
   - vid: 20
