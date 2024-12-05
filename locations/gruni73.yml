@@ -98,7 +98,6 @@ networks:
     name: mesh_11s_o5
     prefix: 10.31.156.40/32
     ipv6_subprefix: -6
-    mesh_metric: 1024
     mesh_ap: gruni73-nf-o-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -109,7 +108,6 @@ networks:
     name: mesh_11s_s5
     prefix: 10.31.156.41/32
     ipv6_subprefix: -7
-    mesh_metric: 1024
     mesh_ap: gruni73-nf-s-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -120,7 +118,6 @@ networks:
     name: mesh_11s_w5
     prefix: 10.31.156.42/32
     ipv6_subprefix: -8
-    mesh_metric: 1024
     mesh_ap: gruni73-nf-w-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh

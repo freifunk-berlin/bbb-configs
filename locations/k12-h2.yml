@@ -59,7 +59,7 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_core_5g
-    prefix: 10.31.158.1129/32
+    prefix: 10.31.158.129/32
     ipv6_subprefix: -20
     mesh_ap: k12-h2-core
     mesh_radio: 11a_standard
@@ -71,8 +71,7 @@ networks:
     name: mesh_core_2g
     prefix: 10.31.158.130/32
     ipv6_subprefix: -21
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.8']
     mesh_ap: k12-h2-core
     mesh_radio: 11g_standard
@@ -94,8 +93,7 @@ networks:
     name: mesh_h1s_2g
     prefix: 10.31.158.132/32
     ipv6_subprefix: -23
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.8']
     mesh_ap: k12-h2-h1s
     mesh_radio: 11g_standard
@@ -107,7 +105,7 @@ networks:
     name: mesh_cpe
     prefix: 10.31.158.133/32
     ipv6_subprefix: -24
-    # adjust mesh_metric(s) to prefer this route
+    # adjust mesh_metric to prefer this route
     mesh_metric: 256
     mesh_ap: k12-h2-cpe
     mesh_radio: 11a_standard
@@ -117,9 +115,9 @@ networks:
   - vid: 30
     role: mesh
     name: mesh_lan
-    prefix: 10.31.226.134/32
+    prefix: 10.31.158.134/32
     ipv6_subprefix: -30
-    # adjust mesh_metric(s) to prefer this route
+    # adjust mesh_metric to prefer this route
     mesh_metric: 128
 
   # DHCP
@@ -157,12 +155,16 @@ networks:
     mtu: 1280
     prefix: 10.31.158.224/32
     wireguard_port: 51820
+    # Make sure tunnel is only last resort backup
+    mesh_metric_lqm: ['default 0.6']
 
   - role: tunnel
     ifname: ts_wg1
     mtu: 1280
     prefix: 10.31.158.225/32
     wireguard_port: 51821
+    # Make sure tunnel is only last resort backup
+    mesh_metric_lqm: ['default 0.6']
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
@@ -188,3 +190,13 @@ dns_servers:
   - 1.0.0.1
   - 2606:4700:4700::1111
   - 2606:4700:4700::1001
+
+# Switch Ports
+# 1: uplink
+# 2: AP
+# 3:
+# 4: CORE
+# 5: AP
+# 6: AP
+# 7: k12-h1-core, VLAN 30
+# 8: segen

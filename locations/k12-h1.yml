@@ -42,8 +42,7 @@ networks:
     name: mesh_core_2g
     prefix: 10.31.226.146/32
     ipv6_subprefix: -21
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.8']
     mesh_ap: k12-h1-core
     mesh_radio: 11g_standard
@@ -55,7 +54,7 @@ networks:
     name: mesh_lan
     prefix: 10.31.226.147/32
     ipv6_subprefix: -30
-    # adjust mesh_metric(s) to prefer this
+    # adjust mesh_metric to prefer this
     mesh_metric: 128
 
   # DHCP with filtering and isolation

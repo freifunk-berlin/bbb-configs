@@ -23,7 +23,7 @@ role_uplink_gw__packages__to_merge:
   - luci-app-falter-owm-gui
   - iptables-mod-ipopt
   - kmod-ipt-ipopt
-  - bird2
+  - bird2-babelpatch
   - bird2c
   - ip-full
   - gre

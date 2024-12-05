@@ -32,9 +32,14 @@ protocol kernel kernel_v6_main {
 protocol kernel kernel_v4_main {
 	ipv4 {
 		table v4_main;
-		import none;
+		import filter {
+			if net != 0.0.0.0/0 then reject; # Import only Default Gateway from kernel
+			preference = 200; # Increase preference to beat babel route
+			accept;
+		};
 		export none;
 	};
+	learn all;
 }
 
 protocol kernel kernel_v4_babel_ff {
@@ -78,20 +83,45 @@ protocol babel babel_mesh {
 	ipv6 sadr {
 		table v6_main;
 		# Import only /56 location aggregates and default routes
-		import where net.len = 56 || net = {{ V6_SADR_DEFAULT_ROUTE }};
+		import filter {
+			if ! (net.len = 56 || net = {{ V6_SADR_DEFAULT_ROUTE }}) then reject;
+{% for interface in mesh_links %}
+			if ifname = "{{ interface['ifname'] }}" then {
+			  babel_metric = babel_metric + {{ interface.get('mesh_metric', mesh_metric_default_in) }};
+			  accept;
+			}
+{% endfor %}
+			if ifname ~ "wg_*" then {
+			  babel_metric = babel_metric + {{ mesh_metric_tunnel_in }};
+			  accept;
+			}
+			accept;
+		};
 		export where source = RTS_BABEL || net = {{ ipv6_prefix }} from ::/0 || net = {{ V6_SADR_DEFAULT_ROUTE }};
 	};
 	ipv4 {
 		table v4_main;
-		import all;
-		export where source = RTS_BABEL; # For now only advertise routes learned from babel
+		import filter {
+			if ifname ~ "gre4-*" then reject;
+{% for interface in mesh_links %}
+			if ifname = "{{ interface['ifname'] }}" then {
+			  babel_metric = babel_metric + {{ interface.get('mesh_metric', mesh_metric_default_in) }};
+			  accept;
+			}
+{% endfor %}
+			if ifname ~ "wg_*" then {
+			  babel_metric = babel_metric + {{ mesh_metric_tunnel_in }};
+			  accept;
+			}
+			accept;
+		};
+		export where source = RTS_BABEL || net = 0.0.0.0/0; # Readvertise Babel routes and advertise default route
 	};
 
 	# Mesh interfaces
 {% for interface in mesh_links %}
 	interface "{{ interface['ifname'] }}" {
 		type wireless;
-		rxcost {{ interface.get('mesh_metric', mesh_metric_default_in) }};
 	};
 {% endfor %}
 
@@ -99,14 +129,14 @@ protocol babel babel_mesh {
 {% for gateway in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
 	interface "gre4-{{ hostvars[gateway]['gre_tunnel_alias'] }}" {
 		type wireless;
-		rxcost {{ gre_metric }};
+		rxcost {{ gre_metric }}; # Keep for now, could be implemented as export filter later
 	};
 {% endfor %}
 
     # Wireguard tunnel links which are dynamically established
 	interface "wg_*" {
 		type wireless;
-		rxcost {{ mesh_metric_tunnel_in }};
+		rxcost {{ mesh_metric_tunnel_in }}; # Keep for now, could be implemented as export filter later
 	};
 }
 

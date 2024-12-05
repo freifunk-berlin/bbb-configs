@@ -48,8 +48,7 @@ networks:
     name: mesh_core_2g
     prefix: 10.31.226.210/32
     ipv6_subprefix: -21
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.8']
     mesh_ap: k12-h3-core
     mesh_radio: 11g_standard
@@ -71,8 +70,7 @@ networks:
     name: mesh_h3n_2g
     prefix: 10.31.226.212/32
     ipv6_subprefix: -23
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.8']
     mesh_ap: k12-h3-h3n
     mesh_radio: 11g_standard
@@ -94,8 +92,7 @@ networks:
   #   name: mesh_v2s_2g
   #   prefix: 10.31.226.214/32
   #   ipv6_subprefix: -25
-  #   # make mesh_metric(s) for 2GHz worse than 5GHz
-  #   mesh_metric: 1024
+  #   # make mesh_metric for 2GHz worse than 5GHz
   #   mesh_metric_lqm: ['default 0.8']
   #   mesh_ap: k12-h3-v2s
   #   mesh_radio: 11g_standard

@@ -137,7 +137,6 @@ networks:
     name: mesh_11s_no
     prefix: 10.230.192.230/32
     ipv6_subprefix: -7
-    mesh_metric: 2048
     mesh_ap: vaterhaus-n-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
