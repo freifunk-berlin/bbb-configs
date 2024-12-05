@@ -31,10 +31,6 @@ snmp_devices:
     address: 10.31.9.244
     snmp_profile: airos_8
 
-  - hostname: k9-scharni
-    address: 10.31.9.245
-    snmp_profile: airos_6
-
 ipv6_prefix: '2001:bf7:830:8d00::/56'
 
 # K9 Prefixes:
