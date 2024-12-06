@@ -79,8 +79,6 @@ networks:
     name: mesh_2g
     prefix: 10.31.212.36/32
     ipv6_subprefix: -21
-    # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.5']
     mesh_ap: w38b-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -101,8 +99,6 @@ networks:
     name: mesh_ap1_2g
     prefix: 10.31.212.38/32
     ipv6_subprefix: -23
-    # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.5']
     mesh_ap: w38b-ap1
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -113,9 +109,6 @@ networks:
     name: mesh_lan
     prefix: 10.31.212.39/32
     ipv6_subprefix: -30
-    # adjust mesh_metric(s) to prefer other links
-    mesh_metric: 4096
-    mesh_metric_lqm: ['default 0.25']
 
   # DHCP with filtering and isolation
   - vid: 40
@@ -162,6 +155,16 @@ networks:
     assignments:
       w38b-core: 1      # 10.31.212.113
       w38b-ds: 2        # 10.31.212.114
+
+  # UPLK - 10.31.212.64/27 as /32
+  - vid: 50
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.212.64/32
+    wireguard_port: 51820
 
   # MGMT
   - vid: 434
