@@ -59,7 +59,7 @@ for FILE_PATH in $SORTED_FILES; do
     echo "Nodename: $NODENAME"
 
     # Build hostname
-    HOSTNAME="$NODENAME.olsr"
+    HOSTNAME="$NODENAME.ff"
     echo "Hostname: $HOSTNAME"
 
     # Check if hostname is reachable
