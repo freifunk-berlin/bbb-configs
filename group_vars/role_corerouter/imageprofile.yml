@@ -1,7 +1,9 @@
 ---
 role_corerouter__packages__to_merge:
-  - bird2
+  - bird2-babelpatch
   - bird2c
+  - bgpdisco
+  - bgpdisco-plugin-nameservice
   - collectd-mod-dhcpleases
   - collectd-mod-olsrd
   - collectd-mod-conntrack

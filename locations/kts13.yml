@@ -43,7 +43,6 @@ networks:
     name: mesh_ap1
     prefix: '10.31.166.194/32'
     ipv6_subprefix: -2
-    mesh_metric: 1024
     mesh_ap: kts13-ap1
     mesh_radio: 11a_standard
     mesh_iface: mesh

@@ -77,8 +77,7 @@ networks:
     name: mesh_2g_core
     prefix: 10.31.215.35/32
     ipv6_subprefix: -21
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.8']
     mesh_ap: noki-core
     mesh_radio: 11g_standard
@@ -100,8 +99,7 @@ networks:
     name: mesh_2g_ap
     prefix: 10.31.215.37/32
     ipv6_subprefix: -23
-    # make mesh_metric(s) for 2GHz worse than 5GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.8']
     mesh_ap: noki-ap
     mesh_radio: 11g_standard

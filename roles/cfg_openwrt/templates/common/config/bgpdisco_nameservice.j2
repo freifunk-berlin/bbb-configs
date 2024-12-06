@@ -1,0 +1,31 @@
+package 'bgpdisco-plugin-nameservice'
+
+config general
+	option domain 'ff'
+	option hosts_file '/var/hosts/ffnameservice'
+	option cmd_on_update 'killall -SIGHUP dnsmasq'
+{% if inventory_hostname in groups['role_gateway'] %}
+	list exclude_interface_self '{{ uplink['ifname'] }}'
+{% endif %} 
+
+{%- if mgmt['assignments'] is defined and mgmt['assignments']|length>0 -%}
+
+{# Gateway ... #}
+{% for host, ip_num in mgmt['assignments'].items() if host != inventory_hostname %}
+config static-entry
+	option host '{{ host }}'
+	list ip '{{ mgmt['ipv4'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }}'
+
+{% endfor %}
+{% else %}
+
+{# Core-Router #}
+{% for network in networks | selectattr('assignments', 'mapping') %}
+{% for host, ip_num in network['assignments'].items() if host != inventory_hostname %}
+config static-entry
+	option host '{{ host }}'
+	list ip '{{ network['prefix'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }}'
+
+{% endfor %}
+{% endfor %}
+{%- endif %}

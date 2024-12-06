@@ -56,7 +56,6 @@ networks:
     name: mesh_nno
     prefix: 10.30.96.43/32
     ipv6_subprefix: -1
-    mesh_metric: 1024
     mesh_ap: fffw-lebenshilfe-nno-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -66,7 +65,6 @@ networks:
     name: mesh_nw
     prefix: 10.30.96.44/32
     ipv6_subprefix: -2
-    mesh_metric: 1024
     mesh_ap: fffw-lebenshilfe-nw-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -76,7 +74,6 @@ networks:
     name: mesh_sso
     prefix: 10.30.96.45/32
     ipv6_subprefix: -3
-    mesh_metric: 1024
     mesh_ap: fffw-lebenshilfe-sso-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -86,7 +83,6 @@ networks:
     name: mesh_ono
     prefix: 10.30.96.46/32
     ipv6_subprefix: -4
-    mesh_metric: 1024
     mesh_ap: fffw-lebenshilfe-ono-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh

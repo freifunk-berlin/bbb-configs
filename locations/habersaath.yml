@@ -103,7 +103,6 @@ networks:
     mesh_ap: habersaath-w-nf-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric: 1024
     mesh_metric_lqm:
       - default 0.12   # Penalty so local uplink is preferred
 

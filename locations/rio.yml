@@ -64,7 +64,6 @@ networks:
     name: mesh_rio
     prefix: 10.31.134.18/32
     ipv6_subprefix: -3
-    mesh_metric: 2048
     mesh_ap: rio-sxt
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -74,7 +73,6 @@ networks:
     name: mesh_ubnt
     prefix: 10.31.134.19/32
     ipv6_subprefix: -4
-    mesh_metric: 2048
     mesh_ap: rio-ubnt
     mesh_radio: 11a_standard
     mesh_iface: mesh

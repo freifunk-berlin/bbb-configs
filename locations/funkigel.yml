@@ -64,8 +64,7 @@ networks:
     name: mesh_2g
     prefix: 10.248.9.210/32
     ipv6_subprefix: -21
-    # make mesh_metric(s) for 2.4 GHz worse than 5 GHz
-    mesh_metric: 1024
+    # make mesh_metric for 2.4 GHz worse than 5 GHz
     mesh_metric_lqm: ['default 0.5']
     mesh_ap: funkigel
     mesh_radio: 11g_standard
