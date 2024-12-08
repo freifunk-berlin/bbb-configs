@@ -1,0 +1,7 @@
+---
+
+brand_nice: Ubiquiti
+model_nice: Nanostation AC Loco
+
+os: airos
+snmp_mib: airos6

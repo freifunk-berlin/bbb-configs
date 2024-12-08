@@ -1,0 +1,8 @@
+---
+
+brand_nice: Ubiquiti
+model_nice: Nanostation M2
+
+antennas:
+  60GHz:
+    gain: 17

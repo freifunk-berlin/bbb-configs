@@ -1,0 +1,12 @@
+---
+target: x86/64
+override_target: generic
+image_search_pattern: "*-ext4-combined-efi.img*"
+model_nice: 32-/64-bit Computer
+
+imagebuilder_params:
+  ROOTFS_PARTSIZE
+
+int_port: eth0
+
+wireless_profile: disable

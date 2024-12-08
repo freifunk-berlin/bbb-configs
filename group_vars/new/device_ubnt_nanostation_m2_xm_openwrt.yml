@@ -1,0 +1,16 @@
+---
+override_target: "ubnt_nanostation-m"
+target: ath79/tiny
+model: ubnt_nanostation-m
+
+int_port: eth1
+
+low_mem: true
+
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: pci0000:00/0000:00:00.0
+    ifname_hint: wlan2
+    antenna_gain: 8

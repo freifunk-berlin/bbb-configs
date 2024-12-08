@@ -1,0 +1,21 @@
+---
+brand_nice: Ubiquiti
+model_nice: Nanostation AC Loco
+
+os: openwrt
+
+cfg_openwrt_target: ath79/generic
+
+cfg_openwrt_packages__to_merge:
+  - "-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct"
+  - "kmod-ath10k-smallbuffers ath10k-firmware-qca988x"
+
+cfg_openwrt_int_port: eth0
+
+cfg_openwrt_wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: VHT
+    path: pci0000:00/0000:00:00.0
+    ifname_hint: wlan5
+    antenna_gain: 11
