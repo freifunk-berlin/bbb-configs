@@ -12,6 +12,13 @@ hosts:
     role: corerouter
     model: "linksys_e8450-ubi"
     wireless_profile: wilgu10
+    openwrt_version: snapshot
+    host__rclocal__to_merge:
+      - |
+        # Balcony is connected to lan2
+        uci set network.vlan_10.ports='lan1:u*' # mesh_sama
+        uci set network.vlan_41.ports='wan:u* lan2:u* lan3:u* lan4:u*' # dhcp
+        uci commit network; reload_config
 
   - hostname: wilgu10-east-nf
     role: ap
