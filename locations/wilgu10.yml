@@ -12,6 +12,21 @@ hosts:
     role: corerouter
     model: "linksys_e8450-ubi"
     wireless_profile: wilgu10
+    openwrt_version: snapshot
+    host__rclocal__to_merge:
+      - |
+        # Workaround bug with stale mac table entries
+        uci set network.port_wan=device
+        uci set network.port_wan.name=wan
+        uci set network.port_wan.learning=0
+
+        # Balcony is connected to lan2
+        uci set network.@bridge-vlan[0].ports='lan1' # mesh_sama
+        uci set network.@bridge-vlan[4].ports='wan:t lan2:t lan3:t lan4:t' # dhcp
+
+        uci commit network
+        sync
+        /etc/init.d/network restart
 
   - hostname: wilgu10-east-nf
     role: ap
@@ -28,6 +43,16 @@ hosts:
     model: "linksys_e8450-ubi"
     wireless_profile: wilgu10
     openwrt_version: snapshot
+    host__rclocal__to_merge:
+      - |
+        # Workaround bug with stale mac table entries
+        uci set network.port_wan=device
+        uci set network.port_wan.name=wan
+        uci set network.port_wan.learning=0
+
+        uci commit network
+        sync
+        /etc/init.d/network restart
 
   - hostname: wilgu10-west-nf
     role: ap
