@@ -55,3 +55,5 @@ config gpio_switch 'poe_power_port{{ loop.index0 }}'
         option value '{{ poe['value'] }}'
 {% endif %}
 {% endfor %}
+
+root password: {{ root_password }}
