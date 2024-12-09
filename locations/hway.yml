@@ -27,7 +27,8 @@ hosts:
     role: corerouter
     int_port: eth1
     model: x86-64
-    image_search_pattern: "*-ext4-combined.img*"
+    openwrt_version: 24.10-SNAPSHOT
+    log_size: 1024
     host__packages__to_merge:
       - kmod-mlx5-core
     host__rclocal__to_merge:
