@@ -11,8 +11,11 @@ hosts:
 
   - hostname: simeon-core
     role: corerouter
-    model: "avm_fritzbox-7530"
-    wireless_profile: freifunk_default
+    model: "ubnt_edgerouter-x"
+    poe_on: []
+    openwrt_version: 24.10-SNAPSHOT
+    log_size: 1024
+
 
 snmp_devices:
 
@@ -55,25 +58,25 @@ networks:
     role: mesh
     name: mesh_mgh
     prefix: 10.31.51.136/32
-    ipv6_subprefix: -1
+    ipv6_subprefix: -10
 
   - vid: 11
     role: mesh
     name: mesh_nord
     prefix: 10.31.51.137/32
-    ipv6_subprefix: -2
+    ipv6_subprefix: -11
 
   - vid: 12
     role: mesh
     name: mesh_emma
     prefix: 10.31.51.138/32
-    ipv6_subprefix: -3
+    ipv6_subprefix: -12
 
   - vid: 13
     role: mesh
     name: mesh_rhx
     prefix: 10.31.51.139/32
-    ipv6_subprefix: -4
+    ipv6_subprefix: -13
 
   - vid: 40
     role: dhcp
