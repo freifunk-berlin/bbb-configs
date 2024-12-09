@@ -25,6 +25,7 @@ hosts:
   # eth1 eth2 - ConnectX-4 Lx CX4121B
   - hostname: hway-core
     role: corerouter
+    int_port: eth1
     model: x86-64
     image_search_pattern: "*-ext4-combined.img*"
     host__packages__to_merge:
@@ -34,6 +35,8 @@ hosts:
       # which regularly hangs the card. It gets reset automatically,
       # but still results in regular ~15s downtimes. Disable offloads.
       - ethtool -K eth0 tx off rx off
+    host__disabled_services__to_merge:
+      - tunspace
 
   - hostname: hway-ap1
     role: ap
@@ -66,6 +69,7 @@ networks:
       hway-core: 1
 
   - vid: 41
+    untagged: true
     role: dhcp
     name: prdhcp
     inbound_filtering: true
@@ -88,7 +92,7 @@ networks:
       hway-ap1: 4        # .255.252
 
   - vid: 50
-    ifname: eth1
+    ifname: eth0
     role: uplink
     untagged: true
 
@@ -123,13 +127,6 @@ location__wireless_profiles__to_merge:
         ifname_hint: ffowe
         owe_transition_ifname_hint: ff
         ieee80211w: 1
-      - mode: ap
-        ssid: huette-test
-        encryption: psk2
-        key: 'file:/root/wifi_pass'
-        network: prdhcp
-        radio: [11a_standard, 11g_standard]
-        ifname_hint: prdhcp
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
         radio: [11a_standard, 11g_standard, 11a_mesh]
