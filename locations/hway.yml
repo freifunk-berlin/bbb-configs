@@ -25,8 +25,10 @@ hosts:
   # eth1 eth2 - ConnectX-4 Lx CX4121B
   - hostname: hway-core
     role: corerouter
+    int_port: eth1
     model: x86-64
-    image_search_pattern: "*-ext4-combined.img*"
+    openwrt_version: 24.10-SNAPSHOT
+    log_size: 1024
     host__packages__to_merge:
       - kmod-mlx5-core
     host__rclocal__to_merge:
@@ -34,11 +36,20 @@ hosts:
       # which regularly hangs the card. It gets reset automatically,
       # but still results in regular ~15s downtimes. Disable offloads.
       - ethtool -K eth0 tx off rx off
+    host__disabled_services__to_merge:
+      - tunspace
 
-  - hostname: hway-ap1
+  - hostname: hway-indoor
     role: ap
     wireless_profile: hway
     model: zyxel_nwa50ax
+    openwrt_version: 24.10-SNAPSHOT
+    log_size: 1024
+
+  - hostname: hway-street
+    role: ap
+    wireless_profile: hway
+    model: cudy_ap3000outdoor-v1
     openwrt_version: 24.10-SNAPSHOT
     log_size: 1024
 
@@ -66,6 +77,7 @@ networks:
       hway-core: 1
 
   - vid: 41
+    untagged: true
     role: dhcp
     name: prdhcp
     inbound_filtering: true
@@ -85,10 +97,11 @@ networks:
       hway-core: 1       # .255.249
       hway-switch: 2     # .255.250
       hway-kiehlufer: 3  # .255.251
-      hway-ap1: 4        # .255.252
+      hway-indoor: 4     # .255.252
+      hway-street: 5     # .255.253
 
   - vid: 50
-    ifname: eth1
+    ifname: eth0
     role: uplink
     untagged: true
 
@@ -99,10 +112,12 @@ networks:
     wireguard_port: 51820
 
 location__channel_assignments_11a_standard__to_merge:
-  hway-ap1: 36-40
+  hway-indoor: 36-40
+  hway-street: 44-40
 
 location__channel_assignments_11b_standard__to_merge:
-  hway-ap1: 13-20
+  hway-indoor: 13-20
+  hway-street: 5-20
 
 location__wireless_profiles__to_merge:
   - name: hway
@@ -123,13 +138,6 @@ location__wireless_profiles__to_merge:
         ifname_hint: ffowe
         owe_transition_ifname_hint: ff
         ieee80211w: 1
-      - mode: ap
-        ssid: huette-test
-        encryption: psk2
-        key: 'file:/root/wifi_pass'
-        network: prdhcp
-        radio: [11a_standard, 11g_standard]
-        ifname_hint: prdhcp
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
         radio: [11a_standard, 11g_standard, 11a_mesh]
