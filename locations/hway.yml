@@ -38,10 +38,17 @@ hosts:
     host__disabled_services__to_merge:
       - tunspace
 
-  - hostname: hway-ap1
+  - hostname: hway-indoor
     role: ap
     wireless_profile: hway
     model: zyxel_nwa50ax
+    openwrt_version: 24.10-SNAPSHOT
+    log_size: 1024
+
+  - hostname: hway-street
+    role: ap
+    wireless_profile: hway
+    model: cudy_ap3000outdoor-v1
     openwrt_version: 24.10-SNAPSHOT
     log_size: 1024
 
@@ -89,7 +96,8 @@ networks:
       hway-core: 1       # .255.249
       hway-switch: 2     # .255.250
       hway-kiehlufer: 3  # .255.251
-      hway-ap1: 4        # .255.252
+      hway-indoor: 4     # .255.252
+      hway-street: 5     # .255.253
 
   - vid: 50
     ifname: eth0
@@ -103,10 +111,12 @@ networks:
     wireguard_port: 51820
 
 location__channel_assignments_11a_standard__to_merge:
-  hway-ap1: 36-40
+  hway-indoor: 36-40
+  hway-street: 44-40
 
 location__channel_assignments_11b_standard__to_merge:
-  hway-ap1: 13-20
+  hway-indoor: 13-20
+  hway-street: 5-20
 
 location__wireless_profiles__to_merge:
   - name: hway
