@@ -8,7 +8,7 @@ community: true
 hosts:
   - hostname: saarbruecker-gw
     role: gateway
-    model: "ubnt_edgerouter-4"
+    model: "protectli_vps6630"
 
 snmp_devices:
   - hostname: saarbruecker-sw
@@ -31,12 +31,12 @@ snmp_devices:
 ipv6_prefix: 2001:bf7:760:2200::/56
 
 uplink:
-  ifname: lan3
+  ifname: eth5
   ipv4: 176.74.57.43/31
   ipv6: 2a04:d480:2001::1/127
 
 mgmt:
-  ifname: lan0.42
+  ifname: eth4.42
   ipv4: 10.31.83.49/29
   ipv6: 2001:bf7:760:2201::/64
   assignments:
@@ -49,21 +49,21 @@ mgmt:
 # Mesh Network: 10.31.83.56/30
 mesh_links:
   - name: mesh_hds
-    ifname: lan0.10
+    ifname: eth4.10
     ipv4: 10.31.83.56/32
     ipv6: 2001:bf7:760:2200::1/128
     mesh_metric: 128
     ptp: true
 
   - name: mesh_sama
-    ifname: lan0.11
+    ifname: eth4.11
     ipv4: 10.31.83.57/32
     ipv6: 2001:bf7:760:2200::2/128
     mesh_metric: 128
     ptp: true
 
   - name: mesh_segen
-    ifname: lan0.12
+    ifname: eth4.12
     ipv4: 10.31.83.58/32
     ipv6: 2001:bf7:760:2200::3/128
     mesh_metric: 128
