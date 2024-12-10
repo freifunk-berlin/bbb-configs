@@ -162,6 +162,18 @@
     line: "{{ item }}::askfirst:/usr/libexec/login.sh"
   loop: "{{ additional_serial_ports | default([]) }}"
 
+- name: Copy over upstream network detect script
+  copy:
+    src: "{{ build_dir }}/target/linux/{{ (target|split('/'))[0] }}/base-files/etc/board.d"
+    dest: "{{ configs_dir}}/etc/"
+  when: "custom_network_detect is defined"
+
+- name: Configure additional board for network detection
+  lineinfile:
+    path: "{{ configs_dir }}/etc/board.d/02_network"
+    insertafter: '^case.*board_name.*\n'
+    line: "{{ custom_network_detect }}"
+  when: "custom_network_detect is defined"
 
 - name: Run Imagebuilder
   changed_when: false
