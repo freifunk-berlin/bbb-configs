@@ -1,0 +1,63 @@
+---
+override_target: generic
+target: x86/64
+image_search_pattern: "*-ext4-combined-efi.img*"
+model_nice: Protectli Vault Pro VP6630
+int_port: eth5 # 2nd SFP+ Port
+wireless_profile: disable
+
+openwrt_version: 24.10-SNAPSHOT
+
+model__packages__to_merge:
+  # Dont install unncessary network kernel modules (reference: https://github.com/openwrt/openwrt/blob/main/target/linux/x86/image/64.mk)
+  - "-kmod-amazon-ena -kmod-amd-xgbe -kmod-bnx2 -kmod-dwmac-intel -kmod-e1000e -kmod-e1000"
+  - "-kmod-forcedeth -kmod-igb -kmod-ixgbe -kmod-r8169 -kmod-tg3"
+  - "intel-microcode"
+  - "kmod-igc kmod-i40e" # Network: Only igc for 2.5G Ports and i40 for SFP+ Ports are required
+#  - "kmod-it87-wdt" # Watchdog (only supported in kernel 6.8+)
+  - "lm-sensors"
+#  - "kmod-hwmon-it87" # Not yet supported in mainline
+
+
+# -> Install latest BIOS update https://kb.protectli.com/kb/bios-versions-for-the-vault/
+# -> Install latest firmware (nvm) for 10G NIC
+# Instructions:
+# - Download Latest Release https://www.intel.de/content/www/de/de/download/18190/non-volatile-memory-nvm-update-utility-for-intel-ethernet-network-adapter-700-series.html
+# - Copy EFI Version along with a edk2 efishell on a USB Key
+# - Boot
+# - fs0:
+# - cd 700Series/EFI2x64
+# - nvmupdate64e.efi
+
+# Port Mapping changed from 24.10 and onwards
+# eth0 - Port 1 (igc, 2,5G)
+# eth1 - Port 2 (igc, 2,5G)
+# eth2 - Port 3 (igc, 2,5G)
+# eth3 - Port 4 (igc, 2,5G)
+# eth4 - SFP+ 1 (i40e, 10G)
+# eth5 - SFP+ 2 (i40e, 10G)
+
+
+# Overriding network names doesnt work with dynamically loaded kmods, because preinit is faster
+## Make interface names stable and match them to whats written on the case
+## TODO: Investigate and bring upstream
+#  protectli-vp6630)
+#          ucidef_set_network_device_path "sfp1" "pci0000:00/0000:00:1c.0/0000:01:00.0"
+#          ucidef_set_network_device_path "sfp2" "pci0000:00/0000:00:1c.0/0000:01:00.1"
+#          ucidef_set_network_device_path "eth1" "pci0000:00/0000:00:1c.4/0000:02:00.0"
+#          ucidef_set_network_device_path "eth2" "pci0000:00/0000:00:1c.5/0000:03:00.0"
+#          ucidef_set_network_device_path "eth3" "pci0000:00/0000:00:1c.6/0000:04:00.0"
+#          ucidef_set_network_device_path "eth4" "pci0000:00/0000:00:1c.7/0000:05:00.0"
+#          ucidef_set_interfaces_lan_wan "eth1 eth2 eth3 eth4 sfp1" "sfp2"
+#          ;;
+
+
+# Device has two console ports
+# ttyS0 - RJ45 Port
+# ttyS1 - USB-C Port <- Lets use choose that for on site debugging
+
+additional_serial_ports:
+  - ttyS1
+
+imagebuilder_config:
+  CONFIG_TARGET_SERIAL: ttyS1
