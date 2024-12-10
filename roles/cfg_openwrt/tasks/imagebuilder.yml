@@ -141,6 +141,28 @@
     search_string: "compat_version=$(if $(DEVICE_COMPAT_VERSION),$(DEVICE_COMPAT_VERSION),1.0)"
     line: "compat_version=9.9"
 
+- name: Override Imagebuilder .config
+  lineinfile:
+    path: "{{ build_dir }}/.config"
+    search_string: "{{ item.key }}="
+    line: "{{ item.key }}={{ item.value }}"
+  loop: "{{ imagebuilder_config | default({}) | dict2items }}"
+
+
+- name: Copy over upstream inittab as base to modify
+  copy:
+    src: "{{ build_dir }}/target/linux/{{ (target|split('/'))[0] }}/base-files/etc/inittab"
+    dest: "{{ configs_dir}}/etc/"
+  when: "additional_serial_ports is defined"
+
+- name: Configure additional serial ports in inittab
+  lineinfile:
+    path: "{{ configs_dir }}/etc/inittab"
+    insertafter: '^ttyS\d.*\n'
+    line: "{{ item }}::askfirst:/usr/libexec/login.sh"
+  loop: "{{ additional_serial_ports | default([]) }}"
+
+
 - name: Run Imagebuilder
   changed_when: false
   command:
