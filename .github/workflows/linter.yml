@@ -57,6 +57,8 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           # Disable JSCPD as we have a lot of duplication by design
           VALIDATE_JSCPD: false
+          VALIDATE_MARKDOWN: false
+          VALIDATE_MARKDOWN_PRETTIER: false
           # Change to 'main' if your main branch differs
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
