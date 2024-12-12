@@ -1,18 +1,68 @@
 #!/usr/bin/env bash
 
+#
+# This script's output is a JSON object containing an array of all host names,
+# and an array with the initial hostvars for each host.
+# More information on inventory construction can be found at
+# https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html
+#
+# The queries and conversions are done with the help of the `jq` and `yq` tools.
+#
+# We first grab the JSON representation of every location YAML definition,
+# then read `.hosts[].hostname` for each location to create the list of all hosts.
+#
+# Usually Ansible then calls this script with `--host <name>` for every host.
+# That does get very slow with hundreds of hosts,
+# which is why Ansible allows for constructing all hostvars objects in advance.
+#
+# To construct the hostvars object for a host,
+# we take as a base the full location object (without `.hosts`),
+# then merge the object from `.hosts[]` with a matching `hostname` value.
+# This way, host values overwrite location values.
+# (We actually merge host<-location<-host to preserve JSON ordering.)
+#
+# Example location file:
+#
+#   ---
+#   location: pktpls
+#   hosts:
+#     - hostname: pktpls-core
+#       role: corerouter
+#       string: host-var-has-precedence
+#       object: { two: 456 }
+#       array: [ bar ]
+#   string: will-be-overridden
+#   object: { one: 123 }
+#   array: [ foo ]
+#
+# Resulting hostvars object, before keyed groups being applied:
+#
+#   {
+#     "location": "pktpls",
+#     "hostname": "pktpls-core",
+#     "role": "corerouter",
+#     "string": "host-var-has-precedence",
+#     "object": {
+#       "two": 456
+#     },
+#     "array": [
+#       "bar"
+#     ]
+#   }
+#
+
 set -e
 # set -x
 
 case "$1" in
 --host)
-    # No op - won't be called by Ansible anymore because --list contains all data.
-    # See https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#tuning-the-external-inventory-script
+    # No op, only ever called with --list
     echo "{}"
     exit 0
     ;;
 --list)
     # Print all location files as consecutive JSON objects.
-    # Later jq -s/--slurp will read these as one top-level array of objects.
+    # Further down, jq -s/--slurp reads these as one top-level array of objects.
     locjson="$(yq '.' locations/*.yml)"
     cat <<EOF
 {
