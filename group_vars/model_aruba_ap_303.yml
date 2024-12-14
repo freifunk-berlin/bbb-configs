@@ -1,0 +1,19 @@
+---
+target: ipq40xx/generic
+brand_nice: Aruba
+model_nice: Instant On AP11
+
+dsa_ports:
+  - lan
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: VHT
+    path: platform/soc/a800000.wifi
+    ifname_hint: wlan5
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: platform/soc/a000000.wifi
+    ifname_hint: wlan2
