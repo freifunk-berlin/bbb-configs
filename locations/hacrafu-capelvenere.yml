@@ -1,0 +1,93 @@
+---
+
+location: hacrafu-capelvenere
+location_nice: Dorfstraße 67, 15370 Petershagen
+latitude: 52.52376838135979
+longitude: 13.770141894083322
+contact_name: "Hacken Craften Funken e.V."
+contact_nickname: "HaCraFu"
+contacts:
+  - "freifunk@hacrafu.de"
+
+hosts:
+
+  - hostname: hacrafu-capelvenere-core
+    role: corerouter
+    model: "cudy_wr3000-v1"
+    wireless_profile: freifunk_hacrafu
+
+ipv6_prefix: "2001:bf7:850:1a00::/56"
+
+# dhcp      10.31.239.96/28
+# mesh5     10.31.54.200/32
+# mesh2     10.31.54.201/32
+# MGMT      10.31.54.202/32
+# TUNNEL    10.248.22.36/31
+
+# Disable noping
+# dhcp_no_ping: false
+
+networks:
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.54.200/32
+    ipv6_subprefix: -20
+    mesh_ap: hacrafu-capelvenere-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.54.201/32
+    ipv6_subprefix: -21
+    mesh_ap: hacrafu-capelvenere-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    untagged: false
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.31.239.96/28
+    ipv6_subprefix: 0
+    assignments:
+      hacrafu-capelvenere-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.54.202/32
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      hacrafu-capelvenere-core: 1
+
+  # UPLINK
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.22.36/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.248.22.37/32
+    wireguard_port: 51821
+
+# only place this ssh-keys
+ssh_keys:
+  - comment: Tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz tom_hacrafu

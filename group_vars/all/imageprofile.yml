@@ -6,7 +6,7 @@ imagebuilder_suffix: zst # Might get overridden for older openwrt versions
 imagebuilder_filename: "openwrt-imagebuilder-{{ openwrt_version }}-{{ target | replace('/', '-') }}.Linux-x86_64.tar.{{ imagebuilder_suffix }}"
 
 imagebuilder: "https://downloads.cdn.openwrt.org/{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}/targets/{{ target }}/{{ imagebuilder_filename }}"
-feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/__FEED_VERSION__/packages/__INSTR_SET__/falter"
+feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/{{ instr_set }}/falter"
 
 
 all__packages__to_merge:
@@ -18,7 +18,8 @@ all__packages__to_merge:
   - collectd-mod-ping
   - collectd-mod-uptime
   - ethtool
-  - ip6tables                  # Its not pulled in by default anymore bc fw4
+  - ip6tables-nft                  # Its not pulled in by default anymore bc fw4
+  - iptables-nft
   - iperf3
   - iwinfo
   - ip
@@ -35,6 +36,7 @@ all_luci_base__packages__to_merge:
   - luci-mod-admin-full
   - luci-proto-ipv6
   - luci-theme-bootstrap
+  - px5g-mbedtls
   - rpcd-mod-rrdns
   - uhttpd
   - uhttpd-mod-ubus

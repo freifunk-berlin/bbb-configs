@@ -1,0 +1,16 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+
+config defaults
+  option syn_flood '1'
+  option input 'ACCEPT'
+  option output 'ACCEPT'
+  option forward 'REJECT'
+  option drop_invalid '0'
+
+config zone 'zone_freifunk'
+  option name 'freifunk'
+  list network 'mgmt'
+
+config forwarding
+  option dest 'freifunk'
+  option src 'freifunk'

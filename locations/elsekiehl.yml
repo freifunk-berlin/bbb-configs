@@ -29,6 +29,8 @@ hosts:
     role: corerouter
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
+    openwrt_version: 24.10-SNAPSHOT
+    log_size: 1024
 
 ipv6_prefix: '2001:bf7:820:1800::/56'
 
@@ -81,23 +83,6 @@ networks:
     ipv6_subprefix: 1
     assignments:
       elsekiehl-core: 1
-
-  # WIREGUARD
-  - vid: 50
-    role: uplink
-    untagged: true
-
-  - role: tunnel
-    ifname: ts_wg0
-    mtu: 1280
-    prefix: 10.31.179.40/32
-    wireguard_port: 51820
-
-  - role: tunnel
-    ifname: ts_wg1
-    mtu: 1280
-    prefix: 10.31.179.41/32
-    wireguard_port: 51821
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
