@@ -1,4 +1,6 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% import 'libraries/network.j2' as libnetwork with context %}
+
 config defaults
 	option syn_flood	1
 	option input		ACCEPT
@@ -174,4 +176,53 @@ config rule
 	option dest_port	'{{ rule['dst_port'] }}'
   {% endif %}
 	option target		ACCEPT
+{% endfor %}
+
+# Allow traffic from Internet to inbound_filtered networks unconditionally
+config rule
+	option name		'Accept Traffic to inbound_filtered networks'
+	option src		uplink
+	option dest		freifunk
+	option ipset		'inbound_filtered_networks dest'
+	option target		ACCEPT
+
+# Dont track (Internet -> inbound_filtered_networks)
+config rule
+	option name		'Dont track (Internet -> inbound_filtered_networks)'
+	option src		uplink
+	option dest		freifunk # see note below
+	option ipset		'inbound_filtered_networks dest'
+	option target		NOTRACK
+
+# Dont track (Internet via GRE -> inbound_filtered_networks)
+config rule
+	option name		'Dont track (Internet via GRE -> inbound_filtered_networks)'
+	option src		freifunk
+	option dest		freifunk # see note below
+	option ipset		'inbound_filtered_networks dest'
+	option target		NOTRACK
+
+# Dont track (inbound_filtered_networks -> Internet + Internet via GRE)
+config rule
+	option name		'Dont track (inbound_filtered_networks -> Internet + Internet via GRE)'
+	option src		freifunk
+	option dest		uplink # see note below
+	option ipset		'inbound_filtered_networks src'
+	option target		NOTRACK
+
+# Note: option dest actually has no impact in rendered nftables config by fw4, because
+# NOTRACK needs to be set on prerouting, where the outbound interface is not determined,
+# but is necessary in order to let fw4 know this is a forwarding rule.
+
+config ipset
+	option name 'inbound_filtered_networks'
+	option match 'net'
+	option family 'ipv6'
+{% for h in groups['role_corerouter'] %}
+  {% set h_vars = hostvars[h] %}
+  {% for network in h_vars['networks']
+              | selectattr('inbound_filtering', 'defined') | selectattr('inbound_filtering')
+              | selectattr('ipv6_subprefix', 'defined') %}
+	list entry	'{{ h_vars['ipv6_prefix'] |  ansible.utils.ipsubnet(64, network['ipv6_subprefix']) }}' # {{ h }} - {{ libnetwork.getUciIfname(network) }}
+  {% endfor %}
 {% endfor %}
