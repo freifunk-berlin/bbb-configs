@@ -32,14 +32,9 @@ protocol kernel kernel_v6_main {
 protocol kernel kernel_v4_main {
 	ipv4 {
 		table v4_main;
-		import filter {
-			if net != 0.0.0.0/0 then reject; # Import only Default Gateway from kernel
-			preference = 200; # Increase preference to beat babel route
-			accept;
-		};
+		import none;
 		export none;
 	};
-	learn all;
 }
 
 protocol kernel kernel_v4_babel_ff {
@@ -72,6 +67,21 @@ protocol pipe pipe_v4_main_to_babel_default {
 	peer table v4_babel_default;
 	export where net = 0.0.0.0/0;
 	import none;
+}
+
+##
+## Uplink static IPv4 route
+##
+{% if uplink['ipv4'] | ansible.utils.ipaddr('prefix') >= 30 %}
+  {% set v4_nexthop =  uplink['ipv4'] | ansible.utils.ipaddr('peer') %}
+{% else %}
+  {% set v4_nexthop =  uplink['ipv4'] | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') %}
+{%- endif %}
+
+protocol static static_uplink {
+	ipv4 { table v4_main; };
+	check link;
+	route 0.0.0.0/0 via {{ v4_nexthop }} dev "{{ uplink['ifname'] }}";
 }
 
 ##
