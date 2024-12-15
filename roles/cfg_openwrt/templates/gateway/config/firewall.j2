@@ -1,4 +1,6 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% import 'libraries/network.j2' as libnetwork with context %}
+
 config defaults
 	option syn_flood	1
 	option input		ACCEPT
@@ -59,6 +61,10 @@ config include
 	option type 		nftables
 	option path		/etc/custom_fw_includes/table_prepend_redirect_samplicator
 	option position		table-prepend
+
+#
+## Inbound to host
+#
 
 {% if 'ipv6' in uplink %}
 config rule
@@ -135,22 +141,50 @@ config rule
 	option family		ipv6
 	option target		ACCEPT
 
-# Allow essential forwarded IPv6 ICMP traffic
+
+#
+## Foward / Inbound to mesh
+#
+
+# Allow traffic from Internet to inbound_filtered networks unconditionally
 config rule
-	option name		Allow-ICMPv6-Forward
+	option name		'Accept Traffic to inbound_filtered networks'
 	option src		uplink
-	option dest		*
-	option proto		icmp
-	list icmp_type		echo-request
-	list icmp_type		echo-reply
-	list icmp_type		destination-unreachable
-	list icmp_type		packet-too-big
-	list icmp_type		time-exceeded
-	list icmp_type		bad-header
-	list icmp_type		unknown-header-type
-	option limit		1000/sec
-	option family		ipv6
+	option dest		freifunk
+	option ipset		'inbound_filtered_networks dest' # defined at EOF
+	option proto		all
 	option target		ACCEPT
+
+# Dont track (Internet -> inbound_filtered_networks)
+config rule
+	option name		'Dont track (Internet -> inbound_filtered_networks)'
+	option src		uplink
+	option dest		* # see note below
+	option ipset		'inbound_filtered_networks dest' # defined at EOF
+	option proto		all
+	option target		NOTRACK
+
+# Dont track (Internet via GRE -> inbound_filtered_networks)
+config rule
+	option name		'Dont track (Internet via GRE -> inbound_filtered_networks)'
+	option src		freifunk
+	option dest		* # see note below
+	option ipset		'inbound_filtered_networks dest' # defined at EOF
+	option proto		all
+	option target		NOTRACK
+
+# Dont track (inbound_filtered_networks -> Internet + Internet via GRE)
+config rule
+	option name		'Dont track (inbound_filtered_networks -> Internet + Internet via GRE)'
+	option src		freifunk
+	option dest		* # see note below
+	option ipset		'inbound_filtered_networks src'
+	option proto		all
+	option target		NOTRACK
+
+# Note: option dest actually has no impact in rendered nftables config by fw4, because
+# NOTRACK needs to be set on prerouting, where the outbound interface is not determined,
+# but is necessary in order to let fw4 know this is a forwarding rule.
 
 # Allow list via group_vars/role_gateway/general.yml
 {% for rule in inbound_allow | default([]) %}
@@ -174,4 +208,35 @@ config rule
 	option dest_port	'{{ rule['dst_port'] }}'
   {% endif %}
 	option target		ACCEPT
+{% endfor %}
+
+# Allow essential forwarded IPv6 ICMP traffic
+config rule
+	option name		Allow-ICMPv6-Forward
+	option src		uplink
+	option dest		*
+	option proto		icmp
+	list icmp_type		echo-request
+	list icmp_type		echo-reply
+	list icmp_type		destination-unreachable
+	list icmp_type		packet-too-big
+	list icmp_type		time-exceeded
+	list icmp_type		bad-header
+	list icmp_type		unknown-header-type
+	option limit		1000/sec
+	option family		ipv6
+	option target		ACCEPT
+
+# ipset for stateful firewall bypass
+config ipset
+	option name 'inbound_filtered_networks'
+	option match 'net'
+	option family 'ipv6'
+{% for h in groups['role_corerouter'] %}
+  {% set h_vars = hostvars[h] %}
+  {% for network in h_vars['networks']
+              | selectattr('inbound_filtering', 'defined') | selectattr('inbound_filtering')
+              | selectattr('ipv6_subprefix', 'defined') %}
+	list entry	'{{ h_vars['ipv6_prefix'] |  ansible.utils.ipsubnet(64, network['ipv6_subprefix']) }}' # {{ h }} - {{ libnetwork.getUciIfname(network) }}
+  {% endfor %}
 {% endfor %}
