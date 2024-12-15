@@ -9,6 +9,8 @@ hosts:
   - hostname: saarbruecker-gw
     role: gateway
     model: "protectli_vps6630"
+    host__packages__to_merge:
+      - naywatch
 
 snmp_devices:
   - hostname: saarbruecker-sw
