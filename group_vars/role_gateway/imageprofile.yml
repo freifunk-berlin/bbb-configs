@@ -7,7 +7,6 @@ role_uplink_gw__packages__to_merge:
   - collectd-mod-snmp6
   - olsrd
   - olsrd-mod-arprefresh
-  - olsrd-mod-dyn-gw
   - olsrd-mod-jsoninfo
   - olsrd-mod-nameservice
   - olsrd-mod-txtinfo
