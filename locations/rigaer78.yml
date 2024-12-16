@@ -53,12 +53,15 @@ hosts:
   - hostname: rigaer78-back-floor-2-kitchen
     role: ap
     model: "avm_fritzbox-4040"
-    port_untag: {40: [lan1, lan2, lan3]}
+    host__rclocal__to_merge:
+      - |
+        # Untag DHCP on some ports
+        uci set network.vlan_40.ports='lan1:t lan2 lan3 lan4 wan'
+        uci commit network; reload_config
 
   - hostname: rigaer78-back-floor-3-left
     role: ap
     model: "siemens_ws-ap3610"
-    port_untag: {40: [lan1, lan2, lan3]}
 
   - hostname: rigaer78-back-floor-3-right
     role: ap
@@ -72,6 +75,11 @@ hosts:
     role: ap
     model: "avm_fritzbox-7530"
     port_untag: {40: [lan1, lan2, lan3]}
+    host__rclocal__to_merge:
+      - |
+        # Untag DHCP on some ports
+        uci set network.vlan_40.ports='lan1:t lan2 lan3 lan4'
+        uci commit network; reload_config
 
   - hostname: rigaer78-east-2ghz
     role: ap
@@ -211,7 +219,3 @@ location__channel_assignments_11a_standard__to_merge:
   rigaer78-back-floor-1-right: 44-20
   rigaer78-back-floor-1-left: 40-20
   rigaer78-back-floor-0-garage: 36-20
-
-# Special vlan config:
-# rigaer78-back-floor-4-right 40: 0t 1t 2 3 4
-# rigaer78-back-floor-2-kitchen 40: 0t 1t 2 3 4
