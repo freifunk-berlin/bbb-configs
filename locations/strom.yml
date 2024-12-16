@@ -7,6 +7,9 @@ longitude: 13.342632651
 altitude: 55
 community: true
 
+local_asn: 65023
+peer_asn: 44194
+
 hosts:
 
   # Thinkcentre M720q, i5-8500T, 16GB RAM, 256GB NVMe
@@ -54,7 +57,7 @@ ipv6_prefix: 2001:bf7:750:2a00::/56
 uplink:
   ifname: eth0.1301
   ipv4: 77.87.51.131/25
-  # ipv6: none
+  ipv6: 2001:bf7:b301:2342::1/127
 
 mgmt:
   ifname: eth0.42
