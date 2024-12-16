@@ -28,11 +28,11 @@ hosts:
     mac_override:
       eth0: 08:55:31:12:9f:12
 
-  - hostname: dorfplatz-ap3
+  - hostname: dorfplatz-ap-hinterhof
     role: ap
     model: "tplink_eap225-outdoor-v1"
 
-  - hostname: dorfplatz-keimzelle
+  - hostname: dorfplatz-ap-keimzelle
     role: ap
     model: "avm_fritzbox-4040"
 
@@ -78,8 +78,8 @@ networks:
       dorfplatz-sama: 3
       dorfplatz-ap1: 14
       dorfplatz-ap2: 13
-      dorfplatz-ap3: 12
-      dorfplatz-keimzelle: 11
+      dorfplatz-ap-hinterhof: 12
+      dorfplatz-ap-keimzelle: 11
 
 location__channel_assignments_11a_standard__to_merge:
   dorfplatz-ap1: 36-20
