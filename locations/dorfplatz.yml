@@ -45,10 +45,6 @@ snmp_devices:
     address: 10.31.75.35
     snmp_profile: airos_8
 
-  - hostname: dorfplatz-zwingli
-    address: 10.31.75.36
-    snmp_profile: airos_8
-
 
 ipv6_prefix: "2001:bf7:830:8200::/56"
 
@@ -59,13 +55,6 @@ networks:
     name: mesh_sama
     prefix: 10.31.74.220/32
     ipv6_subprefix: -1
-    ptp: true
-
-  - vid: 11
-    role: mesh
-    name: mesh_zwingli
-    prefix: 10.31.74.221/32
-    ipv6_subprefix: -2
     ptp: true
 
   - vid: 40
@@ -87,7 +76,6 @@ networks:
       dorfplatz-core: 1
       dorfplatz-poe-switch: 2
       dorfplatz-sama: 3
-      dorfplatz-zwingli: 4
       dorfplatz-ap1: 14
       dorfplatz-ap2: 13
       dorfplatz-ap3: 12
