@@ -198,9 +198,7 @@ config rule
   {% if 'src' in rule %}
 	option src_ip		'{{ rule['src'] }}'
   {% endif %}
-  {% if 'proto' in rule %}
-	option proto		'{{ rule['proto'] }}'
-  {% endif %}
+	option proto		'{{ rule.get('proto', 'all') }}'
   {% if 'src_port' in rule %}
 	option src_port		'{{ rule['src_port'] }}'
   {% endif %}
