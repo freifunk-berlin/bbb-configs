@@ -8,7 +8,7 @@ community: true
 hosts:
   - hostname: camp2-core
     role: corerouter
-    model: "glinet_gl-mt1300"
+    model: "mikrotik_wap-ac"
     wireless_profile: freifunk_default
     packages__to_merge:
       - "kmod-usb-net-rndis"
