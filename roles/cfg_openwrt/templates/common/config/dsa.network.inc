@@ -9,7 +9,7 @@ config device
     {{ portmapping.append(port|string + (":t" if tagged else "")) }}
   {%- endfor %}
 
-config bridge-vlan
+config bridge-vlan 'vlan_{{ network['vid'] }}'
 	option device 'switch0'
 	option vlan '{{ network['vid'] }}'
 	option ports '{{ portmapping|join(' ') }}'
