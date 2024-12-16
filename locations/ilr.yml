@@ -19,55 +19,12 @@ hosts:
     # custom switch config script. Should be applied with a mechanism, that
     # includes files into root files system later on.
     host__rclocal__to_merge:
-      - '#'
-      - '# This script adjusts the configuration of vlans. This is especially'
-      - '# useful with uswflex and custom port configs'
-      - '#'
-      - ' '
-      - '. /lib/functions.sh'
-      - ' '
-      - 'handle_vlans() {'
-      - '	# untag the vlans on different ports based on their id'
-      - '	local uci_section="$1"'
-      - ' '
-      - '	config_get vlan "$uci_section" vlan'
-      - '	config_get ports "$uci_section" ports'
-      - ' '
-      - ' '
-      - '	case "$vlan" in'
-      - '		10)'
-      - '			# untag payload traffic for AF60 to Teufelsberg'
-      - "			port_config='lan1:t lan2 lan3:t lan4:t lan5:t' ;;"
-      - '		40)'
-      - '			# untag DHCP on ports 1 and 5 for convenient maintenance'
-      - "			port_config='lan1 lan2:t lan3:t lan4:t lan5' ;;"
-      - '		*)'
-      - '			# do nothing for the other vlans'
-      - '			return'
-      - '	esac'
-      - ' '
-      - '	# abort if config is applied already'
-      - '	if [ "$ports" = "$port_config" ]; then'
-      - '		printf "Vlan %d applied already.\n" "$vlan"'
-      - '		return'
-      - '	fi'
-      - ' '
-      - '	printf "Port number: %d\n" "$vlan"'
-      - '	printf "Port config: %s\n" "$port_config"'
-      - ' '
-      - '	printf "Configuring %s... " "$uci_section"'
-      - '	uci_set network "$uci_section" ports "$port_config"'
-      - '	printf "Done.\n"'
-      - '}'
-      - ' '
-      - 'config_load network'
-      - ' '
-      - 'config_foreach handle_vlans "bridge-vlan"'
-      - ' '
-      - 'uci commit network'
-      - 'sync'
-      - 'reload_config'
-
+      - |
+        # untag payload traffic for AF60 to Teufelsberg
+        uci set network.vlan_10.ports='lan1:t lan2 lan3:t lan4:t lan5:t'
+        # untag DHCP on ports 1 and 5 for convenient maintenance'
+        uci set network.vlan_40.ports='lan1 lan2:t lan3:t lan4:t lan5'
+        uci commit network; reload_config
 
 snmp_devices:
   - hostname: ilr-teufb
