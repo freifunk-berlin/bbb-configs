@@ -3,10 +3,14 @@ target: ath79/generic
 brand_nice: TP-Link
 model_nice: CPE210
 version_nice: v1
+openwrt_version: snapshot
 
 # PoE port is eth1, 2nd port is eth0
 # override port in host_vars if required
 int_port: eth1
+
+low_mem: true
+low_flash: true
 
 wireless_devices:
   - name: 11g_standard

@@ -1,7 +1,6 @@
 ---
 role_corerouter__packages__to_merge:
   - babeld
-  - luci-app-babeld
   - collectd-mod-dhcpleases
   - collectd-mod-olsrd
   - collectd-mod-conntrack
@@ -13,13 +12,5 @@ role_corerouter__packages__to_merge:
   - olsrd-mod-nameservice
   - olsrd-mod-txtinfo
   - olsrd-utils
-  - luci-app-olsr
-  - luci-app-olsr-services
-  - luci-mod-falter
-  - falter-common
-  - luci-app-falter-owm
-  - luci-app-falter-owm-ant
-  - luci-app-falter-owm-cmd
-  - luci-app-falter-owm-gui
   - iptables-mod-ipopt
   - kmod-ipt-ipopt

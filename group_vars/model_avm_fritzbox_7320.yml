@@ -6,6 +6,7 @@ model_nice: FRITZ!Box 7320
 
 int_port: eth0
 low_mem: true
+low_flash: true
 
 wireless_devices:
   - name: 11g_standard
