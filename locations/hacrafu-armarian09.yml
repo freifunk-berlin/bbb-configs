@@ -87,6 +87,14 @@ networks:
     prefix: 10.248.23.193/32
     wireguard_port: 51821
 
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hacrafu-armarian09-core: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hacrafu-armarian09-core: 13-20
+
 # only place this ssh-keys
 ssh_keys:
   - comment: Tom
