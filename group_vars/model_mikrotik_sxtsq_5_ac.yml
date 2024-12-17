@@ -3,6 +3,8 @@ target: ipq40xx/mikrotik
 brand_nice: MikroTik
 model_nice: SXTsq 5 ac
 
+openwrt_version: 24.10-SNAPSHOT
+
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"
   - "kmod-ath10k ath10k-firmware-qca4019"
