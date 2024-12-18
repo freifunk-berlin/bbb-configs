@@ -1,0 +1,21 @@
+---
+override_target: "arcadyan_arv8539pw22"
+target: lantiq/xway
+brand_nice: Speedport
+model_nice: W 504V Typ A
+
+switch_ports: 6
+switch_int_port: 0
+switch_ignore_ports: [1]
+
+int_port: eth0
+
+low_mem: true
+low_flash: true
+
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: pci0000:00/0000:00:0e.0
+    ifname_hint: wlan2
