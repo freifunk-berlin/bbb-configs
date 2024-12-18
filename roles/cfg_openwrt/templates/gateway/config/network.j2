@@ -53,9 +53,21 @@ config interface 'mgmt'
 {% endif %}
 
 
+{% if uplink['ipv4'] | ansible.utils.ipaddr('prefix') >= 30 %}
+  {% set ipv4_uplink_gw = uplink['ipv4'] | ansible.utils.ipaddr('peer') %}
+{% else %}
+  {% set ipv4_uplink_gw = uplink['ipv4'] | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') %}
+{% endif %}
+
 # gre doesnt support _ in name
 {% for gateway in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
 {% set name = hostvars[gateway]['gre_tunnel_alias'] %}
+
+config route 'route_gre_{{ name }}'
+	option interface 'uplink'
+	option target '{{ hostvars[gateway]['uplink']['ipv4'] | ansible.utils.ipaddr('address') }}/32'
+	option gateway '{{ ipv4_uplink_gw }}'
+
 config interface '{{ name }}'
 	option proto 'gre'
 	option ipaddr '{{ uplink['ipv4'] | ansible.utils.ipaddr('address') }}'
