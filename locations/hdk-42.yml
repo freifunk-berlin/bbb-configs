@@ -1,0 +1,73 @@
+---
+location: hdk-42
+location_nice: Heidekampgraben 42
+latitude: 52.478800921
+longitude: 13.471823930
+community: true
+
+hosts:
+  - hostname: hdk-42
+    role: corerouter
+    model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+
+ipv6_prefix: '2001:bf7:840:2200::/56'
+
+# Router: 10.248.6.128/26 2001:bf7:840:2200::/56
+# --MGMT: 10.248.6.128/28
+# --MESH: 10.248.6.144/28
+# --DHCP: 10.248.6.160/27
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.6.160/27
+    ipv6_subprefix: 0
+    assignments:
+      hdk-42: 1
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.248.6.144/32
+    ipv6_subprefix: -20
+    mesh_ap: hdk-42
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.6.145/32
+    ipv6_subprefix: -21
+    mesh_ap: hdk-42
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.6.128/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      # 10.248.6.129/28
+      hdk-42: 1
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hdk-42: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hdk-42: 13-20
