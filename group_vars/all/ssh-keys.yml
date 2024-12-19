@@ -28,3 +28,5 @@ all__ssh_keys__to_merge:
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaljQHr4Nj6veeDi51BZjy/a3WXPmH8SLePB/s/owNy noxil@systemli.org
   - comment: rtznprmpftl
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHZ5H1Y3o30QvU3ohtXiWZUgw9fIGxvW35STG7vICF8O localghost
+  - comment: zwei
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCRGC0uZwq7vmiGkWxuOWG/mHV2uASR9+nHl2N+xeCsjuCLCw8gC0oAGx2M1/dnweUvHjHp5EIyz8kWtSqbfwBYg1qT8tAVqWO+ZmbNv6qYh7qRoIlMwZG30YxqqVMJ1jCi/HysrsbHljO4DV4e1o6uhZpeqWhr80+IidOicHrwIEfE+tJ1dWdzvL4sTR3mFso3dXXnwqoXJN8eItml4IVuREumG32Bfmj6d5TdhOG7cnjzSpfQbsZm3aO2fNNTqOpeXtuSqU4xoSTAuRyl/xg+PkU1AegUtf/p+opY7sNXT4LJO89hG+mNj4mwHaPzGDcuwIkfHSMMH6R8Ko+7oLbv/TG9z4sdelPiefluPo54cHkgWuhvZjfbTAzfnhyFJ910MpCa3ag0pxj/xr7DBDU/cfcm+q2PKCLzRb1Vfu4brRHURGc06/qIraa7QcwPqqixp6OcaZK3HNzGl03fBpGtJ2MET1qLGqRcMnL49aOQUo59jw8SdhIw7utE0+FU4/M= Zwei
