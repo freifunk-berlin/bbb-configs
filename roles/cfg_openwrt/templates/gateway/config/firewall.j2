@@ -48,7 +48,7 @@ config forwarding
 config include
 	option type 		nftables
 	option path		/etc/custom_fw_includes/chain_prepend_forward_uplink_allow_unestablished_flows
-	option position		chain-prepend
+	option position		chain-post
 	option chain 		'forward_uplink'
 
 config include
