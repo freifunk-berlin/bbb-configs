@@ -221,7 +221,7 @@ config rule
 	list icmp_type		time-exceeded
 	list icmp_type		bad-header
 	list icmp_type		unknown-header-type
-	option limit		1000/sec
+	option limit		10000/sec
 	option family		ipv6
 	option target		ACCEPT
 
