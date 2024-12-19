@@ -24,6 +24,15 @@ config LoadPlugin
 	option library 'olsrd_txtinfo'
 	option port '2006'
 
+config LoadPlugin
+	option library 'olsrd_dyn_gw'
+	list Ping '46.182.19.48'
+	list Ping '80.67.169.40'
+	list Ping '194.150.168.168'
+	option ignore '0'
+	option PingCmd 'ping -c 1 -q -I {{ uplink['ifname'] }} %s'
+	option PingInterval '30'
+
 config olsrd
 	option IpVersion '4'
 	option FIBMetric 'flat'
@@ -36,13 +45,6 @@ config olsrd
 	option OlsrPort '698'
 	option Willingness '3'
 	option TosValue '16'
-	option RtTable '20'
-	option RtTableDefault '21'
-# set rule priorities to some random high numbers to make sure they are never used
-# We define our own route policies in /etc/config/network
-	option RtTablePriority '34000'
-	option RtTableTunnelPriority '34020'
-	option RtTableDefaultPriority '34030'
   {% if sgw is defined and sgw %}
 	option SmartGateway 'yes'
 	option SmartGatewayUplink 'both'
@@ -69,17 +71,10 @@ config Interface
 	option Mode '{{ 'ether' if interface.get('ptp') else 'mesh' }}'
 	option LinkQualityMult 'default 1.0'
   {% endfor %}
-{% endif %}
 
-{% if mgmt is defined %}
+  {% if mgmt is defined %}
 config Hna4
 	option netmask '{{ mgmt['ipv4'] | ansible.utils.ipaddr('netmask') }}'
 	option netaddr '{{ mgmt['ipv4'] | ansible.utils.ipaddr('network') }}'
+  {% endif %}
 {% endif %}
-
-# Announce default route, its anyways not used for forwarding within BBB
-# We only need it to attract traffic from legacy mesh nodes, until babel
-# takes over in our core network
-config Hna4
-	option netmask '0.0.0.0'
-	option netaddr '0.0.0.0'

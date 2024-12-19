@@ -1,17 +1,3 @@
-# IPv4 Soft Migration by priotizing Babel over OLSR
-# Static default Route is set by bird
-config rule
-	option priority 33100
-	option lookup 'babel-ff'
-
-config rule
-	option priority 33101
-	option lookup 'olsr-ff'
-
-config rule
-	option priority 33200
-	option lookup 'babel-default'
-
 config interface 'loopback'
 	option device 'lo'
 	option proto 'static'
@@ -26,9 +12,9 @@ config interface 'uplink'
 	option proto 'static'
 	option ipaddr '{{ uplink['ipv4'] }}'
 {% if uplink['ipv4'] | ansible.utils.ipaddr('prefix') >= 30 %}
-#	option gateway '{{ uplink['ipv4'] | ansible.utils.ipaddr('peer') }}'
+	option gateway '{{ uplink['ipv4'] | ansible.utils.ipaddr('peer') }}'
 {% else %}
-#	option gateway '{{ uplink['ipv4'] | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') }}'
+	option gateway '{{ uplink['ipv4'] | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') }}'
 {% endif %}
 {% if 'ipv6' in uplink %}
 	option ip6addr '{{ uplink['ipv6'] }}'
