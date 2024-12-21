@@ -1,0 +1,73 @@
+---
+location: hdk-85b
+location_nice: Heidekampgraben 85b
+latitude: 52.479624490
+longitude: 13.47
+community: true
+
+hosts:
+  - hostname: hdk-85b
+    role: corerouter
+    model: "tplink_eap225-outdoor-v3"
+    wireless_profile: freifunk_default
+
+ipv6_prefix: '2001:bf7:840:2a00::/56'
+
+# Router: 10.248.8.64/26 2001:bf7:840:2a00::/56
+# --MGMT: 10.248.8.64/28
+# --MESH: 10.248.8.80/28
+# --DHCP: 10.248.8.96/27
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.248.8.80/32
+    ipv6_subprefix: -20
+    mesh_ap: hdk-85b
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.8.81/32
+    ipv6_subprefix: -21
+    mesh_ap: hdk-85b
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.8.96/27
+    ipv6_subprefix: 0
+    assignments:
+      hdk-85b: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.8.64/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      # 10.248.8.65
+      hdk-85b: 1
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hdk-85b: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hdk-85b: 13-20
