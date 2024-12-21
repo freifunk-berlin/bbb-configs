@@ -1,0 +1,101 @@
+---
+
+location: hacrafu-marubini
+location_nice: Gartenstr. 20, 15345 Petershagen/Eggersdorf
+latitude: 52.536130000000000
+longitude: 13.818160000000001
+contact_name: "Hacken Craften Funken e.V."
+contact_nickname: "HaCraFu e.V."
+contacts:
+  - "freifunk@hacrafu.de"
+
+hosts:
+
+  - hostname: hacrafu-marubini-core
+    role: corerouter
+    model: "dlink_dap-x1860-a1"
+    wireless_profile: freifunk_hacrafu
+
+ipv6_prefix: "2001:bf7:850:2200::/56"
+
+# dhcp    10.31.200.0/27
+# mesh5   10.31.32.189/32
+# mesh2   10.31.32.190/32
+# MGMT    10.31.32.173/32
+# TUNNEL  10.31.203.242/31
+
+# Disable noping
+# dhcp_no_ping: false
+
+networks:
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.32.189/32
+    ipv6_subprefix: -20
+    mesh_ap: hacrafu-marubini-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.32.190/32
+    ipv6_subprefix: -21
+    mesh_ap: hacrafu-marubini-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    untagged: false
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.31.200.0/27
+    ipv6_subprefix: 0
+    assignments:
+      hacrafu-marubini-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.32.173/32
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      hacrafu-marubini-core: 1
+
+  # UPLINK + TUNNEL
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.203.242/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.203.243/32
+    wireguard_port: 51821
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hacrafu-marubini-core: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hacrafu-marubini-core: 13-20
+
+# only place this ssh-keys
+ssh_keys:
+  - comment: Tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
