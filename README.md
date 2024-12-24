@@ -10,7 +10,11 @@ Maintainers can remotely upgrade sites without having to worry about wrong confi
 ## Getting Started
 
 Using bbb-configs is quite simple. The TL;DR version for anyone not wanting to read the [FAQ](FAQ.md) is:
-1. Install dependencies. Depending on your distro you might need to use a different package management system than `apt`.
+
+### 1. Install dependencies
+
+Depending on your distro you might need to use a different package management system than `apt`.
+
 ```sh
 apt update
 apt install -y jq
@@ -18,13 +22,27 @@ python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 ```
-2. Generate images
+
+### 2. Generate images
+
+You can generate images using the generate-images script that brings up a menu
+
 ```sh
 ./generate-images.sh
 ```
-or
+
+or by passing locations or hostnames as comma separated list even with wildcards if properly quoted
+
 ```sh
-ansible-playbook play.yml --limit location-* --tags image
+./generate-images.sh location1,host1,host2,location2,"host-*","location-*"
+```
+
+or by passing running the ansible playbook directly with a limit parameter containing locations or hosts as a comma separated list.
+
+Note: Locations must be prefixed witch `location_` and within the location name `-` must be converted to `_`.
+
+```sh
+ansible-playbook play.yml --limit location_loc_name,host --tags image
 ```
 
 ## How it Works
@@ -58,4 +76,3 @@ Wikiupdater expects an article or a redirect to the article at `wiki.freifunk.ne
 
 * [Support Chat](https://matrix.to/#/#berlin.freifunk.net:matrix.org): Channel `#berlin.freifunk.net` on **matrix.org**.
 * [Mailing List](https://lists.berlin.freifunk.net/cgi-bin/mailman/listinfo/berlin): For usage, support, discussions and hardware advise.
-
