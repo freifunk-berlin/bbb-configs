@@ -10,7 +10,11 @@ Maintainers can remotely upgrade sites without having to worry about wrong confi
 ## Getting Started
 
 Using bbb-configs is quite simple. The TL;DR version for anyone not wanting to read the [FAQ](FAQ.md) is:
-1. Install dependencies. Depending on your distro you might need to use a different package management system than `apt`.
+
+### 1. Install dependencies
+
+Depending on your distro you might need to use a different package management system than `apt`.
+
 ```sh
 apt update
 apt install -y jq
@@ -18,13 +22,23 @@ python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 ```
-2. Generate images
+
+### 2. Generate images
+
 ```sh
 ./generate-images.sh
 ```
-or
+
+or by passing location names as comma separated list
+
 ```sh
-ansible-playbook play.yml --limit location-* --tags image
+./generate-images.sh location1,location2,location3
+```
+
+or by passing a limit parameter that matches one or multiple hosts
+
+```sh
+ansible-playbook play.yml --limit location1-* --tags image
 ```
 
 ## How it Works
@@ -58,4 +72,3 @@ Wikiupdater expects an article or a redirect to the article at `wiki.freifunk.ne
 
 * [Support Chat](https://matrix.to/#/#berlin.freifunk.net:matrix.org): Channel `#berlin.freifunk.net` on **matrix.org**.
 * [Mailing List](https://lists.berlin.freifunk.net/cgi-bin/mailman/listinfo/berlin): For usage, support, discussions and hardware advise.
-
