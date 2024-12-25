@@ -190,7 +190,7 @@ FROM alpine:edge
 
 RUN echo https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
 RUN apk upgrade musl
-RUN apk add bash openssh-client git vim mtr curl wget tcpdump iproute2 bridge-utils dhclient firecracker socat
+RUN apk add bash openssh-client git vim mtr curl wget tcpdump iproute2 bridge-utils firecracker socat
 EOF
 
 podman run -it --rm --name="$location" \
