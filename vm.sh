@@ -108,8 +108,8 @@ cnip="$(nth_ip "$mgmtnet" "$(("$maxipn" + 1))")"
 cat << EOF > "$vmdir/vmconfig.json"
 {
   "machine-config": {
-    "vcpu_count": 1,
-    "mem_size_mib": 128,
+    "vcpu_count": 2,
+    "mem_size_mib": 256,
     "smt": false
   },
   "boot-source": {
