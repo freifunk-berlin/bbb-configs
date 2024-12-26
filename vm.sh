@@ -198,7 +198,7 @@ podman run -it --rm --name="$location" \
   --user=root --userns=keep-id --security-opt="label=disable" \
   --device=/dev/kvm --device=/dev/net/tun --cap-add=NET_ADMIN --cap-add=NET_RAW \
   -p 8022:8022 -p 8053:8053/udp -p 8080:8080 -p 8443:8443 \
-  --network=slirp4netns:mtu=1280 \
+  --network=slirp4netns \
   localhost/bbb-configs /vmdir/entrypoint.sh
 
 echo "Done."
