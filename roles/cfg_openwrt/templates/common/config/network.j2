@@ -74,6 +74,8 @@ config interface '{{ name }}'
     {% elif role == 'corerouter' and network['role'] == 'mesh' %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] }}'
+    {% elif role == 'corerouter' and network['role'] == 'uplink' and network['dhcp_client'] is defined and network['dhcp_client'] %}
+	option proto 'dhcp'
     {% else %}
 	option proto 'none'
     {% endif %}

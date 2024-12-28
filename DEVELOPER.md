@@ -186,7 +186,7 @@ tunnel can be an easy and safe solution. In that case you can add one or more tu
 ```yml
   - vid: 50
     role: uplink
-
+    dhcp_client: false         # request ip address from dhcp server (default: false)
   - role: tunnel
     ifname: ts_wg0
     mtu: 1280
