@@ -59,11 +59,13 @@ EOF
   exit 1
 }
 
+[ -n "$1" ] || usage
+
 set -e
 set -o pipefail
 [ -n "$TRACE_VMSH" ] && set -x || true
 
-[ -n "$1" ] && location="$1" || usage
+location="$1"
 host="$(cat "locations/$location.yml" | yq -r '.hosts[] | select(.role == "corerouter") | .hostname')"
 
 [ -n "$2" ] && imgdir="$4" || imgdir="./tmp/build/$host/bin/targets/x86/64"
