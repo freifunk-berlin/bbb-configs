@@ -67,8 +67,7 @@ set -o pipefail
 
 location="$1"
 host="$(cat "locations/$location.yml" | yq -r '.hosts[] | select(.role == "corerouter") | .hostname')"
-
-[ -n "$2" ] && imgdir="$4" || imgdir="./tmp/build/$host/bin/targets/x86/64"
+[ -n "$2" ] && imgdir="$2" || imgdir="./tmp/build/$host/bin/targets/x86/64"
 
 # get kernel and rootfs
 
