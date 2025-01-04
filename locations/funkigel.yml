@@ -14,7 +14,7 @@ hosts:
   - hostname: funkigel
     role: corerouter
     model: "ubnt_unifiac-mesh"
-    wireless_profile: freifunk_default
+    wireless_profile: funkigel
 
 snmp_devices:
 
@@ -34,9 +34,10 @@ ipv6_prefix: "2001:bf7:780:800::/56"
 # got following prefixes:
 # Router:  10.248.9.192/26
 #          2001:bf7:780:800::/56
-# --MGMT:  10.248.9.192/28
-# --MESH:  10.248.9.208/29
-# --DHCP:  10.248.9.216/29 (HOST)
+# --MGMT:  10.248.9.192/29
+# --MESH:  10.248.9.200/30
+# --DHCP:  10.248.9.204/30 (HOST)
+# --DHCP:  10.248.9.208/28 (PRIVATE)
 # --DHCP:  10.248.9.224/27
 
 networks:
@@ -44,7 +45,7 @@ networks:
   - vid: 10
     role: mesh
     name: mesh_frisch
-    prefix: 10.248.9.208/32
+    prefix: 10.248.9.200/32
     ipv6_subprefix: -10
 
   # 802.11s Links
@@ -52,7 +53,7 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_5g
-    prefix: 10.248.9.209/32
+    prefix: 10.248.9.201/32
     ipv6_subprefix: -20
     mesh_ap: funkigel
     mesh_radio: 11a_standard
@@ -62,7 +63,7 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_2g
-    prefix: 10.248.9.210/32
+    prefix: 10.248.9.202/32
     ipv6_subprefix: -21
     # make mesh_metric for 2.4 GHz worse than 5 GHz
     mesh_metric_lqm: ['default 0.5']
@@ -85,24 +86,34 @@ networks:
     role: dhcp
     name: host
     untagged: true
-    prefix: 10.248.9.216/29
+    prefix: 10.248.9.204/30
     ipv6_subprefix: 2
     inbound_filtering: false
     enforce_client_isolation: false
     assignments:
-      funkigel: 1
-      funkigel-rpi: 2
+      funkigel: 1            # 10.248.9.205
+      # funkigel-rpi: 2      # 10.248.9.206 (via DHCP)
 
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.248.9.192/28
+    prefix: 10.248.9.192/29
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      funkigel: 1            # .193
-      funkigel-frischauf: 2  # .194
+      funkigel: 1            # 10.248.9.193
+      funkigel-frischauf: 2  # 10.248.9.194
+
+  # DHCP (PRIVATE)
+  - vid: 43
+    role: dhcp
+    name: private
+    inbound_filtering: true
+    prefix: 10.248.9.208/28
+    ipv6_subprefix: 3
+    assignments:
+      funkigel: 1            # 10.248.9.209
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
@@ -111,3 +122,40 @@ location__channel_assignments_11a_standard__to_merge:
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
   funkigel: 13-20
+
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: funkigel
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: solar41
+        encryption: sae-mixed
+        key: 'file:/root/wifi-pwd-solar41'
+        network: private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
