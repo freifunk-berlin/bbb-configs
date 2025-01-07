@@ -9,7 +9,7 @@ config tunspace "tunspace"
   option uplink_ifname "{{ ifname }}"
   option uplink_mode "{{ mode }}"
   option maintenance_interval 60
-  option debug 1
+  option debug 0
 {% endfor %}
 
 {% for tunnel in networks | selectattr('role', 'equalto', 'tunnel') %}
