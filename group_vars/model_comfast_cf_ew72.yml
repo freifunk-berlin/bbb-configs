@@ -4,6 +4,8 @@ brand_nice: COMFAST
 model_nice: CF-EW72
 version_nice: v1
 
+openwrt_version: 24.10-SNAPSHOT
+
 int_port: eth0
 
 wireless_devices:
