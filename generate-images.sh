@@ -20,24 +20,21 @@ generate_images() {
 # Function to process wildcards
 process_wildcard() {
     local pattern=$1
-    local result=()
-
+    local -n result_ref=$2
+    
     # Match locations
     for location in "${locations[@]}"; do
         if [[ "$location" == $pattern ]]; then
-            result+=( "location_${location//-/_}" )
+            result_ref+=( "location_${location//-/_}" )
         fi
     done
 
     # Match hosts
     for host in "${hosts[@]}"; do
         if [[ "$host" == $pattern ]]; then
-            result+=( "$host" )
+            result_ref+=( "$host" )
         fi
     done
-
-    # Return the result array
-    echo "${result[@]}"
 }
 
 # Check if an argument is passed
@@ -52,7 +49,8 @@ if [[ $# -gt 0 ]]; then
         # Process wildcard entries (if any)
         if [[ $entry == *"*"* ]]; then
             # Get expanded entries from wildcard processing
-            mapfile -t expanded_entries < <(process_wildcard "$entry")
+            expanded_entries=()
+            process_wildcard "$entry" expanded_entries
             # Merge expanded entries with valid_entries
             valid_entries+=( "${expanded_entries[@]}" )
         # If it's a valid location
@@ -67,11 +65,8 @@ if [[ $# -gt 0 ]]; then
     done
 
     if [[ ${#valid_entries[@]} -gt 0 ]]; then
-        # Combine valid entries into a single list and run the playbook
-        # Ensure that the list is joined by commas correctly
-        IFS=, limit_param="${valid_entries[*]}"
-
-        # echo "Debug: Combined limit parameter: $limit_param" # Debugging output 
+        # Combine valid entries into a comma separated list and run the playbook
+        IFS="," limit_param="${valid_entries[*]}"
         generate_images "$limit_param"
     else
         echo "No valid locations or hosts provided. Exiting."
