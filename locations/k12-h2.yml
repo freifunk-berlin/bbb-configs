@@ -24,7 +24,8 @@ hosts:
 
   - hostname: k12-h2-h1n
     role: ap
-    model: "tplink_tl-wdr4300-v1"
+    model: "dlink_covr-x1860-a1"
+    mac_override: {eth0: a8:63:7d:a6:47:77}
     wifi_roaming: true
 
   - hostname: k12-h2-h1s
