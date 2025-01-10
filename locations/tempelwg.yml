@@ -12,6 +12,8 @@ hosts:
     model: "dlink_covr-x1860-a1"
     mac_override: {eth0: a8:63:7d:db:59:cb}
     wireless_profile: tempelwg
+    host__rclocal__to_merge:
+      - 'cat /etc/crontabs/root | grep reboot 2>/dev/null || echo "0 4 * * * reboot" >> /etc/crontabs/root && /etc/init.d/cron restart'
 
   - hostname: tempelwg-ap-tini
     role: ap
