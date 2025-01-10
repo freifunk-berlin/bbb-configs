@@ -11,6 +11,9 @@ hosts:
     model: "mikrotik_sxtsq-2-lite"
     mac_override: {eth0: 08:55:31:d9:3d:bd}
     wireless_profile: freifunk_default
+    # remove some packages for smaller image size (only 64 MB of memory)
+    low_mem: true
+    low_flash: true
 
 ipv6_prefix: '2001:bf7:840:3d00::/56'
 
