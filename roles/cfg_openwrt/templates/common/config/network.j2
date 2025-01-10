@@ -96,6 +96,30 @@ config device
   {% endif %}
 
 {% endfor %}
+
+{% if role == 'corerouter' or role == 'gateway' %}
+  {% for static_route4 in static_routes4 | default(static_routes4['default']) %}
+    {% set static_routes4_parts = static_route4.split(';') %}
+    {% set if_name4 = static_routes4_parts[4] %}
+
+config route 'route_{{ if_name4}}_{{ static_routes4_parts[0] }}'
+  option interface '{{ if_name4 }}'
+  option target '{{ static_routes4_parts[1] }}'
+  option netmask '{{ static_routes4_parts[3] }}'
+  option gateway '{{ static_routes4_parts[2] }}'
+    {% endfor %}
+
+  {% for static_route6 in static_routes6 | default(static_routes6['default']) %}
+    {% set static_routes6_parts = static_route6.split(';') %}
+    {% set if_name6 = static_routes6_parts[3] %}
+
+config route6 'route_{{ if_name6 }}_{{ static_routes6_parts[0] }}'
+  option interface '{{ if_name6 }}'
+  option target '{{ static_routes6_parts[1] }}'
+  option gateway '{{ static_routes6_parts[2] }}'
+  {% endfor %}
+{% endif %}
+
 {% for i in mac_override|default({}) %}
 config device '{{ i }}_dev'
 	option name '{{ i }}'

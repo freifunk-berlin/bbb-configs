@@ -42,3 +42,15 @@
     merged_var_name: "{{ item.split('__')[1] }}"
     expected_type: dict
   loop: "{{ hostvars[inventory_hostname] | select('match', '.*__channel_assignments_.*') }}"
+
+- name: "Merge IPv4 static_routes variables"
+  merge_vars:
+    suffix_to_merge: static_routes_4__to_merge
+    merged_var_name: static_routes4
+    expected_type: list
+
+- name: "Merge IPv6 static_routes variables"
+  merge_vars:
+    suffix_to_merge: static_routes_6__to_merge
+    merged_var_name: static_routes6
+    expected_type: list
