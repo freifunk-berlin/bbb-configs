@@ -100,7 +100,8 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
                 # Debug output: Executing sysupgrade
                 echo "Executing sysupgrade on $HOSTNAME"
                 # shellcheck disable=SC2029
-                ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "root@$HOSTNAME" "sysupgrade '/tmp/$FILENAME'"
+                # Perform the sysupgrade; Ensure the connection terminates within 5 seconds using keep-alive
+                ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ServerAliveInterval=1 -o ServerAliveCountMax=5 "root@$HOSTNAME" "sysupgrade '/tmp/$FILENAME'"
 
                 # Wait for hostname to become unreachable
                 echo "Waiting for $HOSTNAME to become unreachable..."
