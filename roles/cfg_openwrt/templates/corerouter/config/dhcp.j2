@@ -9,6 +9,7 @@ config dnsmasq
 	option expandhosts '1'
 	option authoritative '1'
 	option readethers '1'
+	option sequential_ip '1'
 	option localservice '1'
 	option noping '{{ dhcp_no_ping|int if dhcp_no_ping is defined else 1 }}'
 	option quietdhcp '1'
