@@ -12,14 +12,15 @@ hosts:
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
 
+  - hostname: j41-f2a
+    role: ap
+    model: ubnt_nanostation-m5_xw
+    wireless_profile: mesh_only
+
 snmp_devices:
   - hostname: j41-switch
     address: 10.31.41.2
     snmp_profile: edgeswitch
-
-  - hostname: j41-f2a
-    address: 10.31.41.3
-    snmp_profile: airos_6
 
   - hostname: j41-zwingli
     address: 10.31.41.4
@@ -75,3 +76,4 @@ location__channel_assignments_11g_standard__to_merge:
 
 location__channel_assignments_11a_standard__to_merge:
   j41-core: 36-40
+  j41-f2a: 157-40
