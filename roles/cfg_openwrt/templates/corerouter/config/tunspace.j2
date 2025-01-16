@@ -8,6 +8,8 @@ config tunspace "tunspace"
   option uplink_netns "{{ name }}"
   option uplink_ifname "{{ ifname }}"
   option uplink_mode "{{ mode }}"
+  option uplink_ipv4 "{{ uplink['uplink_ipv4']|default('') }}"
+  option uplink_gateway "{{ uplink['uplink_gateway']|default('') }}"
   option maintenance_interval 60
   option debug 0
 {% endfor %}
