@@ -1,0 +1,133 @@
+---
+location: friedland3
+location_nice: Kolonie Friedland 3, Sangerhauser Weg 12, 12349 Berlin
+latitude: 52.430754
+longitude: 13.408408
+contact_nickname: 'Kolonie Friedland 3'
+contacts:
+  - 'ff-f3@kolonie-friedland3.de'
+  - '@kermitderfrosch:matrix.org'
+
+hosts:
+  - hostname: friedland3-core
+    role: corerouter
+    model: "avm_fritzbox-4040"
+    wireless_profile: friedland3
+    host__rclocal__to_merge:
+      - |
+        # untag DHCP on LAN ports
+        uci set network.vlan_40.ports='lan1 lan2 lan3 lan4 wan:t'
+        # untag UPLK on WAN port
+        uci set network.vlan_50.ports='lan1:t lan2:t lan3:t lan4:t wan'
+        uci commit network; reload_config
+        # Enable legacy rates to enable meshing with neighbors
+        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
+
+ipv6_prefix: "2001:bf7:820:3200::/56"
+
+# Router: 10.248.30.208/28, 10.248.29.0/27, 10.248.23.217, 10.248.23.218, 10.248.23.219
+# --MGMT: 10.248.30.208/29
+# --MESH: 10.248.30.216/29
+# --UPLK: 10.248.23.217, 10.248.23.218, 10.248.23.219
+# --DHCP: 10.248.29.0/27
+
+networks:
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.248.30.216/32
+    ipv6_subprefix: -20
+    mesh_ap: friedland3-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.30.217/32
+    ipv6_subprefix: -21
+    mesh_ap: friedland3-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.29.0/27
+    ipv6_subprefix: 0
+    assignments:
+      friedland3-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.30.208/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      friedland3-core: 1
+
+  # UPLK
+  - vid: 50
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.23.217/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.248.23.218/32
+    wireguard_port: 51821
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  friedland3-core: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  friedland3-core: 13-20
+
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: friedland3
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: Freifunk Friedland 3
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: fffl
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
