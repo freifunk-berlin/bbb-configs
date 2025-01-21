@@ -13,6 +13,10 @@ hosts:
     role: corerouter
     model: "ubnt_unifiac-mesh"
     wireless_profile: freifunk_default
+    host__rclocal__to_merge:
+      - |
+        # Enable legacy rates to enable meshing with neighbors
+        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; wifi reload
 
 snmp_devices:
 
