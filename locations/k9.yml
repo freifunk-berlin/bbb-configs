@@ -21,6 +21,40 @@ hosts:
     role: ap
     model: "aruba_ap-303"
     wireless_profile: freifunk_default
+  - hostname: k9-ap-iuljan
+    role: ap
+    model: "dlink_dap-x1860-a1"
+    wireless_profile: freifunk_default
+  - hostname: k9-switch-front-house
+    role: ap
+    model: "ubnt_usw-flex"
+    poemgr_ports:
+      - name: lan2
+        port: 3
+        disabled: 1
+      - name: lan3  # PoE @ Loge
+        port: 2
+        disabled: 0
+      - name: lan4
+        port: 1
+        disabled: 1
+      - name: lan5
+        port: 0
+        disabled: 1
+    # custom switch config script. Should be applied with a mechanism, that
+    # includes files into root files system later on.
+    host__rclocal__to_merge:
+      - |
+        # Remove vlan 10 & 11 (antennas)
+        uci delete network.vlan_10
+        uci delete network.vlan_11
+        uci commit network
+        reload_config
+        # tag mgmt traffic on ap ports only
+        uci set network.vlan_439.ports='lan1:t lan2 lan3:t lan4 lan5:t'
+        # tag DHCP on all ports
+        uci set network.vlan_40.ports='lan1:t lan2:t lan3:t lan4:t lan5:t'
+        uci commit network; reload_config
 
 snmp_devices:
   - hostname: k9-sama
@@ -77,12 +111,14 @@ networks:
     ipv6_subprefix: 1
     assignments:
       k9-core: 1
-      k9-switch-roof: 2 # uisp-s
-      k9-sama: 3 # wave nano
+      k9-switch-roof: 2         # uisp-s
+      k9-sama: 3                # wave nano
       k9-zwingli: 4
-      k9-switch-house: 8 # hpe 2520g-poe
+      k9-switch-front-house: 7  # ubiquiti usw-flex-poe
+      k9-switch-back-house: 8   # hpe 2520g-poe
       k9-ap-loge: 9
-      k9-ap-hinterhaus: 10
+      k9-ap-groessenwahn: 10
+      k9-ap-iuljan: 11
 
 location__ssh_keys__to_merge:
   - comment: k9 iuljan
