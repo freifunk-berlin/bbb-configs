@@ -16,6 +16,8 @@ hosts:
     role: gateway
     model: "x86-64"
     image_search_pattern: "*-ext4-combined.img*"
+    host__packages__to_merge:
+      - qemu-ga
 
 snmp_devices:
   - hostname: ak36-poe-roof

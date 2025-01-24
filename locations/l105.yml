@@ -13,6 +13,8 @@ hosts:
     image_search_pattern: "*-ext4-combined.img*"
     l105__disabled_services__to_merge:
       - "bird"
+    host__packages__to_merge:
+      - qemu-ga
 
 snmp_devices:
   - hostname: l105-poe
@@ -42,7 +44,7 @@ ipv6_prefix: 2001:bf7:750:3f00::/56
 
 uplink:
   ifname: eth0
-  ipv4: 77.87.49.8/28
+  ipv4: 77.87.49.8/24
   # ipv6: ToDo
 
 mgmt:
