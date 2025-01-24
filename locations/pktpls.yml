@@ -66,6 +66,8 @@ networks:
     ifname: eth1
     role: uplink
     untagged: true
+    uplink_ipv4: 10.0.2.42/24
+    uplink_gateway: 10.0.2.2
 
   - role: tunnel
     ifname: ts_wg0
