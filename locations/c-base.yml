@@ -59,6 +59,8 @@ ipv6_prefix: "2001:bf7:760:4800::/56"
 networks:
   - vid: 4
     role: uplink
+    uplink_ipv4: 172.31.79.99/23
+    uplink_gateway: 172.31.79.254
 
   - vid: 11
     role: mesh
