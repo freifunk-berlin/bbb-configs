@@ -20,38 +20,37 @@ ipv6_prefix: 2001:bf7:820:2c00::/56
 
 hosts:
 
-  # Thinkcentre M720q, i5-8500T, 16GB RAM, 1TB NVMe
-  # eth0      - Intel I219 V7
-  # eth1 eth2 - ConnectX-4 Lx CX4121B
+  # Lenovo 10RS002AGE / Thinkcentre M920q, i5-8600T, 16GB RAM, 256GB NVMe
+  # eth0 eth1 - ConnectX-4 Lx MCX4121A-XCHT - PCIe SMBus taped off (Pins 5 & 6)
+  # eth2      - Intel I219-LM V7
   - hostname: hway-core
     role: corerouter
-    int_port: eth1
+    int_port: eth0
     model: x86-64
-    openwrt_version: 24.10-SNAPSHOT
-    log_size: 1024
     host__packages__to_merge:
       - kmod-mlx5-core
     host__rclocal__to_merge:
-      # There's a decades-old TX offload bug in intel gigabit controllers
+      # There's a decades-old RX/TX offload bug in intel gigabit controllers
       # which regularly hangs the card. It gets reset automatically,
-      # but still results in regular ~15s downtimes. Disable offloads.
-      - ethtool -K eth0 tx off rx off
+      # but that still results in very frequent ~15s downtimes.
+      # To avoid this bug, we disable RX/TX hardware offloading.
+      - ethtool -K eth2 tx off rx off
     host__disabled_services__to_merge:
+      # Disabled but present, just in case we might need it
       - tunspace
 
   - hostname: hway-indoor
     role: ap
     wireless_profile: hway
     model: zyxel_nwa50ax
-    openwrt_version: 24.10-SNAPSHOT
-    log_size: 1024
 
   - hostname: hway-street
     role: ap
     wireless_profile: hway
     model: cudy_ap3000outdoor-v1
     openwrt_version: 24.10-SNAPSHOT
-    log_size: 1024
+
+log_size: 1024
 
 snmp_devices:
 
@@ -101,7 +100,7 @@ networks:
       hway-street: 5     # .255.253
 
   - vid: 50
-    ifname: eth0
+    ifname: eth2
     role: uplink
     untagged: true
 
