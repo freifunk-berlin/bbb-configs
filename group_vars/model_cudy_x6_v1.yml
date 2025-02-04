@@ -1,5 +1,6 @@
 ---
 target: ramips/mt7621
+openwrt_version: 24.10-SNAPSHOT
 brand_nice: Cudy
 model_nice: X6
 version_nice: v1
