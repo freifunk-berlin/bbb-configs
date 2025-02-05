@@ -60,7 +60,7 @@ fi
 # Function to check reachability
 check_reachability() {
     local hostname="$1"
-    if ping -4 -c 1 "$hostname" >/dev/null 2>&1 || ping -6 -c 1 "$hostname" >/dev/null 2>&1; then
+    if ssh -q -o StrictHostKeyChecking=no -o BatchMode=yes -o ConnectTimeout=5 "root@$hostname" exit >/dev/null 2>&1; then
         return 0
     else
         return 1
