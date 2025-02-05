@@ -45,6 +45,8 @@ networks:
   - vid: 50
     untagged: true
     role: uplink
+    uplink_ipv4: 192.168.2.254/24
+    uplink_gateway: 192.168.2.1
 
   - role: tunnel
     ifname: ts_wg0
