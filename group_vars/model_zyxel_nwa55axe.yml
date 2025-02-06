@@ -4,6 +4,8 @@ brand_nice: ZyXEL
 model_nice: NWA55AXE
 int_port: lan
 
+openwrt_version: 24.10-SNAPSHOT
+
 wireless_devices:
   - name: 11a_standard
     band: 5g
