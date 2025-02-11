@@ -19,33 +19,28 @@ hosts:
     role: ap
     model: zyxel_nwa50ax
     wireless_profile: kirchhof
-    wifi_roaming: true
 
   - hostname: kirchhof-nf-hinten
     role: ap
     model: tplink_eap225-outdoor-v1
     wireless_profile: kirchhof
-    wifi_roaming: true
 
   - hostname: kirchhof-n-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
     mac_override: {eth0: 2c:c8:1b:8a:96:e0}
     wireless_profile: freifunk_default
-    wifi_roaming: true
 
   - hostname: kirchhof-w-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
     mac_override: {eth0: 2c:c8:1b:8a:96:28}
     wireless_profile: freifunk_default
-    wifi_roaming: true
 
   - hostname: kirchhof-nf-keller
     role: ap
     model: tplink_eap225-outdoor-v1
     wireless_profile: freifunk_default
-    wifi_roaming: true
 
 snmp_devices:
   - hostname: kirchhof-switch
