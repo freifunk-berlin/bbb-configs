@@ -1,0 +1,95 @@
+---
+location: s35
+location_nice: 'Schönhauser-Allee 35, 10435 Berlin'
+latitude: 52.53775924368907
+longitude: 13.412612820130311
+contact_nickname: 'zander'
+contacts:
+  - 'alexanderjabs@gmx.de'
+
+hosts:
+  - hostname: s35-core
+    role: corerouter
+    model: "tplink_archer-c5-v1"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: s35-segen
+    address: 10.31.153.82
+    snmp_profile: airos_6
+
+ipv6_prefix: '2001:bf7:760:3500::/56'
+
+# got following prefixes:
+# Router: 10.31.152.229/32, 10.31.152.230/32, 10.31.152.231/32, 10.31.153.64/27
+# --MGMT: 10.31.153.80/28
+# --MESH: 10.31.152.229/32, 10.31.152.230/32, 10.31.152.231/32
+# --DHCP: 10.31.153.64/28
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # MESH - segen
+  - vid: 10
+    role: mesh
+    name: mesh_segen
+    prefix: 10.31.152.229/32
+    ipv6_subprefix: -10
+    ptp: true
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_core_5g
+    prefix: 10.31.152.230/32
+    ipv6_subprefix: -20
+    mesh_ap: s35-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_core_2g
+    prefix: 10.31.152.231/32
+    ipv6_subprefix: -21
+    # make mesh_metric for 2GHz worse than 5GHz
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: s35-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.153.64/28
+    ipv6_subprefix: 0
+    assignments:
+      s35-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.153.80/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      s35-core: 1   # 10.31.153.81
+      s35-segen: 2  # 10.31.153.82
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
