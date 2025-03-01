@@ -28,6 +28,7 @@ hosts:
   - hostname: k9-switch-front-house
     role: ap
     model: "ubnt_usw-flex"
+    poemgr_power_budget: 24
     poemgr_ports:
       - name: lan2
         port: 3
