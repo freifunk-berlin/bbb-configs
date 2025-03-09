@@ -28,7 +28,7 @@ hosts:
 
   - hostname: kiehlufer-core
     role: corerouter
-    model: "cudy_x6-v1"
+    model: "cudy_ap3000-v1"
     wireless_profile: freifunk_default
     openwrt_version: 24.10-SNAPSHOT
     log_size: 1024
