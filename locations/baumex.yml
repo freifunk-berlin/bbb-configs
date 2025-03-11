@@ -19,12 +19,13 @@ hosts:
     # eth2 / Port 3: vorne
     # eth3 / Port 4: litebeam
     # eth4 / Port 5: hinten
-    # eth5 / Port 6: dhcp
+    # eth5 / Port 6: fritzbox
     host__rclocal__to_merge:
       - |
-        uci set network.vlan_10.ports='eth0'                # mesh_vater_60g
-        uci set network.vlan_30.ports='eth1'                # mesh_lan_lte
-        uci set network.vlan_40.ports='eth2:t eth4:t eth5'  # dhcp
+        uci set network.vlan_10.ports='eth0'           # mesh_vater_60g
+        uci set network.vlan_30.ports='eth1'           # mesh_lan_lte
+        uci set network.vlan_40.ports='eth2:t eth4:t'  # dhcp public
+        uci set network.vlan_41.ports='eth5'           # dhcp fritzbox
         uci commit network; reload_config
 
   - hostname: baumex-vorne
@@ -47,7 +48,8 @@ ipv6_prefix: "2001:bf7:840:3b00::/56"
 
 # humpty got the following prefixes:
 # Router: 10.248.28.128/25
-# --MGMT: 10.248.28.128/27
+# --MGMT: 10.248.28.128/28
+# --HOST: 10.248.28.144/28
 # --MESH: 10.248.28.160/27
 # --DHCP: 10.248.28.192/26
 
@@ -78,10 +80,22 @@ networks:
   # DHCP with filtering and isolation
   - vid: 40
     role: dhcp
+    name: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
     prefix: 10.248.28.192/26
     ipv6_subprefix: 0
+    assignments:
+      baumex-core: 1
+
+  # DHCP (HOST) without filtering and isolation
+  - vid: 41
+    role: dhcp
+    name: host
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.248.28.144/28
+    ipv6_subprefix: 2
     assignments:
       baumex-core: 1
 
