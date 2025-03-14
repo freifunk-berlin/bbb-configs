@@ -43,6 +43,8 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
+You can find what dependencies you need for your specific linux-distro [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
+
 ### 2. Generate images
 
 You can generate images using the generate-images script that brings up a menu
