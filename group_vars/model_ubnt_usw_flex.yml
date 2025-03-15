@@ -11,6 +11,8 @@ target: ramips/mt7621
 brand_nice: Ubiquiti
 model_nice: USW-Flex
 
+openwrt_version: 24.10-SNAPSHOT
+
 dsa_ports:
   - lan1
   - lan2
