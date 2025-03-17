@@ -11,7 +11,7 @@ hosts:
 
   - hostname: xdorf-core
     role: corerouter
-    model: "avm_fritzbox-4040"
+    model: "tplink_archer-c7-v5"
     wireless_profile: freifunk_default
 
 snmp_devices:
