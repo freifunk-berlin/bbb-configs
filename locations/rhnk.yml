@@ -50,7 +50,7 @@ snmp_devices:
     address: 10.31.153.21
     snmp_profile: airos_8
 
-  - hostname: rhnk-wsw-60ghz
+  - hostname: rhnk-ak36
     address: 10.31.153.22
     snmp_profile: af60
 
@@ -66,7 +66,7 @@ snmp_devices:
     address: 10.31.153.25
     snmp_profile: airos_8
 
-  - hostname: rhnk-nno-60ghz
+  - hostname: rhnk-w38b
     address: 10.31.153.26
     snmp_profile: af60
 
@@ -146,7 +146,7 @@ networks:
 
   - vid: 22
     role: mesh
-    name: mesh_wsw_60
+    name: mesh_ak36
     prefix: 10.230.3.22/32
     mesh_metric: 128
     ipv6_subprefix: -22
@@ -175,7 +175,7 @@ networks:
 
   - vid: 26
     role: mesh
-    name: mesh_nno_60ghz
+    name: mesh_w38b
     prefix: 10.230.3.26/32
     mesh_metric: 128
     ipv6_subprefix: -26
@@ -214,50 +214,21 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # Routerboard 750gr3
-      rhnk-core: 1
-
-      # Mikrotik CRS328-24P-4S+RM - SwitchOS
-      rhnk-switch: 2
-
-      # AirFiber 60-LR
-      rhnk-rhxb: 11
-
-      # Mikrotik Cube 60 Pro
-      rhnk-klunker-60ghz: 14
-
-      # Powerbeam 5AC 400 ISO
-      rhnk-emma: 15
-
-      # Rocket 5AC Lite
-      rhnk-no-5ghz: 20
-
-      # Rocket 5AC Lite
-      rhnk-wsw-5ghz: 21
-
-      # Airfiber LR
-      rhnk-wsw-60ghz: 22
-
-      # Rocket 5AC Lite
-      rhnk-ssw-5ghz: 23
-
-      # Wave AP
-      rhnk-oso-60ghz: 24
-
-      # Rocket 5AC Lite
-      rhnk-nno-5ghz: 25
-
-      # Wave LR
-      rhnk-nno-60ghz: 26
-
-      # SXTsq 5 ac - OpenWrt
-      rhnk-nf-no-5ghz: 28
-
-      # SXTsq 5 ac - OpenWrt
-      rhnk-nf-so-5ghz: 29
-
-      # EAP225-Outdoor - OpenWrt - with UMA-D antenna
-      rhnk-nf-bvv: 30
+      rhnk-core: 1            # Routerboard 750gr3
+      rhnk-switch: 2          # Mikrotik CRS328-24P-4S+RM - SwitchOS
+      rhnk-rhxb: 11           # AirFiber 60-LR
+      rhnk-klunker-60ghz: 14  # Mikrotik Cube 60 Pro
+      rhnk-emma: 15           # Powerbeam 5AC 400 ISO
+      rhnk-no-5ghz: 20        # Rocket 5AC Lite
+      rhnk-wsw-5ghz: 21       # Rocket 5AC Lite
+      rhnk-ak36: 22           # Airfiber LR
+      rhnk-ssw-5ghz: 23       # Rocket 5AC Lite
+      rhnk-oso-60ghz: 24      # Wave AP
+      rhnk-nno-5ghz: 25       # Rocket 5AC Lite
+      rhnk-w38b: 26           # Wave LR
+      rhnk-nf-no-5ghz: 28     # SXTsq 5 ac - OpenWrt
+      rhnk-nf-so-5ghz: 29     # SXTsq 5 ac - OpenWrt
+      rhnk-nf-bvv: 30         # EAP225-Outdoor - OpenWrt - with UMA-D antenna
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
