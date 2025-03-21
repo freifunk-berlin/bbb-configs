@@ -28,7 +28,6 @@ hosts:
     mac_override:
       eth0: 2c:c8:1b:6b:e5:d2
     openwrt_version: 24.10-SNAPSHOT
-    log_size: 1024
 
   - hostname: wilde-nf-n
     role: ap

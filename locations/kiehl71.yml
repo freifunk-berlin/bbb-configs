@@ -31,7 +31,6 @@ hosts:
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
     openwrt_version: 24.10-SNAPSHOT
-    log_size: 1024
 
 ipv6_prefix: '2001:bf7:750:3200::/56'
 
