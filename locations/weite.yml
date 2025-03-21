@@ -1,0 +1,64 @@
+---
+
+location: weite
+location_nice: Weitlingstr., 10317 Berlin
+latitude: 52.507761
+longitude: 13.496429
+contacts:
+  - 'https://config.berlin.freifunk.net/contact/7876/IndlaXRlIg.Z92GqA.cdoLUs4BZajU9_DVDjCiP1-d6XY'
+
+hosts:
+  - hostname: weite-core
+    role: corerouter
+    model: "dlink_dap-x1860-a1"
+    wireless_profile: ap_only
+
+ipv6_prefix: '2001:bf7:860:1b00::/56'
+
+# --DHCP: 10.248.40.64/27
+# --MESH: 10.248.39.164/31
+# --MGMT: 10.248.39.166/32
+
+networks:
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.40.64/27
+    ipv6_subprefix: 0
+    assignments:
+      weite-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.39.166/32
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      weite-core: 1
+
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.39.164/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.248.39.165/32
+    wireguard_port: 51821
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  weite-core: 36-80
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  weite-core: 13-20
