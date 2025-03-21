@@ -17,7 +17,6 @@ hosts:
     model: "zyxel_nwa55axe"
     wireless_profile: freifunk_default
     openwrt_version: 24.10-SNAPSHOT
-    log_size: 1024
 
 ipv6_prefix: '2001:bf7:830:2600::/56'
 
