@@ -36,7 +36,7 @@ hosts:
   - hostname: teufelsberg-sw-nf
     role: ap
     model: mikrotik_sxtsq-5-ac
-    mac_override: {eth0: 2c:c8:1b:6a:ce:f1}
+    mac_override: {eth0: dc:2c:6e:91:0f:68}
     wireless_profile: freifunk_default
 
 snmp_devices:
