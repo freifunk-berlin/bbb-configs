@@ -1,0 +1,132 @@
+---
+location: k6b
+location_nice: "Koloniestr. 6b, 13357 Berlin"
+latitude: 52.555001675
+longitude: 13.378418684
+contact_nickname: 'fa_be'
+contacts:
+  - '@fa_be:matrix.org'
+
+hosts:
+  - hostname: k6b-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: k6b
+
+snmp_devices:
+  - hostname: k6b-ptp-1
+    address: 10.248.41.114
+    snmp_profile: airos_6
+
+ipv6_prefix: '2001:bf7:750:8800::/56'
+
+# got following prefixes:
+# Router: 10.248.41.96/27
+# --MGMT: 10.248.41.112/29
+# --MESH: 10.248.41.120/29
+# --DHCP: 10.248.41.96/28
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # MESH - PtP antenna 1
+  - vid: 10
+    role: mesh
+    name: mesh_ptp_1
+    prefix: 10.248.41.120/32
+    ipv6_subprefix: -10
+    ptp: true
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g_core
+    prefix: 10.248.41.121/32
+    ipv6_subprefix: -20
+    mesh_ap: k6b-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g_core
+    prefix: 10.248.41.122/32
+    ipv6_subprefix: -21
+    # make mesh_metric for 2GHz worse than 5GHz
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: k6b-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.41.96/28
+    ipv6_subprefix: 0
+    assignments:
+      k6b-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.41.112/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      k6b-core: 1    # 10.248.41.113
+      k6b-ptp-1: 2   # 10.248.41.114
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  k6b-core: 36-80
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  k6b-core: 13-20
+
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: k6b
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        ifname_hint: mesh
+
+# DNS Servers
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
