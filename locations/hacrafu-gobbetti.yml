@@ -5,7 +5,7 @@ location_nice: Feldstr. 27, 15345 Eggersdorf
 latitude: 52.53614
 longitude: 13.81647
 contact_name: "Hacken Craften Funken e.V."
-contact_nickname: "HaCraFu"
+contact_nickname: "HaCraFu e.V."
 contacts:
   - "freifunk@hacrafu.de"
 
@@ -80,3 +80,5 @@ location__channel_assignments_11g_standard__to_merge:
 ssh_keys:
   - comment: Tom
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
+  - comment: Bob
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de
