@@ -1,0 +1,108 @@
+---
+location: genterstr69
+location_nice: Genter Str. 69, 13353 Berlin
+latitude: 52.548992
+longitude: 13.350922
+altitude: 50
+contact_nickname: 'Freerk'
+contacts:
+  - 'freerk@ohling.org'
+
+hosts:
+  - hostname: genterstr69-core
+    role: corerouter
+    model: "cudy_wr3000-v1"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: genterstr69-bht
+    address: 10.31.107.130
+    snmp_profile: airos_8
+
+# IPs
+ipv6_prefix: '2001:bf7:750:8a00::/56'
+
+# got following prefixes:
+# Router: 10.31.107.128/26
+# --MGMT: 10.31.107.128/28
+# --MESH: 10.31.107.144/28
+# --DHCP: 10.31.107.160/27
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # MESH - BHT
+  - vid: 10
+    role: mesh
+    name: mesh_bht
+    prefix: 10.31.107.144/32
+    ipv6_subprefix: -10
+    ptp: true
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_11s_5g
+    prefix: 10.31.107.145/32
+    ipv6_subprefix: -20
+    mesh_ap: genterstr69-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_11s_2g
+    prefix: 10.31.107.146/32
+    ipv6_subprefix: -21
+    # make mesh_metric for 2GHz worse than 5GHz
+    mesh_metric_lqm: ['default 0.5']
+    mesh_ap: genterstr69-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.36.107.160/27
+    ipv6_subprefix: 0
+    assignments:
+      genterstr69-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.107.128/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      # 10.31.107.129/32
+      genterstr69-core: 1
+      # 10.31.107.130/32
+      genterstr69-bht: 2
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  genterstr69-core: 36-40
+
+# DNS-Servers
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+
+location__ssh_keys__to_merge:
+  - comment: freerk
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFbENl0EblDkwZCL37ETXmCLLyGnk8YuaFSbJfDF/rD+
