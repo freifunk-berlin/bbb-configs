@@ -67,17 +67,20 @@ fi
 # Function to check reachability
 check_reachability() {
     local hostname="$1"
-    if ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ConnectTimeout=5 "root@$hostname" exit >/dev/null 2>&1; then
-        return 0
-    else
-        return 1
-    fi
+    timeout 6 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ConnectTimeout=5 "root@$hostname" exit >/dev/null 2>&1
+}
+
+# Function to run a SSH command with timeout
+run_ssh() {
+    local hostname="$1"
+    local command="$2"
+    timeout 20 ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ConnectTimeout=5 -o ServerAliveInterval=1 -o ServerAliveCountMax=5 "root@$hostname" "$command"
 }
 
 # Function to check memory availability
 check_memory() {
     local hostname="$1"
-    ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes "root@$hostname" "free | awk 'NR==2 {print \$7}'"
+    run_ssh "$hostname" "free | awk 'NR==2 {print \$7}'"
 }
 
 # Function to check for missing root password
@@ -86,9 +89,8 @@ check_missing_root_password() {
     local password_field
 
     # Get the password field of root, or handle if the root user is missing
-    password_field=$(ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes "root@$hostname" "awk -F: '\$1 == \"root\" { print \$2 }' /etc/shadow" 2>/dev/null)
+    password_field=$(run_ssh "$hostname" "awk -F: '\$1 == \"root\" { print \$2 }' /etc/shadow" 2>/dev/null)
 
-    # If root entry is missing or the password field is empty, '*', or '!', add to list
     if [[ -z "$password_field" || "$password_field" =~ ^(\*|!|)?$ ]]; then
         MISSING_PASSWORD_DEVICES+=("$hostname")
     fi
@@ -98,7 +100,7 @@ check_missing_root_password() {
 reboot() {
     local hostname="$1"
     echo "Rebooting $hostname..."
-    ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes "root@$hostname" "reboot"
+    run_ssh "$hostname" "reboot"
     echo "Waiting for $hostname to become unreachable..."
     while check_reachability "$hostname"; do sleep 1; done
     echo "Waiting for $hostname to become reachable again..."
@@ -133,7 +135,7 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
             echo "Low memory detected ($MEMORY KB), initiating reboot sequence..."
             reboot "$HOSTNAME"
             echo "Stopping non-essential services on $HOSTNAME..."
-            ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes "root@$HOSTNAME" "\
+            run_ssh "$HOSTNAME" "\
                 /etc/init.d/collectd stop; \
                 /etc/init.d/luci_statistics stop; \
                 /etc/init.d/sysntpd stop; \
@@ -151,17 +153,18 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
 
             # SCP the file
             echo "Copying $FILENAME to $HOSTNAME:/tmp/"
-            if scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -O "$FILE_PATH" "root@$HOSTNAME:/tmp/"; then
-                # Debug output: Executing sysupgrade
+
+            if timeout 120 scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ConnectTimeout=5 -O "$FILE_PATH" "root@$HOSTNAME:/tmp/"; then
+
                 echo "Executing sysupgrade on $HOSTNAME"
                 # shellcheck disable=SC2029
-                # Perform the sysupgrade; Ensure the connection terminates within 5 seconds using keep-alive
-                UPGRADE_OUTPUT=$(ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ServerAliveInterval=1 -o ServerAliveCountMax=5 "root@$HOSTNAME" "sysupgrade '/tmp/$FILENAME'" 2>&1)
+                # Perform the sysupgrade; Ensure the connection terminates within 5 seconds using keep-alive in run_ssh
+                UPGRADE_OUTPUT=$(run_ssh "$HOSTNAME" "sysupgrade '/tmp/$FILENAME'" 2>&1)
                 echo "$UPGRADE_OUTPUT"
-                if echo "$UPGRADE_OUTPUT" | grep -q "Out of memory"; then
-                    echo "Out of memory detected during upgrade, rebooting $HOSTNAME and failing..."
+                if echo "$UPGRADE_OUTPUT" | grep -qi "Out of memory"; then
+                    echo "Out of memory detected during upgrade, rebooting $HOSTNAME and skipping..."
                     reboot "$HOSTNAME"
-                    exit 1
+                    continue
                 fi
 
                 # Wait for hostname to become unreachable
@@ -175,28 +178,28 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
 
                 # Remove local files
                 echo "Removing local files for $NODENAME from $WORK_DIR"
-                rm "$FILE_PATH"
-                rm "$WORK_DIR/images/$NODENAME.log"
+                rm -f "$FILE_PATH"
+                rm -f "$WORK_DIR/images/$NODENAME.log"
                 rm -rf "$WORK_DIR/build/$NODENAME"
                 rm -rf "$WORK_DIR/configs/$NODENAME"
             else
-                echo "SCP command failed, rebooting $HOSTNAME and failing..."
+                echo "SCP to $HOSTNAME failed. Rebooting and skipping..."
                 reboot "$HOSTNAME"
-                exit 1
+                continue
             fi
-
         else
-            echo "Skipping file transfer due to insufficient memory on $HOSTNAME"
+            echo "Skipping $HOSTNAME due to insufficient memory"
+            continue
         fi
 
         # Check for missing root password
         check_missing_root_password "$HOSTNAME"
-
     else
-        echo "Hostname $HOSTNAME is not reachable"
+        echo "Hostname $HOSTNAME is not reachable, skipping..."
+        continue
     fi
-
 done
+
 # Print summary of devices with missing root password only if there are any
 if [ ${#MISSING_PASSWORD_DEVICES[@]} -gt 0 ]; then
     echo "----------------------------------------"
@@ -206,5 +209,6 @@ if [ ${#MISSING_PASSWORD_DEVICES[@]} -gt 0 ]; then
     done
     echo -e "\e[31mPlease set root passwords on all listed devices.\e[0m"
 fi
+
 echo "----------------------------------------"
 echo "Finished"
