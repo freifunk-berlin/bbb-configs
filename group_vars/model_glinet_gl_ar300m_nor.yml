@@ -3,6 +3,8 @@ target: ath79/nand
 brand_nice: GL.iNet
 model_nice: GL-AR300M NOR
 
+openwrt_version: 24.10-SNAPSHOT
+
 int_port: eth0
 
 wireless_devices:
