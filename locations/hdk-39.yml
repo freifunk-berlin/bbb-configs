@@ -10,6 +10,10 @@ hosts:
     role: corerouter
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
+    host__rclocal__to_merge:
+      - |
+        # Enable legacy rates to enable meshing with neighbors
+        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
 
 ipv6_prefix: '2001:bf7:840:2900::/56'
 
