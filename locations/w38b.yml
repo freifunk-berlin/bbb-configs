@@ -12,15 +12,6 @@ hosts:
     role: corerouter
     model: "glinet_gl-mt6000"
     wireless_profile: w38b
-  - hostname: w38b-ap1
-    role: ap
-    model: "dlink_covr-x1860-a1"
-    wireless_profile: freifunk_default
-    mac_override: {eth0: 0c:0e:76:cf:2e:3a}
-    host__rclocal__to_merge:
-      - |
-        # Enable legacy rates to enable meshing with neighbors
-        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
 
 snmp_devices:
   - hostname: w38b-sama
