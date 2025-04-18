@@ -30,10 +30,6 @@ snmp_devices:
     address: 10.31.131.11
     snmp_profile: airos_6
 
-  - hostname: dtmb-cbase
-    address: 10.31.131.12
-    snmp_profile: airos_6
-
   - hostname: dtmb-laden
     address: 10.31.131.13
     snmp_profile: airos_6
@@ -81,7 +77,7 @@ networks:
 
   - vid: 12
     role: mesh
-    name: mesh_cbase
+    name: mesh_spk_wifi
     prefix: 10.31.131.34/32
     ipv6_subprefix: -3
 
@@ -96,12 +92,6 @@ networks:
     name: mesh_x
     prefix: 10.31.131.36/32
     ipv6_subprefix: -5
-
-  - vid: 15
-    role: mesh
-    name: mesh_y
-    prefix: 10.31.131.37/32
-    ipv6_subprefix: -6
 
   - vid: 20
     role: mesh
@@ -144,10 +134,8 @@ networks:
       # 5 GHz
       dtmb-ak36: 10
       dtmb-rhxb: 11
-      dtmb-cbase: 12
       dtmb-laden: 13
       dtmb-x: 14
-      dtmb-y: 15
 
       # 2 GHz
       dtmb-m2-1: 20
