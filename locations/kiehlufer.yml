@@ -205,7 +205,7 @@ location__wireless_profiles__to_merge:
         network: dhcp
         radio: [11a_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
         radio: [11a_standard, 11a_mesh]
