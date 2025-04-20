@@ -96,6 +96,10 @@ inbound_allow:
     dst: 2001:bf7:750:5b00::/128
   - name: 'gub37-core local public network'
     dst: 2001:bf7:830:a7ce::1/64
+  - name: 'magda-core PubDHCP SSH'
+    dst: 2001:bf7:860:2::/64
+    proto: tcp
+    dst_port: 22
 #  - name: Rule Description (mandatory)
 #    dst: Destination IP (mandatory)
 #    src: Source IP
