@@ -107,6 +107,16 @@ networks:
     assignments:
       magda-core: 1
 
+  - vid: 41
+    role: dhcp
+    name: pubdhcp
+    prefix: 10.248.42.48/28
+    ipv6_subprefix: 2
+    inbound_filtering: false
+    enforce_client_isolation: true
+    assignments:
+      magda-core: 1
+
 location__channel_assignments_11a_standard__to_merge:
   magda-ap1: 48-20
   magda-ap2: 36-20
