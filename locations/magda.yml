@@ -49,6 +49,10 @@ snmp_devices:
     address: 10.31.83.116
     snmp_profile: airos_8
 
+  - hostname: magda-switch-unten
+    address: 10.31.83.122
+    snmp_profile: swos_lite
+
 airos_dfs_reset:
   - name: "magda-ost-5ghz"
     target: "10.31.83.116"
@@ -92,12 +96,23 @@ networks:
       magda-ap3: 7
       # magda-ap4: 8
       magda-ap-remise: 9
+      magda-switch-unten: 10
 
   - vid: 40
     role: dhcp
     prefix: 10.31.83.192/26
     ipv6_subprefix: 0
     inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      magda-core: 1
+
+  - vid: 41
+    role: dhcp
+    name: pubdhcp
+    prefix: 10.248.42.48/28
+    ipv6_subprefix: 2
+    inbound_filtering: false
     enforce_client_isolation: true
     assignments:
       magda-core: 1

@@ -1,41 +1,42 @@
 ---
-location: eberswalder7
-location_nice: Eberswalder Str. 6-9
-latitude: 52.540807
-longitude: 13.406802
+location: genterstr69
+location_nice: Genter Str. 69, 13353 Berlin
+latitude: 52.548992
+longitude: 13.350922
+altitude: 50
 contact_nickname: 'Freerk'
 contacts:
   - 'freerk@ohling.org'
 
 hosts:
-  - hostname: eberswalder7-core
+  - hostname: genterstr69-core
     role: corerouter
-    model: "tplink_tl-wdr4900-v1"
+    model: "cudy_wr3000-v1"
     wireless_profile: freifunk_default
 
 snmp_devices:
-  - hostname: eberswalder7-segen
-    address: 10.31.238.194
-    snmp_profile: airos_6
+  - hostname: genterstr69-bht
+    address: 10.31.107.130
+    snmp_profile: airos_8
 
 # IPs
-ipv6_prefix: '2001:bf7:760:1600::/56'
+ipv6_prefix: '2001:bf7:750:8a00::/56'
 
 # got following prefixes:
-# Router: 10.31.238.192/26
-# --MGMT: 10.31.238.192/28
-# --MESH: 10.31.238.208/28
-# --DHCP: 10.31.238.224/27
+# Router: 10.31.107.128/26
+# --MGMT: 10.31.107.128/28
+# --MESH: 10.31.107.144/28
+# --DHCP: 10.31.107.160/27
 
 # Disable noping
 dhcp_no_ping: false
 
 networks:
-  # MESH - Segen
+  # MESH - BHT
   - vid: 10
     role: mesh
-    name: mesh_segen
-    prefix: 10.31.238.208/32
+    name: mesh_bht
+    prefix: 10.31.107.144/32
     ipv6_subprefix: -10
     ptp: true
 
@@ -43,9 +44,9 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_11s_5g
-    prefix: 10.31.238.209/32
+    prefix: 10.31.107.145/32
     ipv6_subprefix: -20
-    mesh_ap: eberswalder7-core
+    mesh_ap: genterstr69-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -53,11 +54,11 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_11s_2g
-    prefix: 10.31.238.210/32
+    prefix: 10.31.107.146/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ['default 0.5']
-    mesh_ap: eberswalder7-core
+    mesh_ap: genterstr69-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
@@ -67,31 +68,27 @@ networks:
     untagged: true
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.31.238.224/27
+    prefix: 10.36.107.160/27
     ipv6_subprefix: 0
     assignments:
-      eberswalder7-core: 1
+      genterstr69-core: 1
 
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.31.238.192/28
+    prefix: 10.31.107.128/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # 10.31.238.193/32
-      eberswalder7-core: 1
-      # 10.31.238.194/32
-      eberswalder7-segen: 2
+      # 10.31.107.129/32
+      genterstr69-core: 1
+      # 10.31.107.130/32
+      genterstr69-bht: 2
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  eberswalder7-core: 36-40
-
-# AP-id, wifi-channel, bandwidth, txpower
-location__channel_assignments_11g_standard__to_merge:
-  eberswalder7-core: 13-20
+  genterstr69-core: 36-40
 
 # DNS-Servers
 dns_servers:

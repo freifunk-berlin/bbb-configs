@@ -1,17 +1,11 @@
 ---
-target: "mediatek/filogic"
-brand_nice: GL.iNet
-model_nice: GL-MT6000 (Flint 2)
+target: mediatek/filogic
+openwrt_version: snapshot
+brand_nice: Cudy
+model_nice: AP3000
+version_nice: v1
 
-openwrt_version: 24.10-SNAPSHOT
-
-dsa_ports:
-  - lan1
-  - lan2
-  - lan3
-  - lan4
-  - lan5
-  - eth1
+int_port: eth0
 
 wireless_devices:
   - name: 11a_standard

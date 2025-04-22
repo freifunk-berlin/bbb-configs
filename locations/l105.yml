@@ -6,13 +6,14 @@ longitude: 13.369420
 altitude: 62
 community: true
 
+local_asn: 65023
+peer_asn: 44194
+
 hosts:
   - hostname: l105-gw
     role: gateway
     model: "x86-64"
     image_search_pattern: "*-ext4-combined.img*"
-    l105__disabled_services__to_merge:
-      - "bird"
     host__packages__to_merge:
       - qemu-ga
 
@@ -45,7 +46,7 @@ ipv6_prefix: 2001:bf7:750:3f00::/56
 uplink:
   ifname: eth0
   ipv4: 77.87.49.8/24
-  # ipv6: ToDo
+  ipv6: 2001:bf7:b201:1312::1/127
 
 mgmt:
   ifname: eth1.42

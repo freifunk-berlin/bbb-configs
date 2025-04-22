@@ -1,6 +1,6 @@
 ---
 location: j41
-location_nice: Jessnerstraße 41
+location_nice: Jessnerstraße 41, 10247 Berlin
 latitude: 52.51047588
 longitude: 13.47179912
 altitude: 58
@@ -12,14 +12,19 @@ hosts:
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
 
+  - hostname: j41-hof
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override: {eth0: 2c:c8:1b:6a:ce:f1}
+
+  - hostname: j41-nw-5ghz
+    role: ap
+    model: "ubnt_bullet-m5-ar7241"
+
 snmp_devices:
   - hostname: j41-switch
     address: 10.31.41.2
     snmp_profile: edgeswitch
-
-  - hostname: j41-f2a
-    address: 10.31.41.3
-    snmp_profile: airos_6
 
   - hostname: j41-zwingli
     address: 10.31.41.4
@@ -34,33 +39,34 @@ ipv6_prefix: "2001:bf7:830:bd00::/56"
 # --DHCP: 10.31.41.128/25
 
 networks:
-  - vid: 10
-    role: mesh
-    name: mesh_f2a
-    prefix: 10.31.41.66/32
-    ipv6_subprefix: -10
-    mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.3']
-    ptp: true
-
+  # MESH - Zwingli
   - vid: 11
     role: mesh
     name: mesh_zwingli
-    prefix: 10.31.41.67/32
+    prefix: 10.31.41.64/32
     ipv6_subprefix: -11
 
-  - vid: 42
-    role: mgmt
-    prefix: 10.31.41.0/27
-    gateway: 1
-    dns: 1
-    ipv6_subprefix: 1
-    assignments:
-      j41-core: 1
-      j41-switch: 2
-      j41-f2a: 3
-      j41-zwingli: 4
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_hof
+    prefix: 10.31.41.65/32
+    ipv6_subprefix: -20
+    mesh_ap: j41-hof
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
 
+  # MESH - 5 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_nw
+    prefix: 10.31.41.66/32
+    ipv6_subprefix: -21
+    mesh_ap: j41-nw-5ghz
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # DHCP with filtering and isolation
   - vid: 40
     role: dhcp
     prefix: 10.31.41.128/25
@@ -70,8 +76,24 @@ networks:
     assignments:
       j41-core: 1
 
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.41.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      j41-core: 1
+      j41-switch: 2
+      j41-hof: 3
+      j41-zwingli: 4
+      j41-nw-5ghz: 5
+
 location__channel_assignments_11g_standard__to_merge:
   j41-core: 13-20
 
 location__channel_assignments_11a_standard__to_merge:
-  j41-core: 36-40
+  j41-core: 44-40
+  j41-hof: 36-40
+  j41-nw-5ghz: 36-20

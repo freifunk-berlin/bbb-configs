@@ -12,15 +12,6 @@ hosts:
     role: corerouter
     model: "glinet_gl-mt6000"
     wireless_profile: w38b
-  - hostname: w38b-ap1
-    role: ap
-    model: "dlink_covr-x1860-a1"
-    wireless_profile: freifunk_default
-    mac_override: {eth0: 0c:0e:76:cf:2e:3a}
-    host__rclocal__to_merge:
-      - |
-        # Enable legacy rates to enable meshing with neighbors
-        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
 
 snmp_devices:
   - hostname: w38b-sama
@@ -87,31 +78,11 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # MESH - 5 GHz 802.11s ap1
-  - vid: 22
-    role: mesh
-    name: mesh_ap1_5g
-    prefix: 10.31.212.37/32
-    ipv6_subprefix: -22
-    mesh_ap: w38b-ap1
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
-
-  # MESH - 2.4 GHz 802.11s ap1
-  - vid: 23
-    role: mesh
-    name: mesh_ap1_2g
-    prefix: 10.31.212.38/32
-    ipv6_subprefix: -23
-    mesh_ap: w38b-ap1
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
  # MESH - LAN
   - vid: 30
     role: mesh
     name: mesh_lan
-    prefix: 10.31.212.39/32
+    prefix: 10.31.212.37/32
     ipv6_subprefix: -30
 
   # DHCP with filtering and isolation
@@ -179,7 +150,6 @@ networks:
     ipv6_subprefix: 1
     assignments:
       w38b-core: 1      # 10.31.212.1
-      w38b-ap1: 2       # 10.31.212.2
       w38b-sama: 3      # 10.31.212.3
       w38b-rhnk: 4      # 10.31.212.4
 
@@ -187,12 +157,10 @@ networks:
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
   w38b-core: 36-80
-  w38b-ap1: 52-80
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
   w38b-core: 13-20
-  w38b-ap1: 13-20
 
 # Wireless profile
 location__wireless_profiles__to_merge:

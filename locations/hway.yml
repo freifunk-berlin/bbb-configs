@@ -50,8 +50,6 @@ hosts:
     model: cudy_ap3000outdoor-v1
     openwrt_version: 24.10-SNAPSHOT
 
-log_size: 1024
-
 snmp_devices:
 
   - hostname: hway-kiehlufer
@@ -136,7 +134,7 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
         owe_transition_ifname_hint: ff
-        ieee80211w: 1
+        ieee80211w: 2
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
         radio: [11a_standard, 11g_standard, 11a_mesh]

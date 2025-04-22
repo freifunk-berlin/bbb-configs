@@ -28,17 +28,15 @@ hosts:
 
   - hostname: kiehlufer-core
     role: corerouter
-    model: "cudy_x6-v1"
+    model: "cudy_ap3000-v1"
     wireless_profile: freifunk_default
     openwrt_version: 24.10-SNAPSHOT
-    log_size: 1024
 
   - hostname: kiehlufer-huette
     role: ap
     model: "zyxel_nwa55axe"
     wireless_profile: kiehlufer5g
     openwrt_version: 24.10-SNAPSHOT
-    log_size: 1024
 
   - hostname: kiehlufer-nf-wbp1
     role: ap
@@ -207,7 +205,7 @@ location__wireless_profiles__to_merge:
         network: dhcp
         radio: [11a_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
         radio: [11a_standard, 11a_mesh]

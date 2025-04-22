@@ -17,10 +17,10 @@ wireless_devices:
   - name: 11a_standard
     band: 5g
     htmode_prefix: HE
-    path: platform/18000000.wifi+1
+    path: platform/soc/18000000.wifi+1
     ifname_hint: wlan5
   - name: 11g_standard
     band: 2g
     htmode_prefix: HE
-    path: platform/18000000.wifi
+    path: platform/soc/18000000.wifi
     ifname_hint: wlan2

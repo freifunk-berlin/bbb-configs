@@ -9,7 +9,8 @@ community: true
 hosts:
   - hostname: emma-core
     role: corerouter
-    model: "mikrotik_routerboard-750gr3"
+    model: "cudy_wr3000-v1"
+    wireless_profile: freifunk_default
 
 snmp_devices:
   - hostname: emma-switch-no

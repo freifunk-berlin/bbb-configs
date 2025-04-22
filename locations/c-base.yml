@@ -43,7 +43,7 @@ snmp_devices:
     snmp_profile: airos_8
 
 airos_dfs_reset:
-  - name: "c-base-mesh-ssw"
+  - name: "c-base-simeon"
     target: "10.31.134.101"
     username: "ubnt"
     password: "/root/pwd"
@@ -64,7 +64,7 @@ networks:
 
   - vid: 11
     role: mesh
-    name: mesh_ssw
+    name: mesh_simeon
     prefix: 10.31.134.112/32
     ipv6_subprefix: -11
 
@@ -106,7 +106,7 @@ networks:
       c-base-switch: 2    # 10.31.134.98
       c-base-nf-1: 3      # 10.31.134.99
       c-base-nf-2: 4      # 10.31.134.100
-      c-base-mesh-ssw: 5  # 10.31.134.101
+      c-base-simeon: 5    # 10.31.134.101
       c-base-nf-3: 6      # 10.31.134.102
       c-base-nf-4: 7      # 10.31.134.103
 

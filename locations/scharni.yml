@@ -9,7 +9,7 @@ community: true
 hosts:
   - hostname: scharni-core
     role: corerouter
-    model: "linksys_e8450-ubi"
+    model: "openwrt_one"
     wireless_profile: freifunk_default
 
   - hostname: scharni-ap-gastwg

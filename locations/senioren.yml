@@ -1,0 +1,58 @@
+---
+location: senioren
+location_nice: Falkensee Senioren Wohngemeinschaft, Falkenhagener Straße 35, 13585 Berlin
+latitude: 52.567321
+longitude: 13.104941
+altitude: 0
+contact_nickname: 'jammingblub'
+contacts:
+  - 'koltonowski@protonmail.com'
+
+hosts:
+  - hostname: senioren-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: freifunk_default
+
+ipv6_prefix: "2001:bf7:780:c00::/56"
+
+# Senioren got following prefixes:
+# Router: 10.248.37.128/25
+# --MGMT: 10.248.37.128/27
+# --MESH: 10.248.37.160/27
+# --DHCP: 10.248.37.192/26
+
+networks:
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.37.192/26
+    ipv6_subprefix: 0
+    assignments:
+      senioren-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.37.128/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      senioren-core: 1
+
+  - vid: 50
+    untagged: true
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.37.160/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.248.37.161/32
+    wireguard_port: 51821
