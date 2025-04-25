@@ -1,8 +1,8 @@
 ---
-location: weidenbaum
+location: weidenbaum-r2
 location_nice: Kleingartenkolonie Weidenbaum, Straße 70 Nr. 8+10, 13627 Berlin
-latitude: 52.54227473545742
-longitude: 13.305438420309441
+latitude: 52.542105
+longitude: 13.301957
 altitude: 27
 height: 6
 contact_nickname: 'wbaum'
@@ -11,7 +11,7 @@ contacts:
   - '@wbaum:matrix.org'
 
 hosts:
-  - hostname: weidenbaum-core
+  - hostname: weidenbaum-r2
     role: corerouter
     model: "ubnt_unifiac-mesh"
     wireless_profile: freifunk_default
@@ -25,36 +25,24 @@ hosts:
           uci set wireless.$radio.legacy_rates='1'
         done
         uci commit wireless; reload_config
-snmp_devices:
-  - hostname: weidenbaum-bht
-    address: 10.31.204.130
-    snmp_profile: airos_8
 
-ipv6_prefix: "2001:bf7:780:a00::/56"
+ipv6_prefix: "2001:bf7:800:2300::/56"
 
 # got following prefixes:
-# Router:  10.31.204.128/26
-#          2001:bf7:780:a00::/56
-# --MGMT:  10.31.204.128/28
-# --MESH:  10.31.204.144/28
-# --DHCP:  10.31.204.160/27
+# Router: 10.248.81.128/26
+# --MGMT: 10.248.81.128/28
+# --MESH: 10.248.81.144/28
+# --DHCP: 10.248.81.160/27
 
 networks:
-  # MESH - PTMP / PTP Links
-  - vid: 10
-    role: mesh
-    name: mesh_bht
-    prefix: 10.31.204.144/32
-    ipv6_subprefix: -10
-
   # 802.11s Links
   # MESH - 5 GHz 802.11s - core
   - vid: 20
     role: mesh
     name: mesh_5g
-    prefix: 10.31.204.147/32
+    prefix: 10.248.81.144/32
     ipv6_subprefix: -20
-    mesh_ap: weidenbaum-core
+    mesh_ap: weidenbaum-r2
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -62,39 +50,38 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_2g
-    prefix: 10.31.204.148/32
+    prefix: 10.248.81.145/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ["default 0.5"]
-    mesh_ap: weidenbaum-core
+    mesh_metric_lqm: ['default 0.5']
+    mesh_ap: weidenbaum-r2
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
   # DHCP
   - vid: 40
     role: dhcp
-    prefix: 10.31.204.160/27
+    prefix: 10.248.81.160/27
     ipv6_subprefix: 0
     inbound_filtering: true
     enforce_client_isolation: true
     assignments:
-      weidenbaum-core: 1
+      weidenbaum-r2: 1
 
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.31.204.128/28
+    prefix: 10.248.81.128/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      weidenbaum-core: 1 # .129
-      weidenbaum-bht: 2 # .130
+      weidenbaum-r2: 1  # 10.248.81.129
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  weidenbaum-core: 36-40
+  weidenbaum-r2: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  weidenbaum-core: 13-20
+  weidenbaum-r2: 13-20
