@@ -37,6 +37,7 @@ config interface 'loopback'
   {% include './common/config/swconfig.network.inc' %}
 {% endif %}
 
+{% include './common/config/network-mt7530-eee-bug.inc' %}
 
 {% for network in networks %}
   {% set name = libnetwork.getUciIfname(network) %}

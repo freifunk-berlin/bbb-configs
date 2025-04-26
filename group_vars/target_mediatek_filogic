@@ -1,3 +1,4 @@
 ---
 
 multicore: true
+mt7530_eee_bug: true
