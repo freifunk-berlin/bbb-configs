@@ -4,6 +4,9 @@ brand_nice: TP-Link
 model_nice: Archer C6
 version_nice: v2
 
+openwrt_version: 24.10-SNAPSHOT
+low_flash: true
+
 switch_ports: 7
 switch_int_port: 0
 switch_ignore_ports: [6]
