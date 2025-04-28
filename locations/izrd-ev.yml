@@ -3,6 +3,7 @@ location: izrd-ev
 location_nice: Normannenstraße 1-2, 10367 Berlin
 latitude: 52.51609518171857
 longitude: 13.480124737072417
+altitude: 56
 contact_nickname: 'IZRD e. V.'
 contacts:
   - 'it@izrd.de'
