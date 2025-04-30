@@ -31,7 +31,8 @@ ipv6_prefix: "2001:bf7:750:6800::/56"
 #          2001:bf7:750:6800::/56
 # --MGMT:  10.31.205.128/29
 # --MESH:  10.31.205.136/29
-# --DHCP:  10.31.205.144/28
+# --DHCP:  10.31.205.144/29
+# --DHCP:  10.31.205.152/29 (Public)
 
 networks:
   # MESH - PTMP / PTP Links
@@ -66,11 +67,22 @@ networks:
   # DHCP
   - vid: 40
     role: dhcp
-    untagged: true
-    prefix: 10.31.205.144/28
+    prefix: 10.31.205.144/29
     ipv6_subprefix: 0
     inbound_filtering: true
     enforce_client_isolation: true
+    assignments:
+      perle-core: 1
+
+  # DHCP PUBLIC without filter
+  - vid: 41
+    role: dhcp
+    name: pubdhcp
+    untagged: true
+    prefix: 10.31.205.152/29
+    ipv6_subprefix: -41
+    inbound_filtering: false
+    enforce_client_isolation: false
     assignments:
       perle-core: 1
 
