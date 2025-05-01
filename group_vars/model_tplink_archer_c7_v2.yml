@@ -4,6 +4,8 @@ brand_nice: TP-Link
 model_nice: Archer C7
 version_nice: v2, v2.1
 
+openwrt_version: 24.10-SNAPSHOT
+
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"
   - "kmod-ath10k ath10k-firmware-qca988x"
