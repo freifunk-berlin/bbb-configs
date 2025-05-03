@@ -72,12 +72,35 @@
     - tcpdump-mini
     - -vnstat
 
+- name: "Remove even more packages for corerouter with low mem and low flash"
+  set_fact:
+    packages: "{{ packages + [item] }}"
+  when:
+    - role == 'corerouter'
+    - low_mem | default(false) or low_flash | default(false)
+  loop:
+    - -tcpdump-mini
+    - -mtr
+
 - name: "Remove Luci on low mem and low flash"
   set_fact:
     packages: "{{ packages + ['-' + item] }}"
   when: (low_mem | default(false) or low_flash | default(false)) and role != "corerouter"
   loop: "{{ all_luci_base__packages__to_merge }}"
 
+- name: "Remove Luci packages on low mem and low flash not removed by the above"
+  set_fact:
+    packages: "{{ packages + [item] }}"
+  when: low_mem | default(false) or low_flash | default(false)
+  loop:
+    - -luci-app-falter-owm-ant
+    - -luci-app-falter-owm-gui
+    - -luci-app-olsr
+    - -luci-app-olsr-services
+    - -luci-mod-admin-full
+    - -luci-mod-falter
+    - -luci-proto-ipv6
+    - -luci-theme-bootstrap
 
 - name: "Disable uhttpd on low mem"
   set_fact:
