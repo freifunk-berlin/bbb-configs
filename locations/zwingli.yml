@@ -290,6 +290,12 @@ networks:
       zwingli-sued-5ghz: 22
       zwingli-west-5ghz: 23
 
+      # Raspberry Pi (Meshtastic / Meshcore)
+      # USB 0 Meshtastic 868
+      # USB 1 Meshtastic 433
+      # USB 2 MeshCore 868
+      zwingli-pi: 25
+
 location__channel_assignments_11a_standard__to_merge:
   zwingli-dome-1: 52-80
   zwingli-dome-2: 36-80
