@@ -11,14 +11,15 @@ contacts:
 hosts:
   - hostname: friedland3-core
     role: corerouter
-    model: "avm_fritzbox-4040"
+    model: "dlink_covr-x1860-a1"
+    mac_override: {eth0: 0c:0e:76:cf:27:09}
     wireless_profile: friedland3
     host__rclocal__to_merge:
       - |
         # untag DHCP on LAN ports
-        uci set network.vlan_40.ports='lan1 lan2 lan3 lan4 wan:t'
+        uci set network.vlan_40.ports='internet:t ethernet'
         # untag UPLK on WAN port
-        uci set network.vlan_50.ports='lan1:t lan2:t lan3:t lan4:t wan'
+        uci set network.vlan_50.ports='internet ethernet:t'
         uci commit network; reload_config
         # Enable legacy rates to enable meshing with neighbors
         for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
