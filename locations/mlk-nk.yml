@@ -11,7 +11,7 @@ hosts:
 
   - hostname: mlk-nk-core
     role: corerouter
-    model: "tplink_tl-wdr4900-v1"
+    model: "mikrotik_routerboard-750gr3"
     wireless_profile: freifunk_default
 
   - hostname: mlk-nk-nf-wbp2
