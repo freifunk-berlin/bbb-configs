@@ -118,18 +118,6 @@ networks:
       mlk-nk-nf-wbp2: 7
       mlk-nk-nf-wbp3: 8
 
-dns_servers:
-  # quad9
-  - 9.9.9.9
-  - 149.112.112.112
-  - 2620:fe::fe
-  - 2620:fe::9
-  # cloudflare
-  - 1.1.1.1
-  - 1.0.0.1
-  - 2606:4700:4700::1111
-  - 2606:4700:4700::1001
-
 location__ssh_keys__to_merge:
   - comment: martin@koltonowski.de
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMTjQj0EmyW6KcG83TOyruZ89/BLL+OsjSBY3i5FUHwM martin@martin-ThinkPad-T15-Gen-1
