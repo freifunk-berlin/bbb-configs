@@ -1,6 +1,6 @@
 ---
 
-#freifunk_global_prefix -> has been migrated to group_vars/all/general.yml
+# freifunk_global_prefix -> has been migrated to group_vars/all/general.yml
 freifunk_wahlkreis_prefixes:
   - 2001:bf7:750::/44
   - 2001:bf7:760::/44
@@ -37,7 +37,7 @@ wireguard_wg_pub: '/etc/wireguard/wg.pub'
 # If it is set wireguard_wg_key and wireguard_wg_pub are not used.
 wireguard_wg_tmp_key: false
 
-gre_metric: 256 # Match default RX Cost
+gre_metric: 256  # Match default RX Cost
 
 
 ## FIREWALL SECTION
@@ -94,6 +94,10 @@ inbound_allow:
     dst: 2001:bf7:830:1029::/64
   - name: 'cryptpad.berlin noc@stadtfunk.net'
     dst: 2001:bf7:750:5b00::/128
+  - name: 'newyorck-homelab newyorck@so36.net'
+    dst: 2001:bf7:830:a92b::2/128
+    proto: tcp
+    dst_port: 22
   - name: 'gub37-core local public network'
     dst: 2001:bf7:830:a7ce::1/64
   - name: 'magda-core PubDHCP SSH'
