@@ -19,7 +19,7 @@ hosts:
 snmp_devices:
   - hostname: izrd-ev-sama
     address: 10.248.44.34
-    snmp_profile: airos_6
+    snmp_profile: airos_8
 
 ipv6_prefix: "2001:bf7:860:1c00::/56"
 
