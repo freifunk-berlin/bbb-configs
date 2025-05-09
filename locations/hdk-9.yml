@@ -1,12 +1,12 @@
 ---
-location: hdk-0
-location_nice: Heidekampgraben 0
-latitude: 52.478098463
-longitude: 13.47196341
+location: hdk-9
+location_nice: Heidekampgraben 9
+latitude: 52.477892624
+longitude: 13.47258568
 community: true
 
 hosts:
-  - hostname: hdk-0
+  - hostname: hdk-9
     role: corerouter
     model: "dlink_dap-x1860-a1"
     wireless_profile: freifunk_default
@@ -15,11 +15,11 @@ hosts:
         # Enable legacy rates to enable meshing with neighbors
         for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
 
-ipv6_prefix: '2001:bf7:840:5900::/56'
+ipv6_prefix: '2001:bf7:840:6200::/56'
 
-# --MGMT: 10.248.53.56/30
-# --MESH: 10.248.53.154/32 10.248.53.155/32
-# --DHCP: 10.248.54.128/28
+# --MGMT: 10.248.53.100/30
+# --MESH: 10.248.53.190/32 10.248.53.191/32
+# --DHCP: 10.248.55.240/28
 
 # Disable noping
 dhcp_no_ping: false
@@ -29,9 +29,9 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_5g
-    prefix: 10.248.53.154/32
+    prefix: 10.248.53.190/32
     ipv6_subprefix: -20
-    mesh_ap: hdk-0
+    mesh_ap: hdk-9
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -39,9 +39,9 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_2g
-    prefix: 10.248.53.155/32
+    prefix: 10.248.53.191/32
     ipv6_subprefix: -21
-    mesh_ap: hdk-0
+    mesh_ap: hdk-9
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
@@ -51,25 +51,25 @@ networks:
     untagged: true
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.248.54.128/28
+    prefix: 10.248.55.240/28
     ipv6_subprefix: 0
     assignments:
-      hdk-0: 1
+      hdk-9: 1
 
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.248.53.56/30
+    prefix: 10.248.53.100/30
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      hdk-0: 1
+      hdk-9: 1
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hdk-0: 36-40
+  hdk-9: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hdk-0: 13-20
+  hdk-9: 13-20
