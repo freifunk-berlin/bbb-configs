@@ -80,7 +80,7 @@ networks:
   - vid: 41
     role: dhcp
     name: prdhcp
-    prefix: 10.31.201.224/28
+    prefix: 10.31.201.224/29
     ipv6_subprefix: -41
     inbound_filtering: true
     enforce_client_isolation: false
@@ -100,6 +100,18 @@ networks:
       q216-tierpark: 3
       q216-nf-s: 4
       q216-spitta: 5
+
+  - vid: 43
+    role: dhcp
+    name: pubdhcp
+    prefix: 10.31.201.232/29
+    ipv6_subprefix: -43
+    inbound_filtering: false
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+    assignments:
+      q216-core: 1
+      q216-test: 2
 
 location__channel_assignments_11a_standard__to_merge:
   q216-core: 44-40
