@@ -1,0 +1,45 @@
+---
+target: ath79/generic
+brand_nice: TP-Link
+model_nice: CPE510
+version_nice: v2
+
+int_port: eth0
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: HT
+    path: platform/ahb/18100000.wmac
+    ifname_hint: wlan5
+
+leds:
+  - name: LAN
+    sysfs: green:lan
+    trigger: netdev
+    mode: link tx rx
+    dev: eth0
+  - name: rssilow
+    sysfs: green:link1
+    trigger: rssi
+    iface: wlan0
+    minq: 1
+    maxq: 100
+  - name: rssimediumlow
+    sysfs: green:link2
+    trigger: rssi
+    iface: wlan0
+    minq: 26
+    maxq: 100
+  - name: rssimediumhigh
+    sysfs: green:link3
+    trigger: rssi
+    iface: wlan0
+    minq: 51
+    maxq: 100
+  - name: rssihigh
+    sysfs: green:link4
+    trigger: rssi
+    iface: wlan0
+    minq: 76
+    maxq: 100
