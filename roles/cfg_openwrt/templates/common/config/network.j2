@@ -1,12 +1,12 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {% import 'libraries/network.j2' as libnetwork with context %}
 
-# Babel inserts into seperate route table, add that to lookup list for IPv6
+# Babel inserts into separate route table, add that to lookup list for IPv6
 config rule6
 	option priority 33000
 	option lookup 'babel-src'
 
-# IPv4 Soft Migration by priotizing Babel over OLSR
+# IPv4 Soft Migration by prioritizing Babel over OLSR
 config rule
 	option priority 33100
 	option lookup 'babel-ff'
