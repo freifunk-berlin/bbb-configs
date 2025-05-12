@@ -1,0 +1,96 @@
+---
+location: ttown
+location_nice: U-Alt Tempelhof
+latitude: 52.465551
+longitude: 13.38598
+contacts:
+  - "@schnick:matrix.org"
+
+hosts:
+  - hostname: ttown-core
+    role: corerouter
+    model: "dlink_covr-x1860-a1"
+    wireless_profile: freifunk_default
+    mac_override: {eth0: a8:63:7d:db:59:c4}
+    host__rclocal__to_merge:
+      - 'cat /etc/crontabs/root | grep reboot 2>/dev/null || echo "0 4 * * * reboot" >> /etc/crontabs/root && /etc/init.d/cron restart'
+
+ipv6_prefix: "2001:bf7:810:1200::/56"
+
+dhcp_no_ping: false
+
+# Reserved Prefixes:
+# 10.31.208.64/26, 2001:bf7:810:1200::/56
+# MGMT: 10.31.208.64/28
+# MESH: 10.31.208.80/28
+# DHCP: 10.31.208.96/27
+
+networks:
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.208.80/32
+    ipv6_subprefix: -20
+    mesh_ap: ttown-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.208.81/32
+    ipv6_subprefix: -21
+    # make mesh_metric for 2GHz worse than 5GHz
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: ttown-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.208.64/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      ttown-core: 1
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.208.96/27
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      ttown-core: 1
+
+  - vid: 50
+    name: prdhcp
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.208.82/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.208.83/32
+    wireguard_port: 51821
+
+location__channel_assignments_11g_standard__to_merge:
+  ttown-core: 13-20
+
+location__channel_assignments_11a_standard__to_merge:
+  ttown-core: 36-40
+
+# only place this ssh-keys
+ssh_keys:
+  - comment: Nick
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJrryeA5Nj8TJzX0hjujDQvrrBRpDFjhGJKn297zhoij nick@systemli.org
