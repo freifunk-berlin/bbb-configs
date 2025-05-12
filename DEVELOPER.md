@@ -6,7 +6,7 @@ This guide explains the directory structure of the project and variables within 
 
 `locations/` holds all the location specific configuration. To create a new location add a new file named  `$LOCATIONNAME.yml`. The name should only contain `a-z`, `0-9` and `-`.
 
-As this format is new there are still some old locationdata you can find at `groups_vars/` and `host_vars/`. These old configurations work the same way exept being spilt into different files. For new locations only use `locations/`.
+As this format is new there are still some old locationdata you can find at `groups_vars/` and `host_vars/`. These old configurations work the same way except being spilt into different files. For new locations only use `locations/`.
 
 There are default values defined in `group_vars/all/`. You can override the variables by redefining them in the `$LOCATIONNAME.yml`.
 
@@ -203,7 +203,7 @@ tunnel can be an easy and safe solution. In that case you can add one or more tu
 If there are routes via the tunnels the following command will show a non empty result, when run on the node
 `(echo /routes | nc 127.0.0.1 9090) | grep '"networkInterface": "ts_'`. For uplinks that should only act as backup connection you should adjust the link metrics. See the network section for a example of Babel Metric and OLSR LQM.
 
-If you have multiple uplinks and want one to be prefered, set different link metrics for the different uplinks.
+If you have multiple uplinks and want one to be preferred, set different link metrics for the different uplinks.
 
 ### uplink over LTE modem
 
@@ -276,7 +276,7 @@ location__wireless_profiles__to_merge:
       - radio: 11a_mesh
       - radio: 11a_standard
         disabled: false # Enable radio (default)
-        legacy_rates: false # Disable lower bandwith rates (default)
+        legacy_rates: false # Disable lower bandwidth rates (default)
         country: 'DE' # Set German country code for radio compliance (default)
 
     ifaces:
@@ -375,7 +375,7 @@ For a model using **DSA** instead of swconfig you can obtain the needed informat
 
 ## inventory/
 
-This is an internal directory on which you don't need to care about now. If you like to learn mor on it, you might read
+This is an internal directory on which you don't need to care about now. If you like to learn more on it, you might read
 the `README.md` file inside of it.
 
 ## roles/
