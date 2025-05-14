@@ -56,6 +56,7 @@ hosts:
     model: "avm_fritzbox-7530"         # model name like written in the corresponding file name in group_vars/
     wireless_profile: freifunk_default # activates wifi with freifunk-default-settings on this device. By default only APs have activated wifi.
 ```
+#### PoE
 
 Some devices use POE-Ports. To enable them, just give the parameter `poe_on` and the port. For example:
 
@@ -69,12 +70,28 @@ Multiple ports can be specified as a list:
     poe_on: [0,1,2,3]
 ```
 
+#### MAC Addresses
+
 A few devices also require an override to properly set the MAC address. The command to read the address from the device should be documented in the corresponding model file.
 
 Without the `mac_override` these devices will still function, but generate a new MAC address on each boot. This causes the devices to appear multiple times in the devices listing of switches and also changes the link local address of the device as it is based on the MAC address.
 
 ```yml
     mac_override: {eth0: XX:XX:XX:XX:XX:XX}
+```
+
+#### Init Script rc.local
+
+For special use cases you can add lines to a script file. This script runs once after installation of the image. One use case is untagging certain vlans on some ports. For this it is important to check the model file at `group_vars/` to find the correct ports.
+
+```yml
+    host__rclocal__to_merge:
+      - |
+        # Untag mesh traffic for a Airfiber as they cant do it themself
+        uci set network.vlan_10.ports='lan1:t lan2 lan3:t lan4:t lan5:t'
+        # Untag DHCP on ports 4 and 5 for convenient maintenance'
+        uci set network.vlan_40.ports='lan1:t lan2:t lan3:t lan4 lan5'
+        uci commit network; reload_config
 ```
 
 ### monitoring
@@ -106,7 +123,7 @@ airos_dfs_reset:
 This part defines IP-Addresses, WIFI-Properties, Mesh and so on.
 
 ```yml
-# ROUTER: 10.31.42.0/26      # add a overview of all reserved addresses at the top as a comment
+# ROUTER: 10.31.42.0/26       # add a overview of all reserved addresses at the top as a comment
 # --MGMT: 10.31.42.0/28
 # --MESH: 10.31.42.16/28
 # --DHCP: 10.31.42.32/27
@@ -115,14 +132,23 @@ ipv6_prefix: "2001:bf7:860::/56"
 
 networks:
   - vid: 10                   # vlan-id
-    role: mesh                # what this vlan does (mesh vs. dhcp)
+    role: mesh                # what this vlan does (mesh, dhcp, mgmt)
     name: mesh_sama           # the name has a 12 characters limit. It should only contain lower letters and underscores
-    ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for point to point connections by ignoring the hidden node problem
+    ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for
+                              # point to point connections by ignoring the hidden node problem
     prefix: 10.31.42.16/32    # single ipv4-address for meshing
-    ipv6_subprefix: -10       # take an address from the back of the IPv6-block. Best practice is to use the same value as the vlan-id for everything except dhcp and mgmt to avoid duplicate addresses.
-    mesh_metric_lqm: ['default 0.8'] # link quality multiplier is used to artificially make routes worse for olsr, so certain links are preferred. Must be higher then 0.2, otherwise link wont work. Currently IPv4 routes over it.
-    mesh_metric: 1024         # overrides the default of 512 for for babel similar to the option above. Lower metrics means a route is preferred. Currently IPv6 routes over it.
-    untagged: true            # untags the vlan. It is commonly used for tunnel-uplinks
+    ipv6_subprefix: -10       # take an address from the back of the IPv6-block. Best practice is
+                              # to use the same value as the vlan-id for everything except dhcp and
+                              # mgmt to avoid duplicate addresses.
+    mesh_metric_lqm: ['default 0.8'] # link quality multiplier is used to artificially make routes
+                              # worse for olsr, so certain links are preferred. Must be higher then 0.2,
+                              # otherwise link wont work. Only used to connect to Falter-Routers.
+    mesh_metric: 1024         # overrides the default metrics for for babel routing.
+                              # Lower metrics means a route is preferred. Babel is used within bbb-configs.
+                              # Defaults can be found at group_vars/all/general.yml
+    untagged: true            # untags the vlan. It is commonly used for tunnel-uplinks. Only one
+                              # network can be untagged. For more advanced use cases, look under
+                              # hosts section at rc.local
 
   - vid: 20
     role: mesh
