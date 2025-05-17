@@ -27,10 +27,17 @@ hosts:
     poe_on: []
 
 snmp_devices:
-  - hostname: manstein10-rhxb
-    address: 10.36.208.4
-    snmp_profile: airos_6
+  - hostname: manstein10-poe-switch-1
+    address: 10.31.125.2
+    snmp_profile: netgear
 
+  - hostname: manstein10-poe-switch-2
+    address: 10.31.125.3
+    snmp_profile: netgear
+
+  - hostname: manstein10-rhxb
+    address: 10.31.125.4
+    snmp_profile: airos_6
 
 # Overall we allocated: 10.31.125.0/24
 # Still unused:
