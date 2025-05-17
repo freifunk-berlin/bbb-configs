@@ -20,6 +20,9 @@ snmp_devices:
   - hostname: w38b-rhnk
     address: 10.31.212.4
     snmp_profile: af60
+  - hostname: w38b-switch
+    address: 10.31.212.194
+    snmp_profile: zyxel
 
 # IPs
 ipv6_prefix: '2001:bf7:830:bc00::/56'
