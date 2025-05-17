@@ -85,6 +85,12 @@ airos_dfs_reset:
     password: "file:/root/pwd"
     daytime_limit: "2-7"
 
+  - name: "rhxb-dragon"
+    target: "10.31.126.17"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
 ipv6_prefix: "2001:bf7:830:9f00::/56"
 
 # Rhxb got following prefixes:
