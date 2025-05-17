@@ -26,6 +26,10 @@ hosts:
     model: "ubnt_nanostation-ac-loco"
 
 snmp_devices:
+  - hostname: gub37-switch-roof
+    address: 10.31.157.2
+    snmp_profile: zyxel
+
   - hostname: gub37-zwingli
     address: 10.31.157.10
     snmp_profile: airos_8
