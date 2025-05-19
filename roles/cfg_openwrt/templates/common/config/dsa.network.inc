@@ -1,13 +1,23 @@
 config device
 	option type 'bridge'
 	option name 'switch0'
+	option vlan_filtering '1'
+	option ports '{{ dsa_ports|join(' ') }}'
 
 {% for network in networks | selectattr('vid', 'defined') | selectattr('ifname', 'undefined') %}
   {% set portmapping = [] %}
   {% for port in dsa_ports %}
     {% set tagged = not network.get('untagged') %}
-    {{ portmapping.append(port|string + (":t" if tagged else "")) }}
+    {{ portmapping.append(port|string + (":t" if tagged else ":u*")) }}
   {%- endfor %}
+
+  {% if libnetwork.isPortNeeded(network) | from_json %}
+config device
+	option type '8021q'
+	option ifname 'switch0'
+	option vid '{{ network['vid'] }}'
+	option name 'switch0.{{ network['vid'] }}'
+  {% endif %}
 
 config bridge-vlan 'vlan_{{ network['vid'] }}'
 	option device 'switch0'
