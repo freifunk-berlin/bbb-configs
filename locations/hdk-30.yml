@@ -1,8 +1,8 @@
 ---
 location: hdk-30
 location_nice: Heidekampgraben
-latitude: 52.478042919
-longitude: 13.471797109
+latitude: 52.477810941
+longitude: 13.4718132
 
 # config restored from router configuration
 # got following prefixes:
@@ -16,7 +16,7 @@ community: true
 hosts:
   - hostname: hdk-30
     role: corerouter
-    model: "ubnt_unifiac-mesh"
+    model: "cudy_ap3000outdoor-v1"
     wireless_profile: freifunk_default
     host__rclocal__to_merge:
       - |
