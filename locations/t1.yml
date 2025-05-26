@@ -53,12 +53,6 @@ networks:
     ipv6_subprefix: -10
     ptp: true
 
-  - vid: 11
-    role: mesh
-    name: mesh_ap_no
-    prefix: 10.248.1.17/32
-    ipv6_subprefix: -11
-
   - vid: 40
     role: dhcp
     prefix: 10.248.1.64/26
