@@ -238,7 +238,7 @@ Many LTE USB sticks work as a so called USB CDC Net device. They emulate a stand
 ```yml
   - vid: 50
     untagged: true
-    ifname: eth1
+    ifname: eth1              # Add here the emulated interfacename
     role: uplink
 
   - role: tunnel
@@ -248,7 +248,7 @@ Many LTE USB sticks work as a so called USB CDC Net device. They emulate a stand
     wireguard_port: 51820
 ```
 
-Some integrated LTE modems work with the QMI protocol instead, which requires basic configuration of the modem.
+Some integrated LTE modems work with the [QMI protocol](https://openwrt.org/docs/guide-user/network/wan/wwan/ltedongle) instead, which requires basic configuration of the modem.
 
 ```yml
   - vid: 50
@@ -256,17 +256,18 @@ Some integrated LTE modems work with the QMI protocol instead, which requires ba
     ifname: wwan0
     role: uplink
     uplink_mode: direct
-    wwan:
-      proto: qmi
-      device: /dev/cdc-wdm0
-      apn: internet
-      pdptype: ipv4
 
   - role: tunnel
     ifname: ts_wg0
     mtu: 1280
     prefix: 10.31.142.120/32
     wireguard_port: 51820
+
+qmi:
+  - name: wwan
+    device: /dev/cdc-wdm0
+    apn: internet
+    pdptype: ipv4
 ```
 
 
