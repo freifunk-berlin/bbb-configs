@@ -37,6 +37,10 @@ snmp_devices:
     address: 10.31.104.134
     snmp_profile: airos_8
 
+  - hostname: simeon-nord-60g
+    address: 10.31.104.135
+    snmp_profile: af60
+
 airos_dfs_reset:
 
   - name: "simeon-mgh"
@@ -80,6 +84,12 @@ networks:
     prefix: 10.31.51.139/32
     ipv6_subprefix: -13
 
+  - vid: 14
+    role: mesh
+    name: mesh_nord_60g
+    prefix: 10.31.51.140/32
+    ipv6_subprefix: -14
+
   - vid: 40
     role: dhcp
     prefix: 10.31.104.0/25
@@ -102,3 +112,4 @@ networks:
       simeon-nord: 4
       simeon-emma: 5
       simeon-rhxb: 6
+      simeon-nord-60g: 7
