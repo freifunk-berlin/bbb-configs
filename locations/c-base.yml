@@ -42,6 +42,10 @@ snmp_devices:
     address: 10.31.134.101
     snmp_profile: airos_8
 
+  - hostname: c-base-simeon60
+    address: 10.31.134.104
+    snmp_profile: af60
+
 airos_dfs_reset:
   - name: "c-base-simeon"
     target: "10.31.134.101"
@@ -67,6 +71,12 @@ networks:
     name: mesh_simeon
     prefix: 10.31.134.112/32
     ipv6_subprefix: -11
+
+  - vid: 12
+    role: mesh
+    name: mesh_sim60
+    prefix: 10.31.134.117/32
+    ipv6_subprefix: -12
 
   - vid: 20
     role: mesh
@@ -109,6 +119,7 @@ networks:
       c-base-simeon: 5    # 10.31.134.101
       c-base-nf-3: 6      # 10.31.134.102
       c-base-nf-4: 7      # 10.31.134.103
+      c-base-simeon60: 8  # 10.31.134.104
 
   - role: tunnel
     ifname: ts_wg0
