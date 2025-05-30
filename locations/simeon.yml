@@ -95,6 +95,7 @@ networks:
     name: mesh_nord_60g
     prefix: 10.31.51.140/32
     ipv6_subprefix: -14
+    mesh_metric: 128
 
   - vid: 40
     role: dhcp

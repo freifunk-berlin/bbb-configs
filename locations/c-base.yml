@@ -77,6 +77,8 @@ networks:
     name: mesh_sim60
     prefix: 10.31.134.117/32
     ipv6_subprefix: -12
+    ptp: true
+    mesh_metric: 128
 
   - vid: 20
     role: mesh
