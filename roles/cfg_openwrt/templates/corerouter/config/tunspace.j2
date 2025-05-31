@@ -2,7 +2,7 @@
 {% for uplink in networks | selectattr('role', 'equalto', 'uplink') %}
   {% set name = uplink['name'] if 'name' in uplink else 'uplink' %}
   {% set mode = uplink['uplink_mode'] if 'uplink_mode' in uplink else 'bridge' %}
-  {% set ifname = uplink['ifname'] if mode == 'direct' else 'br-'+name %}
+  {% set ifname = 'switch0.' ~ uplink['vid'] %}
 
 config tunspace "tunspace"
   # Namespace where the uplink will live.

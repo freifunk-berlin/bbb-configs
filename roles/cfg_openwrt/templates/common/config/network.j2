@@ -50,8 +50,7 @@ config interface '{{ name }}'
     {% if libnetwork.isPortNeeded(network) | from_json %}
 	option device '{{ libnetwork.getIfname(network) }}'
     {% endif %}
-    {% if network.get('enforce_client_isolation') and role == 'corerouter' and
-       not libnetwork.isBridgeNeeded(network) | from_json %}
+    {% if network.get('enforce_client_isolation') and role == 'corerouter' %}
 	option macaddr '02:00:00:00:00:01'
     {% endif %}
     {% if 'assignments' in network and inventory_hostname in network['assignments'] %}
@@ -83,16 +82,6 @@ config interface '{{ name }}'
       {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
 	option ip6addr '{{ subprefix | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
     {% endif %}
-  {% endif %}
-
-  {% if libnetwork.isPortNeeded(network) | from_json and libnetwork.isBridgeNeeded(network) | from_json %}
-config device
-	option name '{{ libnetwork.getBridgeIfname(network) }}'
-	option type 'bridge'
-    {% if network.get('enforce_client_isolation') and role == 'corerouter' %}
-	option macaddr '02:00:00:00:00:01'
-    {% endif %}
-	list ports '{{ libnetwork.getPortIfname(network) }}'
   {% endif %}
 
 {% endfor %}
