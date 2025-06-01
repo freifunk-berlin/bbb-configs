@@ -21,10 +21,6 @@ hosts:
     role: ap
     model: "aruba_ap-303"
     wireless_profile: freifunk_default
-  - hostname: k9-ap-iuljan
-    role: ap
-    model: "dlink_dap-x1860-a1"
-    wireless_profile: freifunk_default
   - hostname: k9-switch-front-house
     role: ap
     model: "ubnt_usw-flex"
@@ -119,7 +115,6 @@ networks:
       k9-switch-back-house: 8   # hpe 2520g-poe
       k9-ap-loge: 9
       k9-ap-groessenwahn: 10
-      k9-ap-iuljan: 11
 
 location__ssh_keys__to_merge:
   - comment: k9 iuljan
