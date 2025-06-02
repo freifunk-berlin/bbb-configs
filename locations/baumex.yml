@@ -23,6 +23,10 @@ hosts:
     host__rclocal__to_merge:
       - |
         uci set network.vlan_10.ports='eth0'           # mesh_vater_60g
+        uci set network.vlan_20.ports='eth2:t eth4:t'  # mesh_5ghz_v
+        uci set network.vlan_21.ports='eth2:t eth4:t'  # mesh_2ghz_v
+        uci set network.vlan_22.ports='eth2:t eth4:t'  # mesh_5ghz_h
+        uci set network.vlan_23.ports='eth2:t eth4:t'  # mesh_2ghz_h
         uci set network.vlan_30.ports='eth1'           # mesh_lan_lte
         uci set network.vlan_40.ports='eth2:t eth4:t'  # dhcp public
         uci set network.vlan_41.ports='eth5'           # dhcp fritzbox
@@ -70,11 +74,55 @@ networks:
     ipv6_subprefix: -11
     ptp: true
 
+  # MESH - 5 GHz 802.11s - baumex-vorne
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz_v
+    prefix: 10.248.28.162/32
+    ipv6_subprefix: -20
+    mesh_ap: baumex-vorne
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - baumex-vorne
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz_v
+    prefix: 10.248.28.163/32
+    ipv6_subprefix: -21
+    # make mesh_metric for 2GHz worse than 5GHz
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: baumex-vorne
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 5 GHz 802.11s - baumex-hinten
+  - vid: 22
+    role: mesh
+    name: mesh_5ghz_h
+    prefix: 10.248.28.164/32
+    ipv6_subprefix: -22
+    mesh_ap: baumex-hinten
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - baumex-hinten
+  - vid: 23
+    role: mesh
+    name: mesh_2ghz_h
+    prefix: 10.248.28.165/32
+    ipv6_subprefix: -23
+    # make mesh_metric for 2GHz worse than 5GHz
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: baumex-hinten
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
   # MESH - LAN - LTE Uplink
   - vid: 30
     role: mesh
     name: mesh_lan_lte
-    prefix: 10.248.28.162/32
+    prefix: 10.248.28.166/32
     ipv6_subprefix: -30
 
   # DHCP with filtering and isolation
