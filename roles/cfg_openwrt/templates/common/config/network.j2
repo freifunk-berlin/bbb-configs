@@ -84,7 +84,7 @@ config interface '{{ name }}'
     {% endif %}
   {% endif %}
 
-  {% if not dsa_ports is defined and libnetwork.isPortNeeded(network) | from_json and libnetwork.isBridgeNeeded(network) | from_json %}
+  {% if int_port is defined and libnetwork.isPortNeeded(network) | from_json and libnetwork.isBridgeNeeded(network) | from_json %}
 config device
 	option name '{{ libnetwork.getBridgeIfname(network) }}'
 	option type 'bridge'
