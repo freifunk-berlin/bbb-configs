@@ -2,6 +2,6 @@
 # shipped "preservation" definitions in /var/upgrade/keep.d/
 # will be deleted and our custom ones will be defined here
 
-{% for i in sysupgrade_preserve_custom_files | default([]) %}
-{{ i }}
+{% for path in sysupgrade_preserve_custom_files | default([]) %}
+{{ path }}
 {% endfor %}

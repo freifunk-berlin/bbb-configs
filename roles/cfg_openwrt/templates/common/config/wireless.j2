@@ -2,9 +2,11 @@
 
 {% set profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first %}
 # Wifi Config is derived from wireless profile: '{{ wireless_profile }}'
+
 {% for wd in wireless_devices | default([]) %}
   {% set wd_id = 'radio' + loop.index0|string %}
   {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
+
   {% if 'devices' in profile %}
     {% set wd_config = profile['devices'] | default([]) | selectattr('radio', 'contains', wd['name']) | first %}
   {% else %}
@@ -15,16 +17,16 @@
   {% set channel_assignment = (channel_assignments[inventory_hostname] | default(channel_assignments['default'])).split('-') %}
   {% set channel = channel_assignment[0] | int %}
   {% set bandwidth = channel_assignment[1] %}
-  {% set txpower = channel_assignment[2]|default(False) %}
+  {% set txpower = channel_assignment[2] | default(False) %}
 
   {% if channel < 36 %}
-  {% set maxtxpower = 20 %}
+    {% set maxtxpower = 20 %}
   {% elif channel < 52 %}
-  {% set maxtxpower = 23 %}
+    {% set maxtxpower = 23 %}
   {% elif channel < 100 %}
-  {% set maxtxpower = 20 %}
+    {% set maxtxpower = 20 %}
   {% else %}
-  {% set maxtxpower = 26 %}
+    {% set maxtxpower = 26 %}
   {% endif %}
 
 # Radio: {{ wd['name'] }}
@@ -37,7 +39,7 @@ config wifi-device '{{ wd_id }}'
   {% if 'htmode_prefix' in wd %}
 	option htmode '{{ wd['htmode_prefix'] }}{{ bandwidth }}'
   {% else %}
-        option htmode 'VHT{{ bandwidth }}'
+	option htmode 'VHT{{ bandwidth }}'
   {% endif %}
 	option channel '{{ channel }}'
   {% if txpower %}
@@ -54,12 +56,12 @@ config wifi-device '{{ wd_id }}'
 	option country 'DE'
   {% endif %}
   {% if 'legacy_rates' in wd_config %}
-	option legacy_rates '{{ wd_config['legacy_rates']|int }}'
+	option legacy_rates '{{ wd_config['legacy_rates'] | int }}'
   {% else %}
 	option legacy_rates '0'
   {% endif %}
   {% if 'disabled' in wd_config %}
-	option disabled '{{ wd_config['disabled']|int }}'
+	option disabled '{{ wd_config['disabled'] | int }}'
   {% endif %}
 	option bss_transition '1'
 	option wnm_sleep_mode '1'
@@ -72,73 +74,78 @@ config wifi-device '{{ wd_id }}'
   {% for iface in wd_ifaces %}
     {% set mesh_net = false %}
     {% if iface['mode'] == 'mesh' %}
-      {% set mesh_nets = networks | selectattr('role','defined') | selectattr('role','equalto','mesh')
-         | selectattr('mesh_ap','defined') | selectattr('mesh_ap','equalto',inventory_hostname)
-         | selectattr('mesh_radio','equalto', wd['name']) | selectattr('mesh_iface','equalto',iface['ifname_hint']) %}
+      {% set mesh_nets = networks 
+         | selectattr('role', 'defined') 
+         | selectattr('role', 'equalto', 'mesh')
+         | selectattr('mesh_ap', 'defined') 
+         | selectattr('mesh_ap', 'equalto', inventory_hostname)
+         | selectattr('mesh_radio', 'equalto', wd['name']) 
+         | selectattr('mesh_iface', 'equalto', iface['ifname_hint']) %}
       {% if mesh_nets | length > 0 %}
-        {% set mesh_net = mesh_nets|first %}
+        {% set mesh_net = mesh_nets | first %}
       {% endif %}
     {% endif %}
 
     {% if iface['mode'] == 'ap' or (iface['mode'] == 'mesh' and mesh_net) %}
 config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
 	option device '{{ wd_id }}'
-    {% if 'network' in iface %}
+      {% if 'network' in iface %}
 	option network '{{ iface['network'] }}'
-    {% endif %}
-	option ifname '{{ wd['ifname_hint'] }}-{{ iface['ifname_hint']|default('if' + loop.index0|string) }}'
-    {% if 'mode' in iface %}
+      {% endif %}
+	option ifname '{{ wd['ifname_hint'] }}-{{ iface['ifname_hint'] | default('if' + loop.index0|string) }}'
+      {% if 'mode' in iface %}
 	option mode '{{ iface['mode'] }}'
-    {% endif %}
-    {% if 'encryption' in iface %}
+      {% endif %}
+      {% if 'encryption' in iface %}
 	option encryption '{{ iface['encryption'] }}'
-      {% if 'key' in iface %}
+        {% if 'key' in iface %}
 	option key '{{ iface['key'] }}'
-      {% endif %}
-    {% endif %}
-    {% if iface['mode'] == 'ap' %}
-      {% if 'ssid' in iface %}
-	option ssid '{{ iface['ssid'] }}'
-      {% endif %}
-      {% if 'hidden' in iface %}
-	option hidden '{{ iface['hidden']|int }}'
-      {% endif %}
-      {% if 'ieee80211w' in iface %}
-	option ieee80211w '{{ iface['ieee80211w'] }}'
-      {% endif %}
-      {% if 'owe_transition_ifname_hint' in iface %}
-	option owe_transition_ifname '{{ wd['ifname_hint'] }}-{{ iface['owe_transition_ifname_hint'] }}'
-      {% endif %}
-      {% if 'isolate' in iface %}
-	option isolate '{{ iface['isolate']|int }}'
-      {% else %}
-        {% set nets = networks | selectattr('name', 'defined') | selectattr('name','equalto',iface['network']) %}
-        {% if nets|length == 0 %}
-          {% set nets = networks | selectattr('role','equalto',iface['network']) %}
         {% endif %}
-        {% if nets|length > 0 %}
-          {% set net = nets|first %}
-          {% if 'enforce_client_isolation' in net %}
-	option isolate '{{ net['enforce_client_isolation']|int }}'
+      {% endif %}
+      {% if iface['mode'] == 'ap' %}
+        {% if 'ssid' in iface %}
+	option ssid '{{ iface['ssid'] }}'
+        {% endif %}
+        {% if 'hidden' in iface %}
+	option hidden '{{ iface['hidden'] | int }}'
+        {% endif %}
+        {% if 'ieee80211w' in iface %}
+	option ieee80211w '{{ iface['ieee80211w'] }}'
+        {% endif %}
+        {% if 'owe_transition_ifname_hint' in iface %}
+	option owe_transition_ifname '{{ wd['ifname_hint'] }}-{{ iface['owe_transition_ifname_hint'] }}'
+        {% endif %}
+        {% if 'isolate' in iface %}
+	option isolate '{{ iface['isolate'] | int }}'
+        {% else %}
+          {% set nets = networks | selectattr('name', 'defined') | selectattr('name', 'equalto', iface['network']) %}
+          {% if nets | length == 0 %}
+            {% set nets = networks | selectattr('role', 'equalto', iface['network']) %}
+          {% endif %}
+          {% if nets | length > 0 %}
+            {% set net = nets | first %}
+            {% if 'enforce_client_isolation' in net %}
+	option isolate '{{ net['enforce_client_isolation'] | int }}'
+            {% endif %}
           {% endif %}
         {% endif %}
       {% endif %}
-    {% endif %}
-    {% if iface['mode'] == 'mesh'  %}
-      {% if 'mesh_id' in iface %}
+      {% if iface['mode'] == 'mesh' %}
+        {% if 'mesh_id' in iface %}
 	option mesh_id '{{ iface['mesh_id'] }}'
-      {% endif %}
-      {% if 'mesh_fwding' in iface %}
+        {% endif %}
+        {% if 'mesh_fwding' in iface %}
 	option mesh_fwding '{{ iface['mesh_fwding'] }}'
-      {% endif %}
-      {% if 'mesh_nolearn' in iface %}
+        {% endif %}
+        {% if 'mesh_nolearn' in iface %}
 	option mesh_nolearn '{{ iface['mesh_nolearn'] }}'
       {% endif %}
       {% if 'mcast_rate' in iface %}
 	option mcast_rate '{{ iface['mcast_rate'] }}'
+        {% endif %}
+	option network '{{ (mesh_net['name'] if mesh_net['name'] | length <= 15) 
+        | mandatory('The generated interface name exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') }}'
       {% endif %}
-	option network '{{ (mesh_net['name'] if mesh_net['name'] | length <= 15) | mandatory('The generated inteface name exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') }}'
-    {% endif %}
     {% endif %}
   {% endfor %}
 {% endfor %}

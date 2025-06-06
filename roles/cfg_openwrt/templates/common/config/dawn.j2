@@ -1,6 +1,7 @@
 {% if wifi_roaming | default(false) %}
 {% set network_mgmt = networks | selectattr('role', 'equalto', 'mgmt') | first %}
-{% set mgmt_broadcast = network_mgmt['prefix'] | ansible.utils.ipaddr('broadcast') %}
+{% set mgmt_broadcast = network_mgmt.prefix | ansible.utils.ipaddr('broadcast') %}
+
 config local
 	option loglevel '0'
 
@@ -9,7 +10,7 @@ config network
 	option broadcast_port '1025'
 	option tcp_port '1026'
 	option network_option '2'
-	option shared_key 'dawn@{{ location_nice|default(location) }}'
+	option shared_key 'dawn@{{ location_nice | default(location) }}'
 	option iv 'thisisaniv!'
 	option use_symm_enc '0'
 	option collision_domain '-1'
@@ -44,7 +45,7 @@ config metric 'global'
 	option min_number_to_kick '3'
 	option chan_util_avg_period '3'
 	option set_hostapd_nr '0'
-	option duration '5' # This is required, otherwise it's not kicking
+	option duration '5'  # Required, otherwise clients are not kicked
 	option rrm_mode 'pat'
 
 config metric '802_11g'

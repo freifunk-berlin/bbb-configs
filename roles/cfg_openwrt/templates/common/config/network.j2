@@ -18,6 +18,7 @@ config rule
 config rule
 	option priority 33200
 	option lookup 'babel-default'
+
 config rule
 	option priority 33201
 	option lookup 'olsr-default'
@@ -33,82 +34,71 @@ config interface 'loopback'
 
 {% if dsa_ports is defined %}
   {% include './common/config/dsa.network.inc' %}
-{% elif switch_ports|default(0) > 0 %}
+{% elif switch_ports | default(0) > 0 %}
   {% include './common/config/swconfig.network.inc' %}
 {% endif %}
 
-
 {% for network in networks %}
   {% set name = libnetwork.getUciIfname(network) %}
+  {% if (
+        (role == 'corerouter' and network['role'] == 'mesh') or
+        ('assignments' in network and inventory_hostname in network['assignments']) or
+        name in libnetwork.getWirelessNetworks() | from_json or
+        network.get('mesh_ap') == inventory_hostname or
+        (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct')
+     ) %}
 
-  {%- if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
-     or name in libnetwork.getWirelessNetworks() | from_json
-     or network.get('mesh_ap') == inventory_hostname
-     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct')
-     %}
 config interface '{{ name }}'
-    {% if libnetwork.isPortNeeded(network) | from_json %}
+{% if libnetwork.isPortNeeded(network) | from_json %}
 	option device '{{ libnetwork.getIfname(network) }}'
-    {% endif %}
-    {% if network.get('enforce_client_isolation') and role == 'corerouter' and
-       not libnetwork.isBridgeNeeded(network) | from_json %}
+{% endif %}
+{% if network.get('enforce_client_isolation') and role == 'corerouter' and not libnetwork.isBridgeNeeded(network) | from_json %}
 	option macaddr '02:00:00:00:00:01'
-    {% endif %}
-    {% if 'assignments' in network and inventory_hostname in network['assignments'] %}
+{% endif %}
+{% if 'assignments' in network and inventory_hostname in network['assignments'] %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) }}'
-       {% if role != "corerouter" and 'dns' in network %}
-	option dns '{{ network['prefix'] | ansible.utils.ipaddr(network['dns']) | ansible.utils.ipaddr('address') }}'
-       {% endif %}
-       {% if 'gateway' in network and 'assignments' in network and network['assignments'][inventory_hostname] != network['gateway'] %}
-	option gateway '{{ network['prefix'] | ansible.utils.ipaddr(network['gateway']) | ansible.utils.ipaddr('address') }}'
-       {% endif %}
-       {% if role != 'corerouter' and 'ipv6_subprefix' in network %}
-
-# IPv6 Address comes via SLAAC and RA. See sysctl, there it is enabled
-# The reason is to get rid of the userspace daemon
-#config interface '{{ name }}6'
-#	option device '@{{ name }}'
-#	option proto 'dhcpv6'
-        {% endif %}
-    {% elif role == 'corerouter' and network['role'] == 'mesh' %}
+{% if role == 'corerouter' and ipv6_prefix is defined and 'ipv6_subprefix' in network %}
+	option ip6addr '{{ (ipv6_prefix | ansible.utils.ipsubnet("64", network["ipv6_subprefix"])) | ansible.utils.ipaddr(1) | ansible.utils.ipaddr("address") }}/{{ "128" if network["role"] == "mesh" else "64" }}'
+{% endif %}
+{% if role != "corerouter" and 'dns' in network %}
+	option dns '{{ network['prefix'] | ansible.utils.ipaddr(network['dns']) | ansible.utils.ipaddr("address") }}'
+{% endif %}
+{% if 'gateway' in network and network['assignments'][inventory_hostname] != network['gateway'] %}
+	option gateway '{{ network['prefix'] | ansible.utils.ipaddr(network['gateway']) | ansible.utils.ipaddr("address") }}'
+{% endif %}
+{% elif role == 'corerouter' and network['role'] == 'mesh' %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] }}'
-    {% else %}
+{% else %}
 	option proto 'none'
-    {% endif %}
-  {% endif %}
-  {% if role == 'corerouter' and ipv6_prefix is defined %}
-    {% if 'ipv6_subprefix' in network %}
-      {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
-	option ip6addr '{{ subprefix | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
-    {% endif %}
+{% endif %}
+
   {% endif %}
 
   {% if libnetwork.isPortNeeded(network) | from_json and libnetwork.isBridgeNeeded(network) | from_json %}
 config device
 	option name '{{ libnetwork.getBridgeIfname(network) }}'
 	option type 'bridge'
-    {% if network.get('enforce_client_isolation') and role == 'corerouter' %}
+{% if network.get('enforce_client_isolation') and role == 'corerouter' %}
 	option macaddr '02:00:00:00:00:01'
-    {% endif %}
+{% endif %}
 	list ports '{{ libnetwork.getPortIfname(network) }}'
   {% endif %}
-
 {% endfor %}
-{% for i in mac_override|default({}) %}
+
+{% for i in mac_override | default({}) %}
 config device '{{ i }}_dev'
 	option name '{{ i }}'
 	option macaddr '{{ mac_override[i] }}'
-
 {% endfor %}
+
 {% if qmi is defined %}
   {% for q in qmi %}
-config interface '{{ q['name'] }}'
-  option proto 'qmi'
-  option device '{{ q['device'] }}'
-  option apn '{{ q['apn'] }}'
-  option pdptype '{{ q['pdptype'] }}'
-
+config interface '{{ q["name"] }}'
+	option proto 'qmi'
+	option device '{{ q["device"] }}'
+	option apn '{{ q["apn"] }}'
+	option pdptype '{{ q["pdptype"] }}'
   {% endfor %}
 {% endif %}

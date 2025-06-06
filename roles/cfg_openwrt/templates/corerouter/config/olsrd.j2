@@ -1,4 +1,5 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
+
 config LoadPlugin
 	option library 'olsrd_arprefresh'
 
@@ -10,7 +11,7 @@ config LoadPlugin
 	option services_file '/var/etc/services.olsr'
 {% for network in networks | selectattr('assignments', 'mapping') %}
   {% for host, ip_num in network['assignments'].items() if host != inventory_hostname %}
-	list hosts '{{ network['prefix'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }} {{ host }}'
+	list hosts '{{ network['prefix'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr("address") }} {{ host }}'
   {% endfor %}
 {% endfor %}
 
@@ -57,30 +58,28 @@ config InterfaceDefaults
 {% for network in networks | selectattr('role', 'equalto', 'mesh') %}
 config Interface
 	option ignore '0'
-	option interface '{{ network['name'] if 'name' in network else network['role'] }}'
-	option Mode '{{ 'ether' if network.get('ptp') else 'mesh' }}'
-  {% for i in network['mesh_metric_lqm'] | default([]) %}
+	option interface '{{ network["name"] if "name" in network else network["role"] }}'
+	option Mode '{{ "ether" if network.get("ptp") else "mesh" }}'
+	{% for i in network.get('mesh_metric_lqm', []) %}
 	list LinkQualityMult '{{ i }}'
-  {% endfor %}
-
+	{% endfor %}
 {% endfor %}
+
 {% for network in networks | rejectattr('role', 'in', ['uplink','ext']) | selectattr('prefix') %}
   {% if network['prefix'] | ansible.utils.ipaddr('prefix') < 32 %}
-
-# Network: {{ network['name'] if 'name' in network else network['role'] }}
+# Network: {{ network["name"] if "name" in network else network["role"] }}
 config Hna4
-	option netmask '{{ network['prefix'] | ansible.utils.ipaddr('netmask') }}'
-	option netaddr '{{ network['prefix'] | ansible.utils.ipaddr('network') }}'
+	option netmask '{{ network["prefix"] | ansible.utils.ipaddr("netmask") }}'
+	option netaddr '{{ network["prefix"] | ansible.utils.ipaddr("network") }}'
   {% endif %}
 {% endfor %}
 
 {% for tunnel in networks | selectattr('role', 'equalto', 'tunnel') %}
 config Interface
-	option interface '{{ tunnel['ifname'] }}'
+	option interface '{{ tunnel["ifname"] }}'
 	option Mode 'ether'
-		{% for lqm in tunnel['mesh_metric_lqm']|default([]) %}
+	{% for lqm in tunnel.get('mesh_metric_lqm', []) %}
 	list LinkQualityMult '{{ lqm }}'
-		{% endfor %}
-	option ignore 0
-
+	{% endfor %}
+	option ignore '0'
 {% endfor %}

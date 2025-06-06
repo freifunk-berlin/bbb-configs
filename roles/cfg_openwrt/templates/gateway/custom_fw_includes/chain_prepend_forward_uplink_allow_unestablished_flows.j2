@@ -1,5 +1,20 @@
-meta nfproto ipv6 udp sport 53 limit rate {{ untracked_flows_dns_rate }}/second burst {{ untracked_flows_dns_burst }} packets counter accept comment "Allow DNS ratelimited, because resolvers answer quicker than Conntrack sync"
-meta nfproto ipv6 tcp flags & ack == ack limit rate {{ untracked_flows_tcp_ack_rate }}/second burst {{ untracked_flows_tcp_ack_burst }} packets counter accept comment "Allow established connections which not made it in the conntrack sync yet"
-meta nfproto ipv6 tcp flags & rst == rst limit rate {{ untracked_flows_tcp_rst_rate }}/second burst {{ untracked_flows_tcp_rst_burst }} packets counter accept comment "Allow established connections which not made it in the conntrack sync yet"
+# Allow DNS queries over UDP/53 with rate limiting to avoid flooding due to fast DNS responses
+meta nfproto ipv6 udp sport 53 \
+    limit rate {{ untracked_flows_dns_rate }}/second burst {{ untracked_flows_dns_burst }} packets \
+    counter accept comment "Allow DNS ratelimited, because resolvers answer quicker than Conntrack sync"
+
+# Allow TCP ACK packets with rate limiting, for established connections not yet in conntrack sync
+meta nfproto ipv6 tcp flags & ack == ack \
+    limit rate {{ untracked_flows_tcp_ack_rate }}/second burst {{ untracked_flows_tcp_ack_burst }} packets \
+    counter accept comment "Allow established connections which not made it in the conntrack sync yet"
+
+# Allow TCP RST packets with rate limiting, similar reason as ACK above
+meta nfproto ipv6 tcp flags & rst == rst \
+    limit rate {{ untracked_flows_tcp_rst_rate }}/second burst {{ untracked_flows_tcp_rst_burst }} packets \
+    counter accept comment "Allow established connections which not made it in the conntrack sync yet"
+
+# Count exceeding ACK packets for monitoring/logging purposes
 meta nfproto ipv6 tcp flags & ack == ack counter comment "Limit exceeded ACK"
+
+# Count exceeding RST packets for monitoring/logging purposes
 meta nfproto ipv6 tcp flags & rst == rst counter comment "Limit exceeded RST"
