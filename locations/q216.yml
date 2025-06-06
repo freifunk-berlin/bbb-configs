@@ -10,7 +10,6 @@ contacts:
   - ffhener@proton.me
 
 hosts:
-
   - hostname: q216-core
     role: corerouter
     model: "linksys_e8450-ubi"
@@ -20,7 +19,7 @@ hosts:
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     wireless_profile: freifunk_default
-    mac_override: {eth0: dc:2c:6e:91:08:1b}
+    mac_override: { eth0: dc:2c:6e:91:08:1b }
 
 snmp_devices:
   - hostname: q216-switch
@@ -35,7 +34,7 @@ snmp_devices:
     address: 10.31.201.245
     snmp_profile: airos_8
 
-ssh_keys:  # to stop merging other ssh-keys
+ssh_keys: # to stop merging other ssh-keys
   - comment: Hener
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEST9QsXtphN7BYb5p9FhxZTxvoWkICfRWC54SN/QHII
 
@@ -47,7 +46,6 @@ ssh_keys:  # to stop merging other ssh-keys
 ipv6_prefix: 2001:bf7:860:e00::/56
 
 networks:
-
   - vid: 10
     role: mesh
     name: mesh_tierpark
@@ -131,7 +129,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: Private Wifi
         encryption: psk2
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: prdhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: prdhcp

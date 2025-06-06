@@ -5,12 +5,11 @@ location_nice: Kirche Zum Vaterhaus, Baumschulenstraße 82-83, 12437 Berlin
 latitude: 52.4649
 longitude: 13.4852
 altitude: 72
-contact_nickname: 'xayax'
+contact_nickname: "xayax"
 contacts:
-  - 'ff@xayax.de'
+  - "ff@xayax.de"
 
 hosts:
-
   - hostname: vaterhaus-core
     role: corerouter
     model: "mikrotik_routerboard-750gr3"

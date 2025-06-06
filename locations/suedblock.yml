@@ -13,7 +13,6 @@ location__ssh_keys__to_merge:
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIONSKWdP3O0EHQei5tLZwCzpXC1CxGVh3FsN1GVJ/c+d id@narf.peng
 
 hosts:
-
   - hostname: suedblock-core
     role: corerouter
     model: "cudy_x6-v1"
@@ -27,7 +26,6 @@ hosts:
 ipv6_prefix: "2001:bf7:830:b100::/56"
 
 networks:
-
   - vid: 42
     role: mgmt
     prefix: 10.248.13.0/29

@@ -9,7 +9,6 @@ height: 5
 community: true
 
 hosts:
-
   - hostname: wuhlipunks-core
     role: corerouter
     model: "avm_fritzbox-7530"
@@ -28,7 +27,6 @@ ipv6_prefix: "2001:bf7:840:b00::/56"
 # --DHCP: 10.31.173.160/27
 
 networks:
-
   - vid: 20
     role: mesh
     name: mesh_n_5g

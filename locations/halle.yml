@@ -18,7 +18,6 @@ snmp_devices:
     address: 10.31.184.66
     snmp_profile: airos_8
 
-
 ipv6_prefix: "2001:bf7:750:5600::/56"
 
 # Halle got following prefixes:

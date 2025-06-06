@@ -3,9 +3,9 @@ location: ilr
 location_nice: ILR @ TU Berlin, Marchstraße 12, Charlottenburg
 latitude: 52.515186022
 longitude: 13.323658705
-contact_nickname: 'Martin'
+contact_nickname: "Martin"
 contacts:
-  - 'https://config.berlin.freifunk.net/contact/7187/Imlsci1jb3JlIg.ZMBJNQ.CSDDgrcP1SQFmuFjEH6FyuCA40I'
+  - "https://config.berlin.freifunk.net/contact/7187/Imlsci1jb3JlIg.ZMBJNQ.CSDDgrcP1SQFmuFjEH6FyuCA40I"
 
 hosts:
   - hostname: ilr-core

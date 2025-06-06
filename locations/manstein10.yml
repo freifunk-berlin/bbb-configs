@@ -5,7 +5,7 @@ latitude: 52.491872
 longitude: 13.366874
 altitude: 57
 contacts:
-  - '365ff@systemli.org'
+  - "365ff@systemli.org"
 
 hosts:
   - hostname: manstein10-core

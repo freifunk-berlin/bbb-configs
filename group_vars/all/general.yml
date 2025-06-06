@@ -1,6 +1,6 @@
 ---
-zonename: 'Europe/Berlin'
-timezone: 'CET-1CEST,M3.5.0,M10.5.0/3'
+zonename: "Europe/Berlin"
+timezone: "CET-1CEST,M3.5.0,M10.5.0/3"
 
 # TODO: find a second good DNS upstream in Berlin
 dns_servers:
@@ -41,7 +41,6 @@ all_sysctl__to_merge:
 
   # especially on low mem devices this is important
   vm.min_free_kbytes: 1024
-
 
 ## Routing Section:
 freifunk_global_prefix: 2001:bf7::/32

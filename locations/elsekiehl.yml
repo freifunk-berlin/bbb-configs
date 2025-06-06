@@ -3,9 +3,9 @@ location: elsekiehl
 location_nice: Kiehlufer
 latitude: 52.484168992301946
 longitude: 13.447140363909915
-contact_nickname: 'jammingblub'
+contact_nickname: "jammingblub"
 contacts:
-  - 'koltonowski@protonmail.com'
+  - "koltonowski@protonmail.com"
 
 location__ssh_keys__to_merge:
   - comment: martin@koltonowski.de
@@ -24,14 +24,13 @@ dns_servers:
   - 2606:4700:4700::1001
 
 hosts:
-
   - hostname: elsekiehl-core
     role: corerouter
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
     openwrt_version: 24.10-SNAPSHOT
 
-ipv6_prefix: '2001:bf7:820:1800::/56'
+ipv6_prefix: "2001:bf7:820:1800::/56"
 
 # Elsekiehl got following prefixes:
 # Router: 10.31.179.0/26
@@ -68,7 +67,7 @@ networks:
     prefix: 10.31.179.33/32
     ipv6_subprefix: -2
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: elsekiehl-core
     mesh_radio: 11g_standard
     mesh_iface: mesh

@@ -4,9 +4,9 @@ location_nice: Genter Str. 69, 13353 Berlin
 latitude: 52.548992
 longitude: 13.350922
 altitude: 50
-contact_nickname: 'Freerk'
+contact_nickname: "Freerk"
 contacts:
-  - 'freerk@ohling.org'
+  - "freerk@ohling.org"
 
 hosts:
   - hostname: genterstr69-core
@@ -20,7 +20,7 @@ snmp_devices:
     snmp_profile: airos_8
 
 # IPs
-ipv6_prefix: '2001:bf7:750:8a00::/56'
+ipv6_prefix: "2001:bf7:750:8a00::/56"
 
 # got following prefixes:
 # Router: 10.31.107.128/26
@@ -57,7 +57,7 @@ networks:
     prefix: 10.31.107.146/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.5']
+    mesh_metric_lqm: ["default 0.5"]
     mesh_ap: genterstr69-core
     mesh_radio: 11g_standard
     mesh_iface: mesh

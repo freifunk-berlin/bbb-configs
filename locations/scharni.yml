@@ -38,7 +38,6 @@ hosts:
     mac_override:
       eth0: 48:8f:5a:b9:83:82
 
-
 snmp_devices:
   - hostname: scharni-sama
     address: 10.31.52.163
@@ -48,8 +47,7 @@ snmp_devices:
     address: 10.31.52.164
     snmp_profile: airos_8
 
-
-ipv6_prefix: '2001:bf7:830:8400::/56'
+ipv6_prefix: "2001:bf7:830:8400::/56"
 
 networks:
   - vid: 10
@@ -99,9 +97,9 @@ networks:
       scharni-ap-gastwg: 9
       scharni-ap-kneipe: 10
       scharni-ap-keller: 11
-      scharni-ap1: 12  # dachboden 1
-      scharni-ap2: 13  # dachboden 2
-      scharni-ap3: 14  # dachboden 3
+      scharni-ap1: 12 # dachboden 1
+      scharni-ap2: 13 # dachboden 2
+      scharni-ap3: 14 # dachboden 3
 
 location_scharni__channel_assignments_11a_standard__to_merge:
   scharni-ap1: 40-20

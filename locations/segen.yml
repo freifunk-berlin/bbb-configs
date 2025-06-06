@@ -4,12 +4,11 @@ location_nice: Segenskirche
 latitude: 52.53604
 longitude: 13.41198
 altitude: 108
-contact_nickname: 'Perry'
+contact_nickname: "Perry"
 contacts:
-  - 'isprotejesvalkata [attt] gmail.com'
+  - "isprotejesvalkata [attt] gmail.com"
 
 hosts:
-
   - hostname: segen-core
     role: corerouter
     model: "ubnt_edgerouter-x-sfp"
@@ -216,14 +215,13 @@ networks:
     prefix: 10.31.6.71/32
     ipv6_subprefix: -8
 
-
   # 11s mesh 2ghz
   - vid: 201
     role: mesh
     name: mesh_11s_n2
     prefix: 10.31.6.72/32
     ipv6_subprefix: -9
-    mesh_metric_lqm: ['default 0.4']
+    mesh_metric_lqm: ["default 0.4"]
     mesh_ap: segen-n-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -233,7 +231,7 @@ networks:
     name: mesh_11s_o2
     prefix: 10.31.6.73/32
     ipv6_subprefix: -10
-    mesh_metric_lqm: ['default 0.4']
+    mesh_metric_lqm: ["default 0.4"]
     mesh_ap: segen-o-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -243,7 +241,7 @@ networks:
     name: mesh_11s_s2
     prefix: 10.31.6.74/32
     ipv6_subprefix: -11
-    mesh_metric_lqm: ['default 0.4']
+    mesh_metric_lqm: ["default 0.4"]
     mesh_ap: segen-s-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -253,11 +251,10 @@ networks:
     name: mesh_11s_w2
     prefix: 10.31.6.75/32
     ipv6_subprefix: -12
-    mesh_metric_lqm: ['default 0.4']
+    mesh_metric_lqm: ["default 0.4"]
     mesh_ap: segen-w-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
-
 
   # 5ghz sector mesh
   - vid: 211

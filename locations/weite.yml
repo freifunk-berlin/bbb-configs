@@ -5,7 +5,7 @@ location_nice: Weitlingstr., 10317 Berlin
 latitude: 52.507761
 longitude: 13.496429
 contacts:
-  - 'https://config.berlin.freifunk.net/contact/7876/IndlaXRlIg.Z92GqA.cdoLUs4BZajU9_DVDjCiP1-d6XY'
+  - "https://config.berlin.freifunk.net/contact/7876/IndlaXRlIg.Z92GqA.cdoLUs4BZajU9_DVDjCiP1-d6XY"
 
 hosts:
   - hostname: weite-core
@@ -13,7 +13,7 @@ hosts:
     model: "dlink_dap-x1860-a1"
     wireless_profile: ap_only
 
-ipv6_prefix: '2001:bf7:860:1b00::/56'
+ipv6_prefix: "2001:bf7:860:1b00::/56"
 
 # --DHCP: 10.248.40.64/27
 # --MESH: 10.248.39.164/31

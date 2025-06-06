@@ -8,7 +8,6 @@ altitude: 67
 community: true
 
 hosts:
-
   - hostname: agym-core
     role: corerouter
     model: "tplink_tl-wdr4900-v1"
@@ -53,7 +52,7 @@ networks:
     name: mesh_simeon
     prefix: 10.230.89.129/32
     ipv6_subprefix: -2
-    mesh_metric_lqm: ['default 0.5']  # prefer zwingli af60 link
+    mesh_metric_lqm: ["default 0.5"] # prefer zwingli af60 link
     ptp: true
 
   - vid: 40
@@ -67,7 +66,7 @@ networks:
 
   - vid: 42
     name: mgmt
-    role: dhcp                        # we wanna do dhcp for the access points
+    role: dhcp # we wanna do dhcp for the access points
     prefix: 10.230.89.0/25
     gateway: 1
     dns: 1

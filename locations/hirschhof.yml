@@ -1,11 +1,11 @@
 ---
 location: hirschhof
-location_nice: 'Nachbarschaftshaus, Oderberger Str. 19, 10435 Berlin'
+location_nice: "Nachbarschaftshaus, Oderberger Str. 19, 10435 Berlin"
 latitude: 52.539836581339266
 longitude: 13.408204867248921
-contact_nickname: 'zander'
+contact_nickname: "zander"
 contacts:
-  - 'alexanderjabs@gmx.de'
+  - "alexanderjabs@gmx.de"
 
 hosts:
   - hostname: hirschhof-core
@@ -17,7 +17,7 @@ hosts:
     model: "tplink_cpe210-v1"
     wireless_profile: mesh_only
 
-ipv6_prefix: '2001:bf7:760:2c00::/56'
+ipv6_prefix: "2001:bf7:760:2c00::/56"
 
 # got following prefixes:
 # Router:  10.31.159.0/24
@@ -33,7 +33,7 @@ networks:
     prefix: 10.31.159.128/32
     ipv6_subprefix: -20
     # make mesh_metric for 2GHz omni worse than 2GHz directional
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: hirschhof-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -45,7 +45,7 @@ networks:
     prefix: 10.31.159.129/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz omni worse than 5GHz omni
-    mesh_metric_lqm: ['default 0.6']
+    mesh_metric_lqm: ["default 0.6"]
     mesh_ap: hirschhof-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -81,8 +81,8 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      hirschhof-core: 1  # 10.31.159.193
-      hirschhof-k12: 2   # 10.31.159.194
+      hirschhof-core: 1 # 10.31.159.193
+      hirschhof-k12: 2 # 10.31.159.194
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

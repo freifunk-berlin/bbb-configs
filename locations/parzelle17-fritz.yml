@@ -24,7 +24,7 @@ hosts:
     wireless_profile: freifunk_default
     openwrt_version: snapshot
 
-ipv6_prefix: '2001:bf7:840:1000::/56'
+ipv6_prefix: "2001:bf7:840:1000::/56"
 
 # config restored from router configuration
 # got following prefixes:

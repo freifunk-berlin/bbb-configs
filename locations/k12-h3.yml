@@ -1,11 +1,11 @@
 ---
 location: k12-h3
-location_nice: 'Haus 3, Kastanienallee 12, 10435 Berlin'
+location_nice: "Haus 3, Kastanienallee 12, 10435 Berlin"
 latitude: 52.53951094884286
 longitude: 13.409447813490967
-contact_nickname: 'zander'
+contact_nickname: "zander"
 contacts:
-  - 'alexanderjabs@gmx.de'
+  - "alexanderjabs@gmx.de"
 
 hosts:
   - hostname: k12-h3-core
@@ -20,7 +20,7 @@ hosts:
   #   model: "dlink_dap-x1860-a1"
   #   wireless_profile: freifunk_owe
 
-ipv6_prefix: '2001:bf7:760:700::/56'
+ipv6_prefix: "2001:bf7:760:700::/56"
 
 # got following prefixes:
 # Router: 10.31.226.192/26
@@ -49,7 +49,7 @@ networks:
     prefix: 10.31.226.210/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: k12-h3-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -71,7 +71,7 @@ networks:
     prefix: 10.31.226.212/32
     ipv6_subprefix: -23
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: k12-h3-h3n
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -117,8 +117,8 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      k12-h3-core: 1  # 10.31.226.193
-      k12-h3-h3n: 2    # 10.31.226.194
+      k12-h3-core: 1 # 10.31.226.193
+      k12-h3-h3n: 2 # 10.31.226.194
       # k12-h3-v2s: 2    # 10.31.226.195
 
 # AP-id, wifi-channel, bandwidth, txpower
