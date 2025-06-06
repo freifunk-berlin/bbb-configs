@@ -8,7 +8,7 @@ config switch
 
   {% for network in networks | selectattr('vid', 'defined') | selectattr('ifname', 'undefined') %}
     {% set portmapping = [] %}
-    {% for port in range(switch_ports)|list|difference(switch_ignore_ports|default([])) %}
+    {% for port in range(switch_ports) | list | difference(switch_ignore_ports | default([])) %}
       {% set tagged = not network.get('untagged') or port == switch_int_port %}
       {{ portmapping.append(port|string + ("t" if tagged else "")) }}
     {%- endfor %}
@@ -16,8 +16,6 @@ config switch
 config switch_vlan
 	option device 'switch0'
 	option vlan '{{ network['vid'] }}'
-	option ports '{{ portmapping|join(' ') }}'
+	option ports '{{ portmapping | join(' ') }}'
   {% endfor %}
 {% endif %}
-
-

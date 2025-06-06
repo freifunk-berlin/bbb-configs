@@ -8,7 +8,7 @@ if [[ -f "$NFT_CONF" ]]; then
     nft -f "$NFT_CONF"
 fi
 
-{% if sysupgrade_preserve_custom_files|default(False) %}
+{% if sysupgrade_preserve_custom_files | default(False) %}
 # sysupgrade_preserve_custom_files was set. Therefore delete all
 # shipped "preservation" definitions
 rm /lib/upgrade/keep.d/*
@@ -18,21 +18,23 @@ rm /lib/upgrade/keep.d/*
 sed -i '/^ \/etc/d' /usr/lib/opkg/status
 {% endif %}
 
+{# Apply sysfs overrides if any #}
 {% for override in sysfs_overrides | default([]) %}
-echo {{ override['value'] }} > {{ override['path'] }}
-{% endfor%}
+echo {{ override.value }} > {{ override.path }}
+{% endfor %}
 
-{% if role == 'corerouter' or role == 'gateway' %}
+{% if role in ['corerouter', 'gateway'] %}
 # make sure mld listener reports are frequently sent on
 # gateways and core routers
 /etc/force_mcast_mld_reports.sh &
 {% endif %}
 
+{# Additional rc.local-style commands #}
 {% for cmd in rclocal | default([]) %}
 {{ cmd }}
 {% endfor %}
 
-{% if role == 'corerouter' or role == 'gateway' %}
+{% if role in ['corerouter', 'gateway'] %}
 # Change the option "procd_set_param stderr  1" to "0" in the file /etc/init.d/collectd
 # This is needed because airos_6 APs w/o stations resulted in a lot of local log spamming
 # In addition switches without unique port labels have the same problem

@@ -6,14 +6,14 @@
 {% set ipv4_mss = MTU - GRE_HEADER_SIZE - TCP_HEADER_SIZE - IPV4_HEADER_SIZE %}
 {% set ipv6_mss = MTU - GRE_HEADER_SIZE - TCP_HEADER_SIZE - IPV6_HEADER_SIZE %}
 
-# Since traffic *could* always go via the GRE Tunnels we need to ensure
-# it fits.
-# This applies to all directions, because also phyiscal known working links
-# could die. (60G Links during rain are a good example)
-# When the traffic is the rerouted through GRE the connections should continue to work
+# Since traffic *could* always go via GRE tunnels, we need to ensure
+# it fits within the MTU to avoid fragmentation or dropped packets.
+# This applies to all directions because physical links can fail
+# and traffic might be rerouted over GRE tunnels (e.g., 60 GHz links affected by rain).
+# Adjusting the MSS prevents TCP sessions from breaking when rerouted.
 
-# only apply to ipv6 for now
+# Currently applying only for IPv6 traffic:
 meta nfproto ipv6 tcp flags syn tcp option maxseg size set {{ ipv6_mss }}
 
-#oifname "gre*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }
-
+# Example of applying it for GRE interfaces (commented out):
+# oifname "gre*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }

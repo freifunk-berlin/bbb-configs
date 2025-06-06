@@ -1,8 +1,9 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
+
 {% for uplink in networks | selectattr('role', 'equalto', 'uplink') %}
   {% set name = uplink['name'] if 'name' in uplink else 'uplink' %}
   {% set mode = uplink['uplink_mode'] if 'uplink_mode' in uplink else 'bridge' %}
-  {% set ifname = uplink['ifname'] if mode == 'direct' else 'br-'+name %}
+  {% set ifname = uplink['ifname'] if mode == 'direct' else 'br-' + name %}
 
 config tunspace "tunspace"
   # Namespace where the uplink will live.
@@ -14,10 +15,10 @@ config tunspace "tunspace"
   # - direct: moves the original uplink interface into the namespace directly, useful for wonky cheap USB sticks with broken drivers.
   option uplink_mode "{{ mode }}"
   # Our own static uplink IPv4 address in CIDR format. Leave empty to use DHCP.
-  option uplink_ipv4 "{{ uplink['uplink_ipv4']|default('') }}"
+  option uplink_ipv4 "{{ uplink['uplink_ipv4'] | default('') }}"
   # IPv4 address of the gateway. Required in combination with uplink_ipv4, ignored when using DHCP.
-  option uplink_gateway "{{ uplink['uplink_gateway']|default('') }}"
-  # Maintenance consists of checking the uplink, refreshing the DHCP lease, checking the tunnel endpoints, and switching endpoints if neccessary.
+  option uplink_gateway "{{ uplink['uplink_gateway'] | default('') }}"
+  # Maintenance consists of checking the uplink, refreshing the DHCP lease, checking the tunnel endpoints, and switching endpoints if necessary.
   option maintenance_interval 60
   # Enables detailed output of Tunspace's operations. If disabled, only tunnel endpoint changes are reported.
   option debug "0"
@@ -31,7 +32,6 @@ config wg-interface
   option mtu "{{ tunnel['mtu'] }}"
   option port "{{ tunnel['wireguard_port'] }}"
   option disabled "0"
-
 {% endfor %}
 
 {% for gateway in groups['role_gateway'] | sort %}
@@ -40,5 +40,4 @@ config wg-server
   option url "https://{{ hostvars[gateway]['uplink']['ipv4'] | ansible.utils.ipaddr('address') }}/ubus"
   option insecure_cert "1"
   option disabled "0"
-
 {% endfor %}

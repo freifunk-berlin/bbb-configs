@@ -1,23 +1,26 @@
 config public 'contact'
-{% if community is true and contact_name is undefined %}
+{% if community is true and contact_name is not defined %}
 	option name 'Freifunk Engenieering Task Force'
 {% elif contact_name is defined %}
 	option name '{{ contact_name }}'
 {% endif %}
-{% if community is true and contact_nickname is undefined %}
+
+{% if community is true and contact_nickname is not defined %}
 	option nickname 'FETF'
 {% elif contact_nickname is defined %}
 	option nickname '{{ contact_nickname }}'
 {% endif %}
+
 {% if contact_email is defined %}
-	{{ contact_email_depr | mandatory('The option "contact_email" in location/general.yml is deprecated. Please rename that flag to "contacts" and make sure to transform it into to a list.') }}
-{% elif community is true and contacts is undefined %}
+	{{ contact_email_depr | mandatory('The option "contact_email" in location/general.yml is deprecated. Please rename it to "contacts" and make it a list.') }}
+{% elif community is true and contacts is not defined %}
 	option mail 'info+{{ location }}@berlin.freifunk.net'
 {% else %}
-{% for contact in contacts | mandatory('Please add at least one contact information via the contacts-flag in location/general.yml. Fellow Freifunkas need to be able to contact you in case they want to mesh with you!') %}
+{% for contact in contacts | mandatory('Please add at least one contact via the contacts flag in location/general.yml. Fellow Freifunkers need to be able to contact you to mesh!') %}
 	list contact '{{ contact }}'
 {% endfor %}
 {% endif %}
+
 	option location '{{ location_nice }}'
 
 config public 'community'

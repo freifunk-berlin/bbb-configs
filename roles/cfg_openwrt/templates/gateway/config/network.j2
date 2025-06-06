@@ -1,4 +1,4 @@
-# IPv4 Soft Migration by priotizing Babel over OLSR
+# IPv4 Soft Migration by prioritizing Babel over OLSR
 # Static default Route is set by bird
 config rule
 	option priority 33100
@@ -34,7 +34,7 @@ config interface 'uplink'
 	option ip6addr '{{ uplink['ipv6'] }}'
 {% endif %}
 
-{% for interface in mesh_links|default([]) %}
+{% for interface in mesh_links | default([]) %}
 config interface '{{ interface['name'] }}'
 	option device '{{ interface['ifname'] }}'
 	option proto 'static'
@@ -52,16 +52,15 @@ config interface 'mgmt'
 	option ip6addr '{{ mgmt['ipv6'] }}'
 {% endif %}
 
-
 {% if uplink['ipv4'] | ansible.utils.ipaddr('prefix') >= 30 %}
   {% set ipv4_uplink_gw = uplink['ipv4'] | ansible.utils.ipaddr('peer') %}
 {% else %}
   {% set ipv4_uplink_gw = uplink['ipv4'] | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') %}
 {% endif %}
 
-# gre doesnt support _ in name
+# GRE tunnels (note: GRE does not support underscores in interface names)
 {% for gateway in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
-{% set name = hostvars[gateway]['gre_tunnel_alias'] %}
+  {% set name = hostvars[gateway]['gre_tunnel_alias'] %}
 
 config route 'route_gre_{{ name }}'
 	option interface 'uplink'

@@ -6,17 +6,20 @@ config naywatch general
     option watchdog_timeout '120'
     option use_watchdog     '0'
     option save_logs        '0'
-{% for network in networks | default([]) %}
-    {% set name = network['name'] if 'name' in network else network['role'] %}
-    {% if network['role'] == 'mgmt' or (role == 'corerouter' and network['role'] == 'mesh') %}
+
+    {% for network in networks | default([]) %}
+        {% set name = network.get('name', network.get('role')) %}
+        {% if network['role'] == 'mgmt' or (role == 'corerouter' and network['role'] == 'mesh') %}
     list interface          '{{ name }}'
+        {% endif %}
+    {% endfor %}
+
+    {% for interface in mesh_links | default([]) %}
+    list interface          '{{ interface.name }}'
+    {% endfor %}
+
+    {% if mgmt is defined %}
+    list interface          '{{ mgmt.get("name", "mgmt") }}'
     {% endif %}
-{% endfor %}
-{% for interface in mesh_links|default([]) %}
-    list interface          '{{ interface['name'] }}'
-{% endfor %}
-{% if mgmt is defined %}
-    list interface          '{{ mgmt['name'] | default('mgmt') }}'
-{% endif %}
 
 {% endif %}

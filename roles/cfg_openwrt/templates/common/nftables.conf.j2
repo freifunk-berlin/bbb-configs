@@ -1,47 +1,49 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 #!/usr/sbin/nft -f
-{% set profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first -%}
 
-{# DISCLAIMER: i'm not very proud of the following. feel free to find more elegant way!
-   Basically we need a list of dicts which can be used later on.
-network_ifname_map =
-  - network: dhcp
-    ifname: wlan5-dhcp
-  - ..
-#}
+{# Retrieve profile based on selected wireless_profile #}
+{% set profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | first -%}
+
+{# Build network -> ifname mapping from wireless devices and profile configuration #}
 {% set network_ifname_map = [] %}
 {% for wd in wireless_devices | default([]) %}
-  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
-  {% if 'devices' in profile %}
-    {% set wd_config = profile['devices'] | default([]) | selectattr('radio', 'contains', wd['name']) | first %}
-  {% else %}
-    {% set wd_config = {} %}
-  {% endif %}
-  {% set wd_ifaces = profile['ifaces'] | default([]) | selectattr('radio', 'contains', wd['name']) %}
+  {% set wd_ifaces = profile.ifaces | default([]) | selectattr('radio', 'contains', wd.name) | list %}
+  {% set wd_config = (profile.devices | default([]) | selectattr('radio', 'contains', wd.name) | first) | default({}) %}
+
   {% if not wd_config.get('disabled') %}
     {% for iface in wd_ifaces %}
-      {% set ifname = wd['ifname_hint'] + '-' + iface['ifname_hint']|default('if' + loop.index0|string) %}
-      {% if iface['mode'] == 'ap' %}
-        {{ network_ifname_map.append({'network': iface['network'], 'ifname': ifname })}}
-      {% elif iface['mode'] == 'mesh' %}
-        {% set mesh_nets = networks | selectattr('role','defined') | selectattr('role','equalto','mesh')
-          | selectattr('mesh_ap','defined') | selectattr('mesh_ap','equalto',inventory_hostname)
-          | selectattr('mesh_radio','equalto', wd['name']) | selectattr('mesh_iface','equalto',iface['ifname_hint']) %}
+      {% set ifname = wd.ifname_hint ~ '-' ~ (iface.ifname_hint | default('if' ~ loop.index0|string)) %}
+      {% if iface.mode == 'ap' %}
+        {{ network_ifname_map.append({'network': iface.network, 'ifname': ifname}) }}
+      {% elif iface.mode == 'mesh' %}
+        {% set mesh_nets = networks
+          | selectattr('role', 'defined')
+          | selectattr('role', 'equalto', 'mesh')
+          | selectattr('mesh_ap', 'defined')
+          | selectattr('mesh_ap', 'equalto', inventory_hostname)
+          | selectattr('mesh_radio', 'equalto', wd.name)
+          | selectattr('mesh_iface', 'equalto', iface.ifname_hint)
+          | list %}
         {% if mesh_nets | length > 0 %}
-          {{ network_ifname_map.append({'network': (mesh_nets|first)['name'], 'ifname': ifname })}}
+          {{ network_ifname_map.append({'network': mesh_nets[0].name, 'ifname': ifname}) }}
         {% endif %}
       {% endif %}
     {% endfor %}
   {% endif %}
 {% endfor %}
-{# DISCLAIMER SCOPE END #}
 
-{% for network in networks | selectattr('enforce_client_isolation', 'defined') | selectattr('enforce_client_isolation') %}
-  {% set name = network['name'] if 'name' in network else network['role'] %}
-  {% set wifi_ifnames = network_ifname_map | selectattr('network', 'equalto', name) | map(attribute='ifname') %}
-  {% if wifi_ifnames|length > 0 %}
-    {% set wifi = '{ ' + wifi_ifnames | join(', ') + '}' %}
-    {% set uplink = (('switch0' if dsa_ports is defined else int_port) + '.' + network['vid']|string) if role == 'ap' else '!= ' + wifi %}
+{# Enforce client isolation on wireless networks that request it #}
+{% for network in networks
+    | selectattr('enforce_client_isolation', 'defined')
+    | selectattr('enforce_client_isolation') %}
+  {% set name = network.name if 'name' in network else network.role %}
+  {% set wifi_ifnames = network_ifname_map
+    | selectattr('network', 'equalto', name)
+    | map(attribute='ifname') | list %}
+  {% if wifi_ifnames %}
+    {% set wifi = '{ ' ~ wifi_ifnames | join(', ') ~ ' }' %}
+    {% set uplink = (('switch0' if dsa_ports is defined else int_port) ~ '.' ~ network.vid|string) if role == 'ap' else '!= ' ~ wifi %}
+
     {% if loop.first %}
 define gw = 02:00:00:00:00:01
 define bc = ff:ff:ff:ff:ff:ff
@@ -51,14 +53,14 @@ table bridge client_isolation
 flush table bridge client_isolation
 table bridge client_isolation {
     {% endif %}
-	chain PREROUTING_{{ name }} {
-		type filter hook prerouting priority 0; policy accept;
-		{{'iif' if role == 'ap' else 'iifname' }} {{ uplink }} accept
-		iifname {{ wifi }} ether daddr $bc ether daddr set $gw
-		iifname {{ wifi }} ether daddr $mc6 ether daddr set $gw
-		iifname {{ wifi }} ether daddr $gw accept
-		iifname {{ wifi }} drop
-	}
+    chain PREROUTING_{{ name }} {
+      type filter hook prerouting priority 0; policy accept;
+      {{ 'iif' if role == 'ap' else 'iifname' }} {{ uplink }} accept
+      iifname {{ wifi }} ether daddr $bc ether daddr set $gw
+      iifname {{ wifi }} ether daddr $mc6 ether daddr set $gw
+      iifname {{ wifi }} ether daddr $gw accept
+      iifname {{ wifi }} drop
+    }
     {% if loop.last %}
 }
     {% endif %}
@@ -121,31 +123,32 @@ table bridge client_isolation {
   meshes on its own, using its own integrated wifi, we tolerate the log noise.
 #}
 {% if role == 'ap' %}
-  {% for network in networks | selectattr('role', 'equalto', 'mesh') | selectattr('name','in', network_ifname_map|map(attribute='network')) %}
-    {% set wifi_if = network_ifname_map | selectattr('network', 'equalto', network['name']) | map(attribute='ifname') | first %}
-    {% set set_localrouter = 'localrouter_' + network['name'] %}
-    {% if loop.first %}
-
+  {% set mesh_networks = networks
+      | selectattr('role', 'equalto', 'mesh')
+      | selectattr('name', 'in', network_ifname_map | map(attribute='network') | list) %}
+  {% if mesh_networks %}
 table bridge prevent_mesh_reflection
 flush table bridge prevent_mesh_reflection
 table bridge prevent_mesh_reflection {
-    {% endif %}
-	set {{ set_localrouter }} {
-		type ether_addr
-		size 5
-		flags timeout
-	}
-	chain POSTROUTING_{{ network['name'] }} {
-		type filter hook postrouting priority 0; policy accept;
-		oifname {{ wifi_if }} update @{{ set_localrouter }} { ether saddr timeout 1h }
-	}
-	chain PREROUTING_{{ network['name'] }} {
-		type filter hook prerouting priority 0; policy accept;
-		iifname {{ wifi_if }} ether saddr @{{ set_localrouter }} counter drop
-
-	}
-    {% if loop.last %}
+    {% for network in mesh_networks %}
+      {% set wifi_if = network_ifname_map
+          | selectattr('network', 'equalto', network.name)
+          | map(attribute='ifname')
+          | first %}
+    set localrouter_{{ network.name }} {
+      type ether_addr
+      size 5
+      flags timeout
+    }
+    chain POSTROUTING_{{ network.name }} {
+      type filter hook postrouting priority 0; policy accept;
+      oifname {{ wifi_if }} update @localrouter_{{ network.name }} { ether saddr timeout 1h }
+    }
+    chain PREROUTING_{{ network.name }} {
+      type filter hook prerouting priority 0; policy accept;
+      iifname {{ wifi_if }} ether saddr @localrouter_{{ network.name }} counter drop
+    }
+    {% endfor %}
 }
-    {% endif %}
-  {% endfor %}
+  {% endif %}
 {% endif %}
