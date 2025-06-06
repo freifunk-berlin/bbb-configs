@@ -10,7 +10,6 @@ model__packages__to_merge:
 switch_ports: 4
 switch_int_port: 0
 switch_ignore_ports: [1]
-
 int_port: eth0
 
 wireless_devices:

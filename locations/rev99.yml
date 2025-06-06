@@ -16,7 +16,7 @@ snmp_devices:
     address: 10.31.214.130
     snmp_profile: airos_8
 
-ipv6_prefix: '2001:bf7:830:be00::/56'
+ipv6_prefix: "2001:bf7:830:be00::/56"
 
 # got following prefixes:
 # Router: 10.31.214.128/27
@@ -53,7 +53,7 @@ networks:
     prefix: 10.31.214.138/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: rev99-core
     mesh_radio: 11g_standard
     mesh_iface: mesh

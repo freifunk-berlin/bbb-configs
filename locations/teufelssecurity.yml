@@ -14,7 +14,6 @@ community: true
 ipv6_prefix: "2001:bf7:800:1600::/56"
 
 hosts:
-
   - hostname: teufelssecurity-core
     role: corerouter
     model: mikrotik_wap-ac
@@ -24,10 +23,9 @@ hosts:
     role: ap
     model: mikrotik_sxtsq-5-ac
     wireless_profile: freifunk_default
-    mac_override: {eth0: dc:2c:6e:c4:36:35}
+    mac_override: { eth0: dc:2c:6e:c4:36:35 }
 
 networks:
-
   - vid: 20
     role: mesh
     name: mesh_ap

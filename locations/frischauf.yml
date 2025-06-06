@@ -4,9 +4,9 @@ location_nice: Kleingartenanlage Frischauf
 latitude: 52.547228
 longitude: 13.305926
 
-contact_nickname: 'funkgemuese'
+contact_nickname: "funkgemuese"
 contacts:
-  - '@funkgemuese:matrix.org'
+  - "@funkgemuese:matrix.org"
 
 hosts:
   - hostname: frischauf-core
@@ -28,7 +28,6 @@ hosts:
     model: "tplink_cpe210-v2"
 
 snmp_devices:
-
   - hostname: frischauf-teufelsberg
     address: 10.248.32.130
     snmp_profile: airos_8
@@ -36,7 +35,6 @@ snmp_devices:
   - hostname: frischauf-weidenbaum
     address: 10.248.32.131
     snmp_profile: airos_8
-
 
 ipv6_prefix: "2001:bf7:780:700::/56"
 
@@ -79,7 +77,7 @@ networks:
     prefix: 10.248.32.165/32
     ipv6_subprefix: -21
     # make mesh_metric for 2.4 GHz worse than 5 GHz
-    mesh_metric_lqm: ['default 0.5']
+    mesh_metric_lqm: ["default 0.5"]
     mesh_ap: frischauf-ap
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -112,11 +110,11 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      frischauf-core: 1          # 10.248.32.129
-      frischauf-teufelsberg: 2   # 10.248.32.130
-      frischauf-weidenbaum: 3    # 10.248.32.131
-      frischauf-ap: 4            # 10.248.32.132
-      frischauf-west: 5          # 10.248.32.133
+      frischauf-core: 1 # 10.248.32.129
+      frischauf-teufelsberg: 2 # 10.248.32.130
+      frischauf-weidenbaum: 3 # 10.248.32.131
+      frischauf-ap: 4 # 10.248.32.132
+      frischauf-west: 5 # 10.248.32.133
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

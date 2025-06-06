@@ -15,7 +15,7 @@ hosts:
   - hostname: j41-hof
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: 2c:c8:1b:6a:ce:f1}
+    mac_override: { eth0: 2c:c8:1b:6a:ce:f1 }
 
   - hostname: j41-nw-5ghz
     role: ap

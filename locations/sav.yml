@@ -5,9 +5,9 @@ location_nice: Rotherstraße 16, 10245 Berlin
 latitude: 52.504016671
 longitude: 13.449078798
 altitude: 89
-contact_nickname: 'Jammingblub'
+contact_nickname: "Jammingblub"
 contacts:
-  - 'freifunk@sva.de'
+  - "freifunk@sva.de"
 
 # ROUTER: 10.31.174.240/28
 # --MGMT: 10.31.174.240/30

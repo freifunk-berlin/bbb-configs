@@ -8,7 +8,6 @@ altitude: 58
 community: true
 
 hosts:
-
   - hostname: rigaer83-core
     role: corerouter
     model: "bananapi_bpi-r64"
@@ -29,7 +28,6 @@ snmp_devices:
   - hostname: rigaer83-sama
     address: 10.31.81.83
     snmp_profile: airos_8
-
 
 ipv6_prefix: "2001:bf7:830:8e00::/56"
 

@@ -7,14 +7,12 @@ longitude: 13.470166
 community: true
 
 hosts:
-
   - hostname: schreiner-core
     role: corerouter
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
 
 snmp_devices:
-
   - hostname: schreiner-f2a
     address: 10.31.97.98
     snmp_profile: airos_6
@@ -31,11 +29,9 @@ snmp_devices:
     address: 10.31.97.102
     snmp_profile: airos_6
 
-
 ipv6_prefix: "2001:bf7:830:9100::/56"
 
 networks:
-
   - vid: 10
     role: mesh
     name: mesh_sama
@@ -49,7 +45,7 @@ networks:
     prefix: 10.31.97.68/32
     ipv6_subprefix: -2
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.3']
+    mesh_metric_lqm: ["default 0.3"]
     ptp: true
 
   - vid: 40

@@ -7,7 +7,6 @@ model_nice: GL-XE300
 switch_ports: 5
 switch_int_port: 0
 switch_ignore_ports: [1, 2, 3]
-
 # VLAN 1 is hardwired, so any untagged VLAN on eth0 must be ID 1.
 # WAN port is a separate device eth1, other VLAN IDs untagged are okay here.
 int_port: eth0

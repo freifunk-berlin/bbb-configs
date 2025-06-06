@@ -8,14 +8,12 @@ altitude: 40
 community: true
 
 hosts:
-
   - hostname: xdorf-core
     role: corerouter
     model: "tplink_archer-c7-v5"
     wireless_profile: freifunk_default
 
 snmp_devices:
-
   - hostname: xdorf-rauchhaus
     address: 10.31.54.162
     snmp_profile: airos_6
@@ -27,7 +25,6 @@ snmp_devices:
   - hostname: xdorf-ap2
     address: 10.31.54.164
     snmp_profile: airos_6
-
 
 ipv6_prefix: "2001:bf7:830:9000::/56"
 
@@ -61,7 +58,6 @@ networks:
       xdorf-rauchhaus: 2
       xdorf-ap1: 3
       xdorf-ap2: 4
-
 
 location__channel_assignments_11a_standard__to_merge:
   xdorf-core: 36-20

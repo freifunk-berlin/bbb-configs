@@ -9,7 +9,6 @@ contacts:
   - noc@stadtfunk.net
 
 hosts:
-
   - hostname: karanfil-core
     role: corerouter
     model: avm_fritzbox-4040
@@ -23,7 +22,6 @@ hosts:
 ipv6_prefix: 2001:bf7:820:2b00::/56
 
 networks:
-
   - vid: 20
     name: mesh_core
     role: mesh

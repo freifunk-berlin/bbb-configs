@@ -4,9 +4,9 @@ location_nice: Falkensee Senioren Wohngemeinschaft, Falkenhagener Straße 35, 13
 latitude: 52.567321
 longitude: 13.104941
 altitude: 0
-contact_nickname: 'jammingblub'
+contact_nickname: "jammingblub"
 contacts:
-  - 'koltonowski@protonmail.com'
+  - "koltonowski@protonmail.com"
 
 hosts:
   - hostname: senioren-core

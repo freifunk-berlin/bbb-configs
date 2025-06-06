@@ -8,7 +8,6 @@ altitude: 105
 community: true
 
 hosts:
-
   - hostname: simeon-core
     role: corerouter
     model: "ubnt_edgerouter-x"
@@ -16,7 +15,6 @@ hosts:
     openwrt_version: 24.10-SNAPSHOT
 
 snmp_devices:
-
   - hostname: simeon-switch
     address: 10.31.104.130
     snmp_profile: edgeswitch
@@ -42,7 +40,6 @@ snmp_devices:
     snmp_profile: af60
 
 airos_dfs_reset:
-
   - name: "simeon-mgh"
     target: "10.31.104.131"
     username: "ubnt"
@@ -65,7 +62,6 @@ airos_dfs_reset:
 ipv6_prefix: "2001:bf7:750:3700::/56"
 
 networks:
-
   - vid: 10
     role: mesh
     name: mesh_mgh
