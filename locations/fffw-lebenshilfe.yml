@@ -4,13 +4,12 @@ location_nice: Lebenshilfe Oder-Spree, Wladimir-Komarow-Straße/Konstantin-E-Zio
 latitude: 52.370406
 longitude: 14.077577
 altitude: 43
-contact_name: 'Marc & Martin'
-contact_nickname: 'marcw & akira25'
+contact_name: "Marc & Martin"
+contact_nickname: "marcw & akira25"
 contacts:
-  - 'fuerstenwalde@freifunk.net'
+  - "fuerstenwalde@freifunk.net"
 
 hosts:
-
   - hostname: fffw-lebenshilfe-core
     role: corerouter
     model: "avm_fritzbox-7530"
@@ -40,7 +39,7 @@ hosts:
     mac_override:
       eth0: cc:2d:e0:9c:51:9e
 
-ipv6_prefix: "2001:bf7:800:f00::/56"  # aus Berlin
+ipv6_prefix: "2001:bf7:800:f00::/56" # aus Berlin
 
 # got following prefixes:
 # Router: ###.###.##.##
@@ -50,7 +49,6 @@ ipv6_prefix: "2001:bf7:800:f00::/56"  # aus Berlin
 # --UPLK: 10.31.40.124/30 # config-wizard aus Berlin
 
 networks:
-
   - vid: 20
     role: mesh
     name: mesh_nno
@@ -135,9 +133,13 @@ location__channel_assignments_11g_standard__to_merge:
 # only place this ssh-keys
 ssh_keys:
   - comment: Marc
-    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDNe6bFfixmUPT6OTgLOcuzaLgBk3EItz/uDemP5PNWjSYSqIIvXe7A0tt0n3rLzK3tp2UF/OXqesnOnrh1iSG0bsJ45NOKyN62GdZqd63YuPk4YyNA8/Gpsio1ynZD+YBdshUteDU8Wht8ApwkRbwNkM77C0vYoG855jm5dxL+SSuioNEgfkTAvvQNW+eAy1uatHISTAWkk4rO78B2hA+Fz1pmA4o/DHT5DHBiBBN3rKtAj0be2UdSikHDIEsdgD/YGqZVCFEWVpEn+fxasEWXBSwts0aBaFB+5VbwWV7Hhj1F9vgIRbOv2PEjDpOfcHzfDmjTKh/teaYEoX0Wrgq4qWDE71JZU9xEi/X7urLVlCUdx0VZjuchpFo+AmpF3x31PFoV+g32W8gZNn5umK0FgKMxaL8uV/PejQbUtvpWcDFmc8/qliKMzwb4/Hcc4tnC4UaTQBWBNOMbIwDyypqzbuoTiuMmbHIDX6BP/gKTtFraXhM7ZDrDbmPfRA2ifs0HMXh+cewXvIIWqOZYEplPy2dbo8R0rG4m7HrXKi+nLlm4rPiTDXmmVK5j3KSlJFQVqzcFFqC1ohP6Y5aQE1XuNPbjs2LuY1FgMw2JtH70JRLYTiJ0gPjSux90K2Mnvvy9SUs80rfx95D9ogy7xqAW0Yis/CDHrvKIEbgCIdHHcw== willwach@Karl
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAACAQDNe6bFfixmUPT6OTgLOcuzaLgBk3EItz/uDemP5PNWjSYSqIIvXe7A0tt0n3rLzK3tp2UF/OXqesnOnrh1iSG0bsJ45NOKyN62GdZqd63YuPk4YyNA8/Gpsio1ynZD+YBdshUteDU8Wht8ApwkRbwNkM77C0vYoG855jm5dxL+SSuioNEgfkTAvvQNW+eAy1uatHISTAWkk4rO78B2hA+Fz1pmA4o/DHT5DHBiBBN3rKtAj0be2UdSikHDIEsdgD/YGqZVCFEWVpEn+fxasEWXBSwts0aBaFB+5VbwWV7Hhj1F9vgIRbOv2PEjDpOfcHzfDmjTKh/teaYEoX0Wrgq4qWDE71JZU9xEi/X7urLVlCUdx0VZjuchpFo+AmpF3x31PFoV+g32W8gZNn5umK0FgKMxaL8uV/PejQbUtvpWcDFmc8/qliKMzwb4/Hcc4tnC4UaTQBWBNOMbIwDyypqzbuoTiuMmbHIDX6BP/gKTtFraXhM7ZDrDbmPfRA2ifs0HMXh+cewXvIIWqOZYEplPy2dbo8R0rG4m7HrXKi+nLlm4rPiTDXmmVK5j3KSlJFQVqzcFFqC1ohP6Y5aQE1XuNPbjs2LuY1FgMw2JtH70JRLYTiJ0gPjSux90K2Mnvvy9SUs80rfx95D9ogy7xqAW0Yis/CDHrvKIEbgCIdHHcw==
+      willwach@Karl
   - comment: Martin
-    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAEAQCZKBSNTEyn0zEKd53R9+4AmnjZguyx6da90Gyd3pVqpUmefR1bMqFdH2Qg3CNBBEzUMgs8E3RTQ3AMNKUHYdqysqZ2I5V5KDGRKpDNH2rAh6tNto9OIxk/nqdFJJ6WX4gg1qN1Di/s3IlBh7gcBgZc6WwQqiWfrPhA8ZT3TbloNZq9y8hjuFny1NmARaunMs0AvB36aGtp68EBKixMapHzY54YdE/95E/pPsd1LqOv1PczkJxjO0bTcbzoN9gb9uueE0/JVR7lomQSV9+o6kSp5tNHdlKe3PU2M7Km+QQ/ksDXpdo4wD2ScIIikkZkgPIOQB9Y4IBHEbpZNT+vnGL5fwHGEbEpikslqGhmpFtDH8J4WPf807eRJIbo5pNRtm5cFZBtwFYEehI0nbPG/Ln8RBfNrKvzx13mL3KYpYcgVfYSXpzaIlGdl8gRnTpXGeumCSB3M0ygSAM0gtMLtYOuGyStwTklJg4+4pKweVpCEqp2go9jmpTl6P++9AYgoe4UbEe0QlcRL7o98svyr76ZiYvBfJyNR0zsak0Q29ruSp7/eANz4jSC1CVkWzB8m9b42i+ANcTDXRiZrlfplxzibY4tw8qFnuKYnaWmP2C03fNg1v45YDuHAXlG9rbwKSPprtyIASTEucv+UrwXJCcGV+FgRMwSswE4jSRI/fYy5JtJQrTCwjzzzhdzSBl0wtMXuJ7gb0WY84G0cQjVrPx8Oq6nuDowbTREQD/xSbkXU9+UqtCk/pU/rRCyb0Ug7wO2+WAGIK3IwLb4j7us/4ghno03n+F8gqAIbDYuAkuA/90To6nX99KUkF0Fm/Ajp2GYZJZBnH9icFdTmm8hKY4vmrWNW0x4/IKYNcBLPkHSsPdbtI7nsFq+Tut8d7RjpDhBv/iPijPnqXlkkaRZfGkh0zd8v/l/DsxOKptUXbABY04DEIGjc0xFsURj1u20HkM84dVEGDWdht3OEpIb+Tr+AdVXj+Y9GiY7/JJVutaPgpcCeO3uFY9pFIQrWX+N69DJlFof0G+kyZapJUnE+C5s66bDaQzqCS9WhnaYIqsyUhHA2KrCyxUyCivEeMmlpkS02kG0vVqLCVR168AvvwrVc4mtleCLtiIgWe5StTRRBAWwK/yorXT6fepu71M7xwz04arilSM3I4m1R4heW3crV1MJDbiToaAE8OcpFXr0Ced+T+dTQ6dZ4C3y6a2lex6R/WOKSYLBMK/uHzP64ln1gTxJtgT9E18dsKA3PuIaAInLzVPkH7qCnkTo09sJQjyNpjaX9hEryMEH8xEyu8GdRLLK7aVCt9SWuYbU7m9lLJbu5oVEr44yn9BJUor1W75sQCIM2YtUi7aCiEhrXT1D martin@Latitude-E5520
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAAEAQCZKBSNTEyn0zEKd53R9+4AmnjZguyx6da90Gyd3pVqpUmefR1bMqFdH2Qg3CNBBEzUMgs8E3RTQ3AMNKUHYdqysqZ2I5V5KDGRKpDNH2rAh6tNto9OIxk/nqdFJJ6WX4gg1qN1Di/s3IlBh7gcBgZc6WwQqiWfrPhA8ZT3TbloNZq9y8hjuFny1NmARaunMs0AvB36aGtp68EBKixMapHzY54YdE/95E/pPsd1LqOv1PczkJxjO0bTcbzoN9gb9uueE0/JVR7lomQSV9+o6kSp5tNHdlKe3PU2M7Km+QQ/ksDXpdo4wD2ScIIikkZkgPIOQB9Y4IBHEbpZNT+vnGL5fwHGEbEpikslqGhmpFtDH8J4WPf807eRJIbo5pNRtm5cFZBtwFYEehI0nbPG/Ln8RBfNrKvzx13mL3KYpYcgVfYSXpzaIlGdl8gRnTpXGeumCSB3M0ygSAM0gtMLtYOuGyStwTklJg4+4pKweVpCEqp2go9jmpTl6P++9AYgoe4UbEe0QlcRL7o98svyr76ZiYvBfJyNR0zsak0Q29ruSp7/eANz4jSC1CVkWzB8m9b42i+ANcTDXRiZrlfplxzibY4tw8qFnuKYnaWmP2C03fNg1v45YDuHAXlG9rbwKSPprtyIASTEucv+UrwXJCcGV+FgRMwSswE4jSRI/fYy5JtJQrTCwjzzzhdzSBl0wtMXuJ7gb0WY84G0cQjVrPx8Oq6nuDowbTREQD/xSbkXU9+UqtCk/pU/rRCyb0Ug7wO2+WAGIK3IwLb4j7us/4ghno03n+F8gqAIbDYuAkuA/90To6nX99KUkF0Fm/Ajp2GYZJZBnH9icFdTmm8hKY4vmrWNW0x4/IKYNcBLPkHSsPdbtI7nsFq+Tut8d7RjpDhBv/iPijPnqXlkkaRZfGkh0zd8v/l/DsxOKptUXbABY04DEIGjc0xFsURj1u20HkM84dVEGDWdht3OEpIb+Tr+AdVXj+Y9GiY7/JJVutaPgpcCeO3uFY9pFIQrWX+N69DJlFof0G+kyZapJUnE+C5s66bDaQzqCS9WhnaYIqsyUhHA2KrCyxUyCivEeMmlpkS02kG0vVqLCVR168AvvwrVc4mtleCLtiIgWe5StTRRBAWwK/yorXT6fepu71M7xwz04arilSM3I4m1R4heW3crV1MJDbiToaAE8OcpFXr0Ced+T+dTQ6dZ4C3y6a2lex6R/WOKSYLBMK/uHzP64ln1gTxJtgT9E18dsKA3PuIaAInLzVPkH7qCnkTo09sJQjyNpjaX9hEryMEH8xEyu8GdRLLK7aVCt9SWuYbU7m9lLJbu5oVEr44yn9BJUor1W75sQCIM2YtUi7aCiEhrXT1D
+      martin@Latitude-E5520
   - comment: Markus - Lebenshilfe
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICJSLpK1JW3qvi9y+mlnu4SetndBwtBoAiWMfjdqnp7I Lebenshilfe Freifunk FW
   - comment: Noki

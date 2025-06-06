@@ -8,14 +8,12 @@ altitude: 78
 community: true
 
 hosts:
-
   - hostname: flughafen-core
     role: corerouter
     model: "ubnt_edgerouter-x-sfp"
     poe_on: [1, 2, 3, 4]
 
 snmp_devices:
-
   - hostname: flughafen-ak36
     address: 10.31.131.131
     snmp_profile: af60
@@ -37,7 +35,6 @@ snmp_devices:
     snmp_profile: airos_6
 
 airos_dfs_reset:
-
   - name: "flughafen-zoll"
     target: "10.31.131.138"
     username: "ubnt"
@@ -49,7 +46,6 @@ airos_dfs_reset:
     username: "ubnt"
     password: "file:/root/pwd"
     daytime_limit: "2-7"
-
 
 ipv6_prefix: "2001:bf7:830:8000::/56"
 
@@ -113,17 +109,17 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      flughafen-core: 1      # .129
-      flughafen-poe: 2       # .130
+      flughafen-core: 1 # .129
+      flughafen-poe: 2 # .130
 
       # 60 GHz
-      flughafen-ak36: 3      # .131
-      flughafen-rhxb: 4      # .132
+      flughafen-ak36: 3 # .131
+      flughafen-rhxb: 4 # .132
 
       # 5 GHz
-      flughafen-zoll: 10     # .138
-      flughafen-feld: 11     # .139
-      flughafen-garten: 12   # .140
+      flughafen-zoll: 10 # .138
+      flughafen-feld: 11 # .139
+      flughafen-garten: 12 # .140
 
       # 868 MHz
-      flughafen-lora: 20     # .148
+      flughafen-lora: 20 # .148

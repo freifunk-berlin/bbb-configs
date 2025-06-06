@@ -8,7 +8,6 @@ altitude: 52
 community: true
 
 hosts:
-
   - hostname: koepi-core
     role: corerouter
     model: "bananapi_bpi-r64"
@@ -38,7 +37,6 @@ hosts:
     role: ap
     model: "avm_fritzbox-7530"
     wireless_profile: koepi
-
 
 networks:
   - vid: 10
@@ -143,7 +141,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: koepi
         encryption: sae-mixed
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: home
         radio: [11a_standard, 11g_standard]
         ifname_hint: home

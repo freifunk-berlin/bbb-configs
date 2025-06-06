@@ -10,7 +10,6 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-pici-core
     role: corerouter
     model: "cudy_ap3000outdoor-v1"
@@ -28,7 +27,6 @@ ipv6_prefix: "2001:bf7:850:1e00::/56"
 # dhcp_no_ping: false
 
 networks:
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh

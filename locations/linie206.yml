@@ -4,13 +4,12 @@ location: linie206
 location_nice: Linienstraße 206
 latitude: 52.5288992
 longitude: 13.4028556
-contact_nickname: 'Linie206 Freifunk AG'
+contact_nickname: "Linie206 Freifunk AG"
 contacts:
-  - 'l206 [ät] riseup [dot] net'
-  - '#freifunk-site-linie206:matrix.riotcat.org'
+  - "l206 [ät] riseup [dot] net"
+  - "#freifunk-site-linie206:matrix.riotcat.org"
 
 hosts:
-
   - hostname: linie206-core
     role: corerouter
     model: "mikrotik_routerboard-750gr3"
@@ -19,32 +18,32 @@ hosts:
   - hostname: linie206-nf-o-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: 08:55:31:ea:e7:76}
+    mac_override: { eth0: 08:55:31:ea:e7:76 }
 
   - hostname: linie206-nf-s-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: 2c:c8:1b:aa:69:3d}
+    mac_override: { eth0: 2c:c8:1b:aa:69:3d }
 
   - hostname: linie206-nf-so-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: 08:55:31:ea:df:2e}
+    mac_override: { eth0: 08:55:31:ea:df:2e }
 
   - hostname: linie206-nf-w-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: 2c:c8:1b:aa:63:42}
+    mac_override: { eth0: 2c:c8:1b:aa:63:42 }
 
   - hostname: linie206-nf-so-2ghz
     role: ap
     model: "mikrotik_sxtsq-2-lite"
-    mac_override: {eth0: 2c:c8:1b:6e:49:01}
+    mac_override: { eth0: 2c:c8:1b:6e:49:01 }
 
   - hostname: linie206-nf-w-2ghz
     role: ap
     model: "mikrotik_sxtsq-2-lite"
-    mac_override: {eth0: 2c:c8:1b:6e:66:69}
+    mac_override: { eth0: 2c:c8:1b:6e:66:69 }
 
   - hostname: linie206-nf-wohnzimmer
     role: ap
@@ -57,7 +56,6 @@ hosts:
 ipv6_prefix: "2001:bf7:750:4b00::/56"
 
 networks:
-
   - vid: 10
     role: mesh
     name: mesh_adalbert

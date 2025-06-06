@@ -7,7 +7,6 @@ model_nice: W 504V Typ A
 switch_ports: 6
 switch_int_port: 0
 switch_ignore_ports: [1]
-
 int_port: eth0
 
 low_mem: true

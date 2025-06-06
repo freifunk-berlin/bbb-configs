@@ -16,7 +16,7 @@ hosts:
         for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
 
 
-ipv6_prefix: '2001:bf7:840:2a00::/56'
+ipv6_prefix: "2001:bf7:840:2a00::/56"
 
 # Router: 10.248.8.64/26 2001:bf7:840:2a00::/56
 # --MGMT: 10.248.8.64/28

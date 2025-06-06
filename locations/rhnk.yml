@@ -7,7 +7,6 @@ altitude: 90
 community: true
 
 hosts:
-
   - hostname: rhnk-core
     role: corerouter
     model: "linksys_e8450-ubi"
@@ -19,13 +18,13 @@ hosts:
 
   - hostname: rhnk-nf-no-5ghz
     role: ap
-    model: "mikrotik_sxtsq-5-ac"  # this host is revision 2 of the device
+    model: "mikrotik_sxtsq-5-ac" # this host is revision 2 of the device
     mac_override:
       eth0: 2c:c8:1b:6a:9a:2c
 
   - hostname: rhnk-nf-so-5ghz
     role: ap
-    model: "mikrotik_sxtsq-5-ac"  # this host is revision 2 of the device
+    model: "mikrotik_sxtsq-5-ac" # this host is revision 2 of the device
     mac_override:
       eth0: 2c:c8:1b:6b:e7:31
 
@@ -105,7 +104,6 @@ ipv6_prefix: "2001:bf7:820:1000::/56"
 # mesh: 10.230.3.0/26
 # dhcp: 10.230.3.64/26
 networks:
-
   # TODO: Clean up VIDs for mesh networks to match convention
   - vid: 11
     role: mesh
@@ -130,7 +128,7 @@ networks:
     ipv6_subprefix: -15
     ptp: true
     mesh_metric: 512
-    mesh_metric_lqm: ['default 0.7']  # prefer rhxb link
+    mesh_metric_lqm: ["default 0.7"] # prefer rhxb link
 
   - vid: 20
     role: mesh
@@ -171,7 +169,7 @@ networks:
     ipv6_subprefix: -25
     # Adjust mesh metric to hermann12-core to prevent using it
     # as a gateway
-    mesh_metric_lqm: ['10.230.25.5 0.5']
+    mesh_metric_lqm: ["10.230.25.5 0.5"]
 
   - vid: 26
     role: mesh
@@ -214,21 +212,21 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      rhnk-core: 1            # Routerboard 750gr3
-      rhnk-switch: 2          # Mikrotik CRS328-24P-4S+RM - SwitchOS
-      rhnk-rhxb: 11           # AirFiber 60-LR
-      rhnk-klunker-60ghz: 14  # Mikrotik Cube 60 Pro
-      rhnk-emma: 15           # Powerbeam 5AC 400 ISO
-      rhnk-no-5ghz: 20        # Rocket 5AC Lite
-      rhnk-wsw-5ghz: 21       # Rocket 5AC Lite
-      rhnk-ak36: 22           # Airfiber LR
-      rhnk-ssw-5ghz: 23       # Rocket 5AC Lite
-      rhnk-oso-60ghz: 24      # Wave AP
-      rhnk-nno-5ghz: 25       # Rocket 5AC Lite
-      rhnk-w38b: 26           # Wave LR
-      rhnk-nf-no-5ghz: 28     # SXTsq 5 ac - OpenWrt
-      rhnk-nf-so-5ghz: 29     # SXTsq 5 ac - OpenWrt
-      rhnk-nf-bvv: 30         # EAP225-Outdoor - OpenWrt - with UMA-D antenna
+      rhnk-core: 1 # Routerboard 750gr3
+      rhnk-switch: 2 # Mikrotik CRS328-24P-4S+RM - SwitchOS
+      rhnk-rhxb: 11 # AirFiber 60-LR
+      rhnk-klunker-60ghz: 14 # Mikrotik Cube 60 Pro
+      rhnk-emma: 15 # Powerbeam 5AC 400 ISO
+      rhnk-no-5ghz: 20 # Rocket 5AC Lite
+      rhnk-wsw-5ghz: 21 # Rocket 5AC Lite
+      rhnk-ak36: 22 # Airfiber LR
+      rhnk-ssw-5ghz: 23 # Rocket 5AC Lite
+      rhnk-oso-60ghz: 24 # Wave AP
+      rhnk-nno-5ghz: 25 # Rocket 5AC Lite
+      rhnk-w38b: 26 # Wave LR
+      rhnk-nf-no-5ghz: 28 # SXTsq 5 ac - OpenWrt
+      rhnk-nf-so-5ghz: 29 # SXTsq 5 ac - OpenWrt
+      rhnk-nf-bvv: 30 # EAP225-Outdoor - OpenWrt - with UMA-D antenna
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
@@ -240,4 +238,6 @@ location__channel_assignments_11g_standard__to_merge:
 
 location__ssh_keys__to_merge:
   - comment: roedel
-    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCgzAZJhT/SyYJQCAye6b8G1ZHjSScXphdqHqkSxtZ0Zqc/iK8qwOsOHuRz44EV+o7udpwbMGbBmX6qbDKoUP/i3aGsTzkLwRhyEvAE7i9HB2WT1s0O6wqb6y9jCTwCSESRbQLFEdCgvuNZS62Lgn/koqM/DLWhLKO43Z0ua4R06oTdA1MabaAUXVzD9p4dm4GGAl2YNE0/co6E+g5UNWs9s1tWV9ZYyyTKp/v5J9jZArc/NACuGQQUx2qLyAplcSEzcj/3Am8gVMUzjzL17lrZevLdCh7PKt8ch3qzPVDH1MnE0moFWF41cTMMb8YBfpo7O78DlqumsQVowICgNHXIE4XMwqvRe2UawWdHEdkGrE40glwzGwPTrIxSsf5xszJRvQ9Rj8i0UTt9k5rh91dNqtMEvPpnLnzr2n+C8j4ozFrkyignHMkgtHD38Vx6+E5ZvZF8GLiRqVmYyT9anhQb0Kd3xJDf7JutYVAJ7eKl31koAjAz+k4MMhkCws051M= roedel
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAABgQDCgzAZJhT/SyYJQCAye6b8G1ZHjSScXphdqHqkSxtZ0Zqc/iK8qwOsOHuRz44EV+o7udpwbMGbBmX6qbDKoUP/i3aGsTzkLwRhyEvAE7i9HB2WT1s0O6wqb6y9jCTwCSESRbQLFEdCgvuNZS62Lgn/koqM/DLWhLKO43Z0ua4R06oTdA1MabaAUXVzD9p4dm4GGAl2YNE0/co6E+g5UNWs9s1tWV9ZYyyTKp/v5J9jZArc/NACuGQQUx2qLyAplcSEzcj/3Am8gVMUzjzL17lrZevLdCh7PKt8ch3qzPVDH1MnE0moFWF41cTMMb8YBfpo7O78DlqumsQVowICgNHXIE4XMwqvRe2UawWdHEdkGrE40glwzGwPTrIxSsf5xszJRvQ9Rj8i0UTt9k5rh91dNqtMEvPpnLnzr2n+C8j4ozFrkyignHMkgtHD38Vx6+E5ZvZF8GLiRqVmYyT9anhQb0Kd3xJDf7JutYVAJ7eKl31koAjAz+k4MMhkCws051M=
+      roedel

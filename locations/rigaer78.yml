@@ -74,7 +74,7 @@ hosts:
   - hostname: rigaer78-back-floor-4-right
     role: ap
     model: "avm_fritzbox-7530"
-    port_untag: {40: [lan1, lan2, lan3]}
+    port_untag: { 40: [lan1, lan2, lan3] }
     host__rclocal__to_merge:
       - |
         # Untag DHCP on some ports

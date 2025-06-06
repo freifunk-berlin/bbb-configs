@@ -19,7 +19,7 @@ hosts:
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     wifi_roaming: true
-    mac_override: {eth0: 64:d1:54:ae:ba:b0}
+    mac_override: { eth0: 64:d1:54:ae:ba:b0 }
 
   - hostname: gub37-hof-w
     role: ap
@@ -119,7 +119,7 @@ networks:
     mesh_iface: mesh
     mesh_metric_lqm: ["default 0.3"]
 
-# DHCP - freifunk
+  # DHCP - freifunk
   - vid: 40
     role: dhcp
     inbound_filtering: true

@@ -4,9 +4,9 @@ location: hts4
 location_nice:
 latitude:
 longitude:
-contact_nickname: 'Noki'
+contact_nickname: "Noki"
 contacts:
-  - '@noki-:matrix.org'
+  - "@noki-:matrix.org"
 
 dns_servers:
   # quad9
@@ -30,7 +30,7 @@ hosts:
     model: "dlink_dap-x1860-a1"
     wireless_profile: hts4
 
-ipv6_prefix: '2001:bf7:830:bf00::/56'
+ipv6_prefix: "2001:bf7:830:bf00::/56"
 
 # got following prefixes:
 # Router: 10.31.235.192/27
@@ -129,7 +129,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: hts4
         encryption: sae-mixed
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: private
         radio: [11a_standard, 11g_standard]
         ifname_hint: pr

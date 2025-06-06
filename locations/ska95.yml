@@ -5,7 +5,7 @@ location_nice: Skalitzer Straße 95
 latitude: 52.50007
 longitude: 13.43249
 contacts:
-  - 'flb@online.de'
+  - "flb@online.de"
 
 dns_servers:
   # quad9
@@ -61,7 +61,7 @@ networks:
     assignments:
       ska95-core: 1
 
-  - vid: 41  # Private LAN where private Internet is connected
+  - vid: 41 # Private LAN where private Internet is connected
     role: ext
     name: private
     untagged: true

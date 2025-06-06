@@ -4,9 +4,9 @@ location_nice: Heilige-Geist-Kirche Moabit
 latitude: 52.530674
 longitude: 13.346146
 altitude: 65
-contact_nickname: 'Perry'
+contact_nickname: "Perry"
 contacts:
-  - 'isprotejesvalkata [attt] gmail.com'
+  - "isprotejesvalkata [attt] gmail.com"
 
 hosts:
   - hostname: perleberger36-core

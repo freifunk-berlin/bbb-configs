@@ -5,7 +5,7 @@ latitude: 52.50503
 longitude: 13.47959
 altitude: 49
 contacts:
-  - '#spitta13:matrix.org'
+  - "#spitta13:matrix.org"
 
 # ALL:  10.31.232.128/25
 # DHCP: 10.31.232.128/26
@@ -13,7 +13,6 @@ contacts:
 # MESH: 10.31.232.224/27
 
 hosts:
-
   - hostname: spitta13-core
     role: corerouter
     model: "zyxel_nwa55axe"
@@ -22,12 +21,12 @@ hosts:
   - hostname: spitta13-nf-o
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:c4:2a:7f}
+    mac_override: { eth0: dc:2c:6e:c4:2a:7f }
 
   - hostname: spitta13-nf-w
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:91:08:e3}
+    mac_override: { eth0: dc:2c:6e:91:08:e3 }
 
 snmp_devices:
   - hostname: spitta13-switch
@@ -56,14 +55,13 @@ airos_dfs_reset:
 ipv6_prefix: "2001:bf7:860:1000::/56"
 
 networks:
-
   # Powerbeam  (PBE-5AC-ISO-Gen2)
   - vid: 10
     role: mesh
     name: mesh_zwingli
     prefix: 10.31.232.224/32
     ipv6_subprefix: -10
-    mesh_metric: 256  # prefer zwingli as uplink
+    mesh_metric: 256 # prefer zwingli as uplink
 
   # Lite AP (LAP-GPS)
   - vid: 11
@@ -87,7 +85,7 @@ networks:
     mesh_ap: spitta13-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.3']  # prefer 5 GHz mesh
+    mesh_metric_lqm: ["default 0.3"] # prefer 5 GHz mesh
 
   - vid: 21
     role: mesh
@@ -97,7 +95,7 @@ networks:
     mesh_ap: spitta13-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.5']  # prefer zwingli as uplink
+    mesh_metric_lqm: ["default 0.5"] # prefer zwingli as uplink
 
   - vid: 22
     role: mesh
@@ -107,7 +105,7 @@ networks:
     mesh_ap: spitta13-nf-w
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.5']  # prefer zwingli as uplink
+    mesh_metric_lqm: ["default 0.5"] # prefer zwingli as uplink
 
   - vid: 23
     role: mesh
@@ -117,7 +115,7 @@ networks:
     mesh_ap: spitta13-nf-o
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.5']  # prefer zwingli as uplink
+    mesh_metric_lqm: ["default 0.5"] # prefer zwingli as uplink
 
   - vid: 40
     role: dhcp
@@ -154,4 +152,6 @@ location__channel_assignments_11g_standard__to_merge:
 
 location__ssh_keys__to_merge:
   - comment: neko
-    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCl2bCyIfDLZR5CQx7DqihqL2f9/2S6AeEHh8b4q6mdv9uatd0dIJqzmBnk/jJW4oTztK0EE7rWwVH+fNFtbMA020xSofrGMpbjvIs3ZiJa6ZBvKg6uZxzZaVAXGtVah98PqZhj9TGoG3msJE0U7Vlu6ha2g0T1j97kxSch+U0/iJNaiuR0ZBSFAA7+oJjEx+yIyC0f8+aM5L+IhMEl8U/bVp9Y5c5JoEIDozCJ4sOK8AL1d1wuCMM31wq9IEYHk+2DF4iRQGZZvgjumiROOEhv20jNkw2rvyEtx4winjC/72E/szL4OEa4yNNeTIINADYBInr0BPk4Tf4qSD7Y9wW5 neko
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAABAQCl2bCyIfDLZR5CQx7DqihqL2f9/2S6AeEHh8b4q6mdv9uatd0dIJqzmBnk/jJW4oTztK0EE7rWwVH+fNFtbMA020xSofrGMpbjvIs3ZiJa6ZBvKg6uZxzZaVAXGtVah98PqZhj9TGoG3msJE0U7Vlu6ha2g0T1j97kxSch+U0/iJNaiuR0ZBSFAA7+oJjEx+yIyC0f8+aM5L+IhMEl8U/bVp9Y5c5JoEIDozCJ4sOK8AL1d1wuCMM31wq9IEYHk+2DF4iRQGZZvgjumiROOEhv20jNkw2rvyEtx4winjC/72E/szL4OEa4yNNeTIINADYBInr0BPk4Tf4qSD7Y9wW5
+      neko

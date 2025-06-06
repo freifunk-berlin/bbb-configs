@@ -15,7 +15,6 @@ community: true
 ipv6_prefix: "2001:bf7:800:1000::/56"
 
 hosts:
-
   - hostname: teufelsberg-core
     role: corerouter
     model: "mikrotik_routerboard-750gr3"
@@ -36,11 +35,10 @@ hosts:
   - hostname: teufelsberg-sw-nf
     role: ap
     model: mikrotik_sxtsq-5-ac
-    mac_override: {eth0: dc:2c:6e:91:0f:68}
+    mac_override: { eth0: dc:2c:6e:91:0f:68 }
     wireless_profile: freifunk_default
 
 snmp_devices:
-
   - hostname: teufelsberg-switch
     address: 10.31.213.2
     snmp_profile: swos
@@ -66,7 +64,6 @@ snmp_devices:
     snmp_profile: airos_8
 
 airos_dfs_reset:
-
   - name: "teufelsberg-nw"
     target: "10.31.213.10"
     username: "ubnt"
@@ -86,7 +83,6 @@ airos_dfs_reset:
     daytime_limit: "2-7"
 
 networks:
-
   - vid: 10
     role: mesh
     name: mesh_ak36

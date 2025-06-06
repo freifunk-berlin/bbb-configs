@@ -9,7 +9,6 @@ height: 13
 community: true
 
 hosts:
-
   - hostname: kotti-core
     role: corerouter
     model: "ubnt_unifiac-mesh"
@@ -53,7 +52,7 @@ networks:
     prefix: 10.31.167.218/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.5']
+    mesh_metric_lqm: ["default 0.5"]
     mesh_ap: kotti-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -80,12 +79,14 @@ networks:
 
 location__channel_assignments_11g_standard__to_merge:
   # AP-id, wifi-channel, bandwidth, txpower. Can be empty for default values
-  kotti-core: 13-20-7                                # 20 dBm - 16 dBm (Antenne) + 3dBm (Cable loss)
+  kotti-core: 13-20-7 # 20 dBm - 16 dBm (Antenne) + 3dBm (Cable loss)
 
 location__channel_assignments_11a_standard__to_merge:
   # AP-id, wifi-channel, bandwidth, txpower. Can be empty for default values
-  kotti-core: 36-20-10                               # 23 dBm - 16 dBm (Antenne) + 3dBm (Cable loss)
+  kotti-core: 36-20-10 # 23 dBm - 16 dBm (Antenne) + 3dBm (Cable loss)
 
 location__ssh_keys__to_merge:
   - comment: Kian
-    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/tkIsr6x/qTnNcn5mJP+ucu4dreueQDNvr51AcMXvVMXy9ZqyUFC3WyAJAALfGv08lA/hWKvaBLeqI1JWrWutaGl3m8oI8jjDeA8WnBNYOpGluL0b1EkIAnB09pPehvIowP6PqgPO/m1Iv+FfOrxe3QoCGI4zvlwrC+Pu2SO4PAItr6ksqhRl5UaXrE3vHITxMCDPSa0xGxD1uq7PEg+OaMEVWtOJrcbIlQFlZSLodtrt6tnEDZJoyxfsjSbbjJD73mBnR4VGIsT1+RUmr4NemFtLJ3wDPUYZmJS5nprxnlAmFX8mDdoGeVw5OrSbCAltAXhXdzTb3uOo/kIxoMuiJajep4ZmB73Jsa8YW9CnQhZ4aHBLkhn80QI3OLrm/EWQevzmQejV4ztPCLkZCDklQJxhglzwr+Cj7JeUfQMdI1baMIQG7Z5oOHZqsVnc+HKoYnnZReUDtQH3oQETECoSIL5uEHujaqeMdVqx8NqiZX+093YLftNzyV+GA5TTxRU= kiangosling@Kians-MacBook-Pro.local
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAABgQC/tkIsr6x/qTnNcn5mJP+ucu4dreueQDNvr51AcMXvVMXy9ZqyUFC3WyAJAALfGv08lA/hWKvaBLeqI1JWrWutaGl3m8oI8jjDeA8WnBNYOpGluL0b1EkIAnB09pPehvIowP6PqgPO/m1Iv+FfOrxe3QoCGI4zvlwrC+Pu2SO4PAItr6ksqhRl5UaXrE3vHITxMCDPSa0xGxD1uq7PEg+OaMEVWtOJrcbIlQFlZSLodtrt6tnEDZJoyxfsjSbbjJD73mBnR4VGIsT1+RUmr4NemFtLJ3wDPUYZmJS5nprxnlAmFX8mDdoGeVw5OrSbCAltAXhXdzTb3uOo/kIxoMuiJajep4ZmB73Jsa8YW9CnQhZ4aHBLkhn80QI3OLrm/EWQevzmQejV4ztPCLkZCDklQJxhglzwr+Cj7JeUfQMdI1baMIQG7Z5oOHZqsVnc+HKoYnnZReUDtQH3oQETECoSIL5uEHujaqeMdVqx8NqiZX+093YLftNzyV+GA5TTxRU=
+      kiangosling@Kians-MacBook-Pro.local

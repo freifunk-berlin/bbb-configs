@@ -23,7 +23,6 @@ dns_servers:
 ipv6_prefix: 2001:bf7:840:1100::/56
 
 hosts:
-
   - hostname: muggel-core
     role: corerouter
     model: avm_fritzbox-4040
@@ -33,7 +32,6 @@ hosts:
     wireless_profile: muggel
 
 networks:
-
   - vid: 20
     role: mesh
     name: mesh_core
