@@ -1,0 +1,20 @@
+---
+name: Ansible Lint
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Ansible Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@main
+        with:
+          args: "-c .github/linters/.ansible-lint.yml"
+          setup_python: true
