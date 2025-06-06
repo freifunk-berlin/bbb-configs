@@ -5,35 +5,34 @@ LoadPlugin interface
 LoadPlugin ping
 {% for host in collectd_ping_hosts %}
 <Plugin ping>
-	TTL 127
-	Interval 10
-	Host "{{ host }}"
+  TTL 127
+  Interval 10
+  Host "{{ host }}"
 </Plugin>
 {% endfor %}
 
 LoadPlugin memory
 <Plugin memory>
-	ValuesPercentage false
-	ValuesAbsolute true
+  ValuesPercentage false
+  ValuesAbsolute true
 </Plugin>
 
 LoadPlugin network
 <Plugin network>
-	Server "{{ collectd_host }}"
-	Forward false
-	ReportStats false
+  Server "{{ collectd_host }}"
+  Forward false
+  ReportStats false
 </Plugin>
-
 
 {% if 'collectd-mod-olsrd' in packages %}
 LoadPlugin olsrd
 <Plugin olsrd>
-	Host "127.0.0.1"
-	Port "2006"
+  Host "127.0.0.1"
+  Port "2006"
 </Plugin>
 {% endif %}
 
-{% if wireless_devices is defined and wireless_profile != 'disable' and low_mem is not true | default (true) and low_flash is not true | default (true) %}
+{% if wireless_devices is defined and wireless_profile != 'disable' and (low_mem is not true | default(true)) and (low_flash is not true | default(true)) %}
 LoadPlugin iwinfo
 {% endif %}
 
@@ -44,6 +43,6 @@ LoadPlugin conntrack
 {% if 'collectd-mod-dhcpleases' in packages %}
 LoadPlugin dhcpleases
 <Plugin dhcpleases>
-	Path "/tmp/dhcp.leases"
+  Path "/tmp/dhcp.leases"
 </Plugin>
 {% endif %}

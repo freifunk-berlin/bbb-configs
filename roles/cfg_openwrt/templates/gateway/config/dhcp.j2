@@ -12,9 +12,8 @@ config dnsmasq
 	option quietdhcp '1'
 	list notinterface '{{ uplink['ifname'] }}'
 {% for _dns_server in dns_servers %}
-        list server '{{ _dns_server }}'
+	list server '{{ _dns_server }}'
 {% endfor %}
-
 
 {% for link in mesh_links %}
 config dhcp 'dhcp_{{ link['name'] }}'
@@ -27,7 +26,6 @@ config dhcp 'dhcp_{{ link['name'] }}'
 config dhcp 'dhcp_{{ name }}'
 	option interface '{{ name }}'
 	option ignore '1'
-
 {% endfor %}
 
 config dhcp 'uplink'
