@@ -26,11 +26,10 @@ snmp_devices:
     address: 10.31.127.131
     snmp_profile: af60
 
-  # tub is not existent as of 02/24
-  # - hostname: l105-tu
-  #   adress: 10.31.127.132
-  #   snmp_profile: af60
-
+# tub is not existent as of 02/24
+# - hostname: l105-tu
+#   adress: 10.31.127.132
+#   snmp_profile: af60
 
 # L105 got following prefixes:
 # Router: 10.31.127.128/25 2001:bf7:750:3f00::/56
@@ -53,9 +52,9 @@ mgmt:
   ipv4: 10.31.127.129/29
   ipv6: 2001:bf7:750:3f00::/64
   assignments:
-    l105-gw: 1    # .129
-    l105-poe: 2   # .130
-    l105-rhxb: 3  # .131
+    l105-gw: 1 # .129
+    l105-poe: 2 # .130
+    l105-rhxb: 3 # .131
     # l105-tu: 4    # .132
 
 # Mesh Network: 10.31.127.160/27

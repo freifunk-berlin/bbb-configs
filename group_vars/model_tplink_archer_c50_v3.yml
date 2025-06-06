@@ -7,7 +7,6 @@ version_nice: v3
 switch_ports: 7
 switch_int_port: 6
 switch_ignore_ports: [5]
-
 int_port: eth0
 
 wireless_devices:

@@ -4,9 +4,9 @@ location_nice: Wildenbruchstraße
 latitude: 52.484751
 longitude: 13.443984
 
-contact_nickname: 'jammingblub'
+contact_nickname: "jammingblub"
 contacts:
-  - 'warnmeldesystem@gmail.com'
+  - "warnmeldesystem@gmail.com"
 
 dns_servers:
   # quad9
@@ -41,7 +41,7 @@ hosts:
     mac_override:
       eth0: 2c:c8:1b:6b:e5:cf
 
-ipv6_prefix: '2001:bf7:820:2700::/56'
+ipv6_prefix: "2001:bf7:820:2700::/56"
 
 # config restored from router configuration
 # got following prefixes:

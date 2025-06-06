@@ -15,7 +15,7 @@ hosts:
         # Enable legacy rates to enable meshing with neighbors
         for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
 
-ipv6_prefix: '2001:bf7:840:2700::/56'
+ipv6_prefix: "2001:bf7:840:2700::/56"
 
 # Router: 10.248.7.128/26 2001:bf7:840:2700::/56
 # --MGMT: 10.248.7.128/28

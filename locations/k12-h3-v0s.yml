@@ -1,20 +1,20 @@
 ---
 location: k12-h3-v0s
-location_nice: 'Haus3, Kastanienallee 12, 10435 Berlin'
+location_nice: "Haus3, Kastanienallee 12, 10435 Berlin"
 latitude: 52.53935393039
 longitude: 13.40930967973
-contact_nickname: 'zander'
+contact_nickname: "zander"
 contacts:
-  - 'alexanderjabs@gmx.de'
+  - "alexanderjabs@gmx.de"
 
 hosts:
   - hostname: k12-h3-v0s
     role: corerouter
     model: "dlink_covr-x1860-a1"
-    mac_override: {eth0: a8:63:7d:b9:46:45}
+    mac_override: { eth0: a8:63:7d:b9:46:45 }
     wireless_profile: freifunk_default
 
-ipv6_prefix: '2001:bf7:760:1300::/56'
+ipv6_prefix: "2001:bf7:760:1300::/56"
 
 # got following prefixes:
 # Router: 10.31.227.128/26
@@ -43,7 +43,7 @@ networks:
     prefix: 10.31.227.145/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: k12-h3-v0s
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -68,7 +68,7 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      k12-h3-v0s: 1  # 10.31.227.129
+      k12-h3-v0s: 1 # 10.31.227.129
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

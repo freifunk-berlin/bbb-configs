@@ -11,7 +11,7 @@ hosts:
     model: "comfast_cf-e130n-v2"
     wireless_profile: freifunk_default
 
-ipv6_prefix: '2001:bf7:840:2500::/56'
+ipv6_prefix: "2001:bf7:840:2500::/56"
 
 # Router: 10.248.7.0/26 2001:bf7:840:2500::/56
 # --MGMT: 10.248.7.0/28

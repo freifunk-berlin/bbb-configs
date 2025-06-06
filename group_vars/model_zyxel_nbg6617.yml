@@ -14,7 +14,6 @@ dsa_ports:
   - lan4
   - wan
 
-
 wireless_devices:
   - name: 11a_standard
     band: 5g

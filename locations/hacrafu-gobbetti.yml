@@ -10,7 +10,6 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-gobbetti-core
     role: corerouter
     model: "glinet_gl-mt3000"
@@ -26,7 +25,6 @@ ipv6_prefix: "2001:bf7:850:1c00::/56"
 # dhcp_no_ping: false
 
 networks:
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh

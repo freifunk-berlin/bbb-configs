@@ -42,11 +42,11 @@ mgmt:
   ipv4: 10.31.83.49/29
   ipv6: 2001:bf7:760:2201::/64
   assignments:
-    saarbruecker-gw: 1     # .49
-    saarbruecker-sw: 2     # .50
-    saarbruecker-hds: 3    # .51
-    saarbruecker-sama: 4   # .52
-    saarbruecker-segen: 5  # .53
+    saarbruecker-gw: 1 # .49
+    saarbruecker-sw: 2 # .50
+    saarbruecker-hds: 3 # .51
+    saarbruecker-sama: 4 # .52
+    saarbruecker-segen: 5 # .53
 
 # Mesh Network: 10.31.83.56/30
 mesh_links:

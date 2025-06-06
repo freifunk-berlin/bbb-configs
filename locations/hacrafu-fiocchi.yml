@@ -14,7 +14,7 @@ hosts:
     role: corerouter
     model: "dlink_covr-x1860-a1"
     wireless_profile: freifunk_hacrafu
-    mac_override: {eth0: a8:63:7d:dc:5b:5f}
+    mac_override: { eth0: a8:63:7d:dc:5b:5f }
 
 ipv6_prefix: "2001:bf7:850:b00::/56"
 # dhcp    10.31.204.0/27
@@ -26,7 +26,6 @@ ipv6_prefix: "2001:bf7:850:b00::/56"
 # dhcp_no_ping: false
 
 networks:
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh

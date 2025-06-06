@@ -4,9 +4,9 @@ location_nice: Jup e.V.
 latitude: 52.565840
 longitude: 13.400220
 altitude: 63
-contact_nickname: 'Jup'
+contact_nickname: "Jup"
 contacts:
-  - 'info@jup.berlin'
+  - "info@jup.berlin"
 
 hosts:
   - hostname: jup-core

@@ -75,7 +75,7 @@ networks:
     prefix: 10.31.30.25/32
     ipv6_subprefix: -3
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: dragonkiez-rathausblock-miami-ap1
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -97,11 +97,10 @@ networks:
     prefix: 10.31.30.27/32
     ipv6_subprefix: -5
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: dragonkiez-rathausblock-miami-ap2
     mesh_radio: 11g_standard
     mesh_iface: mesh
-
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

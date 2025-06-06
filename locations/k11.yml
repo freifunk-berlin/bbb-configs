@@ -1,11 +1,11 @@
 ---
 location: k11
-location_nice: 'Kastanienallee 11, 10435 Berlin'
+location_nice: "Kastanienallee 11, 10435 Berlin"
 latitude: 52.53927888761163
 longitude: 13.410245770672406
-contact_nickname: 'zander'
+contact_nickname: "zander"
 contacts:
-  - 'alexanderjabs@gmx.de'
+  - "alexanderjabs@gmx.de"
 
 hosts:
   - hostname: k11-core
@@ -15,7 +15,7 @@ hosts:
     # remove some packages for smaller image size (only 64 MB of memory)
     low_mem: true
 
-ipv6_prefix: '2001:bf7:760:100::/56'
+ipv6_prefix: "2001:bf7:760:100::/56"
 
 # got following prefixes:
 # Router:  10.31.185.0/24
@@ -43,7 +43,7 @@ networks:
     prefix: 10.31.185.129/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: k11-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -67,7 +67,7 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      k11-core: 1  # 10.31.185.193
+      k11-core: 1 # 10.31.185.193
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

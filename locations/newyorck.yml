@@ -13,7 +13,6 @@ model: "siemens_ws-ap3610"
 wireless_profile: newyorck
 
 hosts:
-
   - hostname: newyorck-core
     role: corerouter
     model: "ubnt_edgerouter-x"
@@ -35,7 +34,6 @@ hosts:
   - hostname: newyorck-ap-3b
 
 snmp_devices:
-
   # TL-SG2424
   - hostname: newyorck-switch1
     address: 10.31.155.226
@@ -60,7 +58,6 @@ snmp_devices:
 ipv6_prefix: "2001:bf7:830:a900::/56"
 
 networks:
-
   - vid: 40
     role: dhcp
     prefix: 10.31.160.0/25
@@ -167,7 +164,6 @@ location__channel_assignments_11g_standard__to_merge:
   newyorck-ap-3b: 11-20
 
 location__wireless_profiles__to_merge:
-
   - name: newyorck
 
     ifaces:
@@ -189,7 +185,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: newyorck
         encryption: psk2
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: prdhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: prdhcp

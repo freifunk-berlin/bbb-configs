@@ -10,12 +10,11 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-gigli-core
     role: corerouter
     model: "dlink_covr-x1860-a1"
     wireless_profile: freifunk_hacrafu
-    mac_override: {eth0: a8:63:7d:dc:5b:66}
+    mac_override: { eth0: a8:63:7d:dc:5b:66 }
 
 ipv6_prefix: "2001:bf7:850:1600::/56"
 # dhcp    10.248.3.224/27
@@ -27,7 +26,6 @@ ipv6_prefix: "2001:bf7:850:1600::/56"
 # dhcp_no_ping: false
 
 networks:
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh

@@ -8,7 +8,6 @@ altitude: 47
 community: true
 
 hosts:
-
   - hostname: rauchhaus-core
     role: corerouter
     model: "ubnt_edgerouter-x"
@@ -155,7 +154,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: rauchhaus
         encryption: sae-mixed
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: home
         radio: [11a_standard, 11g_standard]
         ifname_hint: home

@@ -11,7 +11,7 @@ hosts:
     model: "tplink_eap225-outdoor-v3"
     wireless_profile: freifunk_default
 
-ipv6_prefix: '2001:bf7:840:2a00::/56'
+ipv6_prefix: "2001:bf7:840:2a00::/56"
 
 # Router: 10.248.8.64/26 2001:bf7:840:2a00::/56
 # --MGMT: 10.248.8.64/28

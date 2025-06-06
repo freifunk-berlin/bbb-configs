@@ -13,7 +13,7 @@ hosts:
     role: corerouter
     model: netgear_wax220
     wireless_profile: freifunk_default
-    mac_override: {eth0: 94:18:65:43:6e:67}
+    mac_override: { eth0: 94:18:65:43:6e:67 }
 
 
 ipv6_prefix: 2001:bf7:850:700::/56
