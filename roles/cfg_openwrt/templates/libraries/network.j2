@@ -44,9 +44,9 @@
 {# Do we need to create a logical bridge for that network to bridge to wireless interface or are we not participating.
    # Warning: returns a bool. Use |from_json filter when calling #}
 {% macro isBridgeNeeded(network) %}
-{{- (getUciIfname(network) in getWirelessNetworks()
+{{- (int_port is defined and (getUciIfname(network) in getWirelessNetworks()
      or (role == 'ap' and network.get('mesh_ap') == inventory_hostname)
-     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct')) | to_json -}}
+     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct'))) | to_json -}}
 {% endmacro %}
 
 {# Do we need to configure a port or is this network only connected local (e.g. Mesh Endpoint on the core router)
