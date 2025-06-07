@@ -6,7 +6,7 @@ config device
   {% set portmapping = [] %}
   {% for port in dsa_ports %}
     {% set tagged = not network.get('untagged') %}
-    {% set _ = portmapping.append(port ~ (":t" if tagged else "")) %}
+    {% set _ = portmapping.append(port ~ (":t" if tagged else ":u")) %}
   {% endfor %}
 
 config bridge-vlan
