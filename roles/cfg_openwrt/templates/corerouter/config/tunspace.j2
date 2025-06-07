@@ -1,8 +1,10 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% import 'libraries/network.j2' as libnetwork with context %}
+
 {% for uplink in networks | selectattr('role', 'equalto', 'uplink') %}
   {% set name = uplink['name'] if 'name' in uplink else 'uplink' %}
   {% set mode = uplink['uplink_mode'] if 'uplink_mode' in uplink else 'bridge' %}
-  {% set ifname = uplink['ifname'] if mode == 'direct' else 'br-'+name %}
+  {% set ifname = libnetwork.getIfname(uplink) %}
 
 config tunspace "tunspace"
   # Namespace where the uplink will live.
