@@ -1,5 +1,3 @@
-# Redirect conntrackd to samplicator which listens at port 2000
-
 chain samplicator_redirect {
 	type nat hook output priority -100; policy accept;
 	oif lo udp dport {{ conntrackd_port }} counter redirect to :2000

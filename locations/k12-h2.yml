@@ -1,37 +1,37 @@
 ---
 location: k12-h2
-location_nice: 'Haus2, Kastanienallee 12, 10435 Berlin'
+location_nice: "Haus2, Kastanienallee 12, 10435 Berlin"
 latitude: 52.53936534993554
 longitude: 13.409738833169316
 altitude: 63
-contact_nickname: 'zander'
+contact_nickname: "zander"
 contacts:
-  - 'alexanderjabs@gmx.de'
+  - "alexanderjabs@gmx.de"
 
 hosts:
   - hostname: k12-h2-core
     role: corerouter
     model: "dlink_covr-x1860-a1"
-    mac_override: {eth0: a8:63:7d:db:4d:45}
+    mac_override: { eth0: a8:63:7d:db:4d:45 }
     wireless_profile: freifunk_default
     wifi_roaming: true
 
   - hostname: k12-h2-cpe
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: 08:55:31:ea:e3:32}
+    mac_override: { eth0: 08:55:31:ea:e3:32 }
     wireless_profile: mesh_only
 
   - hostname: k12-h2-h1n
     role: ap
     model: "dlink_covr-x1860-a1"
-    mac_override: {eth0: a8:63:7d:a6:47:77}
+    mac_override: { eth0: a8:63:7d:a6:47:77 }
     wifi_roaming: true
 
   - hostname: k12-h2-h1s
     role: ap
     model: "dlink_covr-x1860-a1"
-    mac_override: {eth0: 0c:0e:76:cf:21:de}
+    mac_override: { eth0: 0c:0e:76:cf:21:de }
     wifi_roaming: true
 
 snmp_devices:
@@ -39,7 +39,7 @@ snmp_devices:
     address: 10.31.158.195
     snmp_profile: airos_8
 
-ipv6_prefix: '2001:bf7:760:2a00::/56'
+ipv6_prefix: "2001:bf7:760:2a00::/56"
 
 # got following prefixes:
 # Router:  10.31.158.0/24
@@ -73,7 +73,7 @@ networks:
     prefix: 10.31.158.130/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: k12-h2-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -95,7 +95,7 @@ networks:
     prefix: 10.31.158.132/32
     ipv6_subprefix: -23
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: k12-h2-h1s
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -139,13 +139,13 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      k12-h2-core: 1    # 10.31.158.193/32
-      k12-h2-switch: 2  # 10.31.158.194/32
-      k12-h2-segen: 3   # 10.31.158.195/32
+      k12-h2-core: 1 # 10.31.158.193/32
+      k12-h2-switch: 2 # 10.31.158.194/32
+      k12-h2-segen: 3 # 10.31.158.195/32
       # NF Antennas     # 10.31.158.196/32
-      k12-h2-cpe: 5     # 10.31.158.197/32
-      k12-h2-h1n: 6      # 10.31.158.198/32
-      k12-h2-h1s: 7      # 10.31.158.199/32
+      k12-h2-cpe: 5 # 10.31.158.197/32
+      k12-h2-h1n: 6 # 10.31.158.198/32
+      k12-h2-h1s: 7 # 10.31.158.199/32
 
   # UPLK
   - vid: 50
@@ -157,7 +157,7 @@ networks:
     prefix: 10.31.158.224/32
     wireguard_port: 51820
     # Make sure tunnel is only last resort backup
-    mesh_metric_lqm: ['default 0.6']
+    mesh_metric_lqm: ["default 0.6"]
 
   - role: tunnel
     ifname: ts_wg1
@@ -165,7 +165,7 @@ networks:
     prefix: 10.31.158.225/32
     wireguard_port: 51821
     # Make sure tunnel is only last resort backup
-    mesh_metric_lqm: ['default 0.6']
+    mesh_metric_lqm: ["default 0.6"]
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

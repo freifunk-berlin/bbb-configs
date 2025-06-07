@@ -1,7 +1,7 @@
 ---
 name: Check missing mac_overrides
 
-on: [push, pull_request]  # yamllint disable-line rule:truthy
+on: [push, pull_request] # yamllint disable-line rule:truthy
 
 jobs:
   check-mac-override-missing:

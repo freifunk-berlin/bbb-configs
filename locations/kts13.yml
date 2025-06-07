@@ -4,16 +4,15 @@ location_nice: Karpfenteichstraße 13
 latitude: 52.48232
 longitude: 13.46545
 altitude: 37
-contact_nickname: 'Packet Please'
+contact_nickname: "Packet Please"
 contacts:
-  - 'pktpls@systemli.org'
+  - "pktpls@systemli.org"
 
 location__ssh_keys__to_merge:
   - comment: pktpls@systemli.org
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVY2XHiLDXbj7TGWtUpKEb8+qKw/DrkiVbLiyvyRaCi pktpls@systemli.org
 
 hosts:
-
   - hostname: kts13-core
     role: corerouter
     model: "avm_fritzbox-7530"
@@ -25,23 +24,22 @@ hosts:
     mac_override:
       eth0: 2C:C8:1B:8A:95:2E
 
-ipv6_prefix: '2001:bf7:840:c00::/56'
+ipv6_prefix: "2001:bf7:840:c00::/56"
 
 # mesh: 10.31.166.192/28
 # mgmt: 10.31.166.208/28
 # dhcp: 10.31.167.0/26
 networks:
-
   - vid: 20
     role: mesh
     name: mesh_core
-    prefix: '10.31.166.193/32'
+    prefix: "10.31.166.193/32"
     ipv6_subprefix: -1
 
   - vid: 21
     role: mesh
     name: mesh_ap1
-    prefix: '10.31.166.194/32'
+    prefix: "10.31.166.194/32"
     ipv6_subprefix: -2
     mesh_ap: kts13-ap1
     mesh_radio: 11a_standard
@@ -49,7 +47,7 @@ networks:
 
   - vid: 40
     role: dhcp
-    prefix: '10.31.167.0/26'
+    prefix: "10.31.167.0/26"
     ipv6_subprefix: 0
     inbound_filtering: true
     enforce_client_isolation: true
@@ -58,7 +56,7 @@ networks:
 
   - vid: 42
     role: mgmt
-    prefix: '10.31.166.208/28'
+    prefix: "10.31.166.208/28"
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
@@ -77,4 +75,4 @@ networks:
     wireguard_port: 51820
 
 location__channel_assignments_11a_standard__to_merge:
-  kts13-ap1: 36-40-7                                   # 7 dBm + 16 dBi gain = 23 dBm
+  kts13-ap1: 36-40-7 # 7 dBm + 16 dBi gain = 23 dBm

@@ -8,7 +8,6 @@ contacts:
   - "#freifunk-cafewostok:matrix.org"
 
 hosts:
-
   - hostname: cafe-wostok-core
     role: corerouter
     model: "avm_fritzbox-7530"
@@ -53,7 +52,6 @@ networks:
     mtu: 1280
     prefix: 10.31.161.152/32
     wireguard_port: 51820
-
 
 location__channel_assignments_11a_standard__to_merge:
   cafe-wostok-ap1: 44-40

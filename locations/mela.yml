@@ -168,20 +168,20 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      mela-core: 1           # 10.36.70.1
-      mela-switch-hinten: 2  # 10.36.70.2
-      mela-switch-vorne: 3   # 10.36.70.3
+      mela-core: 1 # 10.36.70.1
+      mela-switch-hinten: 2 # 10.36.70.2
+      mela-switch-vorne: 3 # 10.36.70.3
       # Ubiquiti PTMP / PTP
-      mela-nw-5ghz: 4        # 10.36.70.4
-      mela-ono-5ghz: 5       # 10.36.70.5
-      mela-teufelsberg: 6    # 10.36.70.6
+      mela-nw-5ghz: 4 # 10.36.70.4
+      mela-ono-5ghz: 5 # 10.36.70.5
+      mela-teufelsberg: 6 # 10.36.70.6
       # OpenWRT AP (Indoor)
-      mela-kanzel: 8         # 10.36.70.8
+      mela-kanzel: 8 # 10.36.70.8
       # OpenWRT 802.11s APs (Nahfeld)
-      mela-n2: 9             # 10.36.70.9
-      mela-o2: 10            # 10.36.70.10
-      mela-s2: 11            # 10.36.70.11
-      mela-w2: 12            # 10.36.70.12
-      mela-n5: 13            # 10.36.70.13
-      mela-o5: 14            # 10.36.70.14
-      mela-s5: 15            # 10.36.70.15
+      mela-n2: 9 # 10.36.70.9
+      mela-o2: 10 # 10.36.70.10
+      mela-s2: 11 # 10.36.70.11
+      mela-w2: 12 # 10.36.70.12
+      mela-n5: 13 # 10.36.70.13
+      mela-o5: 14 # 10.36.70.14
+      mela-s5: 15 # 10.36.70.15

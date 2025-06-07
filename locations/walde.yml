@@ -8,7 +8,6 @@ altitude: 47
 community: true
 
 hosts:
-
   - hostname: walde-core
     role: corerouter
     model: "avm_fritzbox-7530"
@@ -18,7 +17,6 @@ snmp_devices:
   - hostname: walde-emma
     address: 10.31.92.2
     snmp_profile: airos_8
-
 
 ipv6_prefix: "2001:bf7:830:b00::/56"
 

@@ -1,5 +1,4 @@
 ---
-
 #
 # These tasks build /etc contents that will be copied to the target filesystem
 # to override the default configs of the respective packages and system parts.

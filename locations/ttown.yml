@@ -11,7 +11,7 @@ hosts:
     role: corerouter
     model: "dlink_covr-x1860-a1"
     wireless_profile: freifunk_default
-    mac_override: {eth0: a8:63:7d:db:59:c4}
+    mac_override: { eth0: a8:63:7d:db:59:c4 }
     host__rclocal__to_merge:
       - 'cat /etc/crontabs/root | grep reboot 2>/dev/null || echo "0 4 * * * reboot" >> /etc/crontabs/root && /etc/init.d/cron restart'
 
@@ -26,7 +26,6 @@ dhcp_no_ping: false
 # DHCP: 10.31.208.96/27
 
 networks:
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
@@ -44,7 +43,7 @@ networks:
     prefix: 10.31.208.81/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: ttown-core
     mesh_radio: 11g_standard
     mesh_iface: mesh

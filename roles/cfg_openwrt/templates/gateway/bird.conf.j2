@@ -1,4 +1,5 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
+
 {% set V6_SADR_DEFAULT_ROUTE = '::/0 from ' ~ freifunk_global_prefix %}
 log syslog all;
 debug protocols {states};
@@ -16,7 +17,6 @@ ipv6 sadr table v6_main;
 ipv4 table v4_main;
 ipv4 table v4_babel_ff;
 ipv4 table v4_babel_default;
-
 
 protocol kernel kernel_v6_main {
 	ipv6 sadr {
@@ -53,7 +53,7 @@ protocol pipe pipe_v4_main_to_babel_ff {
 	import none;
 }
 
-protocol kernel kernel_v4_babel_default {
+protocol kernel kernel_v4_default {
 	kernel table 11;
 	ipv4 {
 		table v4_babel_default;
@@ -72,17 +72,21 @@ protocol pipe pipe_v4_main_to_babel_default {
 ##
 ## Uplink static IPv4 route
 ##
-{% if uplink['ipv4'] | ansible.utils.ipaddr('prefix') >= 30 %}
-  {% set v4_nexthop =  uplink['ipv4'] | ansible.utils.ipaddr('peer') %}
-{% else %}
-  {% set v4_nexthop =  uplink['ipv4'] | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') %}
-{%- endif %}
+{% if uplink is defined and uplink['ipv4'] is defined %}
+  {% if uplink['ipv4'] | ansible.utils.ipaddr('prefix') >= 30 %}
+    {% set v4_nexthop =  uplink['ipv4'] | ansible.utils.ipaddr('peer') %}
+  {% else %}
+    {% set v4_nexthop =  uplink['ipv4'] | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') %}
+  {% endif %}
+{% endif %}
 
+{% if uplink is defined and uplink['ipv4'] is defined %}
 protocol static static_uplink {
 	ipv4 { table v4_main; };
 	check link;
 	route 0.0.0.0/0 via {{ v4_nexthop }} dev "{{ uplink['ifname'] }}";
 }
+{% endif %}
 
 ##
 ## Babel Section
@@ -150,8 +154,7 @@ protocol babel babel_mesh {
 	};
 }
 
-
-{% if 'ipv6' in uplink %}
+{% if uplink is defined and 'ipv6' in uplink %}
 ##
 ## BGP Section
 ##
@@ -161,7 +164,6 @@ ipv6 table v6_bgp_upstream;
 # routes to our upstream which will likely make the internet explode.
 # While that sounds funny that aint a joke - Take it very serious or risk our trust!!
 attribute int really_announce_to_upstream;
-
 
 # Attention. Following rules are redundant for good reasons.
 # 1. Let only pass routes which carry the really_announce_to_upstream route attribute being true

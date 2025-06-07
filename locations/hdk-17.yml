@@ -23,7 +23,7 @@ hosts:
     model: "dlink_dap-x1860-a1"
     wireless_profile: freifunk_default
 
-ipv6_prefix: '2001:bf7:840:f00::/56'
+ipv6_prefix: "2001:bf7:840:f00::/56"
 
 # config restored from router configuration
 # got following prefixes:

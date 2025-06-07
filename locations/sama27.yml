@@ -4,9 +4,9 @@ location_nice: Sama27
 latitude: 52.5188543341914
 longitude: 13.46564804132173
 altitude: 57
-contact_nickname: 'robertfoss'
+contact_nickname: "robertfoss"
 contacts:
-  - 'me@robertfoss.se'
+  - "me@robertfoss.se"
 
 hosts:
   - hostname: sama27-core
@@ -19,11 +19,10 @@ snmp_devices:
     address: 10.31.161.2
     snmp_profile: airos_8
 
-
 # IPv4 10.31.161.0/27
 # IPv6 2001:bf7:830:ab00::/56
 
-ipv6_prefix: '2001:bf7:830:ab00::/56'
+ipv6_prefix: "2001:bf7:830:ab00::/56"
 
 networks:
   # 10.31.161.8/29

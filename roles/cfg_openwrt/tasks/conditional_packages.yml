@@ -78,7 +78,6 @@
   when: (low_mem | default(false) or low_flash | default(false)) and role != "corerouter"
   loop: "{{ all_luci_base__packages__to_merge }}"
 
-
 - name: "Disable uhttpd on low mem"
   set_fact:
     disabled_services: "{{ disabled_services + ['uhttpd'] }}"

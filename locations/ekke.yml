@@ -35,7 +35,6 @@ snmp_devices:
 ipv6_prefix: 2001:bf7:840:1300::/56
 
 networks:
-
   - vid: 40
     role: dhcp
     name: dhcp
@@ -112,7 +111,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: Interwebz
         encryption: psk2
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: uplink
         radio: [11a_standard, 11g_standard]
         ifname_hint: uplink

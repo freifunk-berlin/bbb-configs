@@ -9,7 +9,6 @@ contacts:
   - noc@stadtfunk.net
 
 hosts:
-
   - hostname: lause-core
     role: corerouter
     model: ubnt_usw-flex
@@ -27,7 +26,6 @@ hosts:
 ipv6_prefix: 2001:bf7:830:e700::/56
 
 networks:
-
   - vid: 40
     name: dhcp
     role: dhcp

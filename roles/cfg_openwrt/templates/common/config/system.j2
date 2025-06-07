@@ -4,22 +4,22 @@ config system
         option timezone '{{ timezone }}'
         option ttylogin '0'
 {% if low_mem | default(false) %}
-        option log_size '{{ log_size | default(64)}}'
+        option log_size '{{ log_size | default(64) }}'
 {% else %}
-        option log_size '{{ log_size | default(1024)}}'
+        option log_size '{{ log_size | default(1024) }}'
 {% endif %}
         option urandom_seed '0'
         option compat_version '9.9' # hardcoded to a bbb-configs exclusive version identifier, matches patch in image builder, because we dont retain device config.
-{% if role == 'corerouter' or role  == 'gateway' %}
-	option latitude '{{ latitude|default(0) }}'
-	option longitude '{{ longitude|default(0) }}'
-	option altitude '{{ altitude|default(60.000000000000000) }}'
-	option location '{{ location_nice|default(location) }}'
+{% if role == 'corerouter' or role == 'gateway' %}
+	option latitude '{{ latitude | default(0) }}'
+	option longitude '{{ longitude | default(0) }}'
+	option altitude '{{ altitude | default(60.000000000000000) }}'
+	option location '{{ location_nice | default(location) }}'
 {% endif %}
 
 config timeserver 'ntp'
         option enabled '1'
-        option enable_server '{{ (role == 'corerouter' or role  == 'gateway') | int }}'
+        option enable_server '{{ (role == 'corerouter' or role == 'gateway') | int }}'
 {% if networks is defined %}
 {% set mgmtnetwork = networks | selectattr('role', 'equalto', 'mgmt') | default([], true) | list | first %}
 {% endif %}
@@ -53,7 +53,7 @@ config led 'led_{{ led['name'] }}'
 config gpio_switch 'poe_power_port{{ loop.index0 }}'
         option name '{{ poe['name'] }}'
         option gpio_pin '{{ poe['gpio_pin'] }}'
-{% if (loop.index0) in poe_on|default([]) %}
+{% if (loop.index0) in poe_on | default([]) %}
         option value '{{ 0 if poe['value'] else 1 }}'
 {% else %}
         option value '{{ poe['value'] }}'
