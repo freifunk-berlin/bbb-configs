@@ -158,4 +158,5 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh
