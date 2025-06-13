@@ -21,7 +21,8 @@ model__packages__to_merge:
 # -> Install latest BIOS update https://kb.protectli.com/kb/bios-versions-for-the-vault/
 # -> Install latest firmware (nvm) for 10G NIC
 # Instructions:
-# - Download Latest Release https://www.intel.de/content/www/de/de/download/18190/non-volatile-memory-nvm-update-utility-for-intel-ethernet-network-adapter-700-series.html
+# - Download Latest Release:
+#   https://www.intel.de/content/www/de/de/download/18190/non-volatile-memory-nvm-update-utility-for-intel-ethernet-network-adapter-700-series.html
 # - Copy EFI Version along with a edk2 efishell on a USB Key
 # - Boot
 # - fs0:
