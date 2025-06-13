@@ -24,7 +24,7 @@
 
 - name: Set destination path for imagebuilder
   set_fact:
-    imagebuilder_path: "{{ dl_dir }}/{{ imagebuilder | basename }}"
+    imagebuilder_path: "{{ [dl_dir, (imagebuilder | basename) | trim] | path_join }}"
 
 - name: Download Imagebuilder if upstream is newer
   get_url:
