@@ -32,13 +32,30 @@ jobs:
 
       - name: Determine changed locations
         run: |
-          CHANGED_HOSTS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" | grep 'host_vars/' | sed 's/host_vars\/\(.*\)\/.*/\1/' | sort | uniq | sed -z 's/\n/,/g;s/,$//')
+          CHANGED_HOSTS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" \
+            | grep 'host_vars/' \
+            | sed 's/host_vars\/\(.*\)\/.*/\1/' \
+            | sort \
+            | uniq \
+            | sed -z 's/\n/,/g;s/,$//')
           echo "Building for $CHANGED_HOSTS"
           echo "CHANGED_HOSTS=$CHANGED_HOSTS" >> "$GITHUB_ENV"
-          CHANGED_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" | grep 'group_vars/location_' | sed 's/group_vars\/\(.*\)\/.*/\1/' | sort | uniq | sed -z 's/\n/,/g;s/,$//')
-          CHANGED_SINGE_FILE_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" | grep 'locations/' | sed 's/locations\/\(.*\)\.yml/location_\1/' | sed -z 's/-/_/g;s/\n/,/g;s/,$//')
+
+          CHANGED_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" \
+            | grep 'group_vars/location_' \
+            | sed 's/group_vars\/\(.*\)\/.*/\1/' \
+            | sort \
+            | uniq \
+            | sed -z 's/\n/,/g;s/,$//')
+          CHANGED_SINGE_FILE_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" \
+            | grep 'locations/' \
+            | sed 's/locations\/\(.*\)\.yml/location_\1/' \
+            | sed -z 's/-/_/g;s/\n/,/g;s/,$//')
           CHANGED_LOCATIONS=${CHANGED_LOCATIONS:+$CHANGED_LOCATIONS,}$CHANGED_SINGE_FILE_LOCATIONS
-          CHANGED_OTHER=$(git diff --diff-filter=d --name-only "origin/$BRANCH" | grep -xP '(inventory|roles)/.+' | sed -z 's/\n/,/g;s/,$//')
+
+          CHANGED_OTHER=$(git diff --diff-filter=d --name-only "origin/$BRANCH" \
+            | grep -xP '(inventory|roles)/.+' \
+            | sed -z 's/\n/,/g;s/,$//')
           if [ -z "${CHANGED_LOCATIONS}" ] && [ -n "${CHANGED_OTHER}" ]; then
             CHANGED_LOCATIONS="sama-core,sama-nord-5ghz,l105-gw"
           fi
