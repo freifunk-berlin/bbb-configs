@@ -10,7 +10,6 @@ contacts:
   - info@mahalle.de
 
 hosts:
-
   - hostname: mahalle-core
     role: corerouter
     model: "avm_fritzbox-4040"
@@ -19,12 +18,12 @@ hosts:
   - hostname: mahalle-nf-o
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:c4:36:51}
+    mac_override: { eth0: dc:2c:6e:c4:36:51 }
 
   - hostname: mahalle-nf-w
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:c4:2a:0b}
+    mac_override: { eth0: dc:2c:6e:c4:2a:0b }
 
 # 10.31.179.112/29 - mgmt
 # 10.31.179.120/29 - mesh
@@ -33,7 +32,6 @@ hosts:
 ipv6_prefix: "2001:bf7:830:bb00::/56"
 
 networks:
-
   - vid: 20
     role: mesh
     name: mahalle_w

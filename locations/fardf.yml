@@ -179,18 +179,18 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      fardf-core: 1         # 10.248.11.129 -  switch has a watchdog (10m) active for this device
+      fardf-core: 1 # 10.248.11.129 -  switch has a watchdog (10m) active for this device
       # There are ping watchdogs setup at the switch that will trigger a power cycle for the devices if they become unreachable.
       # The time for the watchdogs needs to be quite high so the devices can still be flashed without the need to deactivate the
       # watchdogs prior to flashing.
-      fardf-switch: 2       # 10.248.11.130
-      fardf-bht: 3          # 10.248.11.131
-      fardf-maerkisches: 4  # 10.248.11.132
-      fardf-sange: 5        # 10.248.11.133
-      fardf-nord: 6         # 10.248.11.134
-      fardf-ost: 7          # 10.248.11.135
-      fardf-sued: 8         # 10.248.11.136
-      fardf-west: 9         # 10.248.11.137
+      fardf-switch: 2 # 10.248.11.130
+      fardf-bht: 3 # 10.248.11.131
+      fardf-maerkisches: 4 # 10.248.11.132
+      fardf-sange: 5 # 10.248.11.133
+      fardf-nord: 6 # 10.248.11.134
+      fardf-ost: 7 # 10.248.11.135
+      fardf-sued: 8 # 10.248.11.136
+      fardf-west: 9 # 10.248.11.137
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

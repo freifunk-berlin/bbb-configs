@@ -7,12 +7,10 @@ longitude: 13.473224
 community: true
 
 hosts:
-
   - hostname: schleidenplatz-core
     role: corerouter
     model: "tplink_tl-wdr3600-v1"
     wireless_profile: freifunk_default
-
 
 ipv6_prefix: "2001:bf7:830:9400::/56"
 

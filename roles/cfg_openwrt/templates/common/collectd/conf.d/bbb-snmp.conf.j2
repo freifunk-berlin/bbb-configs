@@ -8,28 +8,27 @@ LoadPlugin snmp
 {% endif %}
 
 {%- for profile_name in profiles %}
-  {% for metric_name,metric in collectd_snmp_profiles[profile_name].items() %}
+  {% for metric_name, metric in collectd_snmp_profiles[profile_name].items() %}
     <Data "{{ profile_name }}_{{ metric_name }}">
-    {% for opt,val in metric.items() %}
-        {{ opt }} {{ val|string|lower if val|string == 'True' or val|string =='False' or val is number else  "\"" + val|string + "\"" }}
+    {% for opt, val in metric.items() %}
+      {{ opt }} {{ val|string|lower if val|string in ['True', 'False'] or val is number else '"' ~ val|string ~ '"' }}
     {% endfor %}
     </Data>
   {% endfor %}
 {% endfor %}
 
-
-
 {% for device in snmp_devices | default([]) %}
-    <Host "{{ device['hostname'] }}">
-        Address "{{ device['address'] }}"
-        Version 1
-        Interval 30
-        Community '{{ device['community'] | default('public') }}'
-  {% for metric_name in collectd_snmp_profiles[device['snmp_profile']] %}
-        Collect "{{ device['snmp_profile'] }}_{{ metric_name }}"
-  {% endfor %}
-    </Host>
+  <Host "{{ device['hostname'] }}">
+    Address "{{ device['address'] }}"
+    Version 1
+    Interval 30
+    Community '{{ device['community'] | default('public') }}'
+    {% for metric_name in collectd_snmp_profiles[device['snmp_profile']] %}
+    Collect "{{ device['snmp_profile'] }}_{{ metric_name }}"
+    {% endfor %}
+  </Host>
 {% endfor %}
+
 {% if profiles | length > 0 %}
 </Plugin>
 {% endif %}

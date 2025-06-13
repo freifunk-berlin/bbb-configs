@@ -1,7 +1,16 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
-{% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | default([]) %}
-{% set l3_mesh_networks = networks | selectattr('assignments', 'undefined') | selectattr('role', 'equalto', 'mesh') | default([]) %}
-{% set query = "[].{name: name||role,inbound_filtering: inbound_filtering}" %}
+
+{% set l3_networks = networks
+    | selectattr('assignments', 'defined')
+    | selectattr('assignments', 'contains', inventory_hostname)
+    | default([]) %}
+
+{% set l3_mesh_networks = networks
+    | selectattr('assignments', 'undefined')
+    | selectattr('role', 'equalto', 'mesh')
+    | default([]) %}
+
+{% set query = "[].{name: name || role, inbound_filtering: inbound_filtering}" %}
 {% set l3_networks = (l3_networks + l3_mesh_networks) | json_query(query) %}
 {% set zone_freifunk_networks = l3_networks | rejectattr('inbound_filtering') | map(attribute='name') %}
 
@@ -21,38 +30,39 @@ config zone 'zone_freifunk'
 	list device 'ts_+'
 
 {% for i in l3_networks | selectattr('inbound_filtering') %}
-config zone 'zone_{{ i['name'] }}'
-        option name '{{ i['name'] }}'
-        list network '{{ i['name'] }}'
+config zone 'zone_{{ i.name }}'
+	option name '{{ i.name }}'
+	list network '{{ i.name }}'
 
 {% endfor %}
+
 config forwarding
 	option dest 'freifunk'
 	option src 'freifunk'
 
 {% for i in l3_networks | selectattr('inbound_filtering') %}
 config forwarding
-        option dest 'freifunk'
-        option src '{{ i['name'] }}'
+	option dest 'freifunk'
+	option src '{{ i.name }}'
 
 {% endfor %}
 
 {% for i in l3_networks | selectattr('inbound_filtering') %}
 # Allow essential forwarded IPv6 ICMP traffic
 config rule
-	option name		Allow-ICMPv6-Forward-{{ i['name'] }}
-	option src		freifunk
-	option dest		{{ i['name'] }}
-	option proto		icmp
-	list icmp_type		echo-request
-	list icmp_type		echo-reply
-	list icmp_type		destination-unreachable
-	list icmp_type		packet-too-big
-	list icmp_type		time-exceeded
-	list icmp_type		bad-header
-	list icmp_type		unknown-header-type
-	option limit		1000/sec
-	option family		ipv6
-	option target		ACCEPT
+	option name 'Allow-ICMPv6-Forward-{{ i.name }}'
+	option src 'freifunk'
+	option dest '{{ i.name }}'
+	option proto 'icmp'
+	list icmp_type 'echo-request'
+	list icmp_type 'echo-reply'
+	list icmp_type 'destination-unreachable'
+	list icmp_type 'packet-too-big'
+	list icmp_type 'time-exceeded'
+	list icmp_type 'bad-header'
+	list icmp_type 'unknown-header-type'
+	option limit '1000/sec'
+	option family 'ipv6'
+	option target 'ACCEPT'
 
 {% endfor %}

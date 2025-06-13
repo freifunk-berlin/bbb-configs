@@ -8,7 +8,6 @@ altitude: 64
 community: true
 
 hosts:
-
   - hostname: mlk-nk-core
     role: corerouter
     model: "mikrotik_routerboard-750gr3"
@@ -25,10 +24,9 @@ hosts:
   - hostname: mlk-nk-rhnk
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:c4:1d:b4}
+    mac_override: { eth0: dc:2c:6e:c4:1d:b4 }
 
 snmp_devices:
-
   - hostname: mlk-nk-nno-5ghz
     address: 10.31.69.4
     snmp_profile: airos_8
@@ -37,15 +35,13 @@ snmp_devices:
     address: 10.31.69.5
     snmp_profile: airos_6
 
-
-ipv6_prefix: '2001:bf7:820:2500::/56'
+ipv6_prefix: "2001:bf7:820:2500::/56"
 # ipv4: 10.31.69.0/25
 # mgmt: 10.31.69.0/27
 # mesh: 10.31.69.32/27
 # dhcp: 10.31.69.64/26
 
 networks:
-
   # Airos and similar - mesh links (VID 10-19)
   # Powerbeam 5AC 400 - Orientation Emma
   - vid: 11
@@ -55,7 +51,7 @@ networks:
     ipv6_subprefix: -11
     # Prefer route via rhnk over emma
     mesh_metric: 4048
-    mesh_metric_lqm: ['default 0.5']
+    mesh_metric_lqm: ["default 0.5"]
 
   # Nanostation M5 - Airos 6 - Orientation Sonnenallee
   - vid: 12

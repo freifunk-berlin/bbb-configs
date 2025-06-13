@@ -7,7 +7,6 @@ altitude: 55
 community: true
 
 hosts:
-
   - hostname: dtmb-core
     role: corerouter
     model: "tplink_tl-wdr4900-v1"

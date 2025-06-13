@@ -2,12 +2,27 @@
 {% set TCP_HEADER_SIZE = 20 %}
 {% set IPV4_HEADER_SIZE = 20 %}
 {% set IPV6_HEADER_SIZE = 40 %}
+
+{# Calculate minimum MTU among all tunnel interfaces, defaulting to 1280 if none defined #}
 {% set min_mtu = ([1280] + (networks | selectattr('role', 'equalto', 'tunnel') | map(attribute='mtu') | list)) | min | int %}
+
+{# Calculate MSS for IPv4 and IPv6 based on min_mtu #}
 {% set ipv4_mss = min_mtu - TCP_HEADER_SIZE - IPV4_HEADER_SIZE %}
 {% set ipv6_mss = min_mtu - TCP_HEADER_SIZE - IPV6_HEADER_SIZE %}
+
 chain wg_maxseg {
     type filter hook forward priority -1; policy accept;
-	oifname "ts_*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }
-	iifname "ts_*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }
+
+    # Set TCP MSS clamping for outgoing traffic on interfaces matching "ts_*"
+    oifname "ts_*" tcp flags syn tcp option maxseg size set meta nfproto map {
+        ipv4 : {{ ipv4_mss }},
+        ipv6 : {{ ipv6_mss }}
+    }
+
+    # Set TCP MSS clamping for incoming traffic on interfaces matching "ts_*"
+    iifname "ts_*" tcp flags syn tcp option maxseg size set meta nfproto map {
+        ipv4 : {{ ipv4_mss }},
+        ipv6 : {{ ipv6_mss }}
+    }
 }
 {% endif %}
