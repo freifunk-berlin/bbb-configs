@@ -165,13 +165,19 @@
 
 - name: Run Imagebuilder
   changed_when: false
+  vars:
+    make_command: >
+      make image
+      PROFILE='{{ override_target | default(model) }}'
+      PACKAGES='{{ packages | join(" ") }}'
+      DISABLED_SERVICES='{{ disabled_services | join(" ") }}'
+      FILES='{{ configs_dir }}' 1>&2
   command:
     chdir: "{{ build_dir }}"
     argv:
       - "bash"
       - "-c"
-      - "make image PROFILE='{{ override_target | default(model) }}' PACKAGES='{{ packages | join(' ') }}' DISABLED_SERVICES='{{ disabled_services | join(' ') }}'
-        FILES='{{ configs_dir }}' 1>&2"
+      - "{{ make_command }}"
   register: output
 
 - name: Write build log to output dir
