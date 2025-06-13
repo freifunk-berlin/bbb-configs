@@ -5,15 +5,16 @@
     path: "{{ images_dir }}"
     mode: "755"
   run_once: true
+
 - name: Clear old image and logfile
   file:
     state: absent
-    path: "{{ item }}"
+    path: "{{ [images_dir, inventory_hostname + item] | path_join }}"
   loop:
-    - "{{ images_dir }}/{{ inventory_hostname }}.bin"
-    - "{{ images_dir }}/{{ inventory_hostname }}.img"
-    - "{{ images_dir }}/{{ inventory_hostname }}.itb"
-    - "{{ images_dir }}/{{ inventory_hostname }}.log"
+    - ".bin"
+    - ".img"
+    - ".itb"
+    - ".log"
 
 - name: Create Download directory
   file:
@@ -29,7 +30,7 @@
 - name: Download Imagebuilder if upstream is newer
   get_url:
     url: "{{ imagebuilder }}"
-    dest: "{{ dl_dir }}/{{ imagebuilder_filename }}"
+    dest: "{{ [dl_dir, imagebuilder_filename] | path_join }}"
     mode: "644"
   when: '"http" in imagebuilder'
 
@@ -183,7 +184,7 @@
 - name: Write build log to output dir
   copy:
     content: "{{ output.stderr }}"
-    dest: "{{ images_dir }}/{{ inventory_hostname }}.log"
+    dest: "{{ [images_dir, inventory_hostname + '.log'] | path_join }}"
     mode: "preserve"
 
 - name: Find output image
@@ -196,7 +197,7 @@
 - name: Check Imagebuilder result
   assert:
     that: image_list.files | length > 0
-    fail_msg: "No image was built, check log at {{ images_dir }}/{{ inventory_hostname }}.log"
+    fail_msg: "No image was built, check log at {{ [images_dir, inventory_hostname + '.log'] | path_join }}"
 
 - name: Declare source
   set_fact:
@@ -204,7 +205,7 @@
 
 - name: Declare target
   set_fact:
-    image: "{{ images_dir }}/{{ inventory_hostname }}{{ image_src | splitext | last }}"
+    image: "{{ [images_dir, inventory_hostname + (image_src | splitext | last)] | path_join }}"
 
 - name: Copy Image to Image dir
   copy:
