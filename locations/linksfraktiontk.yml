@@ -4,9 +4,9 @@ location_nice: Linksfraktion Treptow Koepenick
 latitude: 52.483288177671
 longitude: 13.480247402648
 altitude: 48
-contact_nickname: 'Linksfraktion Treptow Koepenick'
+contact_nickname: "Linksfraktion Treptow Koepenick"
 contacts:
-  - 'mail@linksfraktion-treptow-koepenick.de'
+  - "mail@linksfraktion-treptow-koepenick.de"
 
 hosts:
   - hostname: linksfraktiontk-core

@@ -8,7 +8,6 @@ height: 6
 community: true
 
 hosts:
-
   - hostname: weidenbaum-core
     role: corerouter
     model: "ubnt_unifiac-mesh"
@@ -16,10 +15,13 @@ hosts:
     host__rclocal__to_merge:
       - |
         # Enable legacy rates to enable meshing with neighbors
-        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
+        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless
+        reload_config
 
 snmp_devices:
-
   - hostname: weidenbaum-bht
     address: 10.31.204.130
     snmp_profile: airos_8
@@ -59,7 +61,7 @@ networks:
     prefix: 10.31.204.148/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.5']
+    mesh_metric_lqm: ["default 0.5"]
     mesh_ap: weidenbaum-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -82,8 +84,8 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      weidenbaum-core: 1       # .129
-      weidenbaum-bht: 2        # .130
+      weidenbaum-core: 1 # .129
+      weidenbaum-bht: 2 # .130
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

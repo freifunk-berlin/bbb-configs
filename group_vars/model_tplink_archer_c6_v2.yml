@@ -15,7 +15,7 @@ switch_ignore_ports: [6]
 int_port: eth0
 
 model__packages__to_merge:
-  - "-ath10k-firmware-qca9888-ct ath10k-firmware-qca9888-ct-full-htt"  # select candelatech suggested firmware variant
+  - "-ath10k-firmware-qca9888-ct ath10k-firmware-qca9888-ct-full-htt" # select candelatech suggested firmware variant
 
 wireless_devices:
   - name: 11a_standard

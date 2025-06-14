@@ -11,7 +11,7 @@ hosts:
     model: "comfast_cf-ew72"
     wireless_profile: freifunk_default
 
-ipv6_prefix: '2001:bf7:840:2d00::/56'
+ipv6_prefix: "2001:bf7:840:2d00::/56"
 
 # Router: 10.248.9.0/26 2001:bf7:840:2d00::/56
 # --MGMT: 10.248.9.0/28

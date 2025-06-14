@@ -1,14 +1,13 @@
 ---
 
 location: chris
-location_nice: 'Christophoruskirche, Schuckertdamm 336-340, 13629 Berlin'
+location_nice: "Christophoruskirche, Schuckertdamm 336-340, 13629 Berlin"
 latitude: 52.541461
 longitude: 13.267025
 altitude: 65
 community: true
 
 hosts:
-
   - hostname: chris-core
     role: corerouter
     model: "tplink_tl-wdr4900-v1"

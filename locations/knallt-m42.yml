@@ -1,11 +1,11 @@
 ---
 location: knallt-m42
-location_nice: 'Maximilianstraße 42, 13187 Berlin'
+location_nice: "Maximilianstraße 42, 13187 Berlin"
 latitude: 52.5610708
 longitude: 13.4081996
-contact_nickname: 'knallt'
+contact_nickname: "knallt"
 contacts:
-  - '@knallt:matrix.org'
+  - "@knallt:matrix.org"
 
 hosts:
   - hostname: knallt-m42-core
@@ -18,7 +18,7 @@ snmp_devices:
     address: 10.248.0.114
     snmp_profile: airos_8
 
-ipv6_prefix: '2001:bf7:760:1700::/56'
+ipv6_prefix: "2001:bf7:760:1700::/56"
 
 # got following prefixes:
 # Router:  10.248.0.64/26
@@ -51,7 +51,7 @@ networks:
     prefix: 10.248.0.99/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: knallt-m42-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -74,5 +74,5 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      knallt-m42-core: 1  # 10.248.0.113
-      knallt-m42-lb: 2    # 10.248.0.114
+      knallt-m42-core: 1 # 10.248.0.113
+      knallt-m42-lb: 2 # 10.248.0.114

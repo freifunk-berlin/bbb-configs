@@ -24,7 +24,7 @@
 
 - name: Set destination path for imagebuilder
   set_fact:
-    imagebuilder_path: "{{ dl_dir }}/{{ imagebuilder | basename }}"
+    imagebuilder_path: "{{ [dl_dir, (imagebuilder | basename) | trim] | path_join }}"
 
 - name: Download Imagebuilder if upstream is newer
   get_url:
@@ -59,20 +59,20 @@
   unarchive:
     src: "{{ imagebuilder_path }}"
     dest: "{{ build_dir }}"
-    extra_opts: ['--strip=1']
+    extra_opts: ["--strip=1"]
 
 - name: Read instruction set
   shell:
     chdir: "{{ build_dir }}"
     cmd: grep -oP 'CONFIG_TARGET_ARCH_PACKAGES="\K[^"]+' .config
   register: instr_set_result
-  when: 'instr_set is not defined and feed_version is defined'
+  when: "instr_set is not defined and feed_version is defined"
   changed_when: false
 
 - name: Extract Instruction set if needed
   set_fact:
     instr_set: "{{ instr_set_result.stdout_lines | first }}"
-  when: 'instr_set is not defined and feed_version is defined'
+  when: "instr_set is not defined and feed_version is defined"
 
 - name: Insert falter OPKG feed
   lineinfile:
@@ -83,16 +83,16 @@
 - name: Add falter OPKG feed key
   copy:
     src: "files/packagefeed_master.pub"
-    dest: "{{ build_dir }}/keys/61a078a38408e710"  # matches fingerprint
+    dest: "{{ build_dir }}/keys/61a078a38408e710" # matches fingerprint
     mode: "preserve"
-  when: 'feed_version is defined'
+  when: "feed_version is defined"
 
 - name: Disable OPKG signature verification if required
   lineinfile:
     path: "{{ build_dir }}/repositories.conf"
     line: "option check_signature"
     state: "absent"
-  when: 'imagebuilder_disable_signature_check is defined and imagebuilder_disable_signature_check'
+  when: "imagebuilder_disable_signature_check is defined and imagebuilder_disable_signature_check"
 
 - name: Add falter APK feed
   lineinfile:
@@ -105,6 +105,7 @@
     path: "{{ configs_dir }}/etc/apk/repositories.d/falter.list"
     line: "{{ feed }}"
     create: true
+    mode: "0644"
   when: 'feed_version is defined and openwrt_version == "snapshot"'
 
 - name: Add falter APK feed key
@@ -148,29 +149,35 @@
     line: "{{ item.key }}={{ item.value }}"
   loop: "{{ imagebuilder_config | default({}) | dict2items }}"
 
-
 - name: Copy over upstream inittab as base to modify
   copy:
-    src: "{{ build_dir }}/target/linux/{{ (target|split('/'))[0] }}/base-files/etc/inittab"
-    dest: "{{ configs_dir}}/etc/"
-  when: "additional_serial_ports is defined"
+    src: "{{ build_dir }}/target/linux/{{ (target | split('/'))[0] }}/base-files/etc/inittab"
+    dest: "{{ configs_dir }}/etc/inittab"
+    mode: "0644"
+  when: additional_serial_ports is defined
 
 - name: Configure additional serial ports in inittab
   lineinfile:
     path: "{{ configs_dir }}/etc/inittab"
-    insertafter: '^ttyS\d.*\n'
+    insertafter: "^ttyS\\d.*\\n"
     line: "{{ item }}::askfirst:/usr/libexec/login.sh"
   loop: "{{ additional_serial_ports | default([]) }}"
 
-
 - name: Run Imagebuilder
   changed_when: false
+  vars:
+    make_command: >
+      make image
+      PROFILE='{{ override_target | default(model) }}'
+      PACKAGES='{{ packages | join(" ") }}'
+      DISABLED_SERVICES='{{ disabled_services | join(" ") }}'
+      FILES='{{ configs_dir }}' 1>&2
   command:
     chdir: "{{ build_dir }}"
     argv:
       - "bash"
       - "-c"
-      - "make image PROFILE='{{ override_target | default(model) }}' PACKAGES='{{ packages | join(' ') }}' DISABLED_SERVICES='{{ disabled_services | join(' ') }}' FILES='{{ configs_dir }}' 1>&2"
+      - "{{ make_command }}"
   register: output
 
 - name: Write build log to output dir
@@ -189,7 +196,7 @@
 - name: Check Imagebuilder result
   assert:
     that: image_list.files | length > 0
-    fail_msg: 'No image was built, check log at {{ images_dir }}/{{ inventory_hostname }}.log'
+    fail_msg: "No image was built, check log at {{ images_dir }}/{{ inventory_hostname }}.log"
 
 - name: Declare source
   set_fact:

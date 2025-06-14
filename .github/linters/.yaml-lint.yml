@@ -12,3 +12,5 @@ rules:
   line-length:
     max: 2048
     level: warning
+  braces:
+    max-spaces-inside: 1

@@ -5,7 +5,13 @@
 
 - name: "Set ansible ssh target from IPv6 Prefix"
   set_fact:
-    ansible_ssh_host: "{{ ipv6_prefix | ansible.utils.ipsubnet('64', mgmt_network['ipv6_subprefix']) | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}"
+    ansible_ssh_host: >-
+      {{ (
+        ipv6_prefix
+        | ansible.utils.ipsubnet('64', mgmt_network['ipv6_subprefix'])
+        | ansible.utils.ipaddr(1)
+        | ansible.utils.ipaddr('address')
+      ) }}
     ansible_user: root
 
 - name: "Transfer image to remote host:"

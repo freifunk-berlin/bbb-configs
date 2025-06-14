@@ -6,7 +6,6 @@ latitude: 52.53207188797019
 longitude: 13.378598767421284
 community: true
 
-
 hosts:
   - hostname: habersaath-core
     role: corerouter
@@ -15,7 +14,7 @@ hosts:
   - hostname: habersaath-w-nf-5ghz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:c4:06:a8}
+    mac_override: { eth0: dc:2c:6e:c4:06:a8 }
 
   - hostname: habersaath-ap-a1
     role: ap
@@ -104,7 +103,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
-      - default 0.12   # Penalty so local uplink is preferred
+      - default 0.12 # Penalty so local uplink is preferred
 
   - vid: 42
     role: mgmt

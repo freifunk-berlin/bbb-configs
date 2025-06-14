@@ -43,7 +43,6 @@ snmp_devices:
     address: 10.31.191.180
     snmp_profile: af60
 
-
 ipv6_prefix: "2001:bf7:820:e00::/56"
 
 # Klunker got following prefixes:
@@ -119,14 +118,14 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      klunker-core: 1                # 10.31.191.177
-      klunker-switch: 2              # 10.31.191.178
-      klunker-rhnk: 3                # 10.31.191.179
-      klunker-philmel: 4             # 10.31.191.180
+      klunker-core: 1 # 10.31.191.177
+      klunker-switch: 2 # 10.31.191.178
+      klunker-rhnk: 3 # 10.31.191.179
+      klunker-philmel: 4 # 10.31.191.180
       # klunker-rhnk-5ghz: 5         # 10.31.191.181
-      klunker-nf-nnw-5ghz: 6         # 10.31.191.182
-      klunker-nf-sse-5ghz: 7         # 10.31.191.183 - PoE Watchdog 10m
-      klunker-ap-bibliothek-5ghz: 8  # 10.31.191.184
+      klunker-nf-nnw-5ghz: 6 # 10.31.191.182
+      klunker-nf-sse-5ghz: 7 # 10.31.191.183 - PoE Watchdog 10m
+      klunker-ap-bibliothek-5ghz: 8 # 10.31.191.184
 
 location__channel_assignments_11a_standard__to_merge:
   klunker-nf-sse-5ghz: 36-20
