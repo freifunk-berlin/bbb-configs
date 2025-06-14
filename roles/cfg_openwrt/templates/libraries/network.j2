@@ -6,7 +6,7 @@
     {% set ifname = "" %}
     {% if isBridgeNeeded(network) | from_json %}
         {% set ifname = getBridgeIfname(network) %}
-    {% elif network.get('mesh_ap') == inventory_hostname %}
+    {% elif int_port is defined and network.get('mesh_ap') == inventory_hostname %}
         {% set ifname = libwireless.getLocalAdhocIfnameByNetwork(network) %}
     {% else %}
         {% set ifname = getPortIfname(network) %}
