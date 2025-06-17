@@ -1,6 +1,6 @@
 ---
 location: l105
-location_nice: Lützowstraße 105
+location_nice: Lützowstraße 105, 10785 Berlin
 latitude: 52.502040
 longitude: 13.369420
 altitude: 62
@@ -22,7 +22,7 @@ snmp_devices:
     address: 10.31.127.130
     snmp_profile: edgeswitch
 
-  - hostname: l105-rhxb
+  - hostname: l105-ost-60g
     address: 10.31.127.131
     snmp_profile: af60
 
@@ -52,14 +52,14 @@ mgmt:
   ipv4: 10.31.127.129/29
   ipv6: 2001:bf7:750:3f00::/64
   assignments:
-    l105-gw: 1 # .129
-    l105-poe: 2 # .130
-    l105-rhxb: 3 # .131
+    l105-gw: 1    # .129
+    l105-poe: 2   # .130
+    l105-ost-60g: 3  # .131
     # l105-tu: 4    # .132
 
 # Mesh Network: 10.31.127.160/27
 mesh_links:
-  - name: mesh_rhxb
+  - name: mesh_ost_60g
     ifname: eth1.10
     ipv4: 10.31.127.160/32
     ipv6: 2001:bf7:750:3f01::1/128
