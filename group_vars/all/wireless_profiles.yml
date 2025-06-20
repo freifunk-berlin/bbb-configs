@@ -1,5 +1,8 @@
 ---
 
+all__channel_assignments_11ax_standard__to_merge:
+  default: "auto-80"
+
 all__channel_assignments_11a_standard__to_merge:
   default: "36-20"
 
@@ -9,8 +12,6 @@ all__channel_assignments_11g_standard__to_merge:
 all__channel_assignments_11a_mesh__to_merge:
   default: "36-20"
 
-all__channel_assignments_11ax_mesh__to_merge:
-  default: "auto-80"
 
 all__wireless_profiles__to_merge:
   - name: disable
