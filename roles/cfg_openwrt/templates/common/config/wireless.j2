@@ -34,6 +34,9 @@ config wifi-device '{{ wd_id }}'
 	option band '{{ wd['band'] }}'
   {% endif %}
 	option path '{{ wd['path'] }}'
+  {% if 'radio' in wd %}
+	option radio '{{ wd['radio'] }}'
+  {% endif %}
   {% if 'htmode_prefix' in wd %}
 	option htmode '{{ wd['htmode_prefix'] }}{{ bandwidth }}'
   {% else %}
