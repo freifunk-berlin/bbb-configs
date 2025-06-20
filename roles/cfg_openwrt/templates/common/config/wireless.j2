@@ -17,7 +17,9 @@
   {% set bandwidth = channel_assignment[1] %}
   {% set txpower = channel_assignment[2]|default(False) %}
 
-  {% if channel < 36 %}
+  {% if wd.get('band') == '6g' %}
+  {% set maxtxpower = 23 %}
+  {% elif channel < 36 %}
   {% set maxtxpower = 20 %}
   {% elif channel < 52 %}
   {% set maxtxpower = 23 %}
