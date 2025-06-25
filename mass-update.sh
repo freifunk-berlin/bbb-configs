@@ -129,8 +129,14 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
     if check_reachability "$HOSTNAME"; then
         echo "Hostname $HOSTNAME is accessible"
 
-        # Check if device is considered low memory
+        # Check memory on remote host once before any flashing steps
         MEMORY=$(check_memory "$HOSTNAME")
+        if ! [[ "$MEMORY" =~ ^[0-9]+$ ]]; then
+            echo "Unable to determine available memory on $HOSTNAME (value: '$MEMORY'), skipping..."
+            continue
+        fi
+
+        # Check if device is considered low memory
         if [ "$MEMORY" -lt $(( $(stat -c %s "$FILE_PATH") * 2 / 1024 )) ]; then  # Less than 2x file size
             echo "Low memory detected ($MEMORY KB), initiating reboot sequence..."
             reboot "$HOSTNAME"
