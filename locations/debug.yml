@@ -1,0 +1,120 @@
+---
+location: debug
+location_nice: Debugging
+latitude: 0.0
+longitude: 0.0
+contacts:
+  - "@schnick:matrix.org"
+
+hosts:
+  - hostname: debug-zyxel
+    role: ap
+    model: "zyxel_nbg6617"
+    wireless_profile: debug
+    opreless_profile: debug
+    openwrt_version: snapshot
+
+  - hostname: debug-belkin
+    role: corerouter
+    model: "linksys_e8450-ubi"
+    wireless_profile: debug
+    openwrt_version: snapshot
+  
+  - hostname: debug-totolink
+    role: ap
+    model: "totolink_a7000r"
+    wireless_profile: debug
+    openwrt_version: snapshot
+
+  - hostname: debug-covr
+    role: ap
+    model: "dlink_covr-x1860-a1"
+    mac_override: {eth0: 0c:0e:76:cf:2e:3a}
+    wireless_profile: debug
+    openwrt_version: snapshot
+
+  - hostname: debug-dap
+    role: ap
+    model: "dlink_dap-x1860-a1"
+    wireless_profile: debug
+    openwrt_version: snapshot
+
+ipv6_prefix: "2001:bf7:830:eb00::/56"
+
+dhcp_no_ping: false
+
+# Reserved Prefixes:
+# 10.248.62.0/23 2001:bf7:830:eb00::/56 
+# DHCP: 10.248.62.0/24
+# MESH: 10.248.63.128/25
+# MGMT: 10.248.63.0/25
+
+networks:
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.63.0/25
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      debug-belkin: 1
+      debug-zyxel: 2
+      debug-totolink: 3
+      debug-covr: 4
+      debug-dap: 5
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.248.62.0/24
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      debug-belkin: 1
+
+  - vid: 50
+    name: prdhcp
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.63.128/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.248.63.129/32
+    wireguard_port: 51821
+
+location__wireless_profiles__to_merge:
+  - name: debug
+    ifaces:
+      - mode: ap
+        ssid: debug.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: DEBUG-HOME
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass'
+        network: prdhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
