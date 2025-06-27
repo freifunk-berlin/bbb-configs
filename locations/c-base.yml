@@ -38,9 +38,9 @@ snmp_devices:
     address: 10.31.134.98
     snmp_profile: edgeswitch
 
-  - hostname: c-base-mesh-ssw
+  - hostname: c-base-simeon-af60lr
     address: 10.31.134.101
-    snmp_profile: airos_8
+    snmp_profile: af60
 
   - hostname: c-base-simeon60
     address: 10.31.134.104
