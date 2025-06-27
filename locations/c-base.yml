@@ -68,17 +68,19 @@ networks:
 
   - vid: 11
     role: mesh
-    name: mesh_simeon
+    name: mesh_simeon_af60
     prefix: 10.31.134.112/32
     ipv6_subprefix: -11
-
+    mesh_metric: 128
+    ptp: true
+    
   - vid: 12
     role: mesh
-    name: mesh_sim60
+    name: mesh_simeon_wave60
     prefix: 10.31.134.117/32
     ipv6_subprefix: -12
     ptp: true
-    mesh_metric: 128
+    mesh_metric_lqm: ["default 0.5"]
 
   - vid: 20
     role: mesh
