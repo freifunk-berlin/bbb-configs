@@ -35,7 +35,7 @@ If we need someone to reproduce our setup, the person can just generate the imag
 
 ## Getting Started
 
-Using bbb-configs is quite simple. The TL;DR version for anyone just wanting to generate images without reading the [FAQ](FAQ.md) or [Developers Guide](DEVELOPER.md) is:
+Using bbb-configs is quite simple. In the sections below you can find simple introductions to what you can do with bbb-configs. But before you can get started you might need to install some dependecies so everything will work properly.
 
 ### 1. Install OpenWRT build dependencies
 
@@ -53,46 +53,100 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-### 3. Generate images
+You can find what dependencies you need for your specific linux-distro [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
 
-You can generate images using the generate-images script that brings up a menu
 
-```sh
-./generate-images.sh
-```
 
-or by passing locations or hostnames as comma separated list even with wildcards if properly quoted
+### 3. What do you want to set up?
 
-```sh
-./generate-images.sh location1,host1,host2,location2,"host-*","location-*"
-```
+**often needed**
 
-or by passing running the ansible playbook directly with a limit parameter containing locations or hosts as a comma separated list.
+- <details>
+  <summary>images</summary>
 
-Note: Locations must be prefixed witch `location_` and within the location name `-` must be converted to `_`.
+  #### Generate images
 
-```sh
-ansible-playbook play.yml --limit location_loc_name,host --tags image
-```
+  You can generate images using the generate-images script that brings up a menu
 
-### 4. Flash images
+  ```sh
+  ./generate-images.sh
+  ```
 
-After building firmware images you can update multiple routers using the mass-update script. This works best using SSH keys for authentication.
+  or by passing locations or hostnames as comma separated list even with wildcards if properly quoted
 
-```
-./mass-update.sh
-```
+  ```sh
+  ./generate-images.sh location1,host1,host2,location2,"host-*","location-*"
+  ```
+
+  or by passing running the ansible playbook directly with a limit parameter containing locations or hosts as a comma separated list.
+
+  Note: Locations must be prefixed witch `location_` and within the location name `-` must be converted to `_`.
+
+  ```sh
+  ansible-playbook play.yml --limit location_loc_name,host --tags image
+  ```
+  #### Flash images
+
+  After building firmware images you can update multiple routers using the mass-update script, which updates every node,that has an image in `tmp/images/`. This works best using SSH keys for authentication.
+
+  Another suitable way to flash our image might be the web GUI or via your terminal using `scp`.
+
+  ```
+  ./mass-update.sh
+  ```
+  </details>
+- <details>
+  <summary>locations</summary>
+
+  #### Set up new location
+
+     1. Create a location file in the `locations` directory. You might want to copy an existing location to make your start more easy.
+     2. Run the image creation as shown in the commands above (image will be in `tmp/images` directory).
+     3. Flash the image to your router
+     4. Secure the router by setting a root password using SSH or the web interface.
+     5. Done!
+
+    Have a look at the [Developers Guide](DEVELOPER.md) for more information.
+
+
+     <!-- TODO -> create example location which people can copy to start set up their own location with examples and explanations of what you can do -->
+
+  </details>
+
+**rarely needed**
+
+- <details>
+  <summary>models</summary>
+
+  Take a look at this section in DEVELOPER.md: [model-files](https://github.com/freifunk-berlin/bbb-configs/blob/main/DEVELOPER.md#groups_vars)
+
+  </details>
+- <details>
+  <summary>gateways</summary>
+  <br>
+  This section is not finished yet, feel free to contribute.
+
+  </details>
+
+### 4. Contibuting guidelines
+
+To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/issues/785) so contributions are easy to understand and standardised.
+
+### 5. Ansible Introduction
+
+Ansible is a suite of software tools that enables infrastructure as code. It is open-source and the suite includes software provisioning, configuration management, and application deployment functionality.[[1]](https://en.wikipedia.org/wiki/Ansible_(software)) Ansible playbooks offer simple, repeatable, and reusable execution of tasks making them perfectly fit into the Freifunk world. We map these tasks in files following the YAML format and integrate them into our playbook. We follow the common ansible scheme of locations and hosts.
+
+#### How to get started?
+
+Make sure to install ansible and clone the bbb-configs repository. Also don`t forget to check your dependencies.
+
+Depending on your system you might need more requirements. If something fails check out [this OpenWRT page](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem).
+
+You can find more useful ansible tips in our [FAQ](https://github.com/freifunk-berlin/bbb-configs/blob/main/FAQ.md#faq).
 
 ## Developers and Maintainers
 
-If you want to use bbb-configs for locations that are not included in bbb-configs yet or to work on a fork of the code yourself you should start reading the [FAQ](FAQ.md) and [Developers Guide](DEVELOPER.md).
-
-## Automatic Updates for [wiki.freifunk.net](https://wiki.freifunk.net/)
-
-By default all articles that follow the convention will be updated automatically when config changes get merged into the main branch.
-To add this option to your wikiarticle add a section called "Konfiguration" and replace all values that you want to automatically change as you can see in [this example-article](https://wiki.freifunk.net/Berlin:Standorte:Fesev). If you want to add a new location you can start with [this template](https://wiki.freifunk.net/Berlin:Standorte:Template).
-
-Wikiupdater expects an article or a redirect to the article at `wiki.freifunk.net/Berlin:Standorte:$LOCATION` where `$LOCATION` is the location name defined in your file at `locations/$LOCATION.yml`. You can manually run this update by using `--tags wiki` in a ansible config run
+If you want to use bbb-configs to work on a fork of the code yourself or do something else you should start reading the [FAQ](FAQ.md) and [Developers Guide](DEVELOPER.md).
 
 ## Support Information
 
