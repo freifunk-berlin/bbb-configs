@@ -1,0 +1,123 @@
+---
+
+location: vinet-xberg-arw98
+location_nice: top
+latitude: 52.501581
+longitude: 13.432892
+altitude: 68
+height: 12
+contact_nickname: vinet
+contacts:
+  - vinet@c-base.org
+
+hosts:
+  - hostname: vinet-xberg-arw98-core
+    role: corerouter
+    model: "avm_fritzbox-4040"
+    wireless_profile: freifunk_default
+
+# snmp_devices:
+#   - hostname: vinet-tmp-router
+#     address: 10.31.255.65 # Replace with management-IP from 60G-Device
+#     snmp_profile: mikrotik_60g
+
+location__ssh_keys__to_merge:
+  - comment: vinet
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAACAQCRpRJcexdB2N11gsbbKhXGu8sNQIAShohJpjobhSXtcUWTfRlX2SwSF0QuoHP4Bcb8IGCQc8+TK1RSc+owc1bD68gHIGQZ6b3u2sDv1JMoexqtY9PRIhOiUkPMdSJH7ay4WS7p6FHCZ8z1lrf5GaWpA+E0FNvE7sSaA7jHegYZ6D/qru9XddatItWkMgaKqVzaK+W0TldlqqORwQJg0JGPA71vakJCj/H+SsCZyn9HJ/bbq08kBqaBGU7JLFfwKpw8VGn2pwENzHQgzjb6Bfmj1XmbDvXtZjJTF7nhrxemXo9oJDDq8pVveD46cvSffvAAUFRrMlaV+v0qsYK0ir3MDGuguBn3t2+DR0K8JGufYU7i52vTwCuu3d3PRNIwyEYG4vySXpA9m7YSJEHIkasrSADGy47P+Q+jXQZoR5JS0ZtZnqA4JvnYyKd/OeLpNX7MXaDpVAI7pNrDig/4VD7LO70kPPCMAjn40qwF8lcI8U+alrqHG1RIrkugnsGs9g7tselqIi2pAUMml3as778h5Qx+p8FiD3lLPbjJfTBBgl8LfySRWxLgWTMI0TqtMvqNbsUaAB0ThN2FiJE9PrVO2dzUrBUZnaOpT+8B/zW4cGyFqqNZCjpvXkIPzp6jbPDG1aithV0C9mPOGAgq5wUIBgS+Vx95JhA3TArTz4DOdw==
+      Vinet
+
+# Replace the following with your own reserved IPs for a better Overview
+
+# 10.248.31.192/26 - vinet.xberg.r2am
+#    HostMin:   10.248.31.193
+#    HostMax:   10.248.31.254
+#
+# 10.248.31.192/27 - dhcp
+#    HostMin:   10.248.31.193
+#    HostMax:   10.248.31.222
+# 10.248.31.224/28 - prdhcp
+#    HostMin:   10.248.31.225
+#    HostMax:   10.248.31.238
+# 10.248.31.240/29 - mesh
+#    HostMin:   10.248.31.241
+#    HostMax:   10.248.31.246
+# 10.248.31.248/29 - mgmt
+#    HostMin:   10.248.31.249
+#    HostMax:   10.248.31.254
+# new
+# 10.248.33.128/25
+#   min 129
+#   max 254
+# 10.248.33.128/26 - dhcp
+#   min 129
+#   max 190
+# 10.248.33.192/28 - prdhcp
+#  min 193
+#  max 206
+# 10.248.33.208/29 - mesh
+#  min 209
+#  max 214
+# 10.248.33.216/29 - mgmt
+#  min 217
+#  max 222
+
+ipv6_prefix: 2001:bf7:830:d700::/56
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_emma
+    prefix: 10.248.33.209/32
+    ipv6_subprefix: -10
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g_core
+    prefix: 10.248.33.210/32
+    ipv6_subprefix: -20
+    mesh_ap: vinet-xberg-arw98-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g_core
+    prefix: 10.248.33.211/32
+    ipv6_subprefix: -21
+    # make mesh_metric for 2GHz worse than 5GHz
+    mesh_metric_lqm: ["default 0.8"]
+    mesh_ap: vinet-xberg-arw98-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.248.33.128/26
+    ipv6_subprefix: -40
+    inbound_filtering: true
+    enforce_client_isolation: true
+    untagged: true
+    assignments:
+      vinet-xberg-arw98-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.33.216/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      vinet-xberg-arw98-core: 1
+      vinet-xberg-arw98-beam: 2
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  vinet-xberg-arw98-core: 36-20
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  vinet-xberg-arw98-core: 13-20
