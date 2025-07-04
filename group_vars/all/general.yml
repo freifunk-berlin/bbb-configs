@@ -59,4 +59,3 @@ mesh_metric_adhoc_11g_standard: 2560
 # https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading
 # Possible values: none, sw, hw
 flow_offload: none
-
