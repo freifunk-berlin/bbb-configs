@@ -1,0 +1,10 @@
+---
+target: ramips/mt7621
+brand_nice: Genexis
+model_nice: Pulse EX400
+
+openwrt_version: 24.10-SNAPSHOT
+
+dsa_ports:
+  - lan
+  - wan
