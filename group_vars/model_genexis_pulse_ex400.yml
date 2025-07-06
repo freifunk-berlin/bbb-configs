@@ -7,4 +7,4 @@ openwrt_version: 24.10-SNAPSHOT
 
 dsa_ports:
   - lan
-
+  - wan
