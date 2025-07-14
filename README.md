@@ -39,7 +39,7 @@ Using bbb-configs is quite simple. The TL;DR version for anyone just wanting to 
 
 ### 1. Install dependencies
 
-Depending on your distro you might need to use a different package management system than `apt`.
+Depending on your distro you might need to use a different package management system than `apt`. As of 07/2025 there arent all dependencies available for Apple M-Chips.
 
 ```sh
 apt update
