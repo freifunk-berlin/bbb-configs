@@ -4,10 +4,13 @@ location: khsb4
 location_nice: Katholische Schule für Sozialwesen Berlin, Köpenicker Allee 39-57, 10318 Berlin
 latitude: 52.488474
 longitude: 13.534221
-contact_nickname: "riskieee"
+contact_nickname: "khsb-admin"
+contact_name: "Rene Lechler"
 contacts:
   - "edv@khsb-berlin.de"
-
+  - "030 / 50 10 10 66"
+  - "Eingerichtet von Projekt SOLC 07/2025, Dauerbetrieb KHSB IT, OpenWRT One"
+  
 hosts:
   - hostname: khsb4-core
     role: corerouter
