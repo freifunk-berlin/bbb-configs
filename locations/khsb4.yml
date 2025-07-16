@@ -10,7 +10,7 @@ contacts:
   - "edv@khsb-berlin.de"
   - "030 / 50 10 10 66"
   - "Eingerichtet von Projekt SOLC 07/2025, Dauerbetrieb KHSB IT, OpenWRT One"
-  
+
 hosts:
   - hostname: khsb4-core
     role: corerouter
