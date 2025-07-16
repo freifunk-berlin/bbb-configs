@@ -26,6 +26,9 @@ hosts:
     host__packages__to_merge:
       - bash rsync screen tmux htop mtr
       - parted fdisk e2fsprogs btrfs-progs losetup resize2fs coreutils-shred
+      - podman conmon crun catatonit netavark external-protocol
+    host__rclocal__to_merge:
+      - "sed -i 's|#firewall_driver|firewall_driver|g' /etc/containers/containers.conf"
 
 # 10.248.33.64/27 - pktpls+bbb@systemli.org
 # - 10.248.33.64/29 - mgmt
@@ -50,3 +53,14 @@ networks:
     ipv6_subprefix: 42
     assignments:
       podtwo: 1
+
+  - vid: 43
+    untagged: true
+    ifname: podman0
+    name: podman
+    role: ext
+    prefix: 10.248.33.72/29
+    ipv6_subprefix: 2
+    assignments:
+      podtwo-core: 1
+      mirror: 2
