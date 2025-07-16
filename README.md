@@ -39,6 +39,8 @@ Using bbb-configs is quite simple. The TL;DR version for anyone just wanting to 
 
 ### 1. Install dependencies
 
+First install the dependencies. You can find what dependencies you need for your specific linux-distro [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
+
 Depending on your distro you might need to use a different package management system than `apt`.
 
 ```sh
@@ -48,8 +50,6 @@ python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 ```
-
-You can find what dependencies you need for your specific linux-distro [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
 
 ### 2. Generate images
 
