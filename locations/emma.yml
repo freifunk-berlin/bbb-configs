@@ -1,6 +1,6 @@
 ---
 location: emma
-location_nice: Emmauskirche
+location_nice: Emmaus-Kirche, Lausitzer Platz 8, 10997 Berlin
 latitude: 52.499825
 longitude: 13.431035
 altitude: 87
@@ -9,8 +9,7 @@ community: true
 hosts:
   - hostname: emma-core
     role: corerouter
-    model: "cudy_wr3000-v1"
-    wireless_profile: freifunk_default
+    model: mikrotik_routerboard-750gr3
 
 snmp_devices:
   - hostname: emma-switch-no

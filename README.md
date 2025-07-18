@@ -37,9 +37,13 @@ If we need someone to reproduce our setup, the person can just generate the imag
 
 Using bbb-configs is quite simple. The TL;DR version for anyone just wanting to generate images without reading the [FAQ](FAQ.md) or [Developers Guide](DEVELOPER.md) is:
 
-### 1. Install dependencies
+### 1. Install OpenWRT build dependencies
 
-Depending on your distro you might need to use a different package management system than `apt`.
+First install the OpenWRT build dependencies. You can find the dependencies for your specific Linux distribution [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
+
+### 2. Install BBB-configs dependencies
+
+Now install the BBB-configs dependencies. Depending on your distributions you might need to use a different package management system than `apt`.
 
 ```sh
 apt update
@@ -49,9 +53,7 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-You can find what dependencies you need for your specific linux-distro [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
-
-### 2. Generate images
+### 3. Generate images
 
 You can generate images using the generate-images script that brings up a menu
 
@@ -73,7 +75,7 @@ Note: Locations must be prefixed witch `location_` and within the location name 
 ansible-playbook play.yml --limit location_loc_name,host --tags image
 ```
 
-### 3. Flash images
+### 4. Flash images
 
 After building firmware images you can update multiple routers using the mass-update script. This works best using SSH keys for authentication.
 
