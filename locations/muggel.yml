@@ -8,13 +8,6 @@ contact_nickname: Packet Please
 contacts:
   - pktpls@systemli.org
 
-# Quad9 unfiltered DNS
-dns_servers:
-  - 2620:fe::10
-  - 2620:fe::fe:10
-  - 9.9.9.10
-  - 149.112.112.10
-
 # 10.31.220.0/26
 # 10.31.220.0/29 - mgmt
 # 10.31.220.8/29 - mesh + uplink
@@ -71,12 +64,6 @@ networks:
     mtu: 1280
     prefix: 10.31.220.10/32
     wireguard_port: 51820
-
-  - role: tunnel
-    ifname: ts_wg1
-    mtu: 1280
-    prefix: 10.31.220.11/32
-    wireguard_port: 51821
 
 # We expect L2 peers on our switch to be dynamic, naywatch won't work for that
 location__disabled_services__to_merge:
