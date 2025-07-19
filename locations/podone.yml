@@ -1,0 +1,51 @@
+---
+
+location: podone
+location_nice: "podman host no. 1"
+contact_nickname: Packet Please
+contacts:
+  - pktpls+bbb@systemli.org
+
+hosts:
+
+  # Ryzen 5700G, 2x32 GB RAM, Biostar B550T-Silver, 150 W PicoPSU
+  # Boot: Samsung PM991 256 GB
+  # Storage: Lexar NM790 4 TB, another internal M.2 slot is free
+  # Removable: external M.2 tray on Delock PCIe card
+  # Boot prio: 1. USB 2. NVMe
+  # eth0: 2.5G RTL8125B from mainboard
+  - hostname: podone
+    role: corerouter
+    openwrt_version: snapshot
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined-efi.img*"
+    imagebuilder_config:
+      CONFIG_TARGET_ROOTFS_PARTSIZE: 256
+      CONFIG_GRUB_BOOTOPTS: "usb_storage.quirks=152d:0583:ut"
+    host__packages__to_merge:
+      - bash rsync screen tmux htop mtr
+      - parted fdisk e2fsprogs btrfs-progs losetup resize2fs coreutils-shred
+
+# 10.248.33.32/27 - pktpls+bbb@systemli.org
+# - 10.248.33.32/29 - mgmt
+# - 10.248.33.40/29 - unused
+# - 10.248.33.48/29 - mesh
+# - 10.248.33.56/29 - unused
+ipv6_prefix: 2001:bf7:820:3300::/56
+
+networks:
+
+  - vid: 20
+    role: mesh
+    name: mesh_lan
+    prefix: 10.248.33.48/32
+    ipv6_subprefix: -1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.33.32/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 42
+    assignments:
+      podone: 1

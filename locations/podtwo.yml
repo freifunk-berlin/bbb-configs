@@ -1,0 +1,66 @@
+---
+
+location: podtwo
+location_nice: "podman host no. 2"
+contact_nickname: Packet Please
+contacts:
+  - pktpls+bbb@systemli.org
+
+hosts:
+
+  # Ryzen 5700G, 2x32 GB RAM, Biostar B550T-Silver, 150 W PicoPSU
+  # (A little piece on the mainboard bottom broke off, between CPU and RAM)
+  # Boot: Kioxia 256 GB
+  # Storage: Lexar NM790 4 TB, another internal M.2 slot is free
+  # Removable: external M.2 tray on Delock PCIe card
+  # Boot prio: 1. USB 2. NVMe
+  # eth0: 2.5G RTL8125B from mainboard
+  - hostname: podtwo
+    role: corerouter
+    openwrt_version: snapshot
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined-efi.img*"
+    imagebuilder_config:
+      CONFIG_TARGET_ROOTFS_PARTSIZE: 256
+      CONFIG_GRUB_BOOTOPTS: "usb_storage.quirks=152d:0583:ut"
+    host__packages__to_merge:
+      - bash rsync screen tmux htop mtr
+      - parted fdisk e2fsprogs btrfs-progs losetup resize2fs coreutils-shred
+      - podman conmon crun catatonit netavark external-protocol
+    host__rclocal__to_merge:
+      - "sed -i 's|#firewall_driver|firewall_driver|g' /etc/containers/containers.conf"
+
+# 10.248.33.64/27 - pktpls+bbb@systemli.org
+# - 10.248.33.64/29 - mgmt
+# - 10.248.33.72/29 - podman
+# - 10.248.33.80/29 - mesh
+# - 10.248.33.88/29 - unused
+ipv6_prefix: 2001:bf7:820:3400::/56
+
+networks:
+
+  - vid: 20
+    role: mesh
+    name: mesh_lan
+    prefix: 10.248.33.80/32
+    ipv6_subprefix: -1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.33.64/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 42
+    assignments:
+      podtwo: 1
+
+  - vid: 43
+    untagged: true
+    ifname: podman0
+    name: podman
+    role: ext
+    prefix: 10.248.33.72/29
+    ipv6_subprefix: 2
+    assignments:
+      podtwo-core: 1
+      mirror: 2
