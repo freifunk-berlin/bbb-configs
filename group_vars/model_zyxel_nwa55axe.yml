@@ -2,7 +2,8 @@
 target: ramips/mt7621
 brand_nice: ZyXEL
 model_nice: NWA55AXE
-int_port: lan
+dsa_ports:
+  - lan
 
 openwrt_version: 24.10-SNAPSHOT
 

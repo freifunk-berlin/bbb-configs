@@ -4,7 +4,8 @@ openwrt_version: 24.10-SNAPSHOT
 brand_nice: ZyXEL
 model_nice: NWA50AX
 
-int_port: lan
+dsa_ports:
+  - lan
 
 wireless_devices:
   - name: 11a_standard
