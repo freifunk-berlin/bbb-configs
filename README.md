@@ -37,9 +37,13 @@ If we need someone to reproduce our setup, the person can just generate the imag
 
 Using bbb-configs is quite simple. In the sections below you can find simple introductions to what you can do with bbb-configs. But before you can get started you might need to install some dependecies so everything will work properly.
 
-### 1. Install dependencies
+### 1. Install OpenWRT build dependencies
 
-Depending on your distro you might need to use a different package management system than `apt`.
+First install the OpenWRT build dependencies. You can find the dependencies for your specific Linux distribution [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
+
+### 2. Install BBB-configs dependencies
+
+Now install the BBB-configs dependencies. Depending on your distributions you might need to use a different package management system than `apt`.
 
 ```sh
 apt update
@@ -51,7 +55,7 @@ pip3 install -r requirements.txt
 
 You can find what dependencies you need for your specific linux-distro [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
 
-
+### 3. Generate images
 
 ### 2. What do you want to set up?
 
@@ -69,6 +73,8 @@ You can find what dependencies you need for your specific linux-distro [here](ht
   ```
 
   or by passing locations or hostnames as comma separated list even with wildcards if properly quoted
+
+### 4. Flash images
 
   ```sh
   ./generate-images.sh location1,host1,host2,location2,"host-*","location-*"

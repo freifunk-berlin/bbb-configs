@@ -1,6 +1,6 @@
 ---
 target: mediatek/filogic
-openwrt_version: snapshot
+openwrt_version: 24.10-SNAPSHOT
 brand_nice: OpenWrt
 model_nice: One
 

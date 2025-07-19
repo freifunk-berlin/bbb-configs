@@ -76,7 +76,6 @@ networks:
       koepi-simeon: 4
       koepi-ap1: 10
 
-
 location__channel_assignments_11a_standard__to_merge:
   koepi-core: 44-40
   koepi-ap1: 36-40

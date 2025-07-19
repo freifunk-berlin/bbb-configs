@@ -24,6 +24,10 @@ hosts:
     model: "ubnt_rocket-5ac-lite"
 
 snmp_devices:
+  - hostname: rio-poe
+    address: 10.31.134.2
+    snmp_profile: edgeswitch
+
   - hostname: rio-emma
     address: 10.31.134.3
     snmp_profile: airos_6
