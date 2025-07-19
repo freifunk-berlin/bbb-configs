@@ -41,6 +41,10 @@ hosts:
   #   model: "ubnt_nanostation-m2_xm"
 
 snmp_devices:
+  - hostname: magda-switch
+    address: 10.31.83.114
+    snmp_profile: edgeswitch
+
   - hostname: magda-sama
     address: 10.31.83.115
     snmp_profile: airos_8
