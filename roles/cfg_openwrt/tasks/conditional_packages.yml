@@ -1,19 +1,19 @@
 ---
 - name: "Add irqbalance if multicore"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + ['irqbalance'] }}"
   when:
     - multicore|default(false)|bool
 
 - name: "Add airos-dfs-reset if configured"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + ['airos-dfs-reset'] }}"
   when:
     - airos_dfs_reset|default([])|length > 0
     - role == 'corerouter'
 
 - name: "Add Dawn + Luci app for corerouters"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + [item] }}"
   when:
     - role == 'corerouter' or role == 'ap'
@@ -26,7 +26,7 @@
     - umdns
 
 - name: "Add tunspace if configured"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + ['tunspace', 'wireguard-tools'] }}"
   when:
     - networks is defined
@@ -34,14 +34,14 @@
     - role == 'corerouter'
 
 - name: "Add zram-swap on low mem and big flash"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + ['zram-swap'] }}"
   when:
     - low_mem | default(false)
     - not (low_flash | default(false))
 
 - name: "Add debugging-packages on core-routers"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + ['mosh-server', 'tmux'] }}"
   when:
     - role == 'corerouter'
@@ -49,7 +49,7 @@
     - not (low_flash | default(false))
 
 - name: "Remove or replace packages on low mem and low flash"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + [item] }}"
   when: low_mem | default(false) or low_flash | default(false)
   loop:
@@ -73,24 +73,24 @@
     - -vnstat
 
 - name: "Remove Luci on low mem and low flash"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + ['-' + item] }}"
   when: (low_mem | default(false) or low_flash | default(false)) and role != "corerouter"
   loop: "{{ all_luci_base__packages__to_merge }}"
 
 - name: "Disable uhttpd on low mem"
-  set_fact:
+  ansible.builtin.set_fact:
     disabled_services: "{{ disabled_services + ['uhttpd'] }}"
   when: low_mem | default(false)
 
 - name: "Add ip-bridge if dsa target"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + ['ip-bridge'] }}"
   when:
     - dsa_ports is defined
 
 - name: "Add poemgr if poemgr target"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + ['poemgr'] }}"
   when:
     - poemgr_ports is defined
