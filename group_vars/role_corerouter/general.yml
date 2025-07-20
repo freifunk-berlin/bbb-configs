@@ -1,5 +1,4 @@
 ---
-
 wireless_profile: disable
 
 role_corerouter_sysctl__to_merge:

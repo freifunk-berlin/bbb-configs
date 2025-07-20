@@ -82,7 +82,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
- # MESH - LAN
+  # MESH - LAN
   - vid: 30
     role: mesh
     name: mesh_lan

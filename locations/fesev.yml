@@ -1,5 +1,4 @@
 ---
-
 location: fesev
 location_nice: Siegfriedstraße 183
 latitude: 52.5196117669
@@ -112,7 +111,6 @@ location__channel_assignments_11g_standard__to_merge:
   fesev-ap1: 5-20
   fesev-ap2: 9-20
   fesev-ap4: 13-20
-
 # channel-bandwith-txpower in dbm
 
 # ap1: eap225 north            - 2+5ghz

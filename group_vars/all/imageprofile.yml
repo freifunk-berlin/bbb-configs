@@ -10,7 +10,6 @@ imagebuilder: >
   'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version
   }}/targets/{{ target }}/{{ imagebuilder_filename }}
 feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/{{ instr_set }}/falter"
-
 all__packages__to_merge:
   - collectd-mod-interface
   - collectd-mod-iwinfo
