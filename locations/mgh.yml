@@ -1,5 +1,4 @@
 ---
-
 location: mgh
 location_nice: Mehrgenerationenhaus Wassertorstraße
 latitude: 52.500439
@@ -47,7 +46,6 @@ networks:
     untagged: true
     assignments:
       mgh-core: 1
-
 # location__channel_assignments_11a_standard__to_merge:
 #  mgh-core: 36-20-15
 

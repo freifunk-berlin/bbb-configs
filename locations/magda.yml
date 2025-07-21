@@ -1,5 +1,4 @@
 ---
-
 location: magda
 location_nice: Magdalenenstraße 19, 10365 Berlin
 latitude: 52.514072806
@@ -126,7 +125,6 @@ location__channel_assignments_11a_standard__to_merge:
   magda-ap2: 36-20
   magda-ap3: 44-20
   magda-ap-remise: 36-40
-
 # channel-bandwith-txpower in dbm
 
 # ap1: hof - 5ghz

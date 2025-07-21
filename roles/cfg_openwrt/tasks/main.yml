@@ -1,25 +1,25 @@
 ---
 - name: Include tasks for merging variables
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: merge_vars.yml
     apply:
       tags: always
   tags: always
 
 - name: Include tasks for conditional packages
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: conditional_packages.yml
     apply:
       tags: always
   tags: always
 
 - name: Prepare some variables (1)
-  set_fact:
+  ansible.builtin.set_fact:
     basedir: "{{ playbook_dir }}/tmp"
   tags: always
 
 - name: Prepare some variables
-  set_fact:
+  ansible.builtin.set_fact:
     configs_dir: "{{ basedir }}/configs/{{ inventory_hostname }}"
     dl_dir: "{{ basedir }}/dl/"
     build_dir: "{{ basedir }}/build/{{ inventory_hostname }}"
@@ -28,28 +28,28 @@
   tags: always
 
 - name: Create directory
-  file:
+  ansible.builtin.file:
     path: "{{ configs_dir }}"
     state: directory
     mode: "755"
   tags: always
 
 - name: Include render_etc.yml
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: render_etc.yml
     apply:
       tags: always
   tags: always
 
 - name: Include add_symlinks.yml
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: add_symlinks.yml
     apply:
       tags: always
   tags: always
 
 - name: Add poemgr config if poemgr target
-  template:
+  ansible.builtin.template:
     src: "{{ role_path }}/templates/common/config/poemgr.j2"
     dest: "{{ configs_dir }}/etc/config/poemgr"
     mode: "644"
@@ -58,7 +58,7 @@
   tags: always
 
 - name: "Make sure /lib/firmware is present"
-  file:
+  ansible.builtin.file:
     dest: "{{ configs_dir }}/lib/firmware/ath10k"
     state: directory
     recurse: true
@@ -66,7 +66,7 @@
   tags: always
 
 - name: "Configure ath10k-ct driver"
-  copy:
+  ansible.builtin.copy:
     dest: "{{ configs_dir }}/lib/firmware/ath10k/fwcfg-{{ item.id }}.txt"
     content: "{{ item.config }}"
     mode: "644"
@@ -74,14 +74,14 @@
   tags: always
 
 - name: Include fix_permissions.yml
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: fix_permissions.yml
     apply:
       tags: always
   tags: always
 
 - name: Include image generation
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: imagebuilder.yml
     apply:
       tags: always
@@ -91,7 +91,7 @@
     - flash
 
 - name: Include image flash
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: flash.yml
     apply:
       tags: always
@@ -101,7 +101,7 @@
   when: ipv6_prefix is defined
 
 - name: Include wikiupdater
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: wikiupdater.yml
     apply:
       tags: wiki

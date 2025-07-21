@@ -1,5 +1,4 @@
 ---
-
 # freifunk_global_prefix -> has been migrated to group_vars/all/general.yml
 freifunk_wahlkreis_prefixes:
   - 2001:bf7:750::/44

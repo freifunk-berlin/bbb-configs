@@ -1,10 +1,10 @@
 ---
 - name: "Define MGMT prefix number"
-  set_fact:
+  ansible.builtin.set_fact:
     mgmt_network: "{{ networks | selectattr('role', 'equalto', 'mgmt') | first }}"
 
 - name: "Set ansible ssh target from IPv6 Prefix"
-  set_fact:
+  ansible.builtin.set_fact:
     ansible_ssh_host: >-
       {{ (
         ipv6_prefix
@@ -16,8 +16,7 @@
 
 - name: "Transfer image to remote host:"
   changed_when: false
-  command: scp -O -o StrictHostKeyChecking=no {{ image }} {{ ansible_user }}@[{{ ansible_ssh_host }}]:/tmp/
-
+  ansible.builtin.command: scp -O -o StrictHostKeyChecking=no {{ image }} {{ ansible_user }}@[{{ ansible_ssh_host }}]:/tmp/
 - name: "Launch Sysupgrade"
   changed_when: false
-  command: ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_ssh_host }} "sysupgrade -n /tmp/{{ inventory_hostname }}.bin"
+  ansible.builtin.command: ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_ssh_host }} "sysupgrade -n /tmp/{{ inventory_hostname }}.bin"

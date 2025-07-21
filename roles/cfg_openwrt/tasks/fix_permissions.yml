@@ -1,22 +1,22 @@
 ---
 - name: Set permission for dropbear directory
-  file:
+  ansible.builtin.file:
     path: "{{ configs_dir }}/etc/dropbear/"
     mode: "700"
 
 - name: Set permission for authorized_keys
-  file:
+  ansible.builtin.file:
     path: "{{ configs_dir }}/etc/dropbear/authorized_keys"
     mode: "600"
 
 - name: Set permission for replace_secrets script
-  file:
+  ansible.builtin.file:
     path: "{{ configs_dir }}/etc/init.d/replace_secrets"
     mode: "755"
   when: role != "gateway"
 
 - name: Set permission for force_mcast_mld_reports.sh script
-  file:
+  ansible.builtin.file:
     path: "{{ configs_dir }}/etc/force_mcast_mld_reports.sh"
     mode: "755"
   when: role in ['corerouter', 'gateway']
