@@ -10,14 +10,14 @@ contacts:
 hosts:
   - hostname: wilgu10-core
     role: corerouter
-    model: "linksys_e8450-ubi"
+    model: "bananapi_bpi-r4"
     wireless_profile: wilgu10
     openwrt_version: snapshot
     host__rclocal__to_merge:
       - |
-        # Balcony is connected to lan2
-        uci set network.vlan_10.ports='lan1:u*' # mesh_sama
-        uci set network.vlan_41.ports='wan:u* lan2:u* lan3:u* lan4:u*' # dhcp
+        # Balcony is connected to wan
+        uci set network.vlan_10.ports='wan:u*' # mesh_sama
+        uci set network.vlan_41.ports='sfp-lan:u* sfp-wan:u* lan1:u* lan2:u* lan3:u*' # dhcp
         uci commit network; reload_config
 
   - hostname: wilgu10-east-nf
@@ -32,7 +32,7 @@ hosts:
 
   - hostname: wilgu10-int
     role: ap
-    model: "linksys_e8450-ubi"
+    model: "bananapi_bpi-r4"
     wireless_profile: wilgu10
     openwrt_version: snapshot
 
@@ -118,6 +118,15 @@ networks:
       wilgu10-printer: 2
     untagged: true
 
+  - vid: 45
+    name: iot
+    role: dhcp
+    prefix: 10.31.196.48/28
+    inbound_filtering: true
+    assignments:
+      wilgu10-core: 1
+    ipv6_subprefix: 11
+
   - vid: 50
     role: dhcp
     name: w10host
@@ -146,7 +155,7 @@ location__wireless_profiles__to_merge:
         encryption: none
         network: dhcp
         radio: [11a_standard, 11g_standard]
-        ifname_hint: ff
+        ifname_hnt: ff
         owe_transition_ifname_hint: ffowe
 
       - mode: ap
@@ -154,7 +163,7 @@ location__wireless_profiles__to_merge:
         hidden: true
         encryption: owe
         network: dhcp
-        radio: [11a_standard, 11g_standard]
+        radio: [11ax_standard, 11a_standard, 11g_standard]
         ifname_hint: ffowe
         owe_transition_ifname_hint: ff
         ieee80211w: 2
@@ -164,7 +173,7 @@ location__wireless_profiles__to_merge:
         encryption: sae
         key: 'file:/root/wifi_pass'
         network: prdhcp
-        radio: 11a_standard
+        radio: [11a_standard, 11ax_standard]
         ifname_hint: pr
 
       - mode: ap
@@ -174,6 +183,14 @@ location__wireless_profiles__to_merge:
         network: prdhcp
         radio: 11g_standard
         ifname_hint: pr
+
+      - mode: ap
+        ssid: losWlanosLocos_iot
+        encryption: sae-mixed
+        key: 'file:/root/wifi_pass_iot'
+        network: iot
+        radio: 11g_standard
+        ifname_hint: iot
 
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
