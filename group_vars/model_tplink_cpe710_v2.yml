@@ -1,0 +1,23 @@
+---
+target: ath79/generic
+brand_nice: TP-Link
+model_nice: CPE710
+version_nice: v2
+
+openwrt_version: 24.10-SNAPSHOT
+
+int_port: eth0
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: VHT
+    path: pci0000:00/0000:00:00.0
+    ifname_hint: wlan5
+
+leds:
+  - name: LAN
+    sysfs: blue:lan
+    trigger: netdev
+    mode: link tx rx
+    dev: eth0
