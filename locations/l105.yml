@@ -20,7 +20,7 @@ hosts:
 snmp_devices:
   - hostname: l105-poe
     address: 10.31.127.130
-    snmp_profile: edgeswitch
+    snmp_profile: swos_lite
 
   - hostname: l105-ost-60g
     address: 10.31.127.131
