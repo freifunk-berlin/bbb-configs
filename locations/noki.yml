@@ -23,8 +23,15 @@ contacts:
 hosts:
   - hostname: noki-core
     role: corerouter
-    model: "dlink_dap-x1860-a1"
+    model: "cudy_tr3000-v1"
     wireless_profile: noki
+    host__rclocal__to_merge:
+      - |
+        # untag DHCP on LAN port
+        uci set network.vlan_40.ports='lan:u'
+        # untag UPLK on WAN port
+        uci set network.vlan_50.ports='wan:u'
+        uci commit network; reload_config
   - hostname: noki-ap
     role: ap
     model: "dlink_dap-x1860-a1"
@@ -158,7 +165,6 @@ networks:
   # UPLK - 10.31.215.64/27 as /32
   - vid: 50
     role: uplink
-    untagged: true
 
   - role: tunnel
     ifname: ts_wg0
