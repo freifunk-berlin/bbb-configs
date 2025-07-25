@@ -21,7 +21,7 @@ freifunk_wahlkreis_announcement_prefix: 44
 local_asn: 44194
 peer_asn: 25291
 
-role_gateway_sysctl__to_merge:
+role_gateway__sysctl__to_merge:
   net.netfilter.nf_conntrack_max: 524288
 
 ## WIREGUARD SECTION
