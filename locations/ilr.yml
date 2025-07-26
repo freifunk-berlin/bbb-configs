@@ -21,9 +21,9 @@ hosts:
     host__rclocal__to_merge:
       - |
         # untag payload traffic for AF60 to Teufelsberg
-        uci set network.vlan_10.ports='lan1:t lan2 lan3:t lan4:t lan5:t'
+        uci set network.vlan_10.ports='lan1:t lan2:u lan3:t lan4:t lan5:t'
         # untag DHCP on ports 1 and 5 for convenient maintenance'
-        uci set network.vlan_40.ports='lan1 lan2:t lan3:t lan4:t lan5'
+        uci set network.vlan_40.ports='lan1:u lan2:t lan3:t lan4:t lan5:u'
         uci commit network; reload_config
 
 snmp_devices:
