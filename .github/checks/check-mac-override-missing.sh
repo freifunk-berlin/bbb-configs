@@ -15,11 +15,6 @@ else
   location_files=(locations/*.yml)
 fi
 
-# If location files are passed as arguments, override the location_files variable
-if [ "$#" -gt 0 ]; then
-  location_files=("$@")
-fi
-
 # Find all models that require a mac_override
 declare -A mac_override_required_models
 
