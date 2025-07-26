@@ -49,7 +49,7 @@ airos_dfs_reset:
   - name: "spitta-ost"
     target: "10.31.232.196"
     username: "ubnt"
-    password: "/root/pwd.txt"
+    password: "file:/root/pwd.txt"
     daytime_limit: "3-6"
 
 ipv6_prefix: "2001:bf7:860:1000::/56"

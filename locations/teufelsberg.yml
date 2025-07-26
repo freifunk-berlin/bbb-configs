@@ -67,19 +67,19 @@ airos_dfs_reset:
   - name: "teufelsberg-nw"
     target: "10.31.213.10"
     username: "ubnt"
-    password: "/root/pwd.txt"
+    password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "teufelsberg-nord"
     target: "10.31.213.11"
     username: "ubnt"
-    password: "/root/pwd.txt"
+    password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "teufelsberg-ono"
     target: "10.31.213.12"
     username: "ubnt"
-    password: "/root/pwd.txt"
+    password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
 networks:
