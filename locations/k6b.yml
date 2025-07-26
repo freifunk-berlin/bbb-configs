@@ -3,9 +3,9 @@ location: k6b
 location_nice: "Koloniestr. 6b, 13357 Berlin"
 latitude: 52.555001675
 longitude: 13.378418684
-contact_nickname: 'fa_be'
+contact_nickname: "fa_be"
 contacts:
-  - '@fa_be:matrix.org'
+  - "@fa_be:matrix.org"
 
 hosts:
   - hostname: k6b-core
@@ -18,7 +18,7 @@ snmp_devices:
     address: 10.248.41.114
     snmp_profile: airos_6
 
-ipv6_prefix: '2001:bf7:750:8800::/56'
+ipv6_prefix: "2001:bf7:750:8800::/56"
 
 # got following prefixes:
 # Router: 10.248.41.96/27
@@ -55,7 +55,7 @@ networks:
     prefix: 10.248.41.122/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: k6b-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -78,8 +78,8 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      k6b-core: 1    # 10.248.41.113
-      k6b-ptp-1: 2   # 10.248.41.114
+      k6b-core: 1 # 10.248.41.113
+      k6b-ptp-1: 2 # 10.248.41.114
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
@@ -116,6 +116,7 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh
 
 # DNS Servers

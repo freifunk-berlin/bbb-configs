@@ -49,13 +49,11 @@ snmp_devices:
     address: 10.36.190.182
     snmp_profile: af60
 
-
 ipv6_prefix: "2001:bf7:860:900::/56"
 
 # Disable noping as we use dhcp and static assignments
 # both in w10-host network
 dhcp_no_ping: false
-
 
 # Mesh: 10.230.210.104/29
 networks:
@@ -94,8 +92,8 @@ networks:
       wilgu10-int: 2
       wilgu10-east-nf: 3
       wilgu10-west-nf: 4
-      wilgu10-zwingli: 5  # rocket 5 ac lite
-      wilgu10-sama: 6  # af60-lr
+      wilgu10-zwingli: 5 # rocket 5 ac lite
+      wilgu10-sama: 6 # af60-lr
       wilgu10-east-nf-2ghz: 7
 
   - vid: 40
@@ -162,7 +160,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: losWlanosLocos
         encryption: sae
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: prdhcp
         radio: 11a_standard
         ifname_hint: pr
@@ -170,7 +168,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: losWlanosLocos_legacy
         encryption: sae-mixed
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: prdhcp
         radio: 11g_standard
         ifname_hint: pr
@@ -180,6 +178,7 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh
 
 dns_servers:

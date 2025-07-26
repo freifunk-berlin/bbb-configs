@@ -16,21 +16,28 @@ location: noki
 location_nice:
 latitude:
 longitude:
-contact_nickname: 'Noki'
+contact_nickname: "Noki"
 contacts:
-  - '@noki-:matrix.org'
+  - "@noki-:matrix.org"
 
 hosts:
   - hostname: noki-core
     role: corerouter
-    model: "dlink_dap-x1860-a1"
+    model: "cudy_tr3000-v1"
     wireless_profile: noki
+    host__rclocal__to_merge:
+      - |
+        # untag DHCP on LAN port
+        uci set network.vlan_40.ports='lan:u'
+        # untag UPLK on WAN port
+        uci set network.vlan_50.ports='wan:u'
+        uci commit network; reload_config
   - hostname: noki-ap
     role: ap
     model: "dlink_dap-x1860-a1"
     wireless_profile: noki
 
-ipv6_prefix: '2001:bf7:830:1000::/56'
+ipv6_prefix: "2001:bf7:830:1000::/56"
 
 # got following prefixes:
 # Router: 10.31.215.0/24
@@ -78,7 +85,7 @@ networks:
     prefix: 10.31.215.35/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: noki-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -100,7 +107,7 @@ networks:
     prefix: 10.31.215.37/32
     ipv6_subprefix: -23
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: noki-ap
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -140,10 +147,10 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      noki-core: 1   # 10.31.215.1
-      noki-ap: 2     # 10.31.215.2
-      noki-ptp-1: 3  # 10.31.215.3
-      noki-ptp-2: 3  # 10.31.215.3
+      noki-core: 1 # 10.31.215.1
+      noki-ap: 2 # 10.31.215.2
+      noki-ptp-1: 3 # 10.31.215.3
+      noki-ptp-2: 3 # 10.31.215.3
 
   # DHCP (PRIVATE)
   - vid: 43
@@ -158,7 +165,6 @@ networks:
   # UPLK - 10.31.215.64/27 as /32
   - vid: 50
     role: uplink
-    untagged: true
 
   - role: tunnel
     ifname: ts_wg0
@@ -207,7 +213,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: noki
         encryption: sae-mixed
-        key: 'file:/root/wifi-pwd'
+        key: "file:/root/wifi-pwd"
         network: private
         radio: [11a_standard, 11g_standard]
         ifname_hint: pr
@@ -215,7 +221,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: noki-host
         encryption: sae-mixed
-        key: 'file:/root/wifi-pwd-host'
+        key: "file:/root/wifi-pwd-host"
         network: host
         radio: [11a_standard, 11g_standard]
         ifname_hint: ho
@@ -225,6 +231,7 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh
 
 # DNS Servers

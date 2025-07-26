@@ -9,7 +9,6 @@ contacts:
   - noc@stadtfunk.net
 
 hosts:
-
   - hostname: kirchhof-core
     role: corerouter
     model: avm_fritzbox-4040
@@ -28,13 +27,13 @@ hosts:
   - hostname: kirchhof-n-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
-    mac_override: {eth0: 2c:c8:1b:8a:96:e0}
+    mac_override: { eth0: 2c:c8:1b:8a:96:e0 }
     wireless_profile: freifunk_default
 
   - hostname: kirchhof-w-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
-    mac_override: {eth0: 2c:c8:1b:8a:96:28}
+    mac_override: { eth0: 2c:c8:1b:8a:96:28 }
     wireless_profile: freifunk_default
 
   - hostname: kirchhof-nf-keller
@@ -54,7 +53,6 @@ snmp_devices:
 ipv6_prefix: 2001:bf7:820:2300::/56
 
 networks:
-
   - vid: 20
     name: mesh_core
     role: mesh
@@ -149,7 +147,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: khof
         encryption: psk2
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: prdhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: prdhcp
@@ -158,4 +156,5 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh

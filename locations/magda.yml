@@ -6,7 +6,7 @@ latitude: 52.514072806
 longitude: 13.488437533
 altitude: 60
 contacts:
-  - '#ff-site-magda:matrix.org'
+  - "#ff-site-magda:matrix.org"
 
 hosts:
   - hostname: magda-core
@@ -41,6 +41,10 @@ hosts:
   #   model: "ubnt_nanostation-m2_xm"
 
 snmp_devices:
+  - hostname: magda-switch
+    address: 10.31.83.114
+    snmp_profile: edgeswitch
+
   - hostname: magda-sama
     address: 10.31.83.115
     snmp_profile: airos_8
@@ -78,7 +82,7 @@ networks:
     ipv6_subprefix: -2
     # Adjust mesh metric to liese-11-sw-core to prevent using it
     # as a gateway during heavy rain
-    mesh_metric_lqm: ['10.31.205.49 0.2']
+    mesh_metric_lqm: ["10.31.205.49 0.2"]
 
   - vid: 42
     role: mgmt
@@ -122,7 +126,6 @@ location__channel_assignments_11a_standard__to_merge:
   magda-ap2: 36-20
   magda-ap3: 44-20
   magda-ap-remise: 36-40
-
 
 # channel-bandwith-txpower in dbm
 

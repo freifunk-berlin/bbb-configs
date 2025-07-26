@@ -1,5 +1,6 @@
 ---
 role__ssh_keys__to_merge:
   - comment: dpaufler
-    key: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAuMu0TKkVut4KeUsq3n3XDSBw/SgxB4TGsZ8bruRjm8AX4vvrLyZpFcE0MAljqJRhbpRKuMUBFZazPbwVoplGnw49KkTA+KDLVFQQNXD13K0kKcLtP5KuJxiwjLyRShGBgnccItjYqkcPwC+C1jqWdqm5WiwmcQmd9bD+4MhzrgN9g6BLpYiQyDgMoBPgY0AaAVYbuTOdYHTLHOzGmH3cBFGWiwXn8jDWD8uoJOQFQXHpgpKhJRKrE9fXLu3IMSv85YRewiuXlwAiS1j6ok9SpEnUehA3xCGSjTItw9AhXEfXjAmIL6uEymL5KPyygYxphZb8In2v/dqU1qxKhqJv4Q== Daniel Paufler <dpaufler@leo34.net>
-...
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAABIwAAAQEAuMu0TKkVut4KeUsq3n3XDSBw/SgxB4TGsZ8bruRjm8AX4vvrLyZpFcE0MAljqJRhbpRKuMUBFZazPbwVoplGnw49KkTA+KDLVFQQNXD13K0kKcLtP5KuJxiwjLyRShGBgnccItjYqkcPwC+C1jqWdqm5WiwmcQmd9bD+4MhzrgN9g6BLpYiQyDgMoBPgY0AaAVYbuTOdYHTLHOzGmH3cBFGWiwXn8jDWD8uoJOQFQXHpgpKhJRKrE9fXLu3IMSv85YRewiuXlwAiS1j6ok9SpEnUehA3xCGSjTItw9AhXEfXjAmIL6uEymL5KPyygYxphZb8In2v/dqU1qxKhqJv4Q==
+      Daniel Paufler <dpaufler@leo34.net>

@@ -69,7 +69,7 @@ networks:
     prefix: 10.31.92.242/32
     ipv6_subprefix: -3
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: dragonkiez-kiezraum
     mesh_radio: 11g_standard
     mesh_iface: mesh

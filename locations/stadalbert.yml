@@ -5,12 +5,11 @@ location_nice: Torstr. 168
 latitude: 52.52867
 longitude: 13.39561
 altitude: 71
-contact_nickname: 'StAdalbert-FreifunkTeam'
+contact_nickname: "StAdalbert-FreifunkTeam"
 contacts:
-  - 'noc@stadtfunk.net'
+  - "noc@stadtfunk.net"
 
 hosts:
-
   - hostname: stadalbert-core
     role: corerouter
     model: ubnt_usw-flex
@@ -41,7 +40,7 @@ hosts:
   - hostname: stadalbert-nf-roof
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:91:09:09}
+    mac_override: { eth0: dc:2c:6e:91:09:09 }
 
 snmp_devices:
   - hostname: stadalbert-segen
@@ -152,7 +151,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: BAS-Office
         encryption: psk2
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: prdhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: prdhcp

@@ -3,16 +3,16 @@ location: friedland3
 location_nice: Kolonie Friedland 3, Sangerhauser Weg 12, 12349 Berlin
 latitude: 52.430754
 longitude: 13.408408
-contact_nickname: 'Kolonie Friedland 3'
+contact_nickname: "Kolonie Friedland 3"
 contacts:
-  - 'ff-f3@kolonie-friedland3.de'
-  - '@kermitderfrosch:matrix.org'
+  - "ff-f3@kolonie-friedland3.de"
+  - "@kermitderfrosch:matrix.org"
 
 hosts:
   - hostname: friedland3-core
     role: corerouter
     model: "dlink_covr-x1860-a1"
-    mac_override: {eth0: 0c:0e:76:cf:27:09}
+    mac_override: { eth0: 0c:0e:76:cf:27:09 }
     wireless_profile: friedland3
     host__rclocal__to_merge:
       - |
@@ -22,7 +22,13 @@ hosts:
         uci set network.vlan_50.ports='internet ethernet:t'
         uci commit network; reload_config
         # Enable legacy rates to enable meshing with neighbors
-        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
+        for radio in $(uci show wireless \
+          | grep "=wifi-device" \
+          | cut -d. -f2 \
+          | cut -d= -f1); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless; reload_config
 
 ipv6_prefix: "2001:bf7:820:3200::/56"
 
@@ -131,4 +137,5 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh

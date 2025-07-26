@@ -8,7 +8,6 @@ altitude: 35
 community: true
 
 hosts:
-
   - hostname: mgh-core
     role: corerouter
     model: "ubnt_edgerouter-x-sfp"
@@ -18,7 +17,6 @@ snmp_devices:
   - hostname: mgh-simeon
     address: 10.31.106.66
     snmp_profile: airos_8
-
 
 ipv6_prefix: "2001:bf7:830:9500::/56"
 

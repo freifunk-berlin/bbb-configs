@@ -1,8 +1,8 @@
 ---
 location: hdk-39
 location_nice: Heidekampgraben 39
-latitude: 52.478578750
-longitude: 13.472220898
+latitude: 52.478526474
+longitude: 13.47233355
 community: true
 
 hosts:
@@ -13,9 +13,13 @@ hosts:
     host__rclocal__to_merge:
       - |
         # Enable legacy rates to enable meshing with neighbors
-        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
+        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless
+        reload_config
 
-ipv6_prefix: '2001:bf7:840:2900::/56'
+ipv6_prefix: "2001:bf7:840:2900::/56"
 
 # Router: 10.248.8.0/26 2001:bf7:840:2900::/56
 # --MGMT: 10.248.8.0/28

@@ -1,0 +1,22 @@
+---
+target: ramips/mt7621
+brand_nice: Genexis
+model_nice: Pulse EX400
+
+openwrt_version: 24.10-SNAPSHOT
+
+dsa_ports:
+  - lan
+  - wan
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: VHT
+    path: 1e140000.pcie/pci0000:00/0000:00:02.0/0000:02:00.0
+    ifname_hint: wlan5
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: 1e140000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
+    ifname_hint: wlan2

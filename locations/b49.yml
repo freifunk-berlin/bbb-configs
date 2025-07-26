@@ -3,23 +3,23 @@ location: b49
 location_nice: "Badstraße 49, 13357 Berlin"
 latitude: 52.552578266
 longitude: 13.380162120
-contact_nickname: 'Noki'
+contact_nickname: "Noki"
 contacts:
-  - '@noki-:matrix.org'
+  - "@noki-:matrix.org"
 
 hosts:
   - hostname: b49-core
     role: corerouter
     model: "dlink_covr-x1860-a1"
     wireless_profile: freifunk_default
-    mac_override: {eth0: 0c:0e:76:cf:2e:41}
+    mac_override: { eth0: 0c:0e:76:cf:2e:41 }
 
 snmp_devices:
   - hostname: b49-nanostation
     address: 10.31.240.2
     snmp_profile: airos_8
 
-ipv6_prefix: '2001:bf7:830:b500::/56'
+ipv6_prefix: "2001:bf7:830:b500::/56"
 
 # got following prefixes:
 # Router: 10.31.240.0/24
@@ -60,7 +60,7 @@ networks:
     ipv6_subprefix: -21
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: b49-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -83,8 +83,8 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      b49-core: 1         # 10.31.240.1
-      b49-nanostation: 2  # 10.31.240.2
+      b49-core: 1 # 10.31.240.1
+      b49-nanostation: 2 # 10.31.240.2
 
   # UPLK
   - vid: 50

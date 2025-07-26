@@ -1,0 +1,81 @@
+---
+
+location: khsb2
+location_nice: Katholische Schule für Sozialwesen Berlin, Köpenicker Allee 39-57, 10318 Berlin
+latitude: 52.488457779
+longitude: 13.533831239
+contact_nickname: "khsb-admin"
+contact_name: "Rene Lechler"
+contacts:
+  - "edv@khsb-berlin.de"
+  - "030 / 50 10 10 66"
+  - "Eingerichtet von Projekt SOLC 07/2025, Dauerbetrieb KHSB IT, OpenWRT One"
+
+hosts:
+  - hostname: khsb2-core
+    role: corerouter
+    model: "openwrt_one"
+    wireless_profile: freifunk_default
+
+ipv6_prefix: "2001:bf7:840:1300::/56"
+
+# ROUTER: 10.248.66.192/27
+# --MGMT: 10.248.66.192/28
+# --DHCP: 10.248.66.224/27
+# --MESH: 10.31.226.57/32
+# --MESH: 10.31.226.58/32
+# --UPLK: 10.31.226.59/32
+
+networks:
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g_core
+    prefix: 10.31.226.57/32
+    ipv6_subprefix: -20
+    mesh_ap: khsb2-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g_core
+    prefix: 10.31.226.58/32
+    ipv6_subprefix: -21
+    # make mesh_metric for 2GHz worse than 5GHz
+    mesh_metric_lqm: ["default 0.8"]
+    mesh_ap: khsb2-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.66.224/27
+    ipv6_subprefix: 0
+    assignments:
+      khsb2-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.66.192/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      khsb2-core: 1
+
+  # UPLK
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.226.59/32
+    wireguard_port: 51820

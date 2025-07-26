@@ -4,9 +4,9 @@ location_nice: Kinzigstraße 9, 10247 Berlin
 latitude: 52.51378093260403
 longitude: 13.466068518122656
 altitude: 60
-contact_nickname: 'K9 Freifunk Team'
+contact_nickname: "K9 Freifunk Team"
 contacts:
-  - 'freifunk@kinzig9.de'
+  - "freifunk@kinzig9.de"
 
 hosts:
   - hostname: k9-core
@@ -29,7 +29,7 @@ hosts:
       - name: lan2
         port: 3
         disabled: 1
-      - name: lan3  # PoE @ Loge
+      - name: lan3 # PoE @ Loge
         port: 2
         disabled: 0
       - name: lan4
@@ -62,7 +62,7 @@ snmp_devices:
     address: 10.31.9.244
     snmp_profile: airos_8
 
-ipv6_prefix: '2001:bf7:830:8d00::/56'
+ipv6_prefix: "2001:bf7:830:8d00::/56"
 
 # K9 Prefixes:
 # 10.31.9.0/24
@@ -87,7 +87,7 @@ networks:
     prefix: 10.31.9.225/32
     ipv6_subprefix: -2
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.5']
+    mesh_metric_lqm: ["default 0.5"]
 
   # DHCP
   - vid: 40
@@ -108,11 +108,11 @@ networks:
     ipv6_subprefix: 1
     assignments:
       k9-core: 1
-      k9-switch-roof: 2         # uisp-s
-      k9-sama: 3                # wave nano
+      k9-switch-roof: 2 # uisp-s
+      k9-sama: 3 # wave nano
       k9-zwingli: 4
-      k9-switch-front-house: 7  # ubiquiti usw-flex-poe
-      k9-switch-back-house: 8   # hpe 2520g-poe
+      k9-switch-front-house: 7 # ubiquiti usw-flex-poe
+      k9-switch-back-house: 8 # hpe 2520g-poe
       k9-ap-loge: 9
       k9-ap-groessenwahn: 10
 

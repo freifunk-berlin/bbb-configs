@@ -11,7 +11,6 @@ local_asn: 65023
 peer_asn: 44194
 
 hosts:
-
   - hostname: ak36-gw
     role: gateway
     model: "x86-64"
@@ -44,7 +43,6 @@ snmp_devices:
     address: 10.31.130.139
     snmp_profile: af60
 
-
 # AK36 got following prefixes:
 # Router: 10.31.130.128/26 2001:bf7:750:4000::/56
 # --MGMT: 10.31.130.128/27
@@ -62,18 +60,18 @@ mgmt:
   ipv4: 10.31.130.129/27
   ipv6: 2001:bf7:750:4000::/64
   assignments:
-    ak36-gw: 1            # .129
-    ak36-poe-roof: 3      # .131
-    ak36-philmel: 4       # .132
-    ak36-flughafen: 5     # .133
-    ak36-dtmb: 6          # .134
-    ak36-rhnk: 8          # .136
+    ak36-gw: 1 # .129
+    ak36-poe-roof: 3 # .131
+    ak36-philmel: 4 # .132
+    ak36-flughafen: 5 # .133
+    ak36-dtmb: 6 # .134
+    ak36-rhnk: 8 # .136
     # hypervisor: 9       # .137 (strange)
-    ak36-teufelsberg: 11  # .139
+    ak36-teufelsberg: 11 # .139
     # services
-    config: 22            # .150
-    monitor: 23           # .151
-    uisp: 30              # .158
+    config: 22 # .150
+    monitor: 23 # .151
+    uisp: 30 # .158
 
 # Mesh Network: 10.31.130.160/27
 # Not listed here: strom-gw 10.31.130.190/32

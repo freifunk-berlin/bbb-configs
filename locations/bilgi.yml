@@ -9,7 +9,6 @@ contact_nickname: Bilgisaray Kollektiv
 community: true
 
 hosts:
-
   - hostname: bilgi-core
     role: corerouter
     model: "avm_fritzbox-4040"
@@ -23,7 +22,6 @@ hosts:
 ipv6_prefix: "2001:bf7:830:cc00::/56"
 
 networks:
-
   - vid: 20
     role: mesh
     name: mesh_5ghz

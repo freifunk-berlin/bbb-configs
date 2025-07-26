@@ -14,15 +14,15 @@ model__packages__to_merge:
   - "-kmod-forcedeth -kmod-igb -kmod-ixgbe -kmod-r8169 -kmod-tg3"
   - "intel-microcode"
   - "kmod-igc kmod-i40e" # Network: Only igc for 2.5G Ports and i40 for SFP+ Ports are required
-#  - "kmod-it87-wdt" # Watchdog (only supported in kernel 6.8+)
+  #  - "kmod-it87-wdt" # Watchdog (only supported in kernel 6.8+)
   - "lm-sensors"
 #  - "kmod-hwmon-it87" # Not yet supported in mainline
-
 
 # -> Install latest BIOS update https://kb.protectli.com/kb/bios-versions-for-the-vault/
 # -> Install latest firmware (nvm) for 10G NIC
 # Instructions:
-# - Download Latest Release https://www.intel.de/content/www/de/de/download/18190/non-volatile-memory-nvm-update-utility-for-intel-ethernet-network-adapter-700-series.html
+# - Download Latest Release:
+#   https://www.intel.de/content/www/de/de/download/18190/non-volatile-memory-nvm-update-utility-for-intel-ethernet-network-adapter-700-series.html
 # - Copy EFI Version along with a edk2 efishell on a USB Key
 # - Boot
 # - fs0:
@@ -37,7 +37,6 @@ model__packages__to_merge:
 # eth4 - SFP+ 1 (i40e, 10G)
 # eth5 - SFP+ 2 (i40e, 10G)
 
-
 # Overriding network names doesnt work with dynamically loaded kmods, because preinit is faster
 ## Make interface names stable and match them to whats written on the case
 ## TODO: Investigate and bring upstream
@@ -50,7 +49,6 @@ model__packages__to_merge:
 #          ucidef_set_network_device_path "eth4" "pci0000:00/0000:00:1c.7/0000:05:00.0"
 #          ucidef_set_interfaces_lan_wan "eth1 eth2 eth3 eth4 sfp1" "sfp2"
 #          ;;
-
 
 # Device has two console ports
 # ttyS0 - RJ45 Port

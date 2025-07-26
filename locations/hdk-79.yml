@@ -1,21 +1,21 @@
 ---
 location: hdk-79
 location_nice: Heidekampgraben 79
-latitude: 52.478487267
-longitude: 13.469688892
+latitude: 52.478376180
+longitude: 13.47003222
 community: true
 
 hosts:
   - hostname: hdk-79
     role: corerouter
     model: "mikrotik_sxtsq-2-lite"
-    mac_override: {eth0: 08:55:31:d9:3d:bd}
+    mac_override: { eth0: 08:55:31:d9:3d:bd }
     wireless_profile: freifunk_default
     # remove some packages for smaller image size (only 64 MB of memory)
     low_mem: true
     low_flash: true
 
-ipv6_prefix: '2001:bf7:840:3d00::/56'
+ipv6_prefix: "2001:bf7:840:3d00::/56"
 
 # Router: 10.248.32.64/26 2001:bf7:840:3d00::/56
 # --MGMT: 10.248.32.64/28
@@ -55,7 +55,7 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      hdk-79: 1  # 10.248.32.65
+      hdk-79: 1 # 10.248.32.65
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:

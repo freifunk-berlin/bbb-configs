@@ -1,67 +1,57 @@
 ---
 
 location: koepi
-location_nice: koepi
+location_nice: koepi, Köpenicker Straße 137, 10179 Berlin
 latitude: 52.507668
 longitude: 13.426087
 altitude: 52
 community: true
 
 hosts:
-
   - hostname: koepi-core
     role: corerouter
-    model: "bananapi_bpi-r64"
-    ipv6_prefix: "2001:bf7:750:3600::/56"
+    model: "cudy_wr3000-v1"
+    wireless_profile: freifunk_default
 
   - hostname: koepi-ap1
     role: ap
-    model: "tplink_archer-c50-v3"
-    wireless_profile: koepi
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: dc:2c:6e:91:0f:5e
 
-  - hostname: koepi-ap2
-    role: ap
-    model: "tplink_archer-c50-v3"
-    wireless_profile: koepi
+snmp_devices:
+  - hostname: koepi-switch
+    address: 10.31.102.2
+    snmp_profile: edgeswitch
 
-  - hostname: koepi-ap3
-    role: ap
-    model: "tplink_tl-wdr4900-v1"
-    wireless_profile: koepi
+  - hostname: koepi-emma
+    address: 10.31.102.3
+    snmp_profile: airos_8
 
-  - hostname: koepi-ap4
-    role: ap
-    model: "avm_fritzbox-4040"
-    wireless_profile: koepi
+  - hostname: koepi-simeon
+    address: 10.31.102.4
+    snmp_profile: airos_8
 
-  - hostname: koepi-ap5
-    role: ap
-    model: "avm_fritzbox-7530"
-    wireless_profile: koepi
+# --MGMT: 10.31.102.0/27
+# --MESH: single /32 are reserved
+# --DHCP: 10.31.102.128/25
+# --FREE: 10.31.123.0/25
 
+ipv6_prefix: "2001:bf7:750:3600::/56"
 
 networks:
   - vid: 10
     role: mesh
     name: mesh_emma
     prefix: 10.31.18.130/32
-    ipv6_subprefix: -1
+    ipv6_subprefix: -10
     ptp: true
 
   - vid: 11
     role: mesh
     name: mesh_simeon
     prefix: 10.31.19.8/32
-    ipv6_subprefix: -2
-    mesh_metric: 256
-    ptp: true
-
-  - vid: 12
-    role: mesh
-    name: mesh_rhnk
-    prefix: 10.31.38.204/32
-    ipv6_subprefix: -3
-    mesh_metric: 256
+    ipv6_subprefix: -11
     ptp: true
 
   - vid: 40
@@ -69,17 +59,6 @@ networks:
     inbound_filtering: true
     enforce_client_isolation: true
     prefix: 10.31.102.128/25
-    ipv6_subprefix: 0
-    assignments:
-      koepi-core: 1
-
-  - vid: 41
-    role: dhcp
-    name: home
-    no_corerouter_dns_record: true
-    inbound_filtering: true
-    enforce_client_isolation: false
-    prefix: 10.31.123.0/25
     ipv6_subprefix: 1
     assignments:
       koepi-core: 1
@@ -89,73 +68,18 @@ networks:
     prefix: 10.31.102.0/27
     gateway: 1
     dns: 1
-    ipv6_subprefix: 2
+    ipv6_subprefix: 0
     assignments:
       koepi-core: 1
-      koepi-poe: 2
+      koepi-switch: 2
       koepi-emma: 3
-      koepi-rhnk: 4
-      koepi-simeon: 5
+      koepi-simeon: 4
       koepi-ap1: 10
-      koepi-ap2: 11
-      koepi-ap3: 12
-      koepi-ap4: 13
-      koepi-ap5: 14
-      koepi-trailer1: 20
-      koepi-trailer2: 21
-      koepi-front: 22
 
 location__channel_assignments_11a_standard__to_merge:
-  koepi-ap1: 40-20
-  koepi-ap2: 44-20
-  koepi-ap3: 36-20
-  koepi-ap4: 40-20
-  koepi-ap5: 36-20
+  koepi-core: 44-40
+  koepi-ap1: 36-40
 
 location__channel_assignments_11g_standard__to_merge:
-  koepi-ap1: 6-20
-  koepi-ap2: 11-20
-  koepi-ap3: 1-20
-  koepi-ap4: 6-20
-  koepi-ap5: 1-20
-
-# Special vlan config:
-# koepi-ap5 40: 0t 1t 2 3 4t
-
-location__wireless_profiles__to_merge:
-  - name: koepi
-    ifaces:
-      - mode: ap
-        ssid: berlin.freifunk.net
-        encryption: none
-        network: dhcp
-        radio: [11a_standard, 11g_standard]
-        ifname_hint: ff
-
-      - mode: ap
-        ssid: berlin.freifunk.net Encrypted
-        encryption: owe
-        network: dhcp
-        radio: [11a_standard, 11g_standard]
-        ifname_hint: ffowe
-        ieee80211w: 2
-
-      - mode: ap
-        ssid: koepi
-        encryption: sae-mixed
-        key: 'file:/root/wifi_pass'
-        network: home
-        radio: [11a_standard, 11g_standard]
-        ifname_hint: home
-
-dns_servers:
-  # quad9
-  - 9.9.9.9
-  - 149.112.112.112
-  - 2620:fe::fe
-  - 2620:fe::9
-  # cloudflare
-  - 1.1.1.1
-  - 1.0.0.1
-  - 2606:4700:4700::1111
-  - 2606:4700:4700::1001
+  koepi-core: 1-20
+  koepi-ap1: 13-20

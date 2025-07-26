@@ -5,12 +5,11 @@ location_nice: Siegfriedstraße 183
 latitude: 52.5196117669
 longitude: 13.4988631290
 altitude: 71
-contact_nickname: 'Fes e.V. Freifunk AG'
+contact_nickname: "Fes e.V. Freifunk AG"
 contacts:
-  - 'fesev+freifunk@systemli.org'
+  - "fesev+freifunk@systemli.org"
 
 hosts:
-
   - hostname: fesev-core
     role: corerouter
     model: "avm_fritzbox-7530"

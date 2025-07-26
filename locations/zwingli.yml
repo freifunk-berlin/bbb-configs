@@ -7,7 +7,6 @@ altitude: 77
 community: true
 
 hosts:
-
   - hostname: zwingli-core
     role: corerouter
     model: "linksys_e8450-ubi"
@@ -30,13 +29,13 @@ hosts:
   - hostname: zwingli-nno-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
-    mac_override: {eth0: dc:2c:6e:c4:39:03}
+    mac_override: { eth0: dc:2c:6e:c4:39:03 }
     wifi_roaming: true
 
   - hostname: zwingli-nord-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
-    mac_override: {eth0: 2c:c8:1b:88:d4:95}
+    mac_override: { eth0: 2c:c8:1b:88:d4:95 }
     wifi_roaming: true
 
   - hostname: zwingli-ost-nf-2ghz
@@ -57,7 +56,7 @@ hosts:
   - hostname: zwingli-west-nf-5ghz
     role: ap
     model: mikrotik_sxtsq-5-ac
-    mac_override: {eth0: dc:2c:6e:91:0f:be}
+    mac_override: { eth0: dc:2c:6e:91:0f:be }
     wifi_roaming: true
 
 airos_dfs_reset:
@@ -126,7 +125,6 @@ ipv6_prefix: "2001:bf7:830:9800::/56"
 # ipv4-prefix: 10.31.115.0/24
 
 networks:
-
   # 10.31.115.32/27 Mesh Prefix (32)
   - vid: 10
     role: mesh
@@ -159,7 +157,7 @@ networks:
     ipv6_subprefix: -5
     # prefer routing via emma over sama to use ohlauer as gateway)
     mesh_metric: 256
-    mesh_metric_lqm: ['default 0.5']
+    mesh_metric_lqm: ["default 0.5"]
     ptp: true
 
   - vid: 16
@@ -186,7 +184,6 @@ networks:
     mesh_metric: 128
     ptp: true
 
-
   # 11s mesh 2ghz
   - vid: 21
     role: mesh
@@ -197,7 +194,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
     mesh_metric_lqm:
-      - default 0.4                 # penalty on wild meshing
+      - default 0.4 # penalty on wild meshing
 
   - vid: 23
     role: mesh
@@ -208,7 +205,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
     mesh_metric_lqm:
-      - default 0.4                 # penalty on wild meshing
+      - default 0.4 # penalty on wild meshing
 
   # 11s mesh 5ghz
   # no mesh interface for nno-nf-5ghz as there is already one pointing north doing mesh on the default frequency
@@ -221,7 +218,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
-      - default 0.4                 # penalty on wild meshing
+      - default 0.4 # penalty on wild meshing
 
   - vid: 25
     role: mesh
@@ -232,7 +229,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
-      - default 0.4                 # penalty on wild meshing
+      - default 0.4 # penalty on wild meshing
 
   - vid: 27
     role: mesh
@@ -243,7 +240,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
     mesh_metric_lqm:
-      - default 0.4                 # penalty on wild meshing
+      - default 0.4 # penalty on wild meshing
 
   - vid: 40
     role: dhcp
@@ -299,7 +296,7 @@ networks:
 location__channel_assignments_11a_standard__to_merge:
   zwingli-dome-1: 52-80
   zwingli-dome-2: 36-80
-  zwingli-nno-nf-5ghz: 132-40-18                       # EIRP 30dB - Antenna 14dB + Cable loss 2dB = 18dB
+  zwingli-nno-nf-5ghz: 132-40-18 # EIRP 30dB - Antenna 14dB + Cable loss 2dB = 18dB
 
 location__channel_assignments_11g_standard__to_merge:
   zwingli-dome-1: 1-20

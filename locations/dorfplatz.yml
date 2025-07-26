@@ -8,7 +8,6 @@ altitude: 37
 community: true
 
 hosts:
-
   - hostname: dorfplatz-core
     role: corerouter
     model: "linksys_e8450-ubi"
@@ -48,7 +47,6 @@ snmp_devices:
   - hostname: dorfplatz-zwingli
     address: 10.31.75.36
     snmp_profile: airos_8
-
 
 ipv6_prefix: "2001:bf7:830:8200::/56"
 

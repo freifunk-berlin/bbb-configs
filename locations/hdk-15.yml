@@ -1,8 +1,8 @@
 ---
 location: hdk-15
 location_nice: Heidekampgraben 15
-latitude: 52.478675
-longitude: 13.471268
+latitude: 52.478189946
+longitude: 13.4725374
 community: true
 
 hosts:
@@ -11,7 +11,7 @@ hosts:
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
 
-ipv6_prefix: '2001:bf7:840:1d00::/56'
+ipv6_prefix: "2001:bf7:840:1d00::/56"
 
 # config restored from router configuration
 # got following prefixes:

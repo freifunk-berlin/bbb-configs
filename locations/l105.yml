@@ -1,6 +1,6 @@
 ---
 location: l105
-location_nice: Lützowstraße 105
+location_nice: Lützowstraße 105, 10785 Berlin
 latitude: 52.502040
 longitude: 13.369420
 altitude: 62
@@ -20,17 +20,15 @@ hosts:
 snmp_devices:
   - hostname: l105-poe
     address: 10.31.127.130
-    snmp_profile: edgeswitch
+    snmp_profile: swos_lite
 
-  - hostname: l105-rhxb
+  - hostname: l105-ost-60g
     address: 10.31.127.131
     snmp_profile: af60
 
-  # tub is not existent as of 02/24
-  # - hostname: l105-tu
-  #   adress: 10.31.127.132
-  #   snmp_profile: af60
-
+  - hostname: l105-nord-60g
+    address: 10.31.127.132
+    snmp_profile: mikrotik_60g
 
 # L105 got following prefixes:
 # Router: 10.31.127.128/25 2001:bf7:750:3f00::/56
@@ -53,26 +51,26 @@ mgmt:
   ipv4: 10.31.127.129/29
   ipv6: 2001:bf7:750:3f00::/64
   assignments:
-    l105-gw: 1    # .129
-    l105-poe: 2   # .130
-    l105-rhxb: 3  # .131
-    # l105-tu: 4    # .132
+    l105-gw: 1 # .129
+    l105-poe: 2 # .130
+    l105-ost-60g: 3 # .131
+    l105-nord-60g: 4 # .132
 
 # Mesh Network: 10.31.127.160/27
 mesh_links:
-  - name: mesh_rhxb
+  - name: mesh_ost_60g
     ifname: eth1.10
     ipv4: 10.31.127.160/32
     ipv6: 2001:bf7:750:3f01::1/128
     mesh_metric: 128
     ptp: true
 
-  # - name: mesh_tu
-  #   ifname: eth1.11
-  #   ipv4: 10.31.127.161/32
-  #   ipv6: 2001:bf7:750:3f01::2/128
-  #   mesh_metric: 128
-  #   ptp: true
+  - name: mesh_nord_60g
+    ifname: eth1.11
+    ipv4: 10.31.127.161/32
+    ipv6: 2001:bf7:750:3f01::2/128
+    mesh_metric: 256 # Prefer Ost 60g
+    ptp: true
 
   - name: mesh_bbbvpn
     ifname: eth1.32

@@ -1,8 +1,8 @@
 ---
 location: hdk-80
 location_nice: Heidekampgraben 80
-latitude: 52.4783508
-longitude: 13.47084805
+latitude: 52.479571980
+longitude: 13.47096562
 community: true
 
 hosts:
@@ -11,7 +11,7 @@ hosts:
     model: "comfast_cf-ew72"
     wireless_profile: freifunk_default
 
-ipv6_prefix: '2001:bf7:840:2d00::/56'
+ipv6_prefix: "2001:bf7:840:2d00::/56"
 
 # Router: 10.248.9.0/26 2001:bf7:840:2d00::/56
 # --MGMT: 10.248.9.0/28

@@ -1,8 +1,8 @@
 ---
 location: hdk-78a
 location_nice: Heidekampgraben 87a
-latitude: 52.478624490
-longitude: 13.469903469
+latitude: 52.478467664
+longitude: 13.47016096
 community: true
 
 hosts:
@@ -13,7 +13,7 @@ hosts:
     low_mem: true
     low_flash: true
 
-ipv6_prefix: '2001:bf7:840:2800::/56'
+ipv6_prefix: "2001:bf7:840:2800::/56"
 
 # Router: 10.248.7.192/26 2001:bf7:840:2800::/56
 # --MGMT: 10.248.7.192/28

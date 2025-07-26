@@ -1,6 +1,6 @@
 ---
 location: emma
-location_nice: Emmauskirche
+location_nice: Emmaus-Kirche, Lausitzer Platz 8, 10997 Berlin
 latitude: 52.499825
 longitude: 13.431035
 altitude: 87
@@ -9,8 +9,7 @@ community: true
 hosts:
   - hostname: emma-core
     role: corerouter
-    model: "cudy_wr3000-v1"
-    wireless_profile: freifunk_default
+    model: mikrotik_routerboard-750gr3
 
 snmp_devices:
   - hostname: emma-switch-no
@@ -134,17 +133,17 @@ networks:
       emma-no-60ghz: 10
 
       # Router OS
-      emma-wsw-60ghz: 17    # Fenster 4
-      emma-ssw-uplink: 18   # Fenster 2
-      emma-nnw-60ghz: 29    # Fenster 5
+      emma-wsw-60ghz: 17 # Fenster 4
+      emma-ssw-uplink: 18 # Fenster 2
+      emma-nnw-60ghz: 29 # Fenster 5
 
       # Airos 8, 5 GHz
-      emma-oso-5ghz: 19     # Fenster 8, 20 MHz, center frequency 5580 MHz
-      emma-nno-5ghz: 20     # Fenster 6, 20 MHz, center frequency 5600 MHz
-      emma-wsw-5ghz: 22     # Fenster 3, 20 MHz, center frequency 5620 MHz
-      emma-wnw-5ghz: 23     # Fenster 4, 40 MHz, center frequency 5550 MHz
-      emma-nnw-5ghz: 24     # Fenster 5, 20 MHz, center frequency 5700 MHz
-      emma-sso-5ghz: 25     # Fenster 1, 40 MHz, center frequency 5670 MHz
+      emma-oso-5ghz: 19 # Fenster 8, 20 MHz, center frequency 5580 MHz
+      emma-nno-5ghz: 20 # Fenster 6, 20 MHz, center frequency 5600 MHz
+      emma-wsw-5ghz: 22 # Fenster 3, 20 MHz, center frequency 5620 MHz
+      emma-wnw-5ghz: 23 # Fenster 4, 40 MHz, center frequency 5550 MHz
+      emma-nnw-5ghz: 24 # Fenster 5, 20 MHz, center frequency 5700 MHz
+      emma-sso-5ghz: 25 # Fenster 1, 40 MHz, center frequency 5670 MHz
 
   # DHCP
   - vid: 40
@@ -233,4 +232,6 @@ networks:
 
 location__ssh_keys__to_merge:
   - comment: Vinet
-    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCRpRJcexdB2N11gsbbKhXGu8sNQIAShohJpjobhSXtcUWTfRlX2SwSF0QuoHP4Bcb8IGCQc8+TK1RSc+owc1bD68gHIGQZ6b3u2sDv1JMoexqtY9PRIhOiUkPMdSJH7ay4WS7p6FHCZ8z1lrf5GaWpA+E0FNvE7sSaA7jHegYZ6D/qru9XddatItWkMgaKqVzaK+W0TldlqqORwQJg0JGPA71vakJCj/H+SsCZyn9HJ/bbq08kBqaBGU7JLFfwKpw8VGn2pwENzHQgzjb6Bfmj1XmbDvXtZjJTF7nhrxemXo9oJDDq8pVveD46cvSffvAAUFRrMlaV+v0qsYK0ir3MDGuguBn3t2+DR0K8JGufYU7i52vTwCuu3d3PRNIwyEYG4vySXpA9m7YSJEHIkasrSADGy47P+Q+jXQZoR5JS0ZtZnqA4JvnYyKd/OeLpNX7MXaDpVAI7pNrDig/4VD7LO70kPPCMAjn40qwF8lcI8U+alrqHG1RIrkugnsGs9g7tselqIi2pAUMml3as778h5Qx+p8FiD3lLPbjJfTBBgl8LfySRWxLgWTMI0TqtMvqNbsUaAB0ThN2FiJE9PrVO2dzUrBUZnaOpT+8B/zW4cGyFqqNZCjpvXkIPzp6jbPDG1aithV0C9mPOGAgq5wUIBgS+Vx95JhA3TArTz4DOdw== Vinet
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAACAQCRpRJcexdB2N11gsbbKhXGu8sNQIAShohJpjobhSXtcUWTfRlX2SwSF0QuoHP4Bcb8IGCQc8+TK1RSc+owc1bD68gHIGQZ6b3u2sDv1JMoexqtY9PRIhOiUkPMdSJH7ay4WS7p6FHCZ8z1lrf5GaWpA+E0FNvE7sSaA7jHegYZ6D/qru9XddatItWkMgaKqVzaK+W0TldlqqORwQJg0JGPA71vakJCj/H+SsCZyn9HJ/bbq08kBqaBGU7JLFfwKpw8VGn2pwENzHQgzjb6Bfmj1XmbDvXtZjJTF7nhrxemXo9oJDDq8pVveD46cvSffvAAUFRrMlaV+v0qsYK0ir3MDGuguBn3t2+DR0K8JGufYU7i52vTwCuu3d3PRNIwyEYG4vySXpA9m7YSJEHIkasrSADGy47P+Q+jXQZoR5JS0ZtZnqA4JvnYyKd/OeLpNX7MXaDpVAI7pNrDig/4VD7LO70kPPCMAjn40qwF8lcI8U+alrqHG1RIrkugnsGs9g7tselqIi2pAUMml3as778h5Qx+p8FiD3lLPbjJfTBBgl8LfySRWxLgWTMI0TqtMvqNbsUaAB0ThN2FiJE9PrVO2dzUrBUZnaOpT+8B/zW4cGyFqqNZCjpvXkIPzp6jbPDG1aithV0C9mPOGAgq5wUIBgS+Vx95JhA3TArTz4DOdw==
+      Vinet

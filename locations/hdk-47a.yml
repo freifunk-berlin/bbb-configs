@@ -1,37 +1,50 @@
 ---
 location: hdk-47a
 location_nice: Heidekampgraben 47a
-latitude: 52.47883095205514
-longitude: 13.47129945930971
+latitude: 52.478732310
+longitude: 13.47133577
 community: true
 
 hosts:
   - hostname: hdk-47a
     role: corerouter
-    model: "glinet_gl-ar300m-nor"
+    model: "dlink_dap-x1860-a1"
     wireless_profile: freifunk_default
     host__rclocal__to_merge:
       - |
         # Enable legacy rates to enable meshing with neighbors
-        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
+        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless
+        reload_config
 
-ipv6_prefix: '2001:bf7:840:2e00::/56'
+ipv6_prefix: "2001:bf7:840:4e00::/56"
 
-# Router: 10.248.9.64/26 2001:bf7:840:2e00::/56
-# --MGMT: 10.248.9.64/28
-# --MESH: 10.248.9.80/28
-# --DHCP: 10.248.9.96/27
+# --MGMT: 10.248.53.24/30
+# --MESH: 10.248.53.140/32 10.248.53.141/32
+# --DHCP: 10.248.52.32/28
 
 # Disable noping
 dhcp_no_ping: false
 
 networks:
-  # MESH - 2.4 GHz 802.11s
+  # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
-    name: mesh_2g
-    prefix: 10.248.9.80/32
+    name: mesh_5g
+    prefix: 10.248.53.140/32
     ipv6_subprefix: -20
+    mesh_ap: hdk-47a
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.53.141/32
+    ipv6_subprefix: -21
     mesh_ap: hdk-47a
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -42,7 +55,7 @@ networks:
     untagged: true
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.248.9.96/27
+    prefix: 10.248.52.32/28
     ipv6_subprefix: 0
     assignments:
       hdk-47a: 1
@@ -50,13 +63,16 @@ networks:
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.248.9.64/28
+    prefix: 10.248.53.24/30
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # 10.248.9.65/28
       hdk-47a: 1
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hdk-47a: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:

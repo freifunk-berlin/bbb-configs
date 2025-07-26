@@ -14,13 +14,12 @@ hosts:
     role: corerouter
     model: netgear_wax220
     wireless_profile: freifunk_default
-    mac_override: {eth0: 94:18:65:43:6b:8f}
+    mac_override: { eth0: 94:18:65:43:6b:8f }
 
 snmp_devices:
   - hostname: kiezladen154-rhnk
     address: 10.248.3.162
     snmp_profile: airos_8
-
 
 # mgmt: 10.248.3.160/28
 # mesh: 10.248.2.208/29

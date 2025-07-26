@@ -1,6 +1,5 @@
-# bbb-configs (Ansible Config Management)
+# BerlinBackBone Configuration (BBB-configs)
 
-![Freifunk Berlin](https://user-images.githubusercontent.com/10708466/174321624-b43cedab-53e8-4b56-b1fb-a051e18b21bb.png)
 
 BBB-Configs manages and provisions OpenWrt mesh nodes in the city-wide backbone of Freifunk Berlin via ansible. It abstracts the typical OpenWrt mesh config to generic templates. Those templates provision all locations more or less the same helping the maintainers to orientate on all sites.
 
@@ -10,16 +9,21 @@ With BBB-Configs we
 * build firmware images ready to be flashed onto routers including the full configuration
 * provide scripts to efficiently update multiple routers
 
+<br>
+
+![Freifunk Berlin](https://user-images.githubusercontent.com/10708466/174321624-b43cedab-53e8-4b56-b1fb-a051e18b21bb.png)
+
 ## How it Works
 
 ### Short Version
 
-The provision of a router works by generating the necessary OpenWrt configs and feeding the OpenWrt-Imagebuilder with it. In the end, ansible generates a self-contained binary firmware image ready to be flashed onto a router. Due to the self-contained property BBB-Configs can ensure to function properly on a router
-in a specific location as it includes the full configuration. Maintainers can remotely upgrade sites without having to worry about wrong configurations.
+With ansible you can build a specifically configured firmware image to flash onto your OpenWrt router. Due to properties of that image, BBB-configs can ensure proper function at certain locations, as it includes the full configuration. It also makes it easier for maintainers to remotely upgrade sites without worrying about configurations.
+
+<details>
 
 ### Technical Version
 
-Ansible playbooks offer simple, repeatable, and reusable execution of tasks making them perfectly fit into the Freifunk world. Daily Freifunk maintenance consists of updating a location to the newest software version or deploying a new service. Sometimes new sites are acquired with the constraint of producing a network plan and flashing dozens of routers with OpenWrt. We map these tasks in files following the YAML format and integrate them into our playbook. Commonly, playbooks execute ansible tasks on remote machines changing configuration files or installing new software on runtime. Here, we use the playbook to perform tasks with the outcome of a binary image containing all configuration files on compile time. The only remote execution at runtime on the network device may be a sysupgrade-command of the final binary.
+The provision of a router works by generating the necessary OpenWrt configs and feeding the OpenWrt-Imagebuilder with it. In the end, ansible generates a self-contained binary firmware image ready to be flashed onto a router. Due to the self-contained property BBB-Configs can ensure to function properly on a router in a specific location as it includes the full configuration. Maintainers can remotely upgrade sites without having to worry about wrong configurations. Ansible playbooks offer simple, repeatable, and reusable execution of tasks making them perfectly fit into the Freifunk world. Daily Freifunk maintenance consists of updating a location to the newest software version or deploying a new service. Sometimes new sites are acquired with the constraint of producing a network plan and flashing dozens of routers with OpenWrt. We map these tasks in files following the YAML format and integrate them into our playbook. Commonly, playbooks execute ansible tasks on remote machines changing configuration files or installing new software on runtime. Here, we use the playbook to perform tasks with the outcome of a binary image containing all configuration files on compile time. The only remote execution at runtime on the network device may be a sysupgrade-command of the final binary.
 
 We follow the common ansible scheme of locations and hosts. We see a location as an autonomous layer 2 domain connected with other locations in a layer 3 fashion. We call these layer 2 constructions a core-router setup implying only one router is acting as a gateway and provides services, like DHCP. Further, these routers maintain layer 3 connectivity to other locations with mesh routing daemons like babeld. A core setup can have an unbound number of access points. As a layer 2 domain, a network client can roam between all devices, and no routing is done inside the location. Mapping that on our playbook, the location contains the network plan and also service descriptions that are valid for all hosts inside a location. Host entities describe the physical or virtual network entity by its actual hardware, e.g. Belkin RT3200 router, and can also override service descriptions set by the location. The mapping between hosts and location is done inside the host's definition by the location variable.
 
@@ -27,13 +31,19 @@ The image compilation takes the variables defined by the hosts and location file
 
 If we need someone to reproduce our setup, the person can just generate the image for the involved routers, aka hosts, and provision them. Everyone can reproduce our setup and can work with us on our configurations from all over the world. In the future, it may be possible to abstract the actual router hardware with QEMU opening new interesting use cases.
 
+</details>
+
 ## Getting Started
 
 Using bbb-configs is quite simple. The TL;DR version for anyone just wanting to generate images without reading the [FAQ](FAQ.md) or [Developers Guide](DEVELOPER.md) is:
 
-### 1. Install dependencies
+### 1. Install OpenWRT build dependencies
 
-Depending on your distro you might need to use a different package management system than `apt`.
+First install the OpenWRT build dependencies. You can find the dependencies for your specific Linux distribution [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
+
+### 2. Install BBB-configs dependencies
+
+Now install the BBB-configs dependencies. Depending on your distributions you might need to use a different package management system than `apt`.
 
 ```sh
 apt update
@@ -43,9 +53,7 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-You can find what dependencies you need for your specific linux-distro [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
-
-### 2. Generate images
+### 3. Generate images
 
 You can generate images using the generate-images script that brings up a menu
 
@@ -67,7 +75,7 @@ Note: Locations must be prefixed witch `location_` and within the location name 
 ansible-playbook play.yml --limit location_loc_name,host --tags image
 ```
 
-### 3. Flash images
+### 4. Flash images
 
 After building firmware images you can update multiple routers using the mass-update script. This works best using SSH keys for authentication.
 

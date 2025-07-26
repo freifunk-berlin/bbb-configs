@@ -5,12 +5,11 @@ location_nice: Kirche Zum Vaterhaus, Baumschulenstraße 82-83, 12437 Berlin
 latitude: 52.4649
 longitude: 13.4852
 altitude: 72
-contact_nickname: 'xayax'
+contact_nickname: "xayax"
 contacts:
-  - 'ff@xayax.de'
+  - "ff@xayax.de"
 
 hosts:
-
   - hostname: vaterhaus-core
     role: corerouter
     model: "mikrotik_routerboard-750gr3"
@@ -32,9 +31,9 @@ snmp_devices:
     address: 10.230.192.203
     snmp_profile: airos_8
 
-    # - hostname: vaterhaus-no
-    #   address: 10.230.192.204
-    #   snmp_profile: mikrotik
+  - hostname: vaterhaus-nw
+    address: 10.230.192.204
+    snmp_profile: airos_8
 
   - hostname: vaterhaus-o
     address: 10.230.192.205
@@ -44,7 +43,7 @@ snmp_devices:
     address: 10.230.192.206
     snmp_profile: airos_8
 
-  - hostname: vaterhaus-cg47
+  - hostname: vaterhaus-s
     address: 10.230.192.207
     snmp_profile: airos_8
 
@@ -56,6 +55,12 @@ airos_dfs_reset:
   - name: "vaterhaus-w"
     target: "10.230.192.203"
     username: "ubnt"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "vaterhaus-nw"
+    target: "10.230.192.204"
+    username: "root"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
@@ -71,7 +76,7 @@ airos_dfs_reset:
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
-  - name: "vaterhaus-cg47"
+  - name: "vaterhaus-s"
     target: "10.230.192.207"
     username: "root"
     password: "file:/root/pwd.txt"
@@ -106,11 +111,9 @@ networks:
 
   - vid: 12
     role: mesh
-    name: mesh_no
+    name: mesh_nw
     prefix: 10.230.192.226/32
     ipv6_subprefix: -3
-    ptp: true
-    mesh_metric: 128
 
   - vid: 13
     role: mesh
@@ -126,11 +129,9 @@ networks:
 
   - vid: 15
     role: mesh
-    name: mesh_cg47
+    name: mesh_s
     prefix: 10.230.192.229/32
     ipv6_subprefix: -6
-    mesh_metric_lqm:
-      - default 0.2
 
   - vid: 20
     role: mesh
@@ -157,12 +158,12 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      vaterhaus-core: 1
-      vaterhaus-switch: 2
-      vaterhaus-zwingli: 10
-      vaterhaus-w: 11
-      vaterhaus-no: 12
-      vaterhaus-o: 13
-      vaterhaus-adlershof: 14
-      vaterhaus-cg47: 15
-      vaterhaus-n-nf-2ghz: 16
+      vaterhaus-core: 1 # 10.230.192.193
+      vaterhaus-switch: 2 # 10.230.192.194
+      vaterhaus-zwingli: 10 # 10.230.192.202
+      vaterhaus-w: 11 # 10.230.192.203
+      vaterhaus-nw: 12 # 10.230.192.204
+      vaterhaus-o: 13 # 10.230.192.205
+      vaterhaus-adlershof: 14 # 10.230.192.206
+      vaterhaus-s: 15 # 10.230.192.207
+      vaterhaus-n-nf-2ghz: 16 # 10.230.192.208

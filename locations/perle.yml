@@ -5,9 +5,9 @@ latitude: 52.53138
 longitude: 13.34882
 altitude: 42
 height: 16
-contact_nickname: 'paraparapara'
+contact_nickname: "paraparapara"
 contacts:
-  - '@paraparapara:matrix.org'
+  - "@paraparapara:matrix.org"
 
 hosts:
   - hostname: perle-core
@@ -19,7 +19,6 @@ hosts:
       - "kmod-usb-ohci usbip-server usbip-client"
 
 snmp_devices:
-
   - hostname: perle-m5
     address: 10.31.205.130
     snmp_profile: airos_6
@@ -59,7 +58,7 @@ networks:
     name: mesh_2g
     prefix: 10.31.205.138/32
     ipv6_subprefix: -21
-    mesh_metric_lqm: ['default 0.5']
+    mesh_metric_lqm: ["default 0.5"]
     mesh_ap: perle-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -94,9 +93,11 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      perle-core: 1      # .129
-      perle-m5: 2        # .130
+      perle-core: 1 # .129
+      perle-m5: 2 # .130
 
 location__ssh_keys__to_merge:
   - comment: paraparapara
-    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDRKiFXUQTEmREu64NucuYES1mB0aRBuWRkGqR/KPv5+txvdOqTRMbrkVcZ60enbpjNcZjaOljD/L28Gkxl0TiLNAc+5XtvL9JvRCc3PIW3RIvhI06nJw20k+L/m8pBNMAhKmvKHFooBVV4c4UZiGe140KYafne20MZ7LXQXHHoKcikK1PyI1+j44cWhE4UDQz6voqSWVJe/9b5fUdwAwyafwRQYAT75hsaqzlHecWHt3XIW8EjazgIu5dde9ldBoDihVQe0F8kKzks1ncCGX641z9bHcHfZa6r0AJ+eTScKvgSKQuhWW2WcZR7hOO1dXTdiSerJMs3havoqZS13TPpJ9jDNbs35qmWuXZ/He/8M1RT2syUd1ilKreAi6qz7foBPU1cYK3dppXnRrndHDNIJpg0K3Nijj10JtWBvnEtbHghA/T+Vs2eEomMxG5JrzK9JgmaAVoTG0jyEwtvmDfPPXc+89xPCn3wivUOwdchOQZZDDEmtNm0Uhmhe2zUYQE= ff_para
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAABgQDRKiFXUQTEmREu64NucuYES1mB0aRBuWRkGqR/KPv5+txvdOqTRMbrkVcZ60enbpjNcZjaOljD/L28Gkxl0TiLNAc+5XtvL9JvRCc3PIW3RIvhI06nJw20k+L/m8pBNMAhKmvKHFooBVV4c4UZiGe140KYafne20MZ7LXQXHHoKcikK1PyI1+j44cWhE4UDQz6voqSWVJe/9b5fUdwAwyafwRQYAT75hsaqzlHecWHt3XIW8EjazgIu5dde9ldBoDihVQe0F8kKzks1ncCGX641z9bHcHfZa6r0AJ+eTScKvgSKQuhWW2WcZR7hOO1dXTdiSerJMs3havoqZS13TPpJ9jDNbs35qmWuXZ/He/8M1RT2syUd1ilKreAi6qz7foBPU1cYK3dppXnRrndHDNIJpg0K3Nijj10JtWBvnEtbHghA/T+Vs2eEomMxG5JrzK9JgmaAVoTG0jyEwtvmDfPPXc+89xPCn3wivUOwdchOQZZDDEmtNm0Uhmhe2zUYQE=
+      ff_para

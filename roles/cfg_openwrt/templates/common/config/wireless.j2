@@ -131,6 +131,9 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
       {% if 'mesh_fwding' in iface %}
 	option mesh_fwding '{{ iface['mesh_fwding'] }}'
       {% endif %}
+      {% if 'mesh_nolearn' in iface %}
+	option mesh_nolearn '{{ iface['mesh_nolearn'] }}'
+      {% endif %}
       {% if 'mcast_rate' in iface %}
 	option mcast_rate '{{ iface['mcast_rate'] }}'
       {% endif %}

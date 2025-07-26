@@ -1,6 +1,6 @@
 ---
 name: Wikiupdate
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   push:
     branches:
       - main
@@ -22,9 +22,13 @@ jobs:
 
       - name: Determine changed locations
         run: |
-            CHANGED_LOCATIONS=$(git diff ${{ github.event.before }}..${{ github.event.after }} --diff-filter=d --name-only | grep 'locations/' | sed 's/locations\/\(.*\)\.yml/location_\1/' | sed -z 's/-/_/g;s/\n/,/g;s/,$//')
-            echo "Updating for changed locations: $CHANGED_LOCATIONS"
-            echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> "$GITHUB_ENV"
+          CHANGED_LOCATIONS=$(git diff ${{ github.event.before }}..${{ github.event.after }} \
+            --diff-filter=d --name-only \
+            | grep 'locations/' \
+            | sed 's/locations\/\(.*\)\.yml/location_\1/' \
+            | sed -z 's/-/_/g;s/\n/,/g;s/,$//')
+          echo "Updating for changed locations: $CHANGED_LOCATIONS"
+          echo "CHANGED_LOCATIONS=$CHANGED_LOCATIONS" >> "$GITHUB_ENV"
 
       - name: Update wiki.freifunk.net
         env:

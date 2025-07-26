@@ -5,9 +5,9 @@ location_nice: Hüttenroder Weg
 latitude: 52.485032
 longitude: 13.447244
 altitude: 42
-contact_nickname: 'Stadtfunk gGmbH'
+contact_nickname: "Stadtfunk gGmbH"
 contacts:
-  - 'noc@stadtfunk.net'
+  - "noc@stadtfunk.net"
 
 # 10.31.255.192/26
 # - 10.31.255.192/27    dhcp
@@ -19,7 +19,6 @@ contacts:
 ipv6_prefix: 2001:bf7:820:2c00::/56
 
 hosts:
-
   # Lenovo 10RS002AGE / Thinkcentre M920q, i5-8600T, 16GB RAM, 256GB NVMe
   # eth0 eth1 - ConnectX-4 Lx MCX4121A-XCHT - PCIe SMBus taped off (Pins 5 & 6)
   # eth2      - Intel I219-LM V7
@@ -51,18 +50,22 @@ hosts:
     openwrt_version: 24.10-SNAPSHOT
 
 snmp_devices:
-
   - hostname: hway-kiehlufer
     address: 10.31.255.252
     snmp_profile: mikrotik_60g
 
 networks:
-
   - vid: 10
     role: mesh
-    name: mesh_lan
+    name: mesh_kiehl
     prefix: 10.31.255.240/32
     ipv6_subprefix: -10
+
+  - vid: 20
+    role: mesh
+    name: mesh_lan
+    prefix: 10.31.255.241/32
+    ipv6_subprefix: -20
 
   - vid: 40
     role: dhcp
@@ -91,11 +94,11 @@ networks:
     gateway: 1
     dns: 1
     assignments:
-      hway-core: 1       # .255.249
-      hway-switch: 2     # .255.250
-      hway-kiehlufer: 3  # .255.251
-      hway-indoor: 4     # .255.252
-      hway-street: 5     # .255.253
+      hway-core: 1 # .255.249
+      hway-switch: 2 # .255.250
+      hway-kiehlufer: 3 # .255.251
+      hway-indoor: 4 # .255.252
+      hway-street: 5 # .255.253
 
   - vid: 50
     ifname: eth2
@@ -105,7 +108,7 @@ networks:
   - role: tunnel
     ifname: ts_wg0
     mtu: 1280
-    prefix: 10.31.255.241/32
+    prefix: 10.31.255.242/32
     wireguard_port: 51820
 
 location__channel_assignments_11a_standard__to_merge:
@@ -140,4 +143,5 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh

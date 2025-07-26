@@ -5,10 +5,9 @@ latitude: 52.51410
 longitude: 13.49858
 altitude: 63
 contacts:
-  - '#fanninger47:matrix.org'
+  - "#fanninger47:matrix.org"
 
 hosts:
-
   - hostname: fanninger47-core
     role: corerouter
     model: "avm_fritzbox-4040"
@@ -17,17 +16,17 @@ hosts:
   - hostname: fanninger47-nf-n
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:90:fd:bf}
+    mac_override: { eth0: dc:2c:6e:90:fd:bf }
 
   - hostname: fanninger47-nf-o
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:91:10:54}
+    mac_override: { eth0: dc:2c:6e:91:10:54 }
 
   - hostname: fanninger47-nf-w
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:91:0f:88}
+    mac_override: { eth0: dc:2c:6e:91:0f:88 }
 
 snmp_devices:
   - hostname: fanninger47-switch
@@ -45,7 +44,6 @@ ipv6_prefix: "2001:bf7:860:1100::/56"
 # MESH: 10.31.233.16/28
 
 networks:
-
   # Nanobeam
   - vid: 10
     role: mesh
@@ -61,7 +59,6 @@ networks:
   #   ipv6_subprefix: -11
   #   mesh_metric_lqm: ['default 0.8']  # prefer mesh into the bbb via liese
 
-
   - vid: 20
     role: mesh
     name: mesh_nf_n
@@ -70,7 +67,7 @@ networks:
     mesh_ap: fanninger47-nf-n
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.8']  # prefer mesh into the bbb via liese
+    mesh_metric_lqm: ["default 0.8"] # prefer mesh into the bbb via liese
 
   - vid: 21
     role: mesh
@@ -80,8 +77,7 @@ networks:
     mesh_ap: fanninger47-nf-o
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.8']  # prefer mesh into the bbb via liese
-
+    mesh_metric_lqm: ["default 0.8"] # prefer mesh into the bbb via liese
 
   - vid: 22
     role: mesh
@@ -91,8 +87,7 @@ networks:
     mesh_ap: fanninger47-nf-w
     mesh_radio: 11a_standard
     mesh_iface: mesh
-    mesh_metric_lqm: ['default 0.8']  # prefer mesh into the bbb via liese
-
+    mesh_metric_lqm: ["default 0.8"] # prefer mesh into the bbb via liese
 
   - vid: 40
     role: dhcp
@@ -130,4 +125,6 @@ location__channel_assignments_11g_standard__to_merge:
 
 location__ssh_keys__to_merge:
   - comment: neko
-    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCl2bCyIfDLZR5CQx7DqihqL2f9/2S6AeEHh8b4q6mdv9uatd0dIJqzmBnk/jJW4oTztK0EE7rWwVH+fNFtbMA020xSofrGMpbjvIs3ZiJa6ZBvKg6uZxzZaVAXGtVah98PqZhj9TGoG3msJE0U7Vlu6ha2g0T1j97kxSch+U0/iJNaiuR0ZBSFAA7+oJjEx+yIyC0f8+aM5L+IhMEl8U/bVp9Y5c5JoEIDozCJ4sOK8AL1d1wuCMM31wq9IEYHk+2DF4iRQGZZvgjumiROOEhv20jNkw2rvyEtx4winjC/72E/szL4OEa4yNNeTIINADYBInr0BPk4Tf4qSD7Y9wW5 neko
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAABAQCl2bCyIfDLZR5CQx7DqihqL2f9/2S6AeEHh8b4q6mdv9uatd0dIJqzmBnk/jJW4oTztK0EE7rWwVH+fNFtbMA020xSofrGMpbjvIs3ZiJa6ZBvKg6uZxzZaVAXGtVah98PqZhj9TGoG3msJE0U7Vlu6ha2g0T1j97kxSch+U0/iJNaiuR0ZBSFAA7+oJjEx+yIyC0f8+aM5L+IhMEl8U/bVp9Y5c5JoEIDozCJ4sOK8AL1d1wuCMM31wq9IEYHk+2DF4iRQGZZvgjumiROOEhv20jNkw2rvyEtx4winjC/72E/szL4OEa4yNNeTIINADYBInr0BPk4Tf4qSD7Y9wW5
+      neko

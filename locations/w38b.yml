@@ -3,15 +3,16 @@ location: w38b
 location_nice: Weserstraße 38B
 latitude: 52.50870
 longitude: 13.46846
-contact_nickname: 'Noki'
+contact_nickname: "Noki"
 contacts:
-  - '@noki-:matrix.org'
+  - "@noki-:matrix.org"
 
 hosts:
   - hostname: w38b-core
     role: corerouter
     model: "glinet_gl-mt6000"
     wireless_profile: w38b
+    flow_offload: hw
 
 snmp_devices:
   - hostname: w38b-sama
@@ -25,7 +26,7 @@ snmp_devices:
     snmp_profile: zyxel
 
 # IPs
-ipv6_prefix: '2001:bf7:830:bc00::/56'
+ipv6_prefix: "2001:bf7:830:bc00::/56"
 
 # got following prefixes:
 # Router: 10.31.212.0/24
@@ -50,7 +51,7 @@ networks:
     ptp: true
     # prefer routing via RHNK over SAMA
     mesh_metric: 256
-    mesh_metric_lqm: ['default 0.5']
+    mesh_metric_lqm: ["default 0.5"]
 
   # MESH - RHNK
   - vid: 11
@@ -116,12 +117,12 @@ networks:
     prefix: 10.31.212.192/26
     ipv6_subprefix: 3
     assignments:
-      w38b-core: 1      # 10.31.212.193
-      w38b-switch: 2    # 10.31.212.194
-      w38b-pve: 3       # 10.31.212.195
-      w38b-ds: 4        # 10.31.212.196
-      w38b-printer: 5   # 10.31.212.197
-      w38b-aud: 6       # 10.31.212.198
+      w38b-core: 1 # 10.31.212.193
+      w38b-switch: 2 # 10.31.212.194
+      w38b-pve: 3 # 10.31.212.195
+      w38b-ds: 4 # 10.31.212.196
+      w38b-printer: 5 # 10.31.212.197
+      w38b-aud: 6 # 10.31.212.198
 
   # DHCP (IN / PRIVATE-2)
   - vid: 44
@@ -131,8 +132,8 @@ networks:
     prefix: 10.31.212.112/28
     ipv6_subprefix: 4
     assignments:
-      w38b-core: 1      # 10.31.212.113
-      w38b-ds: 2        # 10.31.212.114
+      w38b-core: 1 # 10.31.212.113
+      w38b-ds: 2 # 10.31.212.114
 
   # UPLK - 10.31.212.64/27 as /32
   - vid: 50
@@ -152,10 +153,9 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      w38b-core: 1      # 10.31.212.1
-      w38b-sama: 3      # 10.31.212.3
-      w38b-rhnk: 4      # 10.31.212.4
-
+      w38b-core: 1 # 10.31.212.1
+      w38b-sama: 3 # 10.31.212.3
+      w38b-rhnk: 4 # 10.31.212.4
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
@@ -190,7 +190,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: w38b-home
         encryption: sae-mixed
-        key: 'file:/root/wifi-pwd-home'
+        key: "file:/root/wifi-pwd-home"
         network: private_1
         radio: [11a_standard, 11g_standard]
         ifname_hint: pr
@@ -198,7 +198,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: w38b-in
         encryption: sae-mixed
-        key: 'file:/root/wifi-pwd-in'
+        key: "file:/root/wifi-pwd-in"
         network: private_2
         radio: [11a_standard, 11g_standard]
         ifname_hint: in
@@ -206,7 +206,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: w38b-host
         encryption: sae-mixed
-        key: 'file:/root/wifi-pwd-host'
+        key: "file:/root/wifi-pwd-host"
         network: host
         radio: [11a_standard, 11g_standard]
         ifname_hint: ho
@@ -216,6 +216,7 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh
 
 # DNS-Servers

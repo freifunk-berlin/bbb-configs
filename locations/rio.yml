@@ -8,7 +8,6 @@ altitude: 46
 community: true
 
 hosts:
-
   - hostname: rio-core
     role: corerouter
     model: "ubnt_edgerouter-x"
@@ -25,6 +24,10 @@ hosts:
     model: "ubnt_rocket-5ac-lite"
 
 snmp_devices:
+  - hostname: rio-poe
+    address: 10.31.134.2
+    snmp_profile: edgeswitch
+
   - hostname: rio-emma
     address: 10.31.134.3
     snmp_profile: airos_6
@@ -32,7 +35,6 @@ snmp_devices:
   - hostname: rio-simeon
     address: 10.31.134.4
     snmp_profile: airos_6
-
 
 ipv6_prefix: "2001:bf7:830:6700::/56"
 
@@ -49,7 +51,7 @@ networks:
     prefix: 10.31.134.16/32
     ipv6_subprefix: -1
     mesh_metric: 2024
-    mesh_metric_lqm: ['default 0.25']
+    mesh_metric_lqm: ["default 0.25"]
     ptp: true
 
   - vid: 11

@@ -9,7 +9,6 @@ contacts:
   - noc@stadtfunk.net
 
 hosts:
-
   - hostname: lause-core
     role: corerouter
     model: ubnt_usw-flex
@@ -17,7 +16,7 @@ hosts:
   - hostname: lause-ap1
     role: ap
     model: zyxel_nwa50ax
-    wireless_profile: freifunk_default
+    wireless_profile: freifunk_lause
 
 # 10.248.46.0/24
 # 10.248.46.0/27 - mgmt     - vlan 42
@@ -27,7 +26,6 @@ hosts:
 ipv6_prefix: 2001:bf7:830:e700::/56
 
 networks:
-
   - vid: 40
     name: dhcp
     role: dhcp
@@ -76,3 +74,29 @@ networks:
     mtu: 1280
     prefix: 10.248.46.33/32
     wireguard_port: 51821
+
+location__wireless_profiles__to_merge:
+  - name: freifunk_lause
+    ifaces:
+      - mode: ap
+        ssid: lause.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: lause.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 2
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        mesh_nolearn: 1
+        ifname_hint: mesh

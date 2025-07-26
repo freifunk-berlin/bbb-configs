@@ -1,46 +1,38 @@
 ---
 location: hdk-30
-location_nice: Heidekampgraben
-latitude: 52.478042919
-longitude: 13.471797109
-
-# config restored from router configuration
-# got following prefixes:
-# Router: 10.248.4.192/26
-# --MGMT: 10.248.4.192/28
-# --MESH: 10.248.4.208/28
-# --DHCP: 10.248.4.224/27
+location_nice: Heidekampgraben 30
+latitude: 52.477810941
+longitude: 13.4718132
 
 community: true
 
 hosts:
   - hostname: hdk-30
     role: corerouter
-    model: "ubnt_unifiac-mesh"
+    model: "cudy_ap3000outdoor-v1"
     wireless_profile: freifunk_default
     host__rclocal__to_merge:
       - |
         # Enable legacy rates to enable meshing with neighbors
-        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do uci set wireless.$radio.legacy_rates='1'; done; uci commit wireless; reload_config
+        for radio in $(uci show wireless | grep "=wifi-device" | cut -d. -f2 | cut -d= -f1); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless
+        reload_config
 
-ipv6_prefix: "2001:bf7:840:1b00::/56"
+ipv6_prefix: "2001:bf7:840:5300::/56"
+
+# got following prefixes:
+# --MGMT: 10.248.53.44/30
+# --MESH: 10.248.53.166/32 10.248.53.167/32 10.248.53.168/32 10.248.53.169/32
+# --DHCP: 10.248.52.192/26
 
 networks:
-  # DHCP with filtering and isolation
-  - vid: 40
-    role: dhcp
-    inbound_filtering: true
-    enforce_client_isolation: true
-    prefix: 10.248.4.224/27
-    ipv6_subprefix: 0
-    assignments:
-      hdk-30: 1
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
     name: mesh_5ghz
-    prefix: 10.248.4.208/32
+    prefix: 10.248.53.166/32
     ipv6_subprefix: -1
     mesh_ap: hdk-30
     mesh_radio: 11a_standard
@@ -50,11 +42,21 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_2ghz
-    prefix: 10.248.4.209/32
+    prefix: 10.248.53.167/32
     ipv6_subprefix: -2
     mesh_ap: hdk-30
     mesh_radio: 11g_standard
     mesh_iface: mesh
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.52.192/26
+    ipv6_subprefix: 0
+    assignments:
+      hdk-30: 1
 
   - vid: 50
     role: uplink
@@ -63,24 +65,23 @@ networks:
   - role: tunnel
     ifname: ts_wg0
     mtu: 1280
-    prefix: 10.248.4.210/32
+    prefix: 10.248.53.168/32
     wireguard_port: 51820
 
   - role: tunnel
     ifname: ts_wg1
     mtu: 1280
-    prefix: 10.248.4.211/32
+    prefix: 10.248.53.169/32
     wireguard_port: 51821
 
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.248.4.192/28
+    prefix: 10.248.53.44/30
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # 10.248.4.193/28
       hdk-30: 1
 
 # AP-id, wifi-channel, bandwidth, txpower

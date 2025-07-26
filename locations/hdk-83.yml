@@ -1,0 +1,81 @@
+---
+location: hdk-83
+location_nice: Heidekampgraben 83
+latitude: 52.479019825
+longitude: 13.47195804
+community: true
+
+hosts:
+  - hostname: hdk-83
+    role: corerouter
+    model: "dlink_dap-x1860-a1"
+    wireless_profile: freifunk_default
+    host__rclocal__to_merge:
+      - |
+        # Enable legacy rates to enable meshing with neighbors
+        for radio in $(uci show wireless \
+          | grep "=wifi-device" \
+          | cut -d. -f2 \
+          | cut -d= -f1); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless; reload_config
+
+ipv6_prefix: "2001:bf7:840:6300::/56 "
+
+# --MGMT: 10.248.53.104/30
+# --MESH: 10.248.53.192/32 10.248.53.193/32
+# --DHCP: 10.248.64.144/28
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.248.53.192/32
+    ipv6_subprefix: -20
+    mesh_ap: hdk-83
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.53.193/32
+    ipv6_subprefix: -21
+    mesh_ap: hdk-83
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.64.144/28
+    ipv6_subprefix: 0
+    assignments:
+      hdk-83: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.53.104/30
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      hdk-83: 1
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hdk-83: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hdk-83: 13-20

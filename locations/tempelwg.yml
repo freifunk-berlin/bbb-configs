@@ -10,7 +10,7 @@ hosts:
   - hostname: tempelwg-core
     role: corerouter
     model: "dlink_covr-x1860-a1"
-    mac_override: {eth0: a8:63:7d:db:59:cb}
+    mac_override: { eth0: a8:63:7d:db:59:cb }
     wireless_profile: tempelwg
     host__rclocal__to_merge:
       - 'cat /etc/crontabs/root | grep reboot 2>/dev/null || echo "0 4 * * * reboot" >> /etc/crontabs/root && /etc/init.d/cron restart'
@@ -31,7 +31,6 @@ dhcp_no_ping: false
 # DHCP: 10.248.17.32/27
 
 networks:
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
@@ -49,7 +48,7 @@ networks:
     prefix: 10.248.17.17/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: tempelwg-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -122,7 +121,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: o2-WLAN68
         encryption: sae-mixed
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: prdhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: pr
@@ -132,6 +131,7 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh
 
 dns_servers:

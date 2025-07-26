@@ -4,9 +4,9 @@ location_nice: Kiehlufer
 latitude: 52.484348320
 longitude: 13.446680903
 altitude: 50
-contact_nickname: 'jammingblub'
+contact_nickname: "jammingblub"
 contacts:
-  - 'warnmeldesystem@gmail.com'
+  - "warnmeldesystem@gmail.com"
 
 location__ssh_keys__to_merge:
   - comment: martin@koltonowski.de
@@ -25,7 +25,6 @@ dns_servers:
   - 2606:4700:4700::1001
 
 hosts:
-
   - hostname: kiehlufer-core
     role: corerouter
     model: "cudy_ap3000-v1"
@@ -83,7 +82,7 @@ snmp_devices:
     address: 10.31.82.213
     snmp_profile: airos_8
 
-ipv6_prefix: '2001:bf7:830:8c00::/56'
+ipv6_prefix: "2001:bf7:830:8c00::/56"
 
 # Mesh: 10.31.151.112/28
 networks:
@@ -110,7 +109,7 @@ networks:
     prefix: 10.31.151.114/32
     ipv6_subprefix: -3
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.7']
+    mesh_metric_lqm: ["default 0.7"]
     ptp: true
   # mesh - all mikrotik xtsq 5 ac
   - vid: 20
@@ -211,4 +210,5 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh

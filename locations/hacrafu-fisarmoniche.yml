@@ -10,7 +10,6 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-fisarmoniche-core
     role: corerouter
     model: "dlink_dap-x1860-a1"
@@ -26,7 +25,6 @@ ipv6_prefix: "2001:bf7:850:c00::/56"
 # dhcp_no_ping: false
 
 networks:
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh

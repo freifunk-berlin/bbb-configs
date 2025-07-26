@@ -7,7 +7,6 @@ altitude: 50
 community: true
 
 hosts:
-
   - hostname: colbe15-core
     role: corerouter
     model: "avm_fritzbox-7530"
@@ -89,7 +88,7 @@ location__wireless_profiles__to_merge:
       - mode: ap
         ssid: colbe15-home.freifunk.net
         encryption: sae-mixed
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: home
         radio: [11a_standard, 11g_standard]
         ifname_hint: home
@@ -99,4 +98,5 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh

@@ -1,0 +1,76 @@
+---
+location: bissing
+location_nice: "Bissingzeile"
+latitude: 52.5036325
+longitude: 13.3689817
+altitude: 32
+height: 7
+contact_nickname: "xayax"
+contacts:
+  - "ff@xayax.de"
+
+hosts:
+  - hostname: bissing-core
+    role: corerouter
+    model: "genexis_pulse-ex400"
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: bissing-cube
+    address: 10.248.69.194
+    snmp_profile: mikrotik_60g
+
+ipv6_prefix: "2001:bf7:750:a500::/56"
+
+# Router: 10.248.69.192/26
+# --MGMT: 10.248.69.192/28
+# --MESH: 10.248.69.208/28
+# --DHCP: 10.248.69.224/27
+
+networks:
+  - vid: 11
+    role: mesh
+    name: mesh_l105_60g
+    prefix: 10.248.69.208/32
+    ipv6_subprefix: -11
+    ptp: true
+
+  # MESH - 5 GHz 802.11s - bissing-core
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.248.69.209/32
+    ipv6_subprefix: -20
+    mesh_ap: bissing-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - bissing-core
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.248.69.210/32
+    ipv6_subprefix: -21
+    mesh_ap: bissing-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.69.224/27
+    ipv6_subprefix: 0
+    assignments:
+      bissing-core: 1
+
+  - vid: 440
+    role: mgmt
+    prefix: 10.248.69.192/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      bissing-core: 1  # 10.248.69.193
+      bissing-cube: 2  # 10.248.69.194

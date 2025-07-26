@@ -28,8 +28,8 @@ role_gateway_sysctl__to_merge:
 
 wireguard_port_start: 51820
 wireguard_port_end: 52820
-wireguard_wg_key: '/etc/wireguard/wg.key'
-wireguard_wg_pub: '/etc/wireguard/wg.pub'
+wireguard_wg_key: "/etc/wireguard/wg.key"
+wireguard_wg_pub: "/etc/wireguard/wg.pub"
 # Use temporary keys:
 # Generate for each new connection a private and public key in the form of
 # wg_[PORT].key wg_[PORT].pub
@@ -37,11 +37,9 @@ wireguard_wg_pub: '/etc/wireguard/wg.pub'
 # If it is set wireguard_wg_key and wireguard_wg_pub are not used.
 wireguard_wg_tmp_key: false
 
-gre_metric: 256  # Match default RX Cost
-
+gre_metric: 256 # Match default RX Cost
 
 ## FIREWALL SECTION
-
 
 # For IPv6 there is a stateful firewall implemented. In order to
 # achieve that using multiple active-active gateways, the
@@ -67,40 +65,39 @@ untracked_flows_tcp_ack_burst: 2500
 untracked_flows_tcp_rst_rate: 1000
 untracked_flows_tcp_rst_burst: 500
 
-
 # Inbound is filtered by default
 inbound_allow:
-  - name: 'k9-core SSH'
+  - name: "k9-core SSH"
     dst: 2001:bf7:830:8d00::/128
     proto: tcp
     dst_port: 22
-  - name: 'kiehlufer-core SSH'
+  - name: "kiehlufer-core SSH"
     dst: 2001:bf7:830:8c00::/128
     proto: tcp
     dst_port: 22
-  - name: 'w10host'
+  - name: "w10host"
     dst: 2001:bf7:860:932::/64
-  - name: 'rigaer78-core SSH'
+  - name: "rigaer78-core SSH"
     dst: 2001:bf7:830:9d00::/128
     proto: tcp
     dst_port: 22
-  - name: 'scherer8-wetter'
-    dst: '2001:bf7:750:2e00::10/128'
+  - name: "scherer8-wetter"
+    dst: "2001:bf7:750:2e00::10/128"
     proto: tcp
     dst_port: 80
-  - name: 'w38b-core host network'
+  - name: "w38b-core host network"
     dst: 2001:bf7:830:bc02::/64
-  - name: 'noki-core host network'
+  - name: "noki-core host network"
     dst: 2001:bf7:830:1029::/64
-  - name: 'cryptpad.berlin noc@stadtfunk.net'
+  - name: "cryptpad.berlin noc@stadtfunk.net"
     dst: 2001:bf7:750:5b00::/128
-  - name: 'newyorck-homelab newyorck@so36.net'
+  - name: "newyorck-homelab newyorck@so36.net"
     dst: 2001:bf7:830:a92b::2/128
     proto: tcp
     dst_port: 22
-  - name: 'gub37-core local public network'
+  - name: "gub37-core local public network"
     dst: 2001:bf7:830:a7ce::1/64
-  - name: 'magda-core PubDHCP SSH'
+  - name: "magda-core PubDHCP SSH"
     dst: 2001:bf7:860:2::/64
     proto: tcp
     dst_port: 22

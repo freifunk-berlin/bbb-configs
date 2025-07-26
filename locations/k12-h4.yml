@@ -1,30 +1,30 @@
 ---
 location: k12-h4
-location_nice: 'Haus 4, Kastanienallee 12, 10435 Berlin'
+location_nice: "Haus 4, Kastanienallee 12, 10435 Berlin"
 latitude: 52.53949585878101
 longitude: 13.40898110911928
-contact_nickname: 'zander'
+contact_nickname: "zander"
 contacts:
-  - 'alexanderjabs@gmx.de'
+  - "alexanderjabs@gmx.de"
 
 hosts:
   - hostname: k12-h4-core
     role: corerouter
     model: "dlink_covr-x1860-a1"
-    mac_override: {eth0: 0c:0e:76:cf:21:e5}
+    mac_override: { eth0: 0c:0e:76:cf:21:e5 }
     wireless_profile: freifunk_default
     wifi_roaming: true
   - hostname: k12-h4-h0s
     role: ap
     model: "dlink_covr-x1860-a1"
-    mac_override: {eth0: a8:63:7d:db:4d:53}
+    mac_override: { eth0: a8:63:7d:db:4d:53 }
     wifi_roaming: true
   - hostname: k12-h4-hirschhof
     role: ap
     model: "tplink_cpe210-v1"
     wireless_profile: mesh_only
 
-ipv6_prefix: '2001:bf7:760:2b00::/56'
+ipv6_prefix: "2001:bf7:760:2b00::/56"
 
 # got following prefixes:
 # Router:  10.31.157.128/26
@@ -52,7 +52,7 @@ networks:
     # make mesh_metric(s) for 2GHz worse than 5GHz
     # prevent babel from using 2GHz link to segen
     mesh_metric: 8192
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: k12-h4-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -86,7 +86,7 @@ networks:
     prefix: 10.31.157.164/32
     ipv6_subprefix: -24
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: k12-h4-h0s
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -109,9 +109,9 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      k12-h4-core: 1       # 10.31.157.177
-      k12-h4-hirschhof: 2  # 10.31.157.178
-      k12-h4-h0s: 3         # 10.31.157.179
+      k12-h4-core: 1 # 10.31.157.177
+      k12-h4-hirschhof: 2 # 10.31.157.178
+      k12-h4-h0s: 3 # 10.31.157.179
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

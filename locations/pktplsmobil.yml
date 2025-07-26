@@ -7,7 +7,6 @@ contacts:
   - pktpls+bbb@systemli.org
 
 hosts:
-
   - hostname: pktplsmobil-core
     role: corerouter
     model: "glinet_gl-xe300"
@@ -23,7 +22,6 @@ hosts:
 ipv6_prefix: 2001:bf7:820:2400::/56
 
 networks:
-
   - vid: 10
     role: mesh
     name: mesh_lan
