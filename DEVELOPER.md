@@ -88,9 +88,9 @@ For special use cases you can add lines to a script file. This script runs once 
     host__rclocal__to_merge:
       - |
         # Untag mesh traffic for a Airfiber as they cant do it themself
-        uci set network.vlan_10.ports='lan1:t lan2 lan3:t lan4:t lan5:t'
+        uci set network.vlan_10.ports='lan1:t lan2:u lan3:t lan4:t lan5:t'
         # Untag DHCP on ports 4 and 5 for convenient maintenance'
-        uci set network.vlan_40.ports='lan1:t lan2:t lan3:t lan4 lan5'
+        uci set network.vlan_40.ports='lan1:t lan2:t lan3:t lan4:u lan5:u'
         uci commit network; reload_config
 ```
 
