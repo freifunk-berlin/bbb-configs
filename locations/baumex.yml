@@ -21,14 +21,14 @@ hosts:
     # eth5 / Port 6: fritzbox
     host__rclocal__to_merge:
       - |
-        uci set network.vlan_10.ports='eth0'           # mesh_vater_60g
+        uci set network.vlan_10.ports='eth0:u'           # mesh_vater_60g
         uci set network.vlan_20.ports='eth2:t eth4:t'  # mesh_5ghz_v
         uci set network.vlan_21.ports='eth2:t eth4:t'  # mesh_2ghz_v
         uci set network.vlan_22.ports='eth2:t eth4:t'  # mesh_5ghz_h
         uci set network.vlan_23.ports='eth2:t eth4:t'  # mesh_2ghz_h
-        uci set network.vlan_30.ports='eth1'           # mesh_lan_lte
+        uci set network.vlan_30.ports='eth1:u'           # mesh_lan_lte
         uci set network.vlan_40.ports='eth2:t eth4:t'  # dhcp public
-        uci set network.vlan_41.ports='eth5'           # dhcp fritzbox
+        uci set network.vlan_41.ports='eth5:u'           # dhcp fritzbox
         uci commit network; reload_config
 
   - hostname: baumex-vorne

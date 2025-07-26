@@ -16,7 +16,7 @@ hosts:
     host__rclocal__to_merge:
       - |
         # untag DHCP on ports 5 and 6'
-        uci set network.vlan_40.ports='eth0:t eth1:t eth2:t eth3:t eth4 eth5'
+        uci set network.vlan_40.ports='eth0:t eth1:t eth2:t eth3:t eth4:u eth5:u'
         uci commit network; reload_config
 
   - hostname: frischauf-ap
