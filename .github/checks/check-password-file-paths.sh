@@ -40,11 +40,11 @@ check() {
 }
 
 # Check for issues across locations
-echo "Checking $location_files"
+echo "Checking ${location_files[*]}"
 
 # Check for password path issues
-check 'select(.airos_dfs_reset != null) | .airos_dfs_reset[] | select(.password != null) | .password' "$location_files"
-check 'select(.location__wireless_profiles__to_merge != null) | .location__wireless_profiles__to_merge[] | select(.ifaces != null) | .ifaces[] | select(.key != null) | .key' "$location_files"
+check 'select(.airos_dfs_reset != null) | .airos_dfs_reset[] | select(.password != null) | .password' "${location_files[@]}"
+check 'select(.location__wireless_profiles__to_merge != null) | .location__wireless_profiles__to_merge[] | select(.ifaces != null) | .ifaces[] | select(.key != null) | .key' "${location_files[@]}"
 
 
 # Exit with a non-zero status code if any errors were found
