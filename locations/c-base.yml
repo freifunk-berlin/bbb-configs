@@ -50,7 +50,7 @@ airos_dfs_reset:
   - name: "c-base-simeon"
     target: "10.31.134.101"
     username: "ubnt"
-    password: "/root/pwd"
+    password: "file:/root/pwd"
     daytime_limit: "2-7"
 
 ipv6_prefix: "2001:bf7:760:4800::/56"
