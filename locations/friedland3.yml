@@ -17,9 +17,9 @@ hosts:
     host__rclocal__to_merge:
       - |
         # untag DHCP on LAN ports
-        uci set network.vlan_40.ports='internet:t ethernet'
+        uci set network.vlan_40.ports='internet:t ethernet:u'
         # untag UPLK on WAN port
-        uci set network.vlan_50.ports='internet ethernet:t'
+        uci set network.vlan_50.ports='internet:u ethernet:t'
         uci commit network; reload_config
         # Enable legacy rates to enable meshing with neighbors
         for radio in $(uci show wireless \

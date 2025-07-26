@@ -56,7 +56,7 @@ hosts:
     host__rclocal__to_merge:
       - |
         # Untag DHCP on some ports
-        uci set network.vlan_40.ports='lan1:t lan2 lan3 lan4 wan'
+        uci set network.vlan_40.ports='lan1:t lan2:u lan3:u lan4:u wan:u'
         uci commit network; reload_config
 
   - hostname: rigaer78-back-floor-3-left
@@ -78,7 +78,7 @@ hosts:
     host__rclocal__to_merge:
       - |
         # Untag DHCP on some ports
-        uci set network.vlan_40.ports='lan1:t lan2 lan3 lan4'
+        uci set network.vlan_40.ports='lan1:t lan2:u lan3:u lan4:u'
         uci commit network; reload_config
 
   - hostname: rigaer78-east-2ghz
