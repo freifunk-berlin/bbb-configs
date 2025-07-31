@@ -1,4 +1,4 @@
-# Contributing to Falter
+# Contributing to bbb-configs
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
 - Reporting a bug
@@ -33,7 +33,7 @@ For other changes you might use the category of your change like `docs` or `tree
 ## Any contributions you make will be under the GPLv3 Software License
 In short, when you submit code changes, your submissions are understood to be under the same [GPLv3 License](http://www.gnu.org/licenses/gpl-3.0.html) that covers the project. Feel free to contact the maintainers if that's a concern.
 
-## Report bugs using Github's [issues](https://github.com/freifunk-berlin/falter-packages/issues)
+## Report bugs using Github's [issues](https://github.com/freifunk-berlin/bbb-configs/issues)
 We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/freifunk-berlin/bbb-configs/issues/new); it's that easy! For problems regarding the hardware at the location open an Issue at the [meta repository](https://github.com/freifunk-berlin/meta/issues/new).
 
 ## Write bug reports with detail, background, and sample code
