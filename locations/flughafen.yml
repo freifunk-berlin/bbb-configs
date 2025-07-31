@@ -130,4 +130,4 @@ networks:
       flughafen-garten: 12 # .140
 
       # 868 MHz
-      flughafen-lora: 20 # .148
+      # flughafen-lora: 20 # .148 # Currently not deployed
