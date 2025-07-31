@@ -12,7 +12,15 @@ hosts:
     role: corerouter
     model: mikrotik_routerboard-750gr3
 
+  - hostname: flughafen-ap1
+    role: ap
+    model: "tplink_eap225-outdoor-v1"
+
 snmp_devices:
+  - hostname: flughafen-poe
+    address: 10.31.131.130
+    snmp_profile: edgeswitch
+
   - hostname: flughafen-ak36
     address: 10.31.131.131
     snmp_profile: af60
@@ -110,6 +118,7 @@ networks:
     assignments:
       flughafen-core: 1 # .129
       flughafen-poe: 2 # .130
+      flughafen-ap1: 9 # .137
 
       # 60 GHz
       flughafen-ak36: 3 # .131
