@@ -1,6 +1,6 @@
 ---
 # default OpenWRT version to build from unless overridden
-openwrt_version: 23.05-SNAPSHOT
+openwrt_version: 24.10-SNAPSHOT
 
 imagebuilder_suffix: zst # Might get overridden for older openwrt versions
 imagebuilder_filename: "openwrt-imagebuilder-{{ openwrt_version }}-{{ target | replace('/', '-') }}.Linux-x86_64.tar.{{ imagebuilder_suffix }}"
