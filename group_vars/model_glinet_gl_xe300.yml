@@ -1,6 +1,5 @@
 ---
 target: ath79/nand
-openwrt_version: 24.10-SNAPSHOT
 brand_nice: GL.iNet
 model_nice: GL-XE300
 
