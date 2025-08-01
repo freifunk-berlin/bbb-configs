@@ -4,6 +4,8 @@ target: lantiq/xway
 brand_nice: Speedport
 model_nice: W 504V Typ A
 
+openwrt_version: 23.05-SNAPSHOT
+
 switch_ports: 6
 switch_int_port: 0
 switch_ignore_ports: [1]

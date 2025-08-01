@@ -3,6 +3,8 @@ target: ramips/mt7621
 brand_nice: NETGEAR
 model_nice: WAX202
 
+openwrt_version: 23.05-SNAPSHOT
+
 dsa_ports:
   - wan
   - lan1

@@ -4,6 +4,8 @@ target: ath79/mikrotik
 brand_nice: MikroTik
 model_nice: wAP AC
 
+openwrt_version: 23.05-SNAPSHOT
+
 model__packages__to_merge:
   - "-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct"
   - "kmod-ath10k-smallbuffers ath10k-firmware-qca988x"

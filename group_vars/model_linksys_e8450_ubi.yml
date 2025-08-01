@@ -3,6 +3,8 @@ target: mediatek/mt7622
 brand_nice: Belkin
 model_nice: RT3200
 
+openwrt_version: 23.05-SNAPSHOT
+
 dsa_ports:
   - wan
   - lan1
