@@ -3,6 +3,8 @@ target: "ath79/generic"
 brand_nice: Ubiquiti
 model_nice: Swiss Army Knife Ultra
 
+openwrt_version: 23.05-SNAPSHOT
+
 dsa_ports:
   - eth0
 

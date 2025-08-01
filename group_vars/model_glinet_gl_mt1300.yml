@@ -4,6 +4,8 @@ brand_nice: GL.iNet
 model_nice: GL-MT1300 (Beryl)
 version_nice: v1
 
+openwrt_version: 23.05-SNAPSHOT
+
 dsa_ports:
   - lan1
   - lan2

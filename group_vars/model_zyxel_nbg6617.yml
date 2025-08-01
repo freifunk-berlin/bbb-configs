@@ -3,6 +3,8 @@ target: ipq40xx/generic
 brand_nice: ZyXEL
 model_nice: NBG6617
 
+openwrt_version: 23.05-SNAPSHOT
+
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"
   - "kmod-ath10k ath10k-firmware-qca4019"

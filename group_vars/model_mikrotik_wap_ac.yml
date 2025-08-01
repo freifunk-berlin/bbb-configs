@@ -4,6 +4,8 @@ brand_nice: MikroTik
 model_nice: wAP AC
 version_nice: Rev 2 (2022-)
 
+openwrt_version: 23.05-SNAPSHOT
+
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct -kmod-ath10k-ct-smallbuffers"
   - "kmod-ath10k ath10k-firmware-qca4019"

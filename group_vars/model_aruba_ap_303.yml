@@ -3,6 +3,8 @@ target: ipq40xx/generic
 brand_nice: Aruba
 model_nice: Instant On AP11
 
+openwrt_version: 23.05-SNAPSHOT
+
 dsa_ports:
   - lan
 

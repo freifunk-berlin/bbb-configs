@@ -4,6 +4,8 @@ target: lantiq/xway
 brand_nice: AVM
 model_nice: FRITZ!Box 7320
 
+openwrt_version: 23.05-SNAPSHOT
+
 int_port: eth0
 low_mem: true
 low_flash: true

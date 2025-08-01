@@ -3,6 +3,8 @@ target: ipq40xx/generic
 brand_nice: AVM
 model_nice: FRITZ!Repeater 1200
 
+openwrt_version: 23.05-SNAPSHOT
+
 int_port: eth0
 
 wireless_devices:

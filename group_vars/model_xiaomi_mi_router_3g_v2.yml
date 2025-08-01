@@ -4,6 +4,8 @@ brand_nice: Xiaomi
 model_nice: MiWiFi 3G
 version_nice: v2
 
+openwrt_version: 23.05-SNAPSHOT
+
 dsa_ports:
   - eth0
   - lan1
