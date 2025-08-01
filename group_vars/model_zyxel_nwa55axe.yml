@@ -5,8 +5,6 @@ model_nice: NWA55AXE
 dsa_ports:
   - lan
 
-openwrt_version: 24.10-SNAPSHOT
-
 wireless_devices:
   - name: 11a_standard
     band: 5g

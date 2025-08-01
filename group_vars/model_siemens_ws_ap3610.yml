@@ -3,8 +3,6 @@ target: ath79/generic
 brand_nice: Siemens
 model_nice: WS-AP3610
 
-openwrt_version: 24.10-SNAPSHOT
-
 int_port: eth0
 
 wireless_devices:

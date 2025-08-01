@@ -6,8 +6,6 @@ model_nice: Protectli Vault Pro VP6630
 int_port: eth5 # 2nd SFP+ Port
 wireless_profile: disable
 
-openwrt_version: 24.10-SNAPSHOT
-
 model__packages__to_merge:
   # Dont install unncessary network kernel modules (reference: https://github.com/openwrt/openwrt/blob/main/target/linux/x86/image/64.mk)
   - "-kmod-amazon-ena -kmod-amd-xgbe -kmod-bnx2 -kmod-dwmac-intel -kmod-e1000e -kmod-e1000"

@@ -4,8 +4,6 @@ brand_nice: NETGEAR
 model_nice: WAX220
 int_port: eth0
 
-openwrt_version: 24.10-SNAPSHOT
-
 requires_mac_override: true
 
 wireless_devices:
