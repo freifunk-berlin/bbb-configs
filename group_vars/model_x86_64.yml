@@ -2,7 +2,6 @@
 target: x86/64
 override_target: generic
 image_search_pattern: "*-ext4-combined.img*"
-openwrt_version: 24.10-SNAPSHOT
 model_nice: x86/64 Generic
 
 int_port: eth0

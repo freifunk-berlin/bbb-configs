@@ -4,8 +4,6 @@ brand_nice: Cudy
 model_nice: WR3000S
 version_nice: v1
 
-openwrt_version: 24.10-SNAPSHOT
-
 dsa_ports:
   - wan
   - lan1

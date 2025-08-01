@@ -3,8 +3,6 @@ target: ipq40xx/generic
 brand_nice: AVM
 model_nice: FRITZ!Box 7530
 
-openwrt_version: 24.10-SNAPSHOT
-
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca4019-ct"
   - "kmod-ath10k ath10k-firmware-qca4019"
