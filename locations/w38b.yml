@@ -123,6 +123,7 @@ networks:
       w38b-ds: 4 # 10.31.212.196
       w38b-printer: 5 # 10.31.212.197
       w38b-aud: 6 # 10.31.212.198
+      w38b-ha: 7 # 10.31.212.199
 
   # DHCP (IN / PRIVATE-2)
   - vid: 44
@@ -134,6 +135,7 @@ networks:
     assignments:
       w38b-core: 1 # 10.31.212.113
       w38b-ds: 2 # 10.31.212.114
+      w38b-ha: 3 # 10.31.212.115
 
   # UPLK - 10.31.212.64/27 as /32
   - vid: 50
