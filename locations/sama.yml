@@ -1,7 +1,6 @@
 ---
-
 location: sama
-location_nice: Samariterkirche
+location_nice: "Samariterkirche, Samariterstr. 27, 10247 Berlin"
 latitude: 52.518044835152963
 longitude: 13.466172516345976
 altitude: 77
@@ -94,10 +93,71 @@ airos_dfs_reset:
     password: "file:/root/pwd"
     daytime_limit: "2-7"
 
+# IPs
+# --MGMT: 10.31.81.0/27
+# --MESH: 10.31.79.176/28
+# --DHCP: 10.31.81.128/25
+
 ipv6_prefix: "2001:bf7:830:8600::/56"
 
 networks:
-  - vid: 42
+  # MESH - Nord, 5 GHz
+  - vid: 10
+    role: mesh
+    name: mesh_nord
+    prefix: 10.31.79.176/32
+    ipv6_subprefix: -10
+
+  # MESH - Ost, 5 GHz
+  - vid: 11
+    role: mesh
+    name: mesh_ost
+    prefix: 10.31.79.177/32
+    ipv6_subprefix: -11
+
+  # MESH - Sued, 5 GHz
+  - vid: 12
+    role: mesh
+    name: mesh_sued
+    prefix: 10.31.79.178/32
+    ipv6_subprefix: -12
+
+  # MESH - West, 5 GHz
+  - vid: 13
+    role: mesh
+    name: mesh_west
+    prefix: 10.31.79.179/32
+    ipv6_subprefix: -13
+
+  # MESH - Saarbruecker, 60 GHz
+  - vid: 14
+    role: mesh
+    name: mesh_sabr
+    prefix: 10.31.79.180/32
+    ipv6_subprefix: -14
+    mesh_metric: 128
+    ptp: true
+
+  # MESH - Sued, 60 GHz
+  - vid: 16
+    role: mesh
+    name: mesh_s60
+    prefix: 10.31.79.182/32
+    ipv6_subprefix: -16
+    mesh_metric: 128
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.81.128/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      sama-core: 1
+
+  # MGMT
+  - vid: 426
     role: mgmt
     prefix: 10.31.81.0/27
     gateway: 1
@@ -120,60 +180,12 @@ networks:
       sama-sued-60ghz: 26
       sama-saarbruecker: 30
 
-  - vid: 40
-    role: dhcp
-    prefix: 10.31.81.128/25
-    ipv6_subprefix: 0
-    inbound_filtering: true
-    enforce_client_isolation: true
-    assignments:
-      sama-core: 1
-
-  # 10.31.79.176/28 Mesh Prefix (16)
-  - vid: 10
-    role: mesh
-    name: mesh_nord
-    prefix: 10.31.79.176/32
-    ipv6_subprefix: -1
-  - vid: 11
-    role: mesh
-    name: mesh_ost
-    prefix: 10.31.79.177/32
-    ipv6_subprefix: -2
-  - vid: 12
-    role: mesh
-    name: mesh_sued
-    prefix: 10.31.79.178/32
-    ipv6_subprefix: -3
-  - vid: 13
-    role: mesh
-    name: mesh_west
-    prefix: 10.31.79.179/32
-    ipv6_subprefix: -4
-  - vid: 14
-    role: mesh
-    name: mesh_sabr
-    prefix: 10.31.79.180/32
-    ipv6_subprefix: -5
-    mesh_metric: 128
-    ptp: true
-  - vid: 16
-    role: mesh
-    name: mesh_s60
-    prefix: 10.31.79.182/32
-    ipv6_subprefix: -7
-    mesh_metric: 128
-
+# AP-id, wifi-channel, bandwidth, txpower in dBm
 location__channel_assignments_11a_standard__to_merge:
   sama-nord-nf-5ghz: 36-20
   sama-ost-nf-5ghz: 40-20
   sama-sued-nf-5ghz: 44-20
   sama-west-nf-5ghz: 48-20
-
-# channel-bandwith-txpower in dbm
-# Back to Back channel is reused
-# - Hopefully rf-Shield performs :)
-#
 
 # Switch 1
 # 1: core
