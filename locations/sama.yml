@@ -163,6 +163,16 @@ networks:
     prefix: 10.31.79.182/32
     ipv6_subprefix: -7
     mesh_metric: 128
+  # This is an additional mesh VLAN to avoid issues with sama-sued-60g
+  # and the untagged data VLAN. This VLAN must be passed tagged to the
+  # Wave AP Micro to function as intended. It must also be the same
+  # VLAN ID at the neighboring sites.
+  - vid: 19
+    role: mesh
+    name: mesh_s60_t
+    prefix: 10.31.79.183/32
+    ipv6_subprefix: -8
+    mesh_metric: 128
 
 location__channel_assignments_11a_standard__to_merge:
   sama-nord-nf-5ghz: 36-20

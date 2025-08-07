@@ -184,6 +184,20 @@ networks:
     mesh_metric: 128
     ptp: true
 
+  # This is an additional mesh VLAN to work around issues we have with
+  # sama-sued-60g and the untagged data VLAN. This VLAN needs to be passed
+  # tagged to the Airfiber to work as intended. It also needs to be the same
+  # VLAN id at sama-core.
+  - vid: 19
+    role: mesh
+    name: mesh_sama_t
+    prefix: 10.31.115.41/32
+    ipv6_subprefix: -10
+    # prefer routing via emma over sama to use ohlauer as gateway)
+    mesh_metric: 256
+    mesh_metric_lqm: ["default 0.5"]
+    ptp: true
+
   # 11s mesh 2ghz
   - vid: 21
     role: mesh
