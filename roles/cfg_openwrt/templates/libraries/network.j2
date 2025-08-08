@@ -63,3 +63,17 @@
     {% set selected_wireless_profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first %}
 {{- selected_wireless_profile | json_query('ifaces[].network') | default([], true) | to_json -}}
 {% endmacro %}
+
+{# Generate a deterministic random MAC address from a given seed #}
+{% macro generateDeterministicMAC(seed) -%}
+    {% set r = (seed|string)|hash('sha256') -%}
+    {% set mac = [
+        '02',
+        r[0:2]|upper,
+        r[2:4]|upper,
+        r[4:6]|upper,
+        r[6:8]|upper,
+        r[8:10]|upper
+    ] -%}
+{{- mac|join(':') -}}
+{%- endmacro %}
