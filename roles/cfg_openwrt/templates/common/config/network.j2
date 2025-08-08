@@ -54,6 +54,10 @@ config interface '{{ name }}'
        not libnetwork.isBridgeNeeded(network) | from_json %}
 	option macaddr '02:00:00:00:00:01'
     {% endif %}
+    {# Generate a deterministic random MAC address to avoid issues with multiple paths to the same location #}
+    {% if network['role'] == 'mesh' %}
+        option macaddr '{{- libnetwork.generateDeterministicMAC(inventory_hostname ~ "-" ~ name) -}}'
+    {% endif %}
     {% if 'assignments' in network and inventory_hostname in network['assignments'] %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) }}'
