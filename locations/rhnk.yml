@@ -21,6 +21,10 @@ hosts:
       # HW offload crashes the Intel NIC firmware
       - ethtool -K eth2 tx off rx off
 
+  - hostname: rhnk-nf-turm
+    role: ap
+    model: "siemens_ws-ap3610"
+
   - hostname: rhnk-nf-bvv
     role: ap
     model: "tplink_eap225-outdoor-v1"
@@ -224,6 +228,7 @@ networks:
     assignments:
       rhnk-core: 1 # Routerboard 750gr3
       rhnk-switch: 2 # Mikrotik CRS328-24P-4S+RM - SwitchOS
+      rhnk-nf-turm: 3 # WS-AP3610 - OpenWrt
       rhnk-rhxb: 11 # AirFiber 60-LR
       rhnk-klunker-60ghz: 14 # Mikrotik Cube 60 Pro
       rhnk-emma: 15 # Powerbeam 5AC 400 ISO
