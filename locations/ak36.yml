@@ -71,6 +71,7 @@ mgmt:
     # services
     config: 22 # .150
     monitor: 23 # .151
+    unifi: 29 # .157
     uisp: 30 # .158
 
 # Mesh Network: 10.31.130.160/27
