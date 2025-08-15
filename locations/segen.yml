@@ -11,7 +11,7 @@ contacts:
 hosts:
   - hostname: segen-core
     role: corerouter
-    model: "ubnt_edgerouter-x-sfp"
+    model: "ubnt_edgerouter-x-sfp-24-10"
     poe_on: [0, 1, 2, 3]
 
   - hostname: segen-n-nf-2ghz
