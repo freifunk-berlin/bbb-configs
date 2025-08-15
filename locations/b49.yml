@@ -16,19 +16,16 @@ hosts:
 
 snmp_devices:
   - hostname: b49-nanostation
-    address: 10.31.240.2
+    address: 10.248.71.162
     snmp_profile: airos_8
 
-ipv6_prefix: "2001:bf7:830:b500::/56"
+ipv6_prefix: "2001:bf7:750:aa00::/56"
 
 # got following prefixes:
-# Router: 10.31.240.0/24
-# --MGMT: 10.31.240.0/27
-# --MESH: 10.31.240.32/27
-# --UPLK: 10.31.240.64/27
-# --DHCP: 10.31.240.96/27 (HOST, UNUSED)
-# --DHCP: 10.31.240.128/26 (PUBLIC)
-# --DHCP: 10.31.240.192/26 (PRIVATE, UNUSED)
+# Router: 10.248.71.160/27
+# --MGMT: 10.248.71.160/29
+# --MESH+UPLK: 10.248.71.168/29
+# --DHCP: 10.248.71.176/28 (PUBLIC)
 
 # Disable noping
 dhcp_no_ping: false
@@ -38,7 +35,7 @@ networks:
   - vid: 10
     role: mesh
     name: mesh_ns_5ac
-    prefix: 10.31.240.32/32
+    prefix: 10.248.71.168/32
     ipv6_subprefix: -10
     ptp: true
 
@@ -46,7 +43,7 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_5g
-    prefix: 10.31.240.33/32
+    prefix: 10.248.71.169/32
     ipv6_subprefix: -20
     mesh_ap: b49-core
     mesh_radio: 11a_standard
@@ -56,7 +53,7 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_2g
-    prefix: 10.31.240.34/32
+    prefix: 10.248.71.170/32
     ipv6_subprefix: -21
     # make mesh_metric(s) for 2GHz worse than 5GHz
     mesh_metric: 1024
@@ -70,7 +67,7 @@ networks:
     role: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.31.240.128/26
+    prefix: 10.248.71.176/28
     ipv6_subprefix: 0
     assignments:
       b49-core: 1
@@ -78,13 +75,13 @@ networks:
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.31.240.0/27
+    prefix: 10.248.71.160/29
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      b49-core: 1 # 10.31.240.1
-      b49-nanostation: 2 # 10.31.240.2
+      b49-core: 1 # 10.248.71.161
+      b49-nanostation: 2 # 10.248.71.162
 
   # UPLK
   - vid: 50
@@ -94,13 +91,13 @@ networks:
   - role: tunnel
     ifname: ts_wg0
     mtu: 1280
-    prefix: 10.31.240.36/32
+    prefix: 10.248.71.171/32
     wireguard_port: 51820
 
   - role: tunnel
     ifname: ts_wg1
     mtu: 1280
-    prefix: 10.31.240.37/32
+    prefix: 10.248.71.172/32
     wireguard_port: 51821
 
 # AP-id, wifi-channel, bandwidth, txpower
