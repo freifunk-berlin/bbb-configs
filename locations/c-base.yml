@@ -10,8 +10,9 @@ contacts:
 hosts:
   - hostname: c-base-core
     role: corerouter
-    model: "avm_fritzbox-7530"
+    model: "genexis_pulse-ex400"
     wireless_profile: freifunk_default
+    flow_offload: hw
 
   - hostname: c-base-nf-1
     role: ap
