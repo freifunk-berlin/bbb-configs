@@ -5,9 +5,9 @@ location_nice: Rotherstraße 16, 10245 Berlin
 latitude: 52.504016671
 longitude: 13.449078798
 altitude: 89
-contact_nickname: 'Jammingblub'
+contact_nickname: "Jammingblub"
 contacts:
-  - 'freifunk@sva.de'
+  - "freifunk@sva.de"
 
 # ROUTER: 10.31.174.240/28
 # --MGMT: 10.31.174.240/30
@@ -23,11 +23,11 @@ hosts:
     host__rclocal__to_merge:
       - |
         # untag payload traffic for Wave to Emma
-        uci set network.vlan_10.ports='wan lan2:t lan3:t lan4:t lan5:t'
+        uci set network.vlan_10.ports='wan:u lan2:t lan3:t lan4:t lan5:t'
         # untag DHCP on port 2
-        uci set network.vlan_40.ports='wan:t lan2 lan3:t lan4:t lan5:t'
+        uci set network.vlan_40.ports='wan:t lan2:u lan3:t lan4:t lan5:t'
         # untag port 3 for local backup uplink
-        uci set network.vlan_50.ports='wan:t lan2:t lan3 lan4:t lan5:t'
+        uci set network.vlan_50.ports='wan:t lan2:t lan3:u lan4:t lan5:t'
         uci commit network; reload_config
 
 snmp_devices:

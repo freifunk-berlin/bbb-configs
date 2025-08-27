@@ -1,8 +1,8 @@
 ---
 location: hdk-85b
 location_nice: Heidekampgraben 85b
-latitude: 52.479624490
-longitude: 13.47
+latitude: 52.478699638
+longitude: 13.47232282
 community: true
 
 hosts:
@@ -10,8 +10,19 @@ hosts:
     role: corerouter
     model: "tplink_eap225-outdoor-v3"
     wireless_profile: freifunk_default
+    host__rclocal__to_merge:
+      - |
+        # Enable legacy rates to enable meshing with neighbors
+        for radio in $(uci show wireless \
+          | grep "=wifi-device" \
+          | cut -d. -f2 \
+          | cut -d= -f1); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless; reload_config
 
-ipv6_prefix: '2001:bf7:840:2a00::/56'
+
+ipv6_prefix: "2001:bf7:840:2a00::/56"
 
 # Router: 10.248.8.64/26 2001:bf7:840:2a00::/56
 # --MGMT: 10.248.8.64/28

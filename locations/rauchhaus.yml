@@ -8,11 +8,10 @@ altitude: 47
 community: true
 
 hosts:
-
   - hostname: rauchhaus-core
     role: corerouter
-    model: "tplink_archer-c7-v5"
-    wireless_profile: rauchhaus
+    model: "ubnt_edgerouter-x"
+    wireless_profile: disable
 
   - hostname: rauchhaus-floor0north135
     role: ap
@@ -119,7 +118,6 @@ networks:
       rauchhaus-basement: 15
 
 location__channel_assignments_11a_standard__to_merge:
-  rauchhaus-core: 36-20
   rauchhaus-floor0north135: 36-20
   rauchhaus-floor0south136: 48-20
   rauchhaus-floor1north133: 36-20
@@ -128,7 +126,6 @@ location__channel_assignments_11a_standard__to_merge:
   rauchhaus-basement: 44-20
 
 location__channel_assignments_11g_standard__to_merge:
-  rauchhaus-core: 1-20
   rauchhaus-floor0north135: 11-20
   rauchhaus-floor0south136: 1-20
   rauchhaus-floor1north133: 6-20
@@ -152,12 +149,12 @@ location__wireless_profiles__to_merge:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
 
       - mode: ap
         ssid: rauchhaus
         encryption: sae-mixed
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: home
         radio: [11a_standard, 11g_standard]
         ifname_hint: home

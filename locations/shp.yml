@@ -1,0 +1,152 @@
+---
+location: shp
+location_nice: "Siegfried-Hirschmann-Park, 10247 Berlin"
+latitude: 52.50855920811182
+longitude: 13.468321235371603
+contact_nickname: "Noki"
+contacts:
+  - "@noki-:matrix.org"
+
+hosts:
+  - hostname: shp-core
+    role: corerouter
+    model: "genexis_pulse-ex400"
+    wireless_profile: shp
+    flow_offload: hw
+    host__rclocal__to_merge:
+      - |
+        # Enable legacy rates on 2.4 GHz radio to enable meshing with neighbors
+        uci set wireless.radio1.legacy_rates='1'
+        uci commit wireless
+        reload_config
+
+ipv6_prefix: "2001:bf7:830:f600::/56"
+
+# got following prefixes:
+# Router: 10.248.71.64/27
+# --MGMT: 10.248.71.64/30
+# --MESH: 10.248.71.72/29
+# --DHCP: 10.248.71.80/28
+# --DHCP: 10.248.71.68/30 (Private DHCP)
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.248.71.72/32
+    ipv6_subprefix: -20
+    mesh_ap: shp-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.71.73/32
+    ipv6_subprefix: -21
+    # make mesh_metric(s) for 2GHz worse than 5GHz
+    mesh_metric: 1024
+    mesh_metric_lqm: ["default 0.8"]
+    mesh_ap: shp-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.71.80/28
+    ipv6_subprefix: 0
+    assignments:
+      shp-core: 1
+
+  # DHCP with filtering
+  - vid: 41
+    role: dhcp
+    name: shp_private
+    inbound_filtering: true
+    prefix: 10.248.71.68/30
+    ipv6_subprefix: 3
+    assignments:
+      shp-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.71.64/30
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      shp-core: 1 # 10.248.71.65
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  shp-core: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  shp-core: 13-20
+
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: shp
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: shp
+        encryption: sae-mixed
+        key: "file:/root/wifi-pwd"
+        network: shp_private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        mesh_nolearn: 1
+        ifname_hint: mesh
+
+
+# SSH Keys
+ssh_keys:
+  - comment: Noki
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjIgJKflHEYOIdskwalr83PflhPmFkrAebP2bUkOE11 Noki
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001

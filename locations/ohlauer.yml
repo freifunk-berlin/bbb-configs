@@ -8,7 +8,6 @@ altitude: 55
 community: true
 
 hosts:
-
   - hostname: ohlauer-gw
     role: gateway
     model: "ubnt_edgerouter-4"
@@ -37,9 +36,9 @@ mgmt:
   ipv4: 10.31.166.249/29
   ipv6: 2001:bf7:830:8300::/64
   assignments:
-    ohlauer-gw: 1      # .249
-    ohlauer-switch: 2  # .250
-    ohlauer-emma: 3    # .251
+    ohlauer-gw: 1 # .249
+    ohlauer-switch: 2 # .250
+    ohlauer-emma: 3 # .251
 
 mesh_links:
   - name: mesh_emma

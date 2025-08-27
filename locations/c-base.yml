@@ -25,20 +25,32 @@ hosts:
     mac_override:
       eth0: dc:2c:6e:c4:36:57
 
+  - hostname: c-base-nf-3
+    role: ap
+    model: "tplink_cpe510-v1"
+
+  - hostname: c-base-nf-4
+    role: ap
+    model: "tplink_cpe510-v1"
+
 snmp_devices:
   - hostname: c-base-switch
     address: 10.31.134.98
     snmp_profile: edgeswitch
 
-  - hostname: c-base-mesh-ssw
+  - hostname: c-base-simeon-af60lr
     address: 10.31.134.101
-    snmp_profile: airos_8
+    snmp_profile: af60
+
+  - hostname: c-base-simeon60
+    address: 10.31.134.104
+    snmp_profile: af60
 
 airos_dfs_reset:
-  - name: "c-base-mesh-ssw"
+  - name: "c-base-simeon"
     target: "10.31.134.101"
     username: "ubnt"
-    password: "/root/pwd"
+    password: "file:/root/pwd"
     daytime_limit: "2-7"
 
 ipv6_prefix: "2001:bf7:760:4800::/56"
@@ -51,12 +63,24 @@ ipv6_prefix: "2001:bf7:760:4800::/56"
 networks:
   - vid: 4
     role: uplink
+    uplink_ipv4: 172.31.79.99/23
+    uplink_gateway: 172.31.79.254
 
   - vid: 11
     role: mesh
-    name: mesh_ssw
+    name: simeon_af60
     prefix: 10.31.134.112/32
     ipv6_subprefix: -11
+    mesh_metric: 128
+    ptp: true
+
+  - vid: 12
+    role: mesh
+    name: simeon_wave
+    prefix: 10.31.134.117/32
+    ipv6_subprefix: -12
+    ptp: true
+    mesh_metric_lqm: ["default 0.5"]
 
   - vid: 20
     role: mesh
@@ -92,11 +116,14 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      c-base-core: 1
-      c-base-switch: 2
-      c-base-nf-1: 3
-      c-base-nf-2: 4
-      c-base-mesh-ssw: 5
+      c-base-core: 1 # 10.31.134.97
+      c-base-switch: 2 # 10.31.134.98
+      c-base-nf-1: 3 # 10.31.134.99
+      c-base-nf-2: 4 # 10.31.134.100
+      c-base-simeon-af60lr: 5 # 10.31.134.101
+      c-base-nf-3: 6 # 10.31.134.102
+      c-base-nf-4: 7 # 10.31.134.103
+      c-base-simeon60: 8 # 10.31.134.104
 
   - role: tunnel
     ifname: ts_wg0
@@ -112,4 +139,5 @@ networks:
 
 location__ssh_keys__to_merge:
   - comment: charly
-    key: ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzODQAAABhBFndetEGRuYzJV7fwNFlf1r498La1CIHpgLSbsfmqzlI8beLyB28o/ewMH4wY+sHO7cYWzsWAyRA0TXBu7ULC9Oq/pbNyI8FEQjW25j1Bbx4XRx8uqcS2qO9bc65fMWlwQ==
+    key: ecdsa-sha2-nistp384
+      AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzODQAAABhBFndetEGRuYzJV7fwNFlf1r498La1CIHpgLSbsfmqzlI8beLyB28o/ewMH4wY+sHO7cYWzsWAyRA0TXBu7ULC9Oq/pbNyI8FEQjW25j1Bbx4XRx8uqcS2qO9bc65fMWlwQ==

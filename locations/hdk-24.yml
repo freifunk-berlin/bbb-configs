@@ -1,8 +1,8 @@
 ---
 location: hdk-24
 location_nice: Heidekampgraben 24
-latitude: 52.477859951
-longitude: 13.470954895
+latitude: 52.477820743
+longitude: 13.47099781
 community: true
 
 hosts:
@@ -11,7 +11,7 @@ hosts:
     model: "speedport_w-504v-typ-a"
     wireless_profile: freifunk_default
 
-ipv6_prefix: '2001:bf7:840:2b00::/56'
+ipv6_prefix: "2001:bf7:840:2b00::/56"
 
 # Router: 10.248.8.128/26 2001:bf7:840:2b00::/56
 # --MGMT: 10.248.8.128/28

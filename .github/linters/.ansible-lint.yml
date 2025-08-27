@@ -14,5 +14,5 @@ skip_list:
   - fqcn
   - fqcn-builtins
   - experimental
-  - yaml
   - template-instead-of-copy
+  - var-naming[no-role-prefix]

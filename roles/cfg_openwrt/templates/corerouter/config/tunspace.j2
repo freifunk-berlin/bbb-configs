@@ -1,15 +1,28 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
+{% import 'libraries/network.j2' as libnetwork with context %}
+
 {% for uplink in networks | selectattr('role', 'equalto', 'uplink') %}
   {% set name = uplink['name'] if 'name' in uplink else 'uplink' %}
   {% set mode = uplink['uplink_mode'] if 'uplink_mode' in uplink else 'bridge' %}
-  {% set ifname = uplink['ifname'] if mode == 'direct' else 'br-'+name %}
+  {% set ifname = libnetwork.getIfname(uplink) %}
 
 config tunspace "tunspace"
+  # Namespace where the uplink will live.
   option uplink_netns "{{ name }}"
+  # Existing interface that we'll use as the uplink.
   option uplink_ifname "{{ ifname }}"
+  # How the uplink in the namespace is constructed.
+  # - bridge: creates a macvlan child in bridge mode, useful for creating multiple uplinks from the same original uplink interface.
+  # - direct: moves the original uplink interface into the namespace directly, useful for wonky cheap USB sticks with broken drivers.
   option uplink_mode "{{ mode }}"
+  # Our own static uplink IPv4 address in CIDR format. Leave empty to use DHCP.
+  option uplink_ipv4 "{{ uplink['uplink_ipv4']|default('') }}"
+  # IPv4 address of the gateway. Required in combination with uplink_ipv4, ignored when using DHCP.
+  option uplink_gateway "{{ uplink['uplink_gateway']|default('') }}"
+  # Maintenance consists of checking the uplink, refreshing the DHCP lease, checking the tunnel endpoints, and switching endpoints if neccessary.
   option maintenance_interval 60
-  option debug 0
+  # Enables detailed output of Tunspace's operations. If disabled, only tunnel endpoint changes are reported.
+  option debug "0"
 {% endfor %}
 
 {% for tunnel in networks | selectattr('role', 'equalto', 'tunnel') %}
@@ -17,9 +30,9 @@ config wg-interface
   option ifname "{{ tunnel['ifname'] }}"
   option ipv6 "fe80::2/64"
   option ipv4 "{{ tunnel['prefix'] }}"
-  option mtu {{ tunnel['mtu'] }}
-  option port {{ tunnel['wireguard_port'] }}
-  option disabled 0
+  option mtu "{{ tunnel['mtu'] }}"
+  option port "{{ tunnel['wireguard_port'] }}"
+  option disabled "0"
 
 {% endfor %}
 
@@ -27,7 +40,7 @@ config wg-interface
 config wg-server
   option name "{{ gateway }}"
   option url "https://{{ hostvars[gateway]['uplink']['ipv4'] | ansible.utils.ipaddr('address') }}/ubus"
-  option insecure_cert 1
-  option disabled 0
+  option insecure_cert "1"
+  option disabled "0"
 
 {% endfor %}

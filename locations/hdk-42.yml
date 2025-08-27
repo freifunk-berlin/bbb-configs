@@ -1,8 +1,8 @@
 ---
 location: hdk-42
 location_nice: Heidekampgraben 42
-latitude: 52.478800921
-longitude: 13.471823930
+latitude: 52.478823792
+longitude: 13.47182393
 community: true
 
 hosts:
@@ -11,7 +11,7 @@ hosts:
     model: "ubnt_unifiac-mesh"
     wireless_profile: freifunk_default
 
-ipv6_prefix: '2001:bf7:840:2200::/56'
+ipv6_prefix: "2001:bf7:840:2200::/56"
 
 # Router: 10.248.6.128/26 2001:bf7:840:2200::/56
 # --MGMT: 10.248.6.128/28

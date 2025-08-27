@@ -1,12 +1,12 @@
 ---
 location: e16outdoor
-location_nice: 'Eberswalder Straße 16'
+location_nice: "Eberswalder Straße 16"
 latitude: 52.540810368412
 longitude: 13.408925450394
 altitude: 64
-contact_nickname: 'Noki'
+contact_nickname: "Noki"
 contacts:
-  - '@noki-:matrix.org'
+  - "@noki-:matrix.org"
 
 dns_servers:
   # quad9
@@ -31,7 +31,7 @@ snmp_devices:
     address: 10.31.142.50
     snmp_profile: airos_8
 
-ipv6_prefix: '2001:bf7:760:2700::/56'
+ipv6_prefix: "2001:bf7:760:2700::/56"
 
 # got following prefixes:
 # Router:  10.31.142.0/26
@@ -78,7 +78,7 @@ networks:
     prefix: 10.31.142.33/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: e16outdoor-core
     mesh_radio: 11g_standard
     mesh_iface: mesh

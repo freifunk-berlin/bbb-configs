@@ -7,7 +7,6 @@ contacts:
   - pktpls+bbb@systemli.org
 
 hosts:
-
   - hostname: pktpls-core
     role: corerouter
     model: "x86-64"
@@ -32,7 +31,6 @@ location__packages__to_merge:
 ipv6_prefix: 2001:bf7:750:5500::/56
 
 networks:
-
   - vid: 20
     role: mesh
     name: mesh_core
@@ -66,6 +64,8 @@ networks:
     ifname: eth1
     role: uplink
     untagged: true
+    uplink_ipv4: 10.0.2.42/24
+    uplink_gateway: 10.0.2.2
 
   - role: tunnel
     ifname: ts_wg0

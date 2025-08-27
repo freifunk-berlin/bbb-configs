@@ -4,6 +4,8 @@ brand_nice: TP-Link
 model_nice: Archer C6
 version_nice: v2
 
+low_flash: true
+
 switch_ports: 7
 switch_int_port: 0
 switch_ignore_ports: [6]
@@ -12,7 +14,7 @@ switch_ignore_ports: [6]
 int_port: eth0
 
 model__packages__to_merge:
-  - "-ath10k-firmware-qca9888-ct ath10k-firmware-qca9888-ct-full-htt"  # select candelatech suggested firmware variant
+  - "-ath10k-firmware-qca9888-ct ath10k-firmware-qca9888-ct-full-htt" # select candelatech suggested firmware variant
 
 wireless_devices:
   - name: 11a_standard

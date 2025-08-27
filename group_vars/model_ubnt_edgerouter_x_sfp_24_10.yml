@@ -1,0 +1,32 @@
+---
+override_target: "ubnt_edgerouter-x-sfp"
+target: ramips/mt7621
+brand_nice: Ubiquiti
+model_nice: EdgeRouter X SFP
+
+openwrt_version: 24.10-SNAPSHOT
+
+dsa_ports:
+  - eth0
+  - eth1
+  - eth2
+  - eth3
+  - eth4
+  - eth5
+
+poe_ports:
+  - name: PoE Power Port0
+    gpio_pin: 608
+    value: 0
+  - name: PoE Power Port1
+    gpio_pin: 609
+    value: 0
+  - name: PoE Power Port2
+    gpio_pin: 610
+    value: 0
+  - name: PoE Power Port3
+    gpio_pin: 611
+    value: 0
+  - name: PoE Power Port4
+    gpio_pin: 612
+    value: 0

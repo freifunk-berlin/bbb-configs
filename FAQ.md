@@ -72,24 +72,48 @@ Make sure to test your addition with yamllint and ansible-lint before sending a 
 make lint
 ```
 
-## How can I mass deploy in the Freifunk Network
+## How can I mass deploy in the Freifunk Network?
 
-```sh
-# Find groups matching our targets to ease selection
-ansible-inventory --graph
+1. Clear folder `tmp/images`.
+2. Generate images for every location you want to update
+3. Use `mass-update.sh` while you are connected to the Freifunk Network. It will automatically connect via ssh to all routers and install the new firmware.
 
-# Generate images for a list of specific devices
-ansible-playbook play.yml --tags image --limit example-core,example-ap1
+## How can I have my own website/blog/service ?
 
-# Change into images directory
-cd ./tmp/images
-
-# Optional: Keyscan for hostkeys
-for i in *.bin; do hostname="$(echo $i | awk -F '.' '{print $1}')"; ssh_target="$hostname.olsr"; ssh-keyscan "$ssh_target"; done
-
-# "oneliner" to mass-flash all devices where we have an image (use with caution)
-for i in *.bin; do hostname="$(echo $i | awk -F '.' '{print $1}')"; ssh_target="root@$hostname.olsr"; path="/tmp/$i"; echo -e "\e[92m$(date +%H:%M:%S) - $hostname: Disabling non-mesh wireless networks to free memory and sleep 13 seconds until change is applied (required for 32mb devices)\e[0m";
-ssh "$ssh_target" "for i in \$(uci show wireless | grep mode=\'ap\' | awk -F '.' '{print \$2}'); do uci set wireless.\$i.disabled=1; done; uci commit wireless; ubus call uci reload_config;"; sleep 13; echo -e "\e[92m$(date +%H:%M:%S) - $hostname: Disabling unnecessary services to free even more memory\e[0m";
-ssh "$ssh_target" "/etc/init.d/collectd stop; /etc/init.d/luci_statistics stop; /etc/init.d/sysntpd stop; /etc/init.d/urngd stop; /etc/init.d/rpcd stop; /etc/init.d/naywatch stop 2> /dev/null"; echo -e "\e[92m$(date +%H:%M:%S) - $hostname: Transfering image\e[0m"; scp -O "$i" "$ssh_target:$path";
-echo -e "\e[92m$(date +%H:%M:%S) - $hostname: Start sysupgrade \e[0m"; ssh "$ssh_target" "sysupgrade $path" ; done
+You need to host your service on a separate device like your old computer.
+to make it reachable within Freifunk define a static IP Address in the config file of your location like this:
+```yml
+[...]
+    assignments:
+      foo-core: 1
+      foo-service: 2
 ```
+You could choose an existing network like `mgmt` or define a extra one. Just make sure it doesn't have `inbound_filtering: true` set.
+
+Set the corresponding static IP on your separate device. It will be reachable via the IP Address or via its internal Domain `foo-service.ff`.
+
+If you encounter problems with reaching the local services make sure to check if you are connected via a VPN or have a different DNS configured.
+
+### How can I reach it from outside the Freifunk network
+
+Freifunk Berlin uses a public routable IPv6 Addressroom within its network. We can open the firewall to let traffic in. After you finished these steps you can reach your service via IPv6 from all over the world.
+
+1. Make sure your router doesnt block incoming traffic e.g. the subnetwork doesnt have `inbound_filtering`
+2. Add the following to `group_vars/role_gateway/general.yml`
+
+```yml
+inbound_allow:
+ - name: Rule Description (mandatory)
+   dst: Destination IP (mandatory)
+   src: Source IP
+   proto: [tcp, udp, icmp.]
+   src_port:
+   dst_port: 22
+```
+3. Update the Firewall of the Gateways
+
+   _Note: This can only be done by the maintainers of the bbb_
+
+4. Check your separate device for its IPv6 Address (starting with 2001:) - it is reachbale now.
+
+   _Note: IPv6 Addresses are handed out via SLAAC and might not be static. Define a static Address so it doesnt change over time_

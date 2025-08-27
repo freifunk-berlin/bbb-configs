@@ -5,12 +5,11 @@ location_nice: Frankfurter Allee 218
 latitude: 52.511259
 longitude: 13.49598
 altitude: 93
-contact_nickname: 'Hener'
+contact_nickname: "Hener"
 contacts:
-  - 'ffhener@proton.me'
+  - "ffhener@proton.me"
 
 hosts:
-
   - hostname: liese-21-core
     role: corerouter
     model: ubnt_usw-flex
@@ -36,7 +35,6 @@ snmp_devices:
     snmp_profile: airos_8
 
 airos_dfs_reset:
-
   - name: "liese-21-n-5ghz"
     target: "10.31.137.51"
     username: "ubnt"
@@ -65,7 +63,7 @@ networks:
   - vid: 20
     role: mesh
     name: n_nf_5ghz
-    prefix: '10.31.174.10/32'
+    prefix: "10.31.174.10/32"
     ipv6_subprefix: -20
     mesh_ap: liese-21-n-nf-5ghz
     mesh_radio: 11a_standard

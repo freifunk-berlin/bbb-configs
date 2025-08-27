@@ -6,7 +6,7 @@ latitude: 52.514072806
 longitude: 13.488437533
 altitude: 60
 contacts:
-  - '#ff-site-magda:matrix.org'
+  - "#ff-site-magda:matrix.org"
 
 hosts:
   - hostname: magda-core
@@ -41,6 +41,10 @@ hosts:
   #   model: "ubnt_nanostation-m2_xm"
 
 snmp_devices:
+  - hostname: magda-switch
+    address: 10.31.83.114
+    snmp_profile: edgeswitch
+
   - hostname: magda-sama
     address: 10.31.83.115
     snmp_profile: airos_8
@@ -48,6 +52,10 @@ snmp_devices:
   - hostname: magda-ost-5ghz
     address: 10.31.83.116
     snmp_profile: airos_8
+
+  - hostname: magda-switch-unten
+    address: 10.31.83.122
+    snmp_profile: swos_lite
 
 airos_dfs_reset:
   - name: "magda-ost-5ghz"
@@ -74,7 +82,7 @@ networks:
     ipv6_subprefix: -2
     # Adjust mesh metric to liese-11-sw-core to prevent using it
     # as a gateway during heavy rain
-    mesh_metric_lqm: ['10.31.205.49 0.2']
+    mesh_metric_lqm: ["10.31.205.49 0.2"]
 
   - vid: 42
     role: mgmt
@@ -92,6 +100,7 @@ networks:
       magda-ap3: 7
       # magda-ap4: 8
       magda-ap-remise: 9
+      magda-switch-unten: 10
 
   - vid: 40
     role: dhcp
@@ -102,12 +111,21 @@ networks:
     assignments:
       magda-core: 1
 
+  - vid: 41
+    role: dhcp
+    name: pubdhcp
+    prefix: 10.248.42.48/28
+    ipv6_subprefix: 2
+    inbound_filtering: false
+    enforce_client_isolation: true
+    assignments:
+      magda-core: 1
+
 location__channel_assignments_11a_standard__to_merge:
   magda-ap1: 48-20
   magda-ap2: 36-20
   magda-ap3: 44-20
   magda-ap-remise: 36-40
-
 
 # channel-bandwith-txpower in dbm
 

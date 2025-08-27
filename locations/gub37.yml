@@ -19,13 +19,17 @@ hosts:
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     wifi_roaming: true
-    mac_override: {eth0: 64:d1:54:ae:ba:b0}
+    mac_override: { eth0: 64:d1:54:ae:ba:b0 }
 
   - hostname: gub37-hof-w
     role: ap
     model: "ubnt_nanostation-ac-loco"
 
 snmp_devices:
+  - hostname: gub37-switch-roof
+    address: 10.31.157.2
+    snmp_profile: zyxel
+
   - hostname: gub37-zwingli
     address: 10.31.157.10
     snmp_profile: airos_8
@@ -115,7 +119,7 @@ networks:
     mesh_iface: mesh
     mesh_metric_lqm: ["default 0.3"]
 
-# DHCP - freifunk
+  # DHCP - freifunk
   - vid: 40
     role: dhcp
     inbound_filtering: true

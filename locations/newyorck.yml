@@ -13,7 +13,6 @@ model: "siemens_ws-ap3610"
 wireless_profile: newyorck
 
 hosts:
-
   - hostname: newyorck-core
     role: corerouter
     model: "ubnt_edgerouter-x"
@@ -35,7 +34,6 @@ hosts:
   - hostname: newyorck-ap-3b
 
 snmp_devices:
-
   # TL-SG2424
   - hostname: newyorck-switch1
     address: 10.31.155.226
@@ -51,15 +49,15 @@ snmp_devices:
     address: 10.31.155.228
     snmp_profile: tplink
 
-# PRDHCP: 10.31.247.0/25
-# --DHCP: 10.31.160.0/25
-# --MGMT: 10.31.155.224/27
-# --MESH: 10.31.155.192/29
+# PUBDHCP: 10.248.38.84/30
+#  PRDHCP: 10.31.247.0/25
+#    DHCP: 10.31.160.0/25
+#    MGMT: 10.31.155.224/27
+#    MESH: 10.31.155.192/29
 
 ipv6_prefix: "2001:bf7:830:a900::/56"
 
 networks:
-
   - vid: 40
     role: dhcp
     prefix: 10.31.160.0/25
@@ -105,6 +103,17 @@ networks:
       newyorck-ap-2d: 15
       newyorck-ap-3a: 16
       newyorck-ap-3b: 17
+
+  - vid: 43
+    name: pubdhcp
+    role: dhcp
+    prefix: 10.248.38.84/30
+    ipv6_subprefix: 43
+    inbound_filtering: false
+    enforce_client_isolation: false
+    assignments:
+      newyorck-core: 1
+      newyorck-homelab: 2
 
   - vid: 50
     role: uplink
@@ -155,7 +164,6 @@ location__channel_assignments_11g_standard__to_merge:
   newyorck-ap-3b: 11-20
 
 location__wireless_profiles__to_merge:
-
   - name: newyorck
 
     ifaces:
@@ -172,12 +180,12 @@ location__wireless_profiles__to_merge:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
 
       - mode: ap
         ssid: newyorck
         encryption: psk2
-        key: 'file:/root/wifi_pass'
+        key: "file:/root/wifi_pass"
         network: prdhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: prdhcp

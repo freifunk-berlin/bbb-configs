@@ -3,6 +3,8 @@ target: "mediatek/filogic"
 brand_nice: GL.iNet
 model_nice: GL-MT3000 (Beryl AX)
 
+openwrt_version: 23.05-SNAPSHOT
+
 dsa_ports:
   - lan
   - wan

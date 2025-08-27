@@ -8,10 +8,9 @@ altitude: 64
 community: true
 
 hosts:
-
   - hostname: mlk-nk-core
     role: corerouter
-    model: "tplink_tl-wdr4900-v1"
+    model: "mikrotik_routerboard-750gr3"
     wireless_profile: freifunk_default
 
   - hostname: mlk-nk-nf-wbp2
@@ -25,10 +24,9 @@ hosts:
   - hostname: mlk-nk-rhnk
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: {eth0: dc:2c:6e:c4:1d:b4}
+    mac_override: { eth0: dc:2c:6e:c4:1d:b4 }
 
 snmp_devices:
-
   - hostname: mlk-nk-nno-5ghz
     address: 10.31.69.4
     snmp_profile: airos_8
@@ -37,23 +35,23 @@ snmp_devices:
     address: 10.31.69.5
     snmp_profile: airos_6
 
-
-ipv6_prefix: '2001:bf7:820:2500::/56'
+ipv6_prefix: "2001:bf7:820:2500::/56"
 # ipv4: 10.31.69.0/25
 # mgmt: 10.31.69.0/27
 # mesh: 10.31.69.32/27
 # dhcp: 10.31.69.64/26
 
 networks:
-
   # Airos and similar - mesh links (VID 10-19)
-  # Powerbeam 5AC 400 - Orientation Zwingli/Sama
+  # Powerbeam 5AC 400 - Orientation Emma
   - vid: 11
     role: mesh
     name: mesh_nno_5
     prefix: 10.31.69.33/32
     ipv6_subprefix: -11
-    mesh_metric_lqm: ['default 0.6']
+    # Prefer route via rhnk over emma
+    mesh_metric: 4048
+    mesh_metric_lqm: ["default 0.5"]
 
   # Nanostation M5 - Airos 6 - Orientation Sonnenallee
   - vid: 12
@@ -61,7 +59,6 @@ networks:
     name: mesh_so_5
     prefix: 10.31.69.34/32
     ipv6_subprefix: -12
-    mesh_metric_lqm: ['default 0.7']
 
   # 802.11s mesh links (VID 20-29)
   # 802.11s mesh nf - SXTsq5ac - Orientation Rhnk
@@ -117,18 +114,6 @@ networks:
       mlk-nk-so-5ghz: 5
       mlk-nk-nf-wbp2: 7
       mlk-nk-nf-wbp3: 8
-
-dns_servers:
-  # quad9
-  - 9.9.9.9
-  - 149.112.112.112
-  - 2620:fe::fe
-  - 2620:fe::9
-  # cloudflare
-  - 1.1.1.1
-  - 1.0.0.1
-  - 2606:4700:4700::1111
-  - 2606:4700:4700::1001
 
 location__ssh_keys__to_merge:
   - comment: martin@koltonowski.de

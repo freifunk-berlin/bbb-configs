@@ -1,13 +1,12 @@
 ---
 target: ath79/generic
-brand_nice: COMFAST
-model_nice: CF-E130N
+brand_nice: TP-Link
+model_nice: CPE210
 version_nice: v2
 
-int_port: eth0
+openwrt_version: 23.05-SNAPSHOT
 
-low_mem: true
-low_flash: true
+int_port: eth0
 
 wireless_devices:
   - name: 11g_standard

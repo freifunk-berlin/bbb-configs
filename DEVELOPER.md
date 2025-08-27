@@ -6,7 +6,7 @@ This guide explains the directory structure of the project and variables within 
 
 `locations/` holds all the location specific configuration. To create a new location add a new file named  `$LOCATIONNAME.yml`. The name should only contain `a-z`, `0-9` and `-`.
 
-As this format is new there are still some old locationdata you can find at `groups_vars/` and `host_vars/`. These old configurations work the same way exept being spilt into different files. For new locations only use `locations/`.
+As this format is new there are still some old locationdata you can find at `groups_vars/` and `host_vars/`. These old configurations work the same way except being spilt into different files. For new locations only use `locations/`.
 
 There are default values defined in `group_vars/all/`. You can override the variables by redefining them in the `$LOCATIONNAME.yml`.
 
@@ -56,6 +56,7 @@ hosts:
     model: "avm_fritzbox-7530"         # model name like written in the corresponding file name in group_vars/
     wireless_profile: freifunk_default # activates wifi with freifunk-default-settings on this device. By default only APs have activated wifi.
 ```
+#### PoE
 
 Some devices use POE-Ports. To enable them, just give the parameter `poe_on` and the port. For example:
 
@@ -69,12 +70,28 @@ Multiple ports can be specified as a list:
     poe_on: [0,1,2,3]
 ```
 
+#### MAC Addresses
+
 A few devices also require an override to properly set the MAC address. The command to read the address from the device should be documented in the corresponding model file.
 
 Without the `mac_override` these devices will still function, but generate a new MAC address on each boot. This causes the devices to appear multiple times in the devices listing of switches and also changes the link local address of the device as it is based on the MAC address.
 
 ```yml
     mac_override: {eth0: XX:XX:XX:XX:XX:XX}
+```
+
+#### Init Script rc.local
+
+For special use cases you can add lines to a script file. This script runs once after installation of the image. One use case is untagging certain vlans on some ports. For this it is important to check the model file at `group_vars/` to find the correct ports.
+
+```yml
+    host__rclocal__to_merge:
+      - |
+        # Untag mesh traffic for a Airfiber as they cant do it themself
+        uci set network.vlan_10.ports='lan1:t lan2:u lan3:t lan4:t lan5:t'
+        # Untag DHCP on ports 4 and 5 for convenient maintenance'
+        uci set network.vlan_40.ports='lan1:t lan2:t lan3:t lan4:u lan5:u'
+        uci commit network; reload_config
 ```
 
 ### monitoring
@@ -106,7 +123,7 @@ airos_dfs_reset:
 This part defines IP-Addresses, WIFI-Properties, Mesh and so on.
 
 ```yml
-# ROUTER: 10.31.42.0/26      # add a overview of all reserved addresses at the top as a comment
+# ROUTER: 10.31.42.0/26       # add a overview of all reserved addresses at the top as a comment
 # --MGMT: 10.31.42.0/28
 # --MESH: 10.31.42.16/28
 # --DHCP: 10.31.42.32/27
@@ -115,14 +132,23 @@ ipv6_prefix: "2001:bf7:860::/56"
 
 networks:
   - vid: 10                   # vlan-id
-    role: mesh                # what this vlan does (mesh vs. dhcp)
+    role: mesh                # what this vlan does (mesh, dhcp, mgmt)
     name: mesh_sama           # the name has a 12 characters limit. It should only contain lower letters and underscores
-    ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for point to point connections by ignoring the hidden node problem
+    ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for
+                              # point to point connections by ignoring the hidden node problem
     prefix: 10.31.42.16/32    # single ipv4-address for meshing
-    ipv6_subprefix: -10       # take an address from the back of the IPv6-block. Best practice is to use the same value as the vlan-id for everything except dhcp and mgmt to avoid duplicate addresses.
-    mesh_metric_lqm: ['default 0.8'] # link quality multiplier is used to artificially make routes worse for olsr, so certain links are preferred. Must be higher then 0.2, otherwise link wont work. Currently IPv4 routes over it.
-    mesh_metric: 1024         # overrides the default of 512 for for babel similar to the option above. Lower metrics means a route is preferred. Currently IPv6 routes over it.
-    untagged: true            # untags the vlan. It is commonly used for tunnel-uplinks
+    ipv6_subprefix: -10       # take an address from the back of the IPv6-block. Best practice is
+                              # to use the same value as the vlan-id for everything except dhcp and
+                              # mgmt to avoid duplicate addresses.
+    mesh_metric_lqm: ['default 0.8'] # link quality multiplier is used to artificially make routes
+                              # worse for olsr, so certain links are preferred. Must be higher then 0.2,
+                              # otherwise link wont work. Only used to connect to Falter-Routers.
+    mesh_metric: 1024         # overrides the default metrics for for babel routing.
+                              # Lower metrics means a route is preferred. Babel is used within bbb-configs.
+                              # Defaults can be found at group_vars/all/general.yml
+    untagged: true            # untags the vlan. It is commonly used for tunnel-uplinks. Only one
+                              # network can be untagged. For more advanced use cases, look under
+                              # hosts section at rc.local
 
   - vid: 20
     role: mesh
@@ -203,7 +229,47 @@ tunnel can be an easy and safe solution. In that case you can add one or more tu
 If there are routes via the tunnels the following command will show a non empty result, when run on the node
 `(echo /routes | nc 127.0.0.1 9090) | grep '"networkInterface": "ts_'`. For uplinks that should only act as backup connection you should adjust the link metrics. See the network section for a example of Babel Metric and OLSR LQM.
 
-If you have multiple uplinks and want one to be prefered, set different link metrics for the different uplinks.
+If you have multiple uplinks and want one to be preferred, set different link metrics for the different uplinks.
+
+### uplink over LTE modem
+
+Many LTE USB sticks work as a so called USB CDC Net device. They emulate a standard ethernet device without any need for further configuration.
+
+```yml
+  - vid: 50
+    untagged: true
+    ifname: eth1              # Add here the emulated interfacename
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.142.120/32
+    wireguard_port: 51820
+```
+
+Some integrated LTE modems work with the [QMI protocol](https://openwrt.org/docs/guide-user/network/wan/wwan/ltedongle) instead, which requires basic configuration of the modem.
+
+```yml
+  - vid: 50
+    untagged: true
+    ifname: wwan0
+    role: uplink
+    uplink_mode: direct
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.142.120/32
+    wireguard_port: 51820
+
+qmi:
+  - name: wwan
+    device: /dev/cdc-wdm0
+    apn: internet
+    pdptype: ipv4
+```
+
 
 ### ssh-keys
 
@@ -237,7 +303,7 @@ location__wireless_profiles__to_merge:
       - radio: 11a_mesh
       - radio: 11a_standard
         disabled: false # Enable radio (default)
-        legacy_rates: false # Disable lower bandwith rates (default)
+        legacy_rates: false # Disable lower bandwidth rates (default)
         country: 'DE' # Set German country code for radio compliance (default)
 
     ifaces:
@@ -336,7 +402,7 @@ For a model using **DSA** instead of swconfig you can obtain the needed informat
 
 ## inventory/
 
-This is an internal directory on which you don't need to care about now. If you like to learn mor on it, you might read
+This is an internal directory on which you don't need to care about now. If you like to learn more on it, you might read
 the `README.md` file inside of it.
 
 ## roles/

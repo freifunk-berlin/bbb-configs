@@ -1,0 +1,76 @@
+---
+location: izrd-ev
+location_nice: Normannenstraße 1-2, 10367 Berlin
+latitude: 52.51609518171857
+longitude: 13.480124737072417
+altitude: 56
+contact_nickname: "IZRD e. V."
+contacts:
+  - "it@izrd.de"
+
+hosts:
+  - hostname: izrd-ev-core
+    role: corerouter
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined.img*"
+    host__packages__to_merge:
+      - qemu-ga
+
+snmp_devices:
+  - hostname: izrd-ev-sama
+    address: 10.248.44.34
+    snmp_profile: airos_8
+
+ipv6_prefix: "2001:bf7:860:1c00::/56"
+
+# Router: 10.248.42.192/27, 10.248.44.32/28, 10.248.42.160, 10.248.42.161, 10.248.42.162
+# --MGMT: 10.248.44.32/29
+# --MESH: 10.248.44.40/29
+# --UPLK: 10.248.42.160/32, 10.248.42.161/32
+# --DHCP: 10.248.42.192/27
+
+networks:
+  # MESH - Sama
+  - vid: 10
+    role: mesh
+    name: mesh_sama
+    prefix: 10.248.44.40/32
+    ipv6_subprefix: -10
+    ptp: true
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.42.192/27
+    ipv6_subprefix: 0
+    assignments:
+      izrd-ev-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.44.32/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      izrd-ev-core: 1 # 10.248.44.33
+      izrd-ev-sama: 2 # 10.248.44.34
+
+  # UPLK
+  - vid: 50
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.42.160/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.248.42.161/32
+    wireguard_port: 51821

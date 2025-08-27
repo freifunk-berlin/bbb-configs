@@ -1,0 +1,126 @@
+---
+location: frischauf
+location_nice: Kleingartenanlage Frischauf
+latitude: 52.547228
+longitude: 13.305926
+
+contact_nickname: "funkgemuese"
+contacts:
+  - "@funkgemuese:matrix.org"
+
+hosts:
+  - hostname: frischauf-core
+    role: corerouter
+    model: "ubnt_edgerouter-x-sfp"
+    poe_on: [0, 1, 2, 3]
+    host__rclocal__to_merge:
+      - |
+        # untag DHCP on ports 5 and 6'
+        uci set network.vlan_40.ports='eth0:t eth1:t eth2:t eth3:t eth4:u eth5:u'
+        uci commit network; reload_config
+
+  - hostname: frischauf-ap
+    role: ap
+    model: "ubnt_unifiac-mesh"
+
+  - hostname: frischauf-west
+    role: ap
+    model: "tplink_cpe210-v2"
+
+snmp_devices:
+  - hostname: frischauf-teufelsberg
+    address: 10.248.32.130
+    snmp_profile: airos_8
+
+  - hostname: frischauf-weidenbaum
+    address: 10.248.32.131
+    snmp_profile: airos_8
+
+ipv6_prefix: "2001:bf7:780:700::/56"
+
+# got following prefixes:
+# Router:  10.248.32.128/25
+#          2001:bf7:780:700::/56
+# --MGMT:  10.248.32.128/27
+# --MESH:  10.248.32.160/27
+# --DHCP:  10.248.32.192/26
+
+networks:
+  # MESH - PTMP / PTP Links
+  - vid: 10
+    role: mesh
+    name: mesh_teufel
+    prefix: 10.248.32.160/32
+    ipv6_subprefix: -10
+
+  - vid: 11
+    role: mesh
+    name: mesh_weidenb
+    prefix: 10.248.32.161/32
+    ipv6_subprefix: -11
+
+  # 802.11s Links
+  # MESH - 5 GHz 802.11s - AP
+  - vid: 20
+    role: mesh
+    name: mesh_ap_5g
+    prefix: 10.248.32.164/32
+    ipv6_subprefix: -20
+    mesh_ap: frischauf-ap
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - AP
+  - vid: 21
+    role: mesh
+    name: mesh_ap_2g
+    prefix: 10.248.32.165/32
+    ipv6_subprefix: -21
+    # make mesh_metric for 2.4 GHz worse than 5 GHz
+    mesh_metric_lqm: ["default 0.5"]
+    mesh_ap: frischauf-ap
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - West
+  - vid: 23
+    role: mesh
+    name: mesh_west
+    prefix: 10.248.32.166/32
+    ipv6_subprefix: -23
+    mesh_ap: frischauf-west
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    prefix: 10.248.32.192/26
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      frischauf-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.32.128/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      frischauf-core: 1 # 10.248.32.129
+      frischauf-teufelsberg: 2 # 10.248.32.130
+      frischauf-weidenbaum: 3 # 10.248.32.131
+      frischauf-ap: 4 # 10.248.32.132
+      frischauf-west: 5 # 10.248.32.133
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  frischauf-ap: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  frischauf-ap: 13-20
+  frischauf-west: 13-20

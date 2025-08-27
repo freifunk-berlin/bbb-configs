@@ -1,0 +1,22 @@
+---
+target: ath79/generic
+brand_nice: GL.iNet
+model_nice: GL-AR300M16
+
+dsa_ports:
+  - lan
+  - wan
+
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: platform/ahb/18100000.wmac
+    ifname_hint: wlan2
+
+leds:
+  - name: LAN
+    sysfs: green:lan
+    trigger: netdev
+    mode: link tx rx
+    dev: eth0

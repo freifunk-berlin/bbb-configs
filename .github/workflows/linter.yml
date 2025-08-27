@@ -14,7 +14,7 @@ name: Lint Code Base
 #############################
 # Start the job on all push #
 #############################
-on: [push, pull_request]  # yamllint disable-line rule:truthy
+on: [push, pull_request] # yamllint disable-line rule:truthy
 
 ###############
 # Set the Job #
@@ -59,6 +59,7 @@ jobs:
           VALIDATE_JSCPD: false
           VALIDATE_MARKDOWN: false
           VALIDATE_MARKDOWN_PRETTIER: false
+          VALIDATE_NATURAL_LANGUAGE: false
           # Change to 'main' if your main branch differs
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

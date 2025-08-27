@@ -7,7 +7,7 @@ version_nice: v1
 int_port: eth0
 
 model__packages__to_merge:
-  - "-ath10k-firmware-qca9888-ct ath10k-firmware-qca9888-ct-full-htt"  # select candelatech suggested firmware variant
+  - "-ath10k-firmware-qca9888-ct ath10k-firmware-qca9888-ct-full-htt" # select candelatech suggested firmware variant
 
 wireless_devices:
   - name: 11a_standard
@@ -20,7 +20,6 @@ wireless_devices:
     htmode_prefix: HT
     path: platform/ahb/18100000.wmac
     ifname_hint: wlan2
-
 
 ath10k_ct_fwcfg:
   - id: pci-0000:00:00.0

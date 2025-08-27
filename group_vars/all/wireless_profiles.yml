@@ -26,6 +26,7 @@ all__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh
 
   - name: ap_only
@@ -43,7 +44,7 @@ all__wireless_profiles__to_merge:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
 
   - name: freifunk_default
     ifaces:
@@ -60,13 +61,14 @@ all__wireless_profiles__to_merge:
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ffowe
-        ieee80211w: 1
+        ieee80211w: 2
 
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh
 
   - name: freifunk_fw
@@ -84,13 +86,14 @@ all__wireless_profiles__to_merge:
       #   network: dhcp
       #   radio: [11a_standard, 11g_standard]
       #   ifname_hint: ffowe
-      #   ieee80211w: 1
+      #   ieee80211w: 2
 
       - mode: mesh
         mesh_id: Mesh-Freifunk
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh
 
   - name: freifunk_hacrafu
@@ -108,11 +111,12 @@ all__wireless_profiles__to_merge:
       #   network: dhcp
       #   radio: [11a_standard, 11g_standard]
       #   ifname_hint: ffowe
-      #   ieee80211w: 1
+      #   ieee80211w: 2
 
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
         radio: [11a_standard, 11g_standard, 11a_mesh]
         mcast_rate: 12000
         mesh_fwding: 0
+        mesh_nolearn: 1
         ifname_hint: mesh

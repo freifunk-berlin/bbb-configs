@@ -37,10 +37,6 @@ snmp_devices:
     address: 10.248.1.3
     snmp_profile: airos_8
 
-  - hostname: t1-ap-no
-    address: 10.248.1.4
-    snmp_profile: airos_8
-
 # ROUTER: 10.248.1.0/25
 # --MGMT: 10.248.1.0/28
 # --MESH: 10.248.1.16/28
@@ -56,12 +52,6 @@ networks:
     prefix: 10.248.1.16/32
     ipv6_subprefix: -10
     ptp: true
-
-  - vid: 11
-    role: mesh
-    name: mesh_ap_no
-    prefix: 10.248.1.17/32
-    ipv6_subprefix: -11
 
   - vid: 40
     role: dhcp
@@ -82,7 +72,6 @@ networks:
       t1-core: 1
       t1-switch: 2
       t1-zwingli: 3
-      t1-ap-no: 4
       t1-nf-n: 6
       t1-nf-w: 7
 

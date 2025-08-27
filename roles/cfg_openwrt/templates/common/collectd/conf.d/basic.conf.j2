@@ -22,6 +22,8 @@ LoadPlugin network
 	Server "{{ collectd_host }}"
 	Forward false
 	ReportStats false
+	# Set MaxPacketSize because packages got dropped due to being to big
+	MaxPacketSize 1280
 </Plugin>
 
 

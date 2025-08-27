@@ -4,8 +4,6 @@ target: ath79/mikrotik
 brand_nice: MikroTik
 model_nice: SXTsq Lite2
 
-openwrt_version: 24.10-SNAPSHOT
-
 int_port: eth0
 
 # Mac address can be read with the following command:

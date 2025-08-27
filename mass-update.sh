@@ -34,16 +34,23 @@ done
 # Combine APs first, then corerouters
 SORTED_FILES=("${AP_FILES[@]}" "${COREROUTER_FILES[@]}")
 
+# List to track devices with missing root password
+MISSING_PASSWORD_DEVICES=()
+
 # Print information and prompt for confirmation
 echo ""
 echo "This script will do the following:"
 echo ""
 echo "- flash all the following hosts with the corresponding firmware files currently present in $WORK_DIR/images"
 echo "- first flash APs, then corerouters and gateways based on the role derived from host within the YAML files"
-echo "- check the availability of the hosts before and after flashing"
+echo "- check the accessibility of the hosts by establishing an SSH connection before and after flashing"
 echo "- ignore keychecking"
+echo "- reboot hosts and stop non essential services on hosts with less than '2x image size' of RAM available"
 echo "- make sure that at least 'image size + 1 MB' of RAM is available before starting a firmware upgrade"
 echo "- delete the local firmware file, build log, build and config files from disk after flashing"
+echo "- check for missing root passwords and show a summary of devices missing a password"
+echo ""
+echo "Note: This script requires key-based SSH access for all hosts you want to flash."
 echo ""
 echo "The following firmware files will be flashed:"
 for FILE_PATH in "${SORTED_FILES[@]}"; do
@@ -60,11 +67,44 @@ fi
 # Function to check reachability
 check_reachability() {
     local hostname="$1"
-    if ping -4 -c 1 "$hostname" >/dev/null 2>&1 || ping -6 -c 1 "$hostname" >/dev/null 2>&1; then
-        return 0
-    else
-        return 1
+    timeout 6 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ConnectTimeout=5 "root@$hostname" exit >/dev/null 2>&1
+}
+
+# Function to run a SSH command with timeout
+run_ssh() {
+    local hostname="$1"
+    local command="$2"
+    timeout 20 ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ConnectTimeout=5 -o ServerAliveInterval=1 -o ServerAliveCountMax=5 "root@$hostname" "$command"
+}
+
+# Function to check memory availability
+check_memory() {
+    local hostname="$1"
+    run_ssh "$hostname" "free | awk 'NR==2 {print \$7}'"
+}
+
+# Function to check for missing root password
+check_missing_root_password() {
+    local hostname="$1"
+    local password_field
+
+    # Get the password field of root, or handle if the root user is missing
+    password_field=$(run_ssh "$hostname" "awk -F: '\$1 == \"root\" { print \$2 }' /etc/shadow" 2>/dev/null)
+
+    if [[ -z "$password_field" || "$password_field" =~ ^(\*|!|)?$ ]]; then
+        MISSING_PASSWORD_DEVICES+=("$hostname")
     fi
+}
+
+# Function to reboot and wait for host to become reachable again
+reboot() {
+    local hostname="$1"
+    echo "Rebooting $hostname..."
+    run_ssh "$hostname" "reboot"
+    echo "Waiting for $hostname to become unreachable..."
+    while check_reachability "$hostname"; do sleep 1; done
+    echo "Waiting for $hostname to become reachable again..."
+    while ! check_reachability "$hostname"; do sleep 1; done
 }
 
 # Loop through each file
@@ -84,23 +124,54 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
     HOSTNAME="$NODENAME.ff"
     echo "Hostname: $HOSTNAME"
 
-    # Check if hostname is reachable
-    echo "Checking if $HOSTNAME is reachable..."
+    # Check if hostname is accessible
+    echo "Checking if $HOSTNAME is accessible..."
     if check_reachability "$HOSTNAME"; then
-        echo "Hostname $HOSTNAME is reachable"
+        echo "Hostname $HOSTNAME is accessible"
 
-        # Check memory on remote host
-        MEMORY=$(ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "root@$HOSTNAME" "free | awk 'NR==2 {print \$7}'")
+        # Check memory on remote host once before any flashing steps
+        MEMORY=$(check_memory "$HOSTNAME")
+        if ! [[ "$MEMORY" =~ ^[0-9]+$ ]]; then
+            echo "Unable to determine available memory on $HOSTNAME (value: '$MEMORY'), skipping..."
+            continue
+        fi
+
+        # Check if device is considered low memory
+        if [ "$MEMORY" -lt $(( $(stat -c %s "$FILE_PATH") * 2 / 1024 )) ]; then  # Less than 2x file size
+            echo "Low memory detected ($MEMORY KB), initiating reboot sequence..."
+            reboot "$HOSTNAME"
+            echo "Stopping non-essential services on $HOSTNAME..."
+            run_ssh "$HOSTNAME" "\
+                /etc/init.d/collectd stop; \
+                /etc/init.d/luci_statistics stop; \
+                /etc/init.d/sysntpd stop; \
+                /etc/init.d/urngd stop; \
+                /etc/init.d/rpcd stop; \
+                /etc/init.d/naywatch stop"
+            sleep 20
+            MEMORY=$(check_memory "$HOSTNAME")
+        fi
+
+        # Check memory on remote host before flashing
+        MEMORY=$(check_memory "$HOSTNAME")
         if [ "$MEMORY" -ge $(( $(stat -c %s "$FILE_PATH") / 1024 + 1024 )) ]; then  # File size in KB + 1 MB
             echo "Memory on $HOSTNAME is sufficient ($MEMORY KB)"
 
             # SCP the file
             echo "Copying $FILENAME to $HOSTNAME:/tmp/"
-            if scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -O "$FILE_PATH" "root@$HOSTNAME:/tmp/"; then
-                # Debug output: Executing sysupgrade
+
+            if timeout 120 scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ConnectTimeout=5 -O "$FILE_PATH" "root@$HOSTNAME:/tmp/"; then
+
                 echo "Executing sysupgrade on $HOSTNAME"
                 # shellcheck disable=SC2029
-                ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "root@$HOSTNAME" "sysupgrade '/tmp/$FILENAME'"
+                # Perform the sysupgrade; Ensure the connection terminates within 5 seconds using keep-alive in run_ssh
+                UPGRADE_OUTPUT=$(run_ssh "$HOSTNAME" "sysupgrade '/tmp/$FILENAME'" 2>&1)
+                echo "$UPGRADE_OUTPUT"
+                if echo "$UPGRADE_OUTPUT" | grep -qi "Out of memory"; then
+                    echo "Out of memory detected during upgrade, rebooting $HOSTNAME and skipping..."
+                    reboot "$HOSTNAME"
+                    continue
+                fi
 
                 # Wait for hostname to become unreachable
                 echo "Waiting for $HOSTNAME to become unreachable..."
@@ -113,24 +184,37 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
 
                 # Remove local files
                 echo "Removing local files for $NODENAME from $WORK_DIR"
-                rm "$FILE_PATH"
-                rm "$WORK_DIR/images/$NODENAME.log"
+                rm -f "$FILE_PATH"
+                rm -f "$WORK_DIR/images/$NODENAME.log"
                 rm -rf "$WORK_DIR/build/$NODENAME"
                 rm -rf "$WORK_DIR/configs/$NODENAME"
             else
-                echo "SCP command failed. Exiting..."
-                exit 1
+                echo "SCP to $HOSTNAME failed. Rebooting and skipping..."
+                reboot "$HOSTNAME"
+                continue
             fi
-
         else
-            echo "Skipping file transfer due to insufficient memory on $HOSTNAME"
+            echo "Skipping $HOSTNAME due to insufficient memory"
+            continue
         fi
 
+        # Check for missing root password
+        check_missing_root_password "$HOSTNAME"
     else
-        echo "Hostname $HOSTNAME is not reachable"
+        echo "Hostname $HOSTNAME is not reachable, skipping..."
+        continue
     fi
-
 done
-# Horizontal line to separate iterations
+
+# Print summary of devices with missing root password only if there are any
+if [ ${#MISSING_PASSWORD_DEVICES[@]} -gt 0 ]; then
+    echo "----------------------------------------"
+    echo -e "\e[31mThe following devices miss a root password:\e[0m"
+    for DEVICE in "${MISSING_PASSWORD_DEVICES[@]}"; do
+        echo -e "\e[31m- $DEVICE\e[0m"
+    done
+    echo -e "\e[31mPlease set root passwords on all listed devices.\e[0m"
+fi
+
 echo "----------------------------------------"
 echo "Finished"

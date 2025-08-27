@@ -5,9 +5,9 @@ location_nice: Berliner Hochschule fuer Technik, Luxemburger Straße 10, 13353 B
 latitude: 52.544407831736
 longitude: 13.352562785148
 altitude: 88
-contact_nickname: 'Perry'
+contact_nickname: "Perry"
 contacts:
-  - 'isprotejesvalkata [attt] gmail com'
+  - "isprotejesvalkata [attt] gmail com"
 
 hosts:
   - hostname: bht-core
@@ -124,7 +124,6 @@ airos_dfs_reset:
     password: "file:/root/pwd.txt"
     daytime_limit: "0-23"
 
-
 ipv6_prefix: "2001:bf7:750:1200::/56"
 
 # ROUTER: 10.230.23.128/27
@@ -133,7 +132,6 @@ ipv6_prefix: "2001:bf7:750:1200::/56"
 # --MGMT: 10.31.166.0/27
 
 networks:
-
   - vid: 10
     role: mesh
     name: mesh_segen
@@ -142,7 +140,7 @@ networks:
     ptp: true
     # Prefer routing via perleberger36 over segen
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.2']
+    mesh_metric_lqm: ["default 0.2"]
 
   - vid: 11
     role: mesh
@@ -152,7 +150,6 @@ networks:
     ptp: true
     # Prefer routing via perleberger36 over segen, chris, mela, weidenbaum
     mesh_metric: 256
-
 
   - vid: 12
     role: mesh
@@ -179,7 +176,7 @@ networks:
     ipv6_subprefix: -15
     # Set metrics similar as for mesh_segen so path via jup is always worse
     mesh_metric: 1024
-    mesh_metric_lqm: ['default 0.25']
+    mesh_metric_lqm: ["default 0.25"]
 
   - vid: 16
     role: mesh

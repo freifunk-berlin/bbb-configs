@@ -1,29 +1,27 @@
 ---
 location: hdk-17
 location_nice: Heidekampgraben 17
-latitude: 52.478675
-longitude: 13.471268
+latitude: 52.478029850
+longitude: 13.47230673
 community: true
-
-dns_servers:
-  # quad9
-  - 9.9.9.9
-  - 149.112.112.112
-  - 2620:fe::fe
-  - 2620:fe::9
-  # cloudflare
-  - 1.1.1.1
-  - 1.0.0.1
-  - 2606:4700:4700::1111
-  - 2606:4700:4700::1001
 
 hosts:
   - hostname: hdk-17
     role: corerouter
     model: "dlink_dap-x1860-a1"
     wireless_profile: freifunk_default
+    host__rclocal__to_merge:
+      - |
+        # Enable legacy rates to enable meshing with neighbors
+        for radio in $(uci show wireless \
+          | grep "=wifi-device" \
+          | cut -d. -f2 \
+          | cut -d= -f1); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless; reload_config
 
-ipv6_prefix: '2001:bf7:840:f00::/56'
+ipv6_prefix: "2001:bf7:840:f00::/56"
 
 # config restored from router configuration
 # got following prefixes:
@@ -36,17 +34,6 @@ ipv6_prefix: '2001:bf7:840:f00::/56'
 dhcp_no_ping: false
 
 networks:
-  # DHCP with filtering and isolation
-  - vid: 40
-    role: dhcp
-    untagged: true
-    inbound_filtering: true
-    enforce_client_isolation: true
-    prefix: 10.31.207.32/27
-    ipv6_subprefix: 0
-    assignments:
-      hdk-17: 1
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
@@ -67,6 +54,17 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.207.32/27
+    ipv6_subprefix: 0
+    assignments:
+      hdk-17: 1
+
   # MGMT
   - vid: 42
     role: mgmt
@@ -77,3 +75,11 @@ networks:
     assignments:
       # 10.31.207.1/32
       hdk-17: 1
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hdk-17: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hdk-17: 13-20

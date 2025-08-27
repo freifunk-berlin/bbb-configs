@@ -5,12 +5,11 @@ location_nice: Dorfstraße 67, 15370 Petershagen
 latitude: 52.52376838135979
 longitude: 13.770141894083322
 contact_name: "Hacken Craften Funken e.V."
-contact_nickname: "HaCraFu"
+contact_nickname: "HaCraFu e.V."
 contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-capelvenere-core
     role: corerouter
     model: "cudy_wr3000-v1"
@@ -28,7 +27,6 @@ ipv6_prefix: "2001:bf7:850:1a00::/56"
 # dhcp_no_ping: false
 
 networks:
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
@@ -89,13 +87,15 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hacrafu-capelvenere-core: 36-40
+  hacrafu-capelvenere-core: 36-80
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hacrafu-capelvenere-core: 13-20
+  hacrafu-capelvenere-core: 13-40
 
 # only place this ssh-keys
 ssh_keys:
   - comment: Tom
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz tom_hacrafu
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
+  - comment: Bob
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de

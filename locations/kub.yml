@@ -4,9 +4,9 @@ location_nice: KuB e.V. Berlin
 latitude: 52.50263
 longitude: 13.41339
 altitude: 47
-contact_nickname: 'KuB e.V.'
+contact_nickname: "KuB e.V."
 contacts:
-  - 'KuB e.V.'
+  - "KuB e.V."
 
 hosts:
   - hostname: kub-core
@@ -18,13 +18,11 @@ hosts:
     role: ap
     model: "cudy_x6-v1"
     openwrt_version: 24.10-SNAPSHOT
-    log_size: 1024
 
 snmp_devices:
   - hostname: kub-simeon
     address: 10.31.139.2
     snmp_profile: airos_8
-
 
 ipv6_prefix: "2001:bf7:830:8800::/56"
 

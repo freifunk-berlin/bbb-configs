@@ -59,14 +59,15 @@ EOF
   exit 1
 }
 
+[ -n "$1" ] || usage
+
 set -e
 set -o pipefail
 [ -n "$TRACE_VMSH" ] && set -x || true
 
-[ -n "$1" ] && location="$1" || usage
+location="$1"
 host="$(cat "locations/$location.yml" | yq -r '.hosts[] | select(.role == "corerouter") | .hostname')"
-
-[ -n "$2" ] && imgdir="$4" || imgdir="./tmp/build/$host/bin/targets/x86/64"
+[ -n "$2" ] && imgdir="$2" || imgdir="./tmp/build/$host/bin/targets/x86/64"
 
 # get kernel and rootfs
 
@@ -108,8 +109,8 @@ cnip="$(nth_ip "$mgmtnet" "$(("$maxipn" + 1))")"
 cat << EOF > "$vmdir/vmconfig.json"
 {
   "machine-config": {
-    "vcpu_count": 1,
-    "mem_size_mib": 128,
+    "vcpu_count": 2,
+    "mem_size_mib": 256,
     "smt": false
   },
   "boot-source": {
@@ -190,7 +191,7 @@ FROM alpine:edge
 
 RUN echo https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
 RUN apk upgrade musl
-RUN apk add bash openssh-client git vim mtr curl wget tcpdump iproute2 bridge-utils dhclient firecracker socat
+RUN apk add bash openssh-client git vim mtr curl wget tcpdump iproute2 bridge-utils firecracker socat
 EOF
 
 podman run -it --rm --name="$location" \
@@ -198,7 +199,7 @@ podman run -it --rm --name="$location" \
   --user=root --userns=keep-id --security-opt="label=disable" \
   --device=/dev/kvm --device=/dev/net/tun --cap-add=NET_ADMIN --cap-add=NET_RAW \
   -p 8022:8022 -p 8053:8053/udp -p 8080:8080 -p 8443:8443 \
-  --network=slirp4netns:mtu=1280 \
+  --network=slirp4netns \
   localhost/bbb-configs /vmdir/entrypoint.sh
 
 echo "Done."

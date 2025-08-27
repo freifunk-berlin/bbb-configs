@@ -4,6 +4,8 @@ brand_nice: TP-Link
 model_nice: TL-MR3020
 version_nice: v3
 
+openwrt_version: 23.05-SNAPSHOT
+
 dsa_ports:
   - lan
 
