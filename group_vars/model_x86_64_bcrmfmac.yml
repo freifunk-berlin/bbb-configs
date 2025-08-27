@@ -1,0 +1,17 @@
+---
+target: x86/64
+override_target: generic
+image_search_pattern: "*-ext4-combined.img*"
+model_nice: 32-/64-bit Computer (brcmfmac)
+
+model__packages__to_merge:
+  - "kmod-brcmfmac kmod-brcmutil brcmfmac-firmware-4366c0-pcie kmod-mac80211 hostapd"
+
+int_port: eth0
+
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: pci0000:00/0000:00:1c.0/0000:01:00.0
+    ifname_hint: wlan2
