@@ -4,8 +4,6 @@ brand_nice: Cudy
 model_nice: WR3000H
 version_nice: v1
 
-openwrt_version: snapshot
-
 dsa_ports:
   - wan
   - lan1
