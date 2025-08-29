@@ -35,6 +35,10 @@ hosts:
     wifi_roaming: true
 
 snmp_devices:
+  - hostname: k12-h2-switch
+    address: 10.31.158.194
+    snmp_profile: edgeswitch
+
   - hostname: k12-h2-segen
     address: 10.31.158.195
     snmp_profile: airos_8
@@ -146,6 +150,8 @@ networks:
       k12-h2-cpe: 5 # 10.31.158.197/32
       k12-h2-h1n: 6 # 10.31.158.198/32
       k12-h2-h1s: 7 # 10.31.158.199/32
+      # Lora Gateway
+      k12-h2-lora: 8 # 10.31.158.200/32
 
   # UPLK
   - vid: 50
