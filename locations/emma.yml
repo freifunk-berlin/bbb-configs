@@ -177,12 +177,6 @@ networks:
     prefix: 10.31.11.35/32
     ipv6_subprefix: -12
 
-  - vid: 13
-    role: mesh
-    name: mesh_ono
-    prefix: 10.31.11.36/32
-    ipv6_subprefix: -13
-
   - vid: 14
     role: mesh
     name: mesh_wsw
