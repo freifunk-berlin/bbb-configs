@@ -53,35 +53,93 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-### 3. Generate images
+### 3. What do you want to set up?
 
-You can generate images using the generate-images script that brings up a menu
+**often needed**
 
-```sh
-./generate-images.sh
-```
+- <details>
+  <summary>images</summary>
 
-or by passing locations or hostnames as comma separated list even with wildcards if properly quoted
+  #### Generate images
 
-```sh
-./generate-images.sh location1,host1,host2,location2,"host-*","location-*"
-```
+  You can generate images using the generate-images script that brings up a menu
 
-or by passing running the ansible playbook directly with a limit parameter containing locations or hosts as a comma separated list.
+  ```sh
+  ./generate-images.sh
+  ```
 
-Note: Locations must be prefixed witch `location_` and within the location name `-` must be converted to `_`.
+  or by passing locations or hostnames as comma separated list even with wildcards if properly quoted
 
-```sh
-ansible-playbook play.yml --limit location_loc_name,host --tags image
-```
+  ```sh
+  ./generate-images.sh location1,host1,host2,location2,"host-*","location-*"
+  ```
 
-### 4. Flash images
+  or by passing running the ansible playbook directly with a limit parameter containing locations or hosts as a comma separated list.
 
-After building firmware images you can update multiple routers using the mass-update script. This works best using SSH keys for authentication.
+  Note: Locations must be prefixed witch `location_` and within the location name `-` must be converted to `_`.
 
-```
-./mass-update.sh
-```
+  ```sh
+  ansible-playbook play.yml --limit location_loc_name,host --tags image
+  ```
+
+  ### 4. Flash images
+
+  After building firmware images you can update multiple routers using the mass-update script. This works best using SSH keys for authentication.
+
+  ```
+  ./mass-update.sh
+  ```
+  </details>
+- <details>
+  <summary>locations</summary>
+
+  #### Set up new location
+
+     1. Create a location file in the `locations` directory. You might want to copy an existing location to make your start more easy.
+     2. Run the image creation as shown in the commands above (image will be in `tmp/images` directory).
+     3. Flash the image to your router
+     4. Secure the router by setting a root password using SSH or the web interface.
+     5. Done!
+
+    Have a look at the [Developers Guide](DEVELOPER.md) for more information.
+
+
+     <!--TODO-> create example location which people can copy to start set up their own location with examples and explanations of what you can do -->
+
+  </details>
+
+**rarely needed**
+
+- <details>
+  <summary>models</summary>
+  <br>
+
+  Take a look at this section in DEVELOPER.md: [model-files](https://github.com/freifunk-berlin/bbb-configs/blob/main/DEVELOPER.md#groups_vars)
+
+  </details>
+- <details>
+  <summary>gateways</summary>
+  <br>
+
+  This section is not finished yet, feel free to contribute.
+
+  </details>
+
+### 4. Contibuting guidelines
+
+To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/blob/main/CONTRIBUTING.md) so contributions are easy to understand and standardised.
+
+### 5. Ansible Introduction
+
+Ansible is a suite of software tools that enables infrastructure as code. It is open-source and the suite includes software provisioning, configuration management, and application deployment functionality.[[1]](https://en.wikipedia.org/wiki/Ansible_(software)) Ansible playbooks offer simple, repeatable, and reusable execution of tasks making them perfectly fit into the Freifunk world. We map these tasks in files following the YAML format and integrate them into our playbook. We follow the common ansible scheme of locations and hosts.
+
+#### How to get started?
+
+Make sure to install ansible and clone the bbb-configs repository. Also don`t forget to check your dependencies.
+
+Depending on your system you might need more requirements. If something fails check out [this OpenWRT page](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem).
+
+You can find more useful ansible tips in our [FAQ](https://github.com/freifunk-berlin/bbb-configs/blob/main/FAQ.md#faq).
 
 ## Developers and Maintainers
 
