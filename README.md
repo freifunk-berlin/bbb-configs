@@ -53,10 +53,6 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-You can find what dependencies you need for your specific linux-distro [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
-
-
-
 ### 3. What do you want to set up?
 
 **often needed**
@@ -67,29 +63,38 @@ You can find what dependencies you need for your specific linux-distro [here](ht
   #### Generate images
 
   You can generate images using the generate-images script that brings up a menu
+  You can generate images using the generate-images script that brings up a menu
 
+  ```sh
+  ./generate-images.sh
+  ```
   ```sh
   ./generate-images.sh
   ```
 
   or by passing locations or hostnames as comma separated list even with wildcards if properly quoted
+  or by passing locations or hostnames as comma separated list even with wildcards if properly quoted
 
+  ```sh
+  ./generate-images.sh location1,host1,host2,location2,"host-*","location-*"
+  ```
   ```sh
   ./generate-images.sh location1,host1,host2,location2,"host-*","location-*"
   ```
 
   or by passing running the ansible playbook directly with a limit parameter containing locations or hosts as a comma separated list.
+  or by passing running the ansible playbook directly with a limit parameter containing locations or hosts as a comma separated list.
 
+  Note: Locations must be prefixed witch `location_` and within the location name `-` must be converted to `_`.
   Note: Locations must be prefixed witch `location_` and within the location name `-` must be converted to `_`.
 
   ```sh
   ansible-playbook play.yml --limit location_loc_name,host --tags image
   ```
-  #### Flash images
 
-  After building firmware images you can update multiple routers using the mass-update script, which updates every node,that has an image in `tmp/images/`. This works best using SSH keys for authentication.
+  ### 4. Flash images
 
-  Another suitable way to flash our image might be the web GUI or via your terminal using `scp`.
+  After building firmware images you can update multiple routers using the mass-update script. This works best using SSH keys for authentication.
 
   ```
   ./mass-update.sh
@@ -109,7 +114,7 @@ You can find what dependencies you need for your specific linux-distro [here](ht
     Have a look at the [Developers Guide](DEVELOPER.md) for more information.
 
 
-     <!-- TODO -> create example location which people can copy to start set up their own location with examples and explanations of what you can do -->
+     <!--TODO-> create example location which people can copy to start set up their own location with examples and explanations of what you can do -->
 
   </details>
 
@@ -117,6 +122,7 @@ You can find what dependencies you need for your specific linux-distro [here](ht
 
 - <details>
   <summary>models</summary>
+  <br>
 
   Take a look at this section in DEVELOPER.md: [model-files](https://github.com/freifunk-berlin/bbb-configs/blob/main/DEVELOPER.md#groups_vars)
 
@@ -124,13 +130,14 @@ You can find what dependencies you need for your specific linux-distro [here](ht
 - <details>
   <summary>gateways</summary>
   <br>
+
   This section is not finished yet, feel free to contribute.
 
   </details>
 
 ### 4. Contributing guidelines
 
-To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/issues/785) so contributions are easy to understand and standardised.
+To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/blob/main/CONTRIBUTING.md) so contributions are easy to understand and standardised.
 
 ### 5. Ansible Introduction
 
