@@ -106,7 +106,7 @@ all__wireless_profiles__to_merge:
         ifname_hint: ff
 
       # - mode: ap
-      #   ssid: freifunk.hacrafu.de Encrypted
+      #   ssid: freifunk.hacrafu.de owe
       #   encryption: owe
       #   network: dhcp
       #   radio: [11a_standard, 11g_standard]
@@ -120,3 +120,20 @@ all__wireless_profiles__to_merge:
         mesh_fwding: 0
         mesh_nolearn: 1
         ifname_hint: mesh
+
+  - name: freifunk_hacrafu_ap_only
+    ifaces:
+      - mode: ap
+        ssid: freifunk.hacrafu.de
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      # - mode: ap
+      #   ssid: freifunk.hacrafu.de owe
+      #   encryption: owe
+      #   network: dhcp
+      #   radio: [11a_standard, 11g_standard]
+      #   ifname_hint: ffowe
+      #   ieee80211w: 2
