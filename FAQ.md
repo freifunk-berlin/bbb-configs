@@ -24,7 +24,7 @@ Wikiupdater expects an article or a redirect to the article at `wiki.freifunk.ne
 </details>
 
 <details>
-<summary> Hosting you own sevice ( inside FreiFunk )</summary>
+<summary> Hosting your own service ( inside FreiFunk )</summary>
 
 ## How can I have my own website/blog/service?
 You need to host your service on a separate device like your old computer.
