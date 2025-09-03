@@ -12,10 +12,11 @@ peer_asn: 44194
 
 hosts:
   # Thinkcentre M720q, i5-8500T, 16GB RAM, 256GB NVMe
-  # Intel I219 V7 - eth0
-  # ConnectX-4 LX CX4121B - eth1, eth2
+  # Intel I219 V7 - eth2
+  # ConnectX-4 LX CX4121B - eth1, eth0
   - hostname: strom-gw
     role: gateway
+    int_port: eth0 # Corerouter is connected via left FSP+
     model: "x86-64"
     image_search_pattern: "*-ext4-combined.img*"
     host__packages__to_merge:
@@ -24,7 +25,7 @@ hosts:
       # There's a decades-old TX offload bug in intel gigabit controllers
       # which regularly hangs the card. It gets reset automatically,
       # but still results in regular ~15s downtimes. Disable offloads.
-      - ethtool -K eth0 tx off rx off
+      - ethtool -K eth2 tx off rx off
 
 snmp_devices:
   - hostname: strom-poe
@@ -46,9 +47,6 @@ snmp_devices:
 # Router: 10.31.130.64/26 2001:bf7:750:2a00::/56
 # --MGMT: 10.31.130.64/27
 # --MESH: 10.31.48.1..10 (except 9) {as /32}
-
-# Disable noping as we use dhcp and static assignments
-# both in mgmt network
 
 ipv6_prefix: 2001:bf7:750:2a00::/56
 
