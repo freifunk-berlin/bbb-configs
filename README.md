@@ -81,10 +81,11 @@ pip3 install -r requirements.txt
   ```sh
   ansible-playbook play.yml --limit location_loc_name,host --tags image
   ```
+  #### Flash images
 
-  ### Flash images
+  After building firmware images you can update multiple routers using the mass-update script, which updates every node,that has an image in `tmp/images/`. This works best using SSH keys for authentication.
 
-  After building firmware images you can update multiple routers using the mass-update script. This works best using SSH keys for authentication.
+  Another suitable way to flash our image might be the web GUI or via your terminal using `scp`.
 
   ```
   ./mass-update.sh
@@ -104,7 +105,7 @@ pip3 install -r requirements.txt
     Have a look at the [Developers Guide](DEVELOPER.md) for more information.
 
 
-     <!--TODO-> create example location which people can copy to start set up their own location with examples and explanations of what you can do -->
+     <!-- TODO -> create example location which people can copy to start set up their own location with examples and explanations of what you can do -->
 
   </details>
 
@@ -112,7 +113,6 @@ pip3 install -r requirements.txt
 
 - <details>
   <summary>models</summary>
-  <br>
 
   Take a look at this section in DEVELOPER.md: [model-files](https://github.com/freifunk-berlin/bbb-configs/blob/main/DEVELOPER.md#groups_vars)
 
@@ -120,14 +120,13 @@ pip3 install -r requirements.txt
 - <details>
   <summary>gateways</summary>
   <br>
-
   This section is not finished yet, feel free to contribute.
 
   </details>
 
 ### 4. Contributing guidelines
 
-To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/blob/main/CONTRIBUTING.md) so contributions are easy to understand and standardised.
+To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/blob/main/CONTRIBUTING.md#contributing-to-bbb-configs) so contributions are easy to understand and standardised.
 
 ### 5. Ansible Introduction
 
