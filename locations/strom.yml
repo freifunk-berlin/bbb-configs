@@ -12,10 +12,11 @@ peer_asn: 44194
 
 hosts:
   # Thinkcentre M720q, i5-8500T, 16GB RAM, 256GB NVMe
-  # Intel I219 V7 - eth0
-  # ConnectX-4 LX CX4121B - eth1, eth2
+  # Intel I219 V7 - eth2
+  # ConnectX-4 LX CX4121B - eth1, eth0
   - hostname: strom-gw
     role: gateway
+    int_port: eth2 # Corerouter is connected via RJ45 and not FSP+
     model: "x86-64"
     image_search_pattern: "*-ext4-combined.img*"
     host__packages__to_merge:
@@ -24,7 +25,7 @@ hosts:
       # There's a decades-old TX offload bug in intel gigabit controllers
       # which regularly hangs the card. It gets reset automatically,
       # but still results in regular ~15s downtimes. Disable offloads.
-      - ethtool -K eth0 tx off rx off
+      - ethtool -K eth2 tx off rx off
 
 snmp_devices:
   - hostname: strom-poe
@@ -53,12 +54,12 @@ snmp_devices:
 ipv6_prefix: 2001:bf7:750:2a00::/56
 
 uplink:
-  ifname: eth0.1301
+  ifname: eth2.1301
   ipv4: 77.87.51.131/25
   ipv6: 2001:bf7:b301:2342::1/127
 
 mgmt:
-  ifname: eth0.42
+  ifname: eth2.42
   ipv4: 10.31.130.65/27
   ipv6: 2001:bf7:750:2a00::/64
   assignments:
@@ -72,26 +73,26 @@ mgmt:
 # Mesh Network: 10.31.130.96/27
 mesh_links:
   - name: mesh_tub
-    ifname: eth0.1308
+    ifname: eth2.1308
     ipv4: 10.31.48.1/32
     ipv6: 2001:bf7:750:2a01::/128
 
   - name: mesh_perl
-    ifname: eth0.1310
+    ifname: eth2.1310
     ipv4: 10.31.48.2/32
     ipv6: 2001:bf7:750:2a02::/128
     mesh_metric: 128
 
   # This interface is IPv4 only
   - name: mesh_bbbvpn
-    ifname: eth0.1312
+    ifname: eth2.1312
     ipv4: 10.31.48.3/32
     # ipv6: 2001:bf7:750:2a03::/128
     mesh_metric: 1024
     ptp: true
 
   - name: mesh_no
-    ifname: eth0.1399
+    ifname: eth2.1399
     ipv4: 10.31.48.4/32
     ipv6: 2001:bf7:750:2a04::/128
 
