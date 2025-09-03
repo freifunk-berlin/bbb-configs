@@ -1,20 +1,14 @@
 # FAQ
 
-## How to get started?
+<details>
+<summary> Ansible </summary>
 
-Make sure to install ansible and clone the bbb-configs repository. Then install the requirements using:
+## How to get started with Ansible?
+Take a look at our Introduction [Readme](https://github.com/freifunk-berlin/bbb-configs?tab=readme-ov-file#getting-started) and make sure to install all the required dependencies.
 
-```sh
-apt update
-apt install -y jq
-python3 -m venv venv
-source venv/bin/activate
-pip3 install -r requirements.txt
-```
-
-Depending on your system you might need more requirements. If something fails check out [this OpenWRT page](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem).
-
-## How to spin up a config run?
+<details>
+<summary> How to spin up a config run? </summary>
+<br>
 
 ```sh
 ansible-playbook play.yml
@@ -22,7 +16,11 @@ ansible-playbook play.yml
 
 This will generate config files for all devices for inspection. The output path is `./tmp/configs`.
 
-## How to spin up a config run and image generation?
+</details>
+
+<details>
+<summary> How to spin up a config run and image generation? </summary>
+<br>
 
 ```sh
 ansible-playbook play.yml --tags image
@@ -30,7 +28,11 @@ ansible-playbook play.yml --tags image
 
 The output path for the images is `./tmp/images`.
 
-## How to limit a config and image generation?
+</details>
+
+<details>
+<summary> How to limit a config run and image generation? </summary>
+<br>
 
 ```sh
 # config run
@@ -46,7 +48,11 @@ ansible-playbook play.yml --limit example-core,example-ap1 --tags image # list o
 
 The second command doesn't work in `zsh`. If you encounter that problem consider using `bash` instead, please.
 
-## How to spin up a config run, image generation and flash from inside freifunk network?
+</details>
+
+<details>
+<summary> How to spin up a config run, image generation and flash from inside freifunk network? </summary>
+<br>
 
 NOTE: This requires IPv6 Connectivity from inside the freifunk network and is not yet fully working.
 
@@ -54,32 +60,37 @@ NOTE: This requires IPv6 Connectivity from inside the freifunk network and is no
 ansible-playbook play.yml --tags flash
 ```
 
-## What is required to bringup a location?
+</details>
+<br>
+</details>
 
-1. Create a location file in the `locations` directory. You might want to copy an existing location to make your start more easy.
-2. Run the image creation as shown in the commands above (image will be in `tmp/images` directory).
-3. Flash the image to your router.
-4. Secure the router by setting a root password using SSH or the web interface.
-5. Done!
-
-Have a look at the [Developers Guide](DEVELOPER.md) for more information.
-
-## What is required to send in a pull request?
-
-Make sure to test your addition with yamllint and ansible-lint before sending a pull request by using:
-
-```sh
-make lint
-```
-
-## How can I mass deploy in the Freifunk Network?
+<details>
+<summary> How can I mass deploy in the Freifunk Network? </summary>
+<br>
 
 1. Clear folder `tmp/images`.
 2. Generate images for every location you want to update
 3. Use `mass-update.sh` while you are connected to the Freifunk Network. It will automatically connect via ssh to all routers and install the new firmware.
 
-## How can I have my own website/blog/service ?
+</details>
 
+<details>
+<summary> Automatic Updates for wiki.freifunk.net </summary>
+<br>
+
+[wiki.freifunk.net](https://wiki.freifunk.net/)
+
+By default all articles that follow the convention will be updated automatically when config changes get merged into the main branch.
+To add this option to your wikiarticle add a section called "Konfiguration" and replace all values that you want to automatically change as you can see in [this example-article](https://wiki.freifunk.net/Berlin:Standorte:Fesev). If you want to add a new location you can start with [this template](https://wiki.freifunk.net/Berlin:Standorte:Template).
+
+Wikiupdater expects an article or a redirect to the article at `wiki.freifunk.net/Berlin:Standorte:$LOCATION` where `$LOCATION` is the location name defined in your file at `locations/$LOCATION.yml`. You can manually run this update by using `--tags wiki` in a ansible config run
+
+</details>
+
+<details>
+<summary> Hosting you own sevice ( inside FreiFunk )</summary>
+
+## How can I have my own website/blog/service?
 You need to host your service on a separate device like your old computer.
 to make it reachable within Freifunk define a static IP Address in the config file of your location like this:
 ```yml
@@ -93,6 +104,7 @@ You could choose an existing network like `mgmt` or define a extra one. Just mak
 Set the corresponding static IP on your separate device. It will be reachable via the IP Address or via its internal Domain `foo-service.ff`.
 
 If you encounter problems with reaching the local services make sure to check if you are connected via a VPN or have a different DNS configured.
+
 
 ### How can I reach it from outside the Freifunk network
 
@@ -117,3 +129,5 @@ inbound_allow:
 4. Check your separate device for its IPv6 Address (starting with 2001:) - it is reachbale now.
 
    _Note: IPv6 Addresses are handed out via SLAAC and might not be static. Define a static Address so it doesnt change over time_
+
+</details>
