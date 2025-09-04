@@ -34,3 +34,6 @@ model_rclocal__to_merge:
 # eth0 - left SFP+ Port (10G)
 # eth1 - right SFP+ Port (10G)
 # eth2 - RJ45 Port (1G)
+
+# eth0 eth1 - ConnectX-4 Lx MCX4121A-XCHT - PCIe SMBus taped off (Pins 5 & 6)
+# eth2      - Intel I219-LM V7
