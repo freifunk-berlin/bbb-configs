@@ -10,9 +10,9 @@ community: true
 hosts:
   - hostname: simeon-core
     role: corerouter
-    model: "ubnt_edgerouter-x"
-    poe_on: []
-    openwrt_version: 24.10-SNAPSHOT
+    model: "genexis_pulse-ex400"
+    wireless_profile: freifunk_default
+    flow_offload: hw
 
 snmp_devices:
   - hostname: simeon-switch
@@ -27,9 +27,9 @@ snmp_devices:
     address: 10.31.104.132
     snmp_profile: airos_8
 
-  - hostname: simeon-emma
+  - hostname: simeon-l105
     address: 10.31.104.133
-    snmp_profile: airos_6
+    snmp_profile: af60
 
   - hostname: simeon-rhxb
     address: 10.31.104.134
@@ -57,8 +57,6 @@ airos_dfs_reset:
 # --MESH: 10.31.51.136/29
 # --DHCP: 10.31.104.0/25
 
-# TODO: There are still some old IPs reserved
-
 ipv6_prefix: "2001:bf7:750:3700::/56"
 
 networks:
@@ -76,7 +74,7 @@ networks:
 
   - vid: 12
     role: mesh
-    name: mesh_emma
+    name: mesh_l105
     prefix: 10.31.51.138/32
     ipv6_subprefix: -12
 
@@ -113,6 +111,6 @@ networks:
       simeon-switch: 2
       simeon-mgh: 3
       simeon-nord: 4
-      simeon-emma: 5
+      simeon-l105: 5
       simeon-rhxb: 6
       simeon-nord-60g: 7
