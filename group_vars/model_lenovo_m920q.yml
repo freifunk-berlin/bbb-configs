@@ -1,0 +1,36 @@
+---
+override_target: generic
+target: x86/64
+image_search_pattern: "*-ext4-combined-efi.img*"
+brand_nice: Lenovo
+model_nice: m920q
+int_port: eth0 # left SFP+ Port
+wireless_profile: disable
+
+model__packages__to_merge:
+  # Dont install unncessary network kernel modules (reference: https://github.com/openwrt/openwrt/blob/main/target/linux/x86/image/64.mk)
+  - kmod-mlx5-core
+model_rclocal__to_merge:
+  # HW offload crashes the Intel NIC firmware
+  - ethtool -K eth2 tx off rx off
+
+# Prepare the device
+# yamllint disable-line rule:line-length
+# -> Install latest BIOS update (via USB) https://pcsupport.lenovo.com/us/en/products/desktops-and-all-in-ones/thinkcentre-m-series-desktops/thinkcentre-m920q/downloads/driver-list/component?name=BIOS%2FUEFI&id=5AC6A815-321D-440E-8833-B07A93E0428C
+# -> Prepare BIOS settings
+#    - Boot into Bios
+#    - Navigate to Power
+#      - Set "After Power Loss" to [Power On]
+#    - Select "Intelligent Cooling Engine (ICE)"
+#      - Set "ICE Performance Mode" to [Better Thermal Performance]
+#    - Navigate to Startup
+#    - Select "Primary Boot Sequence"
+#      - Make sure USB HDD is in first position
+#    - Set "CSM" to [Enabled]
+#    - Set "Boot Mode" to [Auto]
+#    - Set "Boot Priority" to [Legacy First]
+
+# Port Mapping from 24.10
+# eth0 - left SFP+ Port (10G)
+# eth1 - right SFP+ Port (10G)
+# eth2 - RJ45 Port (1G)
