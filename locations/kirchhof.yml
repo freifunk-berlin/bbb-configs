@@ -96,7 +96,6 @@ networks:
       kirchhof-n-nf-5ghz: 6
       kirchhof-w-nf-5ghz: 7
       kirchhof-nf-keller: 8
-      testlab01: 9
 
   - vid: 50
     role: uplink

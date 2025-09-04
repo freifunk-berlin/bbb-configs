@@ -59,6 +59,7 @@ networks:
       lause-core: 1
       lause-ap1: 2
       lause-uplink: 3
+      testlab01: 30
 
   - vid: 50
     untagged: true
