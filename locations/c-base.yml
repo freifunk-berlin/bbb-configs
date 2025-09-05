@@ -43,17 +43,6 @@ snmp_devices:
     address: 10.31.134.101
     snmp_profile: af60
 
-  - hostname: c-base-simeon60
-    address: 10.31.134.104
-    snmp_profile: af60
-
-airos_dfs_reset:
-  - name: "c-base-simeon"
-    target: "10.31.134.101"
-    username: "ubnt"
-    password: "file:/root/pwd"
-    daytime_limit: "2-7"
-
 ipv6_prefix: "2001:bf7:760:4800::/56"
 
 # reservierte IPs
@@ -74,14 +63,6 @@ networks:
     ipv6_subprefix: -11
     mesh_metric: 128
     ptp: true
-
-  - vid: 12
-    role: mesh
-    name: simeon_wave
-    prefix: 10.31.134.117/32
-    ipv6_subprefix: -12
-    ptp: true
-    mesh_metric_lqm: ["default 0.5"]
 
   - vid: 20
     role: mesh
@@ -124,7 +105,6 @@ networks:
       c-base-simeon-af60lr: 5 # 10.31.134.101
       c-base-nf-3: 6 # 10.31.134.102
       c-base-nf-4: 7 # 10.31.134.103
-      c-base-simeon60: 8 # 10.31.134.104
 
   - role: tunnel
     ifname: ts_wg0
