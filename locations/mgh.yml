@@ -10,7 +10,7 @@ community: true
 hosts:
   - hostname: mgh-core
     role: corerouter
-    model: "ubnt_edgerouter-x-sfp"
+    model: "ubnt_edgerouter-x-sfp-24-10"
     poe_on: [2]
 
 snmp_devices:
@@ -47,9 +47,3 @@ networks:
     untagged: true
     assignments:
       mgh-core: 1
-
-# location__channel_assignments_11a_standard__to_merge:
-#  mgh-core: 36-20-15
-
-# location__channel_assignments_11g_standard__to_merge:
-#  mgh-core: 1-20
