@@ -8,18 +8,9 @@ community: true
 
 hosts:
   # Lenovo 10T8S00S00 / Thinkcentre M720q, i5-8500T, 1x16 GB RAM, 256 GB NVMe
-  # Boot prio: 1. USB 2. NVMe
-  # eth0 eth1 - ConnectX-4 Lx MCX4121A-XCHT - PCIe SMBus taped off (Pins 5 & 6)
-  # eth2      - Intel I219-LM V7
   - hostname: emma-core
     role: corerouter
-    int_port: eth0
-    model: "x86-64"
-    host__packages__to_merge:
-      - kmod-mlx5-core
-    host__rclocal__to_merge:
-      # HW offload crashes the Intel NIC firmware
-      - ethtool -K eth2 tx off rx off
+    model: "lenovo_m920q"
 
   - hostname: emma-nf-turm
     role: ap
