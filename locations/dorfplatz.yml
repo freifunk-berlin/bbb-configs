@@ -10,12 +10,10 @@ community: true
 hosts:
   - hostname: dorfplatz-core
     role: corerouter
-    model: "linksys_e8450-ubi"
+    model: "siemens_ws-ap3610"
     wireless_profile: freifunk_default
-    dhcp_no_ping: false
 
   - hostname: dorfplatz-ap1
-    location: dorfplatz
     role: ap
     model: "mikrotik_sxtsq-5-ac"
     mac_override:
@@ -35,6 +33,18 @@ hosts:
     role: ap
     model: "avm_fritzbox-4040"
 
+  - hostname: dorfplatz-ap4
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: dorfplatz-ap5
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: dorfplatz-ap6
+    role: ap
+    model: "siemens_ws-ap3610"
+
 snmp_devices:
   - hostname: dorfplatz-poe-switch
     address: 10.31.75.34
@@ -47,6 +57,10 @@ snmp_devices:
   - hostname: dorfplatz-zwingli
     address: 10.31.75.36
     snmp_profile: airos_8
+
+  - hostname: dorplfatz-poe-switch-down
+    address: 10.31.75.39
+    snmp_profile: swos_lite
 
 ipv6_prefix: "2001:bf7:830:8200::/56"
 
@@ -86,10 +100,14 @@ networks:
       dorfplatz-poe-switch: 2
       dorfplatz-sama: 3
       dorfplatz-zwingli: 4
+      dorfplatz-poe-switch-down: 5
       dorfplatz-ap1: 14
       dorfplatz-ap2: 13
       dorfplatz-ap3: 12
       dorfplatz-keimzelle: 11
+      dorfplatz-ap4: 10
+      dorfplatz-ap5: 9
+      dorfplatz-ap6: 8
 
 location__channel_assignments_11a_standard__to_merge:
   dorfplatz-ap1: 36-20
