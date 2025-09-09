@@ -12,7 +12,7 @@ contacts:
 hosts:
   - hostname: q216_the_second-core
     role: corerouter
-    model: "linksys_e8450-ubi"
+    model: "genexis_pulse-ex400"
     wireless_profile: freifunk_default
 
   - hostname: q216_the_second-nf-no
@@ -23,7 +23,7 @@ hosts:
 
 snmp_devices:
   - hostname: q216_the_second-magda
-    address: TODO
+    address: 10.248.70.210
     snmp_profile: airos_8
 
 # Router: 10.248.70.192/27
@@ -88,5 +88,5 @@ networks:
     prefix: 10.248.70.219/32
     wireguard_port: 51820
 
-location__channel_assignments_11a_standard__to_merge:
+location_channel_assignments_11a_standard_to_merge:
   q216_the_second-nf-no: 44-20
