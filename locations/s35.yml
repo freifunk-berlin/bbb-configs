@@ -21,10 +21,11 @@ snmp_devices:
 ipv6_prefix: "2001:bf7:760:3500::/56"
 
 # got following prefixes:
-# Router: 10.31.152.229/32, 10.31.152.230/32, 10.31.152.231/32, 10.31.153.64/27
-# --MGMT: 10.31.153.80/28
-# --MESH: 10.31.152.229/32, 10.31.152.230/32, 10.31.152.231/32
-# --DHCP: 10.31.153.64/28
+# Router: 10.248.43.64/26
+# --MGMT: 10.248.43.64/29
+# --MESH: 10.248.43.72/29
+# --DHCP: 10.248.43.96/27
+# --DHCP: 10.248.43.80/28 (private)
 
 # Disable noping
 dhcp_no_ping: false
@@ -34,7 +35,7 @@ networks:
   - vid: 10
     role: mesh
     name: mesh_segen
-    prefix: 10.31.152.229/32
+    prefix: 10.248.43.72/32
     ipv6_subprefix: -10
     ptp: true
 
@@ -42,7 +43,7 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_core_5g
-    prefix: 10.31.152.230/32
+    prefix: 10.248.43.73/32
     ipv6_subprefix: -20
     mesh_ap: s35-core
     mesh_radio: 11a_standard
@@ -52,7 +53,7 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_core_2g
-    prefix: 10.31.152.231/32
+    prefix: 10.248.43.74/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
     mesh_metric_lqm: ["default 0.8"]
@@ -63,24 +64,72 @@ networks:
   # DHCP with filtering and isolation
   - vid: 40
     role: dhcp
-    untagged: true
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.31.153.64/28
+    prefix: 10.248.43.96/27
     ipv6_subprefix: 0
+    assignments:
+      s35-core: 1
+
+  # DHCP with filtering
+  - vid: 41
+    role: dhcp
+    untagged: true
+    name: private
+    inbound_filtering: true
+    prefix: 10.248.43.80/28
+    ipv6_subprefix: 2
     assignments:
       s35-core: 1
 
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.31.153.80/28
+    prefix: 10.248.43.64/29
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      s35-core: 1 # 10.31.153.81
-      s35-segen: 2 # 10.31.153.82
+      s35-core: 1 # 10.248.43.65
+      s35-segen: 2 # 10.248.43.66
+
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: shp
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: s35-home
+        encryption: sae-mixed
+        key: "file:/root/wifi-pwd"
+        network: private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        mesh_nolearn: 1
+        ifname_hint: mesh
 
 dns_servers:
   # quad9
