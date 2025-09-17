@@ -7,6 +7,8 @@ dsa_ports:
   - eth0
   - eth1
 
+requires_mac_override: true
+
 wireless_devices:
   - name: 11a_standard
     band: 5g

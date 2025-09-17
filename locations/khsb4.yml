@@ -16,6 +16,8 @@ hosts:
     role: corerouter
     model: "openwrt_one"
     wireless_profile: freifunk_default
+    mac_override: { eth0: 20:05:B6:FF:85:6E }
+
 
 ipv6_prefix: "2001:bf7:840:6600::/56"
 
