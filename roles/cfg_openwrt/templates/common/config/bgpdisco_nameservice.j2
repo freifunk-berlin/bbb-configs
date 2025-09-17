@@ -6,7 +6,7 @@ config general
 	option cmd_on_update 'killall -SIGHUP dnsmasq'
 {% if inventory_hostname in groups['role_gateway'] %}
 	list exclude_interface_self '{{ uplink['ifname'] }}'
-{% endif %} 
+{% endif %}
 
 {%- if mgmt['assignments'] is defined and mgmt['assignments']|length>0 -%}
 
@@ -20,7 +20,7 @@ config static-entry
 {% else %}
 
 {# Core-Router #}
-{% for network in networks | selectattr('assignments', 'mapping') %}
+{% for network in networks | selectattr('assignments', 'defined') | selectattr('assignments', 'mapping') %}
 {% for host, ip_num in network['assignments'].items() if host != inventory_hostname %}
 config static-entry
 	option host '{{ host }}'

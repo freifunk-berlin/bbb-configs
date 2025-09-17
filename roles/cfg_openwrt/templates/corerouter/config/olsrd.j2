@@ -8,7 +8,7 @@ config LoadPlugin
 	option hosts_file '/tmp/hosts/olsr'
 	option latlon_file '/var/run/latlon.js'
 	option services_file '/var/etc/services.olsr'
-{% for network in networks | selectattr('assignments', 'mapping') %}
+{% for network in networks | selectattr('assignments', 'mapping') | default ([]) %}
   {% for host, ip_num in network['assignments'].items() if host != inventory_hostname %}
 	list hosts '{{ network['prefix'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }} {{ host }}'
   {% endfor %}
