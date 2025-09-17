@@ -35,7 +35,7 @@ If we need someone to reproduce our setup, the person can just generate the imag
 
 ## Getting Started
 
-Using bbb-configs is quite simple. In the sections below you can find simple introductions to what you can do with bbb-configs. But before you can get started you might need to install some dependecies so everything will work properly.
+Using bbb-configs is quite simple. In the sections below you can find simple introductions to what you can do with bbb-configs. But before you can get started you might need to install some dependencies so everything will work properly.
 
 ### 1. Install OpenWRT build dependencies
 
@@ -128,7 +128,7 @@ You can find what dependencies you need for your specific linux-distro [here](ht
 
   </details>
 
-### 4. Contibuting guidelines
+### 4. Contributing guidelines
 
 To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/issues/785) so contributions are easy to understand and standardised.
 
