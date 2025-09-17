@@ -3,5 +3,5 @@
 # Retrieve the port name of a wireless network
 {% macro getLocalAdhocIfnameByNetwork(network) %}
   {% set wd = wireless_devices | selectattr('name', 'equalto', network['mesh_radio']) | list | first %}
-{{- wd['ifname_hint'] + '-' + network['mesh_iface'] -}} 
+{{- wd['ifname_hint'] + '-' + network['mesh_iface'] -}}
 {% endmacro %}
