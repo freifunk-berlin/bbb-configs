@@ -1,4 +1,4 @@
-ansible >= 2.13
+ansible >= 2.19.2
 ansible-lint >= 25.6.1
 ansible_merge_vars >= 5.0.0
 jmespath >= 1.0.1
