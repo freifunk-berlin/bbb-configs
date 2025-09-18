@@ -39,7 +39,7 @@ Using bbb-configs is quite simple. In the sections below you can find simple int
 
 ### 1. Install OpenWRT build dependencies
 
-First install the OpenWRT build dependencies. You can find the dependencies for your specific Linux distribution [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
+First install the OpenWRT build dependencies. You can find the dependencies for your specific Linux distribution [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions). As of 07/2025 there arent all dependencies available for Apple M-Chips.
 
 ### 2. Install BBB-configs dependencies
 
