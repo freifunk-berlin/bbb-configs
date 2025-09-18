@@ -25,6 +25,7 @@ hosts:
           uci set wireless.$radio.legacy_rates='1'
         done
         uci commit wireless; reload_config
+
 snmp_devices:
   - hostname: weidenbaum-bht
     address: 10.31.204.130
