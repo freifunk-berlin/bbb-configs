@@ -9,7 +9,8 @@ community: true
 hosts:
   - hostname: oplatz-core
     role: corerouter
-    model: "zyxel_nwa55axe"
+    model: "cudy_ap3000outdoor-v1"
+    wireless_profile: freifunk_default
 
 # --MGMT: 10.31.0.76/32
 # --MESH: 10.31.202.64/30
@@ -55,9 +56,7 @@ networks:
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
   oplatz-core: 36-40
-  oplatz-ap: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
   oplatz-core: 13-20
-  oplatz-ap: 13-20
