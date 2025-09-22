@@ -123,6 +123,8 @@ networks:
     name: mesh_lan_lte
     prefix: 10.248.28.166/32
     ipv6_subprefix: -30
+    # Ajust link metric to prefer other OLSR gateways
+    mesh_metric_lqm: ["default 0.75"]
 
   # DHCP with filtering and isolation
   - vid: 40
