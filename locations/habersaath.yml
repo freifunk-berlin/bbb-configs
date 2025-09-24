@@ -6,6 +6,9 @@ latitude: 52.53207188797019
 longitude: 13.378598767421284
 community: true
 
+
+role: ap
+model: "siemens_ws-ap3610"
 hosts:
   - hostname: habersaath-core
     role: corerouter
@@ -17,76 +20,23 @@ hosts:
     mac_override: { eth0: dc:2c:6e:c4:06:a8 }
 
   - hostname: habersaath-ap-a1
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-a2
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-a3
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-a4
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-a5
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-a6
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-b1
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-b2
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-b3
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-b4
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-b5
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-b6
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-c1
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-c2
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-c3
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-c4
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-c5
-    role: ap
-    model: "siemens_ws-ap3610"
-
   - hostname: habersaath-ap-c6
-    role: ap
-    model: "siemens_ws-ap3610"
 
 ipv6_prefix: "2001:bf7:750:4a00::/56"
 # mesh: 10.31.147.224/29
