@@ -21,7 +21,7 @@
   file:
     path: "{{ configs_dir }}/etc/{{ item.path }}"
     state: directory
-    mode: "755"
+    mode: "0755"
   loop: "{{ lookup('community.general.filetree', role_path + '/templates/' + role) }}"
   when: item.state == 'directory'
   loop_control:
@@ -32,7 +32,7 @@
   file:
     path: "{{ configs_dir }}/etc/{{ item.path }}"
     state: directory
-    mode: "755"
+    mode: "0755"
   loop: "{{ lookup('community.general.filetree', role_path + '/files/' + role) }}"
   when: item.state == 'directory'
   loop_control:
@@ -43,7 +43,7 @@
   template:
     src: "{{ item.root }}/{{ item.path }}"
     dest: "{{ configs_dir }}/etc/{{ item.path | regex_replace('.j2$', '') }}"
-    mode: "644"
+    mode: "0644"
   loop: "{{ lookup('community.general.filetree', role_path + '/templates/' + role) }}"
   when: item.path is regex('\.j2$')
   loop_control:
