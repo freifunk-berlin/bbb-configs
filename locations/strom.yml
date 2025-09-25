@@ -11,20 +11,10 @@ local_asn: 65023
 peer_asn: 44194
 
 hosts:
-  # Thinkcentre M720q, i5-8500T, 16GB RAM, 256GB NVMe
-  # Intel I219 V7 - eth0
-  # ConnectX-4 LX CX4121B - eth1, eth2
+# Lenovo 10T8S00S00 / Thinkcentre M720q, i5-8500T, 2x8 GB RAM, 256 GB NVMe
   - hostname: strom-gw
     role: gateway
-    model: "x86-64"
-    image_search_pattern: "*-ext4-combined.img*"
-    host__packages__to_merge:
-      - kmod-mlx5-core
-    host__rclocal__to_merge:
-      # There's a decades-old TX offload bug in intel gigabit controllers
-      # which regularly hangs the card. It gets reset automatically,
-      # but still results in regular ~15s downtimes. Disable offloads.
-      - ethtool -K eth0 tx off rx off
+    model: "lenovo_m920q"
 
 snmp_devices:
   - hostname: strom-poe
