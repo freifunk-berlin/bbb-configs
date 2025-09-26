@@ -11,7 +11,7 @@ contacts:
 hosts:
   - hostname: baumex-core
     role: corerouter
-    model: "ubnt_edgerouter-x-sfp"
+    model: "ubnt_edgerouter-x-sfp-24-10"
     poe_on: [0, 2, 3, 4]
     # eth0 / Port 1: cube
     # eth1 / Port 2: lte
