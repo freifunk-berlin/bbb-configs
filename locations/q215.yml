@@ -1,0 +1,68 @@
+---
+
+location: q215
+location_nice: Frankfurter Allee 216
+latitude: 52.511041
+longitude: 13.494430
+altitude: 12
+contact_nickname: q215
+contacts:
+  - https://config.berlin.freifunk.net/contact/8201/InEyMTUi.aNwi_w.emdFHTLrJM-zKksfUEP5Wk5vkrY
+
+hosts:
+  - hostname: q215-core
+    role: corerouter
+    model: "zyxel_nwa55axe"
+    wireless_profile: freifunk_default
+
+
+# ROUTER: 10.248.85.96/27
+# --DHCP: 10.248.85.96/28
+# --MGMT: 10.248.85.112/29
+# --MESH: 10.248.85.120/29
+ipv6_prefix: 2001:bf7:860:2a00::/56
+
+networks:
+  - vid: 20
+    role: mesh
+    name: mesh_5g_core
+    prefix: 10.248.85.120/32
+    ipv6_subprefix: -20
+    mesh_ap: q215-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 21
+    role: mesh
+    name: mesh_2g_core
+    prefix: 10.248.85.121/32
+    ipv6_subprefix: -21
+    mesh_ap: q215-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    untagged: true
+    prefix: 10.248.85.96/28
+    ipv6_subprefix: -40
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      q215-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.85.112/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      q215-core: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  q215-core: 36-20
+
+location__channel_assignments_11g_standard__to_merge:
+  q215-core: 13-20
