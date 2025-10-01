@@ -53,10 +53,6 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-You can find what dependencies you need for your specific linux-distro [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
-
-
-
 ### 3. What do you want to set up?
 
 **often needed**
@@ -130,7 +126,7 @@ You can find what dependencies you need for your specific linux-distro [here](ht
 
 ### 4. Contributing guidelines
 
-To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/issues/785) so contributions are easy to understand and standardised.
+To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/blob/main/CONTRIBUTING.md#contributing-to-bbb-configs) so contributions are easy to understand and standardised.
 
 ### 5. Ansible Introduction
 
@@ -141,8 +137,6 @@ Ansible is a suite of software tools that enables infrastructure as code. It is 
 Make sure to install ansible and clone the bbb-configs repository. Also don`t forget to check your dependencies.
 
 Depending on your system you might need more requirements. If something fails check out [this OpenWRT page](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem).
-
-You can find more useful ansible tips in our [FAQ](https://github.com/freifunk-berlin/bbb-configs/blob/main/FAQ.md#faq).
 
 ## Developers and Maintainers
 
