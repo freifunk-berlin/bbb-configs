@@ -11,7 +11,7 @@ hosts:
   - hostname: s35-core
     role: corerouter
     model: "tplink_archer-c5-v1"
-    wireless_profile: freifunk_default
+    wireless_profile: s35
 
 snmp_devices:
   - hostname: s35-segen
@@ -95,7 +95,7 @@ networks:
 
 # Wireless profile
 location__wireless_profiles__to_merge:
-  - name: shp
+  - name: s35
     ifaces:
       - mode: ap
         ssid: berlin.freifunk.net
