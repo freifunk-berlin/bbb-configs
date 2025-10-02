@@ -15,10 +15,15 @@ hosts:
     model: "cudy_ap3000outdoor-v1"
     wireless_profile: freifunk_hacrafu
 
+  - hostname: hacrafu-torchio-ap
+    role: ap
+    model: "cudy_ap3000outdoor-v1"
+    wireless_profile: freifunk_hacrafu
+
 ipv6_prefix: "2001:bf7:850:2400::/56"
 # DHCP    10.248.32.32/27
-# MESH    10.31.174.112/31
-# MGMT    10.31.21.185/32
+# MESH    10.31.174.120/29
+# MGMT    10.248.85.40/29
 # TUNNEL  10.31.174.114/31
 
 networks:
@@ -26,7 +31,7 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_5g
-    prefix: 10.31.174.112/32
+    prefix: 10.31.174.120/32
     ipv6_subprefix: -20
     mesh_ap: hacrafu-torchio
     mesh_radio: 11a_standard
@@ -36,9 +41,29 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_2g
-    prefix: 10.31.174.113/32
+    prefix: 10.31.174.121/32
     ipv6_subprefix: -21
     mesh_ap: hacrafu-torchio
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 5 GHz 802.11s - AP
+  - vid: 22
+    role: mesh
+    name: mesh_5g_ap
+    prefix: 10.31.174.122/32
+    ipv6_subprefix: -22
+    mesh_ap: hacrafu-torchio-ap
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - AP
+  - vid: 23
+    role: mesh
+    name: mesh_2g_ap
+    prefix: 10.31.174.123/32
+    ipv6_subprefix: -23
+    mesh_ap: hacrafu-torchio-ap
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
@@ -55,12 +80,13 @@ networks:
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.31.21.185/32
+    prefix: 10.248.85.40/29
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
       hacrafu-torchio: 1
+      hacrafu-torchio-ap: 2
 
   # UPLINK
   - vid: 50
@@ -81,11 +107,13 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hacrafu-torchio: 36-80
+  hacrafu-torchio: 36-40
+  hacrafu-torchio-ap: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hacrafu-torchio: 13-40
+  hacrafu-torchio: 13-20
+  hacrafu-torchio-ap: 13-20
 
 # only place this ssh-keys
 ssh_keys:
