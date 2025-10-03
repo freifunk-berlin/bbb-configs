@@ -32,7 +32,7 @@ sysupgrade_preserve_custom_files:
 
 image_search_pattern: "*-sysupgrade.*"
 
-all_sysctl__to_merge:
+all__sysctl__to_merge:
   # when oom kicks in most likely something broke. Panic/Reboot then
   vm.panic_on_oom: 1
 

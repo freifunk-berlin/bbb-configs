@@ -2,5 +2,5 @@
 
 wireless_profile: disable
 
-role_corerouter_sysctl__to_merge:
+role_corerouter__sysctl__to_merge:
   net.netfilter.nf_conntrack_max: 131072
