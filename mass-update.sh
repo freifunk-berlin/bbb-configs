@@ -162,6 +162,18 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
 
             if timeout 120 scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ConnectTimeout=5 -O "$FILE_PATH" "root@$HOSTNAME:/tmp/"; then
 
+                # Check and set compat_version before sysupgrade
+                echo "Checking compat_version on $HOSTNAME..."
+                COMPAT_VERSION=$(run_ssh "$HOSTNAME" "uci get system.@system[0].compat_version 2>/dev/null" || echo "none")
+                if [ "$COMPAT_VERSION" != "9.9" ]; then
+                    echo "Setting compat_version to 9.9 on $HOSTNAME..."
+                    run_ssh "$HOSTNAME" "\
+                        uci set system.@system[0].compat_version='9.9'; \
+                        uci commit system"
+                else
+                    echo "compat_version already set to 9.9 on $HOSTNAME."
+                fi
+
                 echo "Executing sysupgrade on $HOSTNAME"
                 # shellcheck disable=SC2029
                 # Perform the sysupgrade; Ensure the connection terminates within 5 seconds using keep-alive in run_ssh
