@@ -23,7 +23,7 @@ hosts:
 
 snmp_devices:
   - hostname: koepil183rk-vaterhaus   # hostname
-    address: todo   # static ip of the device
+    address: 10.248.66.177/28   # static ip of the device
     snmp_profile: airos_8 # SNMP profile
     
 # ROUTER: 10.248.66.128/26      # add a overview of all reserved addresses at the top as a comment
