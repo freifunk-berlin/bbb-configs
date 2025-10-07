@@ -47,7 +47,7 @@ networks:
                               # network can be untagged. For more advanced use cases, look under
                               # hosts section at rc.local
 
-- vid: 40
+  - vid: 40
     role: dhcp                # dhcp server will run on core-router and serve it's network on vid 40
     prefix: 10.248.66.128/27
     ipv6_subprefix: 0
