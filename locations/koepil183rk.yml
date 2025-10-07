@@ -18,7 +18,7 @@ contacts:
 hosts:
   - hostname: koepil183rk-core               # the name of the device. The location-part of the name must match `location:` defined above
     role: corerouter                   # devices role. Could either be 'corerouter', 'ap' or 'gateway'
-    model: "genexis_pulse_ex400"         # model name like written in the corresponding file name in group_vars/
+    model: "genexis_pulse-ex400"         # model name like written in the corresponding file name in group_vars/
     wireless_profile: disable # activates wifi with freifunk-default-settings on this device. By default only APs have activated wifi.
 
 snmp_devices:
