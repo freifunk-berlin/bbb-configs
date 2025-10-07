@@ -39,7 +39,7 @@ networks:
     name: mesh_vaterh           # the name has a 12 characters limit. It should only contain lower letters and underscores
     ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for
                               # point to point connections by ignoring the hidden node problem
-    prefix: 10.248.66.160/28              # single ipv4-address for meshing
+    prefix: 10.248.66.160/32              # single ipv4-address for meshing
     ipv6_subprefix: -10       # take an address from the back of the IPv6-block. Best practice is
                               # to use the same value as the vlan-id for everything except dhcp and
                               # mgmt to avoid duplicate addresses.
