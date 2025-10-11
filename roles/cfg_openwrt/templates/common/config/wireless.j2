@@ -86,7 +86,8 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
     {% if 'network' in iface %}
 	option network '{{ iface['network'] }}'
     {% endif %}
-	option ifname '{{ wd['ifname_hint'] }}-{{ iface['ifname_hint']|default('if' + loop.index0|string) }}'
+    {% set ifname_h = wd['ifname_hint'] ~ '-' ~ iface['ifname_hint'] | default('if' ~ loop.index0 | string) %}
+	option ifname '{{ ifname_h }}'
     {% if 'mode' in iface %}
 	option mode '{{ iface['mode'] }}'
     {% endif %}
@@ -94,6 +95,15 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
 	option encryption '{{ iface['encryption'] }}'
       {% if 'key' in iface %}
 	option key '{{ iface['key'] }}'
+	option ieee80211r '1'
+	option mobility_domain '{{ (iface['ssid'] | hash("md5"))[-4:] }}'
+	option ft_over_ds '1'
+	{% set nas_id_final = inventory_hostname | replace("-", ".") ~ "." ~ ifname_h | replace("-", ".") ~ ".local" %}
+	{% if nas_id_final | length > 48 %}
+	{# WARNING: NAS ID truncated from {{ nas_id_final | length }} to 48 chars #}
+	{% set nas_id_final = nas_id_final[:48] %}
+	{% endif %}
+	option nasid '{{ nas_id_final }}'
       {% endif %}
     {% endif %}
     {% if iface['mode'] == 'ap' %}
