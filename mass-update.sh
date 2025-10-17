@@ -52,6 +52,11 @@ echo "- check for missing root passwords and show a summary of devices missing a
 echo ""
 echo "Note: This script requires key-based SSH access for all hosts you want to flash."
 echo ""
+# Exit with message if no SSH key is available via agent forwarding
+ssh-add -l >/dev/null 2>&1 || {
+    echo "No SSH key found in SSH agent. Aborting..."
+    exit 1
+}
 echo "The following firmware files will be flashed:"
 for FILE_PATH in "${SORTED_FILES[@]}"; do
     echo "- $(basename "$FILE_PATH")"
