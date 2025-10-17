@@ -1,0 +1,87 @@
+---
+location: emser97
+location_nice: Emser Str. 97, 12051 Berlin
+latitude: 52.468012
+longitude: 13.428300
+contact_nickname: "techn0punk"
+contacts:
+  - "@techn0punk:matrix.org"
+
+hosts:
+  - hostname: emser97-core
+    role: corerouter
+    model: "zyxel_nbg6617"
+    wireless_profile: freifunk_default
+    host__rclocal__to_merge:
+      - |
+        # Untag DHCP on port 2
+        uci set network.vlan_40.ports='lan1:t lan2:u lan3:t lan4:t'
+        uci commit network; reload_config
+
+snmp_devices:
+  - hostname: emser97-philmel
+    address: 10.230.108.126
+    snmp_profile: airos_8
+
+  - hostname: emser97-emser-west
+    address: 10.230.108.122
+    snmp_profile: airos_8
+
+airos_dfs_reset:
+  - name: "emser97-philmel"
+    target: "10.230.108.126"
+    username: "root"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "emser97-emser-west"
+    target: "10.230.108.122"
+    username: "root"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+# ROUTER: 10.230.108.120/29
+# --DHCP: 10.36.160.65/27
+# --MESH: 10.31.43.227/32
+# --MESH: 10.31.226.47/32
+
+ipv6_prefix: "2001:bf7:820:2000::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: philmel
+    prefix: 10.31.43.227/32
+    ipv6_subprefix: -10
+
+  - vid: 11
+    role: mesh
+    name: emser_west
+    prefix: 10.31.226.47/32
+    ipv6_subprefix: -11
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.36.160.65/27
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      emser97-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.230.108.120/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      emser97-core: 1
+      emser97-philmel: 2
+      emser97-emser-west: 3
+
+ssh_keys:
+  - comment: ika
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAABgQCnH1gliVfsReycYCD5DeUhzmkzpvBQAoOvnCz0NiD2Aywhx1GpDntDHwXlcDW/7rFC036DppcG+6fi48AVFqHBjWASmKxy+S2VSV6Ygcs9j9pOb0K8nptHSmWl/TOpo6MrYFSkQLpj14mFv0RBOl8FQ7rN1tJ8EkEKV4eqOgykLQ8YzqmgwOHkFCCLbSIAfMdQbx5b548FSneTvjEWAlVv+cBSgeLMRcWT7PXdVV2Nnx8PJJRx7/bPTvICo07BZgMRyYvru1MwD1TZOLxoIksJo+FspRotAUQXRlhQTLjepjjwwFhBYbk0K9sWj5Mzz64E4U5H9+oUh5F4hFJ0bY9jmzPfRw8W/eXeoEDZU2ki4W+wwubP8G8nXPiQhKzISE/YH8DHyaL33SfPHqwJ4kmMMhCo7Pm7I6J7i2OiTS1jWjcr6u0yxljknZscHbfUdZBbEjGIRerTADOvXh7lb/TccEcUIqA4LRG2VSr1124Enqu1yywFXt71qXH6LKCpL1M=
+      ika@hostlocal
