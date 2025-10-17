@@ -7,26 +7,28 @@ altitude: 87
 community: true
 
 hosts:
+  # Lenovo 10T8S00S00 / Thinkcentre M720q, i5-8500T, 1x16 GB RAM, 256 GB NVMe
+  # Boot prio: 1. USB 2. NVMe
+  # eth0 eth1 - ConnectX-4 Lx MCX4121A-XCHT - PCIe SMBus taped off (Pins 5 & 6)
+  # eth2      - Intel I219-LM V7
   - hostname: emma-core
     role: corerouter
-    model: mikrotik_routerboard-750gr3
+    int_port: eth0
+    model: "x86-64"
+    host__packages__to_merge:
+      - kmod-mlx5-core
+    host__rclocal__to_merge:
+      # HW offload crashes the Intel NIC firmware
+      - ethtool -K eth2 tx off rx off
+
+  - hostname: emma-nf-turm
+    role: ap
+    model: "siemens_ws-ap3610"
 
 snmp_devices:
-  - hostname: emma-switch-no
+  - hostname: emma-switch
     address: 10.31.11.2
-    snmp_profile: edgeswitch
-
-  - hostname: emma-switch-so
-    address: 10.31.11.3
-    snmp_profile: edgeswitch
-
-  - hostname: emma-switch-sw
-    address: 10.31.11.4
-    snmp_profile: edgeswitch
-
-  - hostname: emma-switch-nw
-    address: 10.31.11.5
-    snmp_profile: edgeswitch
+    snmp_profile: swos
 
   - hostname: emma-no-60ghz
     address: 10.31.11.10
@@ -124,10 +126,8 @@ networks:
     ipv6_subprefix: 1
     assignments:
       emma-core: 1
-      emma-switch-no: 2
-      emma-switch-so: 3
-      emma-switch-sw: 4
-      emma-switch-nw: 5
+      emma-switch: 2
+      emma-nf-turm: 6
 
       # Airos 10, 60 GHz
       emma-no-60ghz: 10
@@ -176,12 +176,6 @@ networks:
     name: mesh_nno
     prefix: 10.31.11.35/32
     ipv6_subprefix: -12
-
-  - vid: 13
-    role: mesh
-    name: mesh_ono
-    prefix: 10.31.11.36/32
-    ipv6_subprefix: -13
 
   - vid: 14
     role: mesh

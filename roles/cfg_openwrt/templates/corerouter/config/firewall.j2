@@ -1,4 +1,4 @@
-#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+#jinja2: trim_blocks: True, lstrip_blocks: True
 {% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | default([]) %}
 {% set l3_mesh_networks = networks | selectattr('assignments', 'undefined') | selectattr('role', 'equalto', 'mesh') | default([]) %}
 {% set query = "[].{name: name||role,inbound_filtering: inbound_filtering}" %}

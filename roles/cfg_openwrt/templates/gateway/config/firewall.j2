@@ -1,4 +1,4 @@
-#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+#jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
 
 config defaults
@@ -187,6 +187,42 @@ config rule
 	option proto		all
 	option target		NOTRACK
 
+# Allow traffic (DNS Reply) from Internet IPv6 DNS resolvers unconditionally
+config rule
+	option name		'Accept Traffic from dns ipv6 resolver (DNS Reply)'
+	option src		uplink
+	option dest		freifunk
+	option ipset		'dns_servers_ipv6 src' # defined at EOF
+	option src_port		'53'
+	option target		ACCEPT
+
+# Dont track DNS Reply (DNS Reply) (dns_servers_ipv6 via Internet -> freifunk)
+config rule
+	option name		'Dont track traffic belonging to dns ipv6 resolver from the internet'
+	option src		uplink
+	option dest		* # see note below
+	option ipset		'dns_servers_ipv6 src'
+	option src_port		'53'
+	option target		NOTRACK
+
+# Dont track DNS Reply (dns_servers_ipv6 via GRE)
+config rule
+	option name		'Dont track DNS via GRE'
+	option src		freifunk
+	option dest		* # see note below
+	option ipset		'dns_servers_ipv6 src' # defined at EOF
+	option src_port		'53'
+	option target		NOTRACK
+
+# Dont track DNS Request (freifunk -> dns_servers_ipv6)
+config rule
+	option name		'Dont track traffic to dns ipv6 resolver (DNS Request)'
+	option src		freifunk
+	option dest		* # see note below
+	option ipset		'dns_servers_ipv6 dest'
+	option dest_port	'53'
+	option target		NOTRACK
+
 # Note: option dest actually has no impact in rendered nftables config by fw4, because
 # NOTRACK needs to be set on prerouting, where the outbound interface is not determined,
 # but is necessary in order to let fw4 know this is a forwarding rule.
@@ -242,4 +278,18 @@ config ipset
               | selectattr('ipv6_subprefix', 'defined') %}
 	list entry	'{{ h_vars['ipv6_prefix'] |  ansible.utils.ipsubnet(64, network['ipv6_subprefix']) }}' # {{ h }} - {{ libnetwork.getUciIfname(network) }}
   {% endfor %}
+{% endfor %}
+
+# ipset for stateful firewall bypass for ipv6 dns server
+config ipset
+	option name	'dns_servers_ipv6'
+	option match	'net'
+	option family	'ipv6'
+{% for addr in groups['role_corerouter']
+        | map('extract', hostvars, 'dns_servers')
+        | flatten
+        | select('search', ':')
+        | unique
+        | sort %}
+	list entry	'{{ addr }}'
 {% endfor %}

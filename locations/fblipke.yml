@@ -1,0 +1,127 @@
+---
+location: fblipke
+location_nice: Marzahn - Blumberger Damm 305
+latitude: 52.557725
+longitude: 13.57437
+altitude: 42
+height: 13
+contact_name: 'Guido L.'
+contact_nickname: 'LipkeGu'
+contacts:
+  - 'contact@fblipke.de'
+  - '@lipkegu:matrix.org'
+hosts:
+# Proxmox VM (QEMU)
+  - hostname: fblipke-core
+    role: corerouter
+    model: "x86_64_bcrmfmac"
+    host__packages__to_merge:
+      - "nano qemu-ga"
+    wireless_profile: fblipke
+
+# NETWRORKS:
+# Assigned: 10.248.12.0/24; 2001:bf7:850:1b00::/56
+
+# DHCP: 10.248.12.128/25
+# MGMT: 10.248.12.0/26
+# MESH: 10.248.12.64/26
+
+ipv6_prefix: "2001:bf7:850:1b00::/56"
+
+dhcp_no_ping: false
+
+networks:
+  - vid: 53
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.12.64/32
+    ipv6_subprefix: -20
+    mesh_ap: fblipke-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 52
+    role: dhcp
+    prefix: 10.248.12.128/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      fblipke-core: 1 # 10.248.12.129
+      fb-bln-fw01: 2  # 10.248.12.130
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.12.0/26
+    gateway: 1
+    ntp: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      fblipke-core: 1 # 10.248.12.1
+      fb-bln-fw01: 3  # 10.248.12.3
+
+  - vid: 40 # WIFI (Private)
+    role: dhcp
+    prefix: 10.20.4.0/24
+    assignments:
+      fb-bln-fw01: 1
+      fblipke-core: 2
+    gateway: 1
+    ntp: 1
+    dns: 1
+    name: lan40
+    enforce_client_isolation: false
+    inbound_filtering: false
+
+  - vid: 101
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.12.65/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.248.12.66/32
+    wireguard_port: 51821
+
+location__wireless_profiles__to_merge:
+  - name: fblipke
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: 11g_standard
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: Lipke-Intern
+        encryption: none
+        network: lan40
+        radio: 11g_standard
+        ifname_hint: pr
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: 11g_standard
+        mcast_rate: 12000
+        mesh_fwding: 0
+        name: mesh_2g
+        ifname_hint: mesh
+
+# SSH Keys
+location__ssh_keys__to_merge:
+  - comment: LipkeGu@fblipke.de
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDWGGDLV9yGbOMicyi+ilmha7ZvKoOtD7PxSkqFLMtzg4KFBLAnss+SxBsKaonDOdeup5f12Jo1Y0ltn63ePmyK11ZORps4+Kl7AdBX3dPxgRt9L2vrtBIf+woq7/UO8GqoCczrYjpzxdYoTgCT24dl6ue6GAEr0a5fIo/KRdEnGzG1htxY2f8YI1PcPrQIxYGvI4krEWnRkNzsjBjnvCux+q+tM/xIVXmODUHd2nNvGi2LroKoXiWGU/NoQ4mjksw26pFLQIJwXwsbadlr+0qSZ55snx6KNvqXwtASg3jmWiPQ5/Va5WT+dF5s7tykExtgz7uIxRPPhf7+OkDmlrAQJofaCd3poNxy3iC7Nih462QKjg0iBiD/nNX1Ditp5bTeJ9waciHBeb57PRzZkIpI9HlwIk4//n/XJ6ML/ErdM+GtjAzKjGzuhPCNPzo0qTpRNEyIABVjHxS3wsaqU8ifQ+6ZcH/NRqv9OIdOAlpApeHv0yU2uwwlO/ZzvJbQ+6s= fblipke\lipkegu@FB-BLN-C01 # yamllint disable-line rule:line-length
+
+dns_servers:
+  # Google
+  - 8.8.8.8
+  - 8.8.4.4
+  - 2001:4860:4860::8888
+  - 2001:4860:4860::8844

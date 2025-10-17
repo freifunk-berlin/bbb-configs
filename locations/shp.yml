@@ -11,16 +11,34 @@ hosts:
   - hostname: shp-core
     role: corerouter
     model: "genexis_pulse-ex400"
+<<<<<<< HEAD
     wireless_profile: freifunk_default
     flow_offload: hw
+=======
+    wireless_profile: shp
+    flow_offload: hw
+    host__rclocal__to_merge:
+      - |
+        # Enable legacy rates on 2.4 GHz radio to enable meshing with neighbors
+        uci set wireless.radio1.legacy_rates='1'
+        uci commit wireless
+        reload_config
+>>>>>>> upstream/main
 
 ipv6_prefix: "2001:bf7:830:f600::/56"
 
 # got following prefixes:
 # Router: 10.248.71.64/27
+<<<<<<< HEAD
 # --MGMT: 10.248.71.64/29
 # --MESH: 10.248.71.72/29
 # --DHCP: 10.248.71.80/28
+=======
+# --MGMT: 10.248.71.64/30
+# --MESH: 10.248.71.72/29
+# --DHCP: 10.248.71.80/28
+# --DHCP: 10.248.71.68/30 (Private DHCP)
+>>>>>>> upstream/main
 
 # Disable noping
 dhcp_no_ping: false
@@ -60,10 +78,27 @@ networks:
     assignments:
       shp-core: 1
 
+<<<<<<< HEAD
   # MGMT
   - vid: 42
     role: mgmt
     prefix: 10.248.71.64/29
+=======
+  # DHCP with filtering
+  - vid: 41
+    role: dhcp
+    name: shp_private
+    inbound_filtering: true
+    prefix: 10.248.71.68/30
+    ipv6_subprefix: 3
+    assignments:
+      shp-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.71.64/30
+>>>>>>> upstream/main
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
@@ -78,6 +113,48 @@ location__channel_assignments_11a_standard__to_merge:
 location__channel_assignments_11g_standard__to_merge:
   shp-core: 13-20
 
+<<<<<<< HEAD
+=======
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: shp
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: shp
+        encryption: sae-mixed
+        key: "file:/root/wifi-pwd"
+        network: shp_private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        mesh_nolearn: 1
+        ifname_hint: mesh
+
+
+>>>>>>> upstream/main
 # SSH Keys
 ssh_keys:
   - comment: Noki

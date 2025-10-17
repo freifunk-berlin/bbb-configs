@@ -12,6 +12,7 @@ hosts:
   - hostname: gruni73-core
     role: corerouter
     model: "linksys_e8450-ubi"
+    openwrt_version: 24.10-SNAPSHOT
     wireless_profile: freifunk_default
 
   - hostname: gruni73-nf-o-5ghz

@@ -35,11 +35,11 @@ If we need someone to reproduce our setup, the person can just generate the imag
 
 ## Getting Started
 
-Using bbb-configs is quite simple. In the sections below you can find simple introductions to what you can do with bbb-configs. But before you can get started you might need to install some dependecies so everything will work properly.
+Using bbb-configs is quite simple. In the sections below you can find simple introductions to what you can do with bbb-configs. But before you can get started you might need to install some dependencies so everything will work properly.
 
 ### 1. Install OpenWRT build dependencies
 
-First install the OpenWRT build dependencies. You can find the dependencies for your specific Linux distribution [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
+First install the OpenWRT build dependencies. You can find the dependencies for your specific Linux distribution [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions). As of 07/2025 there arent all dependencies available for Apple M-Chips.
 
 ### 2. Install BBB-configs dependencies
 
@@ -52,10 +52,6 @@ python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 ```
-
-You can find what dependencies you need for your specific linux-distro [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions).
-
-
 
 ### 3. What do you want to set up?
 
@@ -128,9 +124,15 @@ You can find what dependencies you need for your specific linux-distro [here](ht
 
   </details>
 
+<<<<<<< HEAD
 ### 4. Contibuting guidelines
 
 To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/issues/785) so contributions are easy to understand and standardised.
+=======
+### 4. Contributing guidelines
+
+To contribute your work, it is helpful to stick to the [contributing guidelines](https://github.com/freifunk-berlin/bbb-configs/blob/main/CONTRIBUTING.md#contributing-to-bbb-configs) so contributions are easy to understand and standardised.
+>>>>>>> upstream/main
 
 ### 5. Ansible Introduction
 
@@ -141,8 +143,6 @@ Ansible is a suite of software tools that enables infrastructure as code. It is 
 Make sure to install ansible and clone the bbb-configs repository. Also don`t forget to check your dependencies.
 
 Depending on your system you might need more requirements. If something fails check out [this OpenWRT page](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem).
-
-You can find more useful ansible tips in our [FAQ](https://github.com/freifunk-berlin/bbb-configs/blob/main/FAQ.md#faq).
 
 ## Developers and Maintainers
 

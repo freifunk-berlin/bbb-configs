@@ -1,4 +1,4 @@
-#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+#jinja2: trim_blocks: True, lstrip_blocks: True
 # Defaults are configured in /etc/sysctl.d/* and can be customized in this file
 {% for i in sysctl | default({}) %}
 {{ i }}={{ sysctl[i] }}

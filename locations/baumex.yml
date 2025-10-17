@@ -11,7 +11,7 @@ contacts:
 hosts:
   - hostname: baumex-core
     role: corerouter
-    model: "ubnt_edgerouter-x-sfp"
+    model: "ubnt_edgerouter-x-sfp-24-10"
     poe_on: [0, 2, 3, 4]
     # eth0 / Port 1: cube
     # eth1 / Port 2: lte
@@ -123,6 +123,8 @@ networks:
     name: mesh_lan_lte
     prefix: 10.248.28.166/32
     ipv6_subprefix: -30
+    # Ajust link metric to prefer other OLSR gateways
+    mesh_metric_lqm: ["default 0.75"]
 
   # DHCP with filtering and isolation
   - vid: 40

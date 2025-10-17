@@ -1,4 +1,4 @@
-#jinja2: trim_blocks: "true", lstrip_blocks: "true"
+#jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
 
 # Babel inserts into separate route table, add that to lookup list for IPv6
@@ -54,6 +54,10 @@ config interface '{{ name }}'
        not libnetwork.isBridgeNeeded(network) | from_json %}
 	option macaddr '02:00:00:00:00:01'
     {% endif %}
+    {# Generate a deterministic random MAC address to avoid issues with multiple paths to the same location #}
+    {% if network['role'] == 'mesh' %}
+        option macaddr '{{- libnetwork.generateDeterministicMAC(inventory_hostname ~ "-" ~ name) -}}'
+    {% endif %}
     {% if 'assignments' in network and inventory_hostname in network['assignments'] %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) }}'
@@ -77,11 +81,11 @@ config interface '{{ name }}'
     {% else %}
 	option proto 'none'
     {% endif %}
-  {% endif %}
-  {% if role == 'corerouter' and ipv6_prefix is defined %}
-    {% if 'ipv6_subprefix' in network %}
-      {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
+    {% if role == 'corerouter' and ipv6_prefix is defined %}
+      {% if 'ipv6_subprefix' in network %}
+        {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
 	option ip6addr '{{ subprefix | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
+      {% endif %}
     {% endif %}
   {% endif %}
 
