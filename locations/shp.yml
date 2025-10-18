@@ -15,10 +15,13 @@ hosts:
     flow_offload: hw
     host__rclocal__to_merge:
       - |
-        # Enable legacy rates on 2.4 GHz radio to enable meshing with neighbors
-        uci set wireless.radio1.legacy_rates='1'
-        uci commit wireless
-        reload_config
+        # Enable legacy rates on 2 GHz to enable meshing with legacy neighbors
+        for radio in $(uci show wireless \
+          | grep ".band='2g'" \
+          | cut -d. -f2); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless; reload_config
 
 ipv6_prefix: "2001:bf7:830:f600::/56"
 
