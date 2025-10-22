@@ -151,7 +151,7 @@ networks:
   # MGMT
   - vid: 432
     role: mgmt
-    prefix: 10.248.28.128/27
+    prefix: 10.248.28.128/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1

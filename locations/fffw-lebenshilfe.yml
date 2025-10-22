@@ -44,16 +44,16 @@ ipv6_prefix: "2001:bf7:800:f00::/56" # aus Berlin
 # got following prefixes:
 # Router: ###.###.##.##
 # --DHCP: 10.30.99.0/25
-# --MESH: 10.30.96.32/29
-# --MGMT: 10.30.96.40/29
+# --MESH: 10.30.96.40/29
+# --MGMT: 10.30.96.32/29
 # --UPLK: 10.31.40.124/30 # config-wizard aus Berlin
 
 networks:
   - vid: 20
     role: mesh
     name: mesh_nno
-    prefix: 10.30.96.43/32
-    ipv6_subprefix: -1
+    prefix: 10.30.96.40/32
+    ipv6_subprefix: -20
     mesh_ap: fffw-lebenshilfe-nno-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -61,8 +61,8 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_nw
-    prefix: 10.30.96.44/32
-    ipv6_subprefix: -2
+    prefix: 10.30.96.41/32
+    ipv6_subprefix: -21
     mesh_ap: fffw-lebenshilfe-nw-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -70,8 +70,8 @@ networks:
   - vid: 22
     role: mesh
     name: mesh_sso
-    prefix: 10.30.96.45/32
-    ipv6_subprefix: -3
+    prefix: 10.30.96.42/32
+    ipv6_subprefix: -22
     mesh_ap: fffw-lebenshilfe-sso-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -79,8 +79,8 @@ networks:
   - vid: 23
     role: mesh
     name: mesh_ono
-    prefix: 10.30.96.46/32
-    ipv6_subprefix: -4
+    prefix: 10.30.96.43/32
+    ipv6_subprefix: -23
     mesh_ap: fffw-lebenshilfe-ono-ap-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -104,7 +104,7 @@ networks:
 
   - vid: 42
     role: mgmt
-    prefix: 10.30.96.32/28
+    prefix: 10.30.96.32/29
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
