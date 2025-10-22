@@ -59,7 +59,7 @@ networks:
     assignments:
       hts4-core: 1
 
-  # DHCP with filtering and isolation
+  # Private home network without filtering and isolation
   - vid: 41
     role: ext
     name: private
@@ -74,9 +74,8 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      # 10.31.235.193/32
-      hts4-core: 1
-      hts4-ap: 2
+      hts4-core: 1 # 10.31.235.193
+      hts4-ap: 2 # 10.31.235.194
 
   # UPLK
   - vid: 50

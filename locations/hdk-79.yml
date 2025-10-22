@@ -14,6 +14,15 @@ hosts:
     # remove some packages for smaller image size (only 64 MB of memory)
     low_mem: true
     low_flash: true
+    host__rclocal__to_merge:
+      - |
+        # Enable legacy rates on 2 GHz to enable meshing with legacy neighbors
+        for radio in $(uci show wireless \
+          | grep ".band='2g'" \
+          | cut -d. -f2); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless; reload_config
 
 ipv6_prefix: "2001:bf7:840:3d00::/56"
 

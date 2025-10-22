@@ -12,6 +12,7 @@ hosts:
   - hostname: gruni73-core
     role: corerouter
     model: "linksys_e8450-ubi"
+    openwrt_version: 24.10-SNAPSHOT
     wireless_profile: freifunk_default
 
   - hostname: gruni73-nf-o-5ghz
@@ -25,6 +26,12 @@ hosts:
   - hostname: gruni73-nf-w-5ghz
     role: ap
     model: "ubnt_rocket-5ac-lite"
+
+  - hostname: gruni73-zielona
+    role: ap
+    model: "linksys_e8450-ubi"
+    openwrt_version: 24.10-SNAPSHOT
+    wireless_profile: gruni73
 
 snmp_devices:
   - hostname: gruni73-switch
@@ -60,6 +67,7 @@ networks:
       # 5ghz uplink
       gruni73-sama: 5
       gruni73-zwingli: 6
+      gruni73-zielona: 10
       # local nearfield aps 5ghz
       gruni73-nf-o-5ghz: 13 # switch has a watchdog (10m) active for this device due to instability
       gruni73-nf-s-5ghz: 14 # switch has a watchdog (10m) active for this device due to instability
@@ -73,6 +81,12 @@ networks:
     enforce_client_isolation: true
     assignments:
       gruni73-core: 1
+  - vid: 41
+    role: ext
+    name: private
+    no_corerouter_dns_record: true
+    enforce_client_isolation: false
+    untagged: true
 
   # 10.31.156.32/27 Mesh Prefix (32)
   # 11s mesh 5ghz
@@ -123,7 +137,53 @@ networks:
     mesh_metric_lqm:
       - default 0.4 # penalty on wild meshing
 
+
 location__channel_assignments_11a_standard__to_merge:
   gruni73-nf-o-5ghz: 136-20-14 # EIRP 30dB - Antenna 19dB + Cable loss 3dB = 14dB
   gruni73-nf-s-5ghz: 36-20-7 # EIRP 23dB - Antenna 19dB + Cable loss 3dB = 7dB
   gruni73-nf-w-5ghz: 140-20-14 # EIRP 30dB - Antenna 19dB + Cable loss 3dB = 14dB
+
+location__wireless_profiles__to_merge:
+  - name: gruni73
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: 2.4GHz
+        encryption: sae-mixed
+        key: "file:/root/wifi_pass"
+        network: private
+        radio: [11g_standard]
+        ifname_hint: pr
+
+      - mode: ap
+        ssid: 5GHz
+        encryption: sae-mixed
+        key: "file:/root/wifi_pass"
+        network: private
+        radio: [11a_standard]
+        ifname_hint: pr
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        mesh_nolearn: 1
+        ifname_hint: mesh

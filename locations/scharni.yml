@@ -41,7 +41,7 @@ hosts:
 snmp_devices:
   - hostname: scharni-sama
     address: 10.31.52.163
-    snmp_profile: airos_8
+    snmp_profile: af60
 
   - hostname: scharni-zwingli
     address: 10.31.52.164

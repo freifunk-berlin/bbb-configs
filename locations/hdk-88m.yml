@@ -12,11 +12,10 @@ hosts:
     wireless_profile: freifunk_default
     host__rclocal__to_merge:
       - |
-        # Enable legacy rates to enable meshing with neighbors
+        # Enable legacy rates on 2 GHz to enable meshing with legacy neighbors
         for radio in $(uci show wireless \
-          | grep "=wifi-device" \
-          | cut -d. -f2 \
-          | cut -d= -f1); do
+          | grep ".band='2g'" \
+          | cut -d. -f2); do
           uci set wireless.$radio.legacy_rates='1'
         done
         uci commit wireless; reload_config
@@ -26,11 +25,10 @@ hosts:
     wireless_profile: freifunk_default
     host__rclocal__to_merge:
       - |
-        # Enable legacy rates to enable meshing with neighbors
+        # Enable legacy rates on 2 GHz to enable meshing with legacy neighbors
         for radio in $(uci show wireless \
-          | grep "=wifi-device" \
-          | cut -d. -f2 \
-          | cut -d= -f1); do
+          | grep ".band='2g'" \
+          | cut -d. -f2); do
           uci set wireless.$radio.legacy_rates='1'
         done
         uci commit wireless; reload_config
