@@ -1,0 +1,25 @@
+---
+name: Check prefix overlaps
+
+on: [push, pull_request] # yamllint disable-line rule:truthy
+
+jobs:
+  check-prefix-overlap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run prefix overlap check
+        run: |
+          git fetch origin main
+          changed_files=$(git diff --name-only origin/main)
+          location_files=$(echo "$changed_files" | grep -E '^locations/.*\.yml$' || true)
+          if [ -z "$location_files" ]; then
+            echo "No location files changed, running against all locations"
+            python3 ./.github/checks/check-prefix-overlap.py
+          else
+            python3 ./.github/checks/check-prefix-overlap.py "$location_files"
+          fi
