@@ -37,7 +37,7 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_5g_core
-    prefix: 10.248.65.178/32
+    prefix: 10.248.65.169/32
     ipv6_subprefix: -20
     mesh_ap: q217-core
     mesh_radio: 11a_standard

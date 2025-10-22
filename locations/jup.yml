@@ -63,15 +63,15 @@ networks:
   - vid: 10
     role: mesh
     name: mesh_bht
-    prefix: 10.31.147.128/32
-    ipv6_subprefix: -1
+    prefix: 10.31.147.160/32
+    ipv6_subprefix: -10
     ptp: true
 
   - vid: 11
     role: mesh
     name: mesh_segen
-    prefix: 10.31.147.129/32
-    ipv6_subprefix: -2
+    prefix: 10.31.147.161/32
+    ipv6_subprefix: -11
     ptp: true
 
   - vid: 40
