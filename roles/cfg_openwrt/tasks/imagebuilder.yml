@@ -163,15 +163,21 @@
     line: "{{ item }}::askfirst:/usr/libexec/login.sh"
   loop: "{{ additional_serial_ports | default([]) }}"
 
-- name: Run Imagebuilder
-  changed_when: false
-  vars:
+- name: Generate Imagebuilder command
+  set_fact:
     make_command: >
       make image
       PROFILE='{{ override_target | default(model) }}'
       PACKAGES='{{ packages | join(" ") }}'
       DISABLED_SERVICES='{{ disabled_services | join(" ") }}'
       FILES='{{ configs_dir }}' 1>&2
+
+- name: Debug Imagebuilder command
+  debug:
+    var: make_command
+
+- name: Run Imagebuilder
+  changed_when: false
   command:
     chdir: "{{ build_dir }}"
     argv:
