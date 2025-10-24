@@ -195,3 +195,5 @@ location__wireless_profiles__to_merge:
         network: prdhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: prdhcp
+
+flow_offload: hw
