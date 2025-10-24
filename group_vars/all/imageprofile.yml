@@ -43,5 +43,5 @@ all_luci_base__packages__to_merge:
   - uhttpd
   - uhttpd-mod-ubus
 
-all_disabled_services__to_merge:
+all__disabled_services__to_merge:
   - "olsrd6"
