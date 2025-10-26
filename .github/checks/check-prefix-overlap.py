@@ -13,15 +13,20 @@ import sys
 
 import yaml
 
-# Allowed Freifunk Berlin ip ranges
+# Allowed Freifunk ip ranges of Berlin and Fürstenwalde as defined in
+# the icvpn meta repo https://github.com/freifunk/icvpn-meta/
 ALLOWED_IPV4 = [
+    # Berlin
     ipaddress.ip_network("10.31.0.0/16"),
     ipaddress.ip_network("10.36.0.0/16"),
     ipaddress.ip_network("10.230.0.0/16"),
     ipaddress.ip_network("10.248.0.0/14"),
+    # Fürstenwalde
+    ipaddress.ip_network("10.30.96.0/19"),
 ]
 
 ALLOWED_IPV6 = [
+    # Berlin
     ipaddress.ip_network("2001:bf7:750::/44"),
     ipaddress.ip_network("2001:bf7:760::/44"),
     ipaddress.ip_network("2001:bf7:770::/44"),
