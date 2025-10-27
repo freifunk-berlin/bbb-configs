@@ -33,6 +33,13 @@ networks:
     prefix: 10.31.92.16/32
     ipv6_subprefix: -1
 
+  # MESH - mahalle
+  - vid: 11
+    role: mesh
+    name: mesh_mahalle
+    prefix: 10.31.92.19/32
+    ipv6_subprefix: -2
+
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh

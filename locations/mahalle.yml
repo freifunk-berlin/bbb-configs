@@ -5,9 +5,7 @@ latitude: 52.50099
 longitude: 13.42842
 altitude: 31
 height: 2
-contact_nickname: Mahalle Kollektiv
-contacts:
-  - info@mahalle.de
+community: true
 
 hosts:
   - hostname: mahalle-core
@@ -32,6 +30,13 @@ hosts:
 ipv6_prefix: "2001:bf7:830:bb00::/56"
 
 networks:
+
+  - vid: 10
+    role: mesh
+    name: mesh_walde
+    prefix: 10.31.179.122/32
+    ipv6_subprefix: -10
+
   - vid: 20
     role: mesh
     name: mahalle_w
@@ -71,22 +76,6 @@ networks:
       mahalle-switch: 2
       mahalle-nf-w: 3
       mahalle-nf-o: 4
-
-  - vid: 50
-    role: uplink
-    untagged: true
-
-  - role: tunnel
-    ifname: ts_wg0
-    mtu: 1280
-    prefix: 10.31.179.122/32
-    wireguard_port: 51820
-
-  - role: tunnel
-    ifname: ts_wg1
-    mtu: 1280
-    prefix: 10.31.179.123/32
-    wireguard_port: 51821
 
 location__channel_assignments_11a_standard__to_merge:
   mahalle-core: 36-20
