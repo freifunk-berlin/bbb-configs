@@ -5,9 +5,7 @@ latitude: 52.50099
 longitude: 13.42842
 altitude: 31
 height: 2
-contact_nickname: Mahalle Kollektiv
-contacts:
-  - info@mahalle.de
+community: true
 
 hosts:
   - hostname: mahalle-core
