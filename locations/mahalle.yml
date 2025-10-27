@@ -30,6 +30,13 @@ hosts:
 ipv6_prefix: "2001:bf7:830:bb00::/56"
 
 networks:
+
+  - vid: 10
+    role: mesh
+    name: mesh_walde
+    prefix: 10.31.179.122/32
+    ipv6_subprefix: -10
+
   - vid: 20
     role: mesh
     name: mahalle_w
