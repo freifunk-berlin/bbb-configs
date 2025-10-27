@@ -16,6 +16,7 @@ hosts:
   - hostname: magda-ap-remise
     role: ap
     model: "zyxel_nwa50ax"
+    wireless_profile: remise
 
   - hostname: magda-ap1
     role: ap
@@ -84,24 +85,6 @@ networks:
     # as a gateway during heavy rain
     mesh_metric_lqm: ["10.31.205.49 0.2"]
 
-  - vid: 42
-    role: mgmt
-    prefix: 10.31.83.112/28
-    gateway: 1
-    dns: 1
-    ipv6_subprefix: 1
-    assignments:
-      magda-core: 1
-      magda-switch: 2
-      magda-sama: 3
-      magda-ost-5ghz: 4
-      magda-ap1: 5
-      magda-ap2: 6
-      magda-ap3: 7
-      # magda-ap4: 8
-      magda-ap-remise: 9
-      magda-switch-unten: 10
-
   - vid: 40
     role: dhcp
     prefix: 10.31.83.192/26
@@ -121,16 +104,70 @@ networks:
     assignments:
       magda-core: 1
 
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.83.112/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      magda-core: 1
+      magda-switch: 2
+      magda-sama: 3
+      magda-ost-5ghz: 4
+      magda-ap1: 5
+      magda-ap2: 6
+      magda-ap3: 7
+      # magda-ap4: 8
+      magda-ap-remise: 9
+      magda-switch-unten: 10
+
+  - vid: 43
+    role: dhcp
+    name: remise
+    prefix: 10.31.214.128/28
+    ipv6_subprefix: 41
+    inbound_filtering: true
+    enforce_client_isolation: false
+    assignments:
+      magda-core: 1
+
+
 location__channel_assignments_11a_standard__to_merge:
   magda-ap1: 48-20
   magda-ap2: 36-20
   magda-ap3: 44-20
   magda-ap-remise: 36-40
 
-# channel-bandwith-txpower in dbm
+# channel-bandwidth-txpower in dbm
 
 # ap1: hof - 5ghz
 # ap2: knast - 5ghz
 # ap3: kirche - 5ghz
 # ap4: knast - 2ghz
 # ap-remise: remise via haus netzwerk via media converter - dual band
+
+location__wireless_profiles__to_merge:
+  - name: remise
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: Remise
+        encryption: none
+        network: remise
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: remise
