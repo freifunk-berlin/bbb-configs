@@ -10,6 +10,7 @@ hosts:
   - hostname: sama-core
     role: corerouter
     model: "linksys_e8450-ubi"
+    openwrt_version: 24.10-SNAPSHOT
 
   - hostname: sama-nord-nf-5ghz
     role: ap
