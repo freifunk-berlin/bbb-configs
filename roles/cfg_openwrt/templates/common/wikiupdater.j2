@@ -27,12 +27,12 @@
 {# Processing vars from general.yml #}
 {# Big chunks from this part are copied from config/freifunk.j2 #}
 
- {% if community is true and contact_name is undefined %}
+ {% if community|default(false) is true and contact_name is undefined %}
     {% do wi.ki.update({'Ansprechpartner Name': 'Freifunk Engenieering Task Force'}) %}
 {% elif contact_name is defined %}
     {% do wi.ki.update({'Ansprechpartner Name': contact_name})%}
 {% endif %}
-{% if community is true and contact_nickname is undefined %}
+{% if community|default(false) is true and contact_nickname is undefined %}
     {% do wi.ki.update({'Ansprechpartner Nickname': 'FETF'})%}
 {% elif contact_nickname is defined %}
     {% do wi.ki.update({'Ansprechpartner Nickname': contact_nickname})%}
