@@ -17,7 +17,13 @@ hosts:
   - hostname: k12-h4-h0s
     role: ap
     model: "dlink_covr-x1860-a1"
-    mac_override: { eth0: a8:63:7d:db:4d:53 }
+    mac_override: { eth0: a8:63:7d:dc:5f:fe }
+    wifi_roaming: true
+  - hostname: k12-h4-v0s
+    role: ap
+    model: "dlink_covr-x1860-a1"
+    wireless_profile: ap_only
+    mac_override: { eth0: a8:63:7d:dc:60:05 }
     wifi_roaming: true
   - hostname: k12-h4-hirschhof
     role: ap
@@ -112,15 +118,18 @@ networks:
       k12-h4-core: 1 # 10.31.157.177
       k12-h4-hirschhof: 2 # 10.31.157.178
       k12-h4-h0s: 3 # 10.31.157.179
+      k12-h4-v0s: 4 # 10.31.157.180
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
   k12-h4-core: 44-40
   k12-h4-h0s: 36-40
+  k12-h4-v0s: 52-40
 
 location__channel_assignments_11g_standard__to_merge:
   k12-h4-core: 13-20
   k12-h4-h0s: 13-20
+  k12-h4-v0s: 5-20
   k12-h4-hirschhof: 1-20
 
 dns_servers:
