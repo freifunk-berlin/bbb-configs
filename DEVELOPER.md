@@ -143,7 +143,7 @@ ipv6_prefix: "2001:bf7:860::/56"
 
 networks:
   - vid: 10                   # vlan-id
-    role: mesh                # what this vlan does (mesh, dhcp, mgmt)
+    role: mesh                # what this vlan does (mesh, dhcp, mgmt, ext)
     name: mesh_sama           # the name has a 12 characters limit. It should only contain lower letters and underscores
     ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for
                               # point to point connections by ignoring the hidden node problem
@@ -202,6 +202,22 @@ location__channel_assignments_11a_standard__to_merge:
   magda-ap1: 36-20-15
   magda-ap2: 40-20-15
   magda-ap3: 44-20-15
+```
+
+The role **ext** can either be used like this
+
+```yml
+
+TODO: TODO
+
+```
+
+OR like this
+
+```yml
+
+TODO: TODO
+
 ```
 
 The VLAN ID (vid) usually follow this numbering convention. They should be sorted in ascending order in the file.
