@@ -30,43 +30,43 @@ snmp_devices:
     address: 10.31.11.2
     snmp_profile: swos
 
-  - hostname: emma-no-60ghz
+  - hostname: emma-o-60ghz
     address: 10.31.11.10
     snmp_profile: af60
 
-  - hostname: emma-wsw-60ghz
+  - hostname: emma-lause
     address: 10.31.11.17
     snmp_profile: mikrotik_60g
 
-  - hostname: emma-ssw-uplink
+  - hostname: emma-ohlauer
     address: 10.31.11.18
     snmp_profile: mikrotik_60g
 
-  - hostname: emma-oso-5ghz
+  - hostname: emma-so-5ghz
     address: 10.31.11.19
     snmp_profile: airos_8
 
-  - hostname: emma-nno-5ghz
+  - hostname: emma-no-5ghz
     address: 10.31.11.20
     snmp_profile: airos_8
 
-  - hostname: emma-wsw-5ghz
+  - hostname: emma-w-5ghz
     address: 10.31.11.22
     snmp_profile: airos_8
 
-  - hostname: emma-wnw-5ghz
+  - hostname: emma-nw-5ghz
     address: 10.31.11.23
     snmp_profile: airos_8
 
-  - hostname: emma-nnw-5ghz
+  - hostname: emma-n-5ghz
     address: 10.31.11.24
     snmp_profile: airos_8
 
-  - hostname: emma-sso-5ghz
+  - hostname: emma-s-5ghz
     address: 10.31.11.25
     snmp_profile: airos_8
 
-  - hostname: emma-nnw-60ghz
+  - hostname: emma-n-60ghz
     address: 10.31.11.29
     snmp_profile: mikrotik_60g
 
@@ -130,20 +130,20 @@ networks:
       emma-nf-turm: 6
 
       # Airos 10, 60 GHz
-      emma-no-60ghz: 10
+      emma-o-60ghz: 10
 
       # Router OS
-      emma-wsw-60ghz: 17 # Fenster 4
-      emma-ssw-uplink: 18 # Fenster 2
-      emma-nnw-60ghz: 29 # Fenster 5
+      emma-lause: 17
+      emma-ohlauer: 18
+      emma-n-60ghz: 29
 
       # Airos 8, 5 GHz
-      emma-oso-5ghz: 19 # Fenster 8, 20 MHz, center frequency 5580 MHz
-      emma-nno-5ghz: 20 # Fenster 6, 20 MHz, center frequency 5600 MHz
-      emma-wsw-5ghz: 22 # Fenster 3, 20 MHz, center frequency 5620 MHz
-      emma-wnw-5ghz: 23 # Fenster 4, 40 MHz, center frequency 5550 MHz
-      emma-nnw-5ghz: 24 # Fenster 5, 20 MHz, center frequency 5700 MHz
-      emma-sso-5ghz: 25 # Fenster 1, 40 MHz, center frequency 5670 MHz
+      emma-so-5ghz: 19 # 20 MHz, center frequency 5580 MHz
+      emma-no-5ghz: 20 # 20 MHz, center frequency 5600 MHz
+      emma-w-5ghz: 22 # 20 MHz, center frequency 5620 MHz
+      emma-nw-5ghz: 23 # 40 MHz, center frequency 5550 MHz
+      emma-n-5ghz: 24 # 20 MHz, center frequency 5700 MHz
+      emma-s-5ghz: 25 # 40 MHz, center frequency 5670 MHz
 
   # DHCP
   - vid: 40
@@ -159,7 +159,7 @@ networks:
   # Uplink via Ohlauer using LHGG 60ad
   - vid: 10
     role: mesh
-    name: mesh_ssw
+    name: mesh_ohlauer
     prefix: 10.31.11.33/32
     ipv6_subprefix: -10
     mesh_metric: 128
@@ -167,43 +167,43 @@ networks:
 
   - vid: 11
     role: mesh
-    name: mesh_oso
+    name: mesh_so5g
     prefix: 10.31.11.34/32
     ipv6_subprefix: -11
 
   - vid: 12
     role: mesh
-    name: mesh_nno
+    name: mesh_no5g
     prefix: 10.31.11.35/32
     ipv6_subprefix: -12
 
   - vid: 14
     role: mesh
-    name: mesh_wsw
+    name: mesh_w5g
     prefix: 10.31.11.37/32
     ipv6_subprefix: -14
 
   - vid: 15
     role: mesh
-    name: mesh_wnw
+    name: mesh_nw5g
     prefix: 10.31.11.38/32
     ipv6_subprefix: -15
 
   - vid: 16
     role: mesh
-    name: mesh_nnw
+    name: mesh_n5g
     prefix: 10.31.11.39/32
     ipv6_subprefix: -16
 
   - vid: 17
     role: mesh
-    name: mesh_sso
+    name: mesh_s5g
     prefix: 10.31.11.40/32
     ipv6_subprefix: -17
 
   - vid: 18
     role: mesh
-    name: mesh_wsw_60ghz
+    name: mesh_lause
     prefix: 10.31.11.41/32
     ipv6_subprefix: -18
     mesh_metric: 128
@@ -211,7 +211,7 @@ networks:
 
   - vid: 19
     role: mesh
-    name: mesh_nnw_60ghz
+    name: mesh_n60g
     prefix: 10.31.11.42/32
     ipv6_subprefix: -19
     mesh_metric: 128
@@ -219,7 +219,7 @@ networks:
 
   - vid: 20
     role: mesh
-    name: mesh_no_60ghz
+    name: mesh_o60g
     prefix: 10.31.11.43/32
     ipv6_subprefix: -20
     mesh_metric: 128
