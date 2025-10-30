@@ -12,6 +12,7 @@ hosts:
     role: corerouter
     model: "ubnt_edgerouter-x"
     wireless_profile: disable
+    openwrt_version: 23.05-SNAPSHOT
 
   - hostname: rauchhaus-floor0north135
     role: ap
