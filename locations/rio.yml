@@ -11,6 +11,7 @@ hosts:
   - hostname: rio-core
     role: corerouter
     model: "ubnt_edgerouter-x"
+    openwrt_version: 23.05-SNAPSHOT
     poe_on: []
 
   - hostname: rio-sxt
