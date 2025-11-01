@@ -215,8 +215,8 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hacrafu-lanterne-ap: 44-40
-  hacrafu-lanterne-mesh: 36-40
+  hacrafu-lanterne-ap: 52-40
+  hacrafu-lanterne-mesh: 36-80
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
