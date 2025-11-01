@@ -15,13 +15,13 @@ jobs:
         with:
           python-version: 3.13
 
-      - name: Prepare env
-        run: |
-          mkdir -p ansible/.git
+      # - name: Prepare env
+      #   run: |
+      #     mkdir -p ansible/.git
 
       - name: Run ansible-lint
         uses: ansible/ansible-lint@main
         with:
-          working_directory: ansible
+          # working_directory: ansible
           args: "-c .github/linters/.ansible-lint.yml"
           setup_python: false
