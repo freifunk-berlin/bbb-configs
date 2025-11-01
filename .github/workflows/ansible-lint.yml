@@ -12,9 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          python-version: 3.13
+      
+      - name: Prepare env
+        run: |
+          mkdir -p ansible/.git
 
       - name: Run ansible-lint
         uses: ansible/ansible-lint@main
         with:
+          working_directory: ansible
           args: "-c .github/linters/.ansible-lint.yml"
-          setup_python: true
+          setup_python: false
