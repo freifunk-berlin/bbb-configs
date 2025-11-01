@@ -204,19 +204,50 @@ location__channel_assignments_11a_standard__to_merge:
   magda-ap3: 44-20-15
 ```
 
-The role **ext** can either be used like this
+The role **ext** is used when one wants to distribute a network of another router via the Freifunk router. 
+
+This can be done by extending it through the ports of the Freifunk router
 
 ```yml
+# from ska95.yml
+- vid: 41 # Private LAN where private Internet is connected 
+  role: ext 
+  name: private 
+  untagged: true 
+```
 
-TODO: TODO
+OR by redistributing the network through it's own SSID via the Freifunk router using a custom wireless profile
+
+```yml
+# from hts4.yml
+wireless_profile: hts4
+
+# ...
+
+# Private home network without filtering and isolation 
+ - vid: 41 
+   role: ext 
+   name: private 
+   no_corerouter_dns_record: true 
+   enforce_client_isolation: false
+
+# ...
+
+ - mode: ap 
+   ssid: hts4 
+   encryption: sae-mixed 
+   key: "file:/root/wifi_pass" 
+   network: private 
+   radio: [11a_standard, 11g_standard] 
+   ifname_hint: pr 
 
 ```
 
-OR like this
+OR by doing
 
 ```yml
 
-TODO: TODO
+# OPTION 3
 
 ```
 
