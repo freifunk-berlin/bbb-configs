@@ -11,10 +11,15 @@ jobs:
     name: Ansible Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
 
       - name: Run ansible-lint
         uses: ansible/ansible-lint@main
         with:
           args: "-c .github/linters/.ansible-lint.yml"
-          setup_python: true
+          setup_python: "false"
