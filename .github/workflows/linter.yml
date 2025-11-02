@@ -6,7 +6,7 @@ name: Lint Code Base with Superlinter
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
 #
 
-on: [push, pull_request] # yamllint disable-line rule:truthy
+on: [push, pull_request]
 
 permissions:
   contents: read

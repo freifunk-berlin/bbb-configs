@@ -1,7 +1,7 @@
 ---
 name: Check mgmt assignments
 
-on: [push, pull_request] # yamllint disable-line rule:truthy
+on: [push, pull_request]
 
 permissions:
   contents: read
