@@ -1,9 +1,10 @@
 ---
 name: Wikiupdate
-on: # yamllint disable-line rule:truthy
+
+on:
   push:
     branches:
-      - main
+      - "main"
 
 permissions:
   contents: read
@@ -21,7 +22,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install dependencies
         run: pip3 install -r requirements.txt --upgrade pip
