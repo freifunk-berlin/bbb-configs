@@ -5,6 +5,10 @@ on: # yamllint disable-line rule:truthy
     branches:
       - main
 
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   update_wiki:
     runs-on: ubuntu-latest

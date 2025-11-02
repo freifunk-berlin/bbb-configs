@@ -3,6 +3,10 @@ name: Check missing mac_overrides
 
 on: [push, pull_request] # yamllint disable-line rule:truthy
 
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   check-mac-override-missing:
     runs-on: ubuntu-latest
