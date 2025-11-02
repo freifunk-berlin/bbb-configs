@@ -8,6 +8,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write # required for artifacts
+  actions: read
+
+
 jobs:
   build:
     name: Ansible Config Run
