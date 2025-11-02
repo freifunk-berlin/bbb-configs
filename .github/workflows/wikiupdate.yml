@@ -18,8 +18,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install dependencies
-        run: sudo apt install python3
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
 
       - name: Install dependencies
         run: pip3 install -r requirements.txt --upgrade pip
