@@ -64,7 +64,7 @@ config dhcp 'dhcp_{{ name }}'
 
 {% for network in networks | selectattr('role','equalto','dhcp') %}
     {% for assignment in network['assignments'] %}
-config host
+config host '{{ assignment.replace("-", "_") }}'
 	option name '{{ assignment }}'
 	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][assignment]) | ansible.utils.ipaddr('address') }}'
     {% endfor %}
