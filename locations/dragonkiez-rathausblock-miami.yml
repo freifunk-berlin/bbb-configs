@@ -11,7 +11,7 @@ hosts:
   - hostname: dragonkiez-rathausblock-miami
     role: corerouter
     model: "ubnt_edgerouter-x-sfp"
-    poe_on: [0, 1, 2]
+    poe_on: [0, 1, 2, 3]
   - hostname: dragonkiez-rathausblock-miami-ap1
     role: ap
     model: "ubnt_unifiac-mesh"
@@ -19,6 +19,10 @@ hosts:
   - hostname: dragonkiez-rathausblock-miami-ap2
     role: ap
     model: "ubnt_unifiac-mesh"
+    wireless_profile: freifunk_default
+  - hostname: dragonkiez-rathausblock-miami-ap3
+    role: ap
+    model: "tplink_eap225-outdoor-v3"
     wireless_profile: freifunk_default
 
 snmp_devices:
@@ -57,8 +61,9 @@ networks:
       dragonkiez-rathausblock-miami: 1
       dragonkiez-rathausblock-miami-ap1: 2
       dragonkiez-rathausblock-miami-ap2: 3
+      dragonkiez-rathausblock-miami-ap3: 4
 
-  # MESH - 5 GHz 802.11s
+  # MESH - 5 GHz 802.11s AP1
   - vid: 20
     role: mesh
     name: mesh5_ap1
@@ -68,7 +73,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  # MESH - 2.4 GHz 802.11s
+  # MESH - 2.4 GHz 802.11s AP1
   - vid: 21
     role: mesh
     name: mesh2_ap1
@@ -80,7 +85,7 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # MESH - 5 GHz 802.11s AP1
+  # MESH - 5 GHz 802.11s AP2
   - vid: 22
     role: mesh
     name: mesh5_ap2
@@ -90,7 +95,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  # MESH - 2.4 GHz 802.11s AP1
+  # MESH - 2.4 GHz 802.11s AP2
   - vid: 23
     role: mesh
     name: mesh2_ap2
@@ -106,8 +111,14 @@ networks:
 location__channel_assignments_11a_standard__to_merge:
   dragonkiez-rathausblock-miami-ap1: 36-40
   dragonkiez-rathausblcok-miami-ap2: 36-40
+  dragonkiez-rathausblcok-miami-ap3: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
   dragonkiez-rathausblock-miami-ap1: 13-20
   dragonkiez-rathausblcok-miami-ap2: 13-20
+  dragonkiez-rathausblcok-miami-ap3: 13-20
+
+location__ssh_keys__to_merge:
+  - comment: k9 iuljan
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO0hqsAl0BJGlVgARU0KcE2JD+ljlOJebbFn4NI1aAlQ freifunk-k9@iuljan-m3
