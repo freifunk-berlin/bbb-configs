@@ -5,13 +5,13 @@ latitude: 52.557725
 longitude: 13.57437
 altitude: 42
 height: 13
-contact_name: 'Guido L.'
-contact_nickname: 'LipkeGu'
+contact_name: "Guido L."
+contact_nickname: "LipkeGu"
 contacts:
-  - 'contact@fblipke.de'
-  - '@lipkegu:matrix.org'
+  - "contact@fblipke.de"
+  - "@lipkegu:matrix.org"
 hosts:
-# Proxmox VM (QEMU)
+  # Proxmox VM (QEMU)
   - hostname: fblipke-core
     role: corerouter
     model: "x86_64_bcrmfmac"
@@ -48,7 +48,7 @@ networks:
     enforce_client_isolation: true
     assignments:
       fblipke-core: 1 # 10.248.12.129
-      fb-bln-fw01: 2  # 10.248.12.130
+      fb-bln-fw01: 2 # 10.248.12.130
 
   - vid: 42
     role: mgmt
@@ -59,7 +59,7 @@ networks:
     ipv6_subprefix: 1
     assignments:
       fblipke-core: 1 # 10.248.12.1
-      fb-bln-fw01: 3  # 10.248.12.3
+      fb-bln-fw01: 3 # 10.248.12.3
 
   - vid: 40 # WIFI (Private)
     role: dhcp
@@ -117,7 +117,9 @@ location__wireless_profiles__to_merge:
 # SSH Keys
 location__ssh_keys__to_merge:
   - comment: LipkeGu@fblipke.de
-    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDWGGDLV9yGbOMicyi+ilmha7ZvKoOtD7PxSkqFLMtzg4KFBLAnss+SxBsKaonDOdeup5f12Jo1Y0ltn63ePmyK11ZORps4+Kl7AdBX3dPxgRt9L2vrtBIf+woq7/UO8GqoCczrYjpzxdYoTgCT24dl6ue6GAEr0a5fIo/KRdEnGzG1htxY2f8YI1PcPrQIxYGvI4krEWnRkNzsjBjnvCux+q+tM/xIVXmODUHd2nNvGi2LroKoXiWGU/NoQ4mjksw26pFLQIJwXwsbadlr+0qSZ55snx6KNvqXwtASg3jmWiPQ5/Va5WT+dF5s7tykExtgz7uIxRPPhf7+OkDmlrAQJofaCd3poNxy3iC7Nih462QKjg0iBiD/nNX1Ditp5bTeJ9waciHBeb57PRzZkIpI9HlwIk4//n/XJ6ML/ErdM+GtjAzKjGzuhPCNPzo0qTpRNEyIABVjHxS3wsaqU8ifQ+6ZcH/NRqv9OIdOAlpApeHv0yU2uwwlO/ZzvJbQ+6s= fblipke\lipkegu@FB-BLN-C01 # yamllint disable-line rule:line-length
+    key: ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAABgQDWGGDLV9yGbOMicyi+ilmha7ZvKoOtD7PxSkqFLMtzg4KFBLAnss+SxBsKaonDOdeup5f12Jo1Y0ltn63ePmyK11ZORps4+Kl7AdBX3dPxgRt9L2vrtBIf+woq7/UO8GqoCczrYjpzxdYoTgCT24dl6ue6GAEr0a5fIo/KRdEnGzG1htxY2f8YI1PcPrQIxYGvI4krEWnRkNzsjBjnvCux+q+tM/xIVXmODUHd2nNvGi2LroKoXiWGU/NoQ4mjksw26pFLQIJwXwsbadlr+0qSZ55snx6KNvqXwtASg3jmWiPQ5/Va5WT+dF5s7tykExtgz7uIxRPPhf7+OkDmlrAQJofaCd3poNxy3iC7Nih462QKjg0iBiD/nNX1Ditp5bTeJ9waciHBeb57PRzZkIpI9HlwIk4//n/XJ6ML/ErdM+GtjAzKjGzuhPCNPzo0qTpRNEyIABVjHxS3wsaqU8ifQ+6ZcH/NRqv9OIdOAlpApeHv0yU2uwwlO/ZzvJbQ+6s=
+      fblipke\lipkegu@FB-BLN-C01 # yamllint disable-line rule:line-length
 
 dns_servers:
   # Google

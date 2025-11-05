@@ -59,7 +59,6 @@ snmp_devices:
 ipv6_prefix: "2001:bf7:830:a900::/56"
 
 networks:
-
   # DHCP with filtering and isolation
   - vid: 40
     role: dhcp

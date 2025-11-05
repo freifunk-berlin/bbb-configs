@@ -136,7 +136,6 @@ location__wireless_profiles__to_merge:
         mesh_nolearn: 1
         ifname_hint: mesh
 
-
 # SSH Keys
 ssh_keys:
   - comment: Noki

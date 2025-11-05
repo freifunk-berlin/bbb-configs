@@ -5,10 +5,10 @@ latitude: 52.542105
 longitude: 13.301957
 altitude: 27
 height: 6
-contact_nickname: 'wbaum'
+contact_nickname: "wbaum"
 contacts:
-  - 'loeten@buerotiger.de'
-  - '@wbaum:matrix.org'
+  - "loeten@buerotiger.de"
+  - "@wbaum:matrix.org"
 
 hosts:
   - hostname: weidenbaum-r2
@@ -52,7 +52,7 @@ networks:
     prefix: 10.248.81.145/32
     ipv6_subprefix: -21
     # make mesh_metric for 2GHz worse than 5GHz
-    mesh_metric_lqm: ['default 0.5']
+    mesh_metric_lqm: ["default 0.5"]
     mesh_ap: weidenbaum-r2
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -75,7 +75,7 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      weidenbaum-r2: 1  # 10.248.81.129
+      weidenbaum-r2: 1 # 10.248.81.129
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
