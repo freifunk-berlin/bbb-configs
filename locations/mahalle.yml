@@ -23,6 +23,13 @@ hosts:
     model: "mikrotik_sxtsq-5-ac"
     mac_override: { eth0: dc:2c:6e:c4:2a:0b }
 
+snmp_devices:
+
+  # NanoBeam 5AC
+  - hostname: mahalle-walde
+    address: 10.31.179.117
+    snmp_profile: airos_8
+
 # 10.31.179.112/29 - mgmt
 # 10.31.179.120/29 - mesh
 # 10.31.208.128/25 - dhcp
@@ -76,6 +83,7 @@ networks:
       mahalle-switch: 2
       mahalle-nf-w: 3
       mahalle-nf-o: 4
+      mahalle-walde: 5
 
 location__channel_assignments_11a_standard__to_merge:
   mahalle-core: 36-20
