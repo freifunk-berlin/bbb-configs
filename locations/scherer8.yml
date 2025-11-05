@@ -55,7 +55,7 @@ hosts:
           # mwan
           uci set dhcp.mwan=domain
           uci set dhcp.mwan.name='mwan'
-          uci set dhcp.mwan.ip=10.230.229.11
+          uci set dhcp.mwan.ip=10.230.229.2
         fi
         uci commit dhcp
         /etc/init.d/dnsmasq restart
@@ -76,10 +76,13 @@ ipv6_prefix: "2001:bf7:750:2e00::/56"
 # Router:
 #          2001:bf7:750:2e00::/56
 # --DHCP:  10.230.229.0/24
-# --MESH:  10.230.229.211/32 - meshlan on vlan 211
+# --MESH:  10.230.226.211/32 - meshlan on vlan 211
 # --MESH:  10.230.226.224/27
 #          -  10.230.226.224/30 - perleberger36
 #          -  10.230.226.228/30 - bht
+
+# Disable noping
+dhcp_no_ping: false
 
 networks:
   # MESH - PTMP / PTP Links
