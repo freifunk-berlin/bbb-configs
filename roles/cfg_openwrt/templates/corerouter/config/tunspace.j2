@@ -19,6 +19,8 @@ config tunspace "tunspace"
   option uplink_ipv4 "{{ uplink['uplink_ipv4']|default('') }}"
   # IPv4 address of the gateway. Required in combination with uplink_ipv4, ignored when using DHCP.
   option uplink_gateway "{{ uplink['uplink_gateway']|default('') }}"
+  # Define deterministic mac address
+  option uplink_mac "{{- libnetwork.generateDeterministicMAC(inventory_hostname ~ "-tunspace") -}}"
   # Maintenance consists of checking the uplink, refreshing the DHCP lease, checking the tunnel endpoints, and switching endpoints if neccessary.
   option maintenance_interval 60
   # Enables detailed output of Tunspace's operations. If disabled, only tunnel endpoint changes are reported.
