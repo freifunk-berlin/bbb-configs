@@ -1,5 +1,4 @@
 ---
-
 collectd_snmp_profiles:
   af60:
     sys_uptime:
@@ -219,7 +218,7 @@ collectd_snmp_profiles:
       Type: if_errors
       TypeInstanceOID: .1.3.6.1.2.1.2.2.1.2
       Table: true
-      Values: ".1.3.6.1.2.1.2.2.1.14\" \".1.3.6.1.2.1.2.2.1.20"
+      Values: '.1.3.6.1.2.1.2.2.1.14" ".1.3.6.1.2.1.2.2.1.20'
 
   # The CSS610-Series only runs SwOS Lite which have different OIDs at least for health
   swos_lite:
@@ -253,7 +252,7 @@ collectd_snmp_profiles:
       Type: if_errors
       TypeInstanceOID: .1.3.6.1.2.1.2.2.1.2
       Table: true
-      Values: ".1.3.6.1.2.1.2.2.1.14\" \".1.3.6.1.2.1.2.2.1.20"
+      Values: '.1.3.6.1.2.1.2.2.1.14" ".1.3.6.1.2.1.2.2.1.20'
 
   routeros:
     sys_uptime:
@@ -287,7 +286,7 @@ collectd_snmp_profiles:
       Type: if_errors
       TypeInstanceOID: .1.3.6.1.2.1.2.2.1.2
       Table: true
-      Values: ".1.3.6.1.2.1.2.2.1.14\" \".1.3.6.1.2.1.2.2.1.20"
+      Values: '.1.3.6.1.2.1.2.2.1.14" ".1.3.6.1.2.1.2.2.1.20'
 
   edgeswitch:
     sys_uptime:
@@ -314,7 +313,7 @@ collectd_snmp_profiles:
       Type: if_errors
       TypeInstanceOID: .1.3.6.1.2.1.31.1.1.1.18
       Table: true
-      Values: ".1.3.6.1.2.1.2.2.1.14\" \".1.3.6.1.2.1.2.2.1.20"
+      Values: '.1.3.6.1.2.1.2.2.1.14" ".1.3.6.1.2.1.2.2.1.20'
 
   edgerouter:
     sys_uptime:
@@ -341,7 +340,7 @@ collectd_snmp_profiles:
       Type: if_errors
       TypeInstanceOID: .1.3.6.1.2.1.31.1.1.1.18
       Table: true
-      Values: ".1.3.6.1.2.1.2.2.1.14\" \".1.3.6.1.2.1.2.2.1.20"
+      Values: '.1.3.6.1.2.1.2.2.1.14" ".1.3.6.1.2.1.2.2.1.20'
 
   tplink:
     sys_uptime:
@@ -368,7 +367,7 @@ collectd_snmp_profiles:
       Type: if_errors
       TypeInstanceOID: .1.3.6.1.2.1.31.1.1.1.18
       Table: true
-      Values: ".1.3.6.1.2.1.2.2.1.14\" \".1.3.6.1.2.1.2.2.1.20"
+      Values: '.1.3.6.1.2.1.2.2.1.14" ".1.3.6.1.2.1.2.2.1.20'
 
   zyxel:
     sys_uptime:
@@ -395,7 +394,7 @@ collectd_snmp_profiles:
       Type: if_errors
       TypeInstanceOID: .1.3.6.1.2.1.31.1.1.1.18
       Table: true
-      Values: ".1.3.6.1.2.1.2.2.1.14\" \".1.3.6.1.2.1.2.2.1.20"
+      Values: '.1.3.6.1.2.1.2.2.1.14" ".1.3.6.1.2.1.2.2.1.20'
 
   netgear:
     sys_uptime:
@@ -422,4 +421,4 @@ collectd_snmp_profiles:
       Type: if_errors
       TypeInstanceOID: .1.3.6.1.2.1.31.1.1.1.18
       Table: true
-      Values: ".1.3.6.1.2.1.2.2.1.14\" \".1.3.6.1.2.1.2.2.1.20"
+      Values: '.1.3.6.1.2.1.2.2.1.14" ".1.3.6.1.2.1.2.2.1.20'

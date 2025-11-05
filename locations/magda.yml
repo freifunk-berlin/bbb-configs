@@ -1,5 +1,4 @@
 ---
-
 location: magda
 location_nice: Magdalenenstraße 19, 10365 Berlin
 latitude: 52.514072806
@@ -131,7 +130,6 @@ networks:
     enforce_client_isolation: false
     assignments:
       magda-core: 1
-
 
 location__channel_assignments_11a_standard__to_merge:
   magda-ap1: 48-20

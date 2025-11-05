@@ -39,7 +39,7 @@ networks:
     prefix: 10.31.139.16/32
     ipv6_subprefix: -10
 
- # MESH - 5 GHz 802.11s
+  # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
     name: mesh_5g_ap1

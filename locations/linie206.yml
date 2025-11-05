@@ -1,5 +1,4 @@
 ---
-
 location: linie206
 location_nice: Linienstraße 206
 latitude: 52.5288992
@@ -112,5 +111,4 @@ location__channel_assignments_11g_standard__to_merge:
   linie206-nf-wohnzimmer: 1-20
   linie206-nf-so-2ghz: 5-20
   linie206-nf-w-2ghz: 13-20
-
 # channel-bandwith-txpower in dbm

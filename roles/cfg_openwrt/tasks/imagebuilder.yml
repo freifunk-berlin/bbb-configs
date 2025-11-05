@@ -1,12 +1,12 @@
 ---
 - name: Create images dir
-  file:
+  ansible.builtin.file:
     state: directory
     path: "{{ images_dir }}"
     mode: "755"
   run_once: true
 - name: Clear old image and logfile
-  file:
+  ansible.builtin.file:
     state: absent
     path: "{{ item }}"
   loop:
@@ -16,18 +16,18 @@
     - "{{ images_dir }}/{{ inventory_hostname }}.log"
 
 - name: Create Download directory
-  file:
+  ansible.builtin.file:
     path: "{{ dl_dir }}"
     state: directory
     mode: "755"
   run_once: true
 
 - name: Set destination path for imagebuilder
-  set_fact:
+  ansible.builtin.set_fact:
     imagebuilder_path: "{{ [dl_dir, (imagebuilder | basename) | trim] | path_join }}"
 
 - name: Download Imagebuilder if upstream is newer
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ imagebuilder }}"
     dest: "{{ dl_dir }}/{{ imagebuilder_filename }}"
     mode: "644"
@@ -36,7 +36,7 @@
 # For testing purposes the imagebuilder variable can be replaced with a path to a local file.
 # This task takes care of using this file instead of trying to download something
 - name: Copy Local Imagebuilder
-  command:
+  ansible.builtin.command:
     argv:
       - "cp"
       - "{{ imagebuilder }}"
@@ -45,24 +45,24 @@
   changed_when: true
 
 - name: Clear workdir
-  file:
+  ansible.builtin.file:
     state: absent
     path: "{{ build_dir }}"
 
 - name: (Re)-Create workdir
-  file:
+  ansible.builtin.file:
     state: directory
     path: "{{ build_dir }}"
     mode: "755"
 
 - name: Extract imagebuilder
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ imagebuilder_path }}"
     dest: "{{ build_dir }}"
     extra_opts: ["--strip=1"]
 
 - name: Read instruction set
-  shell:
+  ansible.builtin.shell:
     chdir: "{{ build_dir }}"
     cmd: grep -oP 'CONFIG_TARGET_ARCH_PACKAGES="\K[^"]+' .config
   register: instr_set_result
@@ -70,38 +70,38 @@
   changed_when: false
 
 - name: Extract Instruction set if needed
-  set_fact:
+  ansible.builtin.set_fact:
     instr_set: "{{ instr_set_result.stdout_lines | first }}"
   when: "instr_set is not defined and feed_version is defined"
 
 - name: Insert falter OPKG feed
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ build_dir }}/repositories.conf"
     line: "{{ feed }}"
   when: 'feed_version is defined and openwrt_version != "snapshot"'
 
 - name: Add falter OPKG feed key
-  copy:
+  ansible.builtin.copy:
     src: "files/packagefeed_master.pub"
     dest: "{{ build_dir }}/keys/61a078a38408e710" # matches fingerprint
     mode: "preserve"
   when: "feed_version is defined"
 
 - name: Disable OPKG signature verification if required
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ build_dir }}/repositories.conf"
     line: "option check_signature"
     state: "absent"
   when: "imagebuilder_disable_signature_check is defined and imagebuilder_disable_signature_check"
 
 - name: Add falter APK feed
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ build_dir }}/repositories"
     line: "{{ feed }}"
   when: 'feed_version is defined and openwrt_version == "snapshot"'
 
 - name: Add falter APK feed to image
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ configs_dir }}/etc/apk/repositories.d/falter.list"
     line: "{{ feed }}"
     create: true
@@ -109,62 +109,62 @@
   when: 'feed_version is defined and openwrt_version == "snapshot"'
 
 - name: Add falter APK feed key
-  copy:
+  ansible.builtin.copy:
     src: "files/falter.snapshot.pem"
     dest: "{{ build_dir }}/keys/"
     mode: "preserve"
   when: 'feed_version is defined and openwrt_version == "snapshot"'
 
 - name: Add falter APK feed key to image
-  copy:
+  ansible.builtin.copy:
     src: "files/falter.snapshot.pem"
     dest: "{{ configs_dir }}/etc/apk/keys/"
     mode: "preserve"
   when: 'feed_version is defined and openwrt_version == "snapshot"'
 
 - name: Add custom APK feed key
-  copy:
+  ansible.builtin.copy:
     src: "{{ feed_key }}"
     dest: "{{ build_dir }}/keys/falter.custom.pem"
     mode: "preserve"
   when: 'feed_version is defined and openwrt_version == "snapshot" and feed_key is defined'
 
 - name: Add custom APK feed key to image
-  copy:
+  ansible.builtin.copy:
     src: "{{ feed_key }}"
     dest: "{{ configs_dir }}/etc/apk/keys/falter.custom.pem"
     mode: "preserve"
   when: 'feed_version is defined and openwrt_version == "snapshot" and feed_key is defined'
 
 - name: Override compat_version check to bbb-configs exclusive value 9.9
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ build_dir }}/include/image-commands.mk"
     search_string: "compat_version=$(if $(DEVICE_COMPAT_VERSION),$(DEVICE_COMPAT_VERSION),1.0)"
     line: "compat_version=9.9"
 
 - name: Override Imagebuilder .config
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ build_dir }}/.config"
     search_string: "{{ item.key }}="
     line: "{{ item.key }}={{ item.value }}"
   loop: "{{ imagebuilder_config | default({}) | dict2items }}"
 
 - name: Copy over upstream inittab as base to modify
-  copy:
+  ansible.builtin.copy:
     src: "{{ build_dir }}/target/linux/{{ (target | split('/'))[0] }}/base-files/etc/inittab"
     dest: "{{ configs_dir }}/etc/inittab"
     mode: "644"
   when: additional_serial_ports is defined
 
 - name: Configure additional serial ports in inittab
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ configs_dir }}/etc/inittab"
     insertafter: "^ttyS\\d.*\\n"
     line: "{{ item }}::askfirst:/usr/libexec/login.sh"
   loop: "{{ additional_serial_ports | default([]) }}"
 
 - name: Generate Imagebuilder command
-  set_fact:
+  ansible.builtin.set_fact:
     make_command: >
       make image
       PROFILE='{{ override_target | default(model) }}'
@@ -173,12 +173,12 @@
       FILES='{{ configs_dir }}' 1>&2
 
 - name: Debug Imagebuilder command
-  debug:
+  ansible.builtin.debug:
     var: make_command
 
 - name: Run Imagebuilder
   changed_when: false
-  command:
+  ansible.builtin.command:
     chdir: "{{ build_dir }}"
     argv:
       - "bash"
@@ -187,33 +187,33 @@
   register: output
 
 - name: Write build log to output dir
-  copy:
+  ansible.builtin.copy:
     content: "{{ output.stderr }}"
     dest: "{{ images_dir }}/{{ inventory_hostname }}.log"
     mode: "preserve"
 
 - name: Find output image
-  find:
+  ansible.builtin.find:
     paths: "{{ build_dir }}/bin/"
     patterns: "{{ image_search_pattern }}"
     recurse: true
   register: image_list
 
 - name: Check Imagebuilder result
-  assert:
+  ansible.builtin.assert:
     that: image_list.files | length > 0
     fail_msg: "No image was built, check log at {{ images_dir }}/{{ inventory_hostname }}.log"
 
 - name: Declare source
-  set_fact:
+  ansible.builtin.set_fact:
     image_src: "{{ image_list.files | map(attribute='path') | list | first }}"
 
 - name: Declare target
-  set_fact:
+  ansible.builtin.set_fact:
     image: "{{ images_dir }}/{{ inventory_hostname }}{{ image_src | splitext | last }}"
 
 - name: Copy Image to Image dir
-  copy:
+  ansible.builtin.copy:
     src: "{{ image_src }}"
     dest: "{{ image }}"
     mode: "preserve"

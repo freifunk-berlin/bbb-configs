@@ -1,23 +1,23 @@
 ---
 - name: wikiupdater | Generate directory
-  file:
+  ansible.builtin.file:
     path: "{{ wikiupdater_dir }}"
     state: directory
     mode: "731"
 
 - name: wikiupdater | Generate outputfiles
-  template:
+  ansible.builtin.template:
     src: "templates/common/wikiupdater.j2"
     dest: "{{ wikiupdater_dir }}/{{ location }}.txt"
     mode: "644"
 
 - name: wikiupdater | Update article
-  script: ../files/wiki/update.py -l "{{ location }}"  --file "{{ wikiupdater_dir }}/{{ location }}.txt"
+  ansible.builtin.script: ../files/wiki/update.py -l "{{ location }}"  --file "{{ wikiupdater_dir }}/{{ location }}.txt"
   register: wiki_res
   changed_when: '"UPDATED" in wiki_res.stdout'
   args:
     executable: python3
 
 - name: wikiupdater | Print response
-  debug:
+  ansible.builtin.debug:
     msg: "{{ wiki_res.stdout }}"

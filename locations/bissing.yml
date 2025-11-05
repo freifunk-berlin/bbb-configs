@@ -72,8 +72,8 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      bissing-core: 1  # 10.248.69.193
-      bissing-cube: 2  # 10.248.69.194
+      bissing-core: 1 # 10.248.69.193
+      bissing-cube: 2 # 10.248.69.194
 
 # https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading
 # Possible values: none, sw, hw

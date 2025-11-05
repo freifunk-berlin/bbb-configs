@@ -137,7 +137,6 @@ networks:
     mesh_metric_lqm:
       - default 0.4 # penalty on wild meshing
 
-
 location__channel_assignments_11a_standard__to_merge:
   gruni73-nf-o-5ghz: 136-20-14 # EIRP 30dB - Antenna 19dB + Cable loss 3dB = 14dB
   gruni73-nf-s-5ghz: 36-20-7 # EIRP 23dB - Antenna 19dB + Cable loss 3dB = 7dB
