@@ -10,7 +10,7 @@ community: true
 hosts:
   - hostname: dragonkiez-rathausblock-miami
     role: corerouter
-    model: "ubnt_edgerouter-x-sfp"
+    model: "ubnt_edgerouter-x-sfp-24-10"
     poe_on: [0, 1, 2]
   - hostname: dragonkiez-rathausblock-miami-ap1
     role: ap
