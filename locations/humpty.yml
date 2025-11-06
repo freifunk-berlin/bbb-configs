@@ -12,7 +12,7 @@ contacts:
 hosts:
   - hostname: humpty-edge-core
     role: corerouter
-    model: "ubnt_edgerouter-x-sfp"
+    model: "ubnt_edgerouter-x-sfp-24-10"
     poe_on: [0, 1, 2]
 
 snmp_devices:
