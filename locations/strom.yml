@@ -34,7 +34,7 @@ snmp_devices:
 
   - hostname: strom-perleberger
     address: 10.31.130.67
-    snmp_profile: airos_8
+    snmp_profile: af60
 
   - hostname: strom-tub
     address: 10.31.130.68
