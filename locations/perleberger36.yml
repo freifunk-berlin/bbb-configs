@@ -128,7 +128,7 @@ networks:
     role: mesh
     name: mesh_strom_60
     prefix: 10.36.243.188/30
-    ipv6_subprefix: -6
+    ipv6_subprefix: -9
     assignments:
       perleberger36-core: 1
       perleberger36-strom_60: 2
