@@ -13,13 +13,14 @@ hosts:
     role: corerouter
     model: "mikrotik_routerboard-750gr3"
     wireless_profile: freifunk_default
+    # The af60 is connected directly to lan4 which needs to be untagged and also removed from vlan_11
     host__rclocal__to_merge:
       - |
         uci set network.vlan_105.ports='wan:t lan2:t lan3:t lan4:u lan5:t'
         uci set network.vlan_11.ports='wan:u lan2:u lan3:u lan5:u'
         uci commit network
         reload_config
-
+    
 
 snmp_devices:
   - hostname: perleberger36-strom2a
@@ -43,7 +44,7 @@ snmp_devices:
   - hostname: perleberger36-turm-5ghz-sw
     address: 10.36.243.186
     snmp_profile: airos_8
-  - hostname: perleberger36-strom_60
+  - hostname: perleberger36-strom-60
     address: 10.36.243.190
     snmp_profile: af60
 
@@ -131,7 +132,7 @@ networks:
     ipv6_subprefix: -9
     assignments:
       perleberger36-core: 1
-      perleberger36-strom_60: 2
+      perleberger36-strom-60: 2
 
   - vid: 201
     role: mesh
