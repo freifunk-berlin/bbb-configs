@@ -20,10 +20,10 @@ hosts:
         uci set network.vlan_11.ports='wan:u lan2:u lan3:u lan5:u'
         uci commit network
         reload_config
-    
+
 
 snmp_devices:
-  - hostname: perleberger36-strom2a
+  - hostname: perleberger36-ssw
     address: 10.36.243.162
     snmp_profile: airos_8
   - hostname: perleberger36-tu
@@ -91,12 +91,12 @@ networks:
 
   - vid: 101
     role: mesh
-    name: mesh_strom2a
+    name: mesh_ssw
     prefix: 10.36.243.160/30
     ipv6_subprefix: -2
     assignments:
       perleberger36-core: 1
-      perleberger36-strom2a: 2
+      perleberger36-ssw: 2
 
   - vid: 102
     role: mesh
