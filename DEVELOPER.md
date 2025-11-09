@@ -243,11 +243,11 @@ wireless_profile: hts4
 
 ```
 
-OR by doing
+OR by creating virtual ethernet interfaces to use inside of a container or virtual maschine
 
 ```yml
 
-# OPTION 3
+# TODO: use and explain example from @pktpls
 
 ```
 
