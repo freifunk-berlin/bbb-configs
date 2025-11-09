@@ -10,31 +10,47 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-conchiglioni
     role: corerouter
     model: "cudy_wr3000-v1"
     wireless_profile: freifunk_hacrafu
     host__rclocal__to_merge:
       - |
-        uci set network.vlan_40.ports='lan1:u lan2:u lan3:u'
+        uci set network.vlan_40.ports='lan1:t lan2:t lan3:u'
         uci set network.vlan_50.ports='wan:u'
         uci commit network; reload_config
 
+  # Saal-AP: Panoramasaal Schwanenblick
+  - hostname: hacrafu-conchiglioni-swan
+    role: ap
+    model: "tplink_archer-c50-v4"
+    wireless_profile: freifunk_hacrafu
+
+  # Saal-AP: Schlossherrenzimmer
+  - hostname: hacrafu-conchiglioni-mill
+    role: ap
+    model: "tplink_archer-c50-v4"
+    wireless_profile: freifunk_hacrafu
+
+  # Hotel-AP: Schlafzimmer
+  - hostname: hacrafu-conchiglioni-nap
+    role: ap
+    model: "tplink_archer-c50-v4"
+    wireless_profile: freifunk_hacrafu
+
 ipv6_prefix: "2001:bf7:850:3500::/56"
 
-# dhcp      10.248.47.192/26
-# mesh      10.248.45.52/31
-# MGMT      10.248.45.47/32
+# DHCP      10.248.47.192/26
+# MESH      10.31.233.144/28
+# MGMT      10.248.86.232/29
 # TUNNEL    10.248.45.54/31
 
 networks:
-
   # MESH - 5 GHz 802.11s
   - vid: 20
     role: mesh
     name: mesh_5g
-    prefix: 10.248.45.52/32
+    prefix: 10.31.233.144/32
     ipv6_subprefix: -20
     mesh_ap: hacrafu-conchiglioni
     mesh_radio: 11a_standard
@@ -44,10 +60,73 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_2g
-    prefix: 10.248.45.53/32
+    prefix: 10.31.233.145/32
     ipv6_subprefix: -21
     mesh_metric_lqm: ['default 0.8']  # prefer 5 GHz Mesh
     mesh_ap: hacrafu-conchiglioni
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 5 GHz 802.11s - AP Swan
+  - vid: 22
+    role: mesh
+    name: mesh_5g_swan
+    prefix: 10.31.233.146/32
+    ipv6_subprefix: -22
+    mesh_ap: hacrafu-conchiglioni-swan
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - AP Swan
+  - vid: 23
+    role: mesh
+    name: mesh_2g_swan
+    prefix: 10.31.233.147/32
+    ipv6_subprefix: -23
+    mesh_metric_lqm: ['default 0.8']  # prefer 5 GHz Mesh
+    mesh_ap: hacrafu-conchiglioni-swan
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 5 GHz 802.11s - AP Mill
+  - vid: 24
+    role: mesh
+    name: mesh_5g_mill
+    prefix: 10.31.233.148/32
+    ipv6_subprefix: -24
+    mesh_ap: hacrafu-conchiglioni-mill
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - AP Mill
+  - vid: 25
+    role: mesh
+    name: mesh_2g_mill
+    prefix: 10.31.233.149/32
+    ipv6_subprefix: -25
+    mesh_metric_lqm: ['default 0.8']  # prefer 5 GHz Mesh
+    mesh_ap: hacrafu-conchiglioni-mill
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 5 GHz 802.11s - AP Nap
+  - vid: 26
+    role: mesh
+    name: mesh_5g_nap
+    prefix: 10.31.233.150/32
+    ipv6_subprefix: -26
+    mesh_ap: hacrafu-conchiglioni-nap
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - AP Nap
+  - vid: 27
+    role: mesh
+    name: mesh_2g_nap
+    prefix: 10.31.233.151/32
+    ipv6_subprefix: -27
+    mesh_metric_lqm: ['default 0.8']  # prefer 5 GHz Mesh
+    mesh_ap: hacrafu-conchiglioni-nap
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
@@ -64,12 +143,15 @@ networks:
   # MGMT
   - vid: 42
     role: mgmt
-    prefix: 10.248.45.47/32
+    prefix: 10.248.86.232/29
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
       hacrafu-conchiglioni: 1
+      hacrafu-conchiglioni-swan: 2
+      hacrafu-conchiglioni-mill: 3
+      hacrafu-conchiglioni-nap: 4
 
   # UPLINK
   - vid: 50
@@ -90,10 +172,16 @@ networks:
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
   hacrafu-conchiglioni: 36-80
+  hacrafu-conchiglioni-swan: 36-80
+  hacrafu-conchiglioni-mill: 36-80
+  hacrafu-conchiglioni-nap: 36-80
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
   hacrafu-conchiglioni: 13-40
+  hacrafu-conchiglioni-swan: 13-40
+  hacrafu-conchiglioni-mill: 13-40
+  hacrafu-conchiglioni-nap: 13-40
 
 # only place this ssh-keys
 ssh_keys:
