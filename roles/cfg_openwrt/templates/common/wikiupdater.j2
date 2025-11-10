@@ -127,7 +127,7 @@
 {# Setting categories #}
 
 {% raw %} [[Kategorie:Berlin]] {% endraw %}
-{% if wi.ki['BBB'] is true %}
+{% if wi.ki['BBB']|default(false) is true %}
     {% raw %} [[Kategorie:BBB]] {% endraw %}
 {% endif %}
 {% raw %} [[Kategorie:Standorte_Berlin|{% endraw %}{{location}}{% raw %}]]{% endraw %}
