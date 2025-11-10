@@ -34,6 +34,11 @@ hosts:
     model: "cudy_ap3000outdoor-v1"
     wireless_profile: mesh_only
 
+  - hostname: hacrafu-lanterne-indoor
+    role: ap
+    model: "dlink_dap-x1860-a1" # TODO: replace with real model
+    wireless_profile: freifunk_hacrafu_ap_only
+
 snmp_devices:
   - hostname: hacrafu-lanterne-north
     address: 10.248.77.68
@@ -171,6 +176,26 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
+  # MESH - 5 GHz 802.11s - ap indoor
+  - vid: 26
+    role: mesh
+    name: mesh_5g_home
+    prefix: 10.248.81.27/32
+    ipv6_subprefix: -26
+    mesh_ap: hacrafu-lanterne-indoor
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - ap indoor
+  - vid: 27
+    role: mesh
+    name: mesh_2g_home
+    prefix: 10.248.81.28/32
+    ipv6_subprefix: -27
+    mesh_ap: hacrafu-lanterne-indoor
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
   # DHCP
   - vid: 40
     role: dhcp
@@ -193,10 +218,11 @@ networks:
       hacrafu-lanterne: 1        # 65
       hacrafu-lanterne-ap: 2     # 66
       hacrafu-lanterne-mesh: 3   # 67
-      hacrafu-lanterne-north: 4  # 68
-      hacrafu-lanterne-east: 5   # 69
-      hacrafu-lanterne-south: 6  # 70
-      hacrafu-lanterne-west: 7   # 71
+      hacrafu-lanterne-indoor: 4 # 68
+      hacrafu-lanterne-north: 5  # 69
+      hacrafu-lanterne-east: 6   # 70
+      hacrafu-lanterne-south: 7  # 71
+      hacrafu-lanterne-west: 8   # 72
 
   # Uplink
   - vid: 50
@@ -218,11 +244,13 @@ networks:
 location__channel_assignments_11a_standard__to_merge:
   hacrafu-lanterne-ap: 52-40
   hacrafu-lanterne-mesh: 36-80
+  hacrafu-lanterne-indoor: 52-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
   hacrafu-lanterne-ap: 1-40
   hacrafu-lanterne-mesh: 13-40
+  hacrafu-lanterne-indoor: 1-40
 
 # only place this ssh-keys
 ssh_keys:
