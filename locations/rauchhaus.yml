@@ -12,6 +12,10 @@ hosts:
     role: corerouter
     model: "tplink_archer-c7-v5"
     wireless_profile: rauchhaus
+    host__rclocal__to_merge:
+      - |
+        echo "0 7 * * * /sbin/reboot" >> /etc/crontabs/root
+        /etc/init.d/cron restart
 
   - hostname: rauchhaus-floor0north135
     role: ap
