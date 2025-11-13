@@ -10,9 +10,12 @@ community: true
 hosts:
   - hostname: ohlauer-gw
     role: gateway
-    model: "ubnt_edgerouter-4"
-    host__disabled_services__to_merge:
-      - uhttpd
+    model: "protectli_vps6630"
+    imagebuilder_config:
+      CONFIG_TARGET_ROOTFS_PARTSIZE: 256 # in MB, default is 104
+      #  grub setting specific to the usb device. Check with lsusb on your laptop to find correct values
+      CONFIG_GRUB_BOOTOPTS: "usb_storage.quirks=0781:5583:ut"
+      CONFIG_TARGET_SERIAL: ttyS1
 
 snmp_devices:
   - hostname: ohlauer-switch
