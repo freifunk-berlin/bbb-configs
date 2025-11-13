@@ -11,6 +11,8 @@ hosts:
     model: "protectli_vps6630"
     host__packages__to_merge:
       - naywatch
+    imagebuilder_config:
+      CONFIG_TARGET_SERIAL: ttyS1
 
 snmp_devices:
   - hostname: saarbruecker-sw
