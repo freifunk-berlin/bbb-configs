@@ -29,7 +29,7 @@ snmp_devices:
 ipv6_prefix: 2001:bf7:830:8300::/56
 
 # mgmt: 10.31.166.248/29
-# mesh: 10.31.11.96/29
+# mesh: 10.248.86.240/30
 
 uplink:
   ifname: eth5
@@ -48,12 +48,10 @@ mgmt:
 mesh_links:
   - name: mesh_emma
     ifname: eth4.10
-    ipv4: 10.31.11.96/32
+    ipv4: 10.248.86.240/32
     ipv6: 2001:bf7:830:8301::/128
     mesh_metric: 128
     ptp: true
-
-# Downlink IPv4 is in net announced by emma.
 
 # OLSR Announce SmartGateway
 sgw: "1000000 1000000"
