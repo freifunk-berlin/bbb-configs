@@ -96,12 +96,12 @@ protocol babel babel_mesh {
 		import filter {
 			if ! (net.len = 56 || net = {{ V6_SADR_DEFAULT_ROUTE }}) then reject;
 {% for interface in mesh_links %}
-			if ifname = "{{ interface['ifname'] }}" then {
+			if dest != RTD_UNREACHABLE && ifname = "{{ interface['ifname'] }}" then {
 			  babel_metric = babel_metric + {{ interface.get('mesh_metric', mesh_metric_default_in) }};
 			  accept;
 			}
 {% endfor %}
-			if ifname ~ "wg_*" then {
+			if dest != RTD_UNREACHABLE && ifname ~ "wg_*" then {
 			  babel_metric = babel_metric + {{ mesh_metric_tunnel_in }};
 			  accept;
 			}
@@ -112,14 +112,14 @@ protocol babel babel_mesh {
 	ipv4 {
 		table v4_main;
 		import filter {
-			if ifname ~ "gre4-*" then reject;
+			if dest != RTD_UNREACHABLE && ifname ~ "gre4-*" then reject;
 {% for interface in mesh_links %}
-			if ifname = "{{ interface['ifname'] }}" then {
+			if dest != RTD_UNREACHABLE && ifname = "{{ interface['ifname'] }}" then {
 			  babel_metric = babel_metric + {{ interface.get('mesh_metric', mesh_metric_default_in) }};
 			  accept;
 			}
 {% endfor %}
-			if ifname ~ "wg_*" then {
+			if dest != RTD_UNREACHABLE && ifname ~ "wg_*" then {
 			  babel_metric = babel_metric + {{ mesh_metric_tunnel_in }};
 			  accept;
 			}
