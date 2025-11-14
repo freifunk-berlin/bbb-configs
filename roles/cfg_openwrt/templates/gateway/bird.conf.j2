@@ -1,7 +1,7 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% set V6_SADR_DEFAULT_ROUTE = '::/0 from ' ~ freifunk_global_prefix %}
 log syslog all;
-debug protocols {states};
+#debug protocols {states};
 
 # Include additional bird config files for runtime extendability
 include "/dev/shm/bird_*.conf";
