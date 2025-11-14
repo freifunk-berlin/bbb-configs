@@ -22,8 +22,6 @@ role_uplink_gw__packages__to_merge:
   - luci-app-falter-owm-gui
   - iptables-mod-ipopt
   - kmod-ipt-ipopt
-  - bird2-babelpatch
-  - bird2c
   - bgpdisco
   - bgpdisco-plugin-nameservice
   - ip-full
@@ -34,6 +32,10 @@ role_uplink_gw__packages__to_merge:
   - wg-installer-server-hotplug-olsrd
   - conntrackd
   - samplicator
+
+bird__packages__to_merge:
+  - bird2-babelpatch
+  - bird2c
 
 role_uplink_gw__disabled_services__to_merge:
   - "odhcpd"
