@@ -1,7 +1,5 @@
 ---
 role_corerouter__packages__to_merge:
-  - bird2-babelpatch
-  - bird2c
   - bgpdisco
   - bgpdisco-plugin-nameservice
   - collectd-mod-dhcpleases
@@ -25,3 +23,7 @@ role_corerouter__packages__to_merge:
   - luci-app-falter-owm-gui
   - iptables-mod-ipopt
   - kmod-ipt-ipopt
+
+bird__packages__to_merge:
+  - bird2-babelpatch
+  - bird2c

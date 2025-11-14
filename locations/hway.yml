@@ -26,8 +26,13 @@ hosts:
     role: corerouter
     int_port: eth0
     model: x86-64
+    openwrt_version: snapshot
+    feed_version: testbuildbot
     host__packages__to_merge:
       - kmod-mlx5-core
+    bird__packages__to_merge:
+      - bird3-babelpatch
+      - bird3c
     host__rclocal__to_merge:
       # There's a decades-old RX/TX offload bug in intel gigabit controllers
       # which regularly hangs the card. It gets reset automatically,
