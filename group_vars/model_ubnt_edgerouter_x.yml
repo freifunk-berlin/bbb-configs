@@ -14,5 +14,3 @@ poe_ports:
   - name: PoE Passthrough
     gpio_pin: 512
     value: 0
-
-flow_offload: hw

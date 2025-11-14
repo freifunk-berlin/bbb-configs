@@ -1,3 +1,4 @@
 ---
 
 multicore: true
+flow_offload: hw

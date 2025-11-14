@@ -12,7 +12,6 @@ hosts:
     role: corerouter
     model: "genexis_pulse-ex400"
     wireless_profile: shp
-    flow_offload: hw
     host__rclocal__to_merge:
       - |
         # Enable legacy rates on 2 GHz to enable meshing with legacy neighbors

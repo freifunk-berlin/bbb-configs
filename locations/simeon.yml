@@ -12,7 +12,6 @@ hosts:
     role: corerouter
     model: "genexis_pulse-ex400"
     wireless_profile: freifunk_default
-    flow_offload: hw
 
 snmp_devices:
   - hostname: simeon-switch
