@@ -32,9 +32,17 @@ hosts:
     model: ubnt_nanostation-m2_xm
 
 snmp_devices:
-  - hostname: segen-switch
+  - hostname: segen-switch-1
     address: 10.31.6.2
     snmp_profile: edgeswitch
+
+  - hostname: segen-switch-2
+    address: 10.31.6.3
+    snmp_profile: edgeswitch
+
+  - hostname: segen-switch-3
+    address: 10.31.6.4
+    snmp_profile: edgerouter
 
   # Despite being a 60GHz devices the SNMP-data that is reported is in the same format as the airmax devices
   - hostname: segen-saarbr
@@ -129,9 +137,9 @@ networks:
     ipv6_subprefix: 1
     assignments:
       segen-core: 1
-      segen-switch-1: 2
-      segen-switch-2: 3
-      segen-switch-octagon: 3
+      segen-switch-1: 2 # Main Switch in Octagon
+      segen-switch-2: 3 # Secondary Switch in Octagon
+      segen-switch-3: 4 # ERX Downstream with nearfield devices
 
       # bbb links
       segen-saarbr: 10
