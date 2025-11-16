@@ -10,7 +10,6 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-eliche
     role: corerouter
     model: "cudy_wr3000-v1"
@@ -23,8 +22,8 @@ hosts:
 
 ipv6_prefix: "2001:bf7:850:4b00::/56"
 
-# dhcp      10.248.84.128/27
-# mesh      10.248.76.126/31
+# DHCP      10.248.84.128/27
+# MESH      10.248.76.126/31
 # MGMT      10.248.77.90/32
 # TUNNEL    10.248.84.160/31
 
@@ -35,7 +34,7 @@ networks:
     name: mesh_5g
     prefix: 10.248.76.126/32
     ipv6_subprefix: -20
-    mesh_metric: 128
+    # mesh_metric: 128
     mesh_ap: hacrafu-eliche
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -46,8 +45,8 @@ networks:
     name: mesh_2g
     prefix: 10.248.76.127/32
     ipv6_subprefix: -21
-    mesh_metric: 256
-    mesh_metric_lqm: ['default 0.8']
+    # mesh_metric: 256
+    # mesh_metric_lqm: ['default 0.8']
     mesh_ap: hacrafu-eliche
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -76,7 +75,7 @@ networks:
   - vid: 50
     role: uplink
     # very weak, prefer mesh
-    mesh_metric: 32768
+    # mesh_metric: 32768
 
   - role: tunnel
     ifname: ts_wg0
