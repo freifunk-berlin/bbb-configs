@@ -3,3 +3,7 @@
 venv/
 .env
 tmp/
+# Ignore vim swap files:
+*~
+*.swp
+*.swo
