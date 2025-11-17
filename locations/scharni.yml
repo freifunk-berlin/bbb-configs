@@ -11,6 +11,9 @@ hosts:
     role: corerouter
     model: "openwrt_one"
     wireless_profile: freifunk_default
+    bird__packages__to_merge:
+      - bird3-babelpatch
+      - bird3c
 
   - hostname: scharni-ap-gastwg
     role: ap
