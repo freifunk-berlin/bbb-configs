@@ -12,15 +12,22 @@ hosts:
   - hostname: scherer8
     role: corerouter
     model: "ubnt_edgerouter-x-sfp_24_10"
-    poe_on: [0, 1, 2, 3]
+    poe_on: [0, 1, 2, 3, 4]
     host__rclocal__to_merge:
       - |
-        # untag DHCP on ports 0, 3, 4, temove from 1 and 2
-        uci set network.vlan_10.ports='eth0:u eth3:u eth4:u eth5:t'
+        # eth0 - scherer8-wetter (untagged vlan 10)
+        # eth1 - scherer8-perleberger36 (untagged vlan 201)
+        # eth2 - scherer8-bht (untagged vlan 202)
+        # eth3 - scherer8-meshtastic (untagged vlan 10)
+        # eth4 - scherer8-segen (untagged vlan 203)
+        # untag DHCP on ports 0, 3, remove from 1, 2 and 4
+        uci set network.vlan_10.ports='eth0:u eth3:u eth5:t'
         # untag vlan 201 on port 1
         uci set network.vlan_201.ports='eth1:u'
         # untag vlan 202 on port 2
         uci set network.vlan_202.ports='eth2:u'
+        # untag vlan 203 on port 3
+        uci set network.vlan_203.ports='eth4:u'
         uci commit network
         # add scherer8-wetter to the olsrd service
         uci -q get olsrd.@LoadPlugin[1].service > /dev/null
@@ -70,6 +77,10 @@ snmp_devices:
     address: 10.230.226.230
     snmp_profile: airos_8
 
+  - hostname: scherer8-segen
+    address: 10.230.226.234
+    snmp_profile: airos_8
+
 ipv6_prefix: "2001:bf7:750:2e00::/56"
 
 # got following prefixes:
@@ -80,6 +91,7 @@ ipv6_prefix: "2001:bf7:750:2e00::/56"
 # --MESH:  10.230.226.224/27
 #          -  10.230.226.224/30 - perleberger36
 #          -  10.230.226.228/30 - bht
+#          -  10.230.226.232/20 - segen
 
 # Disable noping
 dhcp_no_ping: false
@@ -103,6 +115,17 @@ networks:
     assignments:
       scherer8: 1
       scherer8-bht: 2
+
+  - vid: 203
+    role: mesh
+    name: segen
+    prefix: 10.230.226.232/30
+    ipv6_subprefix: 3
+    mesh_metric: 2048
+    mesh_metric_lqm: ["default 0.3"]
+    assignments:
+      scherer8: 1
+      scherer8-segen: 2
 
   - vid: 211
     role: mesh
