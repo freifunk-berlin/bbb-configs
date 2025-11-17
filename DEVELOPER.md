@@ -146,6 +146,13 @@ networks:
     mesh_metric: 1024         # overrides the default metrics for for babel routing.
                               # Lower metrics means a route is preferred. Babel is used within bbb-configs.
                               # Defaults can be found at group_vars/all/general.yml
+    mesh_metric_neighbors:    # add additional routing costs on to of the interface cost for individual neighbors
+      - name: neighbor1       # name of the neighbor to make it easier to identify, otherwise unused
+        ip: fe80::1a2b:3c4d:5e6f:7a8b
+        metric: 4096
+      - name: neighbor2
+        ip: fe80::abcd:1234:5678:9abc
+        metric: 1024
     untagged: true            # untags the vlan. It is commonly used for tunnel-uplinks. Only one
                               # network can be untagged. For more advanced use cases, look under
                               # hosts section at rc.local
