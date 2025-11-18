@@ -61,12 +61,8 @@ snmp_devices:
     snmp_profile: airos_8
 
   - hostname: segen-no
-    address: 10.31.6.16
-    snmp_profile: airos_6
-
-  - hostname: segen-wsee
     address: 10.31.6.17
-    snmp_profile: airos_6
+    snmp_profile: airos_8
 
   - hostname: segen-n-5ghz
     address: 10.31.6.20
@@ -138,7 +134,6 @@ networks:
       segen-bht: 14
       segen-k12: 15
       segen-no: 16
-      segen-wsee: 17
 
       # airos
       segen-n-5ghz: 20
@@ -208,12 +203,6 @@ networks:
     name: mesh_no
     prefix: 10.31.6.70/32
     ipv6_subprefix: -7
-
-  - vid: 108
-    role: mesh
-    name: mesh_wsee
-    prefix: 10.31.6.71/32
-    ipv6_subprefix: -8
 
   # 11s mesh 2ghz
   - vid: 201
