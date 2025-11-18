@@ -52,7 +52,7 @@ snmp_devices:
     address: 10.31.6.13
     snmp_profile: airos_6
 
-  - hostname: segen-bht
+  - hostname: segen-fardf
     address: 10.31.6.14
     snmp_profile: airos_8
 
@@ -93,7 +93,7 @@ airos_dfs_reset:
     password: "file:/root/pwd"
     daytime_limit: "2-7"
 
-  - name: "segen-bht"
+  - name: "segen-fardf"
     target: "10.31.6.14"
     username: "ubnt"
     password: "file:/root/pwd"
@@ -131,7 +131,7 @@ networks:
       segen-f2a: 11
       segen-stadalbert: 12
       segen-sw: 13
-      segen-bht: 14
+      segen-fardf: 14
       segen-k12: 15
       segen-no: 16
 
@@ -188,7 +188,7 @@ networks:
 
   - vid: 105
     role: mesh
-    name: mesh_bht
+    name: mesh_fardf
     prefix: 10.31.6.68/32
     ipv6_subprefix: -5
 
