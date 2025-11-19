@@ -105,6 +105,12 @@ airos_dfs_reset:
     password: "file:/root/pwd"
     daytime_limit: "2-7"
 
+  - name: "segen-no"
+    target: "10.31.6.16"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
 # IPv4 10.31.6.0/24
 # IPv4 10.31.66.0/24
 # IPv6 2001:bf7:760:1000::/56
