@@ -62,6 +62,10 @@ snmp_devices:
     address: 10.31.81.23
     snmp_profile: airos_8
 
+  - hostname: sama-ost-60ghz
+    address: 10.31.81.25
+    snmp_profile: af60
+
   - hostname: sama-sued-60ghz
     address: 10.31.81.26
     snmp_profile: af60
@@ -140,6 +144,13 @@ networks:
     mesh_metric: 128
     ptp: true
 
+  # MESH - Ost, 60 GHz
+  - vid: 15
+    role: mesh
+    name: mesh_o60
+    prefix: 10.31.79.181/32
+    ipv6_subprefix: -15
+
   # MESH - Sued, 60 GHz
   - vid: 16
     role: mesh
@@ -179,6 +190,7 @@ networks:
       sama-ost-5ghz: 21
       sama-sued-5ghz: 22
       sama-west-5ghz: 23
+      sama-ost-60ghz: 25
       sama-sued-60ghz: 26
       sama-saarbruecker: 30
 
