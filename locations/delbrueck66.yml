@@ -1,0 +1,52 @@
+---
+
+location: delbrueck66
+location_nice: Delbrückstraße 55, 12051 Berlin
+latitude: 52.465545
+longitude: 13.441531
+altitude: 30
+
+contact_nickname: "booo"
+contacts:
+  - "foobar"
+
+hosts:
+  - hostname: delbrueck66
+    role: corerouter
+    model: "genexis_pulse-ex400"
+    # wireless_profile: freifunk_default
+    host__rclocal__to_merge:
+      - |
+        uci set network.vlan_20.ports='wan:t lan:u'
+        uci commit network; reload_config
+
+ssh_keys:
+  - comment: "Your masters key"
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAsjfnnzmHpRxOAkdx5MXw9fWaMSzPgo8cWkTLb6fCxf6osGuj+CwNmdWK/WkIpplGMXWjj+WS9hXeJqdQx4JGwT6EMO+C6cgw/XxNSnw73/v2YfvOGtnjgWjTgGlGsCPUW2N889qvkb3LpJmPIuHKgZg/6IlgXRLk2uj5hjnDvrupQgU+Q07m8/2GyCKJo7ZNCWccPhs5MZ5IMgmcvXpU+itFCRx9RaKSPO7TO7AYxAMsgfCbQaTImW3vsyH1jPqejwoxbV9LiS0PA6KDnCFKP5Iq0Ga48CeFiTIpXAdGj5btSj98FMtxndJOkeA8EGad8C3t4MgzD7189S7xRG/Ftw=="
+
+# snmp_devices:
+
+# airos_dfs_reset:
+
+# 10.248.89.64/26 - all
+# 10.248.89.64/27 - dhcp
+# 10.248.89.96/28 - mesh
+# 10.248.89.112/28 - mgmt ???
+
+ipv6_prefix: "2001:bf7:820:3a00::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_philmel
+    prefix: 10.248.89.96/32
+    ipv6_subprefix: -10
+
+  - vid: 20
+    role: dhcp
+    prefix: 10.248.89.64/27
+    ipv6_subprefix: 0
+    inbound_filtering: false
+    enforce_client_isolation: false
+    assignments:
+      delbrueck66: 1 # DNS record announcement
