@@ -1,0 +1,78 @@
+---
+
+location: koepil183rk
+
+location_nice: '4OG,Köpenicker Landstraße 183, 12437 Berlin'
+latitude: 52.47286
+longitude: 13.48686
+altitude: 41                                      # in meter above sea level
+height: 13                                        # in meter above ground level
+
+contact_name: 'Raphael Kibelka'
+contact_nickname: 'Raphael'
+# contacts must be a list. Even if only one contact is given
+contacts:
+  - 'rkibelka@gmail.com'
+  - 'rkibelka.07' #Signal	 
+
+hosts:
+  - hostname: koepil183rk-core               # the name of the device. The location-part of the name must match `location:` defined above
+    role: corerouter                   # devices role. Could either be 'corerouter', 'ap' or 'gateway'
+    model: "genexis_pulse-ex400"         # model name like written in the corresponding file name in group_vars/
+    wireless_profile: disable # activates wifi with freifunk-default-settings on this device. By default only APs have activated wifi.
+
+snmp_devices:
+  - hostname: koepil183rk-vaterhaus   # hostname
+    address: 10.248.66.177/28   # static ip of the device
+    snmp_profile: airos_8 # SNMP profile
+    
+# ROUTER: 10.248.66.128/26      # add a overview of all reserved addresses at the top as a comment
+# --MGMT: 10.248.66.176/28
+# --MESH: 10.248.66.160/28
+# --DHCP: 10.248.66.128/27 
+
+ipv6_prefix: "2001:bf7:840:e00::/56"
+
+networks:
+  - vid: 10                   # vlan-id
+    role: mesh                # what this vlan does (mesh, dhcp, mgmt)
+    name: mesh_vaterh           # the name has a 12 characters limit. It should only contain lower letters and underscores
+    ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for
+                              # point to point connections by ignoring the hidden node problem
+    prefix: 10.248.66.160/32              # single ipv4-address for meshing
+    ipv6_subprefix: -10       # take an address from the back of the IPv6-block. Best practice is
+                              # to use the same value as the vlan-id for everything except dhcp and
+                              # mgmt to avoid duplicate addresses.
+    untagged: false           # untags the vlan. It is commonly used for tunnel-uplinks. Only one
+                              # network can be untagged. For more advanced use cases, look under
+                              # hosts section at rc.local
+
+  - vid: 40
+    role: dhcp                # dhcp server will run on core-router and serve it's network on vid 40
+    prefix: 10.248.66.128/27
+    ipv6_subprefix: 0
+    inbound_filtering: true   # blocks traffic from outside to the dhcp clients. This helps with client security
+    enforce_client_isolation: true # blocks traffic between clients within this vlan. This helps with client security
+    no_corerouter_dns_record: true # Add this option to every dhcp-network that is not the main one, for example a private dhcp-network
+    assignments:              # assign static addresses to devices
+      koepil183rk-core: 1
+
+  - vid: 42
+    role: mgmt                # create a management vlan in which we can reach every device on this site for maintenance
+    prefix: 10.248.66.176/28
+    gateway: 1
+    dns: 1                    # used to tell accesspoints the location of dns server at assignment number n
+    ntp: 1                    # used to tell accesspoints to use the ntp server of the core router
+    ipv6_subprefix: 1
+    assignments:              # assign static(!) addresses from mgmt-network to individual devices/interfaces.
+      koepil183rk-core: 1           # core router gets 1st address. In result it will be reachable at 10.31.42.1
+      koepil183rk-vaterhaus: 2
+
+
+
+location__ssh_keys__to_merge:
+  - comment: Raphael Kibelka
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBpQ0u+bCJZArc5Jg6h8YmOUEzxhoAW3hQ7bs9jDu2Ah rkibelka
+
+    
+
