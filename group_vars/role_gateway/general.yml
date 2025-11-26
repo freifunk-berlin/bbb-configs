@@ -103,6 +103,8 @@ inbound_allow:
     dst_port: 22
   - name: "mirror.freifunk.dev noc@stadtfunk.net"
     dst: 2001:bf7:820:3402::2/128
+  - name: "delbrueck66 allow all"
+    dst: "2001:bf7:820:3a00::/56"
 #  - name: Rule Description (mandatory)
 #    dst: Destination IP (mandatory)
 #    src: Source IP
