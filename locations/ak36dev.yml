@@ -1,0 +1,65 @@
+---
+# Note: Dev System to test new features before rolling out to everything
+# VM is setup in a similar way as ak36
+
+location: ak36dev
+location_nice: Alboinkontor Dev System
+community: true
+
+local_asn: 65023
+peer_asn: 44194
+
+hosts:
+  - hostname: ak36dev-gw
+    role: gateway
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined.img*"
+    host__packages__to_merge:
+      - qemu-ga
+      - iperf3
+
+# AK36dev got following prefixes:
+# Router: 10.248.91.0/28 2001:bf7:810:2700::/56
+# MGMT:  10.248.91.16/28
+# MESH: 10.248.67.83/29 {as /32}
+
+
+ipv6_prefix: 2001:bf7:810:2700::/56
+
+uplink:
+  ifname: eth0
+  ipv4: 77.87.51.12/25
+  ipv6: 2001:bf7:b301:1312::13/127
+
+mgmt:
+  ifname: eth1.42
+  ipv4: 10.248.91.16/28
+  ipv6: 2001:bf7:810:2700::/64
+  assignments:
+    ak36dev-gw: 1 # .17
+
+# Mesh Network: 10.31.130.160/27
+# Not listed here: strom-gw 10.31.130.190/32
+mesh_links:
+  - name: mesh_bbbvpn
+    ifname: eth2
+    ipv4: 10.248.67.84/32
+    # the bbb-vpn setup is ipv4-only for now
+    ipv6: 2001:bf7:810:2701::1/128
+    mesh_metric: 1024
+    ptp: true
+
+
+# OLSR Announce SmartGateway
+sgw: "1000000 1000000"
+
+# Tunnel metric 1024 as most internet uplinks will hardly reach 40MBit/s
+tunnel_metric: 1024
+
+wireguard_base_prefix_ipv6: 2001:bf7:810:2702::/64
+wireguard_base_prefix_ipv4: 10.248.92.0/24
+
+gre_base_prefix: 2001:bf7:810:2703::/64
+
+# gre tunnel alias will be used as remote ifname. Must not exceed 9 chars
+gre_tunnel_alias: ak36dev
