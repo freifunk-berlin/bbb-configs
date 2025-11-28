@@ -22,7 +22,7 @@ hosts:
 
 ssh_keys:
   - comment: "Your masters key"
-    key: "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAsjfnnzmHpRxOAkdx5MXw9fWaMSzPgo8cWkTLb6fCxf6osGuj+CwNmdWK/WkIpplGMXWjj+WS9hXeJqdQx4JGwT6EMO+C6cgw/XxNSnw73/v2YfvOGtnjgWjTgGlGsCPUW2N889qvkb3LpJmPIuHKgZg/6IlgXRLk2uj5hjnDvrupQgU+Q07m8/2GyCKJo7ZNCWccPhs5MZ5IMgmcvXpU+itFCRx9RaKSPO7TO7AYxAMsgfCbQaTImW3vsyH1jPqejwoxbV9LiS0PA6KDnCFKP5Iq0Ga48CeFiTIpXAdGj5btSj98FMtxndJOkeA8EGad8C3t4MgzD7189S7xRG/Ftw=="
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAsjfnnzmHpRxOAkdx5MXw9fWaMSzPgo8cWkTLb6fCxf6osGuj+CwNmdWK/WkIpplGMXWjj+WS9hXeJqdQx4JGwT6EMO+C6cgw/XxNSnw73/v2YfvOGtnjgWjTgGlGsCPUW2N889qvkb3LpJmPIuHKgZg/6IlgXRLk2uj5hjnDvrupQgU+Q07m8/2GyCKJo7ZNCWccPhs5MZ5IMgmcvXpU+itFCRx9RaKSPO7TO7AYxAMsgfCbQaTImW3vsyH1jPqejwoxbV9LiS0PA6KDnCFKP5Iq0Ga48CeFiTIpXAdGj5btSj98FMtxndJOkeA8EGad8C3t4MgzD7189S7xRG/Ftw==" # noqa
 
 # snmp_devices:
 
