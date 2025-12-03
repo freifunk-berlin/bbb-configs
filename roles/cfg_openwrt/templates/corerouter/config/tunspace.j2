@@ -39,10 +39,11 @@ config wg-interface
 {% endfor %}
 
 {% for gateway in groups['role_gateway'] | sort %}
+{% if hostvars[gateway]["development"] | default(false) == false %}
 config wg-server
   option name "{{ gateway }}"
   option url "https://{{ hostvars[gateway]['uplink']['ipv4'] | ansible.utils.ipaddr('address') }}/ubus"
   option insecure_cert "1"
   option disabled "0"
-
+{% endif %}
 {% endfor %}
