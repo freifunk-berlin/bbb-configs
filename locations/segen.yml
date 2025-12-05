@@ -176,7 +176,9 @@ networks:
     name: mesh_f2a
     prefix: 10.31.6.65/32
     ipv6_subprefix: -2
-    mesh_metric: 1024
+    # This mitigates issues with f2a announcing a non working gateway
+    # mesh_metric is set to 3072 (tunnel metric) + 4096 (2x 5ghz mesh metric)
+    mesh_metric: 7168
     mesh_metric_lqm:
       - default 0.3
 
