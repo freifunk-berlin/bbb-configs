@@ -65,6 +65,11 @@ networks:
     mesh_ap: j41-nw-5ghz
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    # This mitigates issues with f2a announcing a non working gateway
+    # mesh_metric is set to 3072 (tunnel metric) + 4096 (2x 5ghz mesh metric)
+    mesh_metric: 7168
+    mesh_metric_lqm:
+      - default 0.3
 
   # DHCP with filtering and isolation
   - vid: 40
