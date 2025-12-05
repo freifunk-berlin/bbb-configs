@@ -12,6 +12,7 @@ hosts:
     role: corerouter
     model: "glinet_gl-mt6000"
     wireless_profile: w38b
+    flow_offload: hw
     bird__packages__to_merge:
       - bird3-babelpatch
       - bird3c

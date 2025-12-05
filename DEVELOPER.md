@@ -94,6 +94,17 @@ For special use cases you can add lines to a script file. This script runs once 
         uci commit network; reload_config
 ```
 
+#### Flow Offloading
+
+You can enable flow offloading to drastictly improve performance for mediatek chipsets starting from SoC mt7621. More Infos are available in the [OpenWrt Wiki](https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading).
+
+```yml
+    # Possible values: none, sw, hw
+    flow_offload: hw
+```
+
+**WARNING:** Due to [kernel limitations](https://www.kernel.org/doc/html/v5.15/networking/nf_flowtable.html#limitations) you might encounter problems with wifi roaming or when changing wifi bands.
+
 ### monitoring
 
 All OpenWrt-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make sure SNMP is activated on the proprietary device with the community set to public. You can find an overview with all available profiles at `group_vars/all/snmp_profiles.yml`

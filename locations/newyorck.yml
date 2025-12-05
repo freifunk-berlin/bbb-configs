@@ -17,6 +17,7 @@ hosts:
     role: corerouter
     model: "ubnt_edgerouter-x"
     wireless_profile: disable
+    flow_offload: hw
 
   - hostname: newyorck-ap-1a
   - hostname: newyorck-ap-1b
