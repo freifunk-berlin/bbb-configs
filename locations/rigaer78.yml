@@ -52,12 +52,7 @@ hosts:
 
   - hostname: rigaer78-back-floor-2-kitchen
     role: ap
-    model: "avm_fritzbox-4040"
-    host__rclocal__to_merge:
-      - |
-        # Untag DHCP on some ports
-        uci set network.vlan_40.ports='lan1:t lan2:u lan3:u lan4:u wan:u'
-        uci commit network; reload_config
+    model: "dlink_dap-x1860-a1"
 
   - hostname: rigaer78-back-floor-3-left
     role: ap
