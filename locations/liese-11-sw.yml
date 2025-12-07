@@ -20,7 +20,7 @@ hosts:
   - hostname: liese-11-sw-ap-fa
     role: ap
     model: "mikrotik_sxtsq-5-ac"
-    mac_override: 
+    mac_override:
       eth0: 02:9A:4A:B1:C2:9C
 
 snmp_devices:
