@@ -15,13 +15,13 @@ hosts:
     model: x86_64
     host__rclocal__to_merge:
       - "ip route add 10.23.0.0/16 via 10.200.0.1"
-  
+
   # Mesh
   - hostname: liese-11-sw-ap-magda
     role: ap
     model: "ubnt_nanostation-ac-loco"
     int_port: lan0
-  
+
   - hostname: liese-11-sw-ap-tier
     role: ap
     model: "ubnt_nanobeam-ac-xc"
@@ -36,7 +36,7 @@ snmp_devices:
   - hostname: liese-11-sw-ap-magda
     address: 10.200.0.3
     snmp_profile: airos_8
-  
+
   - hostname: liese-11-sw-ap-tier
     address: 10.200.0.4
     snmp_profile: airos_8
@@ -51,8 +51,6 @@ airos_dfs_reset:
     username: "felix"
     password: "file:/root/liese-11-sw-ap-magda.pass"
     daytime_limit: "0-23"
-
-airos_dfs_reset:
   - name: "liese-11-sw-ap-tier"
     target: "10.200.0.4"
     username: "freifunk"
@@ -76,7 +74,7 @@ networks:
   - vid: 11
     role: mesh
     name: mesh_tierpark
-    mesh_ap: liese-11-sw-ap-tier
+    mesh_ap:
     mesh_radio: 11a_standard
     mesh_iface: mesh_tierpark
     mesh_metric: 64
@@ -84,12 +82,21 @@ networks:
     prefix: 10.248.86.162/32
     ipv6_subprefix: -11
 
+  - vid: 12
+    role: mesh
+    name: mesh_q216
+    mesh_ap: liese-11-sw-ap-fa
+    mesh_radio: 11a_standard
+    mesh_iface: mesh_q216
+    mesh_metric_lqm: ["default 0.8"]
+    mesh_metric: 1024
+    prefix: 10.248.86.163/32
+    ipv6_subprefix: -12
+
   - vid: 40
     role: dhcp
     prefix: 10.248.86.176/28
     ipv6_subprefix: 0
-    inbound_filtering: true
-    enforce_client_isolation: true
     inbound_filtering: true
     enforce_client_isolation: true
     assignments:
