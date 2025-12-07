@@ -16,17 +16,6 @@ hosts:
     host__rclocal__to_merge:
       - "ip route add 10.23.0.0/16 via 10.200.0.1"
 
-  # Mesh
-  - hostname: liese-11-sw-ap-magda
-    role: ap
-    model: "ubnt_nanostation-ac-loco"
-    int_port: lan0
-
-  - hostname: liese-11-sw-ap-tier
-    role: ap
-    model: "ubnt_nanobeam-ac-xc"
-    int_port: eth0
-
   # DHCP
   - hostname: liese-11-sw-ap-fa
     role: ap
