@@ -54,9 +54,6 @@ networks:
   - vid: 10
     role: mesh
     name: mesh_magda
-    mesh_ap: liese-11-sw-ap-magda
-    mesh_radio: 11a_standard
-    mesh_iface: mesh_magda
     mesh_metric: 32
     ptp: true
     prefix: 10.248.86.161/32
@@ -65,9 +62,6 @@ networks:
   - vid: 11
     role: mesh
     name: mesh_tierpark
-    mesh_ap:
-    mesh_radio: 11a_standard
-    mesh_iface: mesh_tierpark
     mesh_metric: 64
     ptp: true
     prefix: 10.248.86.162/32
