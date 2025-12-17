@@ -22,7 +22,7 @@
     suffix_to_merge: __ssh_keys__to_merge
     merged_var_name: ssh_keys
     expected_type: list
-  when: ssh_keys is undefined
+  when: ssh_keys is undefined and (community is defined and community|bool == True)
 
 - name: Merge sysctl variable
   merge_vars:
