@@ -32,12 +32,12 @@ ipv6_prefix: 2001:bf7:830:8300::/56
 # mesh: 10.31.11.96/29
 
 uplink:
-  ifname: eth5
+  ifname: lan0
   ipv4: 176.74.57.19/31
   ipv6: 2a04:d480:1c01::1/127
 
 mgmt:
-  ifname: eth4.42
+  ifname: lan3.42
   ipv4: 10.31.166.249/29
   ipv6: 2001:bf7:830:8300::/64
   assignments:
@@ -47,7 +47,7 @@ mgmt:
 
 mesh_links:
   - name: mesh_emma
-    ifname: eth4.10
+    ifname: lan3.10
     ipv4: 10.31.11.96/32
     ipv6: 2001:bf7:830:8301::/128
     mesh_metric: 128
