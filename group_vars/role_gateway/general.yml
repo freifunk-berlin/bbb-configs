@@ -18,9 +18,6 @@ freifunk_wahlkreis_prefixes:
 freifunk_wahlkreis_announcement_prefix: 44
 # Change to 48 if you wnat to announce 48s
 
-local_asn: 44194
-peer_asn: 25291
-
 role_gateway__sysctl__to_merge:
   net.netfilter.nf_conntrack_max: 524288
 
