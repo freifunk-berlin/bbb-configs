@@ -10,7 +10,7 @@ hosts:
   - hostname: pktpls-core
     role: corerouter
     model: "x86-64"
-    openwrt_version: snapshot
+    openwrt_version: 25.12-SNAPSHOT
     bird__packages__to_merge:
       - bird3-babelpatch
       - bird3c
