@@ -4,9 +4,11 @@ location_nice: Normannenstraße 1-2, 10367 Berlin
 latitude: 52.51609518171857
 longitude: 13.480124737072417
 altitude: 56
-contact_nickname: "IZRD e. V."
+contact_nickname: "IZRD e.V."
 contacts:
-  - "it@izrd.de"
+  email: "it@izrd.de"
+  web: "https://www.izrd.de"
+  phone: "+491736994237"
 
 hosts:
   - hostname: izrd-ev-core
@@ -16,16 +18,17 @@ hosts:
     host__packages__to_merge:
       - qemu-ga
 
-  - hostname: izrd-ev-rhp-lbg-5g # Nahfeld Rathausplatz Lichtenberg
+  - hostname: izrd-ev-rhp-lbg-5g # Under construction Near field Rathausplatz Lichtenberg
     role: ap
     model: "tplink_cpe510-v1"
 
 snmp_devices:
   - hostname: izrd-ev-sama
     address: 10.248.44.34
-    snmp_profile: airos_8
+    snmp_profile: af60
 
 ipv6_prefix: "2001:bf7:860:1c00::/56"
+# 2001:bf7:860:1c00::100/56 static assigned on this device izrd-ev-fw 
 
 # Router: 10.248.42.192/27, 10.248.44.32/28, 10.248.42.160, 10.248.42.161, 10.248.42.162
 # --MGMT: 10.248.44.32/29
