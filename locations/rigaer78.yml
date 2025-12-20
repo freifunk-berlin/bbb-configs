@@ -9,7 +9,7 @@ community: true
 snmp_devices:
   - hostname: rigaer78-sama
     address: 10.31.119.131
-    snmp_profile: airos_8
+    snmp_profile: af60
 
   - hostname: rigaer78-zwingli
     address: 10.31.119.132
@@ -52,12 +52,7 @@ hosts:
 
   - hostname: rigaer78-back-floor-2-kitchen
     role: ap
-    model: "avm_fritzbox-4040"
-    host__rclocal__to_merge:
-      - |
-        # Untag DHCP on some ports
-        uci set network.vlan_40.ports='lan1:t lan2:u lan3:u lan4:u wan:u'
-        uci commit network; reload_config
+    model: "dlink_dap-x1860-a1"
 
   - hostname: rigaer78-back-floor-3-left
     role: ap
@@ -123,7 +118,7 @@ networks:
     ipv6_subprefix: -2
     ptp: true
 
-  - vid: 42
+  - vid: 441
     role: mgmt
     prefix: 10.31.119.128/27
     gateway: 1

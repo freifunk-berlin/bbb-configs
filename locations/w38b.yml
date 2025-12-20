@@ -12,6 +12,7 @@ hosts:
     role: corerouter
     model: "glinet_gl-mt6000"
     wireless_profile: w38b
+    flow_offload: hw
     bird__packages__to_merge:
       - bird3-babelpatch
       - bird3c
@@ -147,11 +148,12 @@ networks:
       w38b-core: 1 # 10.31.212.193
       w38b-switch: 2 # 10.31.212.194
       w38b-nas: 3 # 10.31.212.195
-      w38b-ds: 4 # 10.31.212.196
+      w38b-mc: 4 # 10.31.212.196
       w38b-printer: 5 # 10.31.212.197
       w38b-aud: 6 # 10.31.212.198
       w38b-ha: 7 # 10.31.212.199
       w38b-uplink: 8 # 10.31.212.200
+      w38b-phone: 9 # 10.31.212.201
 
   # DHCP (IN / PRIVATE-2)
   - vid: 44
@@ -162,7 +164,6 @@ networks:
     ipv6_subprefix: 4
     assignments:
       w38b-core: 1 # 10.31.212.113
-      w38b-ds: 2 # 10.31.212.114
       w38b-ha: 3 # 10.31.212.115
       w38b-nas: 4 # 10.31.212.116
 
