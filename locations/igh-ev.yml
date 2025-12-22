@@ -34,40 +34,40 @@ ipv6_prefix: "2001:bf7:820:3d00::/56"
 # --DHCP: 10.248.94.32/27
 
 networks:
- # MESH - rhnk - Rathaus Neukölln
- - vid: 10
-   role: mesh
-   name: mesh_rhnk
-   prefix: 10.31.191.200/32
-   ipv6_subprefix: -10
-   ptp: true
+  # MESH - rhnk - Rathaus Neukölln
+  - vid: 10
+    role: mesh
+    name: mesh_rhnk
+    prefix: 10.31.191.200/32
+    ipv6_subprefix: -10
+    ptp: true
 
- # MESH - flughafen - Flughafen Tempelhof (Bauteil B2)
- - vid: 11
-   role: mesh
-   name: mesh_flughafen
-   prefix: 10.31.191.204/32
-   ipv6_subprefix: -11
-   ptp: true
+  # MESH - flughafen - Flughafen Tempelhof (Bauteil B2)
+  - vid: 11
+    role: mesh
+    name: mesh_flughafen
+    prefix: 10.31.191.204/32
+    ipv6_subprefix: -11
+    ptp: true
 
- - vid: 40
-   role: dhcp
-   prefix: 10.248.94.32/27
-   ipv6_subprefix: 1
-   assignments:
-     igh-ev-core: 1 # 10.248.94.33
+  - vid: 40
+    role: dhcp
+    prefix: 10.248.94.32/27
+    ipv6_subprefix: 1
+    assignments:
+      igh-ev-core: 1 # 10.248.94.33
 
- - vid: 42
-   role: mgmt
-   prefix: 10.31.191.192/29
-   gateway: 1
-   dns: 1
-   ipv6_subprefix: 0
-   assignments:
-     igh-ev-core: 1 # 10.31.191.193
-     igh-ev-ap1: 2 # 10.31.191.194
-     igh-ev-rhnk: 3 # 10.31.191.195
-     igh-ev-flughafen: 4 # 10.31.191.196
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.191.192/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 0
+    assignments:
+      igh-ev-core: 1 # 10.31.191.193
+      igh-ev-ap1: 2 # 10.31.191.194
+      igh-ev-rhnk: 3 # 10.31.191.195
+      igh-ev-flughafen: 4 # 10.31.191.196
 
 # Firewall fallback mgmt IP (not managed here):
 # igh-ev-fw: 10.31.191.197
