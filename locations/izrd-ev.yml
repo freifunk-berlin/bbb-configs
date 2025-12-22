@@ -9,23 +9,24 @@ contacts:
   - "it@izrd.de"
 
 hosts:
-  - hostname: izrd-ev-core
+  - hostname: izrd-ev-core # VM on Proxmox
     role: corerouter
     model: "x86-64"
     image_search_pattern: "*-ext4-combined.img*"
     host__packages__to_merge:
       - qemu-ga
 
-  - hostname: izrd-ev-rhp-lbg-5g # Nahfeld Rathausplatz Lichtenberg
+  - hostname: izrd-ev-rhp-lbg-5g # Near field Rathausplatz Lichtenberg, in progress
     role: ap
     model: "tplink_cpe510-v1"
 
 snmp_devices:
-  - hostname: izrd-ev-sama
+  - hostname: izrd-ev-sama # Ubiquiti UISP Wave Nano
     address: 10.248.44.34
-    snmp_profile: airos_8
+    snmp_profile: af60
 
 ipv6_prefix: "2001:bf7:860:1c00::/56"
+# 2001:bf7:860:1c00::100/56 assigned static to izrd-ev-fw
 
 # Router: 10.248.42.192/27, 10.248.44.32/28, 10.248.42.160, 10.248.42.161, 10.248.42.162
 # --MGMT: 10.248.44.32/29
