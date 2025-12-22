@@ -9,13 +9,13 @@ contacts:
 
 hosts:
   - hostname: igh-ev-core  # PC Engines APU2 Board
-    role: core
-    profile: x86_64
+    role: corerouter
+    model: "x86-64"
+    int_port: eth0
 
   - hostname: igh-ev-ap1 # Unifi AC Pro
     role: ap
-    profile: ubnt_unifi-ap-pro
-    int_port: eth0
+    model: ubnt_unifiac_mesh
 
 snmp_devices:
   - hostname: igh-ev-rhnk # Ubiquiti PowerBeam 5AC 300 ISO
