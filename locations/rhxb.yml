@@ -12,6 +12,7 @@ hosts:
     role: corerouter
     model: "linksys_e8450-ubi"
     wireless_profile: freifunk_default
+    openwrt_version: 23.05-SNAPSHOT
 
 snmp_devices:
   - hostname: rhxb-switch-roof

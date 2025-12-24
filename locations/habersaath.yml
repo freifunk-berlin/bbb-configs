@@ -13,6 +13,7 @@ hosts:
   - hostname: habersaath-core
     role: corerouter
     model: "linksys_e8450-ubi"
+    openwrt_version: 23.05-SNAPSHOT
 
   - hostname: habersaath-w-nf-5ghz
     role: ap

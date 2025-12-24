@@ -11,7 +11,6 @@ hosts:
     role: corerouter
     model: "linksys_e8450-ubi"
     wireless_profile: freifunk_default
-    openwrt_version: 24.10-SNAPSHOT
 
   - hostname: sama-nord-nf-5ghz
     role: ap
