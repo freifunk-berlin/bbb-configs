@@ -3,6 +3,7 @@ target: ramips/mt7621
 brand_nice: D-Link
 model_nice: DAP-X1860
 version_nice: A1
+openwrt_version: 25.12-SNAPSHOT
 
 int_port: lan
 
