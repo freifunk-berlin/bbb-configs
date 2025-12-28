@@ -1,0 +1,6 @@
+---
+contact_name: 'Freifunk Engenieering Task Force'
+contact_nickname: 'FETF'
+contacts:
+  - 'info+{{ location }}@berlin.freifunk.net'
+homepage: https://berlin.freifunk.net
