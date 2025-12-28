@@ -4,7 +4,7 @@ location_nice: Colbe15
 latitude: 52.513189
 longitude: 13.464245
 altitude: 50
-community: true
+community: berlin
 
 hosts:
   - hostname: colbe15-core

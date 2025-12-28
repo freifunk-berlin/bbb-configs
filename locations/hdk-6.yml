@@ -3,7 +3,7 @@ location: hdk-6
 location_nice: Heidekampgraben 6
 latitude: 52.477670447
 longitude: 13.47208679
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-6

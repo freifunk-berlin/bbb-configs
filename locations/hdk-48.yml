@@ -4,7 +4,7 @@ location_nice: Heidekampgraben 48
 latitude: 52.478928343
 longitude: 13.47121239
 
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-48

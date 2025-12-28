@@ -5,7 +5,7 @@ location_nice: Teufelsberg Wachhäuschen
 latitude: 52.49649
 longitude: 13.23970
 altitude: 99
-community: true
+community: berlin
 
 # ROUTER: 10.31.243.64/26
 # --MGMT: 10.31.243.64/28

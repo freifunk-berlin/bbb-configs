@@ -35,7 +35,7 @@ height: 13                                        # in meter above ground level
 
 ### contact details
 
-Please mind that a contact is mandatory. If you don't like to give your email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net). Locations maintained by the entire community can use `community: true` instead. This will set default community values.
+Please mind that a contact is mandatory. If you don't like to give your email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net). Locations maintained by the entire community can use `community: berlin` instead. This will set default community values.
 
 ```yml
 contact_name: 'Petrosilius Quaccus'

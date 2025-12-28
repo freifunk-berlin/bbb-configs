@@ -3,7 +3,7 @@ location: hdk-14
 location_nice: Heidekampgraben 14
 latitude: 52.478343508
 longitude: 13.47264469
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-14
