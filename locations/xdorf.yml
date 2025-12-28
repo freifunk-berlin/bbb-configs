@@ -5,7 +5,7 @@ location_nice: xdorf
 latitude: 52.504855
 longitude: 13.424628
 altitude: 40
-community: true
+community: berlin
 
 hosts:
   - hostname: xdorf-core

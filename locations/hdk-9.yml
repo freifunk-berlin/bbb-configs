@@ -3,7 +3,7 @@ location: hdk-9
 location_nice: Heidekampgraben 9
 latitude: 52.477892624
 longitude: 13.47258568
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-9

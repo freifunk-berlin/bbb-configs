@@ -3,7 +3,7 @@ location: hdk-88m
 location_nice: Heidekampgraben 88m
 latitude: 52.478186679
 longitude: 13.47312212
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-88m

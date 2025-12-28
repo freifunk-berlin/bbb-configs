@@ -4,7 +4,7 @@ location_nice: "Rathaus Neukölln, Karl-Marx-Straße 83, 12043 Berlin"
 latitude: 52.481380
 longitude: 13.435078
 altitude: 90
-community: true
+community: berlin
 
 hosts:
   # Lenovo 10T8S00S00 / Thinkcentre M720q, i5-8500T, 1x16 GB RAM, 256 GB NVMe
