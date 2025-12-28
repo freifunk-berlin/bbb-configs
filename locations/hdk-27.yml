@@ -3,7 +3,7 @@ location: hdk-27
 location_nice: Heidekampgraben 27
 latitude: 52.477873020
 longitude: 13.47134113
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-27

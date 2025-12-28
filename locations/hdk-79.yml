@@ -3,7 +3,7 @@ location: hdk-79
 location_nice: Heidekampgraben 79
 latitude: 52.478376180
 longitude: 13.47003222
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-79

@@ -1,0 +1,38 @@
+---
+
+target: "ath79/generic"
+brand_nice: Ubiquiti
+model_nice: UniFi AP AC Pro
+
+# wie bei den anderen UniFi-APs im Repo
+openwrt_version: "24.10.4"
+
+model__packages__to_merge:
+  - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"
+  - "kmod-ath10k ath10k-firmware-qca988x"
+
+# AC Pro nutzt swconfig (Switch vorhanden)
+# Port-Mapping (OpenWrt): Port 2 = Primary (MAIN), Port 3 = Secondary
+# CPU-Port ist typischerweise 0
+switch_ports: 7
+switch_int_port: 0
+switch_ignore_ports:
+ - 1
+ - 4
+ - 5
+ - 6
+
+# Interface, auf dem swconfig arbeitet
+int_port: "eth0"
+
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: "platform/ahb/18100000.wmac"
+    ifname_hint: wlan2
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: VHT
+    path: "pci0000:00/0000:00:00.0"
+    ifname_hint: wlan5

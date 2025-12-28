@@ -4,7 +4,7 @@ location_nice: "Finanzamt Reinickendorf, Eichborndamm 208, 13403 Berlin"
 latitude: 52.5870976
 longitude: 13.324892521
 altitude: 75
-community: berlin
+community: true
 
 hosts:
   - hostname: fardf-core

@@ -3,7 +3,7 @@ location: hdk-62
 location_nice: Heidekampgraben 62
 latitude: 52.478572215
 longitude: 13.47116947
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-62

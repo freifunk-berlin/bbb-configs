@@ -5,7 +5,7 @@ latitude: 52.495855798
 longitude: 13.387956619
 altitude: 39
 height: 2
-community: berlin
+community: true
 
 hosts:
   - hostname: dragonkiez-rathausblock-miami

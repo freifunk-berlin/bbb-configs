@@ -3,7 +3,7 @@ location: hdk-82
 location_nice: Heidekampgraben 82
 latitude: 52.479186453
 longitude: 13.47159863
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-82

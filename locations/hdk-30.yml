@@ -4,7 +4,7 @@ location_nice: Heidekampgraben 30
 latitude: 52.477810941
 longitude: 13.4718132
 
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-30

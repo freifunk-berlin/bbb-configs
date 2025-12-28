@@ -3,7 +3,7 @@ location: hdk-17
 location_nice: Heidekampgraben 17
 latitude: 52.478029850
 longitude: 13.47230673
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-17

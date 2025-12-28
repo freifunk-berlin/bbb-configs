@@ -5,7 +5,7 @@ latitude: 52.494807413
 longitude: 13.387511373
 altitude: 35
 height: 2
-community: berlin
+community: true
 
 hosts:
   - hostname: dragonkiez-kiezraum

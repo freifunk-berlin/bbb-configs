@@ -6,7 +6,7 @@ latitude: 52.465406
 longitude: 13.536190
 altitude: 36
 height: 7
-community: berlin
+community: true
 
 hosts:
   - hostname: wuhli-core

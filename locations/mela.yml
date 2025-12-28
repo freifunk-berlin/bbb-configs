@@ -5,7 +5,7 @@ latitude: 52.521306576109
 longitude: 13.188832104206
 altitude: 60
 height: 24
-community: berlin
+community: true
 
 hosts:
   - hostname: mela-core

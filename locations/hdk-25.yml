@@ -3,7 +3,7 @@ location: hdk-25
 location_nice: Heidekampgraben 25
 latitude: 52.478010246
 longitude: 13.4710139
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-25

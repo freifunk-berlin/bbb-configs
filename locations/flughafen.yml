@@ -5,7 +5,7 @@ location_nice: Flughafen Tempelhof (Bauteil B2), Klosterstraße 68, 12249 Berlin
 latitude: 52.481937
 longitude: 13.390688
 altitude: 78
-community: berlin
+community: true
 
 hosts:
   - hostname: flughafen-core

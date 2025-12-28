@@ -3,7 +3,7 @@ location: hdk-83
 location_nice: Heidekampgraben 83
 latitude: 52.479019825
 longitude: 13.47195804
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-83

@@ -3,7 +3,7 @@ location: hdk-38
 location_nice: Heidekampgraben 38
 latitude: 52.478457862
 longitude: 13.47247303
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-38

@@ -3,7 +3,7 @@ location: hdk-39
 location_nice: Heidekampgraben 39
 latitude: 52.478526474
 longitude: 13.47233355
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-39

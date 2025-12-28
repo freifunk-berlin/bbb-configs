@@ -3,7 +3,7 @@ location: saarbruecker
 location_nice: Saarbrücker
 latitude: 52.5283930134242
 longitude: 13.41561550087894
-community: berlin
+community: true
 
 local_asn: 44194
 peer_asn: 25291

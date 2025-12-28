@@ -4,7 +4,7 @@ location_nice: Emmaus-Kirche, Lausitzer Platz 8, 10997 Berlin
 latitude: 52.499825
 longitude: 13.431035
 altitude: 87
-community: berlin
+community: true
 
 hosts:
   # Lenovo 10T8S00S00 / Thinkcentre M720q, i5-8500T, 1x16 GB RAM, 256 GB NVMe

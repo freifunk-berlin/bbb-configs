@@ -3,7 +3,7 @@ location: hdk-10
 location_nice: Heidekampgraben 10
 latitude: 52.478023315
 longitude: 13.47272515
-community: berlin
+community: true
 
 hosts:
   - hostname: hdk-10
