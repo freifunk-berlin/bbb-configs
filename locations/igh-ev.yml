@@ -1,7 +1,7 @@
 ---
 
 location: igh-ev
-location_nice: Selchower Straße 22, 12049 Berlin
+location_nice: Selchower Strasse 22, 12049 Berlin
 latitude: 52.47836105779351
 longitude: 13.420856025248085
 altitude: 80
@@ -17,7 +17,8 @@ hosts:
 
   - hostname: igh-ev-ap1 # Unifi AC Pro
     role: ap
-    model: ubnt_unifiac_mesh
+    model: "ubnt_unifiac-pro"
+    wireless_profile: freifunk_default
 
 snmp_devices:
   - hostname: igh-ev-rhnk # Ubiquiti PowerBeam 5AC 300 ISO
@@ -64,6 +65,7 @@ networks:
     prefix: 10.31.191.192/29
     gateway: 1
     dns: 1
+    ntp: 1
     ipv6_subprefix: 0
     assignments:
       igh-ev-core: 1 # 10.31.191.193
