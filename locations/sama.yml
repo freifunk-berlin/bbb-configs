@@ -36,6 +36,11 @@ hosts:
     mac_override:
       eth0: 08:55:31:54:63:06
 
+  - hostname: sama-inside-altar # Inside the church above the altar
+    role: ap
+    model: "ubnt_unifiac-pro"
+    wireless_profile: freifunk_default
+
 snmp_devices:
   - hostname: sama-poe-1
     address: 10.31.81.2
@@ -184,6 +189,7 @@ networks:
       sama-ost-nf-5ghz: 11
       sama-sued-nf-5ghz: 12
       sama-west-nf-5ghz: 13
+      sama-inside-altar: 14
       # 16-31 (BBB / Ubiquiti)
       sama-nord-5ghz: 20
       sama-ost-5ghz: 21
@@ -202,11 +208,12 @@ location__channel_assignments_11a_standard__to_merge:
 
 # Switch 1
 # 1: core
+# 2: --
 # 3: sama-sued-5ghz
 # 4: sama-west-5ghz
 # 5: sama-sued-nf-5ghz
 # 6: sama-west-nf-5ghz
-# 7: --
+# 7: sama-ost-60ghz
 # 8: sama-saarbruecker
 
 # Switch 2
