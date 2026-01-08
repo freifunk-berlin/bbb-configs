@@ -1,0 +1,100 @@
+---
+
+location: liese-11-sw
+location_nice: Frankfurter Allee 218 E11
+latitude: 52.511075796
+longitude: 13.495362997
+height: 35
+contact_nickname: "void"
+contacts:
+  - "in+ff@0x23.me"
+
+hosts:
+  - hostname: liese-11-sw-core
+    role: corerouter
+    model: x86_64
+    host__rclocal__to_merge:
+      - "ip route add 10.23.0.0/16 via 10.230.0.1"
+
+  # DHCP
+  - hostname: liese-11-sw-ap-fa
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: 02:9a:4a:b1:c2:9c
+
+snmp_devices:
+  - hostname: liese-11-sw-ap-magda
+    address: 10.230.0.3
+    snmp_profile: airos_8
+
+  - hostname: liese-11-sw-ap-tier
+    address: 10.230.0.4
+    snmp_profile: airos_8
+
+# mgmt: 10.230.0.0/24
+# mesh: 10.248.86.160/28
+# dhcp: 10.248.86.176/28
+
+airos_dfs_reset:
+  - name: "liese-11-sw-ap-magda"
+    target: "10.230.0.3"
+    username: "felix"
+    password: "file:/root/liese-11-sw-ap-magda.pass"
+    daytime_limit: "0-23"
+  - name: "liese-11-sw-ap-tier"
+    target: "10.230.0.4"
+    username: "freifunk"
+    password: "file:/root/liese-11-sw-ap-tier.pass"
+    daytime_limit: "0-23"
+
+ipv6_prefix: "2001:bf7:860:2b00::/56"
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_magda
+    ptp: true
+    prefix: 10.248.86.161/32
+    ipv6_subprefix: -10
+
+  - vid: 11
+    role: mesh
+    name: mesh_tierpark
+    ptp: true
+    prefix: 10.248.86.162/32
+    ipv6_subprefix: -11
+
+  - vid: 20
+    role: mesh
+    name: mesh
+    mesh_ap: liese-11-sw-ap-fa
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric_lqm: ["default 0.8"]
+    mesh_metric: 1024
+    prefix: 10.248.86.163/32
+    ipv6_subprefix: -12
+
+  - vid: 40
+    role: dhcp
+    prefix: 10.248.86.176/28
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      liese-11-sw-core: 1
+      liese-11-sw-ap-fa: 2
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.230.0.0/24
+    gateway: 2
+    dns: 2
+    ntp: 2
+    ipv6_subprefix: 1
+    assignments:
+      liese-11-sw-core: 2
+      liese-11-sw-ap-magda: 3
+      liese-11-sw-ap-tier: 4
+      liese-11-sw-ap-fa: 5
