@@ -30,10 +30,10 @@
     {% endif %}
 {% endfor %}
 
-{%- for network in networks %}
+{% for network in networks %}
     {% if network['role'] == 'mesh' %}
 |Mesh Adressen = {{ network['prefix']}}
-|Mesh Liste = {{network['vid']}}{% raw %}{({% endraw %}{{network['name']}}{% raw %}){% endraw %}
+|Mesh Liste = {{network['vid']}}({{network['name']}})
     {% elif network['role'] == 'tunnel' %}
 |Mesh Adressen = {{ network['prefix']}}
     {% elif network['role'] == 'mgmt'%}
