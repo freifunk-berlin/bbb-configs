@@ -1,15 +1,7 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 
-{# Printing files in semantic mediawiki syntax for wiki.freifunk.net #}
-
-{# wi.ki is a namespacevariable containing everything that should be printed #}
-{% set wi = namespace(ki={})%}
-{% do wi.ki.update({
-    'Mesh Adressen':[],
-    'Mesh Liste':[],
-    'Mesh Anzahl':0,
-    'Wireguard Tunnel':0
-    })%}
+{#- Printing files in semantic mediawiki syntax for wiki.freifunk.net #}
+{% raw %}{{#set:{% endraw %}
 
 {# attributes is a list of vars that can be directly printed without any magic #}
 {% set attributes = [
@@ -21,113 +13,57 @@
     'ipv6_prefix'
     ]%}
 {% for i in attributes %}
-    {% do wi.ki.update( {i: lookup('vars', i|string, default='')}) %}
+|{{i}}= {{lookup('vars', i|string, default='')}}
 {% endfor %}
 
-{# Processing vars from general.yml #}
-{# Big chunks from this part are copied from config/freifunk.j2 #}
-
- {% if community|default(false) is true and contact_name is undefined %}
-    {% do wi.ki.update({'Ansprechpartner Name': 'Freifunk Engenieering Task Force'}) %}
-{% elif contact_name is defined %}
-    {% do wi.ki.update({'Ansprechpartner Name': contact_name})%}
+{%- if contact_name is defined %}
+|Ansprechpartner Name = {{contact_name}}
+{% endif %}{%- if contact_nickname is defined %}
+|Ansprechpartner Nickname = {{contact_nickname}}
 {% endif %}
-{% if community|default(false) is true and contact_nickname is undefined %}
-    {% do wi.ki.update({'Ansprechpartner Nickname': 'FETF'})%}
-{% elif contact_nickname is defined %}
-    {% do wi.ki.update({'Ansprechpartner Nickname': contact_nickname})%}
-{% endif %}
-{% if contacts is defined%}
-    {# Check if Contact is a Matrixroom because the wiki interprets #foo:matrix.org as a URI fragment #}
-    {% set contacts_output = [] %}
-    {% for contact in contacts %}
-        {% if (contact | regex_search('^#.*\:.*\..*')) %}
-            {% do contacts_output.append('https://matrix.to/#/'+contact) %}
-        {% else %}
-            {% do contacts_output.append(contact) %}
-        {% endif %}
-    {% endfor %}
-    {% do wi.ki.update({'Ansprechpartner Kontakt': contacts_output})%}
-{% else %}
-    {% do wi.ki.update({'Ansprechpartner Kontakt': 'info+'+location+'@berlin.freifunk.net'})%}
-{% endif %}
+{% for contact in contacts %}
+{# Check if Contact is a Matrixroom because the wiki interprets #foo:matrix.org as a URI fragment #}
+    {% if (contact | regex_search('^#.*\:.*\..*')) %}
+|Ansprechpartner Kontakt = https://matrix.to/#/{{contact}}
+    {% else %}
+|Ansprechpartner Kontakt = {{contact}}
+    {% endif %}
+{% endfor %}
 
-{# Processing vars from network.yml #}
-
-{% for network in networks %}
+{%- for network in networks %}
     {% if network['role'] == 'mesh' %}
-        {# Formatting the variables already in a list that can be easily used in semantic mediawiki #}
-        {% do wi.ki['Mesh Liste'].append(network['vid']~'('~network['name']~')')|default([])%}
-        {% do wi.ki['Mesh Adressen'].append(network['prefix'])%}
-        {% do wi.ki.update({'Mesh Anzahl': wi.ki['Mesh Anzahl'] + 1 }) %}
+|Mesh Adressen = {{ network['prefix']}}
+|Mesh Liste = {{network['vid']}}{% raw %}{({% endraw %}{{network['name']}}{% raw %}){% endraw %}
     {% elif network['role'] == 'tunnel' %}
-        {% do wi.ki.update({'Wireguard Tunnel': wi.ki['Wireguard Tunnel'] + 1})%}
-        {% do wi.ki['Mesh Adressen'].append(network['prefix'])%}
-        {# Currently, the only automated way I can say with some certainty that the site is connected to the BBB is with Wireguard #}
-        {% do wi.ki.update({'BBB': true })%}
+|Mesh Adressen = {{ network['prefix']}}
     {% elif network['role'] == 'mgmt'%}
-        {% do wi.ki.update({'Managementnetwork': network['prefix']})%}
-        {# Subobjects are like a list of dictionaries at the level of pages of Semantic Mediawiki #}
-        {% do wi.ki.update({'subobjects': {} })%}
-        {% for assigned in network['assignments']%} {# uses the list of mgmt-network-assignments to loop thru all devices #}
-            {% set subobject = {} %}
-            {% do subobject.update({'name':assigned})%}
-            {% do subobject.update({'IPv4': network['prefix'] | ansible.utils.ipaddr(network['assignments'][assigned]) | ansible.utils.ipaddr('address') }) %}
-            {% if hostvars[assigned] is defined %} {# Only devices with OpenWRT-Images get channels assigned by Ansible. #}
-                {# Getting Role, Model and Target for Devices #}
-                {% for property in ['role', 'model', 'target']%}
-                    {% for properties in groups | select('match', property~'_.*')%}
-                        {% if assigned in groups[properties] %}
-                            {% do subobject.update({property: properties.replace(property~'_','')}) %}
-                        {% endif %}
-                    {% endfor %}
-                {% endfor%}
-            {% endif %}
-            {% do wi.ki['subobjects'].update({assigned : subobject})%}
+|Managementnetwork = {{ network['prefix'] }}
+        {% for assignment in network['assignments']%} {# uses the list of mgmt-network-assignments to loop thru all devices #}
+{% raw %}{{#subobject: {% endraw %}{{assignment}}
+|name = {{ assignment }}
+|IPv4 = {{network['prefix'] | ansible.utils.ipaddr(network['assignments'][assignment]) | ansible.utils.ipaddr('address') }}
+            {% for property in ['role', 'model', 'target']%}
+                {% for properties in groups | select('match', property~'_.*')%}
+                    {% if assignment in groups[properties] %}
+|{{property}} = {{properties.replace(property~'_','')}}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+{% raw %}}}{% endraw %}
+
         {% endfor %}
     {% elif network['role'] == 'dhcp'%}
         {# Doing it this way to account for different dhcp-networks like private ones (brdhcp) #}
-        {% do wi.ki.update({(network['name']|default('dhcp'))~'network': network['prefix']})%}
+|{{network['name']|default('dhcp')}}network =  {{network['prefix']}}
     {% endif %}
 {% endfor %}
-
-{# Printing wi.ki #}
-
-{# Makro for handling the print of lists#}
-{# converting everything to strings as github actions where otherwise complaining#}
-{% macro print(key,value)%}
-    {% if value|type_debug == 'list'-%}
-        {% for i in value -%}
-            |{{key}} = {{i|string}}
-        {% endfor %}
-    {% else -%}
-        |{{key}} = {{value|string}}
-    {% endif %}
-{% endmacro %}
-
-{% raw %}{{#set:{% endraw %}
-
-{% for i in wi.ki %}
-    {% if not i == 'subobjects' -%}
-        {{ print(i, wi.ki[i])}}
-    {% endif %}
-{% endfor %}
-{% raw %} }} {% endraw %}
-
-{% if 'subobjects' in wi.ki %}
-    {% for i in wi.ki['subobjects'] %}
-        {% raw %} {{#subobject: {% endraw %}{{i}}
-        {% for n in wi.ki['subobjects'][i]%}
-            {{ print(n, wi.ki['subobjects'][i][n])}}
-        {% endfor %}
-        {% raw %} }} {% endraw %}
-    {% endfor %}
+{% if tunnel_count is defined %}
+|Wireguard Tunnel = {{ tunnel_count }}
 {% endif %}
 
-{# Setting categories #}
 
-{% raw %} [[Kategorie:Berlin]] {% endraw %}
-{% if wi.ki['BBB']|default(false) is true %}
-    {% raw %} [[Kategorie:BBB]] {% endraw %}
-{% endif %}
-{% raw %} [[Kategorie:Standorte_Berlin|{% endraw %}{{location}}{% raw %}]]{% endraw %}
+{#- Setting categories #}
+{% raw %}
+[[Kategorie:Berlin]]
+[[Kategorie:BBB]]
+[Kategorie:Standorte_Berlin|{% endraw %}{{location}}{% raw %}]]{% endraw %}
