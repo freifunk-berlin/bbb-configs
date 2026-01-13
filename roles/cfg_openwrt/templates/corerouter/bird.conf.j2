@@ -32,12 +32,12 @@ protocol babel {
 {% for nw in networks | selectattr('role', 'equalto', 'mesh') %}
   {# metrics for 2 GHz adhoc get a penalty over 5 GHz adhoc so 5 GHz is preferred #}
   {% set default_mesh_metric = hostvars[inventory_hostname].get('mesh_metric_adhoc_' ~ nw.get('mesh_radio'), mesh_metric_default_in) %}
-			if dest != RTD_UNREACHABLE && ifname = "{{ libnetwork.getIfname(nw) }}" then {
+			if ifname = "{{ libnetwork.getIfname(nw) }}" then {
 			  babel_metric = babel_metric + {{  nw.get('mesh_metric', default_mesh_metric) }};
 			}
 {% endfor %}
 {% for nw in networks | selectattr('role', 'equalto', 'tunnel') %}
-			if dest != RTD_UNREACHABLE && ifname = "{{ nw.get('ifname') }}" then {
+			if ifname = "{{ nw.get('ifname') }}" then {
 			  babel_metric = babel_metric + {{  nw.get('mesh_metric', mesh_metric_tunnel_in) }};
 			}
 {% endfor %}
@@ -55,12 +55,12 @@ protocol babel {
 {% for nw in networks | selectattr('role', 'equalto', 'mesh') %}
   {# metrics for 2 GHz adhoc get a penalty over 5 GHz adhoc so 5 GHz is preferred #}
   {% set default_mesh_metric = hostvars[inventory_hostname].get('mesh_metric_adhoc_' ~ nw.get('mesh_radio'), mesh_metric_default_in) %}
-			if dest != RTD_UNREACHABLE && ifname = "{{ libnetwork.getIfname(nw) }}" then {
+			if ifname = "{{ libnetwork.getIfname(nw) }}" then {
 			  babel_metric = babel_metric + {{  nw.get('mesh_metric', default_mesh_metric) }};
 			}
 {% endfor %}
 {% for nw in networks | selectattr('role', 'equalto', 'tunnel') %}
-			if dest != RTD_UNREACHABLE && ifname = "{{ nw.get('ifname') }}" then {
+			if ifname = "{{ nw.get('ifname') }}" then {
 			  babel_metric = babel_metric + {{  nw.get('mesh_metric', mesh_metric_tunnel_in) }};
 			}
 {% endfor %}
