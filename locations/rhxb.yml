@@ -13,6 +13,22 @@ hosts:
     model: "linksys_e8450-ubi"
     wireless_profile: freifunk_default
     openwrt_version: 23.05-SNAPSHOT
+    host__rclocal__to_merge:
+      - |
+        uci -q get system.@system[0].bbb_config_first_boot > /dev/null
+        if [ "1" -eq $? ]; then
+          # add domain for the bbb unifi controller
+          uci set dhcp.unifi=domain
+          uci set dhcp.unifi.ip=10.31.130.157
+          uci set dhcp.unifi.name=unifi
+          uci commit dhcp
+          /etc/init.d/dnsmasq restart
+          # Prevent this from running again by setting a config option
+          uci set system.@system[0].bbb_config_first_boot=1
+          uci commit system
+          # reload the config to accept these changes
+          reload_config
+        fi
 
 snmp_devices:
   - hostname: rhxb-switch-roof
