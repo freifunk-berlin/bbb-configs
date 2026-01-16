@@ -89,12 +89,6 @@
   when:
     - dsa_ports is defined
 
-- name: "Add poemgr if poemgr target"
-  set_fact:
-    packages: "{{ packages + ['poemgr'] }}"
-  when:
-    - poemgr_ports is defined
-
 - name: "Add QOS support if configured"
   set_fact:
     packages: "{{ packages + ['qos-scripts'] }}"

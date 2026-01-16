@@ -68,17 +68,6 @@
     - always
     - config
 
-- name: Add poemgr config if poemgr target
-  template:
-    src: "{{ role_path }}/templates/common/config/poemgr.j2"
-    dest: "{{ configs_dir }}/etc/config/poemgr"
-    mode: "644"
-  when:
-    - poemgr_ports is defined
-  tags:
-    - always
-    - config
-
 - name: "Make sure /lib/firmware is present"
   file:
     dest: "{{ configs_dir }}/lib/firmware/ath10k"
