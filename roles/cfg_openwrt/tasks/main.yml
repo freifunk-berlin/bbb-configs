@@ -94,6 +94,21 @@
     - always
     - config
 
+- name: Generate Imagebuilder command
+  set_fact:
+    make_command: >
+      make image
+      PROFILE='{{ override_target | default(model) }}'
+      PACKAGES='{{ packages | join(" ") }}'
+      DISABLED_SERVICES='{{ disabled_services | join(" ") }}'
+      FILES='{{ configs_dir }}' 1>&2
+  tags: always
+
+- name: Debug Imagebuilder command
+  debug:
+    var: make_command
+  tags: always
+
 - name: Include image generation
   include_tasks:
     file: imagebuilder.yml
