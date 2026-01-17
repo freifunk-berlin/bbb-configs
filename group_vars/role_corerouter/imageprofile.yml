@@ -29,3 +29,18 @@ collectd__packages__to_merge:
 bird__packages__to_merge:
   - bird2-babelpatch
   - bird2c
+
+tunnel__packages__to_merge:
+  - tunspace
+  - wireguard-tools
+
+dfs__packages__to_merge:
+  - airos-dfs-reset
+
+util__packages__to_merge:
+  - mosh-server
+  - tmux
+
+# There's no way to install only olsrd without olsrd6
+all__disabled_services__to_merge:
+  - "olsrd6"

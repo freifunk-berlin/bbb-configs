@@ -12,18 +12,19 @@ imagebuilder_filename: "openwrt-imagebuilder-{{ openwrt_version }}-{{ target | r
 imagebuilder: "{{ openwrt_mirror }}/{{ openwrt_base }}/targets/{{ target }}/{{ imagebuilder_filename }}"
 feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/__INSTR_SET__/falter"
 
+# The packages list is spread over a number of lists for two reasons:
+# 1. Individual locations want to override particular packages
+#    without dealing with the complete packages list.
+# 2. We want to omit certain packages based on device properties or config,
+#    e.g. devices with low ram / low flash, or with or without tunspace uplink.
+
 all__packages__to_merge:
-  - ethtool
   - ip6tables-nft # Its not pulled in by default anymore bc fw4
   - iptables-nft
-  - iperf3
-  - iwinfo
   - ip
   - kmod-nft-bridge
   - mtr
   - nftables
-  - tcpdump-mini
-  - vnstat
   - -ppp
   - -ppp-mod-pppoe
 
@@ -46,5 +47,44 @@ all_collectd__packages__to_merge:
   - collectd-mod-ping
   - collectd-mod-uptime
 
-all__disabled_services__to_merge:
-  - "olsrd6"
+multicore__packages__to_merge:
+  - irqbalance
+
+# Will be removed unless wifi_roaming
+dawn__packages__to_merge:
+  - dawn
+  - luci-app-dawn
+  - umdns
+
+# Will be removed unless it's a device with DSA switch driver
+dsa__packages__to_merge:
+  - ip-bridge
+
+zram__packages__to_merge:
+  - zram-swap
+
+notlow__packages__to_merge:
+  - ethtool
+  - iperf3
+  - iwinfo
+  - libiwinfo-lua
+  - collectd-mod-iwinfo
+  - tcpdump
+  - vnstat
+
+low__packages__to_merge:
+  - tcpdump-mini
+  - -opkg
+  - -kmod-ipt-core
+  - -kmod-ipt-offload
+  - -kmod-nf-ipt
+  - -kmod-nls-base
+  - -kmod-phy-ath79-usb
+  - -kmod-usb-core
+  - -kmod-usb-ehci
+  - -kmod-usb-ohci
+  - -kmod-usb2
+
+# This will be overridden unless low_mem
+low__disabled_services__to_merge:
+  - uhttpd
