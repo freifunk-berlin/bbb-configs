@@ -126,6 +126,14 @@ config rule
 	option dest_port	5201
 	option target		ACCEPT
 
+config rule
+	option name			"Allow-Ping"
+	option src 			uplink
+	option proto 		icmp
+	option icmp_type 	echo-request
+	option family 		ipv4
+	option target 		ACCEPT
+
 # Allow essential incoming IPv6 ICMP traffic
 config rule
 	option name		Allow-ICMPv6-Input
