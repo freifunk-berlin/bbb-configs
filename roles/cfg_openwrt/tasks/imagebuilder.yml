@@ -74,6 +74,13 @@
     instr_set: "{{ instr_set_result.stdout_lines | first }}"
   when: "instr_set is not defined and feed_version is defined"
 
+- name: Set OPKG mirror
+  replace:
+    path: "{{ build_dir }}/repositories.conf"
+    regexp: 'https://downloads\.openwrt\.org/'
+    replace: "{{ openwrt_mirror }}/"
+  when: 'uses_opkg is defined and feed_version is defined'
+
 - name: Insert falter OPKG feed
   lineinfile:
     path: "{{ build_dir }}/repositories.conf"
@@ -93,6 +100,13 @@
     line: "option check_signature"
     state: "absent"
   when: "uses_opkg is defined and imagebuilder_disable_signature_check is defined and imagebuilder_disable_signature_check"
+
+- name: Set APK mirror
+  replace:
+    path: "{{ build_dir }}/repositories"
+    regexp: 'https://downloads\.openwrt\.org/'
+    replace: "{{ openwrt_mirror }}/"
+  when: 'uses_apk is defined and feed_version is defined'
 
 - name: Add falter APK feed
   lineinfile:
