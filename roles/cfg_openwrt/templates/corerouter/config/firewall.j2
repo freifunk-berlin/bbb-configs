@@ -6,7 +6,7 @@
 {% set zone_freifunk_networks = l3_networks | rejectattr('inbound_filtering') | map(attribute='name') %}
 
 config defaults
-	option syn_flood '1'
+	option synflood_protect '1'
 	option input 'ACCEPT'
 	option output 'ACCEPT'
 	option forward 'REJECT'
