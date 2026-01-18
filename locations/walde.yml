@@ -5,7 +5,7 @@ location_nice: Waldemarstrasse 103
 latitude: 52.501329204
 longitude: 13.427798152
 altitude: 47
-community: true
+community: berlin
 
 hosts:
   - hostname: walde-core
@@ -14,9 +14,23 @@ hosts:
     wireless_profile: freifunk_default
 
 snmp_devices:
+
   - hostname: walde-emma
     address: 10.31.92.2
     snmp_profile: airos_8
+
+  # LiteBeam 5AC
+  - hostname: walde-mahalle
+    address: 10.31.92.3
+    snmp_profile: airos_8
+
+airos_dfs_reset:
+
+  - name: "walde-mahalle"
+    target: "10.31.92.3"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
 
 ipv6_prefix: "2001:bf7:830:b00::/56"
 
@@ -32,6 +46,13 @@ networks:
     name: mesh_emma
     prefix: 10.31.92.16/32
     ipv6_subprefix: -1
+
+  # MESH - mahalle
+  - vid: 11
+    role: mesh
+    name: mesh_mahalle
+    prefix: 10.31.92.19/32
+    ipv6_subprefix: -2
 
   # MESH - 5 GHz 802.11s
   - vid: 20
@@ -72,3 +93,4 @@ networks:
     assignments:
       walde-core: 1
       walde-emma: 2
+      walde-mahalle: 3

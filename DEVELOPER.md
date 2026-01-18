@@ -35,7 +35,7 @@ height: 13                                        # in meter above ground level
 
 ### contact details
 
-Please mind that a contact is mandatory. If you don't like to give your email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net). Locations maintained by the entire community can use `community: true` instead. This will set default community values.
+Please mind that a contact is mandatory. If you don't like to give your email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net). Locations maintained by the entire community can use `community: berlin` instead. This will set default community values.
 
 ```yml
 contact_name: 'Petrosilius Quaccus'
@@ -93,6 +93,17 @@ For special use cases you can add lines to a script file. This script runs once 
         uci set network.vlan_40.ports='lan1:t lan2:t lan3:t lan4:u lan5:u'
         uci commit network; reload_config
 ```
+
+#### Flow Offloading
+
+You can enable flow offloading to drastictly improve performance for mediatek chipsets starting from SoC mt7621. More Infos are available in the [OpenWrt Wiki](https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading).
+
+```yml
+    # Possible values: none, sw, hw
+    flow_offload: hw
+```
+
+**WARNING:** Due to [kernel limitations](https://www.kernel.org/doc/html/v5.15/networking/nf_flowtable.html#limitations) you might encounter problems with wifi roaming or when changing wifi bands.
 
 ### monitoring
 

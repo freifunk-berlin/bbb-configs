@@ -3,7 +3,7 @@ location: hdk-73
 location_nice: Heidekampgraben 73
 latitude: 52.478794387
 longitude: 13.47088516
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-73

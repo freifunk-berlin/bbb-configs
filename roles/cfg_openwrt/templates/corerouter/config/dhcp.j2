@@ -5,7 +5,7 @@ config dnsmasq
 	option rebind_protection '1'
 	option rebind_localhost '1'
 	option local '/lan/'
-	option domain 'lan'
+	option domain 'ff'
 	option expandhosts '1'
 	option authoritative '1'
 	option readethers '1'
@@ -64,7 +64,7 @@ config dhcp 'dhcp_{{ name }}'
 
 {% for network in networks | selectattr('role','equalto','dhcp') %}
     {% for assignment in network['assignments'] %}
-config host
+config host '{{ assignment.replace("-", "_") }}'
 	option name '{{ assignment }}'
 	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][assignment]) | ansible.utils.ipaddr('address') }}'
     {% endfor %}

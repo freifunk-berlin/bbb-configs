@@ -5,12 +5,14 @@ latitude: 52.495855798
 longitude: 13.387956619
 altitude: 39
 height: 2
-community: true
+community: berlin
 
 hosts:
   - hostname: dragonkiez-rathausblock-miami
     role: corerouter
     model: "ubnt_edgerouter-x-sfp"
+    poe_on: [0, 1, 2, 3]
+    model: "ubnt_edgerouter-x-sfp-24-10"
     poe_on: [0, 1, 2, 3]
   - hostname: dragonkiez-rathausblock-miami-ap1
     role: ap

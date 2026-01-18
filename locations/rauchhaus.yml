@@ -5,13 +5,17 @@ location_nice: rauchhaus
 latitude: 52.50481
 longitude: 13.42436
 altitude: 47
-community: true
+community: berlin
 
 hosts:
   - hostname: rauchhaus-core
     role: corerouter
-    model: "ubnt_edgerouter-x"
-    wireless_profile: disable
+    model: "tplink_archer-c7-v5"
+    wireless_profile: rauchhaus
+    host__rclocal__to_merge:
+      - |
+        echo "0 7 * * * /sbin/reboot" >> /etc/crontabs/root
+        /etc/init.d/cron restart
 
   - hostname: rauchhaus-floor0north135
     role: ap
@@ -118,6 +122,7 @@ networks:
       rauchhaus-basement: 15
 
 location__channel_assignments_11a_standard__to_merge:
+  rauchhaus-core: 36-20
   rauchhaus-floor0north135: 36-20
   rauchhaus-floor0south136: 48-20
   rauchhaus-floor1north133: 36-20
@@ -126,6 +131,7 @@ location__channel_assignments_11a_standard__to_merge:
   rauchhaus-basement: 44-20
 
 location__channel_assignments_11g_standard__to_merge:
+  rauchhaus-core: 1-20
   rauchhaus-floor0north135: 11-20
   rauchhaus-floor0south136: 1-20
   rauchhaus-floor1north133: 6-20

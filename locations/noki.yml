@@ -10,6 +10,8 @@
 #   connecting any network port of the setup to an existing internet connection via cable
 # - Mesh on LAN (VID 30) to connect to another Freifunk installation via LAN
 # - Two optional PtP antennas (VID 10 + 11) for long range ptp connections
+# - There is a custom WLAN profile to make all of these networks accesible via WLAN,
+#   including the native WAN network (VID 50)
 
 location: noki
 # This is a test and mobile travel router, therefore it has no location
@@ -32,6 +34,10 @@ hosts:
         # untag UPLK on WAN port
         uci set network.vlan_50.ports='wan:u'
         uci commit network; reload_config
+    host__packages__to_merge:
+      - htop
+      - nano
+      - curl
   - hostname: noki-ap
     role: ap
     model: "dlink_dap-x1860-a1"
@@ -210,6 +216,7 @@ location__wireless_profiles__to_merge:
         owe_transition_ifname_hint: ff
         ieee80211w: 2
 
+      # AP for VID 43 (PRIVATE)
       - mode: ap
         ssid: noki
         encryption: sae-mixed
@@ -218,6 +225,7 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard]
         ifname_hint: pr
 
+      # AP for VID 41 (HOST)
       - mode: ap
         ssid: noki-host
         encryption: sae-mixed
@@ -225,6 +233,15 @@ location__wireless_profiles__to_merge:
         network: host
         radio: [11a_standard, 11g_standard]
         ifname_hint: ho
+
+      # AP for VID 50 (WAN / UPLINK)
+      - mode: ap
+        ssid: noki-wan
+        encryption: sae-mixed
+        key: "file:/root/wifi-pwd"
+        network: uplink
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: wan
 
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin

@@ -1,3 +1,4 @@
 ---
 imagebuilder_suffix: xz
 feed_version: 1.4.0-snapshot
+uses_opkg: true

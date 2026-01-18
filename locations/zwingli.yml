@@ -4,7 +4,7 @@ location_nice: Zwinglikirche, Rudolfstraße 14, 10245 Berlin
 latitude: 52.5035417
 longitude: 13.4547472
 altitude: 77
-community: true
+community: berlin
 
 hosts:
   - hostname: zwingli-core
@@ -12,7 +12,6 @@ hosts:
     model: "linksys_e8450-ubi"
     wireless_profile: freifunk_default
     wifi_roaming: true
-    openwrt_version: 24.10-SNAPSHOT
     # USBIP packages to manage Meshtastic node (TLORA_V2_1_1P6) connected via USB
     host__packages__to_merge:
       - "kmod-usb-ohci usbip-server usbip-client"

@@ -2,6 +2,10 @@
 
 multicore: true
 
+target__packages__to_merge:
+  # Work around ipq40xx ethernet instabilities
+  - naywatch
+
 sysfs_overrides:
   - path: /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     value: 200000

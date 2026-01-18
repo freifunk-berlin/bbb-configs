@@ -14,6 +14,7 @@ hosts:
     role: corerouter
     model: "genexis_pulse-ex400"
     wireless_profile: freifunk_default
+    flow_offload: hw
 
 snmp_devices:
   - hostname: bissing-cube
@@ -74,7 +75,3 @@ networks:
     assignments:
       bissing-core: 1  # 10.248.69.193
       bissing-cube: 2  # 10.248.69.194
-
-# https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading
-# Possible values: none, sw, hw
-flow_offload: hw

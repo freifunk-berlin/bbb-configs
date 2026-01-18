@@ -26,8 +26,12 @@ hosts:
     role: corerouter
     int_port: eth0
     model: x86-64
+    openwrt_version: 25.12-SNAPSHOT
     host__packages__to_merge:
       - kmod-mlx5-core
+    bird__packages__to_merge:
+      - bird3-babelpatch
+      - bird3c
     host__rclocal__to_merge:
       # There's a decades-old RX/TX offload bug in intel gigabit controllers
       # which regularly hangs the card. It gets reset automatically,
@@ -47,7 +51,6 @@ hosts:
     role: ap
     wireless_profile: hway
     model: cudy_ap3000outdoor-v1
-    openwrt_version: 24.10-SNAPSHOT
 
 snmp_devices:
   - hostname: hway-kiehlufer

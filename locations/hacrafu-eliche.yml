@@ -1,0 +1,110 @@
+---
+
+location: hacrafu-eliche
+location_nice: Angerscheune e.V., Dorfpl. 1, 15370 Petershagen
+latitude: 52.52354918402503
+longitude: 13.769907550925465
+contact_name: "Hacken Craften Funken e.V."
+contact_nickname: "HaCraFu e.V."
+contacts:
+  - "freifunk@hacrafu.de"
+
+hosts:
+  - hostname: hacrafu-eliche
+    role: corerouter
+    model: "cudy_wr3000-v1"
+    wireless_profile: freifunk_hacrafu
+    host__rclocal__to_merge:
+      - |
+        uci set network.vlan_40.ports='lan1:u lan2:u lan3:u'
+        uci set network.vlan_42.ports='lan1:t lan2:t lan3:t'
+        uci set network.vlan_50.ports='wan:u'
+        uci commit network; reload_config
+
+ipv6_prefix: "2001:bf7:850:4b00::/56"
+
+# DHCP      10.248.84.128/27
+# MESH      10.248.76.126/31
+# MGMT      10.248.77.90/32
+# TUNNEL    10.248.84.160/31
+
+networks:
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.248.76.126/32
+    ipv6_subprefix: -20
+    mesh_metric: 128
+    mesh_ap: hacrafu-eliche
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.248.76.127/32
+    ipv6_subprefix: -21
+    mesh_metric: 256
+    mesh_metric_lqm: ['default 0.8']
+    mesh_ap: hacrafu-eliche
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.84.128/27
+    ipv6_subprefix: 0
+    assignments:
+      hacrafu-eliche: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.77.90/32
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      hacrafu-eliche: 1
+
+  # UPLINK
+  - vid: 50
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.84.160/32
+    wireguard_port: 51820
+    mesh_metric: 8192
+    mesh_metric_lqm: ['default 0.4']
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.248.84.161/32
+    wireguard_port: 51821
+    mesh_metric: 8192
+    mesh_metric_lqm: ['default 0.4']
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hacrafu-eliche: 36-80
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hacrafu-eliche: 13-40
+
+# only place this ssh-keys
+ssh_keys:
+  - comment: Tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
+  - comment: Bob
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de
+  - comment: Peter
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIzevq2nqgb0rBAEEcDEkAIu24aTiWIkem3+59a6h10 HaCraFu Petersilie
