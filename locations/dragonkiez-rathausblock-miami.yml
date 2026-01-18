@@ -10,8 +10,6 @@ community: berlin
 hosts:
   - hostname: dragonkiez-rathausblock-miami
     role: corerouter
-    model: "ubnt_edgerouter-x-sfp"
-    poe_on: [0, 1, 2, 3]
     model: "ubnt_edgerouter-x-sfp-24-10"
     poe_on: [0, 1, 2, 3]
   - hostname: dragonkiez-rathausblock-miami-ap1
