@@ -143,7 +143,7 @@ ipv6_prefix: "2001:bf7:860::/56"
 
 networks:
   - vid: 10                   # vlan-id
-    role: mesh                # what this vlan does (mesh, dhcp, mgmt)
+    role: mesh                # what this vlan does (mesh, dhcp, mgmt, ext)
     name: mesh_sama           # the name has a 12 characters limit. It should only contain lower letters and underscores
     ptp: true                 # changing the mode from mesh to ether for reducing the airtraffic for
                               # point to point connections by ignoring the hidden node problem
@@ -202,6 +202,53 @@ location__channel_assignments_11a_standard__to_merge:
   magda-ap1: 36-20-15
   magda-ap2: 40-20-15
   magda-ap3: 44-20-15
+```
+
+The role **ext** is used when one wants to distribute a network of another router via the Freifunk router. 
+
+This can be done by extending it through the ports of the Freifunk router
+
+```yml
+# from ska95.yml
+- vid: 41 # Private LAN where private Internet is connected 
+  role: ext 
+  name: private 
+  untagged: true 
+```
+
+OR by redistributing the network through it's own SSID via the Freifunk router using a custom wireless profile
+
+```yml
+# from hts4.yml
+wireless_profile: hts4
+
+# ...
+
+# Private home network without filtering and isolation 
+ - vid: 41 
+   role: ext 
+   name: private 
+   no_corerouter_dns_record: true 
+   enforce_client_isolation: false
+
+# ...
+
+ - mode: ap 
+   ssid: hts4 
+   encryption: sae-mixed 
+   key: "file:/root/wifi_pass" 
+   network: private 
+   radio: [11a_standard, 11g_standard] 
+   ifname_hint: pr 
+
+```
+
+OR by creating virtual ethernet interfaces to use inside of a container or virtual maschine
+
+```yml
+
+# TODO: use and explain example from @pktpls
+
 ```
 
 The VLAN ID (vid) usually follow this numbering convention. They should be sorted in ascending order in the file.
