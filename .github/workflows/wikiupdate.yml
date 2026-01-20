@@ -43,7 +43,7 @@ jobs:
           FF_WIKI_PASSWORD: ${{ secrets.FF_WIKI_PASSWORD }}
         run: |
           if [ -n "${CHANGED_LOCATIONS}" ]; then
-            ansible-playbook play.yml --tags wiki --limit "$CHANGED_LOCATIONS" ||true
+            ansible-playbook play.yml --skip-tags config --tags wiki --limit "$CHANGED_LOCATIONS" ||true
           else
             echo "No locations were changed. Skipping update"
           fi
