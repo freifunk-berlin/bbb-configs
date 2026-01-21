@@ -1,0 +1,63 @@
+---
+
+location: hweg
+location_nice: Hüttenroder Weg
+latitude: 52.485087
+longitude: 13.447097
+altitude: 42
+contact_nickname: "Stadtfunk gGmbH"
+contacts:
+  - "noc@stadtfunk.net"
+
+# 10.248.97.192/26
+# - 10.248.97.192/27    dhcp
+# - 10.248.97.224/28    prdhcp
+# - 10.248.97.240/29    mesh
+#   - 10.248.97.240/32  mesh_rhnk
+#   - 10.248.97.241/32  ts_wg0
+# - 10.248.97.248/29    mgmt
+ipv6_prefix: 2001:bf7:820:400::/56
+
+hosts:
+  - hostname: hweg-core
+    role: corerouter
+    model: zyxel_nwa50ax
+    wireless_profile: freifunk_default
+
+snmp_devices:
+  - hostname: hweg-rhnk
+    address: 10.248.97.250
+    snmp_profile: af60
+
+networks:
+  - vid: 10
+    untagged: true
+    role: mesh
+    name: mesh_rhnk
+    prefix: 10.248.97.240/32
+    ipv6_subprefix: -10
+
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.97.192/27
+    ipv6_subprefix: -40
+    assignments:
+      hweg-core: 1
+
+  - vid: 442
+    role: mgmt
+    prefix: 10.248.97.248/29
+    ipv6_subprefix: -442
+    gateway: 1
+    dns: 1
+    assignments:
+      hweg-core: 1 # .97.249
+      hweg-rhnk: 2 # .97.250
+
+location__channel_assignments_11a_standard__to_merge:
+  hweg-core: 44-40
+
+location__channel_assignments_11b_standard__to_merge:
+  hweg-core: 13-20
