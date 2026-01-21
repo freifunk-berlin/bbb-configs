@@ -1,44 +1,20 @@
 ---
-- name: Merge packages variable
-  merge_vars:
-    suffix_to_merge: __packages__to_merge
-    merged_var_name: packages
-    expected_type: list
 
-- name: Merge disabled_services variable
-  merge_vars:
-    suffix_to_merge: __disabled_services__to_merge
-    merged_var_name: disabled_services
-    expected_type: list
+- name: Merge vars
+  ansible.builtin.set_fact:
+    "{{ item.key }}": "{{ lookup('community.general.merge_variables', '__' + item.key + '__to_merge', pattern_type='suffix', initial_value=item.value) }}"
+  loop: "{{ the_vars | dict2items }}"
+  vars:
+    the_vars:
+      packages: []
+      disabled_services: []
+      wireless_profiles: []
+      sysctl: {}
+      rclocal: []
+      channel_assignments_11a_standard: {}
+      channel_assignments_11g_standard: {}
 
-- name: Merge wireless_profiles variable
-  merge_vars:
-    suffix_to_merge: __wireless_profiles__to_merge
-    merged_var_name: wireless_profiles
-    expected_type: list
-
-- name: Merge ssh_keys variable
-  merge_vars:
-    suffix_to_merge: __ssh_keys__to_merge
-    merged_var_name: ssh_keys
-    expected_type: list
+- name: Merge ssh_keys
+  ansible.builtin.set_fact:
+    "ssh_keys": "{{ lookup('community.general.merge_variables', '__ssh_keys__to_merge', pattern_type='suffix', initial_value=[]) }}"
   when: ssh_keys is undefined
-
-- name: Merge sysctl variable
-  merge_vars:
-    suffix_to_merge: __sysctl__to_merge
-    merged_var_name: sysctl
-    expected_type: dict
-
-- name: Merge rclocal variable
-  merge_vars:
-    suffix_to_merge: __rclocal__to_merge
-    merged_var_name: rclocal
-    expected_type: list
-
-- name: "Merge channel_assignments variables"
-  merge_vars:
-    suffix_to_merge: "__{{ item.split('__')[1] + '__to_merge' }}"
-    merged_var_name: "{{ item.split('__')[1] }}"
-    expected_type: dict
-  loop: "{{ hostvars[inventory_hostname] | select('match', '.*__channel_assignments_.*') }}"
