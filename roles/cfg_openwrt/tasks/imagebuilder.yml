@@ -84,7 +84,7 @@
 - name: Insert falter OPKG feed
   lineinfile:
     path: "{{ build_dir }}/repositories.conf"
-    line: "{{ feed }}"
+    line: "{{ feed | replace('__INSTR_SET__', instr_set) }}"
   when: 'uses_opkg is defined and feed_version is defined'
 
 - name: Add falter OPKG feed key
@@ -111,7 +111,7 @@
 - name: Add falter APK feed
   lineinfile:
     path: "{{ build_dir }}/repositories"
-    line: "{{ feed }}"
+    line: "{{ feed | replace('__INSTR_SET__', instr_set) }}"
   when: 'uses_apk is defined and feed_version is defined'
 
 - name: Add falter APK feed to image
