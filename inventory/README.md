@@ -28,7 +28,7 @@ There are five (now four) stages that construct our inventory data:
 4. Keyed groups, pt. 2
   - Same, but handles `target` and `openwrt_version`.
 5. Merge vars
-  - Handled by Ansible's "merge_vars" action plugin.
+  - Handled by Ansible's `merge_variables` lookup filter.
   - All hostvars construction so far was only able to overwrite properties,
     but in some cases we need to merge with the existing property.
   - For specific properties, a "merge var" can be set:
@@ -38,5 +38,6 @@ There are five (now four) stages that construct our inventory data:
     scope we're currently in, e.g. `location__packages__to_merge`.
   - These merge vars are merged together into one
     before any templates or tasks make use of hostvars.
-  - Handles `ssh_keys`, `packages`, `sysctl`, `rclocal`,
-    `disabled_services`, `wireless_profiles`, `channel_assignments_*`.
+  - Handles `ssh_keys`, `packages`, `sysctl`, `rclocal`, `disabled_services`,
+    `wireless_profiles`, `channel_assignments_11a_standard`,
+    and `channel_assignments_11g_standard`.
