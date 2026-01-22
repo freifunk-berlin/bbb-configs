@@ -3,13 +3,15 @@ target: ramips/mt76x8
 brand_nice: TP-Link
 model_nice: Archer C50
 version_nice: v4
-
-openwrt_version: 23.05-SNAPSHOT
+openwrt_version: 25.12-SNAPSHOT
 
 switch_ports: 7
 switch_int_port: 6
 switch_ignore_ports: [5]
 int_port: eth0
+
+low_mem: true
+low_flash: true
 
 wireless_devices:
   - name: 11a_standard
