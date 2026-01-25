@@ -13,13 +13,6 @@ imagebuilder: "{{ openwrt_mirror }}/{{ openwrt_base }}/targets/{{ target }}/{{ i
 feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/__INSTR_SET__/falter"
 
 all__packages__to_merge:
-  - collectd-mod-interface
-  - collectd-mod-iwinfo
-  - collectd-mod-load
-  - collectd-mod-memory
-  - collectd-mod-network
-  - collectd-mod-ping
-  - collectd-mod-uptime
   - ethtool
   - ip6tables-nft # Its not pulled in by default anymore bc fw4
   - iptables-nft
@@ -43,6 +36,15 @@ all_luci_base__packages__to_merge:
   - rpcd-mod-rrdns
   - uhttpd
   - uhttpd-mod-ubus
+
+all_collectd__packages__to_merge:
+  - collectd-mod-interface
+  - collectd-mod-iwinfo
+  - collectd-mod-load
+  - collectd-mod-memory
+  - collectd-mod-network
+  - collectd-mod-ping
+  - collectd-mod-uptime
 
 all__disabled_services__to_merge:
   - "olsrd6"
