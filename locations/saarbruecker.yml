@@ -37,6 +37,7 @@ snmp_devices:
 ipv6_prefix: 2001:bf7:760:2200::/56
 
 uplink:
+  broken: true
   ifname: eth5
   ipv4: 176.74.57.43/31
   ipv6: 2a04:d480:2001::1/127

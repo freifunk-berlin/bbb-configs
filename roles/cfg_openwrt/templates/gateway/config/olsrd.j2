@@ -80,6 +80,10 @@ config Hna4
 # Announce default route, its anyways not used for forwarding within BBB
 # We only need it to attract traffic from legacy mesh nodes, until babel
 # takes over in our core network
+{% if not uplink.get('broken', false) %}
 config Hna4
 	option netmask '0.0.0.0'
 	option netaddr '0.0.0.0'
+{% else %}
+# Skipping, uplink is marked broken
+{% endif %}
