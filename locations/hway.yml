@@ -54,7 +54,7 @@ hosts:
 
 snmp_devices:
   - hostname: hway-kiehlufer
-    address: 10.31.255.252
+    address: 10.31.255.251
     snmp_profile: mikrotik_60g
 
 networks:
