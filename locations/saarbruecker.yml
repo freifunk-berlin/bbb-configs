@@ -20,9 +20,10 @@ snmp_devices:
     address: 10.31.83.50
     snmp_profile: edgerouter
 
-  - hostname: saarbruecker-hds
-    address: 10.31.83.51
-    snmp_profile: mikrotik_60g
+  # present but powered down
+  # - hostname: saarbruecker-hds
+  #   address: 10.31.83.51
+  #   snmp_profile: mikrotik_60g
 
   - hostname: saarbruecker-sama
     address: 10.31.83.52
