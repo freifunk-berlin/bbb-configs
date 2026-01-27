@@ -27,7 +27,6 @@ hosts:
     wireless_profile: mesh_only
     mac_override:
       eth0: 2c:c8:1b:6b:e5:d2
-    openwrt_version: 24.10-SNAPSHOT
 
   - hostname: wilde-nf-n
     role: ap
