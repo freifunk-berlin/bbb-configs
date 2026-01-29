@@ -12,66 +12,66 @@ mapfile -t hosts < <(yq '.hosts[] | select(.role == "corerouter" or .role == "ga
 
 # Function to run Ansible playbook with a list of hosts and locations
 generate_images() {
-    local limit_param=$1
-    echo "Generating images with limit: $limit_param"
-    ansible-playbook play.yml --limit "$limit_param" --tags image && echo "Location of generated images: ./tmp/images"
+	local limit_param=$1
+	echo "Generating images with limit: $limit_param"
+	ansible-playbook play.yml --limit "$limit_param" --tags image && echo "Location of generated images: ./tmp/images"
 }
 
 # Function to process wildcards
 process_wildcard() {
-    local pattern=$1
-    local -n result_ref=$2
-    
-    # Match locations
-    for location in "${locations[@]}"; do
-        if [[ "$location" == $pattern ]]; then
-            result_ref+=( "location_${location//-/_}" )
-        fi
-    done
+	local pattern=$1
+	local -n result_ref=$2
 
-    # Match hosts
-    for host in "${hosts[@]}"; do
-        if [[ "$host" == $pattern ]]; then
-            result_ref+=( "$host" )
-        fi
-    done
+	# Match locations
+	for location in "${locations[@]}"; do
+		if [[ "$location" == $pattern ]]; then
+			result_ref+=("location_${location//-/_}")
+		fi
+	done
+
+	# Match hosts
+	for host in "${hosts[@]}"; do
+		if [[ "$host" == $pattern ]]; then
+			result_ref+=("$host")
+		fi
+	done
 }
 
 # Check if an argument is passed
 if [[ $# -gt 0 ]]; then
-    # Parse the argument as a comma-separated list of locations and hosts
-    IFS="," read -ra input_args <<< "$1"
+	# Parse the argument as a comma-separated list of locations and hosts
+	IFS="," read -ra input_args <<<"$1"
 
-    # Validate the input against valid locations and hosts
-    valid_entries=()
+	# Validate the input against valid locations and hosts
+	valid_entries=()
 
-    for entry in "${input_args[@]}"; do
-        # Process wildcard entries (if any)
-        if [[ $entry == *"*"* ]]; then
-            # Get expanded entries from wildcard processing
-            expanded_entries=()
-            process_wildcard "$entry" expanded_entries
-            # Merge expanded entries with valid_entries
-            valid_entries+=( "${expanded_entries[@]}" )
-        # If it's a valid location
-        elif [[ " ${locations[*]} " == *" $entry "* ]]; then
-            valid_entries+=( "location_${entry//-/_}" )
-        # If it's a valid host
-        elif [[ " ${hosts[*]} " == *" $entry "* ]]; then
-            valid_entries+=( "$entry" )
-        else
-            echo "Warning: Invalid entry '$entry' ignored."
-        fi
-    done
+	for entry in "${input_args[@]}"; do
+		# Process wildcard entries (if any)
+		if [[ $entry == *"*"* ]]; then
+			# Get expanded entries from wildcard processing
+			expanded_entries=()
+			process_wildcard "$entry" expanded_entries
+			# Merge expanded entries with valid_entries
+			valid_entries+=("${expanded_entries[@]}")
+		# If it's a valid location
+		elif [[ " ${locations[*]} " == *" $entry "* ]]; then
+			valid_entries+=("location_${entry//-/_}")
+		# If it's a valid host
+		elif [[ " ${hosts[*]} " == *" $entry "* ]]; then
+			valid_entries+=("$entry")
+		else
+			echo "Warning: Invalid entry '$entry' ignored."
+		fi
+	done
 
-    if [[ ${#valid_entries[@]} -gt 0 ]]; then
-        # Combine valid entries into a comma separated list and run the playbook
-        IFS="," limit_param="${valid_entries[*]}"
-        generate_images "$limit_param"
-    else
-        echo "No valid locations or hosts provided. Exiting."
-    fi
-    exit
+	if [[ ${#valid_entries[@]} -gt 0 ]]; then
+		# Combine valid entries into a comma separated list and run the playbook
+		IFS="," limit_param="${valid_entries[*]}"
+		generate_images "$limit_param"
+	else
+		echo "No valid locations or hosts provided. Exiting."
+	fi
+	exit
 fi
 
 # Show menu
@@ -106,47 +106,46 @@ PS3=$'\nUse a location number to generate images for that location or type an ac
 
 # Allow the user to choose a location or action
 unset location
-select location in "${locations[@]}"
-do
-    # Abort if selected
-    if [[ "$REPLY" == abort ]]; then break; fi
+select location in "${locations[@]}"; do
+	# Abort if selected
+	if [[ "$REPLY" == abort ]]; then break; fi
 
-    # Generate all images if selected
-    if [[ "$REPLY" == all ]]; then
-        ansible-playbook play.yml --tags image && echo "Location of generated images: ./tmp/images"
-        break
-    fi
+	# Generate all images if selected
+	if [[ "$REPLY" == all ]]; then
+		ansible-playbook play.yml --tags image && echo "Location of generated images: ./tmp/images"
+		break
+	fi
 
-    # Delete old directories and get rid of artifacts
-    if [[ "$REPLY" == clean ]]; then
-        [ -d "./tmp/" ] && rm -r ./tmp/
-        echo "tmp directory was deleted..."
-        continue
-    fi
+	# Delete old directories and get rid of artifacts
+	if [[ "$REPLY" == clean ]]; then
+		[ -d "./tmp/" ] && rm -r ./tmp/
+		echo "tmp directory was deleted..."
+		continue
+	fi
 
-    # Check all configuration files with ansible-lint
-    if [[ "$REPLY" == lint ]]; then
-        yamllint -d .github/linters/.yaml-lint.yml .
-        ansible-lint -c .github/linters/.ansible-lint.yml
-        break
-    fi
+	# Check all configuration files with ansible-lint
+	if [[ "$REPLY" == lint ]]; then
+		yamllint -d .github/linters/.yaml-lint.yml .
+		ansible-lint -c .github/linters/.ansible-lint.yml
+		break
+	fi
 
-    # Install or update requirements
-    if [[ "$REPLY" == requirements ]]; then
-        pip3 install -r requirements.txt
-        continue
-    fi
+	# Install or update requirements
+	if [[ "$REPLY" == requirements ]]; then
+		pip3 install -r requirements.txt
+		continue
+	fi
 
-    # Complain if no location was selected, and loop to ask again
-    if [[ "$location" == "" ]]; then
-        echo "'$REPLY' is not a valid selection"
-        continue
-    fi
+	# Complain if no location was selected, and loop to ask again
+	if [[ "$location" == "" ]]; then
+		echo "'$REPLY' is not a valid selection"
+		continue
+	fi
 
-    # Generate images for a specific location
-    echo "Firmwares for the following location will be generated: $location"
-    generate_images "location_${location//-/_}"
+	# Generate images for a specific location
+	echo "Firmwares for the following location will be generated: $location"
+	generate_images "location_${location//-/_}"
 
-    # Break the loop
-    break
+	# Break the loop
+	break
 done
