@@ -203,6 +203,7 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
                 echo "Removing local files for $NODENAME from $WORK_DIR"
                 rm -f "$FILE_PATH"
                 rm -f "$WORK_DIR/images/$NODENAME.log"
+                rm -f "$WORK_DIR/images/$NODENAME.json"
                 rm -rf "$WORK_DIR/build/$NODENAME"
                 rm -rf "$WORK_DIR/configs/$NODENAME"
             else
