@@ -12,6 +12,14 @@ hosts:
     role: corerouter
     model: "glinet_gl-mt6000"
     wireless_profile: w38b
+    bird__packages__to_merge:
+      - bird3-babelpatch
+      - bird3c
+    host__rclocal__to_merge:
+      - |
+        # Disable rebind protection for internal hosts
+        uci add_list dhcp.@dnsmasq[0].rebind_domain='int.tobias-schwarz.com'
+        uci commit dhcp; reload_config
   - hostname: w38b-shp
     role: ap
     model: "dlink_covr-x1860-a1"
@@ -54,7 +62,7 @@ networks:
     ipv6_subprefix: -10
     ptp: true
     # prefer routing via RHNK over SAMA
-    mesh_metric: 256
+    mesh_metric: 128
     mesh_metric_lqm: ["default 0.5"]
 
   # MESH - RHNK
