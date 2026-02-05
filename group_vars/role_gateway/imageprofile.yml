@@ -16,6 +16,7 @@ role_uplink_gw__packages__to_merge:
   - luci-app-olsr-services
   - luci-mod-falter
   - falter-common
+  - falter-berlin-gw
   - luci-app-falter-owm
   - luci-app-falter-owm-ant
   - luci-app-falter-owm-cmd
