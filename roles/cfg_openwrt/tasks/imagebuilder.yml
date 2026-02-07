@@ -1,10 +1,4 @@
 ---
-- name: Create images dir
-  file:
-    state: directory
-    path: "{{ images_dir }}"
-    mode: "755"
-  run_once: true
 - name: Clear old image and logfile
   file:
     state: absent
@@ -74,10 +68,17 @@
     instr_set: "{{ instr_set_result.stdout_lines | first }}"
   when: "instr_set is not defined and feed_version is defined"
 
+- name: Set OPKG mirror
+  replace:
+    path: "{{ build_dir }}/repositories.conf"
+    regexp: 'https://downloads\.openwrt\.org/'
+    replace: "{{ openwrt_mirror }}/"
+  when: 'uses_opkg is defined and feed_version is defined'
+
 - name: Insert falter OPKG feed
   lineinfile:
     path: "{{ build_dir }}/repositories.conf"
-    line: "{{ feed }}"
+    line: "{{ feed | replace('__INSTR_SET__', instr_set) }}"
   when: 'uses_opkg is defined and feed_version is defined'
 
 - name: Add falter OPKG feed key
@@ -94,10 +95,17 @@
     state: "absent"
   when: "uses_opkg is defined and imagebuilder_disable_signature_check is defined and imagebuilder_disable_signature_check"
 
+- name: Set APK mirror
+  replace:
+    path: "{{ build_dir }}/repositories"
+    regexp: 'https://downloads\.openwrt\.org/'
+    replace: "{{ openwrt_mirror }}/"
+  when: 'uses_apk is defined and feed_version is defined'
+
 - name: Add falter APK feed
   lineinfile:
     path: "{{ build_dir }}/repositories"
-    line: "{{ feed }}"
+    line: "{{ feed | replace('__INSTR_SET__', instr_set) }}"
   when: 'uses_apk is defined and feed_version is defined'
 
 - name: Add falter APK feed to image
@@ -163,16 +171,7 @@
     line: "{{ item }}::askfirst:/usr/libexec/login.sh"
   loop: "{{ additional_serial_ports | default([]) }}"
 
-- name: Generate Imagebuilder command
-  set_fact:
-    make_command: >
-      make image
-      PROFILE='{{ override_target | default(model) }}'
-      PACKAGES='{{ packages | join(" ") }}'
-      DISABLED_SERVICES='{{ disabled_services | join(" ") }}'
-      FILES='{{ configs_dir }}' 1>&2
-
-- name: Debug Imagebuilder command
+- name: Debug Imagebuilder command again
   debug:
     var: make_command
 

@@ -2,14 +2,15 @@
 # default OpenWRT version to build from unless overridden
 openwrt_version: 24.10-SNAPSHOT
 
+openwrt_mirror: https://downloads.openwrt.org
+# openwrt_mirror: https://mirror.berlin.freifunk.net/downloads.openwrt.org
+openwrt_base: "{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}"
+
 imagebuilder_suffix: zst # Might get overridden for older openwrt versions
 imagebuilder_filename: "openwrt-imagebuilder-{{ openwrt_version }}-{{ target | replace('/', '-') }}.Linux-x86_64.tar.{{ imagebuilder_suffix }}"
 
-imagebuilder: >
-  https://downloads.cdn.openwrt.org/{{
-  'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version
-  }}/targets/{{ target }}/{{ imagebuilder_filename }}
-feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/{{ instr_set }}/falter"
+imagebuilder: "{{ openwrt_mirror }}/{{ openwrt_base }}/targets/{{ target }}/{{ imagebuilder_filename }}"
+feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/__INSTR_SET__/falter"
 
 all__packages__to_merge:
   - collectd-mod-interface
