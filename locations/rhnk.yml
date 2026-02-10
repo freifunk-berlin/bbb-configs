@@ -160,7 +160,7 @@ networks:
     role: mesh
     name: mesh_ak36
     prefix: 10.230.3.22/32
-    mesh_metric: 128
+    mesh_metric: 512 # temporarily increase from 128 to 512 until antennas get realigned
     ipv6_subprefix: -22
 
   - vid: 23
