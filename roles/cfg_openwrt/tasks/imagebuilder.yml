@@ -111,7 +111,7 @@
 - name: Add falter APK feed to image
   lineinfile:
     path: "{{ configs_dir }}/etc/apk/repositories.d/falter.list"
-    line: "{{ feed }}"
+    line: "{{ feed | replace('__INSTR_SET__', instr_set) }}"
     create: true
     mode: "644"
   when: 'uses_apk is defined and feed_version is defined'
