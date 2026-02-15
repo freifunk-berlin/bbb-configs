@@ -24,6 +24,7 @@ hosts:
   - hostname: wildbreak-core
     role: corerouter
     model: "avm_fritzbox-7530"
+    wireless_profile: ap_only
 
   - hostname: wildbreak-o-ap
     role: ap
@@ -45,7 +46,6 @@ hosts:
 
 ipv6_prefix: "2001:bf7:820:1a00::/56"
 
-# config restored from router configuration
 # got following prefixes:
 # Router: 10.248.101.64/26
 # --MGMT: 10.248.101.112/28
@@ -66,7 +66,7 @@ networks:
 
   - vid: 20
     role: mesh
-    name: mesh_wildbreak-nf-o
+    name: mesh_wb_nf_o
     prefix: 10.248.101.96/32
     ipv6_subprefix: -20
     mesh_ap: wildbreak-nf-o
@@ -75,7 +75,7 @@ networks:
 
   - vid: 21
     role: mesh
-    name: mesh_wildbreak-nf-s
+    name: mesh_wb_nf_s
     prefix: 10.248.101.97/32
     ipv6_subprefix: -21
     mesh_ap: wildbreak-nf-s
