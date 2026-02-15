@@ -1,0 +1,101 @@
+---
+location: wildbreak
+location_nice: Wildenbruchstraße
+latitude: 52.4841862
+longitude: 13.4432464
+
+contact_nickname: "nolif"
+contacts:
+  - "noliphson@gmail.com"
+
+dns_servers:
+  # quad9
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+
+hosts:
+  - hostname: wildbreak-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+
+  - hostname: wildbreak-o-ap
+    role: ap
+    model: "tplink_eap225-outdoor-v1"
+    wireless_profile: ap_only
+
+  - hostname: wildbreak-nf-o
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    wireless_profile: mesh_only
+    mac_override:
+      eth0: dc:2c:6e:c4:36:31
+
+  - hostname: wildbreak-nf-s
+    role: ap
+    model: "mikrotik_sxtsq-5-ac"
+    mac_override:
+      eth0: dc:2c:6e:c4:36:4B
+
+ipv6_prefix: "2001:bf7:820:1a00::/56"
+
+# config restored from router configuration
+# got following prefixes:
+# Router: 10.248.101.64/26
+# --MGMT: 10.248.101.112/28
+# --MESH: 10.248.101.96/28
+# --DHCP: 10.248.101.64/27
+
+networks:
+  # DHCP with filtering and isolation
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.101.64/27
+    ipv6_subprefix: 0
+    assignments:
+      wildbreak-core: 1
+
+  - vid: 20
+    role: mesh
+    name: mesh_wildbreak-nf-o
+    prefix: 10.248.101.96/32
+    ipv6_subprefix: -20
+    mesh_ap: wildbreak-nf-o
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 21
+    role: mesh
+    name: mesh_wildbreak-nf-s
+    prefix: 10.248.101.97/32
+    ipv6_subprefix: -21
+    mesh_ap: wildbreak-nf-s
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.101.112/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      wildbreak-core: 1
+      wildbreak-o-ap: 2
+      wildbreak-nf-o: 3
+      wildbreak-nf-s: 4
+
+location__channel_assignments_11a_standard__to_merge:
+  # Channel - Bandwidth - TX Power
+  wildbreak-nf-o: 165-40
+  wildbreak-nf-s: 40-20
