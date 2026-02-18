@@ -126,3 +126,15 @@ location_scharni__channel_assignments_11g_standard__to_merge:
   scharni-ap2: 6-20
   scharni-ap-kneipe: 1-20
   scharni-ap-keller: 6-20
+
+dns_servers:
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+  # google
+  - 8.8.8.8
+  - 8.8.4.4
+  - 2001:4860:4860::8888
+  - 2001:4860:4860::8844
