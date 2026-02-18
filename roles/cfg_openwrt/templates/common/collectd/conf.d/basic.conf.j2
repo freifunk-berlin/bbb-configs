@@ -12,7 +12,7 @@ LoadPlugin interface
 
 {% if 'collectd-mod-ping' in packages %}
 LoadPlugin ping
-	{% for host in collectd_ping_hosts %}
+	{% for host in (collectd_ping_hosts | default([]) | union(dns_servers | default([]))) %}
 <Plugin ping>
 	TTL 127
 	Interval 10
