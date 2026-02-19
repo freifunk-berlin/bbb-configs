@@ -1,12 +1,14 @@
+{% if poemgr_ports is defined %}
 config poemgr 'settings'
         option profile 'usw-flex'
         option disabled '0'
         option power_budget '{{ poemgr_power_budget | default('0') }}'
 
-{% for poe in poemgr_ports | default([]) %}
+{% for poe in poemgr_ports %}
 config port '{{ poe['name'] }}'
         option name '{{ poe['name'] }}'
         option port '{{ poe['port'] }}'
         option disabled '{{ poe['disabled'] }}'
 
 {% endfor %}
+{% endif %}

@@ -1,14 +1,14 @@
 ---
-- name: Include tasks for merging variables
+- name: Include tasks for conditional packages
   include_tasks:
-    file: merge_vars.yml
+    file: conditional_packages.yml
     apply:
       tags: always
   tags: always
 
-- name: Include tasks for conditional packages
+- name: Include tasks for merging variables
   include_tasks:
-    file: conditional_packages.yml
+    file: merge_vars.yml
     apply:
       tags: always
   tags: always
@@ -64,17 +64,6 @@
     file: add_symlinks.yml
     apply:
       tags: always
-  tags:
-    - always
-    - config
-
-- name: Add poemgr config if poemgr target
-  template:
-    src: "{{ role_path }}/templates/common/config/poemgr.j2"
-    dest: "{{ configs_dir }}/etc/config/poemgr"
-    mode: "644"
-  when:
-    - poemgr_ports is defined
   tags:
     - always
     - config

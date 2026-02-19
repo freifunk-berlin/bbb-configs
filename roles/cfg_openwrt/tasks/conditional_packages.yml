@@ -1,96 +1,64 @@
 ---
-- name: "Add irqbalance if multicore"
-  set_fact:
-    packages: "{{ packages + ['irqbalance'] }}"
-  when:
-    - multicore|default(false)|bool
 
-- name: "Add airos-dfs-reset if configured"
+- name: "Omit irqbalance unless multicore"
   set_fact:
-    packages: "{{ packages + ['airos-dfs-reset'] }}"
+    multicore__packages__to_merge: []
   when:
-    - airos_dfs_reset|default([])|length > 0
-    - role == 'corerouter'
+    - not (multicore | default(false))
 
-- name: "Add Dawn + Luci app for corerouters"
+- name: "Omit airos-dfs-reset unless configured"
   set_fact:
-    packages: "{{ packages + [item] }}"
+    dfs__packages__to_merge: []
   when:
-    - role == 'corerouter' or role == 'ap'
-    - not (low_mem | default(false))
-    - not (low_flash | default(false))
-    - wifi_roaming | default(false)
-  loop:
-    - dawn
-    - luci-app-dawn
-    - umdns
+    - not (airos_dfs_reset | default([]) | count > 1)
 
-- name: "Add tunspace if configured"
+- name: "Omit DAWN unless configured"
   set_fact:
-    packages: "{{ packages + ['tunspace', 'wireguard-tools'] }}"
+    dawn__packages__to_merge: []
   when:
-    - networks is defined
-    - networks | selectattr('role', 'defined') | selectattr('role','equalto','tunnel') | count > 0
-    - role == 'corerouter'
+    - not (wifi_roaming | default(false))
 
-- name: "Add zram-swap on low mem and big flash"
+- name: "Omit tunspace unless configured"
   set_fact:
-    packages: "{{ packages + ['zram-swap'] }}"
+    tunnel__packages__to_merge: []
   when:
-    - low_mem | default(false)
-    - not (low_flash | default(false))
+    - networks is not defined or networks | selectattr('role','equalto','tunnel') | count == 0
 
-- name: "Add debugging-packages on core-routers"
+- name: "Omit zram-swap unless low mem and big flash"
   set_fact:
-    packages: "{{ packages + ['mosh-server', 'tmux'] }}"
+    zram__packages__to_merge: []
   when:
-    - role == 'corerouter'
-    - not (low_mem | default(false))
-    - not (low_flash | default(false))
+    # CONFIG_KERNEL_SWAP is disabled on many low_flash devices (citation needed)
+    - not (low_mem | default(false) and not (low_flash | default(false)))
 
-- name: "Remove or replace packages on low mem and low flash"
+- name: "Omit corerouter utilities if low mem or low flash"
   set_fact:
-    packages: "{{ packages + [item] }}"
+    util__packages__to_merge: []
+  when:
+    - low_mem | default(false) or low_flash | default(false)
+
+- name: "Omit notlow packages if low mem or low flash"
+  set_fact:
+    notlow__packages__to_merge: []
   when: low_mem | default(false) or low_flash | default(false)
-  loop:
-    - -ethtool
-    - -iperf3
-    - -iwinfo
-    - -libiwinfo-lua
-    - -collectd-mod-iwinfo
-    - -kmod-ipt-core
-    - -kmod-ipt-offload
-    - -kmod-nf-ipt
-    - -kmod-nls-base
-    - -kmod-phy-ath79-usb
-    - -kmod-usb-core
-    - -kmod-usb-ehci
-    - -kmod-usb-ohci
-    - -kmod-usb2
-    - -opkg
-    - -tcpdump
-    - tcpdump-mini
-    - -vnstat
 
-- name: "Remove Luci on low mem and low flash"
+- name: "Omit low packages unless low mem or low flash"
   set_fact:
-    packages: "{{ packages + ['-' + item] }}"
+    low__packages__to_merge: []
+  when: not (low_mem | default(false) or low_flash | default(false))
+
+- name: "Omit LuCI if low mem or low flash unless corerouter"
+  set_fact:
+    all_luci_base__packages__to_merge: []
   when: (low_mem | default(false) or low_flash | default(false)) and role != "corerouter"
-  loop: "{{ all_luci_base__packages__to_merge }}"
 
-- name: "Disable uhttpd on low mem"
+- name: "Skip disabling uhttpd unless low mem"
   set_fact:
-    disabled_services: "{{ disabled_services + ['uhttpd'] }}"
-  when: low_mem | default(false)
+    low__disabled_services__to_merge: []
+  when: not (low_mem | default(false))
 
-- name: "Add ip-bridge if dsa target"
+- name: "Omit ip-bridge unless DSA target"
   set_fact:
-    packages: "{{ packages + ['ip-bridge'] }}"
+    dsa__packages__to_merge: []
   when:
-    - dsa_ports is defined
-
-- name: "Add poemgr if poemgr target"
-  set_fact:
-    packages: "{{ packages + ['poemgr'] }}"
-  when:
-    - poemgr_ports is defined
+    - not (dsa_ports is defined)
