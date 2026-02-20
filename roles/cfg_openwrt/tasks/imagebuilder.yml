@@ -95,6 +95,13 @@
     state: "absent"
   when: "uses_opkg is defined and imagebuilder_disable_signature_check is defined and imagebuilder_disable_signature_check"
 
+- name: Ensure repositories file exists
+  file:
+    path: "{{ build_dir }}/repositories"
+    state: touch
+    mode: '0600'
+  when: uses_apk is defined and feed_version is defined
+
 - name: Set APK mirror
   replace:
     path: "{{ build_dir }}/repositories"
