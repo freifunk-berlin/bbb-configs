@@ -282,6 +282,18 @@ qmi:
 ```
 
 
+### bandwith limits
+
+An optional configuration parameter can be added to any non-tunnel interface to limit the bandwitdh available on that interface.  When either `ingress` or `egress` are included in any interface definition, qos-scripts will be installed.  The values for `ingress` and `egress` are in MBit/s.
+
+```yml
+  - vid: 50
+    rold: uplink
+    ingress: 150     # limit downloads to 150MBit/s
+    egress: 50       # limit uploads to 50MBit/s
+```
+
+
 ### ssh-keys
 
 By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys use this format:

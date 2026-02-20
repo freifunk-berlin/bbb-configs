@@ -94,3 +94,10 @@
     packages: "{{ packages + ['poemgr'] }}"
   when:
     - poemgr_ports is defined
+
+- name: "Add QOS support if configured"
+  set_fact:
+    packages: "{{ packages + ['qos-scripts'] }}"
+  when:
+    - networks is defined
+    - networks | selectattr('ingress', 'defined') | count > 0 or networks | selectattr('egress', 'defined') | count > 0
