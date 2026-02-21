@@ -61,12 +61,24 @@ echo "The following firmware files will be flashed:"
 for FILE_PATH in "${SORTED_FILES[@]}"; do
 	echo "- $(basename "$FILE_PATH")"
 done
+# Check for -y or --yes parameter to auto-confirm
+AUTO_YES=0
+for arg in "$@"; do
+	if [[ "$arg" == "-y" || "$arg" == "--yes" ]]; then
+		AUTO_YES=1
+		break
+	fi
+done
 echo ""
-read -rp "Do you want to proceed [y/N]? " choice
-echo ""
-if [[ ! "$choice" =~ ^[Yy]$ ]]; then
-	echo "Exiting..."
-	exit 0
+if [ $AUTO_YES -eq 0 ]; then
+	read -rp "Do you want to proceed [y/N]? " choice
+	echo ""
+	if [[ ! "$choice" =~ ^[Yy]$ ]]; then
+		echo "Exiting..."
+		exit 0
+	fi
+else
+	echo "Auto-confirm enabled, proceeding without prompt..."
 fi
 
 # Function to check reachability
