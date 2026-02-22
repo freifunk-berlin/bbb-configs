@@ -1,0 +1,52 @@
+---
+location: martin-vpn
+location_nice: "Martins IPv6-VPN und Netz-Entry VM-Router"
+contact_name: "Martin"
+contacts:
+  - "https://config.berlin.freifunk.net/contact/8349/Im1hcnRpbi12cG4i.aZs2yA.vwkt5f_FpU3MEB71PUdcveqF4Pc"
+
+hosts:
+  - hostname: martin-vpn
+    role: corerouter
+    model: "x86-64"
+
+# IPv6 prefix from Berlin
+ipv6_prefix: "2001:bf7:800:2900::/56"
+
+# got following prefixes:
+#-- Mesh-IPs
+#    10.31.0.241 10.31.0.242 10.31.1.29
+#-- DHCP-Network
+#    10.31.96.160/27
+#    2001:bf7:800:2900::/56
+
+networks:
+  # DHCP
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.96.160/27
+    ipv6_subprefix: 0
+    assignments:
+      martin-vpn: 1
+
+  # UPLK
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.0.241/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.0.242/32
+    wireguard_port: 51821
+
+# only place this ssh-keys
+ssh_keys:
+  - comment: Martin
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPCNb87ANxi9nWXdYvxVvX+fZPx8zU5bDaZkNupgDumG Martin
