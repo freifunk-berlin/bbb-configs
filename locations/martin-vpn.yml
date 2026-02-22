@@ -9,13 +9,7 @@ hosts:
   - hostname: martin-vpn
     role: corerouter
     model: "x86-64"
-    host__rclocal__to_merge:
-      - |
-        # untag DHCP on LAN port
-        uci set network.vlan_40.ports='lan:u'
-        # untag UPLK on WAN port
-        uci set network.vlan_50.ports='wan:u'
-        uci commit network; reload_config
+    int_port: eth0
     host__packages__to_merge:
       - htop
       - nano
@@ -35,6 +29,7 @@ networks:
   # DHCP
   - vid: 40
     role: dhcp
+    untagged: true
     inbound_filtering: true
     enforce_client_isolation: true
     prefix: 10.31.96.160/27
@@ -45,6 +40,8 @@ networks:
   # UPLK
   - vid: 50
     role: uplink
+    untagged: true
+    ifname: eth1
 
   - role: tunnel
     ifname: ts_wg0
