@@ -24,6 +24,7 @@ networks:
   # DHCP
   - vid: 40
     role: dhcp
+    untagged: true
     prefix: 10.31.96.160/27
     ipv6_subprefix: 0
     assignments:
@@ -33,6 +34,7 @@ networks:
   - vid: 50
     role: uplink
     untagged: true
+    ifname: eth1
 
   - role: tunnel
     ifname: ts_wg0
