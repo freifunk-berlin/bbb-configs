@@ -17,7 +17,7 @@ hosts:
     host__rclocal__to_merge:
       - |
         uci set network.vlan_50.ports='lan:u'
-        uci commit network; reload_config    
+        uci commit network; reload_config
 
 ipv6_prefix: "2001:bf7:850:a00::/56"
 # DHCP    10.31.203.192/27
