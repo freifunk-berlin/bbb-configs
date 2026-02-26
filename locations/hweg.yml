@@ -13,8 +13,6 @@ contacts:
 # - 10.248.97.192/27    dhcp
 # - 10.248.97.224/28    prdhcp
 # - 10.248.97.240/29    mesh
-#   - 10.248.97.240/32  mesh_rhnk
-#   - 10.248.97.241/32  ts_wg0
 # - 10.248.97.248/29    mgmt
 ipv6_prefix: 2001:bf7:820:400::/56
 
@@ -22,7 +20,7 @@ hosts:
   - hostname: hweg-core
     role: corerouter
     model: zyxel_nwa50ax
-    wireless_profile: freifunk_default
+    wireless_profile: hweg
 
 snmp_devices:
   - hostname: hweg-rhnk
@@ -46,6 +44,16 @@ networks:
     assignments:
       hweg-core: 1
 
+  - vid: 41
+    role: dhcp
+    name: prdhcp
+    inbound_filtering: true
+    enforce_client_isolation: false
+    prefix: 10.248.97.224/28
+    ipv6_subprefix: -41
+    assignments:
+      hweg-core: 1
+
   - vid: 442
     role: mgmt
     prefix: 10.248.97.248/29
@@ -61,3 +69,34 @@ location__channel_assignments_11a_standard__to_merge:
 
 location__channel_assignments_11b_standard__to_merge:
   hweg-core: 13-20
+
+location__wireless_profiles__to_merge:
+  - name: hweg
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard]
+        ifname_hint: ff
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard]
+        ifname_hint: ffowe
+        ieee80211w: 2
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        mesh_nolearn: 1
+        ifname_hint: mesh
+      - mode: ap
+        ssid: hwhwhw
+        encryption: psk2
+        key: "file:/root/wifi_pass"
+        network: prdhcp
+        radio: [11a_standard]
+        ifname_hint: prdhcp
