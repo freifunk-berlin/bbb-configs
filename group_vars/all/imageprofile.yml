@@ -2,8 +2,8 @@
 # default OpenWRT version to build from unless overridden
 openwrt_version: 24.10-SNAPSHOT
 
-openwrt_mirror: https://downloads.openwrt.org
-# openwrt_mirror: https://mirror.berlin.freifunk.net/downloads.openwrt.org
+# openwrt_mirror: https://downloads.openwrt.org
+openwrt_mirror: https://mirror.berlin.freifunk.net/downloads.openwrt.org
 openwrt_base: "{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}"
 
 imagebuilder_suffix: zst # Might get overridden for older openwrt versions
