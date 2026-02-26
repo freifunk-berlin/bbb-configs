@@ -15,7 +15,7 @@ hosts:
     role: corerouter
     model: "genexis_pulse-ex400"
     wireless_profile: freifunk_hacrafu
-    flow_offload: hw
+    # flow_offload: hw
     host__rclocal__to_merge:
       - |
         uci set network.vlan_40.ports='lan:u'
@@ -73,6 +73,8 @@ networks:
   # UPLINK
   - vid: 50
     role: uplink
+    igress: 10
+    egress: 2
 
   - role: tunnel
     ifname: ts_wg0
