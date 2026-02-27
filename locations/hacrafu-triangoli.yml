@@ -100,6 +100,8 @@ networks:
   # UPLINK
   - vid: 50
     role: uplink
+    ingress: 50
+    egress: 50
 
   - role: tunnel
     ifname: ts_wg0
