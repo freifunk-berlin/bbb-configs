@@ -103,7 +103,7 @@ You can enable flow offloading to drastictly improve performance for mediatek ch
     flow_offload: hw
 ```
 
-**WARNING:** Due to [kernel limitations](https://www.kernel.org/doc/html/v5.15/networking/nf_flowtable.html#limitations) you might encounter problems with wifi roaming or when changing wifi bands.
+**WARNING:** Due to [kernel limitations](https://www.kernel.org/doc/html/v5.15/networking/nf_flowtable.html#limitations) you might encounter problems with wifi roaming or when changing wifi bands. [Hardware offload](https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading) bypasses QoS traffic controls (like [bandwith-limits](#bandwith-limits)) at high priority making former ineffective.
 
 ### monitoring
 
@@ -293,6 +293,7 @@ An optional configuration parameter can be added to any non-tunnel interface to 
     egress: 50       # limit uploads to 50MBit/s
 ```
 
+**WARNING:** This is made ineffective if [flow offloading](#flow-offloading) is enabled.
 
 ### ssh-keys
 
