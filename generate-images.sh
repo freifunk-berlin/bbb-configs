@@ -37,32 +37,63 @@ process_wildcard() {
 	done
 }
 
-# Check if an argument is passed
-if [[ $# -gt 0 ]]; then
-	# Parse the argument as a comma-separated list of locations and hosts
-	IFS="," read -ra input_args <<<"$1"
+# Function to process entries and validate them
+process_entries() {
+	local -n entries_ref=$1
+	local -n valid_entries_ref=$2
 
-	# Validate the input against valid locations and hosts
-	valid_entries=()
+	for entry in "${entries_ref[@]}"; do
+		# Skip empty lines
+		[[ -z "$entry" ]] && continue
 
-	for entry in "${input_args[@]}"; do
 		# Process wildcard entries (if any)
 		if [[ $entry == *"*"* ]]; then
 			# Get expanded entries from wildcard processing
 			expanded_entries=()
 			process_wildcard "$entry" expanded_entries
 			# Merge expanded entries with valid_entries
-			valid_entries+=("${expanded_entries[@]}")
+			valid_entries_ref+=("${expanded_entries[@]}")
 		# If it's a valid location
 		elif [[ " ${locations[*]} " == *" $entry "* ]]; then
-			valid_entries+=("location_${entry//-/_}")
+			valid_entries_ref+=("location_${entry//-/_}")
 		# If it's a valid host
 		elif [[ " ${hosts[*]} " == *" $entry "* ]]; then
-			valid_entries+=("$entry")
+			valid_entries_ref+=("$entry")
 		else
 			echo "Warning: Invalid entry '$entry' ignored."
 		fi
 	done
+}
+
+# Check if an argument is passed
+if [[ $# -gt 0 ]]; then
+	# Check if first argument is -l (load from file)
+	if [[ "$1" == "-l" ]]; then
+		# Ensure a file path is provided
+		if [[ $# -lt 2 ]]; then
+			echo "Error: -l requires a file path argument"
+			exit 1
+		fi
+
+		file_path="$2"
+
+		# Check if file exists
+		if [[ ! -f "$file_path" ]]; then
+			echo "Error: File '$file_path' not found"
+			exit 1
+		fi
+
+		# Read entries from file (skip empty lines and comments)
+		mapfile -t input_args < <(grep -v '^[[:space:]]*$' "$file_path" | grep -v '^[[:space:]]*#')
+	else
+		# Parse the argument as a comma-separated list of locations and hosts
+		# shellcheck disable=SC2034
+		IFS="," read -ra input_args <<<"$1"
+	fi
+
+	# Validate the input against valid locations and hosts
+	valid_entries=()
+	process_entries input_args valid_entries
 
 	if [[ ${#valid_entries[@]} -gt 0 ]]; then
 		# Combine valid entries into a comma separated list and run the playbook
@@ -81,6 +112,10 @@ This helper script allows you to build multiple locations and hosts by passing t
 parameter and even allows using wildcards when quoted e.g.
 
 ./generate-images.sh location1,host1,host2,location2,\"host-*\",\"location*\"
+
+You can also load entries from a file, one per line (supports comments starting with #):
+
+./generate-images.sh -l list.txt
 
 or perform bbb-config related tasks via an easy menu. Either select a location by
 typing the corresponding number or one of the following actions by just typing them.
