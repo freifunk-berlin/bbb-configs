@@ -3,7 +3,7 @@ location: hdk-47a
 location_nice: Heidekampgraben 47a
 latitude: 52.478732310
 longitude: 13.47133577
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-47a

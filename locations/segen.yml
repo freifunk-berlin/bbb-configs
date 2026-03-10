@@ -1,6 +1,6 @@
 ---
 location: segen
-location_nice: Segenskirche
+location_nice: Segenskirche, Schönhauser Allee, 10435 Berlin
 latitude: 52.53604
 longitude: 13.41198
 altitude: 108
@@ -52,7 +52,7 @@ snmp_devices:
     address: 10.31.6.13
     snmp_profile: airos_6
 
-  - hostname: segen-bht
+  - hostname: segen-fardf
     address: 10.31.6.14
     snmp_profile: airos_8
 
@@ -61,12 +61,8 @@ snmp_devices:
     snmp_profile: airos_8
 
   - hostname: segen-no
-    address: 10.31.6.16
-    snmp_profile: airos_6
-
-  - hostname: segen-wsee
     address: 10.31.6.17
-    snmp_profile: airos_6
+    snmp_profile: airos_8
 
   - hostname: segen-n-5ghz
     address: 10.31.6.20
@@ -97,7 +93,7 @@ airos_dfs_reset:
     password: "file:/root/pwd"
     daytime_limit: "2-7"
 
-  - name: "segen-bht"
+  - name: "segen-fardf"
     target: "10.31.6.14"
     username: "ubnt"
     password: "file:/root/pwd"
@@ -105,6 +101,12 @@ airos_dfs_reset:
 
   - name: "segen-k12"
     target: "10.31.6.15"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "segen-no"
+    target: "10.31.6.16"
     username: "ubnt"
     password: "file:/root/pwd"
     daytime_limit: "2-7"
@@ -135,10 +137,9 @@ networks:
       segen-f2a: 11
       segen-stadalbert: 12
       segen-sw: 13
-      segen-bht: 14
+      segen-fardf: 14
       segen-k12: 15
       segen-no: 16
-      segen-wsee: 17
 
       # airos
       segen-n-5ghz: 20
@@ -175,7 +176,9 @@ networks:
     name: mesh_f2a
     prefix: 10.31.6.65/32
     ipv6_subprefix: -2
-    mesh_metric: 1024
+    # This mitigates issues with f2a announcing a non working gateway
+    # mesh_metric is set to 3072 (tunnel metric) + 4096 (2x 5ghz mesh metric)
+    mesh_metric: 7168
     mesh_metric_lqm:
       - default 0.3
 
@@ -193,7 +196,7 @@ networks:
 
   - vid: 105
     role: mesh
-    name: mesh_bht
+    name: mesh_fardf
     prefix: 10.31.6.68/32
     ipv6_subprefix: -5
 
@@ -208,12 +211,6 @@ networks:
     name: mesh_no
     prefix: 10.31.6.70/32
     ipv6_subprefix: -7
-
-  - vid: 108
-    role: mesh
-    name: mesh_wsee
-    prefix: 10.31.6.71/32
-    ipv6_subprefix: -8
 
   # 11s mesh 2ghz
   - vid: 201

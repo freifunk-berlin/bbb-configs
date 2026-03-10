@@ -4,7 +4,7 @@ location_nice: "Rathaus Neukölln, Karl-Marx-Straße 83, 12043 Berlin"
 latitude: 52.481380
 longitude: 13.435078
 altitude: 90
-community: true
+community: berlin
 
 hosts:
   # Lenovo 10T8S00S00 / Thinkcentre M720q, i5-8500T, 1x16 GB RAM, 256 GB NVMe
@@ -160,7 +160,7 @@ networks:
     role: mesh
     name: mesh_ak36
     prefix: 10.230.3.22/32
-    mesh_metric: 128
+    mesh_metric: 512 # temporarily increase from 128 to 512 until antennas get realigned
     ipv6_subprefix: -22
 
   - vid: 23

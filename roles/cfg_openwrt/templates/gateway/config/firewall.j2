@@ -2,7 +2,7 @@
 {% import 'libraries/network.j2' as libnetwork with context %}
 
 config defaults
-	option syn_flood	1
+	option synflood_protect	1
 	option input		ACCEPT
 	option output		ACCEPT
 	option forward		REJECT
@@ -125,6 +125,14 @@ config rule
 	option src		uplink
 	option dest_port	5201
 	option target		ACCEPT
+
+config rule
+	option name			"Allow-Ping"
+	option src 			uplink
+	option proto 		icmp
+	option icmp_type 	echo-request
+	option family 		ipv4
+	option target 		ACCEPT
 
 # Allow essential incoming IPv6 ICMP traffic
 config rule

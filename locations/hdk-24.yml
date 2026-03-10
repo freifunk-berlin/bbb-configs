@@ -3,7 +3,7 @@ location: hdk-24
 location_nice: Heidekampgraben 24
 latitude: 52.477820743
 longitude: 13.47099781
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-24

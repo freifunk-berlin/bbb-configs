@@ -3,7 +3,7 @@ location: hdk-83
 location_nice: Heidekampgraben 83
 latitude: 52.479019825
 longitude: 13.47195804
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-83
@@ -20,7 +20,7 @@ hosts:
         done
         uci commit wireless; reload_config
 
-ipv6_prefix: "2001:bf7:840:6300::/56 "
+ipv6_prefix: "2001:bf7:840:6300::/56"
 
 # --MGMT: 10.248.53.104/30
 # --MESH: 10.248.53.192/32 10.248.53.193/32

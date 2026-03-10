@@ -11,7 +11,7 @@ contacts:
 hosts:
   - hostname: frischauf-core
     role: corerouter
-    model: "ubnt_edgerouter-x-sfp"
+    model: "ubnt_edgerouter-x-sfp-24-10"
     poe_on: [0, 1, 2, 3]
     host__rclocal__to_merge:
       - |
@@ -26,6 +26,15 @@ hosts:
   - hostname: frischauf-west
     role: ap
     model: "tplink_cpe210-v2"
+    host__rclocal__to_merge:
+      - |
+        # Enable legacy rates on 2 GHz to enable meshing with legacy neighbors
+        for radio in $(uci show wireless \
+          | grep ".band='2g'" \
+          | cut -d. -f2); do
+          uci set wireless.$radio.legacy_rates='1'
+        done
+        uci commit wireless; reload_config
 
 snmp_devices:
   - hostname: frischauf-teufelsberg

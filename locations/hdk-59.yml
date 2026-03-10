@@ -3,7 +3,7 @@ location: hdk-59
 location_nice: Heidekampgraben 59
 latitude: 52.478542810
 longitude: 13.47187758
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-59

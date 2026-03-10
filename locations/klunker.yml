@@ -4,7 +4,7 @@ location_nice: Klunkerkranich
 latitude: 52.4819617
 longitude: 13.4330485
 altitude: 63
-community: true
+community: berlin
 
 hosts:
   - hostname: klunker-core

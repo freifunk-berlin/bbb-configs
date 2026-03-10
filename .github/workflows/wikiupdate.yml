@@ -1,21 +1,28 @@
 ---
 name: Wikiupdate
-on: # yamllint disable-line rule:truthy
+
+on:
   push:
     branches:
-      - main
+      - "main"
+
+permissions:
+  contents: read
+  actions: read
 
 jobs:
   update_wiki:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - name: Install dependencies
-        run: sudo apt install python3
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
 
       - name: Install dependencies
         run: pip3 install -r requirements.txt --upgrade pip
@@ -36,7 +43,7 @@ jobs:
           FF_WIKI_PASSWORD: ${{ secrets.FF_WIKI_PASSWORD }}
         run: |
           if [ -n "${CHANGED_LOCATIONS}" ]; then
-            ansible-playbook play.yml --tags wiki --limit "$CHANGED_LOCATIONS" ||true
+            ansible-playbook play.yml --skip-tags config --tags wiki --limit "$CHANGED_LOCATIONS" ||true
           else
             echo "No locations were changed. Skipping update"
           fi

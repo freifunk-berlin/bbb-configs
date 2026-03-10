@@ -3,7 +3,7 @@ location: hdk-0
 location_nice: Heidekampgraben 0
 latitude: 52.478098463
 longitude: 13.47196341
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-0

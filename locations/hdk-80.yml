@@ -3,7 +3,7 @@ location: hdk-80
 location_nice: Heidekampgraben 80
 latitude: 52.479571980
 longitude: 13.47096562
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-80

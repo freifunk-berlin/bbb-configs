@@ -1,0 +1,155 @@
+---
+location: basta
+location_nice: Schererstr 8
+latitude: 52.548189957239830
+longitude: 13.367031291128984
+
+contact_nickname: "Perry"
+contacts:
+  - "isprotejesvalkata [attt] gmail com"
+
+hosts:
+  - hostname: basta
+    role: corerouter
+    model: "siemens_ws-ap3610"
+    wireless_profile: basta
+    host__rclocal__to_merge:
+      - |
+        # set the ip address on hauslan because the lint checker doesn't like
+        # it in the config.  Huh
+        uci -q get network.hauslan.ipaddr > /dev/null
+        if [ '1' -eq $? ]; then
+          uci set network.hauslan.proto="static"
+          uci set network.hauslan.ipaddr="192.168.5.3/24"
+          uci commit network
+        fi
+        # set up DHCP for the non-autoconfigured interfaces properly
+        uci -q get dhcp.freifunk.interface > /dev/null
+        if [ "1" -eq $? ]; then
+          uci set dhcp.freifunk=dhcp
+          uci set dhcp.freifunk.interface=freifunk
+          uci set dhcp.freifunk.ignore=1
+          uci set dhcp.hauslan=dhcp
+          uci set dhcp.hauslan.interface=hauslan
+          uci set dhcp.hauslan.ignore=1
+          uci set dhcp.transtor=dhcp
+          uci set dhcp.transtor.interface=transtor
+          uci set dhcp.transtor.ignore=1
+          uci commit dhcp
+          /etc/init.d/dnsmasq restart
+        fi
+        # reconfigure firewall because the autoconfig is totally wrong
+        uci -q get firewall.zone_hauslan.name > /dev/null
+        if [ "1" -eq $? ]; then
+          uci add_list firewall.zone_freifunk.network=freifunk
+          uci set firewall.zone_hauslan=zone
+          uci set firewall.zone_hauslan.name=hauslan
+          uci set firewall.zone_hauslan.forward=ACCEPT
+          uci add_list firewall.zone_hauslan.network=hauslan
+          uci set firewall.zone_transtor=zone
+          uci set firewall.zone_transtor.name=transtor
+          uci set firewall.zone_transtor.forward=ACCEPT
+          uci add_list firewall.zone_transtor.network=transtor
+          uci commit firewall
+        fi
+        reload_config
+
+ipv6_prefix: "2001:bf7:750:b400::/56"
+
+# got following prefixes:
+# Router:
+#          2001:bf7:750:b400::/56
+# --DHCP:  None, see scherer8.ff
+# --MESH:  10.230.226.213/32 - meshlan on vlan 211
+# --MESH:  10.230.226.197/32 - 802.11s mesh
+#          10.230.226.198/32 - 802.11s mesh
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # MESH - PTMP / PTP Links
+  - vid: 211
+    role: mesh
+    name: meshlan
+    prefix: 10.230.226.213/32
+    ipv6_subprefix: -1
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.230.226.197/32
+    ipv6_subprefix: -2
+    mesh_ap: basta
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.230.226.198/32
+    ipv6_subprefix: -3
+    mesh_ap: basta
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # freifunk client network
+  - vid: 10
+    role: ext
+    name: freifunk
+    inbound_filtering: false
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+
+  # hauslan
+  - vid: 5
+    role: ext
+    name: hauslan
+    inbound_filtering: false
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+    untagged: true
+
+  # transtor
+  - vid: 11
+    role: ext
+    name: transtor
+    inbound_filtering: false
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: basta
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: freifunk
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: racoon
+        encryption: psk-mixed
+        key: "file:/root/racoon_pass"
+        network: hauslan
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: haus
+
+      - mode: ap
+        ssid: "Transparent Tor"
+        encryption: none
+        network: transtor
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ttor
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        mesh_nolearn: 1
+        ifname_hint: mesh

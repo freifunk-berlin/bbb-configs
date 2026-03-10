@@ -35,7 +35,7 @@ height: 13                                        # in meter above ground level
 
 ### contact details
 
-Please mind that a contact is mandatory. If you don't like to give your email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net). Locations maintained by the entire community can use `community: true` instead. This will set default community values.
+Please mind that a contact is mandatory. If you don't like to give your email address, you can use the link to the contact form, that you've got from [config.berlin.freifunk.net](https://config.berlin.freifunk.net). Locations maintained by the entire community can use `community: berlin` instead. This will set default community values.
 
 ```yml
 contact_name: 'Petrosilius Quaccus'
@@ -93,6 +93,17 @@ For special use cases you can add lines to a script file. This script runs once 
         uci set network.vlan_40.ports='lan1:t lan2:t lan3:t lan4:u lan5:u'
         uci commit network; reload_config
 ```
+
+#### Flow Offloading
+
+You can enable flow offloading to drastictly improve performance for mediatek chipsets starting from SoC mt7621. More Infos are available in the [OpenWrt Wiki](https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading).
+
+```yml
+    # Possible values: none, sw, hw
+    flow_offload: hw
+```
+
+**WARNING:** Due to [kernel limitations](https://www.kernel.org/doc/html/v5.15/networking/nf_flowtable.html#limitations) you might encounter problems with wifi roaming or when changing wifi bands. [Hardware offload](https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading) bypasses QoS traffic controls (like [bandwith-limits](#bandwith-limits)) at high priority making former ineffective.
 
 ### monitoring
 
@@ -270,6 +281,19 @@ qmi:
     pdptype: ipv4
 ```
 
+
+### bandwith limits
+
+An optional configuration parameter can be added to any non-tunnel interface to limit the bandwitdh available on that interface.  When either `ingress` or `egress` are included in any interface definition, qos-scripts will be installed.  The values for `ingress` and `egress` are in MBit/s.
+
+```yml
+  - vid: 50
+    rold: uplink
+    ingress: 150     # limit downloads to 150MBit/s
+    egress: 50       # limit uploads to 50MBit/s
+```
+
+**WARNING:** This is made ineffective if [flow offloading](#flow-offloading) is enabled.
 
 ### ssh-keys
 

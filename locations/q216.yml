@@ -14,6 +14,7 @@ hosts:
     role: corerouter
     model: "linksys_e8450-ubi"
     wireless_profile: q216
+    openwrt_version: 23.05-SNAPSHOT
 
   - hostname: q216-nf-s
     role: ap

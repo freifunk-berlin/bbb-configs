@@ -3,7 +3,7 @@ location: hdk-13
 location_nice: Heidekampgraben 13
 latitude: 52.478238955
 longitude: 13.47269833
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-13

@@ -3,7 +3,7 @@ location: hdk-23
 location_nice: Heidekampgraben 23
 latitude: 52.477696586
 longitude: 13.47115874
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-23

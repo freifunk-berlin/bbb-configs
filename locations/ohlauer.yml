@@ -5,17 +5,22 @@ location_nice: Ohlauer
 latitude: 52.49378703855491
 longitude: 13.42969238683751
 altitude: 55
-community: true
+community: berlin
+
+local_asn: 44194
+peer_asn: 5405
 
 hosts:
   - hostname: ohlauer-gw
     role: gateway
     model: "ubnt_edgerouter-4"
+    host__disabled_services__to_merge:
+      - uhttpd
 
 snmp_devices:
   - hostname: ohlauer-switch
     address: 10.31.166.250
-    snmp_profile: edgerouter
+    snmp_profile: swos_lite
 
   - hostname: ohlauer-emma
     address: 10.31.166.251
@@ -28,8 +33,8 @@ ipv6_prefix: 2001:bf7:830:8300::/56
 
 uplink:
   ifname: lan0
-  ipv4: 176.74.57.19/31
-  ipv6: 2a04:d480:1c01::1/127
+  ipv4: 45.153.82.209/31
+  ipv6: 2a11:4141:a402::5/127
 
 mgmt:
   ifname: lan3.42

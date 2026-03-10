@@ -1,0 +1,167 @@
+---
+location: scherer8-abb
+location_nice: Schererstr 8
+latitude: 52.548006693797761
+longitude: 13.366858363151452
+
+contact_nickname: "Perry"
+contacts:
+  - "isprotejesvalkata [attt] gmail com"
+
+# This is a mesh-only node, but we want to keep it on the map so it's
+# configued as a core router.  Huh
+hosts:
+  - hostname: scherer8-abb
+    role: corerouter
+    model: "tplink_tl-wdr4900-v1"
+    wireless_profile: scherer8-abb
+    host__rclocal__to_merge:
+      - |
+        # set up the ports correctly
+        # vlan 211
+        uci set network.vlan_211.ports="wan:t lan1:t"
+        # vlan 10
+        uci set network.vlan_10.ports="wan:t lan1:u"
+        # vlan 5
+        uci set network.vlan_5.ports="wan:t lan2:u lan3:u lan4:u"
+        # vlan 11
+        uci set network.vlan_11.ports="wan:t"
+        # set the ip address on hauslan because the lint checker doesn't like
+        # it in the config.  Huh
+        uci -q get network.hauslan.ipaddr > /dev/null
+        if [ "1" -eq $? ]; then
+          uci set network.hauslan.proto="static"
+          uci set network.hauslan.ipaddr="192.168.5.2/24"
+        fi
+        uci commit network
+        # set up DHCP for the non-autoconfigured interfaces properly
+        uci -q get dhcp.freifunk.interface > /dev/null
+        if [ "1" -eq $? ]; then
+          uci set dhcp.freifunk=dhcp
+          uci set dhcp.freifunk.interface=freifunk
+          uci set dhcp.freifunk.ignore=1
+          uci set dhcp.hauslan=dhcp
+          uci set dhcp.hauslan.interface=hauslan
+          uci set dhcp.hauslan.ignore=1
+          uci set dhcp.transtor=dhcp
+          uci set dhcp.transtor.interface=transtor
+          uci set dhcp.transtor.ignore=1
+          uci commit dhcp
+          /etc/init.d/dnsmasq restart
+        fi
+        # reconfigure firewall because the autoconfig is totally wrong
+        uci -q get firewall.zone_hauslan.name > /dev/null
+        if [ "1" -eq $? ]; then
+          uci add_list firewall.zone_freifunk.network=freifunk
+          uci set firewall.zone_hauslan=zone
+          uci set firewall.zone_hauslan.name=hauslan
+          uci set firewall.zone_hauslan.forward=ACCEPT
+          uci add_list firewall.zone_hauslan.network=hauslan
+          uci set firewall.zone_transtor=zone
+          uci set firewall.zone_transtor.name=transtor
+          uci set firewall.zone_transtor.forward=ACCEPT
+          uci add_list firewall.zone_transtor.network=transtor
+          uci commit firewall
+        fi
+        reload_config
+
+ipv6_prefix: "2001:bf7:750:b500::/56"
+
+# got following prefixes:
+# Router:
+#          2001:bf7:750:b500::/56
+# --DHCP:  None, see scherer8.ff
+# --MESH:  10.230.226.212/32 - meshlan on vlan 211
+# --MESH:  10.230.226.195/32 - 802.11s mesh
+#          10.230.226.196/32 - 802.11s mesh
+
+
+# Disable noping
+dhcp_no_ping: false
+
+networks:
+  # MESH - PTMP / PTP Links
+  - vid: 211
+    role: mesh
+    name: meshlan
+    prefix: 10.230.226.212/32
+    ipv6_subprefix: -1
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.230.226.195/32
+    ipv6_subprefix: -2
+    mesh_ap: scherer8-abb
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.230.226.196/32
+    ipv6_subprefix: -3
+    mesh_ap: scherer8-abb
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # freifunk client network
+  - vid: 10
+    role: ext
+    name: freifunk
+    inbound_filtering: false
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+
+  # hauslan
+  - vid: 5
+    role: ext
+    name: hauslan
+    inbound_filtering: false
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+    untagged: true
+
+  # transtor
+  - vid: 11
+    role: ext
+    name: transtor
+    inbound_filtering: false
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+
+# Wireless profile
+location__wireless_profiles__to_merge:
+  - name: scherer8-abb
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: freifunk
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: racoon
+        encryption: psk-mixed
+        key: "file:/root/racoon_pass"
+        network: hauslan
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: haus
+
+      - mode: ap
+        ssid: "Transparent Tor"
+        encryption: none
+        network: transtor
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ttor
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        mesh_nolearn: 1
+        ifname_hint: mesh

@@ -12,7 +12,19 @@ hosts:
     role: corerouter
     model: "glinet_gl-mt6000"
     wireless_profile: w38b
-    flow_offload: hw
+    bird__packages__to_merge:
+      - bird3-babelpatch
+      - bird3c
+    host__rclocal__to_merge:
+      - |
+        # Disable rebind protection for internal hosts
+        uci add_list dhcp.@dnsmasq[0].rebind_domain='int.tobias-schwarz.com'
+        uci commit dhcp; reload_config
+  - hostname: w38b-shp
+    role: ap
+    model: "dlink_covr-x1860-a1"
+    wireless_profile: mesh_only
+    mac_override: { eth0: 0c:0e:76:cf:2e:3a }
 
 snmp_devices:
   - hostname: w38b-sama
@@ -50,7 +62,7 @@ networks:
     ipv6_subprefix: -10
     ptp: true
     # prefer routing via RHNK over SAMA
-    mesh_metric: 256
+    mesh_metric: 128
     mesh_metric_lqm: ["default 0.5"]
 
   # MESH - RHNK
@@ -62,7 +74,7 @@ networks:
     ptp: true
     mesh_metric: 128
 
-  # MESH - 5 GHz 802.11s
+  # MESH - 5 GHz 802.11s - CORE
   - vid: 20
     role: mesh
     name: mesh_5g
@@ -72,7 +84,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  # MESH - 2.4 GHz 802.11s
+  # MESH - 2.4 GHz 802.11s - CORE
   - vid: 21
     role: mesh
     name: mesh_2g
@@ -82,11 +94,31 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
+  # MESH - 5 GHz 802.11s - COVR
+  - vid: 22
+    role: mesh
+    name: mesh_shp_5g
+    prefix: 10.31.212.37/32
+    ipv6_subprefix: -22
+    mesh_ap: w38b-shp
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - COVR
+  - vid: 23
+    role: mesh
+    name: mesh_shp_2g
+    prefix: 10.31.212.38/32
+    ipv6_subprefix: -23
+    mesh_ap: w38b-shp
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
  # MESH - LAN
   - vid: 30
     role: mesh
     name: mesh_lan
-    prefix: 10.31.212.37/32
+    prefix: 10.31.212.39/32
     ipv6_subprefix: -30
 
   # DHCP with filtering and isolation
@@ -120,11 +152,12 @@ networks:
       w38b-core: 1 # 10.31.212.193
       w38b-switch: 2 # 10.31.212.194
       w38b-nas: 3 # 10.31.212.195
-      w38b-ds: 4 # 10.31.212.196
+      w38b-mc: 4 # 10.31.212.196
       w38b-printer: 5 # 10.31.212.197
       w38b-aud: 6 # 10.31.212.198
       w38b-ha: 7 # 10.31.212.199
       w38b-uplink: 8 # 10.31.212.200
+      w38b-phone: 9 # 10.31.212.201
 
   # DHCP (IN / PRIVATE-2)
   - vid: 44
@@ -135,19 +168,18 @@ networks:
     ipv6_subprefix: 4
     assignments:
       w38b-core: 1 # 10.31.212.113
-      w38b-ds: 2 # 10.31.212.114
       w38b-ha: 3 # 10.31.212.115
       w38b-nas: 4 # 10.31.212.116
 
   # UPLK - 10.31.212.64/27 as /32
-  - vid: 50
-    role: uplink
-
-  - role: tunnel
-    ifname: ts_wg0
-    mtu: 1280
-    prefix: 10.31.212.64/32
-    wireguard_port: 51820
+  # - vid: 50
+  #   role: uplink
+  #
+  # - role: tunnel
+  #   ifname: ts_wg0
+  #   mtu: 1280
+  #   prefix: 10.31.212.64/32
+  #   wireguard_port: 51820
 
   # MGMT
   - vid: 434
@@ -160,14 +192,17 @@ networks:
       w38b-core: 1 # 10.31.212.1
       w38b-sama: 3 # 10.31.212.3
       w38b-rhnk: 4 # 10.31.212.4
+      w38b-shp: 5 # 10.31.212.5
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
   w38b-core: 36-80
+  w38b-shp: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
   w38b-core: 13-20
+  w38b-shp: 13-20
 
 # Wireless profile
 location__wireless_profiles__to_merge:

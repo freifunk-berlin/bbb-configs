@@ -5,7 +5,7 @@ location_nice: koepi, Köpenicker Straße 137, 10179 Berlin
 latitude: 52.507668
 longitude: 13.426087
 altitude: 52
-community: true
+community: berlin
 
 hosts:
   - hostname: koepi-core

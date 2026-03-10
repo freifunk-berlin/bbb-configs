@@ -3,7 +3,7 @@ location: parzelle17-fritz
 location_nice: Parzelle 17
 latitude: 52.478675
 longitude: 13.471268
-community: true
+community: berlin
 
 dns_servers:
   # quad9

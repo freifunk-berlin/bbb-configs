@@ -10,11 +10,14 @@ hosts:
   - hostname: pktpls-core
     role: corerouter
     model: "x86-64"
-    openwrt_version: snapshot
+    openwrt_version: 25.12-SNAPSHOT
+    bird__packages__to_merge:
+      - bird3-babelpatch
+      - bird3c
 
 # Custom APK feed: snapshot
 # feed: "file:///home/user/w/ff/falter-packages/out/main/x86_64/falter/packages.adb"
-# feed_key: "/home/user/w/ff/falter-packages/tmp/main/x86_64/public-key.pem"
+# feed_key: "/home/user/w/ff/falter-packages/out/main/x86_64/public-key.pem"
 #
 # Custom OPKG feed: 24.10-SNAPSHOT, 23.05-SNAPSHOT
 # feed: "src/gz openwrt_falter file:///home/user/w/ff/falter-packages/out/openwrt-24.10/x86_64/falter"
@@ -22,6 +25,7 @@ hosts:
 
 location__packages__to_merge:
   - openssh-sftp-server
+  - gdb
 
 # 10.31.174.128/26 - pktpls+bbb@systemli.org
 # - 10.31.174.128/29 - mgmt

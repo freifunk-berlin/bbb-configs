@@ -1,12 +1,17 @@
 ---
 name: Config Run
+
 on:
   push:
     branches:
-      - main
+      - "main"
   pull_request:
     branches:
-      - main
+      - "main"
+
+permissions:
+  contents: write # required for artifacts
+  actions: read
 
 jobs:
   build:
@@ -14,12 +19,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - name: Install dependencies
-        run: sudo apt install python3
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
 
       - name: Install dependencies
         run: pip3 install -r requirements.txt --upgrade pip
@@ -76,7 +83,7 @@ jobs:
           tar -cvf ./tmp/configs.tar ./tmp/configs/
 
       - name: Store build output
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ansibleconfigs
           path: |

@@ -3,7 +3,7 @@ location: hdk-78a
 location_nice: Heidekampgraben 87a
 latitude: 52.478467664
 longitude: 13.47016096
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-78a

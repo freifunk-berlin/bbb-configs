@@ -1,6 +1,5 @@
 ansible == 12.0.0
 ansible-lint == 25.9.0
-ansible_merge_vars == 5.0.0 # We might not need it any longer https://github.com/leapfrogonline/ansible-merge-vars
 jmespath == 1.0.1
 netaddr == 1.3.0
 yamllint == 1.37.1

@@ -19,7 +19,7 @@
 By default all articles that follow the convention will be updated automatically when config changes get merged into the main branch.
 To add this option to your wikiarticle add a section called "Konfiguration" and replace all values that you want to automatically change as you can see in [this example-article](https://wiki.freifunk.net/Berlin:Standorte:Fesev). If you want to add a new location you can start with [this template](https://wiki.freifunk.net/Berlin:Standorte:Template).
 
-Wikiupdater expects an article or a redirect to the article at `wiki.freifunk.net/Berlin:Standorte:$LOCATION` where `$LOCATION` is the location name defined in your file at `locations/$LOCATION.yml`. You can manually run this update by using `--tags wiki` in a ansible config run
+Wikiupdater expects an article or a redirect to the article at `wiki.freifunk.net/Berlin:Standorte:$LOCATION` where `$LOCATION` is the location name defined in your file at `locations/$LOCATION.yml`. You can manually run this update by using `--tags wiki` in a ansible config run. If you dont need the config files generated you can skip it by adding `--skip-tags`
 
 </details>
 

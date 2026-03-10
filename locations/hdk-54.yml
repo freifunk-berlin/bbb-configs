@@ -3,7 +3,7 @@ location: hdk-54
 location_nice: Heidekampgraben 54
 latitude: 52.478307568
 longitude: 13.47185612
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-54

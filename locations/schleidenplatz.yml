@@ -4,7 +4,7 @@ location: schleidenplatz
 location_nice: schleidenplatz
 latitude: 52.515432
 longitude: 13.473224
-community: true
+community: berlin
 
 hosts:
   - hostname: schleidenplatz-core

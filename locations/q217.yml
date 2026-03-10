@@ -14,6 +14,7 @@ hosts:
     role: corerouter
     model: "linksys_e8450-ubi"
     wireless_profile: freifunk_default
+    openwrt_version: 23.05-SNAPSHOT
 
 snmp_devices:
   - hostname: q217-spitta
@@ -37,7 +38,7 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_5g_core
-    prefix: 10.248.65.178/32
+    prefix: 10.248.65.169/32
     ipv6_subprefix: -20
     mesh_ap: q217-core
     mesh_radio: 11a_standard

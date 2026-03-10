@@ -4,7 +4,7 @@ location: habersaath
 location_nice: Leerstand Hab-ich-saath
 latitude: 52.53207188797019
 longitude: 13.378598767421284
-community: true
+community: berlin
 
 
 role: ap
@@ -13,6 +13,7 @@ hosts:
   - hostname: habersaath-core
     role: corerouter
     model: "linksys_e8450-ubi"
+    openwrt_version: 23.05-SNAPSHOT
 
   - hostname: habersaath-w-nf-5ghz
     role: ap

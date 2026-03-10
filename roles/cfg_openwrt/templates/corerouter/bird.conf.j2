@@ -2,7 +2,7 @@
 {% import 'libraries/network.j2' as libnetwork with context %}
 
 log syslog all;
-debug protocols {states};
+#debug protocols {states};
 
 # Include additional bird config files for runtime extendability
 include "/dev/shm/bird_*.conf";

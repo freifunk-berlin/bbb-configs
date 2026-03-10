@@ -4,7 +4,7 @@ location_nice: "Finanzamt Reinickendorf, Eichborndamm 208, 13403 Berlin"
 latitude: 52.5870976
 longitude: 13.324892521
 altitude: 75
-community: true
+community: berlin
 
 hosts:
   - hostname: fardf-core
@@ -17,7 +17,7 @@ snmp_devices:
     address: 10.248.11.130
     snmp_profile: edgeswitch
 
-  - hostname: fardf-bht
+  - hostname: fardf-segen
     address: 10.248.11.131
     snmp_profile: airos_8
 
@@ -91,10 +91,10 @@ airos_dfs_reset:
 ipv6_prefix: "2001:bf7:770:200::/56"
 
 networks:
-  # Mesh bht
+  # Mesh segen
   - vid: 10
     role: mesh
-    name: mesh_bht
+    name: mesh_segen
     prefix: 10.248.11.144/32
     ipv6_subprefix: -10
     ptp: true
@@ -184,7 +184,7 @@ networks:
       # The time for the watchdogs needs to be quite high so the devices can still be flashed without the need to deactivate the
       # watchdogs prior to flashing.
       fardf-switch: 2 # 10.248.11.130
-      fardf-bht: 3 # 10.248.11.131
+      fardf-segen: 3 # 10.248.11.131
       fardf-maerkisches: 4 # 10.248.11.132
       fardf-sange: 5 # 10.248.11.133
       fardf-nord: 6 # 10.248.11.134

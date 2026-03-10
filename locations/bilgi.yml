@@ -6,7 +6,7 @@ longitude: 13.41419
 altitude: 41
 height: 1
 contact_nickname: Bilgisaray Kollektiv
-community: true
+community: berlin
 
 hosts:
   - hostname: bilgi-core

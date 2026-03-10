@@ -3,7 +3,7 @@ location: hdk-76
 location_nice: Heidekampgraben 76
 latitude: 52.478601621
 longitude: 13.47041845
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-76

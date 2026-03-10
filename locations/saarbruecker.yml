@@ -3,7 +3,10 @@ location: saarbruecker
 location_nice: Saarbrücker
 latitude: 52.5283930134242
 longitude: 13.41561550087894
-community: true
+community: berlin
+
+local_asn: 44194
+peer_asn: 25291
 
 hosts:
   - hostname: saarbruecker-gw
@@ -17,9 +20,10 @@ snmp_devices:
     address: 10.31.83.50
     snmp_profile: edgerouter
 
-  - hostname: saarbruecker-hds
-    address: 10.31.83.51
-    snmp_profile: mikrotik_60g
+  # present but powered down
+  # - hostname: saarbruecker-hds
+  #   address: 10.31.83.51
+  #   snmp_profile: mikrotik_60g
 
   - hostname: saarbruecker-sama
     address: 10.31.83.52
@@ -33,6 +37,7 @@ snmp_devices:
 ipv6_prefix: 2001:bf7:760:2200::/56
 
 uplink:
+  broken: true
   ifname: eth5
   ipv4: 176.74.57.43/31
   ipv6: 2a04:d480:2001::1/127

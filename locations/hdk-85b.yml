@@ -3,7 +3,7 @@ location: hdk-85b
 location_nice: Heidekampgraben 85b
 latitude: 52.478699638
 longitude: 13.47232282
-community: true
+community: berlin
 
 hosts:
   - hostname: hdk-85b

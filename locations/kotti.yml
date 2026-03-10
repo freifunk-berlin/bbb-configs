@@ -6,7 +6,7 @@ latitude: 52.49943
 longitude: 13.41860
 altitude: 41
 height: 13
-community: true
+community: berlin
 
 hosts:
   - hostname: kotti-core

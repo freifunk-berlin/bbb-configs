@@ -17,6 +17,7 @@ hosts:
     role: corerouter
     model: "ubnt_edgerouter-x"
     wireless_profile: disable
+    flow_offload: hw
 
   - hostname: newyorck-ap-1a
   - hostname: newyorck-ap-1b
@@ -30,6 +31,7 @@ hosts:
   - hostname: newyorck-ap-2b
   - hostname: newyorck-ap-2c
   - hostname: newyorck-ap-2d
+  - hostname: newyorck-ap-2e
   - hostname: newyorck-ap-3a
   - hostname: newyorck-ap-3b
 
@@ -49,15 +51,17 @@ snmp_devices:
     address: 10.31.155.228
     snmp_profile: tplink
 
-# PUBDHCP: 10.248.38.84/30
-#  PRDHCP: 10.31.247.0/25
-#    DHCP: 10.31.160.0/25
-#    MGMT: 10.31.155.224/27
-#    MESH: 10.31.155.192/29
+# DHCP: 10.248.38.84/30 (HOST)
+# DHCP: 10.31.247.0/25 (PRIVATE)
+# DHCP: 10.31.160.0/25
+# MGMT: 10.31.155.224/27
+# UPLK: 10.31.155.192/29
 
 ipv6_prefix: "2001:bf7:830:a900::/56"
 
 networks:
+
+  # DHCP with filtering and isolation
   - vid: 40
     role: dhcp
     prefix: 10.31.160.0/25
@@ -67,6 +71,7 @@ networks:
     assignments:
       newyorck-core: 1
 
+  # DHCP (PRIVATE) with filtering but no isolation
   - vid: 41
     name: prdhcp
     role: dhcp
@@ -78,6 +83,7 @@ networks:
     assignments:
       newyorck-core: 1
 
+  # MGMT
   - vid: 42
     role: mgmt
     prefix: 10.31.155.224/27
@@ -101,11 +107,13 @@ networks:
       newyorck-ap-2b: 13
       newyorck-ap-2c: 14
       newyorck-ap-2d: 15
-      newyorck-ap-3a: 16
-      newyorck-ap-3b: 17
+      newyorck-ap-2e: 16
+      newyorck-ap-3a: 17
+      newyorck-ap-3b: 18
 
+  # DHCP (HOST) without filtering and isolation
   - vid: 43
-    name: pubdhcp
+    name: host
     role: dhcp
     prefix: 10.248.38.84/30
     ipv6_subprefix: 43
@@ -115,6 +123,7 @@ networks:
       newyorck-core: 1
       newyorck-homelab: 2
 
+  # UPLK - 10.31.155.192/29 as /32
   - vid: 50
     role: uplink
     untagged: true
@@ -144,6 +153,7 @@ location__channel_assignments_11a_standard__to_merge:
   newyorck-ap-2b: 44-20
   newyorck-ap-2c: 36-20
   newyorck-ap-2d: 48-20
+  newyorck-ap-2e: 44-20
   newyorck-ap-3a: 40-20
   newyorck-ap-3b: 44-20
 
@@ -160,6 +170,7 @@ location__channel_assignments_11g_standard__to_merge:
   newyorck-ap-2b: 11-20
   newyorck-ap-2c: 1-20
   newyorck-ap-2d: 11-20
+  newyorck-ap-2e: 6-20
   newyorck-ap-3a: 6-20
   newyorck-ap-3b: 11-20
 
