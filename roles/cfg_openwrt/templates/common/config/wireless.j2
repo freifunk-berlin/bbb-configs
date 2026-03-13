@@ -1,4 +1,5 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
+{% import 'libraries/network.j2' as libnetwork with context %}
 
 {% set profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first %}
 # Wifi Config is derived from wireless profile: '{{ wireless_profile }}'
@@ -126,18 +127,19 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
     {% endif %}
     {% if iface['mode'] == 'mesh'  %}
       {% if 'mesh_id' in iface %}
-	option mesh_id '{{ iface['mesh_id'] }}'
+ 	option mesh_id '{{ iface['mesh_id'] }}'
       {% endif %}
       {% if 'mesh_fwding' in iface %}
-	option mesh_fwding '{{ iface['mesh_fwding'] }}'
+ 	option mesh_fwding '{{ iface['mesh_fwding'] }}'
       {% endif %}
       {% if 'mesh_nolearn' in iface %}
-	option mesh_nolearn '{{ iface['mesh_nolearn'] }}'
+ 	option mesh_nolearn '{{ iface['mesh_nolearn'] }}'
       {% endif %}
       {% if 'mcast_rate' in iface %}
-	option mcast_rate '{{ iface['mcast_rate'] }}'
+ 	option mcast_rate '{{ iface['mcast_rate'] }}'
       {% endif %}
-	option network '{{ (mesh_net['name'] if mesh_net['name'] | length <= 15) | mandatory('The generated inteface name exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') }}'
+ 	option network '{{ (mesh_net['name'] if mesh_net['name'] | length <= 15) | mandatory('The generated inteface name exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') }}'
+	option macaddr '{{- libnetwork.generateDeterministicMAC(inventory_hostname ~ "-" ~ mesh_net['name'] ~ "-wifi") -}}'
     {% endif %}
     {% endif %}
   {% endfor %}
