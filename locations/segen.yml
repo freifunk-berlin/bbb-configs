@@ -11,28 +11,32 @@ contacts:
 hosts:
   - hostname: segen-core
     role: corerouter
-    model: "ubnt_edgerouter-x-sfp-24-10"
-    poe_on: [0, 1, 2, 3]
+    model: "genexis_pulse-ex400"
+    wireless_profile: freifunk_default
 
   - hostname: segen-n-nf-2ghz
     role: ap
-    model: ubnt_nanostation-m2_xm
+    model: ubnt_nanostation-m2-xm
 
   - hostname: segen-o-nf-2ghz
     role: ap
-    model: ubnt_nanostation-m2_xm
+    model: ubnt_nanostation-m2-xm
 
   - hostname: segen-s-nf-2ghz
     role: ap
-    model: ubnt_nanostation-m2_xm
+    model: ubnt_nanostation-m2-xm
 
   - hostname: segen-w-nf-2ghz
     role: ap
-    model: ubnt_nanostation-m2_xm
+    model: ubnt_nanostation-m2-xm
 
 snmp_devices:
   - hostname: segen-switch
     address: 10.31.6.2
+    snmp_profile: edgeswitch
+
+  - hostname: segen-switch-2
+    address: 10.31.6.3
     snmp_profile: edgeswitch
 
   # Despite being a 60GHz devices the SNMP-data that is reported is in the same format as the airmax devices
@@ -131,6 +135,7 @@ networks:
     assignments:
       segen-core: 1
       segen-switch: 2
+      segen-switch-2: 3
 
       # bbb links
       segen-saarbr: 10
