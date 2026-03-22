@@ -2,7 +2,7 @@
 target: ath79/generic
 brand_nice: Ubiquiti
 model_nice: UniFi AC Mesh
-openwrt_version: 24.10-SNAPSHOT
+openwrt_version: 25.12-SNAPSHOT
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"
