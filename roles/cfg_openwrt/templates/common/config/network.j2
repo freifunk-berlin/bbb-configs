@@ -116,3 +116,33 @@ config interface '{{ q['name'] }}'
 
   {% endfor %}
 {% endif %}
+{% if wireguard_access is defined and role == 'corerouter' and ipv6_prefix is defined %}
+{% set wg_ipv6_subnet = ipv6_prefix | ansible.utils.ipsubnet('64', wireguard_access['ipv6_subprefix']) %}
+{% set wg_has_ipv4 = 'prefix' in wireguard_access %}
+
+# WireGuard access VPN - clients connect here to reach Freifunk and internet
+config interface 'wg_access'
+	option proto 'wireguard'
+	option private_key 'file:{{ wireguard_access['private_key_file'] | default('/etc/wireguard/access.key') }}'
+	option listen_port '{{ wireguard_access['port'] | default(51820) }}'
+	list addresses '{{ wg_ipv6_subnet | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}/64'
+{% if wg_has_ipv4 %}
+	list addresses '{{ wireguard_access['prefix'] | ansible.utils.ipaddr(1) }}'
+{% endif %}
+
+{% for peer in wireguard_access['peers'] | default([]) %}
+# Peer: {{ peer.get('description', peer['public_key'][:8] + '...') }}
+config wireguard_wg_access
+	option public_key '{{ peer['public_key'] }}'
+{% if 'preshared_key' in peer %}
+	option preshared_key '{{ peer['preshared_key'] }}'
+{% endif %}
+{% for allowed_ip in peer['allowed_ips'] %}
+	list allowed_ips '{{ allowed_ip }}'
+{% endfor %}
+{% if 'persistent_keepalive' in peer %}
+	option persistent_keepalive '{{ peer['persistent_keepalive'] }}'
+{% endif %}
+
+{% endfor %}
+{% endif %}
