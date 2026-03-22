@@ -9,7 +9,7 @@ community: berlin
 hosts:
   - hostname: scharni-core
     role: corerouter
-    model: "openwrt_one"
+    model: "linksys_e8450-ubi"
     wireless_profile: freifunk_default
     bird__packages__to_merge:
       - bird3-babelpatch
