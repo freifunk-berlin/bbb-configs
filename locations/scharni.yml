@@ -122,15 +122,11 @@ wireguard_access:
   peers:
     - description: "Test"
       public_key: "5dkLlAtOqcoT7ocNYnLvyJ5pIippsxBXgFJvtVoI0yI=" # gitleaks:allow
-      allowed_ips:
-        - "10.248.105.130/32"
-        - "2001:bf7:830:842a::2/128"
+      id: 2
       persistent_keepalive: 25
     - description: "Friend"
       public_key: "iBUwLV7EU5odRoiK1GxQGNP1QruBbPp8Lk50yJ/iMno=" # gitleaks:allow
-      allowed_ips:
-        - "10.248.105.131/32"
-        - "2001:bf7:830:842a::3/128"
+      id: 3
       persistent_keepalive: 25
 
 location_scharni__channel_assignments_11a_standard__to_merge:

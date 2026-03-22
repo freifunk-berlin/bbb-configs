@@ -137,9 +137,16 @@ config wireguard_wg_access
 {% if 'preshared_key' in peer %}
 	option preshared_key '{{ peer['preshared_key'] }}'
 {% endif %}
+{% if 'id' in peer %}
+	list allowed_ips '{{ wg_ipv6_subnet | ansible.utils.ipaddr(peer['id']) | ansible.utils.ipaddr('address') }}/128'
+{% if wg_has_ipv4 %}
+	list allowed_ips '{{ wireguard_access['prefix'] | ansible.utils.ipaddr(peer['id']) | ansible.utils.ipaddr('address') }}/32'
+{% endif %}
+{% else %}
 {% for allowed_ip in peer['allowed_ips'] %}
 	list allowed_ips '{{ allowed_ip }}'
 {% endfor %}
+{% endif %}
 {% if 'persistent_keepalive' in peer %}
 	option persistent_keepalive '{{ peer['persistent_keepalive'] }}'
 {% endif %}
