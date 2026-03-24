@@ -64,7 +64,7 @@ airos_dfs_reset:
 
   - name: "vaterhaus-nw"
     target: "10.230.192.204"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
