@@ -11,7 +11,7 @@ contacts:
 hosts:
   - hostname: l5-core
     role: corerouter
-    model: "avm_fritzbox-4040"
+    model: cudy_wr3000e-v1
     wireless_profile: freifunk_default
 
   - hostname: l5-nf-o
