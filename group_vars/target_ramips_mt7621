@@ -1,3 +1,7 @@
 ---
 
 multicore: true
+
+target__packages__to_merge:
+  # Workaround for apparant mt7530 lockup
+  - naywatch
