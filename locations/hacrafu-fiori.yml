@@ -10,19 +10,20 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-  - hostname: hacrafu-fiori-core
+  - hostname: hacrafu-fiori
     role: corerouter
     model: "dlink_dap-x1860-a1"
     wireless_profile: freifunk_hacrafu
+    host__rclocal__to_merge:
+      - |
+        uci set network.vlan_50.ports='lan:u'
+        uci commit network; reload_config
 
 ipv6_prefix: "2001:bf7:850:a00::/56"
-# dhcp    10.31.203.192/27
-# mesh5   10.31.202.92/32
-# mesh2   10.31.202.93/32
+# DHCP    10.31.203.192/27
+# MESH    10.31.202.92/31
 # MGMT    10.31.202.94/32
-
-# Disable noping
-# dhcp_no_ping: false
+# TUNNEL  10.31.226.42/31
 
 networks:
   # MESH - 5 GHz 802.11s
@@ -31,7 +32,7 @@ networks:
     name: mesh_5g
     prefix: 10.31.202.92/32
     ipv6_subprefix: -20
-    mesh_ap: hacrafu-fiori-core
+    mesh_ap: hacrafu-fiori
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
@@ -41,20 +42,19 @@ networks:
     name: mesh_2g
     prefix: 10.31.202.93/32
     ipv6_subprefix: -21
-    mesh_ap: hacrafu-fiori-core
+    mesh_ap: hacrafu-fiori
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
   # DHCP
   - vid: 40
     role: dhcp
-    untagged: true
-    inbound_filtering: false
-    enforce_client_isolation: false
+    inbound_filtering: true
+    enforce_client_isolation: true
     prefix: 10.31.203.192/27
     ipv6_subprefix: 0
     assignments:
-      hacrafu-fiori-core: 1
+      hacrafu-fiori: 1
 
   # MGMT
   - vid: 42
@@ -64,15 +64,31 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      hacrafu-fiori-core: 1
+      hacrafu-fiori: 1
+
+  # UPLINK
+  - vid: 50
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.226.42/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.226.43/32
+    wireguard_port: 51821
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hacrafu-fiori-core: 36-40
+  hacrafu-fiori: 36-80
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hacrafu-fiori-core: 13-20
+  hacrafu-fiori: 13-40
 
 # only place this ssh-keys
 ssh_keys:
@@ -80,3 +96,5 @@ ssh_keys:
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
   - comment: Bob
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de
+  - comment: Peter
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIzevq2nqgb0rBAEEcDEkAIu24aTiWIkem3+59a6h10 HaCraFu Petersilie
