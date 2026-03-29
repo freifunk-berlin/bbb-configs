@@ -3,7 +3,7 @@ override_target: "mikrotik_routerboard-wap-g-5hact2hnd"
 target: ath79/mikrotik
 brand_nice: MikroTik
 model_nice: wAP AC
-openwrt_version: 24.10-SNAPSHOT
+openwrt_version: 25.12-SNAPSHOT
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct"
