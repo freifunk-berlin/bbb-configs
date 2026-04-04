@@ -19,6 +19,7 @@ hosts:
   - hostname: liese-11-sw-core
     role: corerouter
     model: x86_64
+    openwrt_version: 24.10-SNAPSHOT
 
   # DHCP
   - hostname: liese-11-sw-ap-fa
