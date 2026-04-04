@@ -114,6 +114,21 @@ networks:
       scharni-ap2: 13 # dachboden 2
       scharni-ap3: 14 # dachboden 3
 
+wireguard_access:
+  port: 51820
+  ipv6_subprefix: 42
+  private_key_file: /root/wireguard.key
+  prefix: 10.248.105.128/27
+  peers:
+    - description: "Test"
+      public_key: "5dkLlAtOqcoT7ocNYnLvyJ5pIippsxBXgFJvtVoI0yI=" # gitleaks:allow
+      id: 2
+      persistent_keepalive: 25
+    - description: "Friend"
+      public_key: "iBUwLV7EU5odRoiK1GxQGNP1QruBbPp8Lk50yJ/iMno=" # gitleaks:allow
+      id: 3
+      persistent_keepalive: 25
+
 location_scharni__channel_assignments_11a_standard__to_merge:
   scharni-ap1: 40-20
   scharni-ap2: 44-20
