@@ -159,12 +159,12 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
 			reboot "$HOSTNAME"
 			echo "Stopping non-essential services on $HOSTNAME..."
 			run_ssh "$HOSTNAME" "\
-                /etc/init.d/collectd stop; \
-                /etc/init.d/luci_statistics stop; \
-                /etc/init.d/sysntpd stop; \
-                /etc/init.d/urngd stop; \
-                /etc/init.d/rpcd stop; \
-                /etc/init.d/naywatch stop"
+                [ -f /etc/init.d/collectd ] && /etc/init.d/collectd stop; \
+                [ -f /etc/init.d/luci_statistics ] && /etc/init.d/luci_statistics stop; \
+                [ -f /etc/init.d/sysntpd ] && /etc/init.d/sysntpd stop; \
+                [ -f /etc/init.d/urngd ] && /etc/init.d/urngd stop; \
+                [ -f /etc/init.d/rpcd ] && /etc/init.d/rpcd stop; \
+                [ -f /etc/init.d/naywatch ] && /etc/init.d/naywatch stop"
 			sleep 20
 			MEMORY=$(check_memory "$HOSTNAME")
 		fi
