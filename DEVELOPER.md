@@ -242,6 +242,39 @@ If there are routes via the tunnels the following command will show a non empty 
 
 If you have multiple uplinks and want one to be preferred, set different link metrics for the different uplinks.
 
+### uplink via wireless
+
+You can configure the router to connect to an existing external WiFi network (e.g., a neighbor's home internet) and use it as an uplink. The wireless interface operates in station mode and is placed inside the tunspace namespace alongside the wireguard tunnel.
+
+```yaml
+  - vid: 51
+    role: wireless_uplink
+    wireless_ssid: "NeighborWiFi"
+    wireless_encryption: psk2             # none, psk2, sae, sae-mixed
+    wireless_key: "file:/root/wireless_uplink_key"  # Required if wireless_encryption is not none
+    wireless_hidden: true                 # Optional: connect to hidden SSID
+    radio: 11g_standard                   # 11g_standard or 11a_standard
+    uplink_ipv4: 192.168.1.42/24          # Optional: DHCP if omitted
+    uplink_gateway: 192.168.1.1           # Required if uplink_ipv4 is set
+
+  - role: tunnel
+    ifname: ts_wg0
+    ...
+```
+
+The wireless uplink works together with tunnel configurations. The wireless interface is moved into the tunspace namespace where the wireguard tunnel also operates.
+
+**Encryption modes:**
+- `none` - Open network (no password)
+- `psk2` - WPA2-PSK
+- `sae` - WPA3 SAE
+- `sae-mixed` - WPA2/WPA3 mixed mode
+
+**Notes:**
+- Only usable on corerouter role
+- The specified radio must be available on the router model
+- Passwords use the `file:/path/to/file` pattern and are replaced on first boot
+
 ### uplink over LTE modem
 
 Many LTE USB sticks work as a so called USB CDC Net device. They emulate a standard ethernet device without any need for further configuration.
