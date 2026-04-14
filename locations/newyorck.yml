@@ -144,14 +144,14 @@ networks:
       newyorck-ap-1e: 9
       newyorck-ap-1f: 10
       newyorck-ap-1g: 11
-      newyorck-ap-1h: 18
-      newyorck-ap-2a: 12
-      newyorck-ap-2b: 13
-      newyorck-ap-2c: 14
-      newyorck-ap-2d: 15
-      newyorck-ap-2e: 16
-      newyorck-ap-3a: 17
-      newyorck-ap-3b: 18
+      newyorck-ap-1h: 12
+      newyorck-ap-2a: 13
+      newyorck-ap-2b: 14
+      newyorck-ap-2c: 15
+      newyorck-ap-2d: 16
+      newyorck-ap-2e: 17
+      newyorck-ap-3a: 18
+      newyorck-ap-3b: 19
 
   # DHCP (HOST) without filtering and isolation
   - vid: 43
