@@ -116,3 +116,53 @@ config interface '{{ q['name'] }}'
 
   {% endfor %}
 {% endif %}
+{% if wireguard_access is defined and role == 'corerouter' and ipv6_prefix is defined %}
+{% for peer in wireguard_access['peers'] | default([]) %}
+{% if 'vid' not in peer %}
+{{ raise('wireguard_access peer is missing required field: vid') }}
+{% endif %}
+{% if 'assignment' not in peer %}
+{{ raise('wireguard_access peer is missing required field: assignment') }}
+{% endif %}
+{% if 'public_key' not in peer %}
+{{ raise('wireguard_access peer is missing required field: public_key') }}
+{% endif %}
+{% set network = networks | selectattr('vid', 'equalto', peer['vid']) | first %}
+{% if network is undefined %}
+{{ raise('wireguard_access peer references unknown vid: ' ~ peer['vid']) }}
+{% endif %}
+{% if 'ipv6_subprefix' not in network %}
+{{ raise('wireguard_access peer references network without ipv6_subprefix: vid ' ~ peer['vid']) }}
+{% endif %}
+{% if 'prefix' not in network %}
+{{ raise('wireguard_access peer references network without prefix: vid ' ~ peer['vid']) }}
+{% endif %}
+{% if 'assignments' not in network or peer['assignment'] not in network['assignments'] %}
+{{ raise('wireguard_access peer assignment "' ~ peer['assignment'] ~ '" not found in network assignments for vid ' ~ peer['vid']) }}
+{% endif %}
+{% set peer_ip = network['prefix'] | ansible.utils.ipaddr(network['assignments'][peer['assignment']]) | ansible.utils.ipaddr('address') %}
+{% set peer_ip_v6 = (ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) | ansible.utils.ipaddr(network['assignments'][peer['assignment']]) | ansible.utils.ipaddr('address')) %}
+{% set wg_ifname = 'wg_' ~ peer['assignment'] %}
+{% set wg_ipv6_subnet = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
+{% set wg_prefix = network['prefix'] %}
+
+config interface '{{ wg_ifname }}'
+  option proto 'wireguard'
+  option private_key 'file:{{ wireguard_access['private_key_file'] | default('/etc/wireguard/access.key') }}'
+  option listen_port '{{ wireguard_access['port'] | default(51820) }}'
+  list addresses '{{ peer_ip_v6 }}/64'
+  list addresses '{{ peer_ip }}'
+
+config wireguard_{{ wg_ifname }}
+  option public_key '{{ peer['public_key'] }}'
+{% if 'preshared_key' in peer %}
+  option preshared_key '{{ peer['preshared_key'] }}'
+{% endif %}
+  list allowed_ips '{{ peer_ip_v6 }}/128'
+  list allowed_ips '{{ peer_ip }}/32'
+{% if 'persistent_keepalive' in peer %}
+  option persistent_keepalive '{{ peer['persistent_keepalive'] }}'
+{% endif %}
+
+{% endfor %}
+{% endif %}
