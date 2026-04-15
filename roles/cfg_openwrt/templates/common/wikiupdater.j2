@@ -1,10 +1,9 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 
 {#- Printing files in semantic mediawiki syntax for wiki.freifunk.net #}
-{% raw %}{{#set:{% endraw %}
 
-{# attributes is a list of vars that can be directly printed without any magic #}
-{% set attributes = [
+{#- attributes is a list of vars that can be directly printed without any magic #}
+{%- set attributes = [
     'location_nice',
     'latitude',
     'longitude',
@@ -12,9 +11,15 @@
     'height',
     'ipv6_prefix'
     ]%}
+{% raw %}{{#set:{% endraw %}
+
 {% for i in attributes %}
 |{{i}}= {{lookup('vars', i|string, default='')}}
 {% endfor %}
+
+{%- if tunnel_count is defined %}
+|Wireguard Tunnel = {{ tunnel_count }}
+{% endif %}
 
 {%- if contact_name is defined %}
 |Ansprechpartner Name = {{contact_name}}
@@ -30,7 +35,7 @@
     {% endif %}
 {% endfor %}
 
-{% for network in networks %}
+{%- for network in networks %}
     {% if network['role'] == 'mesh' %}
 |Mesh Adressen = {{ network['prefix']}}
 |Mesh Liste = {{network['vid']}}({{network['name']}})
@@ -38,6 +43,16 @@
 |Mesh Adressen = {{ network['prefix']}}
     {% elif network['role'] == 'mgmt'%}
 |Managementnetwork = {{ network['prefix'] }}
+    {% elif network['role'] == 'dhcp'%}
+    {# Doing it this way to account for different dhcp-networks like private ones (brdhcp) #}
+|{{network['name']|default('dhcp')}}network =  {{network['prefix']}}
+    {% endif %}
+{% endfor %}
+{% raw %}}}{% endraw %}
+
+{# Check for mgmt-assignments separately as they will be defined as subobjects #}
+{% for network in networks %}
+    {% if network['role'] == 'mgmt'%}
         {% for assignment in network['assignments']%} {# uses the list of mgmt-network-assignments to loop thru all devices #}
 {% raw %}{{#subobject: {% endraw %}{{assignment}}
 |name = {{ assignment }}
@@ -52,18 +67,11 @@
 {% raw %}}}{% endraw %}
 
         {% endfor %}
-    {% elif network['role'] == 'dhcp'%}
-        {# Doing it this way to account for different dhcp-networks like private ones (brdhcp) #}
-|{{network['name']|default('dhcp')}}network =  {{network['prefix']}}
     {% endif %}
 {% endfor %}
-{% if tunnel_count is defined %}
-|Wireguard Tunnel = {{ tunnel_count }}
-{% endif %}
-
 
 {#- Setting categories #}
 {% raw %}
 [[Kategorie:Berlin]]
 [[Kategorie:BBB]]
-[Kategorie:Standorte_Berlin|{% endraw %}{{location}}{% raw %}]]{% endraw %}
+[[Kategorie:Standorte_Berlin|{% endraw %}{{location}}{% raw %}]]{% endraw %}
