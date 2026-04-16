@@ -5,7 +5,7 @@ location_nice: Dorfplatz
 latitude: 52.517924
 longitude: 13.457358
 altitude: 37
-community: berlin
+community: true
 
 hosts:
   - hostname: dorfplatz-core
@@ -27,7 +27,7 @@ hosts:
 
   - hostname: dorfplatz-ap3
     role: ap
-    model: "tplink_eap225-outdoor-v1"
+    model: "cudy_ap3000outdoor-v1"
 
   - hostname: dorfplatz-keimzelle
     role: ap
@@ -42,6 +42,14 @@ hosts:
     model: "siemens_ws-ap3610"
 
   - hostname: dorfplatz-ap6
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: dorfplatz-ap7
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: dorfplatz-ap8
     role: ap
     model: "siemens_ws-ap3610"
 
@@ -108,6 +116,8 @@ networks:
       dorfplatz-ap4: 10
       dorfplatz-ap5: 9
       dorfplatz-ap6: 8
+      dorfplatz-ap7: 6
+      dorfplatz-ap8: 7
 
 location__channel_assignments_11a_standard__to_merge:
   dorfplatz-ap1: 36-20
