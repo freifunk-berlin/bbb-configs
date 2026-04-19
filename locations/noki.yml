@@ -30,9 +30,9 @@ hosts:
     host__rclocal__to_merge:
       - |
         # untag DHCP on LAN port
-        uci set network.vlan_40.ports='lan:u'
+        uci set network.vlan_40.ports='eth1:u'
         # untag UPLK on WAN port
-        uci set network.vlan_50.ports='wan:u'
+        uci set network.vlan_50.ports='eth0:u'
         uci commit network; reload_config
     host__packages__to_merge:
       - htop
