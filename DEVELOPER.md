@@ -275,6 +275,30 @@ The wireless uplink works together with tunnel configurations. The wireless inte
 - The specified radio must be available on the router model
 - Passwords use the `file:/path/to/file` pattern and are replaced on first boot
 
+**Device Limitations:**
+Not all devices support running multiple APs, 802.11s mesh, and a STA (station) interface simultaneously on the same radio. To check if your device supports this configuration, run:
+
+```
+iw phy phy0 info
+```
+
+Look for the "valid interface combinations" section. Each line describes which combinations of interface types the radio can handle concurrently. For example:
+
+```
+valid interface combinations:
+         * #{ IBSS } <= 1, #{ AP, mesh point } <= 16, #{ managed } <= 19,
+           total <= 19, #channels <= 1, STA/AP BI must match, radar detect widths: { 20 MHz (no HT), 20 MHz, 40 MHz, 80 MHz, 160 MHz }
+```
+
+If your device doesn't support the combination you need, consider:
+- Using a separate radio for the wireless uplink (e.g., 2.4 GHz radio for uplink, 5 GHz for mesh/AP)
+- Using a different device model that supports the required combination
+
+**Channel Limitations:**
+When using a wireless uplink, the radio will use whatever channel is configured on the upstream network and may not be able to mesh with other routers. Our mesh network typically uses channel 13 (2.4 GHz) or channel 36 (5 GHz).
+
+Since most devices are equipped with two radios, you can use one radio for the uplink and the other for meshing with a neighbor. However, depending on the frequency band remaining for meshing, you may get lower bandwidth (2.4 GHz) or reduced range (5 GHz).
+
 ### uplink over LTE modem
 
 Many LTE USB sticks work as a so called USB CDC Net device. They emulate a standard ethernet device without any need for further configuration.
