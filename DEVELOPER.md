@@ -295,6 +295,105 @@ An optional configuration parameter can be added to any non-tunnel interface to 
 
 **WARNING:** This is made ineffective if [flow offloading](#flow-offloading) is enabled.
 
+### wireguard access vpn
+
+The core router can act as a WireGuard server, allowing remote clients to connect to specific VLANs/networks. Each peer is assigned to a network via the `vid` field, and their IP address is derived from the network's assignments.
+
+#### Requirements
+
+1. The network must have `assignments` defined (DHCP network with static assignments)
+2. Add a WireGuard peer assignment to the network's assignments
+3. Configure the `wireguard_access` section with peer definitions
+
+#### Configuration
+
+```yml
+wireguard_access:
+  port: 51820                           # WireGuard listen port (optional, default: 51820)
+  private_key_file: /root/wireguard.key  # Path to private key file (optional, default: /etc/wireguard/access.key)
+  peers:
+    - assignment: <name>               # Required: must match a key in the network's assignments
+      description: "<description>"      # Optional: for documentation
+      vid: <vid>                       # Required: VLAN ID of the network to assign peer to
+      public_key: "<key>"               # Required: WireGuard public key of the peer (add # gitleaks:allow comment)
+      persistent_keepalive: 25          # Optional: seconds between keepalive packets
+      preshared_key: "<key>"            # Optional: extra security key (add # gitleaks:allow comment if used)
+```
+
+**Note:** When adding actual public keys, append `# gitleaks:allow` to the line to prevent false-positive secrets scanning in the repository.
+
+#### Example
+
+In the `networks` section, add the WireGuard peer to assignments:
+
+```yml
+networks:
+  # Network with DHCP and assignments
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.0.0.0/24
+    ipv6_subprefix: 0
+    assignments:
+      example-core: 1         # 10.0.0.1
+      example-laptop-1: 10    # 10.0.0.10 - WireGuard peer
+```
+
+Then configure the `wireguard_access` section:
+
+```yml
+wireguard_access:
+  port: 51820
+  private_key_file: /root/wireguard.key
+  peers:
+    - assignment: example-laptop-1
+      description: "laptop home network"
+      vid: 40
+      public_key: "YOUR_PEER_PUBLIC_KEY"
+      persistent_keepalive: 25
+```
+
+#### Network Behavior
+
+- Each peer gets its own WireGuard interface (e.g., `wg_example-laptop-1`)
+- The interface is placed in the same firewall zone as the network it belongs to
+- If the network has `inbound_filtering: true`, the WireGuard peer inherits that behavior
+- This means the peer behaves exactly as if connected via WiFi/LAN to that VLAN
+
+#### Multiple Peers on Same VLAN
+
+Simply add more assignments and peers:
+
+```yml
+networks:
+  - vid: 40
+    name: dhcp
+    assignments:
+      example-laptop-1: 10    # 10.0.0.10
+      example-laptop-2: 11    # 10.0.0.11
+
+wireguard_access:
+  peers:
+    - assignment: example-laptop-1
+      vid: 40
+      public_key: "..."
+    - assignment: example-laptop-2
+      vid: 40
+      public_key: "..."
+```
+
+#### Gateway Deployment
+
+When enabling wireguard_access for the first time on a location, the **gateways must be deployed first** to receive the new firewall rules that allow incoming WireGuard connections from the mesh network to the core router. Deploy gateways before deploying the core router with wireguard_access configured.
+
+#### Validation
+
+The following errors are raised if configuration is invalid:
+- Peer missing required field: `assignment`, `vid`, or `public_key`
+- Peer references unknown `vid`
+- Network is missing required fields: `ipv6_subprefix`, `prefix`, or `assignments`
+- Peer assignment not found in network's assignments
+
 ### ssh-keys
 
 By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys use this format:
