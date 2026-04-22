@@ -11,6 +11,36 @@
 </details>
 
 <details>
+<summary> sysupgrade fails with "image is incompatible"</summary>
+<br>
+
+When upgrading a router that was previously running a different OpenWrt version (e.g., stock OpenWrt or an older bbb-configs image), sysupgrade may fail with an error like:
+
+```
+upgrade: The device is supported, but this image is incompatible for sysupgrade based on the image version (1.0->9.9).
+Image check failed.
+```
+
+To fix this, set the compat_version on the router before upgrading:
+
+```sh
+uci set system.@system[0].compat_version="9.9"
+uci commit system
+```
+
+After this you can run sysupgrade normally. The mass-update.sh script handles setting this automatically.
+
+Alternatively, you can force the upgrade with the `-f` flag:
+
+```sh
+sysupgrade -f /tmp/router-image.bin
+```
+
+Note: We ususaly don't need the compat_version check because we ship the config within the image.
+
+</details>
+
+<details>
 <summary> Automatic Updates for wiki.freifunk.net </summary>
 <br>
 
