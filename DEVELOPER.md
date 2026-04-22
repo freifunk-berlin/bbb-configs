@@ -282,6 +282,63 @@ qmi:
 ```
 
 
+### ext
+
+The `ext` role is used to integrate external networks with the Freifunk router. This is useful in several scenarios:
+
+**Extend external network via ports**: When you have an external network (e.g., a FritzBox with 192.168.x.x IP range) and want to extend it through the Freifunk router's ports:
+
+```yml
+  - vid: 41
+    role: ext
+    name: private
+    untagged: true
+```
+
+**Redistribute via WiFi**: To expose an external network via its own SSID with a custom wireless profile:
+
+```yml
+  - vid: 41
+    role: ext
+    name: private
+    no_corerouter_dns_record: true
+    enforce_client_isolation: false
+```
+
+Along with a wireless profile that references the network by name:
+
+```yml
+location__wireless_profiles__to_merge:
+  - name: hts4
+    devices:
+      - radio: 11g_standard
+      - radio: 11a_standard
+    ifaces:
+      - mode: ap
+        ssid: hts4
+        encryption: sae-mixed
+        key: "file:/root/wifi_pass"
+        network: private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+```
+
+See [wireless profiles](#wireless-profiles) for more details.
+
+**Container networking**: To make Podman/Docker container networks routable in the mesh:
+
+```yml
+  - vid: 43
+    untagged: true
+    ifname: podman0
+    name: podman
+    role: ext
+    prefix: 10.248.33.72/29
+    ipv6_subprefix: 2
+    assignments:
+      podtwo-core: 1
+```
+
 ### bandwith limits
 
 An optional configuration parameter can be added to any non-tunnel interface to limit the bandwitdh available on that interface.  When either `ingress` or `egress` are included in any interface definition, qos-scripts will be installed.  The values for `ingress` and `egress` are in MBit/s.
