@@ -158,6 +158,25 @@
     search_string: "compat_version=$(if $(DEVICE_COMPAT_VERSION),$(DEVICE_COMPAT_VERSION),1.0)"
     line: "compat_version=9.9"
 
+- name: Enable kernel debugging when kernel_debug is set
+  when: kernel_debug | default(false) | bool
+  block:
+    - name: Enable kernel symbols (CONFIG_KERNEL_KALLSYMS)
+      lineinfile:
+        path: "{{ build_dir }}/.config"
+        regexp: "^# CONFIG_KERNEL_KALLSYMS"
+        line: "CONFIG_KERNEL_KALLSYMS=y"
+
+    - name: Disable kernel debug info collection (CONFIG_COLLECT_KERNEL_DEBUG)
+      lineinfile:
+        path: "{{ build_dir }}/.config"
+        regexp: "^CONFIG_COLLECT_KERNEL_DEBUG"
+        line: "# CONFIG_COLLECT_KERNEL_DEBUG"
+  rescue:
+    - name: Kernel debugging setup failed
+      debug:
+        msg: "Kernel debugging setup failed - continuing without kernel symbols"
+
 - name: Override Imagebuilder .config
   lineinfile:
     path: "{{ build_dir }}/.config"

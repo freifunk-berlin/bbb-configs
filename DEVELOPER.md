@@ -105,6 +105,20 @@ You can enable flow offloading to drastictly improve performance for mediatek ch
 
 **WARNING:** Due to [kernel limitations](https://www.kernel.org/doc/html/v5.15/networking/nf_flowtable.html#limitations) you might encounter problems with wifi roaming or when changing wifi bands. [Hardware offload](https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading) bypasses QoS traffic controls (like [bandwith-limits](#bandwith-limits)) at high priority making former ineffective.
 
+#### Kernel Debugging
+
+You can enable kernel debugging to include kernel symbols and disable debug info stripping. This is useful when you need to decode kernel stack traces from crash logs for debugging kernel issues. This should ideally be set on a single host to minimize image size.
+
+```yml
+hosts:
+  - hostname: magda-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    kernel_debug: true
+```
+
+When enabled, the firmware will include `CONFIG_KERNEL_KALLSYMS` and disable `CONFIG_COLLECT_KERNEL_DEBUG`. This allows developers to analyze kernel crashes using tools like `decode_stacktrace`. This is required for proper bug reports when submitting kernel issues. Only enable this when needed for debugging, as it increases image size.
+
 ### monitoring
 
 All OpenWrt-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make sure SNMP is activated on the proprietary device with the community set to public. You can find an overview with all available profiles at `group_vars/all/snmp_profiles.yml`
