@@ -312,6 +312,31 @@ ssh_keys:
   - comment: John
     key: ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Keyname
 ```
+### packages
+
+To add packages to a specific host, add the packages to the host definition:
+
+```yml
+hosts:
+  - hostname: example-core
+    role: corerouter
+    model: "cudy_tr3000-v1"
+    host__packages__to_merge:
+      - htop
+      - nano
+      - curl
+```
+
+To remove a package that is installed by default, prefix it with a `-`:
+
+```yml
+host__packages__to_merge:
+  - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"
+  - "kmod-ath10k ath10k-firmware-qca988x"
+```
+
+This is useful for replacing kernel modules with alternative versions.
+
 ### wireless profiles
 
 <!-- TODO: this section needs to be improved -->
