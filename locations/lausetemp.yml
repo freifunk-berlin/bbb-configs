@@ -44,6 +44,12 @@ networks:
     prefix: 10.248.106.224/32
     ipv6_subprefix: -10
 
+  - vid: 20
+    role: mesh
+    name: mesh_local
+    prefix: 10.248.106.225/32
+    ipv6_subprefix: -20
+
   - vid: 40
     name: dhcp
     role: dhcp
