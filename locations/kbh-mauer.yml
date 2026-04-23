@@ -1,0 +1,80 @@
+---
+location: kbh-mauer
+location_nice: "Kinderbauernhof und Wagenplatz Adalbertstr."
+latitude: 52.505082
+longitude: 13.420785
+community: berlin
+
+hosts:
+  - hostname: kbh-mauer-core
+    role: corerouter
+    model: "cudy_ap3000outdoor-v1"
+    wireless_profile: freifunk_default
+
+ipv6_prefix: "2001:bf7:831:d00::/56"
+
+# got following prefixes:
+# Router:  10.248.109.0/25
+# --MGMT:  10.248.109.0/27
+# --MESH:  10.248.109.32/27
+# --DHCP:  10.248.109.64/26
+
+networks:
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.248.109.32/32
+    ipv6_subprefix: -20
+    mesh_ap: kbh-mauer-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.248.109.33/32
+    ipv6_subprefix: -21
+    mesh_ap: kbh-mauer-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.109.64/26
+    ipv6_subprefix: 0
+    assignments:
+      kbh-mauer-core: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.109.0/27
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      kbh-mauer-core: 1 # 10.248.109.1
+
+  # UPLK
+  - vid: 50
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.109.34/32
+    wireguard_port: 51820
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  kbh-mauer-core: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  kbh-mauer-core: 13-20
