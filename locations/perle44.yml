@@ -1,0 +1,66 @@
+---
+location: perle44
+location_nice: Perlebergerstr 44
+latitude: 52.529823
+longitude: 13.345715
+altitude: 36
+contact_nickname: Perle44
+contacts:
+  - Gotthard@Schulte-Tigges.net
+
+hosts:
+  - hostname: perle44-core
+    role: corerouter
+    model: cudy_wr3000e-v1
+    wireless_profile: freifunk_default
+    host__rclocal__to_merge:
+      - |
+        uci -q get system.@system[0].bbb_config_first_boot > /dev/null
+        if [ "1" -eq $? ]; then
+          # set up the WAN port as an untagged connection to the uplink AP
+          uci set network.vlan_10.ports='wan:u'
+          # set up the other ports as untagged for all LAN ports
+          uci set network.vlan_40.ports='lan1:u lan2:u lan3:u lan4:u'
+          # Prevent this from running again by setting a config option
+          uci commit network
+          uci set system.@system[0].bbb_config_first_boot=1
+          uci commit system
+          # reload the config to accept these changes
+          reload_config
+        fi
+
+
+snmp_devices:
+  - hostname: perle44-perleberger36
+    address: 10.31.98.162
+    snmp_profile: airos_8
+
+# 10.31.98.160/30 - mesh and mgmt uplink AP
+# 10.31.98.166/30 - unused - reserved
+# 10.248.108.128/25 - dhcp
+
+ipv6_prefix: 2001:bf7:750:d400::/56
+
+networks:
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    untagged: true
+    prefix: 10.248.108.128/25
+    ipv6_subprefix: -1
+    inbound_filtering: true
+    enforce_client_isolation: false
+    assignments:
+      perle44-core: 1
+
+  - vid: 10
+    role: mesh
+    name: perleberger36
+    prefix: 10.31.98.160/30
+    ipv6_subprefix: 1
+    assignments:
+      perle44-core: 1
+      perle44-perleberger36: 2
+
+location__channel_assignments_11a_standard__to_merge:
+  perle44-core: 36-40
