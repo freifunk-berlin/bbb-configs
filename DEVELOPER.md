@@ -103,7 +103,7 @@ You can enable flow offloading to drastictly improve performance for mediatek ch
     flow_offload: hw
 ```
 
-**WARNING:** Due to [kernel limitations](https://www.kernel.org/doc/html/v5.15/networking/nf_flowtable.html#limitations) you might encounter problems with wifi roaming or when changing wifi bands.
+**WARNING:** Due to [kernel limitations](https://www.kernel.org/doc/html/v5.15/networking/nf_flowtable.html#limitations) you might encounter problems with wifi roaming or when changing wifi bands. [Hardware offload](https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading) bypasses QoS traffic controls (like [bandwith-limits](#bandwith-limits)) at high priority making former ineffective.
 
 ### monitoring
 
@@ -282,6 +282,76 @@ qmi:
 ```
 
 
+### ext
+
+The `ext` role is used to integrate external networks with the Freifunk router. This is useful in several scenarios:
+
+**Extend external network via ports**: When you have an external network (e.g., a FritzBox with 192.168.x.x IP range) and want to extend it through the Freifunk router's ports:
+
+```yml
+  - vid: 41
+    role: ext
+    name: private
+    untagged: true
+```
+
+**Redistribute via WiFi**: To expose an external network via its own SSID with a custom wireless profile:
+
+```yml
+  - vid: 41
+    role: ext
+    name: private
+    no_corerouter_dns_record: true
+    enforce_client_isolation: false
+```
+
+Along with a wireless profile that references the network by name:
+
+```yml
+location__wireless_profiles__to_merge:
+  - name: hts4
+    devices:
+      - radio: 11g_standard
+      - radio: 11a_standard
+    ifaces:
+      - mode: ap
+        ssid: hts4
+        encryption: sae-mixed
+        key: "file:/root/wifi_pass"
+        network: private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+```
+
+See [wireless profiles](#wireless-profiles) for more details.
+
+**Container networking**: To make Podman/Docker container networks routable in the mesh:
+
+```yml
+  - vid: 43
+    untagged: true
+    ifname: podman0
+    name: podman
+    role: ext
+    prefix: 10.248.33.72/29
+    ipv6_subprefix: 2
+    assignments:
+      podtwo-core: 1
+```
+
+### bandwith limits
+
+An optional configuration parameter can be added to any non-tunnel interface to limit the bandwitdh available on that interface.  When either `ingress` or `egress` are included in any interface definition, qos-scripts will be installed.  The values for `ingress` and `egress` are in MBit/s.
+
+```yml
+  - vid: 50
+    rold: uplink
+    ingress: 150     # limit downloads to 150MBit/s
+    egress: 50       # limit uploads to 50MBit/s
+```
+
+**WARNING:** This is made ineffective if [flow offloading](#flow-offloading) is enabled.
+
 ### ssh-keys
 
 By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys use this format:
@@ -299,6 +369,31 @@ ssh_keys:
   - comment: John
     key: ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Keyname
 ```
+### packages
+
+To add packages to a specific host, add the packages to the host definition:
+
+```yml
+hosts:
+  - hostname: example-core
+    role: corerouter
+    model: "cudy_tr3000-v1"
+    host__packages__to_merge:
+      - htop
+      - nano
+      - curl
+```
+
+To remove a package that is installed by default, prefix it with a `-`:
+
+```yml
+host__packages__to_merge:
+  - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"
+  - "kmod-ath10k ath10k-firmware-qca988x"
+```
+
+This is useful for replacing kernel modules with alternative versions.
+
 ### wireless profiles
 
 <!-- TODO: this section needs to be improved -->

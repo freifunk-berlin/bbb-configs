@@ -1,24 +1,18 @@
 ---
 # default OpenWRT version to build from unless overridden
-openwrt_version: 24.10-SNAPSHOT
+openwrt_version: 25.12-SNAPSHOT
+
+openwrt_mirror: https://downloads.openwrt.org
+# openwrt_mirror: https://mirror.berlin.freifunk.net/downloads.openwrt.org
+openwrt_base: "{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}"
 
 imagebuilder_suffix: zst # Might get overridden for older openwrt versions
 imagebuilder_filename: "openwrt-imagebuilder-{{ openwrt_version }}-{{ target | replace('/', '-') }}.Linux-x86_64.tar.{{ imagebuilder_suffix }}"
 
-imagebuilder: >
-  https://downloads.cdn.openwrt.org/{{
-  'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version
-  }}/targets/{{ target }}/{{ imagebuilder_filename }}
-feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/{{ instr_set }}/falter"
+imagebuilder: "{{ openwrt_mirror }}/{{ openwrt_base }}/targets/{{ target }}/{{ imagebuilder_filename }}"
+feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/__INSTR_SET__/falter"
 
 all__packages__to_merge:
-  - collectd-mod-interface
-  - collectd-mod-iwinfo
-  - collectd-mod-load
-  - collectd-mod-memory
-  - collectd-mod-network
-  - collectd-mod-ping
-  - collectd-mod-uptime
   - ethtool
   - ip6tables-nft # Its not pulled in by default anymore bc fw4
   - iptables-nft
@@ -42,6 +36,15 @@ all_luci_base__packages__to_merge:
   - rpcd-mod-rrdns
   - uhttpd
   - uhttpd-mod-ubus
+
+all_collectd__packages__to_merge:
+  - collectd-mod-interface
+  - collectd-mod-iwinfo
+  - collectd-mod-load
+  - collectd-mod-memory
+  - collectd-mod-network
+  - collectd-mod-ping
+  - collectd-mod-uptime
 
 all__disabled_services__to_merge:
   - "olsrd6"

@@ -20,8 +20,6 @@ networks:
     name: mesh_f2a
     prefix: 10.31.26.186/32
     ipv6_subprefix: -1
-    assignments:
-      schleidenplatz-core: 0
     ptp: true
 
   - vid: 11
@@ -29,8 +27,6 @@ networks:
     name: mesh_sama
     prefix: 10.31.26.187/32
     ipv6_subprefix: -2
-    assignments:
-      schleidenplatz-core: 0
     ptp: true
 
   - vid: 12
@@ -38,8 +34,6 @@ networks:
     name: mesh_k9
     prefix: 10.31.26.188/32
     ipv6_subprefix: -3
-    assignments:
-      schleidenplatz-core: 0
     ptp: true
 
   - vid: 40

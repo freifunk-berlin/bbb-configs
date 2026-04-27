@@ -79,6 +79,8 @@ protocol babel {
 {% for nw in networks | selectattr('role', 'equalto', 'tunnel') %}
 	interface "{{ nw.get('ifname') }}" {
 		type wireless;
+		hello interval 1s;
+		update interval 5s;
 	};
 {% endfor %}
 }

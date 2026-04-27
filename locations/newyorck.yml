@@ -8,9 +8,6 @@ contact_nickname: NewYorck Internet AG
 contacts:
   - newyorck@so36.net
 
-role: ap
-model: "siemens_ws-ap3610"
-wireless_profile: newyorck
 
 hosts:
   - hostname: newyorck-core
@@ -20,20 +17,65 @@ hosts:
     flow_offload: hw
 
   - hostname: newyorck-ap-1a
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-1b
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-1c
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-1d
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-1e
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-1f
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-1g
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-1h
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-2a
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-2b
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-2c
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-2d
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-2e
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-3a
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
   - hostname: newyorck-ap-3b
+    role: ap
+    model: "siemens_ws-ap3610"
+    wireless_profile: newyorck
 
 snmp_devices:
   # TL-SG2424
@@ -102,14 +144,14 @@ networks:
       newyorck-ap-1e: 9
       newyorck-ap-1f: 10
       newyorck-ap-1g: 11
-      newyorck-ap-1h: 18
-      newyorck-ap-2a: 12
-      newyorck-ap-2b: 13
-      newyorck-ap-2c: 14
-      newyorck-ap-2d: 15
-      newyorck-ap-2e: 16
-      newyorck-ap-3a: 17
-      newyorck-ap-3b: 18
+      newyorck-ap-1h: 12
+      newyorck-ap-2a: 13
+      newyorck-ap-2b: 14
+      newyorck-ap-2c: 15
+      newyorck-ap-2d: 16
+      newyorck-ap-2e: 17
+      newyorck-ap-3a: 18
+      newyorck-ap-3b: 19
 
   # DHCP (HOST) without filtering and isolation
   - vid: 43

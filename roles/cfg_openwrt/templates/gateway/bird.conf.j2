@@ -77,12 +77,16 @@ protocol pipe pipe_v4_main_to_babel_default {
 {% else %}
   {% set v4_nexthop =  uplink['ipv4'] | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') %}
 {%- endif %}
+{% if not uplink.get('broken', false) %}
 
 protocol static static_uplink {
 	ipv4 { table v4_main; };
 	check link;
 	route 0.0.0.0/0 via {{ v4_nexthop }} dev "{{ uplink['ifname'] }}";
 }
+{% else %}
+## Skipping, uplink via {{ v4_nexthop }} is marked broken
+{% endif %}
 
 ##
 ## Babel Section

@@ -1,0 +1,30 @@
+---
+name: Check model nice fields
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  check-model-nice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Run model nice fields check
+        run: |
+          git fetch origin main
+          changed_files=$(git diff --name-only origin/main)
+          model_files=$(echo "$changed_files" | grep -E '^group_vars/model_.*\.yml$' || true)
+          if [ -z "$model_files" ]; then
+            echo "No model files changed, running against all models"
+            bash ./.github/checks/check-model-nice.sh
+          else
+            echo "Running check on changed model files"
+            bash ./.github/checks/check-model-nice.sh "$model_files"
+          fi

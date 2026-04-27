@@ -74,6 +74,23 @@ pip3 install -r requirements.txt
   ./generate-images.sh location1,host1,host2,location2,"host-*","location-*"
   ```
 
+  or by loading entries from a file, one per line (supports comments starting with #):
+
+  ```sh
+  ./generate-images.sh -l list.txt
+  ```
+
+  where `list.txt` contains:
+
+  ```
+  kotti
+  kotti-core
+  hdk-80
+  hdk-*
+  ```
+
+  Note: When using locations in a file, use the short name (e.g., `kotti`) - the script automatically converts it to the required `location_kotti` format. Wildcards like `hdk-*` will expand to all matching locations.
+
   or by passing running the ansible playbook directly with a limit parameter containing locations or hosts as a comma separated list.
 
   Note: Locations must be prefixed witch `location_` and within the location name `-` must be converted to `_`.
@@ -81,6 +98,7 @@ pip3 install -r requirements.txt
   ```sh
   ansible-playbook play.yml --limit location_loc_name,host --tags image
   ```
+
   #### Flash images
 
   After building firmware images you can update multiple routers using the mass-update script, which updates every node,that has an image in `tmp/images/`. This works best using SSH keys for authentication.
@@ -90,6 +108,13 @@ pip3 install -r requirements.txt
   ```
   ./mass-update.sh
   ```
+
+  Use the `-y` or `--yes` flag to skip the confirmation prompt:
+
+  ```
+  ./mass-update.sh -y
+  ```
+
   </details>
 - <details>
   <summary>locations</summary>

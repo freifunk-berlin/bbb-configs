@@ -23,6 +23,10 @@ hosts:
     poe_on: []
 
 snmp_devices:
+  - hostname: vaterhaus-cube-xa
+    address: 10.230.192.201
+    snmp_profile: mikrotik_60g
+
   - hostname: vaterhaus-zwingli
     address: 10.230.192.202
     snmp_profile: af60
@@ -60,13 +64,13 @@ airos_dfs_reset:
 
   - name: "vaterhaus-nw"
     target: "10.230.192.204"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
   - name: "vaterhaus-o"
     target: "10.230.192.205"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
@@ -78,7 +82,7 @@ airos_dfs_reset:
 
   - name: "vaterhaus-s"
     target: "10.230.192.207"
-    username: "root"
+    username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
@@ -133,11 +137,17 @@ networks:
     prefix: 10.230.192.229/32
     ipv6_subprefix: -6
 
+  - vid: 16
+    role: mesh
+    name: mesh_cube_xa
+    prefix: 10.230.192.230/32
+    ipv6_subprefix: -7
+
   - vid: 20
     role: mesh
     name: mesh_11s_no
-    prefix: 10.230.192.230/32
-    ipv6_subprefix: -7
+    prefix: 10.230.192.231/32
+    ipv6_subprefix: -8
     mesh_ap: vaterhaus-n-nf-2ghz
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -160,6 +170,7 @@ networks:
     assignments:
       vaterhaus-core: 1 # 10.230.192.193
       vaterhaus-switch: 2 # 10.230.192.194
+      vaterhaus-cube-xa: 9 # 10.230.192.201
       vaterhaus-zwingli: 10 # 10.230.192.202
       vaterhaus-w: 11 # 10.230.192.203
       vaterhaus-nw: 12 # 10.230.192.204

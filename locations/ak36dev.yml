@@ -14,6 +14,7 @@ hosts:
   - hostname: ak36dev-gw
     role: gateway
     model: "x86-64"
+    openwrt_version: 24.10-SNAPSHOT
     image_search_pattern: "*-ext4-combined.img*"
     host__packages__to_merge:
       - qemu-ga

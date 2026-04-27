@@ -61,6 +61,7 @@ networks:
     prefix: 10.31.157.97/32
     ipv6_subprefix: -10
     ptp: true
+    mesh_metric: 2048
     mesh_metric_lqm: ["default 0.85"]
 
   - vid: 11
@@ -69,7 +70,7 @@ networks:
     prefix: 10.31.157.98/32
     ipv6_subprefix: -11
     ptp: true
-    mesh_metric: 128
+    mesh_metric: 1024
 
   - vid: 12
     role: mesh
@@ -77,6 +78,7 @@ networks:
     prefix: 10.31.157.99/32
     ipv6_subprefix: -12
     ptp: true
+    mesh_metric: 1024
     mesh_metric_lqm: ["default 0.90"]
 
   - vid: 20
@@ -87,6 +89,7 @@ networks:
     mesh_ap: gub37-core
     mesh_radio: 11g_standard
     mesh_iface: mesh
+    mesh_metric: 4096
     mesh_metric_lqm: ["default 0.3"]
 
   - vid: 21
@@ -97,6 +100,7 @@ networks:
     mesh_ap: gub37-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric: 4096
     mesh_metric_lqm: ["default 0.3"]
 
   - vid: 22
@@ -107,6 +111,7 @@ networks:
     mesh_ap: gub37-hof-s
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric: 4096
     mesh_metric_lqm: ["default 0.3"]
 
   - vid: 23
@@ -117,6 +122,7 @@ networks:
     mesh_ap: gub37-hof-w
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric: 4096
     mesh_metric_lqm: ["default 0.3"]
 
   # DHCP - freifunk

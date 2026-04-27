@@ -20,7 +20,7 @@ hosts:
 snmp_devices:
   - hostname: ohlauer-switch
     address: 10.31.166.250
-    snmp_profile: edgerouter
+    snmp_profile: swos_lite
 
   - hostname: ohlauer-emma
     address: 10.31.166.251

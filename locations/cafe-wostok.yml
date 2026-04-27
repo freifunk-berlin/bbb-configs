@@ -11,10 +11,20 @@ hosts:
   - hostname: cafe-wostok-core
     role: corerouter
     model: "avm_fritzbox-7530"
+    collectd__packages__to_merge:
+      - collectd-mod-olsrd
+      - collectd-mod-conntrack
 
   - hostname: cafe-wostok-ap1
     role: ap
     model: "zyxel_nwa50ax"
+
+all_collectd__packages__to_merge:
+  - collectd-mod-load
+  - collectd-mod-memory
+  - collectd-mod-network
+  - collectd-mod-ping
+  - collectd-mod-uptime
 
 ipv6_prefix: "2001:bf7:860:d00::/56"
 

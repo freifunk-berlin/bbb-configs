@@ -1,10 +1,6 @@
 ---
 role_uplink_gw__packages__to_merge:
   - -wpad-openssl
-  - collectd-mod-conntrack
-  - collectd-mod-olsrd
-  - collectd-mod-snmp
-  - collectd-mod-snmp6
   - olsrd
   - olsrd-mod-arprefresh
   - olsrd-mod-jsoninfo
@@ -16,6 +12,7 @@ role_uplink_gw__packages__to_merge:
   - luci-app-olsr-services
   - luci-mod-falter
   - falter-common
+  - falter-berlin-gw
   - luci-app-falter-owm
   - luci-app-falter-owm-ant
   - luci-app-falter-owm-cmd
@@ -36,6 +33,12 @@ role_uplink_gw__packages__to_merge:
 bird__packages__to_merge:
   - bird2-babelpatch
   - bird2c
+
+collectd__packages__to_merge:
+  - collectd-mod-conntrack
+  - collectd-mod-olsrd
+  - collectd-mod-snmp
+  - collectd-mod-snmp6
 
 role_uplink_gw__disabled_services__to_merge:
   - "odhcpd"
