@@ -16,67 +16,77 @@ hosts:
   - hostname: hacrafu-lanterne
     role: corerouter
     model: "glinet_gl-mt6000"
-    wireless_profile: disable
-    flow_offload: hw
+    wireless_profile: freifunk_hacrafu
     host__rclocal__to_merge:
       - |
+        uci set network.vlan_10.ports='lan2:t'
+        uci set network.vlan_11.ports='lan3:t'
+        uci set network.vlan_12.ports='lan4:t'
+        uci set network.vlan_13.ports='lan5:t'
+        uci set network.vlan_22.ports='lan1:t'
+        uci set network.vlan_23.ports='lan1:t'
+        uci set network.vlan_24.ports='lan1:t'
+        uci set network.vlan_25.ports='lan1:t'
+        uci set network.vlan_26.ports='lan1:t'
+        uci set network.vlan_27.ports='lan1:t'
         uci set network.vlan_40.ports='lan1:u lan2:t lan3:t lan4:t lan5:t'
+        uci set network.vlan_42.ports='lan1:t lan2:t lan3:t lan4:t lan5:t'
         uci set network.vlan_50.ports='eth1:u'
         uci commit network; reload_config
 
-  - hostname: hacrafu-lanterne-ap
+  - hostname: hacrafu-lanterne-ap-1
     role: ap
     model: "cudy_ap3000outdoor-v1"
-    wireless_profile: freifunk_hacrafu_ap_only
+    wireless_profile: freifunk_hacrafu
 
-  - hostname: hacrafu-lanterne-mesh
+  - hostname: hacrafu-lanterne-ap-2
     role: ap
     model: "cudy_ap3000outdoor-v1"
-    wireless_profile: mesh_only
+    wireless_profile: freifunk_hacrafu
 
   - hostname: hacrafu-lanterne-indoor
     role: ap
     model: "dlink_dap-x1860-a1" # TODO: replace with real model
-    wireless_profile: freifunk_hacrafu_ap_only
+    wireless_profile: freifunk_hacrafu
 
 snmp_devices:
   - hostname: hacrafu-lanterne-north
-    address: 10.248.77.68
-    snmp_profile: airos_8
-
-  - hostname: hacrafu-lanterne-east
     address: 10.248.77.69
     snmp_profile: airos_8
 
-  - hostname: hacrafu-lanterne-south
+  - hostname: hacrafu-lanterne-east
     address: 10.248.77.70
     snmp_profile: airos_8
 
-  - hostname: hacrafu-lanterne-west
+  - hostname: hacrafu-lanterne-south
     address: 10.248.77.71
+    snmp_profile: airos_8
+
+  - hostname: hacrafu-lanterne-west
+    address: 10.248.77.72
     snmp_profile: airos_8
 
 airos_dfs_reset:
   - name: "hacrafu-lanterne-north"
-    target: "10.248.77.68"
-    username: "ubnt"
-    password: "file:/root/pwd.txt"
-    daytime_limit: "2-7"
-
-  - name: "hacrafu-lanterne-east"
     target: "10.248.77.69"
     username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
-  - name: "hacrafu-lanterne-south"
+  - name: "hacrafu-lanterne-east"
     target: "10.248.77.70"
     username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
 
-  - name: "hacrafu-lanterne-west"
+  - name: "hacrafu-lanterne-south"
     target: "10.248.77.71"
+    username: "ubnt"
+    password: "file:/root/pwd.txt"
+    daytime_limit: "2-7"
+
+  - name: "hacrafu-lanterne-west"
+    target: "10.248.77.72"
     username: "ubnt"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
@@ -136,47 +146,47 @@ networks:
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # MESH - 5 GHz 802.11s - ap dhcp
+  # MESH - 5 GHz 802.11s - AP 1
   - vid: 22
     role: mesh
-    name: mesh_5g_ap
+    name: mesh_5g_ap1
     prefix: 10.248.81.23/32
     ipv6_subprefix: -22
-    mesh_ap: hacrafu-lanterne-ap
+    mesh_ap: hacrafu-lanterne-ap-1
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  # MESH - 2.4 GHz 802.11s - ap dhcp
+  # MESH - 2.4 GHz 802.11s - AP 1
   - vid: 23
     role: mesh
-    name: mesh_2g_ap
+    name: mesh_2g_ap1
     prefix: 10.248.81.24/32
     ipv6_subprefix: -23
-    mesh_ap: hacrafu-lanterne-ap
+    mesh_ap: hacrafu-lanterne-ap-1
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # MESH - 5 GHz 802.11s - ap mesh
+  # MESH - 5 GHz 802.11s - AP 2
   - vid: 24
     role: mesh
-    name: mesh_5g_mesh
+    name: mesh_5g_ap2
     prefix: 10.248.81.25/32
     ipv6_subprefix: -24
-    mesh_ap: hacrafu-lanterne-mesh
+    mesh_ap: hacrafu-lanterne-ap-2
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  # MESH - 2.4 GHz 802.11s - ap mesh
+  # MESH - 2.4 GHz 802.11s - AP 2
   - vid: 25
     role: mesh
-    name: mesh_2g_mesh
+    name: mesh_2g_ap2
     prefix: 10.248.81.26/32
     ipv6_subprefix: -25
-    mesh_ap: hacrafu-lanterne-mesh
+    mesh_ap: hacrafu-lanterne-ap-2
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # MESH - 5 GHz 802.11s - ap indoor
+  # MESH - 5 GHz 802.11s - AP Indoor
   - vid: 26
     role: mesh
     name: mesh_5g_home
@@ -186,7 +196,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  # MESH - 2.4 GHz 802.11s - ap indoor
+  # MESH - 2.4 GHz 802.11s - AP Indoor
   - vid: 27
     role: mesh
     name: mesh_2g_home
@@ -216,8 +226,8 @@ networks:
     ipv6_subprefix: 1
     assignments:
       hacrafu-lanterne: 1        # 65
-      hacrafu-lanterne-ap: 2     # 66
-      hacrafu-lanterne-mesh: 3   # 67
+      hacrafu-lanterne-ap-1: 2   # 66
+      hacrafu-lanterne-ap-2: 3   # 67
       hacrafu-lanterne-indoor: 4 # 68
       hacrafu-lanterne-north: 5  # 69
       hacrafu-lanterne-east: 6   # 70
@@ -242,15 +252,17 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hacrafu-lanterne-ap: 52-40
-  hacrafu-lanterne-mesh: 36-80
-  hacrafu-lanterne-indoor: 52-40
+  hacrafu-lanterne: 36-40
+  hacrafu-lanterne-ap-1: 36-40
+  hacrafu-lanterne-ap-2: 44-40
+  hacrafu-lanterne-indoor: 44-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hacrafu-lanterne-ap: 1-40
-  hacrafu-lanterne-mesh: 13-40
-  hacrafu-lanterne-indoor: 1-40
+  hacrafu-lanterne: 13-20
+  hacrafu-lanterne-ap-1: 13-20
+  hacrafu-lanterne-ap-2: 9-20
+  hacrafu-lanterne-indoor: 9-20
 
 # only place this ssh-keys
 ssh_keys:
