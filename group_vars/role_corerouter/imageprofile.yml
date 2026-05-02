@@ -2,15 +2,6 @@
 role_corerouter__packages__to_merge:
   - bgpdisco
   - bgpdisco-plugin-nameservice
-  - olsrd
-  - olsrd-mod-arprefresh
-  - olsrd-mod-dyn-gw
-  - olsrd-mod-jsoninfo
-  - olsrd-mod-nameservice
-  - olsrd-mod-txtinfo
-  - olsrd-utils
-  - luci-app-olsr
-  - luci-app-olsr-services
   - luci-mod-falter
   - falter-common
   - luci-app-falter-owm
@@ -22,7 +13,6 @@ role_corerouter__packages__to_merge:
 
 collectd__packages__to_merge:
   - collectd-mod-dhcpleases
-  - collectd-mod-olsrd
   - collectd-mod-conntrack
   - collectd-mod-snmp
 
