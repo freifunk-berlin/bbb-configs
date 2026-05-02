@@ -6,6 +6,7 @@ config rule6
 	option priority 33000
 	option lookup 'babel-src'
 
+{% if not (bird_only | default(true)) %}
 # IPv4 Soft Migration by prioritizing Babel over OLSR
 config rule
 	option priority 33100
@@ -21,6 +22,7 @@ config rule
 config rule
 	option priority 33201
 	option lookup 'olsr-default'
+{% endif %}
 
 config interface 'loopback'
 	option device 'lo'
