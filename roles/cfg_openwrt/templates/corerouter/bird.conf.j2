@@ -9,8 +9,10 @@ include "/dev/shm/bird_*.conf";
 
 #master4 is implicitly created
 ipv6 sadr table v6_main;
+{% if not (bird_only | default(true)) %}
 ipv4 table v4_babel_ff;
 ipv4 table v4_babel_default;
+{% endif %}
 
 protocol device {
 };
@@ -94,9 +96,14 @@ protocol kernel {
 	learn all; # Allow learning loopback route
 }
 
-
-
-# Currently not in use but keep for later purposes
+{% if bird_only | default(true) %}
+protocol kernel {
+	ipv4;
+	import all;
+	export all;
+	learn all;
+}
+{% else %}
 protocol kernel {
 	ipv4 {
 		import none;
@@ -104,7 +111,6 @@ protocol kernel {
 	};
 }
 
-# TODO: Get rid of the following when OLSRD is gone
 protocol kernel {
 	kernel table 10;
 	ipv4 {
@@ -115,7 +121,7 @@ protocol kernel {
 }
 
 protocol pipe {
-        table master4;
+	table master4;
 	peer table v4_babel_ff;
 	export where net != 0.0.0.0/0;
 }
@@ -130,7 +136,8 @@ protocol kernel {
 }
 
 protocol pipe {
-        table master4;
+	table master4;
 	peer table v4_babel_default;
 	export where net = 0.0.0.0/0;
 }
+{% endif %}

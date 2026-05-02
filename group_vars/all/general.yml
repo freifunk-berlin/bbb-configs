@@ -43,6 +43,9 @@ all__sysctl__to_merge:
   vm.min_free_kbytes: 1024
 
 ## Routing Section:
+# Set to false to re-enable OLSR (legacy, for connecting to Falter routers)
+bird_only: true
+
 freifunk_global_prefix: 2001:bf7::/32
 
 # Default mesh metric in inbound direction (rxcost) for normal mesh links
