@@ -11,6 +11,7 @@ on:
 permissions:
   contents: write # required for artifacts
   actions: read
+  pull-requests: write # required for Commenting
 
 jobs:
   build:
@@ -83,8 +84,17 @@ jobs:
           tar -cvf ./tmp/images.tar ./tmp/images/
 
       - name: Store build output
+        id: artifact-upload-step
         uses: actions/upload-artifact@v5
         with:
           name: ansibleimages
           path: |
             ./tmp/images.tar
+
+      - name: Comment link to artifacts
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Hey :wave:
+            I am building images because you added the label `build_image`.
+            You can find the output [here](${{ steps.artifact-upload-step.outputs.artifact-url }}). If you need new images just add the label again.
