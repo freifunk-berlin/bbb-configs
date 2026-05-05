@@ -73,6 +73,7 @@ mgmt:
     config: 22 # .150
     monitor: 23 # .151
     unifi: 29 # .157
+    unifi-controller: 29 # .157 two names for the unifi controller
     uisp: 30 # .158
 
 # Mesh Network: 10.31.130.160/27
