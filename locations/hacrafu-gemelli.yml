@@ -10,15 +10,14 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-gemelli
     role: corerouter
     model: "genexis_pulse-ex400"
     wireless_profile: freifunk_hacrafu
-    # flow_offload: hw
     host__rclocal__to_merge:
       - |
         uci set network.vlan_40.ports='lan:u'
+        uci set network.vlan_42.ports='lan:t'
         uci set network.vlan_50.ports='wan:u'
         uci commit network; reload_config
 
@@ -74,7 +73,7 @@ networks:
   - vid: 50
     role: uplink
     igress: 10
-    egress: 2
+    egress: 5
 
   - role: tunnel
     ifname: ts_wg0
@@ -90,11 +89,11 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hacrafu-gemelli: 36-80
+  hacrafu-gemelli: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hacrafu-gemelli: 13-40
+  hacrafu-gemelli: 13-20
 
 # only place this ssh-keys
 ssh_keys:
@@ -104,3 +103,5 @@ ssh_keys:
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de
   - comment: Peter
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIzevq2nqgb0rBAEEcDEkAIu24aTiWIkem3+59a6h10 HaCraFu Petersilie
+  - comment: Flupsy
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHG1Y5nkEm3yUIF1nQkbO8G2qHgtAz5b5Os9o5hVjyQZ HaCraFu Flupsy
