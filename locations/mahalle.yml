@@ -44,14 +44,14 @@ networks:
     prefix: 10.31.179.122/32
     ipv6_subprefix: -10
 
-  - vid: 20
-    role: mesh
-    name: mahalle_w
-    prefix: 10.31.179.120/32
-    ipv6_subprefix: -2
-    mesh_ap: mahalle-nf-w
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
+  # - vid: 20
+  #   role: mesh
+  #   name: mahalle_w
+  #   prefix: 10.31.179.120/32
+  #   ipv6_subprefix: -2
+  #   mesh_ap: mahalle-nf-w
+  #   mesh_radio: 11a_standard
+  #   mesh_iface: mesh
 
   - vid: 21
     role: mesh
@@ -81,11 +81,11 @@ networks:
     assignments:
       mahalle-core: 1
       mahalle-switch: 2
-      mahalle-nf-w: 3
+      # mahalle-nf-w: 3
       mahalle-nf-o: 4
       mahalle-walde: 5
 
 location__channel_assignments_11a_standard__to_merge:
   mahalle-core: 36-20
   mahalle-nf-o: 40-20
-  mahalle-nf-w: 44-20
+  # mahalle-nf-w: 44-20
