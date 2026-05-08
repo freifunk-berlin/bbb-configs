@@ -83,10 +83,10 @@ snmp_devices:
     address: 10.31.155.226
     snmp_profile: tplink
 
-  # TL-SG2424
-  - hostname: newyorck-switch2
-    address: 10.31.155.227
-    snmp_profile: tplink
+  # # TL-SG2424
+  # - hostname: newyorck-switch2
+  #   address: 10.31.155.227
+  #   snmp_profile: tplink
 
   # TL-SG3424P
   - hostname: newyorck-switch3
@@ -135,7 +135,7 @@ networks:
     assignments:
       newyorck-core: 1
       newyorck-switch1: 2
-      newyorck-switch2: 3
+      # newyorck-switch2: 3
       newyorck-switch3: 4
       newyorck-ap-1a: 5
       newyorck-ap-1b: 6
