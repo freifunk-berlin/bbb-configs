@@ -274,6 +274,7 @@ The wireless uplink works together with tunnel configurations. The wireless inte
 - Only usable on corerouter role
 - The specified radio must be available on the router model
 - Passwords use the `file:/path/to/file` pattern and are replaced on first boot
+- **Mesh networks on the same radio will not be configured.** On the core router, when a wireless uplink is configured on a radio, any mesh (802.11s) interfaces on that same radio will be skipped. This is because both the STA (wireless uplink) and the mesh interfaces would try to set the channel. Whoever succeeds first defines it, making the configuration unreliable.
 
 **Device Limitations:**
 Not all devices support running multiple APs, 802.11s mesh, and a STA (station) interface simultaneously on the same radio. To check if your device supports this configuration, run:
