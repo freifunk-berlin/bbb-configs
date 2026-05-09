@@ -39,9 +39,9 @@ config wifi-device '{{ wd_id }}'
   {% else %}
         option htmode 'VHT{{ bandwidth }}'
   {% endif %}
-  {# Skip channel setting for radios with wireless_uplink - station mode uses AP's channel #}
+  {# Skip channel setting for corerouter radios with wireless_uplink - station mode uses AP's channel #}
   {% set has_wireless_uplink = networks | selectattr('role', 'equalto', 'wireless_uplink') | selectattr('radio', 'equalto', wd['name']) | list | length > 0 %}
-  {% if not has_wireless_uplink %}
+  {% if not (role == 'corerouter' and has_wireless_uplink) %}
 	option channel '{{ channel }}'
   {% endif %}
   {% if txpower %}
@@ -146,7 +146,8 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
     {% endif %}
   {% endfor %}
 
-  {# Wireless uplink: station interface for connecting to external AP as uplink #}
+  {# Wireless uplink: station interface for connecting to external AP as uplink (corerouter only) #}
+  {% if role == 'corerouter' %}
   {% set wireless_uplinks = networks | selectattr('role', 'equalto', 'wireless_uplink') | selectattr('radio', 'equalto', wd['name']) | list %}
   {% if wireless_uplinks %}
   {% set wireless_uplink = wireless_uplinks[0] %}
@@ -174,6 +175,7 @@ config wifi-iface '{{ wd_id }}_sta'
     {% endif %}
   {% else %}
     option encryption 'none'
+  {% endif %}
   {% endif %}
   {% endif %}
 {% endfor %}
