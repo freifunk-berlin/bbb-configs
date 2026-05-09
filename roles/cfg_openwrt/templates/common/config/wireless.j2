@@ -84,7 +84,8 @@ config wifi-device '{{ wd_id }}'
       {% endif %}
     {% endif %}
 
-    {% if iface['mode'] == 'ap' or (iface['mode'] == 'mesh' and mesh_net) %}
+    {# On the core router with a wireless uplink, skip mesh on radios used for that uplink - both the STA and mesh would try to set the channel, whoever succeeds first defines it, making the configuration unreliable. This is documented in DEVELOPER.md. #}
+    {% if iface['mode'] == 'ap' or (iface['mode'] == 'mesh' and mesh_net and not (role == 'corerouter' and has_wireless_uplink)) %}
 config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
 	option device '{{ wd_id }}'
     {% if 'network' in iface %}
