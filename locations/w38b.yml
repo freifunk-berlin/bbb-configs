@@ -23,7 +23,9 @@ hosts:
   - hostname: w38b-shp
     role: ap
     model: "dlink_covr-x1860-a1"
-    wireless_profile: mesh_only
+    # With dlink_covr-x1860-a1 mesh_only does not work. Channel 13 has 'no IR' set
+    # this means no initial radiation. The mesh only starts with an additional AP
+    wireless_profile: w38b
     mac_override: { eth0: 0c:0e:76:cf:2e:3a }
 
 snmp_devices:
