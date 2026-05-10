@@ -89,7 +89,7 @@ protocol kernel {
 	ipv6 sadr {
 		table v6_main;
 		import all;
-		export all;
+		export where source != RTS_INHERIT;
 	};
 	learn all; # Allow learning loopback route
 }
