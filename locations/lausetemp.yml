@@ -21,6 +21,11 @@ hosts:
     model: "zyxel_nwa55axe"
     wireless_profile: ap_only
 
+  - hostname: lausetemp-ap2
+    role: ap
+    model: "zyxel_nwa55axe"
+    wireless_profile: ap_only
+
 snmp_devices:
   - hostname: lausetemp-switch
     address: 10.248.106.242
@@ -72,3 +77,4 @@ networks:
       lausetemp-switch: 2
       lausetemp-emma: 3
       lausetemp-ap1: 4
+      lausetemp-ap2: 5
