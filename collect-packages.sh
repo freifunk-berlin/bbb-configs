@@ -8,7 +8,18 @@
 # The generated .config files contain:
 #   - Target/subtarget selection  (CONFIG_TARGET_*)
 #   - Imagebuilder output flag    (CONFIG_IB=y)
-#   - All packages for that target (CONFIG_PACKAGE_*=y)
+#   - All packages for that target (CONFIG_PACKAGE_*=m)
+#
+# Packages are marked =m ("module") rather than =y to make them available
+# in the imagebuilder's package repository without forcing them into the
+# base firmware, avoiding conflicts with default-installed packages.
+#
+# Two sources of packages are collected per target:
+#   1. bbb-configs packages: from the final 'packages' variable of each host
+#   2. Model-profile defaults: fetched from profiles.json on the OpenWrt
+#      mirror for each target, then looked up per device model.  This picks
+#      up packages like 'rssileds' that the imagebuilder profile installs
+#      automatically but that are not listed in bbb-configs.
 #
 # Usage:
 #   ./collect-packages.sh [--skip-ansible]
@@ -76,6 +87,50 @@ for target in "${targets[@]}"; do
 	arch="${target%%/*}"
 	subtarget="${target##*/}"
 
+	# --- bbb-configs packages (exclude removals like "-pkg") ---
+	mapfile -t bbb_pkgs < <(
+		jq -r --arg t "$target" \
+			'select(.target == $t) | .packages[] | select(startswith("-") | not)' \
+			"${json_files[@]}" | sort -u
+	)
+
+	# --- Model-profile default packages from OpenWrt profiles.json ---
+	# Construct the profiles.json URL from plain-string fields in the JSON.
+	profiles_url=$(jq -r --arg t "$target" \
+		'select(.target == $t) |
+		 .openwrt_mirror + "/" +
+		 (if .openwrt_version == "snapshot" then "snapshots"
+		  else "releases/" + .openwrt_version end) +
+		 "/targets/" + .target + "/profiles.json"' \
+		"${json_files[@]}" | head -1)
+
+	profiles_tmp=$(mktemp)
+	profile_pkgs=()
+	if curl -sSf -o "$profiles_tmp" "$profiles_url" 2>/dev/null; then
+		# Collect the profile ID for each host on this target
+		# (uses override_target when set, falls back to model)
+		mapfile -t profile_pkgs < <(
+			jq -r --arg t "$target" \
+				'select(.target == $t) | (.override_target // .model)' \
+				"${json_files[@]}" |
+			sort -u |
+			while IFS= read -r profile_id; do
+				jq -r --arg p "$profile_id" \
+					'.profiles[$p].packages // [] | .[]' \
+					"$profiles_tmp" 2>/dev/null
+			done | sort -u
+		)
+	else
+		echo "  Warning: could not fetch $profiles_url" \
+		     "(model-profile default packages not included)"
+	fi
+	rm -f "$profiles_tmp"
+
+	# --- Combine and write .config ---
+	mapfile -t all_pkgs < <(
+		printf '%s\n' "${bbb_pkgs[@]}" "${profile_pkgs[@]}" | sort -u | grep -v '^$'
+	)
+
 	{
 		# --- Target selection ---
 		echo "# Target: $target"
@@ -88,18 +143,15 @@ for target in "${targets[@]}"; do
 		echo "CONFIG_IB=y"
 		echo ""
 
-		# --- Packages ---
+		# --- Packages (=m: in imagebuilder repo, not forced into base firmware) ---
 		echo "# Packages"
-		jq -r --arg target "$target" \
-			'select(.target == $target) | .packages[] | select(startswith("-") | not)' \
-			"${json_files[@]}" |
-			sort -u |
-			awk '{print "CONFIG_PACKAGE_" $1 "=y"}'
+		printf '%s\n' "${all_pkgs[@]}" | awk '{print "CONFIG_PACKAGE_" $1 "=m"}'
 
 	} >"$config_file"
 
-	pkg_count=$(grep -c '^CONFIG_PACKAGE_' "$config_file")
-	echo "  $target  ->  $config_file  ($pkg_count packages)"
+	bbb_count=${#bbb_pkgs[@]}
+	profile_count=${#profile_pkgs[@]}
+	echo "  $target  ->  $config_file  ($bbb_count bbb-configs + $profile_count profile-defaults packages)"
 done
 
 # ---------------------------------------------------------------------------
