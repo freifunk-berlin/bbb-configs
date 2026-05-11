@@ -107,6 +107,11 @@ check_missing_root_password() {
 
 	# Get the password field of root, or handle if the root user is missing
 	password_field=$(run_ssh "$hostname" "awk -F: '\$1 == \"root\" { print \$2 }' /etc/shadow" 2>/dev/null)
+	local ssh_exit_code=$?
+
+	if [ $ssh_exit_code -ne 0 ]; then
+		return
+	fi
 
 	if [[ -z "$password_field" || "$password_field" =~ ^(\*|!|)?$ ]]; then
 		MISSING_PASSWORD_DEVICES+=("$hostname")

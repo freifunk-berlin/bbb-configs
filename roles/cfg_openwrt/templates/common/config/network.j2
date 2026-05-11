@@ -100,6 +100,23 @@ config device
   {% endif %}
 
 {% endfor %}
+{% if role == 'corerouter' %}
+{% for network in networks | selectattr('role', 'equalto', 'wireless_uplink') %}
+  {% set wd = wireless_devices | selectattr('name', 'equalto', network['radio']) | list | first %}
+config interface '{{ libnetwork.getUciIfname(network) }}'
+  option device '{{ wd['ifname_hint'] }}-sta'
+  {% if network.get('uplink_ipv4') %}
+  option proto 'static'
+  option ipaddr '{{ network['uplink_ipv4'] }}'
+    {% if network.get('uplink_gateway') %}
+  option gateway '{{ network['uplink_gateway'] }}'
+    {% endif %}
+  {% else %}
+  option proto 'none'
+  {% endif %}
+
+{% endfor %}
+{% endif %}
 {% for i in mac_override|default({}) %}
 config device '{{ i }}_dev'
 	option name '{{ i }}'
