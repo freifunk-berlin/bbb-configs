@@ -1,0 +1,72 @@
+---
+location: sav-hq
+location_nice: Rotherstraße 16, 10245 Berlin
+latitude: 52.5040166
+longitude: 13.4490787
+altitude: 89
+contact_nickname: "Jammingblub"
+contacts:
+  - "freifunk@sva.de"
+
+hosts:
+  - hostname: sav-hq # VM on Proxmox
+    role: corerouter
+    model: "x86-64"
+    image_search_pattern: "*-ext4-combined.img*"
+    host__packages__to_merge:
+      - qemu-ga
+
+
+ipv6_prefix: "2001:bf7:831:1000::/56"
+
+# 22001:bf7:831:1000::/56 assigned static to sav-hq-fw
+
+# Router: 10.248.111.64/26
+# --DHCP: 10.248.111.64/27
+# --MGMT: 10.248.111.96/29
+# --UPLK: 10.248.111.104/32, 10.248.111.105/32
+
+networks:
+
+  # DHCP
+  - vid: 40
+    ifname: eth0
+    untagged: true
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.111.64/27
+    ipv6_subprefix: 0
+    assignments:
+      sav-hq: 1
+
+  # MGMT
+  - vid: 42
+    ifname: eth1
+    untagged: true
+    role: mgmt
+    prefix: 10.248.111.96/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      sav-hq: 1 # 10.248.111.97
+
+
+  # UPLK
+  - vid: 50
+    ifname: eth2
+    untagged: true
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.248.111.104/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.248.111.105/32
+    wireguard_port: 51821
