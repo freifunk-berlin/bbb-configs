@@ -28,6 +28,11 @@ hosts:
       eth0: DC:2C:6E:C4:1A:5D
     wifi_roaming: true
 
+  - hostname: t1-nf-s
+    role: ap
+    model: mikrotik_wap-ac
+    wifi_roaming: true
+
 snmp_devices:
   - hostname: t1-switch
     address: 10.248.1.2
@@ -72,6 +77,7 @@ networks:
       t1-core: 1
       t1-switch: 2
       t1-zwingli: 3
+      t1-nf-s: 5
       t1-nf-n: 6
       t1-nf-w: 7
 
@@ -79,7 +85,9 @@ location__channel_assignments_11a_standard__to_merge:
   t1-core: 40-20
   t1-nf-n: 36-20
   t1-nf-w: 44-20
+  t1-nf-s: 48-20
 
 location__channel_assignments_11g_standard__to_merge:
   t1-core: 1-20
   t1-nf-n: 13-20
+  t1-ns-s: 6-20
