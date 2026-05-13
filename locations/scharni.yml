@@ -38,6 +38,7 @@ hosts:
   - hostname: scharni-ap3
     role: ap
     model: "mikrotik_sxtsq-5-ac"
+    wireless_profile: freifunk_default_apup
     mac_override:
       eth0: 48:8f:5a:b9:83:82
 
@@ -73,6 +74,7 @@ networks:
     name: mesh_ap3
     prefix: 10.31.252.194/32
     ipv6_subprefix: -4
+    mesh_type: apup
     mesh_ap: scharni-ap3
     mesh_radio: 11a_standard
     mesh_iface: mesh
