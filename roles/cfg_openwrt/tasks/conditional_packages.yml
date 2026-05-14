@@ -101,3 +101,46 @@
   when:
     - networks is defined
     - networks | selectattr('ingress', 'defined') | count > 0 or networks | selectattr('egress', 'defined') | count > 0
+
+- name: "Add OLSR packages for corerouters when bird_only is disabled"
+  set_fact:
+    packages: "{{ packages + [item] }}"
+  when:
+    - not (bird_only | default(true))
+    - role == 'corerouter'
+  loop:
+    - olsrd
+    - olsrd-mod-arprefresh
+    - olsrd-mod-dyn-gw
+    - olsrd-mod-jsoninfo
+    - olsrd-mod-nameservice
+    - olsrd-mod-txtinfo
+    - olsrd-utils
+    - luci-app-olsr
+    - luci-app-olsr-services
+    - collectd-mod-olsrd
+
+- name: "Add OLSR packages for gateways when bird_only is disabled"
+  set_fact:
+    packages: "{{ packages + [item] }}"
+  when:
+    - not (bird_only | default(true))
+    - role == 'gateway'
+  loop:
+    - olsrd
+    - olsrd-mod-arprefresh
+    - olsrd-mod-jsoninfo
+    - olsrd-mod-nameservice
+    - olsrd-mod-txtinfo
+    - olsrd-utils
+    - luci-app-olsr
+    - luci-app-olsr-services
+    - wg-installer-server-hotplug-olsrd
+    - collectd-mod-olsrd
+
+- name: "Disable olsrd6 when bird_only is disabled"
+  set_fact:
+    disabled_services: "{{ disabled_services + ['olsrd6'] }}"
+  when:
+    - not (bird_only | default(true))
+    - role == 'corerouter' or role == 'gateway'
