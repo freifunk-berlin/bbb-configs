@@ -16,7 +16,7 @@ ipv6_prefix: "2001:bf7:800:1600::/56"
 hosts:
   - hostname: teufelssecurity-core
     role: corerouter
-    model: mikrotik_wap-ac
+    model: "siemens_ws-ap3610"
     wireless_profile: freifunk_default
 
   - hostname: teufelssecurity-ap

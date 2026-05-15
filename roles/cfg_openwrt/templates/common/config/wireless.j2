@@ -39,7 +39,11 @@ config wifi-device '{{ wd_id }}'
   {% else %}
         option htmode 'VHT{{ bandwidth }}'
   {% endif %}
+  {# Skip channel setting for corerouter radios with wireless_uplink - station mode uses AP's channel #}
+  {% set has_wireless_uplink = networks | selectattr('role', 'equalto', 'wireless_uplink') | selectattr('radio', 'equalto', wd['name']) | list | length > 0 %}
+  {% if not (role == 'corerouter' and has_wireless_uplink) %}
 	option channel '{{ channel }}'
+  {% endif %}
   {% if txpower %}
 	option txpower '{{ txpower }}'
   {% elif 'antenna_gain' in wd %}
@@ -80,7 +84,8 @@ config wifi-device '{{ wd_id }}'
       {% endif %}
     {% endif %}
 
-    {% if iface['mode'] == 'ap' or (iface['mode'] == 'mesh' and mesh_net) %}
+    {# On the core router with a wireless uplink, skip mesh on radios used for that uplink - both the STA and mesh would try to set the channel, whoever succeeds first defines it, making the configuration unreliable. This is documented in DEVELOPER.md. #}
+    {% if iface['mode'] == 'ap' or (iface['mode'] == 'mesh' and mesh_net and not (role == 'corerouter' and has_wireless_uplink)) %}
 config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
 	option device '{{ wd_id }}'
     {% if 'network' in iface %}
@@ -141,4 +146,37 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
     {% endif %}
     {% endif %}
   {% endfor %}
+
+  {# Wireless uplink: station interface for connecting to external AP as uplink (corerouter only) #}
+  {% if role == 'corerouter' %}
+  {% set wireless_uplinks = networks | selectattr('role', 'equalto', 'wireless_uplink') | selectattr('radio', 'equalto', wd['name']) | list %}
+  {% if wireless_uplinks %}
+  {% set wireless_uplink = wireless_uplinks[0] %}
+config wifi-iface '{{ wd_id }}_sta'
+  option device '{{ wd_id }}'
+  option ifname '{{ wd['ifname_hint'] }}-sta'
+  option mode 'sta'
+  option ssid '{{ wireless_uplink['wireless_ssid'] }}'
+  {% if wireless_uplink.get('wireless_hidden') %}
+  option hidden '{{ wireless_uplink['wireless_hidden']|int }}'
+  {% endif %}
+  {# wireless_encryption/wireless_key: WPA2/WPA3 settings, defaults to open if not specified #}
+  {% if 'wireless_encryption' in wireless_uplink %}
+    {% if wireless_uplink['wireless_encryption'] == 'none' %}
+      {% if 'wireless_key' in wireless_uplink %}
+        {{ raise('wireless_key must not be set when wireless_encryption is "none"') }}
+      {% endif %}
+      option encryption 'none'
+    {% else %}
+      {% if 'wireless_key' not in wireless_uplink %}
+        {{ raise('wireless_key is required when wireless_encryption is set') }}
+      {% endif %}
+      option encryption '{{ wireless_uplink['wireless_encryption'] }}'
+      option key '{{ wireless_uplink['wireless_key'] }}'
+    {% endif %}
+  {% else %}
+    option encryption 'none'
+  {% endif %}
+  {% endif %}
+  {% endif %}
 {% endfor %}

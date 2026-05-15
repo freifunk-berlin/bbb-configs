@@ -1,0 +1,113 @@
+---
+
+location: hausbuch
+location_nice: Grüntaler Str 38
+latitude: 52.55571
+longitude: 13.39391
+altitude: 25
+community: berlin
+
+hosts:
+  - hostname: hausbuch-core
+    role: corerouter
+    model: "x86-64"
+    openwrt_version: 24.10-SNAPSHOT
+    image_search_pattern: "*-ext4-combined.img*"
+    host__packages__to_merge:
+      - qemu-ga
+    host__rclocal__to_merge:
+      - |
+        uci -q get system.@system[0].bbb_config_first_boot > /dev/null
+        if [ "1" -eq $? ]; then
+          # add domain for the vm host "vmhost"
+          uci set dhcp.vmhost=domain
+          uci set dhcp.vmhost.ip=10.248.109.130
+          uci set dhcp.vmhost.name=vmhost
+          # add static lease for the unifi controller "unifi"
+          uci set dhcp.unifi=host
+          uci set dhcp.unifi.name=unifi
+          uci set dhcp.unifi.ip=10.248.109.131
+          uci set dhcp.unifi.mac='bc:24:11:ae:58:51'
+          uci set dhcp.unifi.dns=1
+          # add domain for perry's switch "pswitch"
+          uci set dhcp.pswitch=domain
+          uci set dhcp.pswitch.ip=10.248.109.132
+          uci set dhcp.pswitch.name=pswitch
+          # add static lease for HH switch1 (edgeswitch 10xp)
+          uci set dhcp.swhh1=host
+          uci set dhcp.swhh1.name='sw-hh1'
+          uci set dhcp.swhh1.ip=10.248.109.133
+          uci set dhcp.swhh1.mac=18:e8:29:43:e9:49
+          uci set dhcp.swhh1.dns=1
+          # add static lease for HH switch2 (hp 2530 8g)
+          uci set dhcp.swhh2=host
+          uci set dhcp.swhh2.name='sw-hh2'
+          uci set dhcp.swhh2.ip=10.248.109.134
+          uci set dhcp.swhh2.mac=5c:b9:01:75:3e:c0
+          uci set dhcp.swhh2.dns=1
+          # add static lease for HH switch3 (future)
+          # add static lease for SF switch1
+          uci set dhcp.swsf1=host
+          uci set dhcp.swsf1.name'sw-sf1'
+          uci set dhcp.swsf1.ip=10.248.109.136
+          uci set dhcp.swsf1.mac=18:e8:29:43:e9:aa
+          uci set dhcp.swsf1.dns=1
+          # start the dhcp network at the 10th address
+          uci set dhcp.dhcp_dhcp.start=10
+          uci commit dhcp
+          /etc/init.d/dnsmasq restart
+          # Prevent this from running again by setting a config option
+          uci set system.@system[0].bbb_config_first_boot=1
+          uci commit system
+          # reload the config to accept these changes
+          reload_config
+        fi
+
+
+# This node has the following prefixes:
+# Router: 10.248.109.128/25, 2001:bf7:750:d500::/56
+# --MESH: 10.31.154.32/29
+
+ipv6_prefix: 2001:bf7:750:d500::/56
+
+networks:
+  - vid: 10
+    ifname: eth0
+    untagged: true
+    name: meshlan
+    role: mesh
+    prefix: 10.31.154.32/32
+    ipv6_subprefix: -1
+
+  - vid: 40
+    ifname: eth1
+    untagged: true
+    name: dhcp
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: false
+    prefix: 10.248.109.128/25
+    ipv6_subprefix: 1
+    assignments:
+      hausbuch-core: 1
+
+  - vid: 38
+    ifname: eth2
+    role: uplink
+    untagged: true
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.154.33/32
+    ipv6_subprefix: -2
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.154.34/32
+    ipv6_subprefix: -3
+    wireguard_port: 51821
+
+wireless_profile: disable

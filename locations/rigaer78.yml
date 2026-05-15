@@ -214,3 +214,15 @@ location__channel_assignments_11a_standard__to_merge:
   rigaer78-back-floor-1-right: 44-20
   rigaer78-back-floor-1-left: 40-20
   rigaer78-back-floor-0-garage: 36-20
+
+dns_servers:
+  # cloudflare
+  - 1.1.1.1
+  - 1.0.0.1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+  # google
+  - 8.8.8.8
+  - 8.8.4.4
+  - 2001:4860:4860::8888
+  - 2001:4860:4860::8844

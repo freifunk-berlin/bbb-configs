@@ -2,10 +2,6 @@
 role_corerouter__packages__to_merge:
   - bgpdisco
   - bgpdisco-plugin-nameservice
-  - collectd-mod-dhcpleases
-  - collectd-mod-olsrd
-  - collectd-mod-conntrack
-  - collectd-mod-snmp
   - olsrd
   - olsrd-mod-arprefresh
   - olsrd-mod-dyn-gw
@@ -23,6 +19,12 @@ role_corerouter__packages__to_merge:
   - luci-app-falter-owm-gui
   - iptables-mod-ipopt
   - kmod-ipt-ipopt
+
+collectd__packages__to_merge:
+  - collectd-mod-dhcpleases
+  - collectd-mod-olsrd
+  - collectd-mod-conntrack
+  - collectd-mod-snmp
 
 bird__packages__to_merge:
   - bird2-babelpatch

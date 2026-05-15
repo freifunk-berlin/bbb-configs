@@ -103,7 +103,7 @@ You can enable flow offloading to drastictly improve performance for mediatek ch
     flow_offload: hw
 ```
 
-**WARNING:** Due to [kernel limitations](https://www.kernel.org/doc/html/v5.15/networking/nf_flowtable.html#limitations) you might encounter problems with wifi roaming or when changing wifi bands.
+**WARNING:** Due to [kernel limitations](https://www.kernel.org/doc/html/v5.15/networking/nf_flowtable.html#limitations) you might encounter problems with wifi roaming or when changing wifi bands. [Hardware offload](https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading) bypasses QoS traffic controls (like [bandwith-limits](#bandwith-limits)) at high priority making former ineffective.
 
 ### monitoring
 
@@ -242,6 +242,64 @@ If there are routes via the tunnels the following command will show a non empty 
 
 If you have multiple uplinks and want one to be preferred, set different link metrics for the different uplinks.
 
+### uplink via wireless
+
+You can configure the router to connect to an existing external WiFi network (e.g., a neighbor's home internet) and use it as an uplink. The wireless interface operates in station mode and is placed inside the tunspace namespace alongside the wireguard tunnel.
+
+```yaml
+  - vid: 51
+    role: wireless_uplink
+    wireless_ssid: "NeighborWiFi"
+    wireless_encryption: psk2             # none, psk2, sae, sae-mixed
+    wireless_key: "file:/root/wireless_uplink_key"  # Required if wireless_encryption is not none
+    wireless_hidden: true                 # Optional: connect to hidden SSID
+    radio: 11g_standard                   # 11g_standard or 11a_standard
+    uplink_ipv4: 192.168.1.42/24          # Optional: DHCP if omitted
+    uplink_gateway: 192.168.1.1           # Required if uplink_ipv4 is set
+
+  - role: tunnel
+    ifname: ts_wg0
+    ...
+```
+
+The wireless uplink works together with tunnel configurations. The wireless interface is moved into the tunspace namespace where the wireguard tunnel also operates.
+
+**Encryption modes:**
+- `none` - Open network (no password)
+- `psk2` - WPA2-PSK
+- `sae` - WPA3 SAE
+- `sae-mixed` - WPA2/WPA3 mixed mode
+
+**Notes:**
+- Only usable on corerouter role
+- The specified radio must be available on the router model
+- Passwords use the `file:/path/to/file` pattern and are replaced on first boot
+- **Mesh networks on the same radio will not be configured.** On the core router, when a wireless uplink is configured on a radio, any mesh (802.11s) interfaces on that same radio will be skipped. This is because both the STA (wireless uplink) and the mesh interfaces would try to set the channel. Whoever succeeds first defines it, making the configuration unreliable.
+
+**Device Limitations:**
+Not all devices support running multiple APs, 802.11s mesh, and a STA (station) interface simultaneously on the same radio. To check if your device supports this configuration, run:
+
+```
+iw phy phy0 info
+```
+
+Look for the "valid interface combinations" section. Each line describes which combinations of interface types the radio can handle concurrently. For example:
+
+```
+valid interface combinations:
+         * #{ IBSS } <= 1, #{ AP, mesh point } <= 16, #{ managed } <= 19,
+           total <= 19, #channels <= 1, STA/AP BI must match, radar detect widths: { 20 MHz (no HT), 20 MHz, 40 MHz, 80 MHz, 160 MHz }
+```
+
+If your device doesn't support the combination you need, consider:
+- Using a separate radio for the wireless uplink (e.g., 2.4 GHz radio for uplink, 5 GHz for mesh/AP)
+- Using a different device model that supports the required combination
+
+**Channel Limitations:**
+When using a wireless uplink, the radio will use whatever channel is configured on the upstream network and may not be able to mesh with other routers. Our mesh network typically uses channel 13 (2.4 GHz) or channel 36 (5 GHz).
+
+Since most devices are equipped with two radios, you can use one radio for the uplink and the other for meshing with a neighbor. However, depending on the frequency band remaining for meshing, you may get lower bandwidth (2.4 GHz) or reduced range (5 GHz).
+
 ### uplink over LTE modem
 
 Many LTE USB sticks work as a so called USB CDC Net device. They emulate a standard ethernet device without any need for further configuration.
@@ -282,6 +340,76 @@ qmi:
 ```
 
 
+### ext
+
+The `ext` role is used to integrate external networks with the Freifunk router. This is useful in several scenarios:
+
+**Extend external network via ports**: When you have an external network (e.g., a FritzBox with 192.168.x.x IP range) and want to extend it through the Freifunk router's ports:
+
+```yml
+  - vid: 41
+    role: ext
+    name: private
+    untagged: true
+```
+
+**Redistribute via WiFi**: To expose an external network via its own SSID with a custom wireless profile:
+
+```yml
+  - vid: 41
+    role: ext
+    name: private
+    no_corerouter_dns_record: true
+    enforce_client_isolation: false
+```
+
+Along with a wireless profile that references the network by name:
+
+```yml
+location__wireless_profiles__to_merge:
+  - name: hts4
+    devices:
+      - radio: 11g_standard
+      - radio: 11a_standard
+    ifaces:
+      - mode: ap
+        ssid: hts4
+        encryption: sae-mixed
+        key: "file:/root/wifi_pass"
+        network: private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+```
+
+See [wireless profiles](#wireless-profiles) for more details.
+
+**Container networking**: To make Podman/Docker container networks routable in the mesh:
+
+```yml
+  - vid: 43
+    untagged: true
+    ifname: podman0
+    name: podman
+    role: ext
+    prefix: 10.248.33.72/29
+    ipv6_subprefix: 2
+    assignments:
+      podtwo-core: 1
+```
+
+### bandwith limits
+
+An optional configuration parameter can be added to any non-tunnel interface to limit the bandwitdh available on that interface.  When either `ingress` or `egress` are included in any interface definition, qos-scripts will be installed.  The values for `ingress` and `egress` are in MBit/s.
+
+```yml
+  - vid: 50
+    rold: uplink
+    ingress: 150     # limit downloads to 150MBit/s
+    egress: 50       # limit uploads to 50MBit/s
+```
+
+**WARNING:** This is made ineffective if [flow offloading](#flow-offloading) is enabled.
+
 ### ssh-keys
 
 By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys use this format:
@@ -299,6 +427,31 @@ ssh_keys:
   - comment: John
     key: ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Keyname
 ```
+### packages
+
+To add packages to a specific host, add the packages to the host definition:
+
+```yml
+hosts:
+  - hostname: example-core
+    role: corerouter
+    model: "cudy_tr3000-v1"
+    host__packages__to_merge:
+      - htop
+      - nano
+      - curl
+```
+
+To remove a package that is installed by default, prefix it with a `-`:
+
+```yml
+host__packages__to_merge:
+  - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"
+  - "kmod-ath10k ath10k-firmware-qca988x"
+```
+
+This is useful for replacing kernel modules with alternative versions.
+
 ### wireless profiles
 
 <!-- TODO: this section needs to be improved -->

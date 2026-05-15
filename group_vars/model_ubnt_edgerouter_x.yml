@@ -2,6 +2,7 @@
 target: ramips/mt7621
 brand_nice: Ubiquiti
 model_nice: EdgeRouter X
+openwrt_version: 24.10-SNAPSHOT
 
 dsa_ports:
   - eth0

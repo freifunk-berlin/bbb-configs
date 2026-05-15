@@ -3,6 +3,7 @@ target: x86/64
 override_target: generic
 image_search_pattern: "*-ext4-combined.img*"
 model_nice: 32-/64-bit Computer (brcmfmac)
+openwrt_version: 24.10-SNAPSHOT
 
 model__packages__to_merge:
   - "kmod-brcmfmac kmod-brcmutil brcmfmac-firmware-4366c0-pcie kmod-mac80211 hostapd"

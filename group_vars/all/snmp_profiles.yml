@@ -10,44 +10,69 @@ collectd_snmp_profiles:
       Values: .1.3.6.1.2.1.1.3.0
     rf_freq:
       Type: frequency
-      TypeInstance: "Frequency (MHz)"
-      Table: false
-      Values: .1.3.6.1.4.1.41112.1.11.2.1.2.1
-    rf_width:
-      Type: frequency
-      TypeInstance: "Channel Width (MHz)"
-      Table: false
-      Values: .1.3.6.1.4.1.41112.1.11.2.1.3.1
-    rf_sta_distance:
-      PluginInstance: distance
-      Type: gauge
       Table: true
-      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.1.3.1.14
-      Values: .1.3.6.1.4.1.41112.1.11.1.3.1.15
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.3
+    rf_width:
+      PluginInstance: "channel width"
+      Type: frequency
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.4
     rf_sta_signal:
       Type: signal_power
       Table: true
-      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.1.3.1.14
-      Values: .1.3.6.1.4.1.41112.1.11.1.3.1.3
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.5
+    rf_sta_signal_remote:
+      PluginInstance: "remote"
+      Type: signal_power
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.21
     rf_sta_snr:
       Type: snr
       Table: true
-      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.1.3.1.14
-      Values: .1.3.6.1.4.1.41112.1.11.1.3.1.4
-    rf_sta_rx_capacity:
-      Type: bitrate
-      PluginInstance: rx
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.6
+    rf_sta_snr_remote:
+      PluginInstance: "remote"
+      Type: snr
       Table: true
-      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.1.3.1.14
-      Scale: 1000
-      Values: .1.3.6.1.4.1.41112.1.11.1.3.1.7
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.22
+    rf_sta_tx_mcs:
+      PluginInstance: "MCS tx"
+      Type: gauge
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.7
+    rf_sta_rx_mcs:
+      PluginInstance: "MCS rx"
+      Type: gauge
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.8
     rf_sta_tx_capacity:
       Type: bitrate
       PluginInstance: tx
       Table: true
-      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.1.3.1.14
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
       Scale: 1000
-      Values: .1.3.6.1.4.1.41112.1.11.1.3.1.8
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.9
+    rf_sta_rx_capacity:
+      Type: bitrate
+      PluginInstance: rx
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
+      Scale: 1000
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.10
+    rf_sta_distance:
+      PluginInstance: distance
+      Type: gauge
+      Table: true
+      TypeInstanceOID: .1.3.6.1.4.1.41112.1.11.2.3.1.17
+      Values: .1.3.6.1.4.1.41112.1.11.2.3.1.18
 
   airos_8:
     sys_uptime:

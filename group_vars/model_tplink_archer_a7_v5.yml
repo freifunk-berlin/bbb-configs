@@ -1,10 +1,9 @@
 ---
 target: ath79/generic
 brand_nice: TP-Link
-model_nice: Archer C7
+model_nice: Archer A7
 version_nice: v5
-
-openwrt_version: 23.05-SNAPSHOT
+openwrt_version: 25.12-SNAPSHOT
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"

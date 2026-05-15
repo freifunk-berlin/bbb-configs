@@ -13,9 +13,12 @@ fi
 # shipped "preservation" definitions
 rm /lib/upgrade/keep.d/*
 
-# sysupgrade also looks up the config file definitions by opkg.
-# Prune em'
+# sysupgrade also looks up the config file definitions. Prune em
+    {% if uses_apk is defined %}
+rm -vf /lib/apk/packages/*.conffiles*
+    {% else %}
 sed -i '/^ \/etc/d' /usr/lib/opkg/status
+    {% endif %}
 {% endif %}
 
 {% for override in sysfs_overrides | default([]) %}

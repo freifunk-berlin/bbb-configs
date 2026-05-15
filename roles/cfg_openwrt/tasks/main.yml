@@ -27,7 +27,21 @@
     wikiupdater_dir: "{{ basedir }}/wikiupdater/"
   tags: always
 
-- name: Create directory
+- name: Create images directory
+  file:
+    state: directory
+    path: "{{ images_dir }}"
+    mode: "755"
+  tags: always
+
+- name: Debug hostvars
+  copy:
+    dest: "{{ images_dir }}/{{ inventory_hostname }}.json"
+    content: "{{ hostvars[inventory_hostname] | dict2items | rejectattr('key', 'eq', 'groups') | items2dict | to_json(indent=2) }}\n"
+    mode: "644"
+  tags: always
+
+- name: Create configs directory
   file:
     path: "{{ configs_dir }}"
     state: directory
@@ -93,6 +107,21 @@
   tags:
     - always
     - config
+
+- name: Generate Imagebuilder command
+  set_fact:
+    make_command: >
+      make image
+      PROFILE='{{ override_target | default(model) }}'
+      PACKAGES='{{ packages | join(" ") }}'
+      DISABLED_SERVICES='{{ disabled_services | join(" ") }}'
+      FILES='{{ configs_dir }}' 1>&2
+  tags: always
+
+- name: Debug Imagebuilder command
+  debug:
+    var: make_command
+  tags: always
 
 - name: Include image generation
   include_tasks:

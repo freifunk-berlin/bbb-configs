@@ -1,26 +1,39 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
 
-{% for uplink in networks | selectattr('role', 'equalto', 'uplink') %}
-  {% set name = uplink['name'] if 'name' in uplink else 'uplink' %}
-  {% set mode = uplink['uplink_mode'] if 'uplink_mode' in uplink else 'bridge' %}
-  {% set ifname = libnetwork.getIfname(uplink) %}
+{% set all_uplinks = networks | selectattr('role', 'in', ['wireless_uplink', 'uplink']) | list %}
+{% for uplink in all_uplinks %}
+  {% if uplink['role'] == 'wireless_uplink' %}
+    {% set wd = wireless_devices | selectattr('name', 'equalto', uplink['radio']) | list | first %}
+    {% set uplink_netns = uplink['name']|default('wireless_uplink') %}
+    {% set uplink_ifname = wd['ifname_hint'] + '-sta' %}
+    {% set uplink_mode = 'passthru' %}
+    {% set uplink_mac = libnetwork.generateDeterministicMAC(inventory_hostname ~ "-tunspace-wlan") %}
+  {% else %}
+    {% set uplink_netns = uplink['name'] if 'name' in uplink else 'uplink' %}
+    {% set uplink_ifname = libnetwork.getIfname(uplink) %}
+    {% set uplink_mode = uplink['uplink_mode'] if 'uplink_mode' in uplink else 'bridge' %}
+    {% set uplink_mac = libnetwork.generateDeterministicMAC(inventory_hostname ~ "-tunspace") %}
+  {% endif %}
+  {% set uplink_ipv4 = uplink.get('uplink_ipv4', '') %}
+  {% set uplink_gateway = uplink.get('uplink_gateway', '') %}
 
 config tunspace "tunspace"
   # Namespace where the uplink will live.
-  option uplink_netns "{{ name }}"
-  # Existing interface that we'll use as the uplink.
-  option uplink_ifname "{{ ifname }}"
+  option uplink_netns "{{ uplink_netns }}"
+  # Existing interface (or wireless interface for wireless_uplink) used as the uplink.
+  option uplink_ifname "{{ uplink_ifname }}"
   # How the uplink in the namespace is constructed.
   # - bridge: creates a macvlan child in bridge mode, useful for creating multiple uplinks from the same original uplink interface.
+  # - passthru: macvlan shares parent MAC, required for wireless uplinks (DHCP works with single lease).
   # - direct: moves the original uplink interface into the namespace directly, useful for wonky cheap USB sticks with broken drivers.
-  option uplink_mode "{{ mode }}"
+  option uplink_mode "{{ uplink_mode }}"
   # Our own static uplink IPv4 address in CIDR format. Leave empty to use DHCP.
-  option uplink_ipv4 "{{ uplink['uplink_ipv4']|default('') }}"
+  option uplink_ipv4 "{{ uplink_ipv4 }}"
   # IPv4 address of the gateway. Required in combination with uplink_ipv4, ignored when using DHCP.
-  option uplink_gateway "{{ uplink['uplink_gateway']|default('') }}"
+  option uplink_gateway "{{ uplink_gateway }}"
   # Define deterministic mac address
-  option uplink_mac "{{- libnetwork.generateDeterministicMAC(inventory_hostname ~ "-tunspace") -}}"
+  option uplink_mac "{{ uplink_mac }}"
   # Maintenance consists of checking the uplink, refreshing the DHCP lease, checking the tunnel endpoints, and switching endpoints if neccessary.
   option maintenance_interval 60
   # Enables detailed output of Tunspace's operations. If disabled, only tunnel endpoint changes are reported.

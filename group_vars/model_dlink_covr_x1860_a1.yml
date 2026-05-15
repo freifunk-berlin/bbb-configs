@@ -1,4 +1,7 @@
 ---
+# Important!
+# With dlink_covr-x1860-a1 mesh_only does not work. Channel 13 has 'no IR' set
+# this means no initial radiation. The mesh only starts with an additional AP
 target: ramips/mt7621
 brand_nice: D-Link
 model_nice: COVR-X1860

@@ -29,13 +29,11 @@ hosts:
     role: corerouter
     model: "cudy_ap3000-v1"
     wireless_profile: freifunk_default
-    openwrt_version: 24.10-SNAPSHOT
 
   - hostname: kiehlufer-huette
     role: ap
     model: "zyxel_nwa55axe"
     wireless_profile: kiehlufer5g
-    openwrt_version: 24.10-SNAPSHOT
 
   - hostname: kiehlufer-nf-wbp1
     role: ap

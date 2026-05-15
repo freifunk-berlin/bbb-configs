@@ -1,5 +1,5 @@
 ---
 feed_version: snapshot
 imagebuilder_filename: "openwrt-imagebuilder-{{ target | replace('/', '-') }}.Linux-x86_64.tar.zst"
-feed: "https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/{{ instr_set }}/falter/packages.adb"
+feed: "https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/__INSTR_SET__/falter/packages.adb"
 uses_apk: true

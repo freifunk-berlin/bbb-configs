@@ -1,0 +1,80 @@
+---
+
+location: zorrow
+location_nice: Grüntaler Str 38
+latitude: 52.55579
+longitude: 13.39399
+altitude: 25
+community: berlin
+
+hosts:
+  - hostname: zorrow-core
+    role: corerouter
+    model: "x86-64"
+    openwrt_version: 24.10-SNAPSHOT
+    image_search_pattern: "*-ext4-combined.img*"
+    host__packages__to_merge:
+      - qemu-ga
+
+# This node has the following prefixes:
+# Router: 10.248.110.0/25, 2001:bf7:750:b600::/56
+# --MESH: 10.31.154.40/29
+
+ipv6_prefix: 2001:bf7:750:d600::/56
+
+networks:
+  - vid: 10
+    ifname: eth0
+    untagged: true
+    name: meshlan
+    role: mesh
+    prefix: 10.31.154.40/32
+    ipv6_subprefix: -1
+
+  - vid: 40
+    ifname: eth1
+    untagged: true
+    name: dhcp
+    role: dhcp
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.248.110.0/25
+    ipv6_subprefix: 1
+    assignments:
+      zorrow-core: 1
+    ingress: 75
+    egress: 150
+
+#  - vid: 38
+#    ifname: eth2
+#    role: uplink
+#    untagged: true
+#    ingress: 150
+#    egress: 75
+
+  - vid: 20
+    ifname: eth3
+    untagged: true
+    name: mesh_segen
+    role: mesh
+    prefix: 10.31.154.45/30
+    ipv6_subprefix: -2
+    assignments:
+      zorrow-core: 1
+      zorrow-segen: 2
+
+#  - role: tunnel
+#    ifname: ts_wg0
+#    mtu: 1280
+#    prefix: 10.31.154.41/32
+#    ipv6_subprefix: -3
+#    wireguard_port: 51820
+
+#  - role: tunnel
+#    ifname: ts_wg1
+#    mtu: 1280
+#    prefix: 10.31.154.42/32
+#    ipv6_subprefix: -4
+#    wireguard_port: 51821
+
+wireless_profile: disable

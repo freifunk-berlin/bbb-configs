@@ -2,6 +2,7 @@
 target: ath79/nand
 brand_nice: GL.iNet
 model_nice: GL-XE300
+openwrt_version: 24.10-SNAPSHOT
 
 switch_ports: 5
 switch_int_port: 0
