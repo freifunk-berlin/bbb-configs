@@ -564,6 +564,31 @@ For a model using **DSA** instead of swconfig you can obtain the needed informat
 
 `cat /etc/board.json`
 
+### Custom OpenWrt Version
+
+If you don't want to use the default OpenWrt version to build your location's firmware you have to create new **version file**. The default version files can be found under group_vars/version_XX_YY_snapshot.yml
+
+- `XX` Mayor
+- `YY` Minor
+- `ZZ` Bug fix / `snapshot`
+
+Version files for specific OpenWrt versions have to follow this Format: **version_XX_YY_ZZ.yml**. They also need to use the same feed version as their snapshot counterpart
+
+example filename: version_25.12.6.yml
+```yml
+feed_version: 1.6.0-snapshot
+```
+
+After creating such a file you can use
+
+```yml
+openwrt_version: XX.YY.ZZ
+# for this example it would be:
+openwrt_version: 25.12.6
+```
+
+in your location file to build a firmware with your specific version. It is currently **not possible** to garanty completly identical builds if too much time (>= one week) lies between to builds, do to automatic packade builders. So backup your firmware builds for later uses.
+
 ## inventory/
 
 This is an internal directory on which you don't need to care about now. If you like to learn more on it, you might read
