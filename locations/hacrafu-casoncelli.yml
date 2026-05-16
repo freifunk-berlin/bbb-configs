@@ -1,0 +1,157 @@
+---
+
+location: hacrafu-casoncelli
+location_nice: Bäckerei Noebe, Karl-Marx-Str. 15, 15345 Eggersdorf
+latitude: 52.539588079
+longitude: 13.822131157
+contact_name: "Hacken Craften Funken e.V."
+contact_nickname: "HaCraFu e.V."
+contacts:
+  - "freifunk@hacrafu.de"
+
+hosts:
+  - hostname: hacrafu-casoncelli
+    role: corerouter
+    model: "mikrotik_routerboard-750gr3"
+    host__rclocal__to_merge:
+      - |
+        uci set network.vlan_10.ports='lan2:t lan3:t lan4:t lan5:t'
+        uci set network.vlan_20.ports='lan2:t lan3:t lan4:t lan5:t'
+        uci set network.vlan_21.ports='lan2:t lan3:t lan4:t lan5:t'
+        uci set network.vlan_22.ports='lan2:t lan3:t lan4:t lan5:t'
+        uci set network.vlan_23.ports='lan2:t lan3:t lan4:t lan5:t'
+        uci set network.vlan_40.ports='lan2:t lan3:t lan4:t lan5:u'
+        uci set network.vlan_42.ports='lan2:t lan3:t lan4:t lan5:t'
+        uci set network.vlan_50.ports='wan:u'
+        uci commit network; reload_config
+
+  - hostname: hacrafu-casoncelli-ap
+    role: ap
+    model: "cudy_ap3000outdoor-v1"
+    wireless_profile: freifunk_hacrafu
+
+  - hostname: hacrafu-casoncelli-snack
+    role: ap
+    model: "cudy_wr3000-v1"
+    wireless_profile: freifunk_hacrafu
+
+ipv6_prefix: "2001:bf7:850:5d00::/56"
+
+# DHCP    10.248.108.96/27
+# MESH    10.31.98.144/29
+# MGMT    10.31.98.152/29
+# TUNNEL  10.31.18.96/31
+
+snmp_devices:
+  - hostname: hacrafu-casoncelli-lite
+    address: 10.31.98.155
+    snmp_profile: airos_6
+
+networks:
+  # MESH LiteBeam M5 23
+  - vid: 10
+    role: mesh
+    name: mesh_lite
+    prefix: 10.31.98.148/32
+    ipv6_subprefix: -10
+    ptp: true
+
+  # MESH - 5 GHz 802.11s - AP
+  - vid: 22
+    role: mesh
+    name: mesh_5g_ap
+    prefix: 10.31.98.146/32
+    ipv6_subprefix: -22
+    mesh_ap: hacrafu-casoncelli-ap
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - AP
+  - vid: 23
+    role: mesh
+    name: mesh_2g_ap
+    prefix: 10.31.98.147/32
+    ipv6_subprefix: -23
+    mesh_ap: hacrafu-casoncelli-ap
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 5 GHz 802.11s - Snack
+  - vid: 24
+    role: mesh
+    name: mesh_5g_sck
+    prefix: 10.31.98.150/32
+    ipv6_subprefix: -24
+    mesh_ap: hacrafu-casoncelli-snack
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - Snack
+  - vid: 25
+    role: mesh
+    name: mesh_2g_sck
+    prefix: 10.31.98.151/32
+    ipv6_subprefix: -25
+    mesh_ap: hacrafu-casoncelli-snack
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.108.96/27
+    ipv6_subprefix: 0
+    assignments:
+      hacrafu-casoncelli: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.98.152/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      hacrafu-casoncelli: 1  # 153
+      hacrafu-casoncelli-ap: 2  # 154
+      hacrafu-casoncelli-lite: 3  # 155
+      hacrafu-casoncelli-snack: 4  # 156
+
+  # Uplink
+  - vid: 50
+    role: uplink
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.18.96/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.18.97/32
+    wireguard_port: 51821
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hacrafu-casoncelli-ap: 36-40
+  hacrafu-casoncelli-snack: 44-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hacrafu-casoncelli-ap: 13-20
+  hacrafu-casoncelli-snack: 9-20
+
+# only place this ssh-keys
+ssh_keys:
+  - comment: Tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
+  - comment: Bob
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de
+  - comment: Peter
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIzevq2nqgb0rBAEEcDEkAIu24aTiWIkem3+59a6h10 HaCraFu Petersilie
+  - comment: Flupsy
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHG1Y5nkEm3yUIF1nQkbO8G2qHgtAz5b5Os9o5hVjyQZ HaCraFu Flupsy
