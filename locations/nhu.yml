@@ -1,0 +1,122 @@
+---
+location: nhu
+location_nice: Nachbarschaftshaus, Urbanstraße 21, 10961 Berlin
+latitude: 52.4929494
+longitude: 13.407581
+community: berlin
+  
+hosts:
+  - hostname: nhu-core
+    role: corerouter
+    model: "mikrotik_routerboard-750gr3"
+    # USBIP packages to manage meshcore node connected via USB
+    host__packages__to_merge:
+      - "kmod-usb-ohci usbip-server usbip-client"
+
+  - hostname: nhu-nf-n
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    mac_override:
+      eth0: dc:2c:6e:91:0f:c4
+
+  - hostname: nhu-nf-so
+    role: ap
+    model: mikrotik_sxtsq-5-ac
+    #mac_override:
+    #  eth0: 2c:c8:1b:8a:96:ca
+
+  - hostname: nhu-nf-sw
+    role: ap
+    model: zyxel_nwa55axe
+
+snmp_devices:
+  - hostname: nhu-switch
+    address: 10.248.115.2
+    snmp_profile: edgeswitch
+    
+  - hostname: nhu-rhxb
+    address: 10.248.115.3
+    snmp_profile: airos_8
+    
+  - hostname: nhu-emma
+    address: 10.248.115.4
+    snmp_profile: airos_8
+
+ipv6_prefix: "2001:bf7:831:1300::/56"
+
+# Router: 10.248.115.0/24
+# mgmt: 10.248.115.0/28
+# mesh: 10.248.115.16/28
+# dhcp: 10.248.115.128/25
+# free: 10.248.115.32/27 
+# free: 10.248.115.64/28
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_rhxb
+    ipv6_subprefix: -10
+    prefix: 10.248.115.16/32
+
+  - vid: 11
+    role: mesh
+    name: mesh_emma
+    ipv6_subprefix: -11
+    prefix: 10.248.115.17/32
+
+  - vid: 20
+    role: mesh
+    name: mesh_nf_n
+    ipv6_subprefix: -20
+    prefix: 10.248.115.18/32
+    mesh_ap: nhu-nf-n
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 21
+    role: mesh
+    name: mesh_nf_so
+    ipv6_subprefix: -21
+    prefix: 10.248.115.19/32
+    mesh_ap: nhu-nf-so
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 22
+    role: mesh
+    name: mesh_nf_sw
+    ipv6_subprefix: -22
+    prefix: 10.248.115.20/32
+    mesh_ap: nhu-nf-sw
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    ipv6_subprefix: 0
+    prefix: 10.248.115.128/25
+    assignments:
+      nhu-core: 1
+    inbound_filtering: true
+    enforce_client_isolation: true
+
+  - vid: 42
+    role: mgmt
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    prefix: 10.248.115.0/28
+    assignments:
+      nhu-core: 1 #10.248.115.1
+      nhu-switch: 2
+      nhu-rhxb: 3 # AirOS 
+      nhu-emma: 4 # AirOS 
+      nhu-nf-n: 5
+      nhu-nf-so: 6
+      nhu-nf-sw: 7
+
+
+location__channel_assignments_11a_standard__to_merge:
+  nhu-nf-n: 44-20
+  nhu-nf-so: 36-20
+  nhu-nf-sw: 40-20
