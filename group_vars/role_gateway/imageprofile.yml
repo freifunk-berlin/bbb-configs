@@ -31,8 +31,8 @@ role_uplink_gw__packages__to_merge:
   - samplicator
 
 bird__packages__to_merge:
-  - bird2-babelpatch
-  - bird2c
+  - bird3-babelpatch
+  - bird3c
 
 collectd__packages__to_merge:
   - collectd-mod-conntrack

@@ -27,5 +27,5 @@ collectd__packages__to_merge:
   - collectd-mod-snmp
 
 bird__packages__to_merge:
-  - bird2-babelpatch
-  - bird2c
+  - bird3-babelpatch
+  - bird3c
