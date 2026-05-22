@@ -59,6 +59,9 @@ networks:
     name: mesh_rhxb
     ipv6_subprefix: -10
     prefix: 10.248.115.16/32
+    # prefer link to emma as rhxb still has airos6
+    mesh_metric: 1024
+    mesh_metric_lqm: ["default 0.5"]
 
   - vid: 11
     role: mesh
