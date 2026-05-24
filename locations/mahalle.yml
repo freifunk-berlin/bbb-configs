@@ -24,7 +24,6 @@ hosts:
   #   mac_override: { eth0: dc:2c:6e:c4:2a:0b }
 
 snmp_devices:
-
   # NanoBeam 5AC
   - hostname: mahalle-walde
     address: 10.31.179.117
@@ -37,7 +36,6 @@ snmp_devices:
 ipv6_prefix: "2001:bf7:830:bb00::/56"
 
 networks:
-
   - vid: 10
     role: mesh
     name: mesh_walde

@@ -25,7 +25,6 @@ hosts:
 # MGMT:  10.248.91.16/28
 # MESH: 10.248.67.83/29 {as /32}
 
-
 ipv6_prefix: 2001:bf7:810:2700::/56
 
 uplink:
@@ -50,7 +49,6 @@ mesh_links:
     ipv6: 2001:bf7:810:2701::1/128
     mesh_metric: 1024
     ptp: true
-
 
 # OLSR Announce SmartGateway
 sgw: "1000000 1000000"

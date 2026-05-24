@@ -16,7 +16,6 @@ hosts:
     host__packages__to_merge:
       - qemu-ga
 
-
 ipv6_prefix: "2001:bf7:831:1000::/56"
 
 # 22001:bf7:831:1000::/56 assigned static to sav-hq-fw
@@ -27,7 +26,6 @@ ipv6_prefix: "2001:bf7:831:1000::/56"
 # --UPLK: 10.248.111.104/32, 10.248.111.105/32
 
 networks:
-
   # DHCP
   - vid: 40
     ifname: eth0
@@ -51,7 +49,6 @@ networks:
     ipv6_subprefix: 1
     assignments:
       sav-hq: 1 # 10.248.111.97
-
 
   # UPLK
   - vid: 50

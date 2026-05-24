@@ -14,7 +14,6 @@ hosts:
     wireless_profile: freifunk_default
 
 snmp_devices:
-
   - hostname: walde-emma
     address: 10.31.92.2
     snmp_profile: airos_8
@@ -25,7 +24,6 @@ snmp_devices:
     snmp_profile: airos_8
 
 airos_dfs_reset:
-
   - name: "walde-mahalle"
     target: "10.31.92.3"
     username: "ubnt"

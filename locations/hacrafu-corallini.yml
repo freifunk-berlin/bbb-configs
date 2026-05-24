@@ -10,7 +10,6 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-corallini
     role: corerouter
     model: "cudy_wr3000-v1"
@@ -45,7 +44,7 @@ networks:
     name: mesh_2g
     prefix: 10.248.84.163/32
     ipv6_subprefix: -21
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: hacrafu-corallini
     mesh_radio: 11g_standard
     mesh_iface: mesh

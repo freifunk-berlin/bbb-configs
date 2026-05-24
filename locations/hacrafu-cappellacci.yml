@@ -67,21 +67,21 @@ networks:
     assignments:
       hacrafu-cappellacci: 1
 
-  # UPLINK
-  # - vid: 50
-  #   role: uplink
+# UPLINK
+# - vid: 50
+#   role: uplink
 
-  # - role: tunnel
-  #   ifname: ts_wg0
-  #   mtu: 1280
-  #   prefix: 10.248.67.82/32
-  #   wireguard_port: 51820
+# - role: tunnel
+#   ifname: ts_wg0
+#   mtu: 1280
+#   prefix: 10.248.67.82/32
+#   wireguard_port: 51820
 
-  # - role: tunnel
-  #   ifname: ts_wg1
-  #   mtu: 1280
-  #   prefix: 10.248.67.83/32
-  #   wireguard_port: 51821
+# - role: tunnel
+#   ifname: ts_wg1
+#   mtu: 1280
+#   prefix: 10.248.67.83/32
+#   wireguard_port: 51821
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
