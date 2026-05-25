@@ -1,0 +1,33 @@
+---
+name: Remove Stale Branches
+
+#
+# Documentation:
+# https://github.com/marketplace/actions/remove-stale-branches
+#
+
+on:
+  schedule:
+    - cron: "15 * * * *" # Switch to something more reasonable when removing dry-run mode
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  remove-stale-branches:
+    name: Remove Stale Branches
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: read
+
+    steps:
+      - uses: fpicalausa/remove-stale-branches@v2.6.1
+        with:
+          dry-run: true
+          exempt-branches-regex: "^(main)$"
+          ignore-branches-with-open-prs: true
+          days-before-branch-stale: 180
+          days-before-branch-delete: 14
