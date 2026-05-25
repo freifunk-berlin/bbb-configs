@@ -8,7 +8,7 @@ name: Remove Stale Branches
 
 on:
   schedule:
-    - cron: "15 * * * *" # Switch to something more reasonable when removing dry-run mode
+    - cron: "23 2,4 * * *" # Run twice each night (some scheduled jobs are skipped by GitHub)
 
 permissions:
   contents: read
@@ -26,7 +26,6 @@ jobs:
     steps:
       - uses: fpicalausa/remove-stale-branches@v2.6.1
         with:
-          dry-run: true
           exempt-branches-regex: "^(main)$"
           ignore-branches-with-open-prs: true
           days-before-branch-stale: 180
