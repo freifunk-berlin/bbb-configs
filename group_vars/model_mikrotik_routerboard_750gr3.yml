@@ -3,7 +3,7 @@ target: ramips/mt7621
 brand_nice: MikroTik
 model_nice: hEX
 wireless_profile: disable
-openwrt_version: 25.12-SNAPSHOT
+openwrt_version: 25.12.4
 
 dsa_ports:
   - wan
