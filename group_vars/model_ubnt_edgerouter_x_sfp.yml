@@ -4,7 +4,7 @@ target: ramips/mt7621
 brand_nice: Ubiquiti
 model_nice: EdgeRouter X SFP
 
-openwrt_version: 25.12-SNAPSHOT
+openwrt_version: 25.12.4
 
 model__packages__to_merge:
   - "kmod-gpio-pca953x" # GPIO expander driver

@@ -2,7 +2,7 @@
 target: mediatek/filogic
 brand_nice: OpenWrt
 model_nice: One
-openwrt_version: 25.12-SNAPSHOT
+openwrt_version: 25.12.4
 
 dsa_ports:
   - eth0
