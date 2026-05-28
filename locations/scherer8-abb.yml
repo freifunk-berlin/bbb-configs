@@ -75,7 +75,6 @@ ipv6_prefix: "2001:bf7:750:b500::/56"
 # --MESH:  10.230.226.195/32 - 802.11s mesh
 #          10.230.226.196/32 - 802.11s mesh
 
-
 # Disable noping
 dhcp_no_ping: false
 

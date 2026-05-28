@@ -47,7 +47,7 @@ networks:
     prefix: 10.248.76.127/32
     ipv6_subprefix: -21
     mesh_metric: 256
-    mesh_metric_lqm: ['default 0.8']
+    mesh_metric_lqm: ["default 0.8"]
     mesh_ap: hacrafu-eliche
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -82,7 +82,7 @@ networks:
     prefix: 10.248.84.160/32
     wireguard_port: 51820
     mesh_metric: 8192
-    mesh_metric_lqm: ['default 0.4']
+    mesh_metric_lqm: ["default 0.4"]
 
   - role: tunnel
     ifname: ts_wg1
@@ -90,7 +90,7 @@ networks:
     prefix: 10.248.84.161/32
     wireguard_port: 51821
     mesh_metric: 8192
-    mesh_metric_lqm: ['default 0.4']
+    mesh_metric_lqm: ["default 0.4"]
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:

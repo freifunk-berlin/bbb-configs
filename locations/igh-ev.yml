@@ -10,7 +10,7 @@ contacts:
   - "vorstand@ighamspirit.de"
 
 hosts:
-  - hostname: igh-ev-core  # PC Engines APU2 Board
+  - hostname: igh-ev-core # PC Engines APU2 Board
     role: corerouter
     model: "x86-64"
     int_port: eth0

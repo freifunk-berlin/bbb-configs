@@ -132,7 +132,6 @@ networks:
     assignments:
       magda-core: 1
 
-
 location__channel_assignments_11a_standard__to_merge:
   magda-ap1: 48-20
   magda-ap2: 36-20

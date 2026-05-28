@@ -14,7 +14,6 @@ location__ssh_keys__to_merge:
   - comment: felix-build-box
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHAbgDSrzEIQ4FE8/JWbyGZf8tS8Gh2kHLUy3nomNW+W felix@devbox
 
-
 hosts:
   - hostname: liese-11-sw-core
     role: corerouter
