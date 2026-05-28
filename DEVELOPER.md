@@ -572,11 +572,13 @@ If you don't want to use the default OpenWrt version to build your location's fi
 - `YY` Minor
 - `ZZ` Bug fix / `snapshot`
 
-Version files for specific OpenWrt versions have to follow this Format: **version_XX_YY_ZZ.yml**. They also need to use the same feed version as their snapshot counterpart
+Version files for specific OpenWrt versions have to follow this Format: **version_XX_YY_ZZ.yml**. They also need to use the same feed version and url as their snapshot counterpart
 
 example filename: version_25.12.6.yml
 ```yml
 feed_version: 1.6.0-snapshot
+feed: "https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/__INSTR_SET__/falter/packages.adb"
+uses_apk: true
 ```
 
 After creating such a file you can use
