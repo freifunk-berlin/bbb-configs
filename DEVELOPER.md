@@ -47,7 +47,7 @@ contacts:
 ```
 ### hosts
 
-This section describes every OpenWrt-device.
+This section describes every OpenWRT-device.
 
 ```yml
 hosts:
@@ -96,7 +96,7 @@ For special use cases you can add lines to a script file. This script runs once 
 
 #### Flow Offloading
 
-You can enable flow offloading to drastictly improve performance for mediatek chipsets starting from SoC mt7621. More Infos are available in the [OpenWrt Wiki](https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading).
+You can enable flow offloading to drastictly improve performance for mediatek chipsets starting from SoC mt7621. More Infos are available in the [OpenWRT Wiki](https://openwrt.org/docs/guide-user/perf_and_log/flow_offloading).
 
 ```yml
     # Possible values: none, sw, hw
@@ -107,7 +107,7 @@ You can enable flow offloading to drastictly improve performance for mediatek ch
 
 ### monitoring
 
-All OpenWrt-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make sure SNMP is activated on the proprietary device with the community set to public. You can find an overview with all available profiles at `group_vars/all/snmp_profiles.yml`
+All OpenWRT-devices have monitoring enabled. To activate monitoring for other devices we use SNMP. The core router will collect and report statistics for the devices. Make sure SNMP is activated on the proprietary device with the community set to public. You can find an overview with all available profiles at `group_vars/all/snmp_profiles.yml`
 
 ```yml
 snmp_devices:
@@ -564,15 +564,15 @@ For a model using **DSA** instead of swconfig you can obtain the needed informat
 
 `cat /etc/board.json`
 
-### Custom OpenWrt Version
+### Custom OpenWRT Version
 
-If you don't want to use the default OpenWrt version to build your location's firmware you have to create new **version file**. The default version files can be found under group_vars/version_XX_YY_snapshot.yml
+If you don't want to use the default OpenWRT version to build your location's firmware you have to create new **version file**. The version files can be found  `group_vars` directory and start with `version_` prefix e.g. `group_vars/version_25_12_snapshot.yml`
 
 - `XX` Mayor
 - `YY` Minor
 - `ZZ` Bug fix / `snapshot`
 
-Version files for specific OpenWrt versions have to follow this Format: **version_XX_YY_ZZ.yml**. They also need to use the same feed version and url as their snapshot counterpart
+Version files for specific OpenWRT versions have to follow this format: **version_XX_YY_ZZ.yml**. They also need to use the same feed version and url as their snapshot counterpart
 
 example filename: version_25.12.6.yml
 ```yml
@@ -586,7 +586,7 @@ After creating such a file you can use
 ```yml
 openwrt_version: XX.YY.ZZ
 # for this example it would be:
-openwrt_version: 25.12.6
+openwrt_version: 25.12.4
 ```
 
 in your location file to build a firmware with your specific version. It is currently **not possible** to garanty completly identical builds if too much time (>= one week) lies between to builds, do to automatic packade builders. So backup your firmware builds for later uses.
