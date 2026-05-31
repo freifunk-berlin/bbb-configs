@@ -97,7 +97,13 @@ run_ssh() {
 # Function to check memory availability
 check_memory() {
 	local hostname="$1"
-	run_ssh "$hostname" "free | awk 'NR==2 {print \$7}'"
+	local mem
+	mem=$(run_ssh "$hostname" "free | awk 'NR==2 {print \$7}'")
+	if ! [[ "$mem" =~ ^[0-9]+$ ]]; then
+		echo "Unable to determine available memory on $hostname (value: '$mem')" >&2
+		return 1
+	fi
+	echo "$mem"
 }
 
 # Function to check for missing root password
@@ -152,11 +158,7 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
 		echo "Hostname $HOSTNAME is accessible"
 
 		# Check memory on remote host once before any flashing steps
-		MEMORY=$(check_memory "$HOSTNAME")
-		if ! [[ "$MEMORY" =~ ^[0-9]+$ ]]; then
-			echo "Unable to determine available memory on $HOSTNAME (value: '$MEMORY'), skipping..."
-			continue
-		fi
+		MEMORY=$(check_memory "$HOSTNAME") || continue
 
 		# Check if device is considered low memory
 		if [ "$MEMORY" -lt $(($(stat -c %s "$FILE_PATH") * 2 / 1024)) ]; then # Less than 2x file size
@@ -171,11 +173,11 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
                 [ -f /etc/init.d/rpcd ] && /etc/init.d/rpcd stop; \
                 [ -f /etc/init.d/naywatch ] && /etc/init.d/naywatch stop"
 			sleep 20
-			MEMORY=$(check_memory "$HOSTNAME")
+			MEMORY=$(check_memory "$HOSTNAME") || continue
 		fi
 
 		# Check memory on remote host before flashing
-		MEMORY=$(check_memory "$HOSTNAME")
+		MEMORY=$(check_memory "$HOSTNAME") || continue
 		if [ "$MEMORY" -ge $(($(stat -c %s "$FILE_PATH") / 1024 + 1024)) ]; then # File size in KB + 1 MB
 			echo "Memory on $HOSTNAME is sufficient ($MEMORY KB)"
 
