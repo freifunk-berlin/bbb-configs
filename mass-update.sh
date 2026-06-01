@@ -94,6 +94,29 @@ run_ssh() {
 	timeout 20 ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ConnectTimeout=5 -o ServerAliveInterval=1 -o ServerAliveCountMax=5 "root@$hostname" "$command"
 }
 
+# Function to wait for a host to become reachable or unreachable with timeout
+# Poll the host. If its current state matches the target, we're done. Otherwise, wait and try again.
+wait_for_state() {
+	local hostname="$1"
+	local target="$2"
+	local i=0
+
+	while [ $i -lt 600 ]; do
+		if check_reachability "$hostname"; then
+			[ "$target" = reachable ] && break
+		else
+			[ "$target" = unreachable ] && break
+		fi
+		sleep 1
+		((i++))
+	done
+
+	[ $i -ge 600 ] && {
+		echo "Timeout waiting for $hostname. Aborting."
+		exit 1
+	}
+}
+
 # Function to check memory availability
 check_memory() {
 	local hostname="$1"
@@ -125,9 +148,9 @@ reboot() {
 	echo "Rebooting $hostname..."
 	run_ssh "$hostname" "reboot"
 	echo "Waiting for $hostname to become unreachable..."
-	while check_reachability "$hostname"; do sleep 1; done
+	wait_for_state "$hostname" unreachable
 	echo "Waiting for $hostname to become reachable again..."
-	while ! check_reachability "$hostname"; do sleep 1; done
+	wait_for_state "$hostname" reachable
 }
 
 # Loop through each file
@@ -206,12 +229,12 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
 
 				# Wait for hostname to become unreachable
 				echo "Waiting for $HOSTNAME to become unreachable..."
-				while check_reachability "$HOSTNAME"; do sleep 1; done
+				wait_for_state "$HOSTNAME" unreachable
 
 				# Wait 20 seconds and then wait for hostname to become reachable again
 				echo "Waiting for $HOSTNAME to become reachable again..."
 				sleep 20
-				while ! check_reachability "$HOSTNAME"; do sleep 1; done
+				wait_for_state "$HOSTNAME" reachable
 
 				# Remove local files
 				echo "Removing local files for $NODENAME from $WORK_DIR"
