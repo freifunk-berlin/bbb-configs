@@ -38,6 +38,7 @@ all_luci_base__packages__to_merge:
   - uhttpd-mod-ubus
 
 all_collectd__packages__to_merge:
+  - collectd-mod-cpu
   - collectd-mod-interface
   - collectd-mod-iwinfo
   - collectd-mod-load
