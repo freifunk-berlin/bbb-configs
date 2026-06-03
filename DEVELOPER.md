@@ -589,7 +589,7 @@ openwrt_version: XX.YY.ZZ
 openwrt_version: 25.12.4
 ```
 
-in your location file to build a firmware with your specific version. It is currently **not possible** to garanty completly identical builds if too much time (>= one week) lies between to builds, do to automatic packade builders. So backup your firmware builds for later uses.
+in your location file to build a firmware with your specific version. It is currently **not possible** to garanty completly identical builds if too much time (>= one week) lies between to builds, do to automatic package builders. So backup your firmware builds for later uses.
 
 ## inventory/
 
