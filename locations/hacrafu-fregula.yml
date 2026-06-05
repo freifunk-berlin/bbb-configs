@@ -2,8 +2,8 @@
 
 location: hacrafu-fregula
 location_nice: Karl-Marx-Straße 11, Kießelbude, 15345 Eggersdorf
-# latitude: 52.539454308
-# longitude: 13.821079731
+latitude: 52.539454308
+longitude: 13.821079731
 contact_name: "Hacken Craften Funken e.V."
 contact_nickname: "HaCraFu e.V."
 contacts:
