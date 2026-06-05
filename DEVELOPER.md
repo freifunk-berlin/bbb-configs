@@ -581,6 +581,8 @@ feed: "https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/__I
 uses_apk: true
 ```
 
+OpenWRT switched its package manager from `opkg` to `apk` between the 24.10 and 25.12. We are currently in this transitioning phase and therefore need the options `feed` and `uses_apk`.
+
 After creating such a file you can use
 
 ```yml
