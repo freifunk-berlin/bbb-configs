@@ -37,9 +37,9 @@ If we need someone to reproduce our setup, the person can just generate the imag
 
 Using bbb-configs is quite simple. In the sections below you can find simple introductions to what you can do with bbb-configs. But before you can get started you might need to install some dependencies so everything will work properly.
 
-### 1. Install OpenWRT build dependencies
+### 1. Install OpenWrt build dependencies
 
-First install the OpenWRT build dependencies. You can find the dependencies for your specific Linux distribution [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions). As of 07/2025 there arent all dependencies available for Apple M-Chips.
+First install the OpenWrt build dependencies. You can find the dependencies for your specific Linux distribution [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions). As of 07/2025 there arent all dependencies available for Apple M-Chips.
 
 ### 2. Install BBB-configs dependencies
 
@@ -161,7 +161,7 @@ Ansible is a suite of software tools that enables infrastructure as code. It is 
 
 Make sure to install ansible and clone the bbb-configs repository. Also don`t forget to check your dependencies.
 
-Depending on your system you might need more requirements. If something fails check out [this OpenWRT page](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem).
+Depending on your system you might need more requirements. If something fails check out [this OpenWrt page](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem).
 
 ## Developers and Maintainers
 

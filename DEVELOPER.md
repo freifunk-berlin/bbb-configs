@@ -551,20 +551,20 @@ Band replaces hwmode since 21.02.2.
 Possible values for `htmode_prefix` are HT (802.11n), VHT (802.11ac) and HE (802.11ax).
 The htmode_prefix setting corresponds with the htmode option.
 
-To create a new model file for a device with **swconfig** you can use the following commands to get information about the switch on a standard OpenWRT install:
+To create a new model file for a device with **swconfig** you can use the following commands to get information about the switch on a standard OpenWrt install:
 
 - `swconfig list` to list all switches e.g. switch0
 - `swconfig dev switch0 help` to get information about the switch
 - `swconfig dev switch0 show` to get information about the state of the switch and ports
 
-Note: If you want to create a new model_file you can have a look at `/etc/config/wireless` on a standard OpenWRT
+Note: If you want to create a new model_file you can have a look at `/etc/config/wireless` on a standard OpenWrt
 install to obtain the path information for the wireless_devices.
 
 For a model using **DSA** instead of swconfig you can obtain the needed information from
 
 `cat /etc/board.json`
 
-### Custom OpenWRT Version
+### Custom OpenWrt Version
 
 If you don't want to use the default OpenWrt version to build your location's firmware you have to create new **version file**. The version files can be found  `group_vars` directory and start with `version_` prefix e.g. `group_vars/version_25_12_snapshot.yml`
 
@@ -581,7 +581,7 @@ feed: "https://firmware.berlin.freifunk.net/feed/{{ feed_version }}/packages/__I
 uses_apk: true
 ```
 
-OpenWRT switched its package manager from `opkg` to `apk` between the 24.10 and 25.12. We are currently in this transitioning phase and therefore need the options `feed` and `uses_apk`.
+OpenWrt switched its package manager from `opkg` to `apk` between the 24.10 and 25.12. We are currently in this transitioning phase and therefore need the options `feed` and `uses_apk`.
 
 After creating such a file you can use
 
