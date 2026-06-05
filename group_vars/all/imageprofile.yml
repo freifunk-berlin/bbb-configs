@@ -1,5 +1,5 @@
 ---
-# default OpenWRT version to build from unless overridden
+# default OpenWrt version to build from unless overridden
 openwrt_version: 25.12.4
 
 openwrt_mirror: https://downloads.openwrt.org

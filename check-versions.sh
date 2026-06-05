@@ -68,10 +68,10 @@ check_host() {
 
 clone_or_update_repo() {
 	if [ -d "$OPENWRT_REPO/.git" ]; then
-		echo "Updating OpenWRT repository..."
+		echo "Updating OpenWrt repository..."
 		git -C "$OPENWRT_REPO" fetch --quiet origin 'refs/heads/*:refs/remotes/origin/*'
 	else
-		echo "Cloning OpenWRT repository..."
+		echo "Cloning OpenWrt repository..."
 		mkdir -p "$WORK_DIR"
 		git clone --quiet git@github.com:openwrt/openwrt.git "$OPENWRT_REPO"
 		git -C "$OPENWRT_REPO" fetch --quiet origin 'refs/heads/*:refs/remotes/origin/*'
@@ -288,7 +288,7 @@ if [ ${#results[@]} -eq 0 ]; then
 fi
 
 log ""
-log "Updating OpenWRT repository..."
+log "Updating OpenWrt repository..."
 clone_or_update_repo
 
 declare -A branch_cache
