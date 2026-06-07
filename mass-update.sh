@@ -189,7 +189,10 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
                 [ -f /etc/init.d/sysntpd ] && /etc/init.d/sysntpd stop; \
                 [ -f /etc/init.d/urngd ] && /etc/init.d/urngd stop; \
                 [ -f /etc/init.d/rpcd ] && /etc/init.d/rpcd stop; \
-                [ -f /etc/init.d/naywatch ] && /etc/init.d/naywatch stop"
+                [ -f /etc/init.d/naywatch ] && /etc/init.d/naywatch stop; \
+                [ -f /etc/init.d/olsrd ] && /etc/init.d/olsrd stop; \
+                [ -f /etc/init.d/bgpdisco ] && /etc/init.d/bgpdisco stop; \
+                rm -f /tmp/mrt_bgpdisco.dump"
 			sleep 20
 			MEMORY=$(check_memory "$HOSTNAME") || continue
 		fi
