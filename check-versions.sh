@@ -119,47 +119,47 @@ time_ago() {
 	seconds=${seconds#-}
 
 	if [ "$seconds" -eq 0 ]; then
-		echo "up-to-date"
+		echo "OK"
 		return
 	fi
 
 	if [ "$seconds" -lt 60 ]; then
-		echo "${seconds}s ago"
+		echo "${seconds}s"
 		return
 	fi
 
 	minutes=$((seconds / 60))
 	if [ "$minutes" -lt 60 ]; then
-		echo "${minutes}m ago"
+		echo "${minutes}m"
 		return
 	fi
 
 	hours=$((minutes / 60))
 	if [ "$hours" -lt 24 ]; then
-		echo "${hours}h ago"
+		echo "${hours}h"
 		return
 	fi
 
 	days=$((hours / 24))
 	if [ "$days" -lt 30 ]; then
-		echo "${days}d ago"
+		echo "${days}d"
 		return
 	fi
 
 	weeks=$((days / 7))
 	if [ "$weeks" -lt 12 ]; then
-		echo "${weeks}w ago"
+		echo "${weeks}w"
 		return
 	fi
 
 	months=$((days / 30))
 	if [ "$months" -lt 12 ]; then
-		echo "${months}mo ago"
+		echo "${months}mo"
 		return
 	fi
 
 	years=$((days / 365))
-	echo "${years}y ago"
+	echo "${years}y"
 }
 
 check_outdated() {
@@ -189,6 +189,70 @@ check_outdated() {
 
 	local diff=$((tip_date - local_date))
 	echo "$(time_ago $diff)|$diff"
+}
+
+# Compare two OpenWrt version strings. Returns 0 if v1 > v2, 1 otherwise.
+# Ordering: SNAPSHOT (main) > X.Y-SNAPSHOT > X.Y.Z (higher patch) > X.Y.Z (lower patch)
+# Same major.minor with -SNAPSHOT is newer than any stable patch (e.g. 25.12-SNAPSHOT > 25.12.4)
+version_gt() {
+	local v1="$1" v2="$2"
+
+	[ "$v1" = "SNAPSHOT" ] && return 0
+	[ "$v2" = "SNAPSHOT" ] && return 1
+
+	local snap1=0 snap2=0
+	[[ "$v1" == *-SNAPSHOT ]] && snap1=1 && v1="${v1%-SNAPSHOT}"
+	[[ "$v2" == *-SNAPSHOT ]] && snap2=1 && v2="${v2%-SNAPSHOT}"
+
+	local IFS=. m1 n1 p1 m2 n2 p2
+	read -r m1 n1 p1 <<<"$v1"
+	read -r m2 n2 p2 <<<"$v2"
+
+	: "${p1:=0}" "${p2:=0}"
+
+	[ "$m1" -gt "$m2" ] 2>/dev/null && return 0
+	[ "$m1" -lt "$m2" ] 2>/dev/null && return 1
+	[ "$n1" -gt "$n2" ] 2>/dev/null && return 0
+	[ "$n1" -lt "$n2" ] 2>/dev/null && return 1
+
+	if [ "$snap1" -ne "$snap2" ]; then
+		[ "$snap1" -gt "$snap2" ] && return 0 || return 1
+	fi
+
+	[ "$p1" -gt "$p2" ] 2>/dev/null && return 0
+	return 1
+}
+
+# Check how far behind a git tag a given build hash is.
+# Uses merge-base to detect if the hash is an ancestor of the tag (i.e. build is before release).
+# Hashes at or after the tag are considered OK.
+check_outdated_tag() {
+	local repo="$1" hash="$2" tag="$3"
+
+	local tag_hash
+	tag_hash=$(git -C "$repo" rev-parse "$tag" 2>/dev/null) || {
+		echo "?|0"
+		return
+	}
+
+	if [ "${tag_hash:0:${#hash}}" = "$hash" ]; then
+		echo "OK|0"
+		return
+	fi
+
+	if git -C "$repo" merge-base --is-ancestor "$hash" "$tag_hash" 2>/dev/null; then
+		local hash_date tag_date
+		hash_date=$(get_commit_date "$repo" "$hash")
+		tag_date=$(get_commit_date "$repo" "$tag_hash")
+		if [ -z "$hash_date" ] || [ -z "$tag_date" ]; then
+			echo "?|0"
+			return
+		fi
+		local diff=$((tag_date - hash_date))
+		echo "$(time_ago $diff)|$diff"
+	else
+		echo "OK|0"
+	fi
 }
 
 init_output
@@ -245,20 +309,40 @@ log ""
 log "========================================"
 log ""
 
-log "$(printf '| %-64s | %-14s | %-14s | %-9s | %-9s | %-26s |' 'HOST' 'OPENWRT' 'EXPECTED' 'BUILD_REV' 'BUILD_HASH' 'STATUS')"
+log "$(printf '| %-64s | %-14s | %-14s | %-9s | %-9s | %-26s |' 'HOST' 'OPENWRT' 'EXPECTED' 'BUILD_REV' 'BUILD_HASH' 'STATUS / BEHIND')"
 log '| :--------------------------------------------------------------- | :------------- | :------------- | --------: | :--------- | :------------------------- |'
 
+# Determine outdated status:
+# - stable version match (ver == expected == X.Y.Z) -> OK
+# - expected > ver (cross-branch or higher patch)   -> outdated, show age vs branch tip
+# - ver >= expected in version terms:
+#     if expected is stable X.Y.Z -> check hash against tag v$expected
+#     if expected is snapshot     -> check hash against branch tip
+is_stable='^[0-9]+\.[0-9]+\.[0-9]+$'
 printf '%s\n' "${results[@]}" | sort -t'|' -k2,2V -k3,3V -k4,4V -k5,5V -k1,1 | while IFS='|' read -r host ver expected rev hash; do
 	branch="${branch_cache[$ver]}"
-	status_info=$(check_outdated "$OPENWRT_REPO" "$hash" "$branch")
-	status="${status_info%|*}"
-	age_seconds="${status_info#*|}"
+	if [ "$ver" = "$expected" ] && [[ "$expected" =~ $is_stable ]]; then
+		status="OK"
+		age_seconds=0
+	elif version_gt "$expected" "$ver"; then
+		status_info=$(check_outdated "$OPENWRT_REPO" "$hash" "$branch")
+		status="${status_info%|*}"
+		age_seconds="${status_info#*|}"
+	else
+		if [[ "$expected" =~ $is_stable ]]; then
+			status_info=$(check_outdated_tag "$OPENWRT_REPO" "$hash" "v$expected")
+		else
+			status_info=$(check_outdated "$OPENWRT_REPO" "$hash" "$branch")
+		fi
+		status="${status_info%|*}"
+		age_seconds="${status_info#*|}"
+	fi
 	if [ "$ver" != "$expected" ]; then
 		display_expected="$expected"
 	else
 		display_expected=""
 	fi
-	if [[ "$expected" == 24.10* ]] || [[ "$expected" == 25.12* ]] || [[ "$expected" == "SNAPSHOT" ]]; then
+	if [ -n "$expected" ]; then
 		if [ "$status" != "OK" ] && [ "$age_seconds" -ge "$UPDATE_THRESHOLD_SECONDS" ]; then
 			echo "$host" >>"$UPDATE_TMP"
 		fi
