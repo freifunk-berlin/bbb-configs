@@ -11,7 +11,7 @@ role_uplink_gw__packages__to_merge:
   - luci-app-olsr
   - luci-app-olsr-services
   - luci-mod-falter
-  - falter-berlin-owmsh
+  - falter-berlin-owm-ucode
   - falter-berlin-gw
   - iptables-mod-ipopt
   - kmod-ipt-ipopt
