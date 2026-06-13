@@ -12,7 +12,7 @@ role_corerouter__packages__to_merge:
   - luci-app-olsr
   - luci-app-olsr-services
   - luci-mod-falter
-  - falter-berlin-owmsh
+  - falter-berlin-owm-ucode
   - iptables-mod-ipopt
   - kmod-ipt-ipopt
 
