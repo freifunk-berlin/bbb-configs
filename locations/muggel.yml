@@ -57,8 +57,21 @@ networks:
       muggel-core: 1
       muggel-uplink: 2
 
-  # Uplink is a Zyxel NR7101 running OpenWrt
-  # For 5G connection info, do:
+  # Uplink at 192.168.1.1 is a Zyxel NR7101 running vanilla OpenWrt
+  # For modem setup:
+  #   apk add kmod-usb-net kmod-usb-net-cdc-ether kmod-usb-net-cdc-mbim kmod-usb-net-cdc-ncm umbim wwan
+  #   uci batch "
+  #     network.wan=interface
+  #     network.wan.proto='mbim'
+  #     network.wan.device='/dev/cdc-wdm0'
+  #     network.wan.apn='internet'
+  #     network.wan.auth='none'
+  #     network.wan.pdptype='ipv4v6'"
+  # For modem status info:
+  #   modeminfo script from https://github.com/solomonricky/luci-app-modeminfo
+  #   apk add sms-tool
+  #   /root/modeminfo.sh | grep -E 'Network|Signal|SINR|Band'
+  # Modem status:
   #   ssh root@muggel-core.ff ip netns exec uplink \
   #     ssh -yy root@192.168.1.1 /root/modeminfo.sh \
   #   | grep -E 'Network|Signal|SINR|Band'
