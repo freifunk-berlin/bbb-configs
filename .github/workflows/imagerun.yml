@@ -1,6 +1,11 @@
 ---
 name: Image Run
 
+# This workflow generates images of changed locations on user request.
+# Add the label 'build_image' to the PR to trigger a new image run.
+# This will run once. To trigger the workflow again you have to remove
+# the label first to add it again.
+
 on:
   pull_request:
     branches:
@@ -11,7 +16,7 @@ on:
 permissions:
   contents: write # required for artifacts
   actions: read
-  pull-requests: write # required for Commenting
+  pull-requests: write # required for commenting
 
 jobs:
   build:
