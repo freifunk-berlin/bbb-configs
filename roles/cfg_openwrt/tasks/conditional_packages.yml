@@ -33,6 +33,13 @@
     - networks | selectattr('role', 'defined') | selectattr('role','equalto','tunnel') | count > 0
     - role == 'corerouter'
 
+- name: "Add wireguard if wireguard_access configured"
+  set_fact:
+    packages: "{{ packages + ['kmod-wireguard', 'wireguard-tools'] }}"
+  when:
+    - wireguard_access is defined
+    - role == 'corerouter'
+
 - name: "Add zram-swap on low mem and big flash"
   set_fact:
     packages: "{{ packages + ['zram-swap'] }}"
