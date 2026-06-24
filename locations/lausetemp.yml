@@ -1,0 +1,80 @@
+---
+
+location: lausetemp
+location_nice: Roof, Lausitzer Straße 10, 10999 Berlin
+latitude: 52.497552
+longitude: 13.428032
+contact_nickname: Stadtfunk gGmbH
+contacts:
+  - noc@stadtfunk.net
+
+hosts:
+  - hostname: lausetemp-core
+    role: corerouter
+    model: mikrotik_routerboard-750gr3
+    bird__packages__to_merge:
+      - bird3-babelpatch
+      - bird3c
+
+  - hostname: lausetemp-ap1
+    role: ap
+    model: "zyxel_nwa55axe"
+    wireless_profile: ap_only
+
+  - hostname: lausetemp-ap2
+    role: ap
+    model: "zyxel_nwa55axe"
+    wireless_profile: ap_only
+
+snmp_devices:
+  - hostname: lausetemp-switch
+    address: 10.248.106.242
+    snmp_profile: swos_lite
+
+  - hostname: lausetemp-emma
+    address: 10.248.106.243
+    snmp_profile: mikrotik_60g
+
+
+# Router: 10.248.106.192/26
+# --DHCP: 10.248.106.192/27
+# --MESH: 10.248.106.224/28
+# --MGMT: 10.248.106.240/28
+ipv6_prefix: 2001:bf7:831:a00::/56
+
+networks:
+  - vid: 10
+    role: mesh
+    name: mesh_emma
+    prefix: 10.248.106.224/32
+    ipv6_subprefix: -10
+
+  - vid: 20
+    role: mesh
+    name: mesh_local
+    prefix: 10.248.106.225/32
+    ipv6_subprefix: -20
+
+  - vid: 40
+    name: dhcp
+    role: dhcp
+    prefix: 10.248.106.192/27
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      lausetemp-core: 1
+
+  - vid: 42
+    name: mgmt
+    role: mgmt
+    prefix: 10.248.106.240/28
+    ipv6_subprefix: 1
+    gateway: 1
+    dns: 1
+    assignments:
+      lausetemp-core: 1
+      lausetemp-switch: 2
+      lausetemp-emma: 3
+      lausetemp-ap1: 4
+      lausetemp-ap2: 5
