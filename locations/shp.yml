@@ -37,6 +37,10 @@ networks:
     mesh_ap: shp-core
     mesh_radio: 11a_standard
     mesh_iface: mesh
+    mesh_metric_neighbors:
+      - name: w38b-core
+        ip: fe80::8483:c4ff:fea5:4161
+        metric: 4096
 
   # MESH - 2.4 GHz 802.11s
   - vid: 21
