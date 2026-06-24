@@ -9,10 +9,6 @@ contacts:
   - "freifunk@kinzig9.de"
 
 hosts:
-  # - hostname: k9-ap-leichtsinn
-  #   role: ap
-  #   model: "avm_fritzbox-7530"
-  #   wireless_profile: freifunk_default
   - hostname: k9-core-front
     role: corerouter
     model: "zyxel_ex5601-t0-ubootmod"
@@ -32,10 +28,31 @@ hosts:
     role: ap
     model: "aruba_ap-303"
     wireless_profile: freifunk_default
+  - hostname: k9-ap-leichtsinn
+    role: ap
+    model: "genexis_pulse-ex400"
+    wireless_profile: freifunk_default
+    flow_offload: hw
   - hostname: k9-ap-remise
     role: ap
     model: "tplink_archer-c7-v5"
     wireless_profile: freifunk_default
+  # - hostname: k9-dummy-covr
+  #   role: ap
+  #   model: "dlink_covr-x1860-a1"
+  #   wireless_profile: freifunk_default
+  # - hostname: k9-dummy-dap
+  #   role: ap
+  #   model: "dlink_dap-x1860-a1"
+  #   wireless_profile: freifunk_default
+  - hostname: k9ap-dummy-wr3000s
+    role: ap
+    model: "cudy_wr3000s-v1"
+    wireless_profile: freifunk_default
+  # - hostname: k9ap-dummy-wr3000h
+  #   role: ap
+  #   model: "cudy_wr3000h-v1"
+  #   wireless_profile: freifunk_default
 
 snmp_devices:
   - hostname: k9-sama
@@ -81,7 +98,6 @@ networks:
     prefix: 10.31.9.0/25
     ipv6_subprefix: 0
     assignments:
-      # k9-core: 1
       k9-core-front: 1
 
   # MGMT
@@ -101,7 +117,8 @@ networks:
       k9-ap-loge: 9 # Aruba AP11
       k9-ap-groessenwahn: 10 # Aruba AP11
       k9-ap-remise: 11 # Archer C7 v5
-      # k9-ap-leichtsinn: 12 # Fritzbox-7530
+      k9-ap-leichtsinn: 12 # Pulse EX400
+      k9ap-dummy-wr3000s: 13 # not used
 
 location__ssh_keys__to_merge:
   - comment: k9 iuljan
