@@ -13,11 +13,14 @@ config dnsmasq
 	option noping '{{ dhcp_no_ping|int if dhcp_no_ping is defined else 1 }}'
 	option quietdhcp '1'
 	option cachesize '{{ dns_cache_size | default(10000) }}'
- 	list server '/olsr/'
+{% if not (bird_only | default(true)) %}
+	list server '/olsr/'
+{% endif %}
 {% for _dns_server in dns_servers %}
         list server '{{ _dns_server }}'
 {% endfor %}
 
+{% if not (bird_only | default(true)) %}
 {% for network in networks | selectattr('role', 'equalto', 'mgmt') %}
   {% for host, ip_num in network['assignments'].items() %}
 config domain '{{ host | replace('-', '_') }}_olsr'
@@ -26,6 +29,7 @@ config domain '{{ host | replace('-', '_') }}_olsr'
 
   {% endfor %}
 {% endfor %}
+{% endif %}
 
 {% for network in networks | rejectattr('role', 'in', ['uplink', 'wireless_uplink', 'mesh', 'tunnel', 'ext']) %}
     {% set name = network['name'] if 'name' in network else network['role'] %}
