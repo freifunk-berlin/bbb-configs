@@ -48,6 +48,13 @@
     - not (low_mem | default(false))
     - not (low_flash | default(false))
 
+- name: "Add adblock-fast on core-routers"
+  set_fact:
+    packages: "{{ packages + ['adblock-fast', 'luci-app-adblock-fast', 'ca-bundle', 'gawk', 'grep', 'sed', 'coreutils-sort'] }}"
+  when:
+    - role == 'corerouter'
+    - adblock_enabled | default(false) | bool
+
 - name: "Remove or replace packages on low mem and low flash"
   set_fact:
     packages: "{{ packages + [item] }}"
