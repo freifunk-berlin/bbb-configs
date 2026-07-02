@@ -1,0 +1,72 @@
+---
+
+location: dweb-ap-32
+location_nice: table
+latitude: 52.497459
+longitude: 13.427857
+community: berlin
+
+location__packages__to_merge:
+  - snmpd
+
+hosts:
+  - hostname: dweb-ap-32
+    role: corerouter
+    model: "cudy_ap3000outdoor-v1"
+    wireless_profile: dweb
+    host__rclocal__to_merge:
+      - |
+        chmod +x /etc/librenms/*.sh
+        chmod +x /etc/librenms/distro
+        uci set network.vlan_40.ports=''
+        uci commit network; reload_config
+
+# dhcp all ap: 10.248.118.0/23
+#  dweb-ap-32: 10.248.118.0/25
+#  dweb-ap-33: 10.248.118.128/25
+#  dweb-ap-34: 10.248.119.0/25
+#  dweb-ap-35: 10.248.119.128/25
+
+ipv6_prefix: 2001:bf7:831:1800::/56
+
+networks:
+  - vid: 30
+    role: mesh
+    name: mesh_lan_30
+    prefix: 10.31.0.76/32
+    ipv6_subprefix: -30
+
+  - vid: 40
+    name: dhcp
+    role: dhcp
+    prefix: 10.248.118.0/25
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      dweb-ap-32: 1
+
+  - vid: 42
+    name: mgmt
+    role: mgmt
+    prefix: 10.248.120.32/32
+    ipv6_subprefix: 1
+    gateway: 1
+    dns: 1
+    assignments:
+      dweb-ap-32: 1
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  dweb-ap-32: 36-40
+#  dweb-ap-33: 44-40
+#  dweb-ap-34: 52-40
+#  dweb-ap-35: 60-40
+
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  dweb-ap-32: 1-20-8 # reduce txpower because we need to reuse channels
+#  dweb-ap-33: 6-20-8
+#  dweb-ap-34: 13-20-8
+#  dweb-ap-35: 1-20-8
