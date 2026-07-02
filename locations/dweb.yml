@@ -59,6 +59,7 @@ networks:
     assignments:
       dweb-core: 1
       dweb-cloud: 2
+
       dweb-sw-11: 11 # netpower 16p
       dweb-sw-12: 12 # netpower 16p
       dweb-sw-13: 13 # netpower 16p
@@ -67,6 +68,15 @@ networks:
       dweb-sw-16: 16 # netpower 16p SPARE
       dweb-sw-17: 17 # CSS610
       dweb-sw-18: 18 # unifi
+
+#      dweb-ap-32: 32
+#      dweb-ap-33: 33
+#      dweb-ap-34: 34
+#      dweb-ap-35: 35
+#      dweb-ap-36: 36
+#      dweb-ap-37: 37
+#      dweb-ap-38: 38
+#      dweb-ap-39: 39
 
   - vid: 50
     untagged: true
