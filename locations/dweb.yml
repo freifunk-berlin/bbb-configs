@@ -23,6 +23,30 @@ hosts:
         uci set network.vlan_50.ports='wan:u'
         uci commit network; reload_config
 
+snmp_devices:
+  - hostname: dweb-sw-11
+    address: 10.248.120.11
+    snmp_profile: swos
+
+  - hostname: dweb-sw-12
+    address: 10.248.120.11
+    snmp_profile: swos
+
+  - hostname: dweb-sw-13
+    address: 10.248.120.11
+    snmp_profile: swos
+
+  - hostname: dweb-sw-14
+    address: 10.248.120.11
+    snmp_profile: swos
+
+  - hostname: dweb-sw-15
+    address: 10.248.120.11
+    snmp_profile: swos
+
+  - hostname: dweb-sw-16
+    address: 10.248.120.11
+    snmp_profile: swos
 
 # ROUTER: 10.248.120.0/23
 # --MGMT: 10.248.120.0/26
