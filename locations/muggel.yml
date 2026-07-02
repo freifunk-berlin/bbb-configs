@@ -27,6 +27,7 @@ hosts:
         uci set network.vlan_40.ports='lan1:u lan2:u lan3:u lan4:u'
         uci set network.vlan_50.ports='wan:u'
         uci commit network; reload_config
+      - cat /etc/crontabs/root | grep "ifdown wan" 2>/dev/null || echo "0 6 * * * ip netns exec uplink ssh -yy root@192.168.1.1 'ifdown wan ; sleep 5 ; ifup wan'" >> /etc/crontabs/root && /etc/init.d/cron restart
 
 networks:
   - vid: 20
