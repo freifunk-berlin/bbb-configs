@@ -83,7 +83,7 @@ networks:
     assignments:
       dweb-core: 1
       dweb-cloud: 2
-
+      dweb-app-srv: 3
       dweb-sw-11: 11 # netpower 16p
       dweb-sw-12: 12 # netpower 16p
       dweb-sw-13: 13 # netpower 16p
@@ -117,4 +117,3 @@ networks:
     mtu: 1280
     prefix: 10.248.120.65/32
     wireguard_port: 51821
-
