@@ -29,23 +29,23 @@ snmp_devices:
     snmp_profile: swos
 
   - hostname: dweb-sw-12
-    address: 10.248.120.11
+    address: 10.248.120.12
     snmp_profile: swos
 
   - hostname: dweb-sw-13
-    address: 10.248.120.11
+    address: 10.248.120.13
     snmp_profile: swos
 
   - hostname: dweb-sw-14
-    address: 10.248.120.11
+    address: 10.248.120.14
     snmp_profile: swos
 
   - hostname: dweb-sw-15
-    address: 10.248.120.11
+    address: 10.248.120.15
     snmp_profile: swos
 
   - hostname: dweb-sw-16
-    address: 10.248.120.11
+    address: 10.248.120.16
     snmp_profile: swos
 
 # ROUTER: 10.248.120.0/23

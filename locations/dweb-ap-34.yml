@@ -33,7 +33,7 @@ networks:
   - vid: 40
     name: dhcp
     role: dhcp
-    prefix: 10.248.122.0/24
+    prefix: 10.248.124.0/24
     ipv6_subprefix: 0
     inbound_filtering: false
     enforce_client_isolation: false
@@ -43,7 +43,7 @@ networks:
   - vid: 42
     name: mgmt
     role: mgmt
-    prefix: 10.248.120.32/32
+    prefix: 10.248.120.34/32
     ipv6_subprefix: 1
     gateway: 1
     dns: 1
