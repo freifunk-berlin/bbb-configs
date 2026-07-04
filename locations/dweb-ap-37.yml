@@ -1,0 +1,54 @@
+---
+
+location: dweb-ap-37
+location_nice: table
+latitude: 52.497459
+longitude: 13.427857
+community: berlin
+
+location__packages__to_merge:
+  - snmpd
+
+hosts:
+  - hostname: dweb-ap-37
+    role: corerouter
+    model: "cudy_ap3000outdoor-v1"
+    wireless_profile: dweb
+    host__rclocal__to_merge:
+      - |
+        chmod +x /etc/librenms/*.sh
+        chmod +x /etc/librenms/distro
+        uci set network.vlan_40.ports=''
+        uci commit network; reload_config
+
+ipv6_prefix: 2001:bf7:790:2b00::/56
+
+networks:
+  - vid: 30
+    role: mesh
+    name: mesh_lan_30
+    prefix: 10.31.202.165/32
+    ipv6_subprefix: -30
+
+  - vid: 40
+    name: dhcp
+    role: dhcp
+    prefix: 10.248.127.0/24
+    ipv6_subprefix: 0
+    inbound_filtering: false
+    enforce_client_isolation: false
+    assignments:
+      dweb-ap-37: 1
+
+  - vid: 42
+    name: mgmt
+    role: mgmt
+    prefix: 10.248.120.37/32
+    ipv6_subprefix: 1
+    gateway: 1
+    dns: 1
+    assignments:
+      dweb-ap-37: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  dweb-ap-37: 36-40
