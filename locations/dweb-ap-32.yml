@@ -21,28 +21,22 @@ hosts:
         uci set network.vlan_40.ports=''
         uci commit network; reload_config
 
-# dhcp all ap: 10.248.118.0/23
-#  dweb-ap-32: 10.248.118.0/25
-#  dweb-ap-33: 10.248.118.128/25
-#  dweb-ap-34: 10.248.119.0/25
-#  dweb-ap-35: 10.248.119.128/25
-
-ipv6_prefix: 2001:bf7:831:1800::/56
+ipv6_prefix: 2001:bf7:790:2600::/56
 
 networks:
   - vid: 30
     role: mesh
     name: mesh_lan_30
-    prefix: 10.31.0.76/32
+    prefix: 10.31.202.160/32
     ipv6_subprefix: -30
 
   - vid: 40
     name: dhcp
     role: dhcp
-    prefix: 10.248.118.0/25
+    prefix: 10.248.122.0/24
     ipv6_subprefix: 0
-    inbound_filtering: true
-    enforce_client_isolation: true
+    inbound_filtering: false
+    enforce_client_isolation: false
     assignments:
       dweb-ap-32: 1
 
@@ -56,17 +50,5 @@ networks:
     assignments:
       dweb-ap-32: 1
 
-# AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
   dweb-ap-32: 36-40
-#  dweb-ap-33: 44-40
-#  dweb-ap-34: 52-40
-#  dweb-ap-35: 60-40
-
-
-# AP-id, wifi-channel, bandwidth, txpower
-location__channel_assignments_11g_standard__to_merge:
-  dweb-ap-32: 1-20-8 # reduce txpower because we need to reuse channels
-#  dweb-ap-33: 6-20-8
-#  dweb-ap-34: 13-20-8
-#  dweb-ap-35: 1-20-8
