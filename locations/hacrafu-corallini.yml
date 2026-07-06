@@ -10,7 +10,6 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-corallini
     role: corerouter
     model: "cudy_wr3000-v1"
@@ -23,8 +22,8 @@ hosts:
 
 ipv6_prefix: "2001:bf7:850:4c00::/56"
 
-# dhcp      10.248.84.192/27
-# mesh      10.248.84.162/31
+# DHCP      10.248.84.192/27
+# MESH      10.248.84.162/31
 # MGMT      10.248.77.91/32
 # TUNNEL    10.248.84.164/31
 
@@ -45,7 +44,6 @@ networks:
     name: mesh_2g
     prefix: 10.248.84.163/32
     ipv6_subprefix: -21
-    mesh_metric_lqm: ['default 0.8']
     mesh_ap: hacrafu-corallini
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -88,11 +86,11 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hacrafu-corallini: 36-80
+  hacrafu-corallini: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hacrafu-corallini: 13-40
+  hacrafu-corallini: 13-20
 
 # only place this ssh-keys
 ssh_keys:
@@ -102,3 +100,5 @@ ssh_keys:
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de
   - comment: Peter
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIzevq2nqgb0rBAEEcDEkAIu24aTiWIkem3+59a6h10 HaCraFu Petersilie
+  - comment: Flupsy
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHG1Y5nkEm3yUIF1nQkbO8G2qHgtAz5b5Os9o5hVjyQZ HaCraFu Flupsy
