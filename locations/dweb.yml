@@ -88,7 +88,6 @@ networks:
     role: mgmt
     prefix: 10.248.120.0/27 # the next /27 is for APs in separate locations
     ipv6_subprefix: 1
-    inbound_filtering: true # to secure the infra from the camp
     gateway: 1
     dns: 1
     assignments:
