@@ -10,7 +10,7 @@ community: berlin
 hosts:
   - hostname: rauchhaus-core
     role: corerouter
-    model: "tplink_archer-c7-v5"
+    model: cudy_wr3000e-v1
     wireless_profile: rauchhaus
     host__rclocal__to_merge:
       - |
@@ -19,32 +19,32 @@ hosts:
 
   - hostname: rauchhaus-floor0north135
     role: ap
-    model: "tplink_tl-wdr4300-v1"
+    model: cudy_wr3000e-v1
     wireless_profile: rauchhaus
 
   - hostname: rauchhaus-floor0south136
     role: ap
-    model: "tplink_tl-wdr3600-v1"
+    model: cudy_wr3000e-v1
     wireless_profile: rauchhaus
 
   - hostname: rauchhaus-floor1north133
     role: ap
-    model: "tplink_tl-wdr4300-v1"
+    model: cudy_wr3000e-v1
     wireless_profile: rauchhaus
 
   - hostname: rauchhaus-floor1south134
     role: ap
-    model: "tplink_tl-wdr3600-v1"
+    model: cudy_wr3000e-v1
     wireless_profile: rauchhaus
 
   - hostname: rauchhaus-floor2north132
     role: ap
-    model: "tplink_tl-wdr3600-v1"
+    model: cudy_wr3000e-v1
     wireless_profile: rauchhaus
 
   - hostname: rauchhaus-basement
     role: ap
-    model: "avm_fritzbox-4040"
+    model: cudy_wr3000e-v1
     wireless_profile: rauchhaus
 
 snmp_devices:
