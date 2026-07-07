@@ -18,8 +18,10 @@ hosts:
       - |
         chmod +x /etc/librenms/*.sh
         chmod +x /etc/librenms/distro
+        uci set network.vlan_30.ports='lan2:t lan3:t lan4:t lan5:t'
         uci set network.vlan_40.ports=''
         uci set network.vlan_42.ports='lan2:t lan3:t lan4:t lan5:t'
+        uci set network.vlan_30.ports='lan2:t lan3:t lan4:t lan5:t'
         uci set network.vlan_50.ports='wan:u'
         uci commit network; reload_config
 
