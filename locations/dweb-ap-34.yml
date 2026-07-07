@@ -1,9 +1,9 @@
 ---
 
 location: dweb-ap-34
-location_nice: table
-latitude: 52.497459
-longitude: 13.427857
+location_nice: Resilience Base
+latitude: 52.118222
+longitude: 12.406578
 community: berlin
 
 location__packages__to_merge:
