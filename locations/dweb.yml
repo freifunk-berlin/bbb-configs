@@ -1,9 +1,9 @@
 ---
 
 location: dweb
-location_nice: table
-latitude: 52.497459
-longitude: 13.427857
+location_nice: basement
+latitude: 52.11879
+longitude: 12.407222
 community: berlin
 
 location__packages__to_merge:
