@@ -3,7 +3,7 @@ target: ath79/generic
 brand_nice: Ubiquiti
 model_nice: Nanostation AC Loco
 
-openwrt_version: 23.05-SNAPSHOT
+openwrt_version: 23.05.6
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct"

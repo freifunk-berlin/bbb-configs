@@ -3,3 +3,7 @@ imagebuilder_suffix: xz
 openwrt_mirror: https://mirror.berlin.freifunk.net/downloads.openwrt.org
 feed_version: 1.4.0-snapshot
 uses_opkg: true
+
+bird__packages__to_merge:
+  - bird2-babelpatch
+  - bird2c
