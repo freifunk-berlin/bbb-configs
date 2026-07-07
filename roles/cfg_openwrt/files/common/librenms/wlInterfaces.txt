@@ -1,2 +1,0 @@
-wlan2,wl-2.4G
-wlan5,wl-5.0G
