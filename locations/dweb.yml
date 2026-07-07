@@ -52,7 +52,7 @@ snmp_devices:
 # --MGMT: 10.248.120.0/27
 # --MGMT-APS: 10.248.120.32/27
 # --MESH: 10.248.120.64/26
-# --FREE: 10.248.120.128/25
+# --DHCP: 10.248.120.128/25 (yolocolo)
 # --DHCP: 10.248.121.0/24
 ipv6_prefix: 2001:bf7:831:1600::/56
 
@@ -68,6 +68,16 @@ networks:
     role: dhcp
     prefix: 10.248.121.0/24
     ipv6_subprefix: 0
+    inbound_filtering: false
+    enforce_client_isolation: false
+    assignments:
+      dweb-core: 1
+
+  - vid: 41
+    name: yolocolo
+    role: dhcp
+    prefix: 10.248.120.128/25
+    ipv6_subprefix: 2
     inbound_filtering: false
     enforce_client_isolation: false
     assignments:
