@@ -130,3 +130,7 @@ networks:
     mtu: 1280
     prefix: 10.248.120.65/32
     wireguard_port: 51821
+
+location__ssh_keys__to_merge:
+  - comment: esther
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMm88uBCzRA++SaZXD7nJTC7LyO/oLHRxv2rN4kmp6EI infrared@thnk
