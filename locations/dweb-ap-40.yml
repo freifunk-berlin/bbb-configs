@@ -2,8 +2,8 @@
 
 location: dweb-ap-40
 location_nice: Solidarity Station (22)
-latitude: 52.117994
-longitude: 12.406893
+latitude: 52.118381
+longitude: 12.406292
 community: berlin
 
 location__packages__to_merge:
