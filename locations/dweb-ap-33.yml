@@ -51,4 +51,8 @@ networks:
       dweb-ap-33: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  dweb-ap-33: 44-40-17
+  dweb-ap-33: 44-40-15
+
+location__ssh_keys__to_merge:
+  - comment: esther
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMm88uBCzRA++SaZXD7nJTC7LyO/oLHRxv2rN4kmp6EI infrared@thnk
