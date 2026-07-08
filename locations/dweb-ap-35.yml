@@ -51,4 +51,4 @@ networks:
       dweb-ap-35: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  dweb-ap-35: 36-40
+  dweb-ap-35: 60-40
