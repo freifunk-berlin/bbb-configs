@@ -94,8 +94,10 @@ networks:
       dweb-core: 1
       dweb-cloud: 2
       dweb-app-srv: 3
+      dweb-ptp-4: 4
+      dweb-ptp-5: 5
       dweb-sw-11: 11 # netpower 16p Resilience Base
-      dweb-sw-12: 12 # netpower 16p 
+      dweb-sw-12: 12 # netpower 16p
       dweb-sw-13: 13 # netpower 16p Camping
       dweb-sw-14: 14 # netpower 16p Mesh Nest
       dweb-sw-15: 15 # netpower 16p Hackers Lab
