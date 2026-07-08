@@ -22,6 +22,23 @@ protocol direct {
 	ipv4;
 }
 
+{% set dual_prefix_networks = networks | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | selectattr('freifunk_access', 'defined') | selectattr('freifunk_access') | selectattr('ipv6_subprefix', 'defined') | list %}
+{% if dual_prefix_networks | length > 0 %}
+# These networks have two IPv6 prefixes: one delegated live from the ISP (for internet
+# access) and one carved out of our own ipv6_prefix (so the mesh can reach them, see
+# network.j2's ip6addr and bird's babel export filter above). Traffic sourced from the
+# latter must never take the internet exit - only the ISP-delegated source may.
+protocol static {
+	ipv6 sadr {
+		table v6_main;
+	};
+{% for nw in dual_prefix_networks %}
+  {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', nw['ipv6_subprefix']) %}
+	route ::/0 from {{ subprefix }} reject;
+{% endfor %}
+}
+{% endif %}
+
 protocol babel {
 	randomize router id yes;
 	ipv6 sadr {
@@ -66,7 +83,21 @@ protocol babel {
 {% endfor %}
 			accept;
 		};
-		export where source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]; # Readvertise learned routes and advertise local networks from 10/8
+{% set no_mesh_prefixes = [] %}
+{% for nw in networks %}
+  {% if nw.get('direct_internet') and not nw.get('freifunk_access') %}
+    {% set _ = no_mesh_prefixes.append(nw['prefix']) %}
+  {% endif %}
+{% endfor %}
+		export filter {
+{% if no_mesh_prefixes | length > 0 %}
+			# direct_internet networks without freifunk_access don't route through
+			# the mesh at all (see firewall.j2) - don't announce them into babel either.
+			if net ~ [ {{ no_mesh_prefixes | join(', ') }} ] then reject;
+{% endif %}
+			if source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ] then accept; # Readvertise learned routes and advertise local networks from 10/8
+			reject;
+		};
 	};
 
 	# Mesh interfaces

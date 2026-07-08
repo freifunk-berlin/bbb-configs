@@ -37,9 +37,29 @@ config interface 'loopback'
   {% include './common/config/swconfig.network.inc' %}
 {% endif %}
 
+{% if dsl is defined and role == 'corerouter' %}
+config atm-bridge 'atm'
+	option vpi '{{ dsl.atm_vpi }}'
+	option vci '{{ dsl.atm_vci }}'
+	option encaps '{{ dsl.atm_encaps }}'
+	option payload '{{ dsl.atm_payload }}'
+	option nameprefix 'dsl'
+
+config dsl 'dsl'
+	option annex '{{ dsl.annex }}'
+	option tone '{{ dsl.tone }}'
+
+{% endif %}
 
 {% for network in networks %}
   {% set name = libnetwork.getUciIfname(network) %}
+  {# uplink_mode: none means tunspace runs registration/tunnel directly in the root namespace,
+     relying on this interface already having a working route there - only proto pppoe wires
+     that up today. Fail loudly on other combinations instead of silently emitting proto 'none'. #}
+  {% set is_owned_uplink = role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') == 'none' %}
+  {% if role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_proto') == 'pppoe' and network.get('uplink_mode') != 'none' %}
+{{ undef("network '" ~ name ~ "': uplink_proto: pppoe requires uplink_mode: none (PPPoE can only be dialed in the root namespace); got uplink_mode=" ~ (network.get('uplink_mode', 'unset') | string)) }}
+  {% endif %}
 
   {%- if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
      or name in libnetwork.getWirelessNetworks() | from_json
@@ -78,15 +98,43 @@ config interface '{{ name }}'
     {% elif role == 'corerouter' and network['role'] == 'mesh' %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] }}'
+    {% elif is_owned_uplink %}
+      {% if network.get('uplink_proto') == 'pppoe' %}
+	option proto 'pppoe'
+	option username '{{ network['pppoe_username'] }}'
+	option password '{{ network['pppoe_password'] }}'
+	option ipv6 '1'
+      {% else %}
+{{ undef("network '" ~ name ~ "': uplink_mode: none currently only supports uplink_proto: pppoe; got uplink_proto=" ~ (network.get('uplink_proto', 'unset') | string)) }}
+      {% endif %}
     {% else %}
 	option proto 'none'
     {% endif %}
-    {% if role == 'corerouter' and ipv6_prefix is defined %}
+    {% if role == 'corerouter' and network.get('direct_internet') %}
+	{# IPv6 for internet access is delegated live from whatever prefix the uplink receives
+	   from the ISP (see the uplink's 'wan6'/reqprefix below), not carved out of our own
+	   internal ipv6_prefix. #}
+	option ip6assign '64'
+      {% if network.get('freifunk_access') and 'ipv6_subprefix' in network and ipv6_prefix is defined %}
+	{# A second address from our own ipv6_prefix, purely so this network is reachable over
+	   the mesh (see bird.conf.j2's SADR route, which stops this specific source prefix from
+	   ever being routed out to the internet - only the ip6assign'd one above can do that). #}
+        {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
+	option ip6addr '{{ subprefix | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}/64'
+      {% endif %}
+    {% elif role == 'corerouter' and ipv6_prefix is defined %}
       {% if 'ipv6_subprefix' in network %}
         {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
 	option ip6addr '{{ subprefix | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
       {% endif %}
     {% endif %}
+  {% endif %}
+
+  {% if is_owned_uplink and network.get('uplink_proto') == 'pppoe' %}
+config interface '{{ name }}6'
+	option device '@{{ name }}'
+	option proto 'dhcpv6'
+	option reqprefix 'auto'
   {% endif %}
 
   {% if libnetwork.isPortNeeded(network) | from_json and libnetwork.isBridgeNeeded(network) | from_json %}

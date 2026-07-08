@@ -10,9 +10,17 @@
     {% set uplink_mode = 'passthru' %}
     {% set uplink_mac = libnetwork.generateDeterministicMAC(inventory_hostname ~ "-tunspace-wlan") %}
   {% else %}
-    {% set uplink_netns = uplink['name'] if 'name' in uplink else 'uplink' %}
-    {% set uplink_ifname = libnetwork.getIfname(uplink) %}
     {% set uplink_mode = uplink['uplink_mode'] if 'uplink_mode' in uplink else 'bridge' %}
+    {% if uplink_mode == 'none' %}
+      {# uplink already has a working default route in the root namespace (e.g. own PPPoE line) -
+         no namespace is ever created; uplink_ifname is only used by /etc/init.d/tunspace to wait
+         for the UCI logical interface to come up before starting. #}
+      {% set uplink_netns = '' %}
+      {% set uplink_ifname = libnetwork.getUciIfname(uplink) %}
+    {% else %}
+      {% set uplink_netns = uplink['name'] if 'name' in uplink else 'uplink' %}
+      {% set uplink_ifname = libnetwork.getIfname(uplink) %}
+    {% endif %}
     {% set uplink_mac = libnetwork.generateDeterministicMAC(inventory_hostname ~ "-tunspace") %}
   {% endif %}
   {% set uplink_ipv4 = uplink.get('uplink_ipv4', '') %}
