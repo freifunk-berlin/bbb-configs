@@ -97,8 +97,8 @@ networks:
       dweb-ptp-4: 4
       dweb-ptp-5: 5
       dweb-sw-11: 11 # netpower 16p Resilience Base
-      dweb-sw-12: 12 # netpower 16p The Seebed
-      dweb-sw-13: 13 # netpower 16p Camping
+      dweb-sw-12: 12 # netpower 16p Solidarity Station (22)
+      dweb-sw-13: 13 # netpower 16p Camping (Behind Tent 61)
       dweb-sw-14: 14 # netpower 16p Mesh Nest
       dweb-sw-15: 15 # netpower 16p Hackers Lab
       dweb-sw-16: 16 # netpower 16p SPARE
