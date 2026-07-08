@@ -1,7 +1,7 @@
 ---
 
 location: dweb-ap-46
-location_nice: table
+location_nice: Camping (Behind Tent 52)
 latitude: 52.497459
 longitude: 13.427857
 community: berlin
@@ -51,4 +51,4 @@ networks:
       dweb-ap-46: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  dweb-ap-46: 44-40
+  dweb-ap-46: 44-40-17

@@ -51,4 +51,4 @@ networks:
       dweb-ap-42: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  dweb-ap-42: 149-40
+  dweb-ap-42: 149-40-17
