@@ -467,6 +467,17 @@ An optional configuration parameter can be added to any non-tunnel interface to 
 
 **WARNING:** This is made ineffective if [flow offloading](#flow-offloading) is enabled.
 
+By default this installs [`qos-scripts`](https://github.com/openwrt/packages/tree/master/net/qos-scripts) (a legacy HTB-based shaper). To use [`qosify`](https://github.com/openwrt/qosify) instead - a maintained CAKE + eBPF-based shaper with DSCP classification and per-link overhead compensation, recommended for new links - add `qos_engine: qosify`:
+
+```yml
+  - vid: 50
+    role: uplink
+    ingress: 150
+    egress: 50
+    qos_engine: qosify
+    qosify_overhead_type: pppoe-llcsnap   # optional, defaults to 'none' - see qosify's overhead_type
+```
+
 ### ssh-keys
 
 By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys use this format:

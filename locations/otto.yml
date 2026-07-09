@@ -54,6 +54,9 @@ networks:
     uplink_proto: pppoe
     pppoe_username: "file:/root/pppoe_user"
     pppoe_password: "file:/root/pppoe_pass"
+    qos_engine: qosify
+    ingress: 85
+    egress: 36
 
   # Carries the public Freifunk SSID's traffic into the mesh backbone over
   # the VDSL uplink above.
