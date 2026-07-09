@@ -20,6 +20,14 @@ hosts:
     int_port: eth1
 
 snmp_devices:
+  - hostname: dweb-ptp-4
+    address: 10.248.120.4
+    snmp_profile: routeros
+
+  - hostname: dweb-ptp-5
+    address: 10.248.120.5
+    snmp_profile: routeros
+
   - hostname: dweb-sw-11
     address: 10.248.120.11
     snmp_profile: swos
