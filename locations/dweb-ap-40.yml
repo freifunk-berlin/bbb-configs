@@ -20,6 +20,7 @@ hosts:
         chmod +x /etc/librenms/distro
         uci set network.vlan_40.ports=''
         uci commit network; reload_config
+        uci set wireless.radio0.cell_density=1
 
 ipv6_prefix: 2001:bf7:790:2e00::/56
 
@@ -51,7 +52,7 @@ networks:
       dweb-ap-40: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  dweb-ap-40: 132-40-15
+  dweb-ap-40: 132-40-17
 
 location__ssh_keys__to_merge:
   - comment: esther
