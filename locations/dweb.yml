@@ -181,13 +181,15 @@ networks:
     wireguard_port: 51821
 
   # Stub network so eth0 is brought up and we get link-local IPv6 connectivity
-  - vid: 99
+  - vid: 13
     untagged: true
     ifname: eth0
     role: ext
     name: stub
     prefix: 10.248.120.67/32
-    ipv6_subprefix: -99
+    ipv6_subprefix: -13
+    assignments:
+      dweb-core: 1
 
 location__ssh_keys__to_merge:
   - comment: esther
