@@ -21,6 +21,7 @@ hosts:
         uci set network.vlan_40.ports=''
         uci commit network; reload_config
         uci set wireless.radio0.cell_density=1
+        uci commit wireless; wireless reload
 
 ipv6_prefix: 2001:bf7:790:2f00::/56
 
