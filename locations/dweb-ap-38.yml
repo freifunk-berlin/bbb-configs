@@ -13,7 +13,7 @@ hosts:
   - hostname: dweb-ap-38
     role: corerouter
     model: "cudy_ap3000outdoor-v1"
-    wireless_profile: dweb
+    wireless_profile: dweb_with_24
     host__rclocal__to_merge:
       - |
         chmod +x /etc/librenms/*.sh
@@ -51,7 +51,9 @@ networks:
       dweb-ap-38: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  dweb-ap-38: 116-40-15
+  dweb-ap-38: 116-40-13
+location__channel_assignments_11g_standard__to_merge:
+  dweb-ap-38: 11-20-10
 
 location__ssh_keys__to_merge:
   - comment: esther

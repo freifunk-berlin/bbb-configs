@@ -154,3 +154,12 @@ all__wireless_profiles__to_merge:
 #       radio: [11a_standard, 11g_standard]
 #        ifname_hint: ffowe
 #        ieee80211w: 2
+
+  - name: dweb_with_24
+    ifaces:
+      - mode: ap
+        ssid: dweb.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
