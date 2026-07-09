@@ -161,5 +161,12 @@ all__wireless_profiles__to_merge:
         ssid: dweb.freifunk.net
         encryption: none
         network: dhcp
-        radio: [11a_standard, 11g_standard]
+        radio: [11a_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: dweb.freifunk.net-2.4g
+        encryption: none
+        network: dhcp
+        radio: [11g_standard]
         ifname_hint: ff
