@@ -46,6 +46,7 @@ all_collectd__packages__to_merge:
   - collectd-mod-network
   - collectd-mod-ping
   - collectd-mod-uptime
+  - collectd-mod-exec
 
 all__disabled_services__to_merge:
   - "olsrd6"

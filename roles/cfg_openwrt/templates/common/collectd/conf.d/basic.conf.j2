@@ -1,3 +1,8 @@
+LoadPlugin exec
+<Plugin exec>
+        Exec "nobody" "/tmp/iwinfo_wifi_chan_freq.sh" "wlan5-ff"
+</Plugin>
+
 {% if 'collectd-mod-load' in packages %}
 LoadPlugin load
 {% endif %}
