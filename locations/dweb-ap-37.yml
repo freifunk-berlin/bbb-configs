@@ -20,6 +20,8 @@ hosts:
         chmod +x /etc/librenms/distro
         uci set network.vlan_40.ports=''
         uci commit network; reload_config
+        chmod +x /etc/iwinfo_wifi_chan_freq.sh
+        chown nobody:nogroup /etc/iwinfo_wifi_chan_freq.sh
 
 ipv6_prefix: 2001:bf7:790:2b00::/56
 

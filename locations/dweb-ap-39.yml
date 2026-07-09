@@ -20,6 +20,8 @@ hosts:
         chmod +x /etc/librenms/distro
         uci set network.vlan_40.ports=''
         uci commit network; reload_config
+        chmod +x /etc/iwinfo_wifi_chan_freq.sh
+        chown nobody:nogroup /etc/iwinfo_wifi_chan_freq.sh
         uci set wireless.radio0.cell_density=2
         uci commit wireless; wireless reload
 
