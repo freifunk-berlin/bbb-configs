@@ -22,11 +22,11 @@ hosts:
 snmp_devices:
   - hostname: dweb-ptp-4
     address: 10.248.120.4
-    snmp_profile: routeros
+    snmp_profile: af60
 
   - hostname: dweb-ptp-5
     address: 10.248.120.5
-    snmp_profile: routeros
+    snmp_profile: af60
 
   - hostname: dweb-sw-11
     address: 10.248.120.11
