@@ -96,7 +96,7 @@ location__wireless_profiles__to_merge:
         ieee80211w: 2
 
       - mode: ap
-        ssid: lab.freifunk.net
+        ssid: test-lab
         encryption: psk2
         key: "file:/root/wifi_pass"
         network: lab
