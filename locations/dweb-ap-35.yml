@@ -1,9 +1,9 @@
 ---
 
 location: dweb-ap-35
-location_nice: table
-latitude: 52.497459
-longitude: 13.427857
+location_nice: registration
+latitude: 52.117034
+longitude: 12.406221
 community: berlin
 
 location__packages__to_merge:
