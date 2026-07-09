@@ -52,6 +52,10 @@ snmp_devices:
     address: 10.248.120.16
     snmp_profile: swos
 
+  - hostname: dweb-sw-19
+    address: 10.248.120.19
+    snmp_profile: swos
+
 # ROUTER: 10.248.120.0/23
 # --MGMT: 10.248.120.0/27
 # --MGMT-APS: 10.248.120.32/27
@@ -100,14 +104,15 @@ networks:
       dweb-app-srv: 3
       dweb-ptp-4: 4
       dweb-ptp-5: 5
-      dweb-sw-11: 11 # netpower 16p Resilience Base
+      dweb-sw-11: 11 # netpower 16p Resilience Base (10)
       dweb-sw-12: 12 # netpower 16p Solidarity Station (22)
       dweb-sw-13: 13 # netpower 16p Camping (Behind Tent 61)
       dweb-sw-14: 14 # netpower 16p Mesh Nest
-      dweb-sw-15: 15 # netpower 16p Hackers Lab
+      dweb-sw-15: 15 # netpower 16p Chaos Infusion
       dweb-sw-16: 16 # netpower 16p SPARE
       dweb-sw-17: 17 # CSS610
       dweb-sw-18: 18 # unifi
+      dweb-sw-19: 19 # netpower 16p Hackers Lab
 
 #      dweb-ap-32: 32
 #      dweb-ap-33: 33
