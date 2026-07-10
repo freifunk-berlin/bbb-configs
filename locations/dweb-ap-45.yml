@@ -25,6 +25,8 @@ hosts:
         uci commit network; reload_config
         chmod +x /etc/iwinfo_wifi_chan_freq.sh
         chown nobody:nogroup /etc/iwinfo_wifi_chan_freq.sh
+        uci set wireless.radio0.cell_density=3
+        uci commit wireless; wireless reload
 
 ipv6_prefix: 2001:bf7:790:3300::/56
 
