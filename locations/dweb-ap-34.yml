@@ -13,6 +13,7 @@ hosts:
   - hostname: dweb-ap-34
     role: corerouter
     model: "cudy_ap3000outdoor-v1"
+    openwrt_version: snapshot
     wireless_profile: dweb
     host__disabled_services__to_merge:
       - bgpdisco
