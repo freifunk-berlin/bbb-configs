@@ -14,6 +14,8 @@ hosts:
     role: corerouter
     model: "cudy_ap3000outdoor-v1"
     wireless_profile: dweb
+    host__disabled_services__to_merge:
+      - bgpdisco
     host__rclocal__to_merge:
       - |
         chmod +x /etc/librenms/*.sh
