@@ -27,6 +27,7 @@ networks:
     name: mesh_scharni
     prefix: 10.31.52.237/32
     ipv6_subprefix: -3
+    mesh_type: apup
     mesh_ap: colbe15-ap1
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -93,10 +94,8 @@ location__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard]
         ifname_hint: home
 
-      - mode: mesh
-        mesh_id: Mesh-Freifunk-Berlin
+      - mode: apup
+        ssid: Mesh-Freifunk-Berlin
+        encryption: none
         radio: [11a_standard, 11g_standard]
-        mcast_rate: 12000
-        mesh_fwding: 0
-        mesh_nolearn: 1
         ifname_hint: mesh

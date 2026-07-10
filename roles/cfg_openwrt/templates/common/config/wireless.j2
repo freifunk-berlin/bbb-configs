@@ -75,7 +75,7 @@ config wifi-device '{{ wd_id }}'
 
   {% for iface in wd_ifaces %}
     {% set mesh_net = false %}
-    {% if iface['mode'] == 'mesh' %}
+    {% if iface['mode'] in ['mesh', 'apup'] %}
       {% set mesh_nets = networks | selectattr('role','defined') | selectattr('role','equalto','mesh')
          | selectattr('mesh_ap','defined') | selectattr('mesh_ap','equalto',inventory_hostname)
          | selectattr('mesh_radio','equalto', wd['name']) | selectattr('mesh_iface','equalto',iface['ifname_hint']) %}
@@ -85,7 +85,7 @@ config wifi-device '{{ wd_id }}'
     {% endif %}
 
     {# On the core router with a wireless uplink, skip mesh on radios used for that uplink - both the STA and mesh would try to set the channel, whoever succeeds first defines it, making the configuration unreliable. This is documented in DEVELOPER.md. #}
-    {% if iface['mode'] == 'ap' or (iface['mode'] == 'mesh' and mesh_net and not (role == 'corerouter' and has_wireless_uplink)) %}
+    {% if iface['mode'] == 'ap' or (iface['mode'] in ['mesh', 'apup'] and mesh_net and not (role == 'corerouter' and has_wireless_uplink)) %}
 config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
 	option device '{{ wd_id }}'
     {% if 'network' in iface %}
@@ -93,7 +93,7 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
     {% endif %}
 	option ifname '{{ wd['ifname_hint'] }}-{{ iface['ifname_hint']|default('if' + loop.index0|string) }}'
     {% if 'mode' in iface %}
-	option mode '{{ iface['mode'] }}'
+	option mode '{{ 'ap' if iface['mode'] == 'apup' else iface['mode'] }}'
     {% endif %}
     {% if 'encryption' in iface %}
 	option encryption '{{ iface['encryption'] }}'
@@ -143,6 +143,18 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
 	option mcast_rate '{{ iface['mcast_rate'] }}'
       {% endif %}
 	option network '{{ (mesh_net['name'] if mesh_net['name'] | length <= 15) | mandatory('The generated inteface name exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') }}'
+    {% endif %}
+    {% if iface['mode'] == 'apup' %}
+      {% if 'ssid' in iface %}
+	option ssid '{{ iface['ssid'] }}'
+      {% endif %}
+      {% if 'hidden' in iface %}
+	option hidden '{{ iface['hidden']|int }}'
+      {% endif %}
+	list hostapd_bss_options 'apup=1'
+	{# apup_peer_ifname_prefix is intentionally NOT set: the default hostapd naming
+	   "{iface}.sta{aid}" (e.g. phy0-mesh.sta1) is what bird uses as "phy0-mesh.sta*" #}
+	option network '{{ (mesh_net['name'] if mesh_net['name'] | length <= 15) | mandatory('The generated interface name exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') }}'
     {% endif %}
     {% endif %}
   {% endfor %}

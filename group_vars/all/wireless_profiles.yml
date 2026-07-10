@@ -137,3 +137,71 @@ all__wireless_profiles__to_merge:
       #   radio: [11a_standard, 11g_standard]
       #   ifname_hint: ffowe
       #   ieee80211w: 2
+
+  # APuP (Access Point Micro Peering) profiles
+  # APuP uses standard AP mode with 4-address WDS peering - all APs share the same SSID
+  # and hostapd dynamically creates per-peer interfaces (e.g. phy0-mesh.sta0, phy0-mesh.sta1).
+  # These peer interfaces are fed to Babel for routing. No kernel/driver changes required,
+  # only AP mode + 4-address mode support needed.
+  # To use: set wireless_profile to one of these and add mesh_type: apup to mesh network definitions.
+
+  - name: mesh_only_apup
+    ifaces:
+      - mode: apup
+        ssid: Mesh-Freifunk-Berlin
+        encryption: none
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        ifname_hint: mesh
+
+  - name: freifunk_default_apup
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 2
+
+      - mode: apup
+        ssid: Mesh-Freifunk-Berlin
+        encryption: none
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        ifname_hint: mesh
+
+  - name: freifunk_fw_apup
+    ifaces:
+      - mode: ap
+        ssid: fuerstenwalde.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: apup
+        ssid: Mesh-Freifunk
+        encryption: none
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        ifname_hint: mesh
+
+  - name: freifunk_hacrafu_apup
+    ifaces:
+      - mode: ap
+        ssid: freifunk.hacrafu.de
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: apup
+        ssid: Mesh-Freifunk-Berlin
+        encryption: none
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        ifname_hint: mesh
