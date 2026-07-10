@@ -4,7 +4,7 @@ brand_nice: Ubiquiti
 model_nice: Powerbeam M5
 version_nice: XW
 
-openwrt_version: 23.05-SNAPSHOT
+openwrt_version: 23.05.6
 
 int_port: eth0
 

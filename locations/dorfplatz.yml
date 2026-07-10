@@ -10,7 +10,7 @@ community: berlin
 hosts:
   - hostname: dorfplatz-core
     role: corerouter
-    model: "siemens_ws-ap3610"
+    model: "mikrotik_routerboard-750gr3"
     wireless_profile: freifunk_default
 
   - hostname: dorfplatz-ap1
@@ -27,7 +27,7 @@ hosts:
 
   - hostname: dorfplatz-ap3
     role: ap
-    model: "tplink_eap225-outdoor-v1"
+    model: "cudy_ap3000outdoor-v1"
 
   - hostname: dorfplatz-keimzelle
     role: ap
@@ -42,6 +42,14 @@ hosts:
     model: "siemens_ws-ap3610"
 
   - hostname: dorfplatz-ap6
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: dorfplatz-ap7
+    role: ap
+    model: "siemens_ws-ap3610"
+
+  - hostname: dorfplatz-ap8
     role: ap
     model: "siemens_ws-ap3610"
 
@@ -108,6 +116,8 @@ networks:
       dorfplatz-ap4: 10
       dorfplatz-ap5: 9
       dorfplatz-ap6: 8
+      dorfplatz-ap7: 6
+      dorfplatz-ap8: 7
 
 location__channel_assignments_11a_standard__to_merge:
   dorfplatz-ap1: 36-20

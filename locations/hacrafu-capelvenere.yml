@@ -10,15 +10,18 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-capelvenere
     role: corerouter
-    model: "cudy_wr3000-v1"
+    model: "cudy_wr3000h-v1"
     wireless_profile: freifunk_hacrafu
-    # wifi_roaming: true
     host__rclocal__to_merge:
       - |
-        uci set network.vlan_40.ports='lan1:t lan2:t lan3:u'
+        uci set network.vlan_22.ports='lan1:t lan2:t lan3:t lan4:t'
+        uci set network.vlan_23.ports='lan1:t lan2:t lan3:t lan4:t'
+        uci set network.vlan_24.ports='lan1:t lan2:t lan3:t lan4:t'
+        uci set network.vlan_25.ports='lan1:t lan2:t lan3:t lan4:t'
+        uci set network.vlan_40.ports='lan1:t lan2:u lan3:u lan4:u'
+        uci set network.vlan_42.ports='lan1:t lan2:t lan3:t lan4:t'
         uci set network.vlan_50.ports='wan:u'
         uci commit network; reload_config
 
@@ -26,18 +29,21 @@ hosts:
     role: ap
     model: "dlink_dap-x1860-a1"
     wireless_profile: freifunk_hacrafu
-    # wifi_roaming: true
+
+  - hostname: hacrafu-capelvenere-range
+    role: ap
+    model: "cudy_ap3000outdoor-v1"
+    wireless_profile: freifunk_hacrafu
 
   - hostname: hacrafu-capelvenere-dungeon
     role: ap
     model: "genexis_pulse-ex400"
-    wireless_profile: freifunk_hacrafu
-    # wifi_roaming: true
+    wireless_profile: freifunk_hacrafu_ap_only
 
 ipv6_prefix: "2001:bf7:850:3a00::/56"
 
-# dhcp      10.248.54.32/27
-# mesh      10.248.50.8/29
+# DHCP      10.248.54.32/27
+# MESH      10.248.50.8/29
 # MGMT      10.248.54.16/29
 # TUNNEL    10.248.50.2/31
 
@@ -58,7 +64,6 @@ networks:
     name: mesh_2g
     prefix: 10.248.50.9/32
     ipv6_subprefix: -21
-    mesh_metric_lqm: ['default 0.8']
     mesh_ap: hacrafu-capelvenere
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -79,41 +84,43 @@ networks:
     name: mesh_2g_dap
     prefix: 10.248.50.11/32
     ipv6_subprefix: -23
-    mesh_metric_lqm: ['default 0.8']
     mesh_ap: hacrafu-capelvenere-dap
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
-  # MESH - 5 GHz 802.11s - dungeon
+  # MESH - 5 GHz 802.11s - range
   - vid: 24
     role: mesh
-    name: mesh_5g_dgn
+    name: mesh_5g_rgn
     prefix: 10.248.50.12/32
     ipv6_subprefix: -24
-    mesh_ap: hacrafu-capelvenere-dungeon
+    mesh_ap: hacrafu-capelvenere-range
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  # MESH - 2.4 GHz 802.11s - dungeon
+  # MESH - 2.4 GHz 802.11s - range
   - vid: 25
     role: mesh
-    name: mesh_2g_dgn
+    name: mesh_2g_rgn
     prefix: 10.248.50.13/32
     ipv6_subprefix: -25
-    mesh_ap: hacrafu-capelvenere-dungeon
+    mesh_ap: hacrafu-capelvenere-range
     mesh_radio: 11g_standard
     mesh_iface: mesh
 
   # DHCP
   - vid: 40
     role: dhcp
-    inbound_filtering: true
+    inbound_filtering: false
     enforce_client_isolation: false
     prefix: 10.248.54.32/27
     ipv6_subprefix: 0
     assignments:
       hacrafu-capelvenere: 1  # 33
-      ffpi: 2                 # 34
+      ffpi: 2  # 34
+      tompi: 3  # 35
+      deb: 4  # 36
+      pi-hacrafu: 5  # 37
 
   # MGMT
   - vid: 42
@@ -123,10 +130,12 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      hacrafu-capelvenere: 1      # 17
+      hacrafu-capelvenere: 1  # 17
       hacrafu-capelvenere-dap: 2  # 18
       hacrafu-capelvenere-dungeon: 3  # 19
-      ffpi: 4                     # 20
+      hacrafu-capelvenere-range: 4  # 20
+      hacrafu-capelvenere-switch-fritz: 5  # 21
+      hacrafu-capelvenere-switch-roof: 6  # 22
 
   # UPLINK
   - vid: 50
@@ -146,17 +155,19 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hacrafu-capelvenere: 36-80
-  hacrafu-capelvenere-dap: 36-80
-  hacrafu-capelvenere-dungeon: 36-80
+  hacrafu-capelvenere: 36-40
+  hacrafu-capelvenere-dap: 44-40
+  hacrafu-capelvenere-range: 36-40
+  hacrafu-capelvenere-dungeon: 44-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hacrafu-capelvenere: 13-40
-  hacrafu-capelvenere-dap: 13-40
-  hacrafu-capelvenere-dungeon: 13-20
+  hacrafu-capelvenere: 13-20
+  hacrafu-capelvenere-dap: 1-20
+  hacrafu-capelvenere-range: 13-20
+  hacrafu-capelvenere-dungeon: 1-20
 
-# only place this ssh-keys
+# only place these ssh-keys
 ssh_keys:
   - comment: Tom
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
@@ -164,3 +175,5 @@ ssh_keys:
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de
   - comment: Peter
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIzevq2nqgb0rBAEEcDEkAIu24aTiWIkem3+59a6h10 HaCraFu Petersilie
+  - comment: Flupsy
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHG1Y5nkEm3yUIF1nQkbO8G2qHgtAz5b5Os9o5hVjyQZ HaCraFu Flupsy

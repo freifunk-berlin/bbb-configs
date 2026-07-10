@@ -1,7 +1,7 @@
 ---
 
 location: hacrafu-eliche
-location_nice: Angerscheune e.V., Dorfpl. 1, 15370 Petershagen
+location_nice: Angerscheune e.V., Dorfplatz 1, 15370 Petershagen
 latitude: 52.52354918402503
 longitude: 13.769907550925465
 contact_name: "Hacken Craften Funken e.V."
@@ -35,7 +35,6 @@ networks:
     name: mesh_5g
     prefix: 10.248.76.126/32
     ipv6_subprefix: -20
-    mesh_metric: 128
     mesh_ap: hacrafu-eliche
     mesh_radio: 11a_standard
     mesh_iface: mesh
@@ -46,8 +45,6 @@ networks:
     name: mesh_2g
     prefix: 10.248.76.127/32
     ipv6_subprefix: -21
-    mesh_metric: 256
-    mesh_metric_lqm: ['default 0.8']
     mesh_ap: hacrafu-eliche
     mesh_radio: 11g_standard
     mesh_iface: mesh
@@ -81,26 +78,22 @@ networks:
     mtu: 1280
     prefix: 10.248.84.160/32
     wireguard_port: 51820
-    mesh_metric: 8192
-    mesh_metric_lqm: ['default 0.4']
 
   - role: tunnel
     ifname: ts_wg1
     mtu: 1280
     prefix: 10.248.84.161/32
     wireguard_port: 51821
-    mesh_metric: 8192
-    mesh_metric_lqm: ['default 0.4']
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hacrafu-eliche: 36-80
+  hacrafu-eliche: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hacrafu-eliche: 13-40
+  hacrafu-eliche: 13-20
 
-# only place this ssh-keys
+# only place these ssh-keys
 ssh_keys:
   - comment: Tom
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
@@ -108,3 +101,5 @@ ssh_keys:
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de
   - comment: Peter
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIzevq2nqgb0rBAEEcDEkAIu24aTiWIkem3+59a6h10 HaCraFu Petersilie
+  - comment: Flupsy
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHG1Y5nkEm3yUIF1nQkbO8G2qHgtAz5b5Os9o5hVjyQZ HaCraFu Flupsy

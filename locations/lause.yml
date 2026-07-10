@@ -12,9 +12,6 @@ hosts:
   - hostname: lause-core
     role: corerouter
     model: ubnt_usw-flex
-    bird__packages__to_merge:
-      - bird3-babelpatch
-      - bird3c
 
   - hostname: lause-ap1
     role: ap
@@ -99,7 +96,7 @@ location__wireless_profiles__to_merge:
         ieee80211w: 2
 
       - mode: ap
-        ssid: lab.freifunk.net
+        ssid: test-lab
         encryption: psk2
         key: "file:/root/wifi_pass"
         network: lab

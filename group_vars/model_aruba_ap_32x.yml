@@ -1,0 +1,21 @@
+---
+target: ipq806x/generic
+brand_nice: Aruba
+model_nice: Aruba AP-32x
+openwrt_version: snapshot
+
+dsa_ports:
+  - eth0
+  - eth1
+
+wireless_devices:
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: VHT
+    path: soc/1b500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
+    ifname_hint: wlan5
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: soc/1b700000.pcie/pci0001:00/0001:00:00.0/0001:01:00.0
+    ifname_hint: wlan2

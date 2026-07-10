@@ -1,0 +1,28 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+config adblock-fast 'config'
+	option enabled '{{ 1 if adblock_enabled | default(false) | bool else 0 }}'
+	option dns '{{ adblock_fast_dns }}'
+	list dnsmasq_instance '*'
+	option force_dns '{{ 1 if adblock_fast_force_dns | default(false) | bool else 0 }}'
+	option gateway_check '{{ adblock_fast_gateway_check }}'
+	option ipv6_enabled '{{ 1 if adblock_fast_ipv6_enabled | default(false) | bool else 0 }}'
+	option parallel_downloads '4'
+	option download_connect_timeout '10'
+	option download_timeout '20'
+	option download_allow_insecure '0'
+	option curl_retry '3'
+	option verbosity '2'
+	option procd_trigger_wan6 '0'
+	option procd_boot_wan_timeout '{{ adblock_fast_procd_boot_wan_timeout }}'
+	option heartbeat_domain 'heartbeat.mossdef.org'
+	option heartbeat_sleep_timeout '10'
+	option dnsmasq_sanity_check '1'
+	option update_config_sizes '0'
+{% for feed in adblock_fast_feeds | default([]) %}
+
+config file_url
+	option name '{{ feed['name'] }}'
+	option url '{{ feed['url'] }}'
+	option action '{{ feed['action'] | default('block') }}'
+	option enabled '{{ 1 if feed['enabled'] | default(true) | bool else 0 }}'
+{% endfor %}

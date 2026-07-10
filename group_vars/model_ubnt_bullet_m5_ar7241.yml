@@ -5,7 +5,7 @@ brand_nice: Ubiquiti
 model_nice: Bullet M5
 version_nice: XM
 
-openwrt_version: 23.05-SNAPSHOT
+openwrt_version: 23.05.6
 
 int_port: eth0
 

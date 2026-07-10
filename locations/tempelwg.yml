@@ -6,6 +6,8 @@ longitude: 13.38598
 contacts:
   - "@nick:matrix.riotcat.org"
 
+adblock_enabled: true
+
 hosts:
   - hostname: tempelwg-core
     role: corerouter
