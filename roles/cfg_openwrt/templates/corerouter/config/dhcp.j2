@@ -33,7 +33,7 @@ config domain '{{ host | replace('-', '_') }}_olsr'
 config dhcp 'dhcp_{{ name }}'
 	option ignore '0'
 	option interface '{{ name }}'
-	option ra 'server'
+	option ra 'disabled'
 	option dhcpv6 'disabled'
     {% if network['role'] == 'dhcp' %}
 	option dhcpv4 'server'
