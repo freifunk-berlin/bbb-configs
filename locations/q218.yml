@@ -15,6 +15,11 @@ hosts:
     model: mikrotik_wap-ac
     wireless_profile: freifunk_default
 
+snmp_devices:
+  - hostname: q218-q216_the_second
+    address: 10.248.84.2
+    snmp_profile: routeros
+
 # ROUTER: 10.248.84.0/27
 # --MGMT: 10.248.84.0/29
 # --MESH: 10.248.84.8/29
@@ -23,14 +28,11 @@ hosts:
 ipv6_prefix: 2001:bf7:860:2800::/56
 
 networks:
-  - vid: 20
+  - vid: 10
     role: mesh
-    name: mesh_5g_core
+    name: mesh_q216_2n
     prefix: 10.248.84.8/29
-    ipv6_subprefix: -20
-    mesh_ap: q218-core
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
+    ipv6_subprefix: -10
 
   - vid: 40
     role: dhcp
@@ -51,6 +53,7 @@ networks:
     ipv6_subprefix: 1
     assignments:
       q218-core: 1
+      q218-q216_the_second: 2
 
 location__channel_assignments_11a_standard__to_merge:
   q218-core: 44-20
