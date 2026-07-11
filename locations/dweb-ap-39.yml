@@ -21,8 +21,6 @@ hosts:
       - |
         chmod +x /etc/librenms/*.sh
         chmod +x /etc/librenms/distro
-        uci set network.vlan_40.ports=''
-        uci commit network; reload_config
         chmod +x /etc/iwinfo_wifi_chan_freq.sh
         chown nobody:nogroup /etc/iwinfo_wifi_chan_freq.sh
         uci set wireless.radio0.cell_density=3
@@ -37,7 +35,7 @@ networks:
     prefix: 10.31.202.167/32
     ipv6_subprefix: -30
 
-  - vid: 40
+  - vid: 60
     name: dhcp
     role: dhcp
     prefix: 10.248.129.0/24
