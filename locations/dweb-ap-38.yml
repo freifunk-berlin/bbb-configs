@@ -15,8 +15,6 @@ hosts:
     model: "cudy_ap3000outdoor-v1"
     openwrt_version: snapshot
     wireless_profile: dweb_with_24
-    host__disabled_services__to_merge:
-      - bgpdisco
     host__rclocal__to_merge:
       - |
         chmod +x /etc/librenms/*.sh
