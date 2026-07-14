@@ -23,7 +23,7 @@ hosts:
         uci set network.vlan_50.ports='wan:u'
         uci commit network; reload_config
 
-  - hostname: hacrafu-triangoli-ap  # Trainstation AP (Strausberg Nord)
+  - hostname: hacrafu-triangoli-ap # Trainstation AP (Strausberg Nord)
     role: ap
     model: "cudy_ap3000outdoor-v1"
     wireless_profile: freifunk_hacrafu
@@ -36,7 +36,6 @@ ipv6_prefix: "2001:bf7:850:3800::/56"
 # TUNNEL    10.248.47.150/31
 
 networks:
-
   # MESH - 5 GHz 802.11s
   # - vid: 20
   #   role: mesh

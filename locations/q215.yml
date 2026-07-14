@@ -15,7 +15,6 @@ hosts:
     model: "zyxel_nwa55axe"
     wireless_profile: freifunk_default
 
-
 # ROUTER: 10.248.85.96/27
 # --DHCP: 10.248.85.96/28
 # --MGMT: 10.248.85.112/29

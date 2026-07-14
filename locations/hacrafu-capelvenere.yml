@@ -116,11 +116,11 @@ networks:
     prefix: 10.248.54.32/27
     ipv6_subprefix: 0
     assignments:
-      hacrafu-capelvenere: 1  # 33
-      ffpi: 2  # 34
-      tompi: 3  # 35
-      deb: 4  # 36
-      pi-hacrafu: 5  # 37
+      hacrafu-capelvenere: 1 # 33
+      ffpi: 2 # 34
+      tompi: 3 # 35
+      deb: 4 # 36
+      pi-hacrafu: 5 # 37
 
   # MGMT
   - vid: 42
@@ -130,12 +130,12 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      hacrafu-capelvenere: 1  # 17
-      hacrafu-capelvenere-dap: 2  # 18
-      hacrafu-capelvenere-dungeon: 3  # 19
-      hacrafu-capelvenere-range: 4  # 20
-      hacrafu-capelvenere-switch-fritz: 5  # 21
-      hacrafu-capelvenere-switch-roof: 6  # 22
+      hacrafu-capelvenere: 1 # 17
+      hacrafu-capelvenere-dap: 2 # 18
+      hacrafu-capelvenere-dungeon: 3 # 19
+      hacrafu-capelvenere-range: 4 # 20
+      hacrafu-capelvenere-switch-fritz: 5 # 21
+      hacrafu-capelvenere-switch-roof: 6 # 22
 
   # UPLINK
   - vid: 50

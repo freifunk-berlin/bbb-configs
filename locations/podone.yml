@@ -7,7 +7,6 @@ contacts:
   - pktpls+bbb@systemli.org
 
 hosts:
-
   # Ryzen 5700G, 2x32 GB RAM, Biostar B550T-Silver, 150 W PicoPSU
   # Boot: Samsung PM991 256 GB
   # Storage: Lexar NM790 4 TB, another internal M.2 slot is free
@@ -34,7 +33,6 @@ hosts:
 ipv6_prefix: 2001:bf7:820:3300::/56
 
 networks:
-
   - vid: 20
     role: mesh
     name: mesh_lan

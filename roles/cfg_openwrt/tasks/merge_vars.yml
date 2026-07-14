@@ -1,5 +1,4 @@
 ---
-
 - name: Merge vars
   ansible.builtin.set_fact:
     "{{ item.key }}": "{{ lookup('community.general.merge_variables', '__' + item.key + '__to_merge', pattern_type='suffix', initial_value=item.value) }}"

@@ -19,5 +19,5 @@ rules:
     ignore-shebangs: true
     min-spaces-from-content: 1
   truthy:
-    allowed-values: ['true', 'false']
+    allowed-values: ["true", "false"]
     check-keys: false
