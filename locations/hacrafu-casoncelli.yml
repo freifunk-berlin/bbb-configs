@@ -114,10 +114,10 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      hacrafu-casoncelli: 1  # 153
-      hacrafu-casoncelli-ap: 2  # 154
-      hacrafu-casoncelli-lite: 3  # 155
-      hacrafu-casoncelli-snack: 4  # 156
+      hacrafu-casoncelli: 1 # 153
+      hacrafu-casoncelli-ap: 2 # 154
+      hacrafu-casoncelli-lite: 3 # 155
+      hacrafu-casoncelli-snack: 4 # 156
 
   # Uplink
   - vid: 50

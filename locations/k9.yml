@@ -96,7 +96,7 @@ networks:
       k9-switch-roof: 2 # uisp-s
       k9-sama: 3 # wave nano
       k9-zwingli: 4
-      k9-switch-front-house:: 6 # TP Link SG2210P
+      "k9-switch-front-house:": 6 # TP Link SG2210P
       k9-switch-back-house: 8 # hpe 2520g-poe
       k9-ap-loge: 9 # Aruba AP11
       k9-ap-groessenwahn: 10 # Aruba AP11

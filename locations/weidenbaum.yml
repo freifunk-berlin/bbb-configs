@@ -5,10 +5,10 @@ latitude: 52.54227473545742
 longitude: 13.305438420309441
 altitude: 27
 height: 6
-contact_nickname: 'wbaum'
+contact_nickname: "wbaum"
 contacts:
-  - 'loeten@buerotiger.de'
-  - '@wbaum:matrix.org'
+  - "loeten@buerotiger.de"
+  - "@wbaum:matrix.org"
 
 hosts:
   - hostname: weidenbaum-core

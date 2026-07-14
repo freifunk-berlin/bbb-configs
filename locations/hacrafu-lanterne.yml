@@ -215,14 +215,14 @@ networks:
     dns: 1
     ipv6_subprefix: 1
     assignments:
-      hacrafu-lanterne: 1        # 65
-      hacrafu-lanterne-ap: 2     # 66
-      hacrafu-lanterne-mesh: 3   # 67
+      hacrafu-lanterne: 1 # 65
+      hacrafu-lanterne-ap: 2 # 66
+      hacrafu-lanterne-mesh: 3 # 67
       hacrafu-lanterne-indoor: 4 # 68
-      hacrafu-lanterne-north: 5  # 69
-      hacrafu-lanterne-east: 6   # 70
-      hacrafu-lanterne-south: 7  # 71
-      hacrafu-lanterne-west: 8   # 72
+      hacrafu-lanterne-north: 5 # 69
+      hacrafu-lanterne-east: 6 # 70
+      hacrafu-lanterne-south: 7 # 71
+      hacrafu-lanterne-west: 8 # 72
 
   # Uplink
   - vid: 50
