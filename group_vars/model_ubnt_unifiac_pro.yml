@@ -15,7 +15,6 @@ model__packages__to_merge:
 switch_ports: 7
 switch_int_port: 0
 switch_ignore_ports: [1, 4, 5, 6]
-
 # Interface, auf dem swconfig arbeitet
 int_port: "eth0"
 

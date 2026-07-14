@@ -74,7 +74,6 @@ networks:
     ingress: 10
     egress: 10
 
-
   - role: tunnel
     ifname: ts_wg0
     mtu: 1280

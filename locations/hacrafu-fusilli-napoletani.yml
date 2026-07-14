@@ -10,7 +10,6 @@ contacts:
   - "freifunk@hacrafu.de"
 
 hosts:
-
   - hostname: hacrafu-fusilli-napoletani
     role: corerouter
     model: "genexis_pulse-ex400"

@@ -1,8 +1,8 @@
 ---
 location: scherer8-abb
 location_nice: Schererstr 8
-latitude: 52.548006693797761
-longitude: 13.366858363151452
+latitude: 52.548006693797760
+longitude: 13.366858363151453
 
 contact_nickname: "Perry"
 contacts:
@@ -74,7 +74,6 @@ ipv6_prefix: "2001:bf7:750:b500::/56"
 # --MESH:  10.230.226.212/32 - meshlan on vlan 211
 # --MESH:  10.230.226.195/32 - 802.11s mesh
 #          10.230.226.196/32 - 802.11s mesh
-
 
 # Disable noping
 dhcp_no_ping: false

@@ -120,7 +120,6 @@ networks:
       nhu-nf-so: 6
       nhu-nf-sw: 7
 
-
 location__channel_assignments_11a_standard__to_merge:
   nhu-nf-n: 44-20
   nhu-nf-so: 36-20
