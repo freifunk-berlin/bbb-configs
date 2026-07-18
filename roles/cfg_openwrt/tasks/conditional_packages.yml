@@ -107,4 +107,15 @@
     packages: "{{ packages + ['qos-scripts'] }}"
   when:
     - networks is defined
-    - networks | selectattr('ingress', 'defined') | count > 0 or networks | selectattr('egress', 'defined') | count > 0
+    - networks | rejectattr('qos_engine', 'defined') | selectattr('ingress', 'defined') | count > 0
+      or networks | rejectattr('qos_engine', 'defined') | selectattr('egress', 'defined') | count > 0
+      or networks | selectattr('qos_engine', 'defined') | rejectattr('qos_engine', 'equalto', 'qosify') | selectattr('ingress', 'defined') | count > 0
+      or networks | selectattr('qos_engine', 'defined') | rejectattr('qos_engine', 'equalto', 'qosify') | selectattr('egress', 'defined') | count > 0
+
+- name: "Add qosify support if configured"
+  set_fact:
+    packages: "{{ packages + ['qosify'] }}"
+  when:
+    - networks is defined
+    - networks | selectattr('qos_engine', 'defined') | selectattr('qos_engine', 'equalto', 'qosify') | selectattr('ingress', 'defined') | count > 0
+      or networks | selectattr('qos_engine', 'defined') | selectattr('qos_engine', 'equalto', 'qosify') | selectattr('egress', 'defined') | count > 0

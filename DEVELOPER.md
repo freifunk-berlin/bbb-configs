@@ -339,6 +339,63 @@ qmi:
     pdptype: ipv4
 ```
 
+### uplink via PPPoE/VDSL
+
+For a location that has its own DSL line as the actual internet connection (rather than joining the Freifunk mesh via a neighbor's uplink), the corerouter can dial PPPoE directly. This needs the modem's line parameters declared once at the top level:
+
+```yml
+dsl:
+  annex: j            # as printed on your line/ISP docs, e.g. 'b' for most German VDSL lines
+  tone: b
+  atm_vpi: 1
+  atm_vci: 32
+  atm_encaps: llc
+  atm_payload: bridged
+```
+
+and an uplink network with `uplink_proto: pppoe`:
+
+```yml
+networks:
+  - role: uplink
+    name: wan
+    ifname: dsl0               # the modem's virtual ethernet-like device
+    untagged: true
+    uplink_mode: none           # see below
+    uplink_proto: pppoe
+    pppoe_username: "file:/root/pppoe_user"
+    pppoe_password: "file:/root/pppoe_pass"
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.203.126/32
+    wireguard_port: 51820
+```
+
+This dials a single PPPoE session in the root namespace (`config interface 'wan'`), giving the router a real, usable default route there. Unlike the LTE/wireless uplink patterns, `uplink_mode: none` tells tunspace not to create a separate namespace or macvlan clone at all — the WireGuard tunnel to the Freifunk backbone (and any registration handshake with a gateway) uses that same root-namespace route directly. This only works because the DSL line is fully owned by this router; do not use `uplink_mode: none` for a borrowed/foreign uplink (neighbor's wifi, etc.), since that would let ordinary mesh traffic leak onto it un-tunneled - use `bridge`/`direct`/`passthru` for those instead.
+
+A `dhcp` or `private`-style network can then be routed directly out over this same PPPoE connection instead of through the mesh, by setting `direct_internet: true`:
+
+```yml
+  - vid: 41
+    role: dhcp
+    name: private
+    prefix: 10.31.203.64/27
+    inbound_filtering: true
+    enforce_client_isolation: true
+    no_corerouter_dns_record: true
+    direct_internet: true       # NAT (v4) / route (v6) straight out the uplink instead of into the freifunk/mesh zone
+    freifunk_access: true       # optional: also allow this network to reach freifunk mesh resources
+    assignments:
+      otto-core: 1
+```
+
+IPv4 for a `direct_internet` network is masqueraded out the uplink (there's no delegated IPv4 space on a residential PPPoE line). IPv6 instead gets `ip6assign '64'`, carving a real routed `/64` out of whatever prefix the uplink's `wan6` interface receives via `reqprefix 'auto'` - not masqueraded, and not taken from this location's own internal `ipv6_prefix` like every other network here.
+
+`freifunk_access: true` adds a `private → freifunk` forwarding rule alongside the `private → wan` one, so clients on this network can also reach resources elsewhere on the Freifunk mesh. It's one-directional like every other `inbound_filtering` network here: freifunk hosts still can't initiate new connections back into this network, only replies to connections it started get through.
+
+This adds a `zone_wan` firewall zone bound to the uplink interface (IPv4 masqueraded, IPv6 routed - see above) with `input` rejected by default since it faces the raw internet, and forwards the network's zone there instead of into `zone_freifunk`.
 
 ### ext
 
@@ -409,6 +466,17 @@ An optional configuration parameter can be added to any non-tunnel interface to 
 ```
 
 **WARNING:** This is made ineffective if [flow offloading](#flow-offloading) is enabled.
+
+By default this installs [`qos-scripts`](https://github.com/openwrt/packages/tree/master/net/qos-scripts) (a legacy HTB-based shaper). To use [`qosify`](https://github.com/openwrt/qosify) instead - a maintained CAKE + eBPF-based shaper with DSCP classification and per-link overhead compensation, recommended for new links - add `qos_engine: qosify`:
+
+```yml
+  - vid: 50
+    role: uplink
+    ingress: 150
+    egress: 50
+    qos_engine: qosify
+    qosify_overhead_type: pppoe-llcsnap   # optional, defaults to 'none' - see qosify's overhead_type
+```
 
 ### ssh-keys
 
