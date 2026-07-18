@@ -26,7 +26,7 @@ hosts:
     role: corerouter
     int_port: eth0
     model: x86-64
-    openwrt_version: 25.12-SNAPSHOT
+    openwrt_version: snapshot
     host__packages__to_merge:
       - kmod-mlx5-core
     host__rclocal__to_merge:
@@ -43,6 +43,7 @@ hosts:
     role: ap
     wireless_profile: hway
     model: zyxel_nwa50ax
+    openwrt_version: snapshot
 
 snmp_devices:
   - hostname: hway-kiehlufer
