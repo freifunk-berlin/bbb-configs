@@ -14,7 +14,7 @@ hosts:
   - hostname: ak36-gw
     role: gateway
     model: "x86-64"
-    openwrt_version: 24.10-SNAPSHOT
+    openwrt_version: 25.12.5
     image_search_pattern: "*-ext4-combined.img*"
     host__packages__to_merge:
       - qemu-ga
@@ -73,6 +73,7 @@ mgmt:
     config: 22 # .150
     monitor: 23 # .151
     unifi: 29 # .157
+    unifi-controller: 29 # .157 two names for the unifi controller
     uisp: 30 # .158
 
 # Mesh Network: 10.31.130.160/27

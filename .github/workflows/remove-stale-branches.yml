@@ -1,0 +1,32 @@
+---
+name: Remove Stale Branches
+
+#
+# Documentation:
+# https://github.com/marketplace/actions/remove-stale-branches
+#
+
+on:
+  schedule:
+    - cron: "23 2,4 * * *" # Run twice each night (some scheduled jobs are skipped by GitHub)
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  remove-stale-branches:
+    name: Remove Stale Branches
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: read
+
+    steps:
+      - uses: fpicalausa/remove-stale-branches@v2.6.1
+        with:
+          exempt-branches-regex: "^(main)$"
+          ignore-branches-with-open-prs: true
+          days-before-branch-stale: 180
+          days-before-branch-delete: 14

@@ -22,7 +22,6 @@ snmp_devices:
     address: 10.248.89.227
     snmp_profile: airos_8
 
-
 ipv6_prefix: "2001:bf7:750:b900::/56"
 
 # reservierte IPs

@@ -11,15 +11,6 @@ hosts:
     role: corerouter
     model: "cudy_ap3000outdoor-v1"
     wireless_profile: freifunk_default
-    host__rclocal__to_merge:
-      - |
-        # Enable legacy rates on 2 GHz to enable meshing with legacy neighbors
-        for radio in $(uci show wireless \
-          | grep ".band='2g'" \
-          | cut -d. -f2); do
-          uci set wireless.$radio.legacy_rates='1'
-        done
-        uci commit wireless; reload_config
 
 ipv6_prefix: "2001:bf7:840:5300::/56"
 

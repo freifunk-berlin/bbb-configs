@@ -94,10 +94,39 @@ run_ssh() {
 	timeout 20 ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -o ConnectTimeout=5 -o ServerAliveInterval=1 -o ServerAliveCountMax=5 "root@$hostname" "$command"
 }
 
+# Function to wait for a host to become reachable or unreachable with timeout
+# Poll the host. If its current state matches the target, we're done. Otherwise, wait and try again.
+wait_for_state() {
+	local hostname="$1"
+	local target="$2"
+	local i=0
+
+	while [ $i -lt 600 ]; do
+		if check_reachability "$hostname"; then
+			[ "$target" = reachable ] && break
+		else
+			[ "$target" = unreachable ] && break
+		fi
+		sleep 1
+		((i++))
+	done
+
+	[ $i -ge 600 ] && {
+		echo "Timeout waiting for $hostname. Aborting."
+		exit 1
+	}
+}
+
 # Function to check memory availability
 check_memory() {
 	local hostname="$1"
-	run_ssh "$hostname" "free | awk 'NR==2 {print \$7}'"
+	local mem
+	mem=$(run_ssh "$hostname" "free | awk 'NR==2 {print \$7}'")
+	if ! [[ "$mem" =~ ^[0-9]+$ ]]; then
+		echo "Unable to determine available memory on $hostname (value: '$mem')" >&2
+		return 1
+	fi
+	echo "$mem"
 }
 
 # Function to check for missing root password
@@ -106,12 +135,7 @@ check_missing_root_password() {
 	local password_field
 
 	# Get the password field of root, or handle if the root user is missing
-	password_field=$(run_ssh "$hostname" "awk -F: '\$1 == \"root\" { print \$2 }' /etc/shadow" 2>/dev/null)
-	local ssh_exit_code=$?
-
-	if [ $ssh_exit_code -ne 0 ]; then
-		return
-	fi
+	password_field=$(run_ssh "$hostname" "awk -F: '\$1 == \"root\" { print \$2 }' /etc/shadow" 2>/dev/null) || return
 
 	if [[ -z "$password_field" || "$password_field" =~ ^(\*|!|)?$ ]]; then
 		MISSING_PASSWORD_DEVICES+=("$hostname")
@@ -124,9 +148,9 @@ reboot() {
 	echo "Rebooting $hostname..."
 	run_ssh "$hostname" "reboot"
 	echo "Waiting for $hostname to become unreachable..."
-	while check_reachability "$hostname"; do sleep 1; done
+	wait_for_state "$hostname" unreachable
 	echo "Waiting for $hostname to become reachable again..."
-	while ! check_reachability "$hostname"; do sleep 1; done
+	wait_for_state "$hostname" reachable
 }
 
 # Loop through each file
@@ -152,11 +176,7 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
 		echo "Hostname $HOSTNAME is accessible"
 
 		# Check memory on remote host once before any flashing steps
-		MEMORY=$(check_memory "$HOSTNAME")
-		if ! [[ "$MEMORY" =~ ^[0-9]+$ ]]; then
-			echo "Unable to determine available memory on $HOSTNAME (value: '$MEMORY'), skipping..."
-			continue
-		fi
+		MEMORY=$(check_memory "$HOSTNAME") || continue
 
 		# Check if device is considered low memory
 		if [ "$MEMORY" -lt $(($(stat -c %s "$FILE_PATH") * 2 / 1024)) ]; then # Less than 2x file size
@@ -169,13 +189,16 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
                 [ -f /etc/init.d/sysntpd ] && /etc/init.d/sysntpd stop; \
                 [ -f /etc/init.d/urngd ] && /etc/init.d/urngd stop; \
                 [ -f /etc/init.d/rpcd ] && /etc/init.d/rpcd stop; \
-                [ -f /etc/init.d/naywatch ] && /etc/init.d/naywatch stop"
+                [ -f /etc/init.d/naywatch ] && /etc/init.d/naywatch stop; \
+                [ -f /etc/init.d/olsrd ] && /etc/init.d/olsrd stop; \
+                [ -f /etc/init.d/bgpdisco ] && /etc/init.d/bgpdisco stop; \
+                rm -f /tmp/mrt_bgpdisco.dump"
 			sleep 20
-			MEMORY=$(check_memory "$HOSTNAME")
+			MEMORY=$(check_memory "$HOSTNAME") || continue
 		fi
 
 		# Check memory on remote host before flashing
-		MEMORY=$(check_memory "$HOSTNAME")
+		MEMORY=$(check_memory "$HOSTNAME") || continue
 		if [ "$MEMORY" -ge $(($(stat -c %s "$FILE_PATH") / 1024 + 1024)) ]; then # File size in KB + 1 MB
 			echo "Memory on $HOSTNAME is sufficient ($MEMORY KB)"
 
@@ -209,12 +232,12 @@ for FILE_PATH in "${SORTED_FILES[@]}"; do
 
 				# Wait for hostname to become unreachable
 				echo "Waiting for $HOSTNAME to become unreachable..."
-				while check_reachability "$HOSTNAME"; do sleep 1; done
+				wait_for_state "$HOSTNAME" unreachable
 
 				# Wait 20 seconds and then wait for hostname to become reachable again
 				echo "Waiting for $HOSTNAME to become reachable again..."
 				sleep 20
-				while ! check_reachability "$HOSTNAME"; do sleep 1; done
+				wait_for_state "$HOSTNAME" reachable
 
 				# Remove local files
 				echo "Removing local files for $NODENAME from $WORK_DIR"

@@ -5,25 +5,16 @@ latitude: 52.54227473545742
 longitude: 13.305438420309441
 altitude: 27
 height: 6
-contact_nickname: 'wbaum'
+contact_nickname: "wbaum"
 contacts:
-  - 'loeten@buerotiger.de'
-  - '@wbaum:matrix.org'
+  - "loeten@buerotiger.de"
+  - "@wbaum:matrix.org"
 
 hosts:
   - hostname: weidenbaum-core
     role: corerouter
     model: "ubnt_unifiac-mesh"
     wireless_profile: freifunk_default
-    host__rclocal__to_merge:
-      - |
-        # Enable legacy rates on 2 GHz to enable meshing with legacy neighbors
-        for radio in $(uci show wireless \
-          | grep ".band='2g'" \
-          | cut -d. -f2); do
-          uci set wireless.$radio.legacy_rates='1'
-        done
-        uci commit wireless; reload_config
 
 snmp_devices:
   - hostname: weidenbaum-bht

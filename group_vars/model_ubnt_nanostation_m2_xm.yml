@@ -1,11 +1,12 @@
 ---
+# This device has been removed in OpenWrt 23.05, only XW is still supported
 override_target: "ubnt_nanostation-m"
 target: ath79/tiny
 brand_nice: Ubiquiti
 model_nice: Nanostation M2
 version_nice: XM
 
-openwrt_version: 23.05-SNAPSHOT
+openwrt_version: 23.05.6
 
 int_port: eth1
 

@@ -3,7 +3,7 @@ target: ath79/generic
 brand_nice: Ubiquiti
 model_nice: UniFi AC Lite
 
-openwrt_version: 23.05-SNAPSHOT
+openwrt_version: 25.12.5
 
 model__packages__to_merge:
   - "-kmod-ath10k-ct -ath10k-firmware-qca988x-ct"

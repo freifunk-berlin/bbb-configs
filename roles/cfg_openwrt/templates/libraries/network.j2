@@ -37,7 +37,7 @@
 {{- 'br-' + getUciIfname(network) -}}
 {% endmacro %}
 
-{# Retrieve the UCI/OpenWRT internal name of a network. #}
+{# Retrieve the UCI/OpenWrt internal name of a network. #}
 {% macro getUciIfname(network) %}
 {{- network['name'] if 'name' in network else network['role'] -}}
 {% endmacro %}

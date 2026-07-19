@@ -11,12 +11,8 @@ role_uplink_gw__packages__to_merge:
   - luci-app-olsr
   - luci-app-olsr-services
   - luci-mod-falter
-  - falter-common
+  - falter-berlin-owm-ucode
   - falter-berlin-gw
-  - luci-app-falter-owm
-  - luci-app-falter-owm-ant
-  - luci-app-falter-owm-cmd
-  - luci-app-falter-owm-gui
   - iptables-mod-ipopt
   - kmod-ipt-ipopt
   - bgpdisco
@@ -31,8 +27,8 @@ role_uplink_gw__packages__to_merge:
   - samplicator
 
 bird__packages__to_merge:
-  - bird2-babelpatch
-  - bird2c
+  - bird3-babelpatch
+  - bird3c
 
 collectd__packages__to_merge:
   - collectd-mod-conntrack

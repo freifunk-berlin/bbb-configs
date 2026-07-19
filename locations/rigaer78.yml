@@ -6,6 +6,8 @@ longitude: 13.464282
 altitude: 56
 community: berlin
 
+adblock_enabled: true
+
 snmp_devices:
   - hostname: rigaer78-sama
     address: 10.31.119.131

@@ -6,14 +6,13 @@ latitude: 52.53207188797019
 longitude: 13.378598767421284
 community: berlin
 
-
 role: ap
 model: "siemens_ws-ap3610"
 hosts:
   - hostname: habersaath-core
     role: corerouter
     model: "linksys_e8450-ubi"
-    openwrt_version: 23.05-SNAPSHOT
+    openwrt_version: 23.05.6
 
   - hostname: habersaath-w-nf-5ghz
     role: ap

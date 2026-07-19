@@ -14,7 +14,7 @@ hosts:
   - hostname: ak36dev-gw
     role: gateway
     model: "x86-64"
-    openwrt_version: 24.10-SNAPSHOT
+    openwrt_version: 25.12.5
     image_search_pattern: "*-ext4-combined.img*"
     host__packages__to_merge:
       - qemu-ga
@@ -24,7 +24,6 @@ hosts:
 # Router: 10.248.91.0/28 2001:bf7:810:2700::/56
 # MGMT:  10.248.91.16/28
 # MESH: 10.248.67.83/29 {as /32}
-
 
 ipv6_prefix: 2001:bf7:810:2700::/56
 
@@ -50,7 +49,6 @@ mesh_links:
     ipv6: 2001:bf7:810:2701::1/128
     mesh_metric: 1024
     ptp: true
-
 
 # OLSR Announce SmartGateway
 sgw: "1000000 1000000"

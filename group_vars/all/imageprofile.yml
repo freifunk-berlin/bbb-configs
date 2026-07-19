@@ -1,6 +1,6 @@
 ---
-# default OpenWRT version to build from unless overridden
-openwrt_version: 25.12-SNAPSHOT
+# default OpenWrt version to build from unless overridden
+openwrt_version: 25.12.5
 
 openwrt_mirror: https://downloads.openwrt.org
 # openwrt_mirror: https://mirror.berlin.freifunk.net/downloads.openwrt.org
@@ -38,6 +38,7 @@ all_luci_base__packages__to_merge:
   - uhttpd-mod-ubus
 
 all_collectd__packages__to_merge:
+  - collectd-mod-cpu
   - collectd-mod-interface
   - collectd-mod-iwinfo
   - collectd-mod-load
