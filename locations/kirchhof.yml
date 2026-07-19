@@ -21,7 +21,7 @@ hosts:
 
   - hostname: kirchhof-nf-hinten
     role: ap
-    model: tplink_eap225-outdoor-v1
+    model: zyxel_nwa50ax
     wireless_profile: kirchhof
 
   - hostname: kirchhof-n-nf-5ghz
