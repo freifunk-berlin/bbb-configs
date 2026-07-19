@@ -35,7 +35,7 @@ leds:
     sysfs: white:wan
     trigger: netdev
     dev: wan
-    mode: link tx rx 
+    mode: link tx rx
   - name: lan1
     sysfs: white:lan-1
     trigger: netdev
