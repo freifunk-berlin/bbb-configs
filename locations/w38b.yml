@@ -17,6 +17,14 @@ hosts:
         # Disable rebind protection for internal hosts
         uci add_list dhcp.@dnsmasq[0].rebind_domain='int.tobias-schwarz.com'
         uci commit dhcp; reload_config
+        # Try to fix https://github.com/openwrt/openwrt/issues/24194
+        ethtool -K eth0 rx off tx off tso off ufo off gso off gro off lro off
+        ethtool -K eth1 rx off tx off tso off ufo off gso off gro off lro off
+        ethtool -K lan1 rx off tx off tso off ufo off gso off gro off lro off
+        ethtool -K lan2 rx off tx off tso off ufo off gso off gro off lro off
+        ethtool -K lan3 rx off tx off tso off ufo off gso off gro off lro off
+        ethtool -K lan4 rx off tx off tso off ufo off gso off gro off lro off
+        ethtool -K lan5 rx off tx off tso off ufo off gso off gro off lro off
   - hostname: w38b-shp
     role: ap
     model: "dlink_covr-x1860-a1"
