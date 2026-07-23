@@ -27,9 +27,15 @@ hosts:
     wireless_profile: ap_only
 
 snmp_devices:
-  - hostname: lausetemp-switch
+
+  - hostname: lausetemp-sw-core
     address: 10.248.106.242
+    snmp_profile: edgeswitch
+
+  - hostname: lausetemp-sw-5
+    address: 10.248.106.246
     snmp_profile: swos_lite
+
 
   - hostname: lausetemp-emma
     address: 10.248.106.243
@@ -74,7 +80,8 @@ networks:
     dns: 1
     assignments:
       lausetemp-core: 1
-      lausetemp-switch: 2
+      lausetemp-sw-core: 2
       lausetemp-emma: 3
       lausetemp-ap1: 4
       lausetemp-ap2: 5
+      lausetemp-sw-5: 6
