@@ -14,6 +14,7 @@ hosts:
     role: corerouter
     model: "cudy_wr3000h-v1"
     wireless_profile: freifunk_hacrafu
+    wifi_roaming: true
     host__rclocal__to_merge:
       - |
         uci set network.vlan_22.ports='lan1:t lan2:t lan3:t lan4:t'
@@ -29,16 +30,19 @@ hosts:
     role: ap
     model: "dlink_dap-x1860-a1"
     wireless_profile: freifunk_hacrafu
+    wifi_roaming: true
 
   - hostname: hacrafu-capelvenere-range
     role: ap
     model: "cudy_ap3000outdoor-v1"
     wireless_profile: freifunk_hacrafu
+    wifi_roaming: true
 
   - hostname: hacrafu-capelvenere-dungeon
     role: ap
     model: "genexis_pulse-ex400"
     wireless_profile: freifunk_hacrafu_ap_only
+    wifi_roaming: true
 
 ipv6_prefix: "2001:bf7:850:3a00::/56"
 
@@ -134,8 +138,8 @@ networks:
       hacrafu-capelvenere-dap: 2 # 18
       hacrafu-capelvenere-dungeon: 3 # 19
       hacrafu-capelvenere-range: 4 # 20
-      hacrafu-capelvenere-switch-fritz: 5 # 21
-      hacrafu-capelvenere-switch-roof: 6 # 22
+      hacrafu-capelvenere-fritz: 5 # 21
+      hacrafu-capelvenere-roof: 6 # 22
 
   # UPLINK
   - vid: 50
