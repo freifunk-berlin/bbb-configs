@@ -19,10 +19,9 @@ ipv6_prefix: "2001:bf7:830:f600::/56"
 # got following prefixes:
 # Router: 10.248.71.64/27
 # --MGMT: 10.248.71.64/30
-# --MESH: 10.248.71.72/30 as /32
-# --UPLK: 10.248.71.76/30 as /32
+# --MESH+UPLK: 10.248.71.68/30 as /32
+# --DHCP: 10.248.71.72/29 (Private DHCP)
 # --DHCP: 10.248.71.80/28
-# --DHCP: 10.248.71.68/30 (Private DHCP)
 
 # Disable noping
 dhcp_no_ping: false
@@ -32,7 +31,7 @@ networks:
   - vid: 20
     role: mesh
     name: mesh_5g
-    prefix: 10.248.71.72/32
+    prefix: 10.248.71.68/32
     ipv6_subprefix: -20
     mesh_ap: shp-core
     mesh_radio: 11a_standard
@@ -42,7 +41,7 @@ networks:
   - vid: 21
     role: mesh
     name: mesh_2g
-    prefix: 10.248.71.73/32
+    prefix: 10.248.71.69/32
     ipv6_subprefix: -21
     mesh_ap: shp-core
     mesh_radio: 11g_standard
@@ -59,7 +58,7 @@ networks:
   - role: tunnel
     ifname: ts_wg0
     mtu: 1280
-    prefix: 10.248.71.76/32
+    prefix: 10.248.71.70/32
     wireguard_port: 51820
 
   # DHCP with filtering and isolation
@@ -78,7 +77,7 @@ networks:
     role: dhcp
     name: shp_private
     inbound_filtering: true
-    prefix: 10.248.71.68/30
+    prefix: 10.248.71.72/29
     ipv6_subprefix: 3
     assignments:
       shp-core: 1
