@@ -1,63 +1,68 @@
 ---
 
-location: dweb-ap-41
-location_nice: Open Social
-latitude: 52.118605
-longitude: 12.405469
+location: kollaps-ap-42
+location_nice: Staging
+# latitude: 52.0
+# longitude: 12.0
 community: berlin
 
-location__packages__to_merge:
-  - snmpd
-
 hosts:
-  - hostname: dweb-ap-41
+  - hostname: kollaps-ap-42
     role: corerouter
     model: "cudy_ap3000outdoor-v1"
     openwrt_version: snapshot
-    wireless_profile: dweb
+    wireless_profile: kollaps
     host__rclocal__to_merge:
       - |
         chmod +x /etc/librenms/*.sh
         chmod +x /etc/librenms/distro
         uci set network.vlan_40.ports=''
-        uci commit network; reload_config
-        chmod +x /etc/iwinfo_wifi_chan_freq.sh
-        chown nobody:nogroup /etc/iwinfo_wifi_chan_freq.sh
+        # uci commit network; reload_config
+        # chmod +x /etc/iwinfo_wifi_chan_freq.sh
+        # chown nobody:nogroup /etc/iwinfo_wifi_chan_freq.sh
         uci set wireless.radio0.cell_density=3
         uci commit wireless; wireless reload
 
-ipv6_prefix: 2001:bf7:790:2f00::/56
+ipv6_prefix: 2001:bf7:790:3000::/56
 
 networks:
   - vid: 30
     role: mesh
     name: mesh_lan_30
-    prefix: 10.31.202.169/32
+    prefix: 10.31.202.170/32
     ipv6_subprefix: -30
 
   - vid: 40
     name: dhcp
     role: dhcp
-    prefix: 10.248.131.0/24
+    prefix: 10.248.132.0/24
     ipv6_subprefix: 0
     inbound_filtering: false
     enforce_client_isolation: false
     assignments:
-      dweb-ap-41: 1
+      kollaps-ap-42: 1
+
+  # kollaps core
+  - vid: 41
+    role: ext
+    name: p2p
+    inbound_filtering: false
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
 
   - vid: 42
     name: mgmt
     role: mgmt
-    prefix: 10.248.120.41/32
+    prefix: 10.248.120.42/32
     ipv6_subprefix: 1
     gateway: 1
     dns: 1
     assignments:
-      dweb-ap-41: 1
+      kollaps-ap-42: 1
 
 location__channel_assignments_11a_standard__to_merge:
-  dweb-ap-41: 140-40-17
+  kollaps-ap-42: 149-40-15
 
 location__ssh_keys__to_merge:
-  - comment: esther
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMm88uBCzRA++SaZXD7nJTC7LyO/oLHRxv2rN4kmp6EI infrared@thnk
+  - comment: Tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de

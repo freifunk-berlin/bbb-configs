@@ -138,14 +138,22 @@ all__wireless_profiles__to_merge:
       #   ifname_hint: ffowe
       #   ieee80211w: 2
 
-  - name: dweb
+  - name: kollaps
     ifaces:
       - mode: ap
-        ssid: dweb.freifunk.net
+        ssid: WIP-kollaps-freifunk
         encryption: none
         network: dhcp
         radio: [11a_standard]
         ifname_hint: ff
+
+      # vlan 41: ext from core
+      - mode: ap
+        ssid: WIP-kollaps-freifunk-p2p
+        encryption: none
+        network: p2p
+        radio: [11a_standard]
+        ifname_hint: ff_p2p
 
 #      - mode: ap
 #        ssid: dweb.freifunk.net
@@ -154,19 +162,3 @@ all__wireless_profiles__to_merge:
 #       radio: [11a_standard, 11g_standard]
 #        ifname_hint: ffowe
 #        ieee80211w: 2
-
-  - name: dweb_with_24
-    ifaces:
-      - mode: ap
-        ssid: dweb.freifunk.net
-        encryption: none
-        network: dhcp
-        radio: [11a_standard]
-        ifname_hint: ff
-
-      - mode: ap
-        ssid: dweb.freifunk.net-2.4g
-        encryption: none
-        network: dhcp
-        radio: [11g_standard]
-        ifname_hint: ff

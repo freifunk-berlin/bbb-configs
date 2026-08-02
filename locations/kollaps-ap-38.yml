@@ -1,0 +1,70 @@
+---
+
+location: kollaps-ap-38
+location_nice: Staging
+# latitude: 52.0
+# longitude: 12.0
+community: berlin
+
+hosts:
+  - hostname: kollaps-ap-38
+    role: corerouter
+    model: "cudy_ap3000outdoor-v1"
+    openwrt_version: snapshot
+    wireless_profile: kollaps
+    host__rclocal__to_merge:
+      - |
+        chmod +x /etc/librenms/*.sh
+        chmod +x /etc/librenms/distro
+        uci set network.vlan_40.ports=''
+        # uci commit network; reload_config
+        # chmod +x /etc/iwinfo_wifi_chan_freq.sh
+        # chown nobody:nogroup /etc/iwinfo_wifi_chan_freq.sh
+        uci set wireless.radio0.cell_density=3
+        uci commit wireless; wireless reload
+
+ipv6_prefix: 2001:bf7:790:2c00::/56
+
+networks:
+  - vid: 30
+    role: mesh
+    name: mesh_lan_30
+    prefix: 10.31.202.166/32
+    ipv6_subprefix: -30
+
+  - vid: 40
+    name: dhcp
+    role: dhcp
+    prefix: 10.248.128.0/24
+    ipv6_subprefix: 0
+    inbound_filtering: false
+    enforce_client_isolation: false
+    assignments:
+      kollaps-ap-38: 1
+
+  # kollaps core
+  - vid: 41
+    role: ext
+    name: p2p
+    inbound_filtering: false
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+
+  - vid: 42
+    name: mgmt
+    role: mgmt
+    prefix: 10.248.120.38/32
+    ipv6_subprefix: 1
+    gateway: 1
+    dns: 1
+    assignments:
+      kollaps-ap-38: 1
+
+location__channel_assignments_11a_standard__to_merge:
+  kollaps-ap-38: 116-40-13
+location__channel_assignments_11g_standard__to_merge:
+  kollaps-ap-38: 11-20-10
+
+location__ssh_keys__to_merge:
+  - comment: Tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
