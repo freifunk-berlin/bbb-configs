@@ -1,27 +1,78 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
 
+{% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list %}
+{% set mesh_networks = networks | selectattr('role', 'equalto', 'mesh') | list %}
+{% set freifunk_ipv4_policy_networks = l3_networks + mesh_networks %}
+
 # Babel inserts into separate route table, add that to lookup list for IPv6
+{% if role == 'corerouter' and ipv6_prefix is defined %}
 config rule6
-	option priority 33000
+	option priority 30000
+	option src '{{ ipv6_prefix }}'
 	option lookup 'babel-src'
 
-# IPv4 Soft Migration by prioritizing Babel over OLSR
+{% endif %}
+
+# IPv4 Freifunk policy routing through Babel
+{% set freifunk_ipv4_policy_count = namespace(value=0) %}
+{% for network in freifunk_ipv4_policy_networks if network.get('prefix') and not network.get('direct_internet') %}
+{% set rule_index = freifunk_ipv4_policy_count.value %}
+{% set freifunk_ipv4_policy_count.value = freifunk_ipv4_policy_count.value + 1 %}
 config rule
-	option priority 33100
+	option priority {{ 30010 + rule_index * 100 }}
+	option src '{{ network['prefix'] }}'
 	option lookup 'babel-ff'
 
+{% if not (bird_only | default(true)) %}
 config rule
-	option priority 33101
+	option priority {{ 30011 + rule_index * 100 }}
+	option src '{{ network['prefix'] }}'
 	option lookup 'olsr-ff'
 
+{% endif %}
 config rule
-	option priority 33200
+	option priority {{ 30020 + rule_index * 100 }}
+	option src '{{ network['prefix'] }}'
 	option lookup 'babel-default'
+
+{% if not (bird_only | default(true)) %}
 config rule
-	option priority 33201
+	option priority {{ 30021 + rule_index * 100 }}
+	option src '{{ network['prefix'] }}'
 	option lookup 'olsr-default'
 
+{% endif %}
+{% endfor %}
+{% if freifunk_ipv4_policy_count.value > 0 %}
+config route 'fail_closed_babel_default'
+	option type 'unreachable'
+	option target '0.0.0.0/0'
+	option table 'babel-default'
+	option metric '32767'
+
+{% endif %}
+{% if role == 'corerouter' and ipv6_prefix is defined %}
+config route6 'fail_closed_babel_src'
+	option type 'unreachable'
+	option target '::/0'
+	option source '{{ freifunk_global_prefix }}'
+	option table 'babel-src'
+	option metric '32767'
+
+config route6 'fail_closed_main_freifunk_v6'
+	option type 'unreachable'
+	option target '{{ freifunk_global_prefix }}'
+	option metric '32767'
+
+{% endif %}
+{% if role == 'corerouter' %}
+config route 'fail_closed_main_freifunk_v4'
+	option type 'unreachable'
+	option target '10.0.0.0/8'
+	option metric '32767'
+
+{% endif %}
 config interface 'loopback'
 	option device 'lo'
 	option proto 'static'
