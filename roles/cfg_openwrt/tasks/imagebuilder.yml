@@ -150,7 +150,7 @@
     src: "{{ feed_key }}"
     dest: "{{ configs_dir }}/etc/apk/keys/falter.custom.pem"
     mode: "preserve"
-  when: "uses_apk is defined and feed_version is defined and eed_key is defined"
+  when: "uses_apk is defined and feed_version is defined and feed_key is defined"
 
 - name: Override compat_version check to bbb-configs exclusive value 9.9
   lineinfile:
