@@ -17,6 +17,15 @@ adblock_lean_raw_block_lists: []
 adblock_lean_dnsmasq_block_lists:
   - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/pro.txt
 adblock_lean_dnsmasq_indexes: "0"
+# "cfg01411c" is UCI's auto-generated anonymous-section ID for the single
+# `config dnsmasq` block dhcp.j2 renders (confirmed live: `uci show dhcp`
+# reports `dhcp.cfg01411c=dnsmasq` on every corerouter today, since they all
+# render that section in the same position). It is NOT a value this project
+# controls - if dhcp.j2 ever gains another dnsmasq-related UCI section ahead
+# of this one, or reorders it, this ID can change and adblock-lean's
+# blocklist mount (see the matching addnmount path in dhcp.j2) will silently
+# stop working with no error. If adblock-lean's block lists stop loading,
+# check `uci show dhcp.@dnsmasq[0]` on the affected router first.
 adblock_lean_dnsmasq_conf_dirs: "/tmp/dnsmasq.cfg01411c.d"
 adblock_lean_min_good_line_count: 180000
 adblock_lean_max_file_part_size_kb: 20000

@@ -397,7 +397,7 @@ Isolation between `direct_internet` networks and Freifunk is structural, not fir
 
 `bird`'s `babel` protocol is bound to `vrf "vrf_freifunk"` on these corerouters, and a dedicated Babel-sourced-only kernel-table export (table 20, avoiding leaking any locally-connected `direct_internet` subnet into the VRF) feeds `vrf_freifunk`'s routing table. This VRF path assumes `bird_only: true` (the default) - it does not have an OLSR-side equivalent.
 
-This adds a `zone_wan` firewall zone bound to the uplink interface (IPv4 masqueraded, IPv6 routed - see above) with `input` rejected by default since it faces the raw internet, and forwards the network's zone there instead of into `zone_freifunk`.
+This adds a `zone_wan` firewall zone bound to the uplink interface (IPv4 masqueraded, IPv6 routed - see above) with `input` rejected by default since it faces the raw internet, and forwards the network's zone there instead of into `zone_freifunk`. That zone also carries an explicit `Allow-DHCPv6` rule (UDP 546) despite the input reject: DHCPv6-PD replies don't match conntrack established/related, because the client's Solicit goes to the `ff02::1:2` multicast group while the server's Advertise/Reply comes from its own unicast address, so the reverse packet never matches the forward flow's tuple. Without the explicit rule, odhcp6c never sees a reply and the `wan6` interface sits pending forever - this is not a redundant exception to remove during cleanup.
 
 ### ext
 
