@@ -66,7 +66,20 @@ protocol babel {
 {% endfor %}
 			accept;
 		};
-		export where source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]; # Readvertise learned routes and advertise local networks from 10/8
+{% set no_mesh_prefixes = [] %}
+{% for nw in networks %}
+  {% if nw.get('direct_internet') %}
+    {% set _ = no_mesh_prefixes.append(nw['prefix']) %}
+  {% endif %}
+{% endfor %}
+		export filter {
+{% if no_mesh_prefixes | length > 0 %}
+			# direct_internet networks use only the ISP uplink and must not be announced as Freifunk client prefixes.
+			if net ~ [ {{ no_mesh_prefixes | join(', ') }} ] then reject;
+{% endif %}
+			if source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ] then accept; # Readvertise learned routes and advertise local networks from 10/8
+			reject;
+		};
 	};
 
 	# Mesh interfaces
@@ -86,6 +99,7 @@ protocol babel {
 }
 
 protocol kernel {
+	kernel table 12;
 	ipv6 sadr {
 		table v6_main;
 		import all;
@@ -96,7 +110,8 @@ protocol kernel {
 
 
 
-# Currently not in use but keep for later purposes
+# Keep Babel IPv4 routes in policy tables so Freifunk-source traffic cannot
+# fall through to direct-internet uplinks in the kernel main table.
 protocol kernel {
 	ipv4 {
 		import none;
@@ -104,7 +119,6 @@ protocol kernel {
 	};
 }
 
-# TODO: Get rid of the following when OLSRD is gone
 protocol kernel {
 	kernel table 10;
 	ipv4 {
