@@ -1,4 +1,5 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
+{% import 'libraries/network.j2' as libnetwork with context %}
 config dnsmasq
 	option domainneeded '1'
 	option localise_queries '1'
@@ -28,7 +29,7 @@ config domain '{{ host | replace('-', '_') }}_olsr'
 {% endfor %}
 
 {% for network in networks | rejectattr('role', 'in', ['uplink', 'wireless_uplink', 'mesh', 'tunnel', 'ext']) %}
-    {% set name = network['name'] if 'name' in network else network['role'] %}
+    {% set name = libnetwork.getUciIfname(network) %}
 
 config dhcp 'dhcp_{{ name }}'
 	option ignore '0'
@@ -55,7 +56,7 @@ config domain 'frei_funk_{{ name }}'
 {% endfor %}
 
 {% for network in networks | selectattr('role','in', ['uplink', 'mesh', 'tunnel']) %}
-    {% set name = network['name'] if 'name' in network else network['role'] %}
+    {% set name = libnetwork.getUciIfname(network) %}
 config dhcp 'dhcp_{{ name }}'
 	option interface '{{ name }}'
 	option ignore '1'
@@ -63,8 +64,9 @@ config dhcp 'dhcp_{{ name }}'
 {% endfor %}
 
 {% for network in networks | selectattr('role','equalto','dhcp') %}
+    {% set name = libnetwork.getUciIfname(network) %}
     {% for assignment in network['assignments'] %}
-config host '{{ assignment.replace("-", "_") }}'
+config host '{{ name }}_{{ assignment.replace("-", "_") }}'
 	option name '{{ assignment }}'
 	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][assignment]) | ansible.utils.ipaddr('address') }}'
     {% endfor %}
