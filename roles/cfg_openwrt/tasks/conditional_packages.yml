@@ -69,6 +69,15 @@
   when:
     - role == 'corerouter'
     - adblock_enabled | default(false) | bool
+    - adblock_provider | default('fast') == 'fast'
+
+- name: "Add adblock-lean support on core-routers"
+  set_fact:
+    packages: "{{ packages + ['-adblock-fast', '-luci-app-adblock-fast', 'adblock-lean'] }}"
+  when:
+    - role == 'corerouter'
+    - adblock_enabled | default(false) | bool
+    - adblock_provider | default('fast') == 'lean'
 
 - name: "Remove or replace packages on low mem and low flash"
   set_fact:

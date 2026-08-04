@@ -476,6 +476,24 @@ By default this installs [`qos-scripts`](https://github.com/openwrt/packages/tre
     qosify_overhead_type: pppoe-llcsnap   # optional, defaults to 'none' - see qosify's overhead_type
 ```
 
+### ad blocking
+
+Corerouters can run DNS-based ad blocking via dnsmasq. It's off by default (`adblock_enabled: false`); enable it per location:
+
+```yml
+adblock_enabled: true
+adblock_provider: lean   # 'fast' (default) or 'lean'
+```
+
+Two mutually exclusive providers are supported, selected by `adblock_provider`:
+
+- **`fast`** (default): [`adblock-fast`](https://github.com/openwrt/packages/tree/master/net/adblock-fast) from the upstream OpenWrt `packages` feed, with its own LuCI app. Tunable via `adblock_fast_dns`, `adblock_fast_force_dns`, `adblock_fast_gateway_check`, `adblock_fast_ipv6_enabled`, `adblock_fast_procd_boot_wan_timeout`, and `adblock_fast_feeds` (a list of `{name, url}` blocklist sources).
+- **`lean`**: [`adblock-lean`](https://github.com/lynxthecat/adblock-lean), packaged in the `falter` feed (`falter-packages/packages/adblock-lean`). That package intentionally ships only the upstream runtime scripts with self-update disabled - bbb-configs owns everything else: `/etc/adblock-lean/config` (rendered from the `adblock_lean_*` variables below), the dnsmasq `addnmount` integration, cron scheduling, and service enablement. See `falter-packages/packages/adblock-lean/README.md` for the package's own update procedure - bumping that package's version can require matching changes to this project's `adblock-lean/config.j2` template if the upstream config format changes.
+
+`adblock_lean_*` variables map directly to `adblock-lean`'s own config keys (see the package's upstream documentation for exact semantics): `adblock_lean_raw_block_lists`, `adblock_lean_dnsmasq_block_lists`, `adblock_lean_dnsmasq_indexes`, `adblock_lean_dnsmasq_conf_dirs` (see the comment above its definition in `group_vars/role_corerouter/general.yml` - this one is fragile, derived from a UCI-internal ID), `adblock_lean_min_good_line_count`, `adblock_lean_max_file_part_size_kb`, `adblock_lean_max_blocklist_file_size_kb`, `adblock_lean_boot_start_delay_s`, and `adblock_lean_cron_schedule`.
+
+Do not set `adblock_provider: lean` without also having the `falter` feed available to the image build (see the feed setup in `roles/cfg_openwrt/tasks/imagebuilder.yml`) - the `adblock-lean` package only exists there, not in upstream OpenWrt's `packages` feed.
+
 ### ssh-keys
 
 By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys use this format:

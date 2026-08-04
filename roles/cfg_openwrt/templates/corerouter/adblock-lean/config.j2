@@ -1,0 +1,64 @@
+{% if adblock_enabled | default(false) | bool and adblock_provider | default('fast') == 'lean' %}
+{# The 'config_format=v11' line below is not a template-authoring comment - it's
+   read directly by adblock-lean's own get_config_format() and must match the
+   CONFIG_FORMAT the packaged init script expects (see CONFIG_FORMAT= near the
+   top of /etc/init.d/adblock-lean). Self-update is disabled in the falter
+   package (see falter-packages/packages/adblock-lean), so nothing will ever
+   auto-migrate this file - bumping the adblock-lean package version upstream
+   can require updating this template (and this line) to match, or the config
+   fails closed at load time (adblock-lean logs an error and stops updating
+   blocklists rather than silently misbehaving). Check falter-packages'
+   packages/adblock-lean/README.md when bumping PKG_VERSION there. #}
+# adblock-lean configuration options
+# config_format=v11
+#
+# Managed by bbb-configs. Do not run the upstream interactive setup on this
+# router; dnsmasq addnmounts and cron policy are rendered by Ansible.
+
+whitelist_mode="0"
+
+raw_block_lists="{{ adblock_lean_raw_block_lists | default([]) | join(' ') }}"
+raw_allow_lists=""
+raw_ipv4_block_lists=""
+
+dnsmasq_block_lists="{{ adblock_lean_dnsmasq_block_lists | default([]) | join(' ') }}"
+dnsmasq_allow_lists=""
+dnsmasq_ipv4_block_lists=""
+
+hosts_block_lists=""
+
+local_allowlist_path="/etc/adblock-lean/allowlist"
+local_blocklist_path="/etc/adblock-lean/blocklist"
+
+test_domains="google.com microsoft.com amazon.com matrix.org github.com downloads.openwrt.org berlin.freifunk.net"
+
+list_part_failed_action="STOP"
+max_download_retries="3"
+
+hagezi_default_mirror="github"
+oisd_default_mirror="oisd"
+stevenblack_default_mirror="github"
+
+min_good_line_count="{{ adblock_lean_min_good_line_count }}"
+min_blocklist_part_line_count="1"
+min_ipv4_blocklist_part_line_count="1"
+min_allowlist_part_line_count="1"
+max_file_part_size_KB="{{ adblock_lean_max_file_part_size_kb }}"
+max_blocklist_file_size_KB="{{ adblock_lean_max_blocklist_file_size_kb }}"
+
+deduplication="1"
+
+compression_util="gzip"
+intermediate_compression_options="-3"
+final_compression_options="-6"
+unload_blocklist_before_update="auto"
+
+boot_start_delay_s="{{ adblock_lean_boot_start_delay_s }}"
+MAX_PARALLEL_JOBS="auto"
+
+custom_script=""
+cron_schedule="{{ adblock_lean_cron_schedule }}"
+
+DNSMASQ_INDEXES="{{ adblock_lean_dnsmasq_indexes }}"
+DNSMASQ_CONF_DIRS="{{ adblock_lean_dnsmasq_conf_dirs }}"
+{% endif %}

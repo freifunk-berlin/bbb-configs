@@ -19,6 +19,10 @@ config dnsmasq
 {% for _dns_server in dns_servers %}
         list server '{{ _dns_server }}'
 {% endfor %}
+{% if adblock_enabled | default(false) | bool and adblock_provider | default('fast') == 'lean' %}
+	list addnmount '/bin/busybox'
+	list addnmount '/var/run/adblock-lean/abl-blocklist.gz'
+{% endif %}
 
 {% if not (bird_only | default(true)) %}
 {% for network in networks | selectattr('role', 'equalto', 'mgmt') %}

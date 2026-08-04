@@ -1,6 +1,6 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 config adblock-fast 'config'
-	option enabled '{{ 1 if adblock_enabled | default(false) | bool else 0 }}'
+	option enabled '{{ 1 if adblock_enabled | default(false) | bool and adblock_provider | default('fast') == 'fast' else 0 }}'
 	option dns '{{ adblock_fast_dns }}'
 	list dnsmasq_instance '*'
 	option force_dns '{{ 1 if adblock_fast_force_dns | default(false) | bool else 0 }}'

@@ -3,6 +3,7 @@
 wireless_profile: disable
 
 adblock_enabled: false
+adblock_provider: fast
 adblock_fast_dns: dnsmasq.servers
 adblock_fast_force_dns: false
 adblock_fast_gateway_check: none
@@ -11,6 +12,17 @@ adblock_fast_procd_boot_wan_timeout: 300
 adblock_fast_feeds:
   - name: HaGeZi Multi PRO
     url: https://raw.githubusercontent.com/hagezi/dns-blocklists/main/dnsmasq/pro.mini.txt
+
+adblock_lean_raw_block_lists: []
+adblock_lean_dnsmasq_block_lists:
+  - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/dnsmasq/pro.txt
+adblock_lean_dnsmasq_indexes: "0"
+adblock_lean_dnsmasq_conf_dirs: "/tmp/dnsmasq.cfg01411c.d"
+adblock_lean_min_good_line_count: 180000
+adblock_lean_max_file_part_size_kb: 20000
+adblock_lean_max_blocklist_file_size_kb: 32768
+adblock_lean_boot_start_delay_s: 180
+adblock_lean_cron_schedule: "17 5 * * *"
 
 role_corerouter__sysctl__to_merge:
   net.netfilter.nf_conntrack_max: 131072
