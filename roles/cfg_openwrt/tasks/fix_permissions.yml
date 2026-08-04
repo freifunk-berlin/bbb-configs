@@ -15,6 +15,11 @@
     mode: "755"
   when: role != "gateway"
 
+- name: Set permission for sysfs-overrides script
+  file:
+    path: "{{ configs_dir }}/etc/init.d/sysfs-overrides"
+    mode: "755"
+
 - name: Set permission for force_mcast_mld_reports.sh script
   file:
     path: "{{ configs_dir }}/etc/force_mcast_mld_reports.sh"
