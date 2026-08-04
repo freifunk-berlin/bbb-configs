@@ -1,16 +1,18 @@
+{% if not (bird_only | default(true)) %}
 # IPv4 Soft Migration by priotizing Babel over OLSR
 # Static default Route is set by bird
 config rule
-	option priority 33100
+	option priority 30010
 	option lookup 'babel-ff'
 
 config rule
-	option priority 33101
+	option priority 30011
 	option lookup 'olsr-ff'
 
 config rule
-	option priority 33200
+	option priority 30020
 	option lookup 'babel-default'
+{% endif %}
 
 config interface 'loopback'
 	option device 'lo'

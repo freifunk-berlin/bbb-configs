@@ -119,3 +119,49 @@
     - networks is defined
     - networks | selectattr('qos_engine', 'defined') | selectattr('qos_engine', 'equalto', 'qosify') | selectattr('ingress', 'defined') | count > 0
       or networks | selectattr('qos_engine', 'defined') | selectattr('qos_engine', 'equalto', 'qosify') | selectattr('egress', 'defined') | count > 0
+
+- name: "Add OLSR packages for corerouters when bird_only is disabled"
+  set_fact:
+    packages: "{{ packages + [item] }}"
+  when:
+    - not (bird_only | default(true))
+    - role == 'corerouter'
+  loop:
+    - olsrd
+    - olsrd-mod-arprefresh
+    - olsrd-mod-dyn-gw
+    - olsrd-mod-jsoninfo
+    - olsrd-mod-nameservice
+    - olsrd-mod-txtinfo
+    - olsrd-utils
+    - luci-app-olsr
+    - luci-app-olsr-services
+    - collectd-mod-olsrd
+
+- name: "Add OLSR packages for gateways when bird_only is disabled"
+  set_fact:
+    packages: "{{ packages + [item] }}"
+  when:
+    - not (bird_only | default(true))
+    - role == 'gateway'
+  loop:
+    - olsrd
+    - olsrd-mod-arprefresh
+    - olsrd-mod-jsoninfo
+    - olsrd-mod-nameservice
+    - olsrd-mod-txtinfo
+    - olsrd-utils
+    - luci-app-olsr
+    - luci-app-olsr-services
+    - wg-installer-server-hotplug-olsrd
+    - collectd-mod-olsrd
+
+- name: "Disable olsrd6"
+  set_fact:
+    disabled_services: "{{ disabled_services + ['olsrd6'] }}"
+  when:
+    # Unconditional, not just when bird_only is disabled: a harmless no-op
+    # when olsrd6 was never installed, but keeps the old fleet-wide defense
+    # in depth for bird-only hosts instead of relying solely on the package
+    # never being present.
+    - role == 'corerouter' or role == 'gateway'
