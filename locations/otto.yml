@@ -1,0 +1,144 @@
+---
+
+location: otto
+location_nice: "Pekrunstr."
+latitude: 52.5376754
+longitude: 13.55436
+altitude: 0
+contact_nickname: "Nick"
+contacts:
+  - "@schnick:matrix.org"
+
+adblock_enabled: true
+adblock_provider: lean
+
+hosts:
+  - hostname: otto-core
+    role: corerouter
+    model: "avm_fritzbox-7530"
+    wireless_profile: otto
+    openwrt_version: snapshot
+    imagebuilder: "/home/nick/clone_openwrt/bin/targets/ipq40xx/generic/openwrt-imagebuilder-ipq40xx-generic.Linux-x86_64.tar.zst"
+
+# Router: 10.31.203.0/25 2001:bf7:850:6300::/56
+# --MGMT: 10.31.203.0/28
+# --DHCP (public wifi, tunneled to mesh): 10.31.203.32/27
+# --PRIVATE (Feel zu spaet, direct internet via VDSL): 10.31.203.64/27
+
+ipv6_prefix: "2001:bf7:850:6300::/56"
+
+# VDSL modem hardware parameters. Matches the FRITZ!Box 7530's factory
+# default line settings (annex j / tone b, vpi 1, vci 32, PPPoE-over-ATM
+# bridged, LLC encap) as shipped on this router.
+dsl:
+  annex: j
+  tone: b
+  atm_vpi: 1
+  atm_vci: 32
+  atm_encaps: llc
+  atm_payload: bridged
+
+networks:
+  # The router's own VDSL/PPPoE internet connection. It has a working
+  # default route in the root namespace, used directly (see "direct_internet"
+  # below) and also by the WireGuard tunnel to Freifunk (uplink_mode: none -
+  # see tunspace's uplink_mode docs / DEVELOPER.md for why no separate
+  # namespace/second PPPoE session is needed here).
+  - role: uplink
+    name: wan
+    ifname: dsl0
+    vid: 7
+    uplink_mode: none
+    uplink_proto: pppoe
+    ipv6_reqaddress: try
+    ipv6_default_route: true
+    ipv6_norelease: true
+    pppoe_username: "file:/root/pppoe_user"
+    pppoe_password: "file:/root/pppoe_pass"
+    qos_engine: qosify
+    ingress: 95
+    egress: 38
+
+  # Carries the public Freifunk SSID's traffic into the mesh backbone over
+  # the VDSL uplink above.
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.203.126/32
+    wireguard_port: 51820
+
+  # Public Freifunk wifi (berlin.freifunk.net). Routed into the mesh via
+  # the WireGuard tunnel above, same as every other location.
+  - vid: 40
+    role: dhcp
+    prefix: 10.31.203.32/27
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      otto-core: 1
+
+  # Private wifi ("Feel zu spaet"). Bypasses the mesh for internet access: IPv4 is
+  # NAT'd and IPv6 is routed from the Easybell prefix delegated to wan6.
+  - vid: 41
+    role: dhcp
+    name: private
+    untagged: true
+    prefix: 10.31.203.64/27
+    inbound_filtering: true
+    enforce_client_isolation: false
+    no_corerouter_dns_record: true
+    direct_internet: true
+    ip6class: wan6
+    assignments:
+      otto-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.203.0/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      otto-core: 1
+
+location__wireless_profiles__to_merge:
+  - name: otto
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+        owe_transition_ifname_hint: ffowe
+
+      - mode: ap
+        ssid: berlin.freifunk.net OWE
+        hidden: true
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        owe_transition_ifname_hint: ff
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: "Feel zu spaet"
+        encryption: sae
+        key: "file:/root/wifi_pass"
+        network: private
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+        ieee80211w: 2
+
+location__channel_assignments_11a_standard__to_merge:
+  otto-core: "36-80"
+
+location__channel_assignments_11g_standard__to_merge:
+  otto-core: "13-20"
+
+# only place this ssh-keys
+ssh_keys:
+  - comment: Nick
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJrryeA5Nj8TJzX0hjujDQvrrBRpDFjhGJKn297zhoij nick@systemli.org
