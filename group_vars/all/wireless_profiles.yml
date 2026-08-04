@@ -141,7 +141,7 @@ all__wireless_profiles__to_merge:
   - name: kollaps
     ifaces:
       - mode: ap
-        ssid: WIP-kollaps-freifunk
+        ssid: kollaps-freifunk
         encryption: none
         network: dhcp
         radio: [11a_standard]
@@ -149,7 +149,7 @@ all__wireless_profiles__to_merge:
 
       # vlan 41: ext from core
       - mode: ap
-        ssid: WIP-kollaps-freifunk-p2p
+        ssid: kollaps-freifunk-p2p
         encryption: none
         network: p2p
         radio: [11a_standard]

@@ -14,12 +14,6 @@ hosts:
     wireless_profile: kollaps
     host__rclocal__to_merge:
       - |
-        chmod +x /etc/librenms/*.sh
-        chmod +x /etc/librenms/distro
-        uci set network.vlan_40.ports=''
-        # uci commit network; reload_config
-        # chmod +x /etc/iwinfo_wifi_chan_freq.sh
-        # chown nobody:nogroup /etc/iwinfo_wifi_chan_freq.sh
         uci set wireless.radio0.cell_density=3
         uci commit wireless; wireless reload
 
@@ -37,8 +31,8 @@ networks:
     role: dhcp
     prefix: 10.248.127.0/24
     ipv6_subprefix: 0
-    inbound_filtering: false
-    enforce_client_isolation: false
+    inbound_filtering: true
+    enforce_client_isolation: true
     assignments:
       kollaps-ap-37: 1
 
@@ -46,9 +40,8 @@ networks:
   - vid: 41
     role: ext
     name: p2p
-    inbound_filtering: false
-    enforce_client_isolation: false
     no_corerouter_dns_record: true
+    enforce_client_isolation: false
 
   - vid: 42
     name: mgmt

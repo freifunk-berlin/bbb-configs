@@ -17,14 +17,6 @@ hosts:
     int_port: eth1
 
 snmp_devices:
-  - hostname: kollaps-ptp-4
-    address: 10.248.120.4
-    snmp_profile: af60
-
-  - hostname: kollaps-ptp-5
-    address: 10.248.120.5
-    snmp_profile: af60
-
   - hostname: kollaps-sw-11
     address: 10.248.120.11
     snmp_profile: swos
@@ -49,9 +41,6 @@ snmp_devices:
     address: 10.248.120.16
     snmp_profile: swos
 
-  - hostname: kollaps-sw-19
-    address: 10.248.120.19
-    snmp_profile: swos
 
 # ROUTER: 10.248.120.0/23
 # --MGMT: 10.248.120.0/27
@@ -71,8 +60,8 @@ networks:
   - vid: 40
     name: dhcp
     role: dhcp
-    prefix: 10.248.121.0/24
-    ipv6_subprefix: 0
+    prefix: 10.248.120.128/25
+    ipv6_subprefix: 2
     inbound_filtering: true
     enforce_client_isolation: true
     assignments:
@@ -81,8 +70,8 @@ networks:
   - vid: 41
     name: p2p
     role: dhcp
-    prefix: 10.248.120.128/25
-    ipv6_subprefix: 2
+    prefix: 10.248.121.0/24
+    ipv6_subprefix: 0
     inbound_filtering: false
     enforce_client_isolation: false
     assignments:
@@ -108,8 +97,6 @@ networks:
       kollaps-sw-15: 15 # netpower 16p
       kollaps-sw-16: 16 # netpower 16p
       kollaps-sw-17: 17 # CSS610
-      kollaps-sw-18: 18 # unifi
-      kollaps-sw-19: 19 # netpower 16p
 
 #      kollaps-ap-32: 32
 #      kollaps-ap-33: 33
@@ -171,22 +158,16 @@ networks:
     prefix: 10.248.120.64/32
     wireguard_port: 51820
 
-  - role: tunnel
-    ifname: ts_wg1
-    mtu: 1412
-    prefix: 10.248.120.65/32
-    wireguard_port: 51821
-
   # Stub network so eth0 is brought up and we get link-local IPv6 connectivity - dweb
-  # - vid: 13
-  #   untagged: true
-  #   ifname: eth0
-  #   role: ext
-  #   name: stub
-  #   prefix: 10.248.120.67/32
-  #   ipv6_subprefix: -13
-  #   assignments:
-  #     kollaps-core: 1
+  - vid: 13
+    untagged: true
+    ifname: eth0
+    role: ext
+    name: stub
+    prefix: 10.248.120.67/32
+    ipv6_subprefix: -13
+    assignments:
+      kollaps-core: 1
 
 location__ssh_keys__to_merge:
   - comment: Tom
