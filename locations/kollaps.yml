@@ -1,9 +1,9 @@
 ---
 
 location: kollaps
-location_nice: wip-staging
-latitude: 52.0
-longitude: 12.0
+location_nice: Schimmelburg
+latitude: 53.226226
+longitude: 12.656567
 community: berlin
 
 hosts:
