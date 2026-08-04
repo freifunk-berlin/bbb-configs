@@ -33,6 +33,21 @@
     - networks | selectattr('role', 'defined') | selectattr('role','equalto','tunnel') | count > 0
     - role == 'corerouter'
 
+- name: "Add DSL/PPPoE support if configured"
+  set_fact:
+    packages: >-
+      {{
+        packages
+        | map('split')
+        | flatten
+        | reject('in', ['-ppp', '-ppp-mod-pppoe', '-ltq-vdsl-vr11-app'])
+        | list
+        + ['ppp', 'ppp-mod-pppoe', 'ltq-vdsl-vr11-app']
+      }}
+  when:
+    - role == 'corerouter'
+    - dsl is defined
+
 - name: "Add zram-swap on low mem and big flash"
   set_fact:
     packages: "{{ packages + ['zram-swap'] }}"
