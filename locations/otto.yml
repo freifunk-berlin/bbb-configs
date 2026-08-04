@@ -27,16 +27,10 @@ hosts:
 
 ipv6_prefix: "2001:bf7:850:6300::/56"
 
-# VDSL modem hardware parameters. Matches the FRITZ!Box 7530's factory
-# default line settings (annex j / tone b, vpi 1, vci 32, PPPoE-over-ATM
-# bridged, LLC encap) as shipped on this router.
+# VDSL line parameters for the FRITZ!Box 7530 on Easybell (PTM, not ATM).
 dsl:
   annex: j
   tone: b
-  atm_vpi: 1
-  atm_vci: 32
-  atm_encaps: llc
-  atm_payload: bridged
 
 networks:
   # The router's own VDSL/PPPoE internet connection. It has a working

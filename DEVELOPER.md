@@ -347,11 +347,10 @@ For a location that has its own DSL line as the actual internet connection (rath
 dsl:
   annex: j            # as printed on your line/ISP docs, e.g. 'b' for most German VDSL lines
   tone: b
-  atm_vpi: 1
-  atm_vci: 32
-  atm_encaps: llc
-  atm_payload: bridged
 ```
+
+Only ATM lines (rare for VDSL2, more common on old ADSL) need `config
+atm-bridge` - not currently supported by this `dsl:` block.
 
 and an uplink network with `uplink_proto: pppoe`:
 

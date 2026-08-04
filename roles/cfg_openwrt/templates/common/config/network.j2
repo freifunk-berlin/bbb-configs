@@ -116,13 +116,6 @@ config interface 'loopback'
 {% endif %}
 
 {% if dsl is defined and role == 'corerouter' %}
-config atm-bridge 'atm'
-	option vpi '{{ dsl.atm_vpi }}'
-	option vci '{{ dsl.atm_vci }}'
-	option encaps '{{ dsl.atm_encaps }}'
-	option payload '{{ dsl.atm_payload }}'
-	option nameprefix 'dsl'
-
 config dsl 'dsl'
 	option annex '{{ dsl.annex }}'
 	option tone '{{ dsl.tone }}'
