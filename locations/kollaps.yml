@@ -172,3 +172,5 @@ networks:
 location__ssh_keys__to_merge:
   - comment: Tom
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
+  - comment: J
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNBJGb8oHcy6hQ5ZsLxTzlvXSLAjL5rDvpjV6C/8t2u
