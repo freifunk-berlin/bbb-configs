@@ -35,14 +35,14 @@ dsl:
 networks:
   # The router's own VDSL/PPPoE internet connection. It has a working
   # default route in the root namespace, used directly (see "direct_internet"
-  # below) and also by the WireGuard tunnel to Freifunk (uplink_mode: none -
-  # see tunspace's uplink_mode docs / DEVELOPER.md for why no separate
+  # below) and also by the WireGuard tunnel to Freifunk (uplink_topology: root -
+  # see tunspace's uplink_topology docs / DEVELOPER.md for why no separate
   # namespace/second PPPoE session is needed here).
   - role: uplink
     name: wan
     ifname: dsl0
     vid: 7
-    uplink_mode: none
+    uplink_topology: root
     uplink_proto: pppoe
     ipv6_reqaddress: try
     ipv6_default_route: true

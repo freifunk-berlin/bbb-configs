@@ -324,7 +324,7 @@ Some integrated LTE modems work with the [QMI protocol](https://openwrt.org/docs
     untagged: true
     ifname: wwan0
     role: uplink
-    uplink_mode: direct
+    uplink_topology: netns-move-interface
 
   - role: tunnel
     ifname: ts_wg0
@@ -360,7 +360,7 @@ networks:
     name: wan
     ifname: dsl0               # the modem's virtual ethernet-like device
     untagged: true
-    uplink_mode: none           # see below
+    uplink_topology: root       # see below
     uplink_proto: pppoe
     pppoe_username: "file:/root/pppoe_user"
     pppoe_password: "file:/root/pppoe_pass"
@@ -372,7 +372,7 @@ networks:
     wireguard_port: 51820
 ```
 
-This dials a single PPPoE session in the root namespace (`config interface 'wan'`), giving the router a real, usable default route there. Unlike the LTE/wireless uplink patterns, `uplink_mode: none` tells tunspace not to create a separate namespace or macvlan clone at all — the WireGuard tunnel to the Freifunk backbone (and any registration handshake with a gateway) uses that same root-namespace route directly. This only works because the DSL line is fully owned by this router; do not use `uplink_mode: none` for a borrowed/foreign uplink (neighbor's wifi, etc.), since that would let ordinary mesh traffic leak onto it un-tunneled - use `bridge`/`direct`/`passthru` for those instead.
+This dials a single PPPoE session in the root namespace (`config interface 'wan'`), giving the router a real, usable default route there. Unlike the LTE/wireless uplink patterns, `uplink_topology: root` tells tunspace not to create a separate namespace or macvlan clone at all — the WireGuard tunnel to the Freifunk backbone (and any registration handshake with a gateway) uses that same root-namespace route directly. This only works because the DSL line is fully owned by this router; do not use `uplink_topology: root` for a borrowed/foreign uplink (neighbor's wifi, etc.), since that would let ordinary mesh traffic leak onto it un-tunneled - use `netns-macvlan-bridge`/`netns-move-interface`/`netns-macvlan-passthru` for those instead.
 
 A `dhcp` or `private`-style network can then be routed directly out over this same PPPoE connection instead of through the mesh, by setting `direct_internet: true`:
 
