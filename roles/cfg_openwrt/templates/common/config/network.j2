@@ -124,18 +124,18 @@ config dsl 'dsl'
 
 {% for network in networks %}
   {% set name = libnetwork.getUciIfname(network) %}
-  {# uplink_mode: none means tunspace runs registration/tunnel directly in the root namespace,
+  {# uplink_topology: root means tunspace runs registration/tunnel directly in the root namespace,
      relying on this interface already having a working route there - only proto pppoe wires
      that up today. Fail loudly on other combinations instead of silently emitting proto 'none'. #}
-  {% set is_owned_uplink = role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') == 'none' %}
-  {% if role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_proto') == 'pppoe' and network.get('uplink_mode') != 'none' %}
-{{ undef("network '" ~ name ~ "': uplink_proto: pppoe requires uplink_mode: none (PPPoE can only be dialed in the root namespace); got uplink_mode=" ~ (network.get('uplink_mode', 'unset') | string)) }}
+  {% set is_owned_uplink = role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_topology') == 'root' %}
+  {% if role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_proto') == 'pppoe' and network.get('uplink_topology') != 'root' %}
+{{ undef("network '" ~ name ~ "': uplink_proto: pppoe requires uplink_topology: root (PPPoE can only be dialed in the root namespace); got uplink_topology=" ~ (network.get('uplink_topology', 'unset') | string)) }}
   {% endif %}
 
   {%- if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
      or name in libnetwork.getWirelessNetworks() | from_json
      or network.get('mesh_ap') == inventory_hostname
-     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct')
+     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_topology') != 'netns-move-interface')
      %}
 config interface '{{ name }}'
     {% if libnetwork.isPortNeeded(network) | from_json %}
@@ -180,7 +180,7 @@ config interface '{{ name }}'
 	   openwrt/netifd#72. #}
 	option ipv6 '0'
       {% else %}
-{{ undef("network '" ~ name ~ "': uplink_mode: none currently only supports uplink_proto: pppoe; got uplink_proto=" ~ (network.get('uplink_proto', 'unset') | string)) }}
+{{ undef("network '" ~ name ~ "': uplink_topology: root currently only supports uplink_proto: pppoe; got uplink_proto=" ~ (network.get('uplink_proto', 'unset') | string)) }}
       {% endif %}
     {% else %}
 	option proto 'none'
