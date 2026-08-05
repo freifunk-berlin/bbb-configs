@@ -39,7 +39,8 @@
   when:
     - role == 'corerouter'
     - networks is defined
-    - networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | length > 0
+    - networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname)
+      | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | length > 0
 
 - name: "Add DSL/PPPoE support if configured"
   set_fact:
