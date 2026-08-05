@@ -1,9 +1,9 @@
 ---
 
 location: kollaps-ap-33
-location_nice: Staging
-# latitude: 52.0
-# longitude: 12.0
+location_nice: Gewächshaus
+latitude: 53.227138
+longitude: 12.655679
 community: berlin
 
 hosts:
