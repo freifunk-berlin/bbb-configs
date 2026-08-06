@@ -1,9 +1,9 @@
 ---
 
 location: kollaps-ap-41
-location_nice: Staging
-# latitude: 52.0
-# longitude: 12.0
+location_nice: Zeltwiese Süd
+latitude: 53.227096
+longitude: 12.655150
 community: berlin
 
 hosts:
