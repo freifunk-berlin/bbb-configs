@@ -1,0 +1,115 @@
+---
+
+location: kollapsdemo2
+location_nice:
+community: berlin
+
+hosts:
+  - hostname: kollapsdemo2-core
+    role: corerouter
+    model: "glinet_gl-mt1300"
+    wireless_profile: freifunk_default
+
+
+# 10.31.174.128/26 - OLD
+# - 10.31.174.128/29 - mgmt
+# - 10.31.174.136/29 - mesh
+# - 10.31.174.144/28 - prdhcp
+# - 10.31.174.160/27 - dhcp
+ipv6_prefix: 2001:bf7:750:5500::/56
+
+networks:
+  # MESH - PtP antenna 1
+  - vid: 10
+    role: mesh
+    name: mesh_ptp_1
+    prefix: 10.31.174.136/32
+    ipv6_subprefix: -10
+    ptp: true
+
+  # MESH - PtP antenna 2
+  - vid: 11
+    role: mesh
+    name: mesh_ptp_2
+    prefix: 10.31.174.137/32
+    ipv6_subprefix: -11
+    ptp: true
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g_core
+    prefix: 10.31.174.138/32
+    ipv6_subprefix: -20
+    mesh_ap: kollapsdemo2-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g_core
+    prefix: 10.31.174.139/32
+    ipv6_subprefix: -21
+    mesh_ap: kollapsdemo2-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+# MESH - Lan
+  - vid: 30
+    untagged: true
+    role: mesh
+    name: mesh_lan
+    prefix: 10.31.174.144/32
+    ipv6_prefix: -30
+
+  - vid: 40
+    name: dhcp
+    role: dhcp
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.31.174.160/27
+    ipv6_subprefix: 2
+    assignments:
+      kollapsdemo2-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.174.128/29
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 42
+    assignments:
+      kollapsdemo2-core: 1
+
+  # - vid: 50
+  #   role: uplink
+  #   untagged: false
+
+  # - vid: 50
+  #  ifname: eth1
+  #  role: uplink
+  #  untagged: true
+  #  uplink_ipv4: 10.0.2.42/24
+  #  uplink_gateway: 10.0.2.2
+
+  #- role: tunnel
+  #  ifname: ts_wg0
+  #  mtu: 1280
+  #  prefix: 10.31.174.136/32
+  #  wireguard_port: 51820
+
+  # - role: tunnel
+  #   ifname: ts_wg1
+  #   prefix: 10.31.174.137/32
+  #   mtu: 1280
+  #   wireguard_port: 51821
+  #   mesh_metric_lqm:
+  #     - 'default 1.0'
+  #   mesh_metric: 512
+
+location__ssh_keys__to_merge:
+  - comment: Tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
+  - comment: J
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNBJGb8oHcy6hQ5ZsLxTzlvXSLAjL5rDvpjV6C/8t2u
