@@ -5,9 +5,9 @@ model_nice: AIoT AC2350
 version_nice: v1
 openwrt_version: 25.12.5
 
-dsa_ports:
-  - eth0.1 # LAN 1-3
-  - eth0.2 # WAN
+switch_ports: 5
+switch_int_port: 0
+int_port: eth0
 
 wireless_devices:
   - name: 11a_standard
