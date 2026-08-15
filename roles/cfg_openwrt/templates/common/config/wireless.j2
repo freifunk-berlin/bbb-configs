@@ -109,6 +109,9 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
 	option ieee80211k '1'
 	option rrm_neighbor_report '1'
 	option rrm_beacon_report '1'
+      {% if 'disassoc_low_ack' in iface %}
+	option disassoc_low_ack '{{ iface['disassoc_low_ack']|int }}'
+      {% endif %}
       {% if 'owe_transition_ifname_hint' in iface %}
 	option owe_transition_ifname '{{ wd['ifname_hint'] }}-{{ iface['owe_transition_ifname_hint'] }}'
       {% endif %}
