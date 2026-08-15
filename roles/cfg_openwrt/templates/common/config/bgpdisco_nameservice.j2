@@ -3,7 +3,6 @@ package 'bgpdisco-plugin-nameservice'
 config general
 	option domain 'ff'
 	option hosts_file '/var/hosts/ffnameservice'
-	option cmd_on_update 'killall -SIGHUP dnsmasq'
 {% if inventory_hostname in groups['role_gateway'] %}
 	list exclude_interface_self '{{ uplink['ifname'] }}'
 {% endif %}
