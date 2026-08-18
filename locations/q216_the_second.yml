@@ -15,16 +15,14 @@ hosts:
     model: "genexis_pulse-ex400"
     wireless_profile: freifunk_default
 
-  - hostname: q216_the_second-nf-no
-    role: ap
-    model: "mikrotik_sxtsq-5-ac"
-    wireless_profile: freifunk_default
-    mac_override: { eth0: dc:2c:6e:c4:2c:91 }
-
 snmp_devices:
   - hostname: q216_the_second-magda
     address: 10.248.70.210
     snmp_profile: airos_8
+
+  - hostname: q216_the_second-o-60g
+    address: 10.248.70.211
+    snmp_profile: routeros
 
 # Router: 10.248.70.192/27
 # --MGMT: 10.248.70.208/29
@@ -39,14 +37,11 @@ networks:
     prefix: 10.248.70.216/32
     ipv6_subprefix: -10
 
-  - vid: 20
+  - vid: 11
     role: mesh
-    name: nf_no_mesh
+    name: mesh_o_60g
     prefix: 10.248.70.217/32
-    ipv6_subprefix: -20
-    mesh_ap: q216_the_second-nf-no
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
+    ipv6_subprefix: -11
 
   - vid: 21
     role: mesh
@@ -76,7 +71,7 @@ networks:
     assignments:
       q216_the_second-core: 1
       q216_the_second-magda: 2
-      q216_the_second-nf-no: 3
+      q216_the_second-o-60g: 3
 
   - vid: 50
     role: uplink
