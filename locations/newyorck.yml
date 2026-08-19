@@ -11,9 +11,7 @@ contacts:
 hosts:
   - hostname: newyorck-core
     role: corerouter
-    model: "ubnt_edgerouter-x"
-    wireless_profile: disable
-    flow_offload: hw
+    model: "x86-64"
 
   - hostname: newyorck-ap-1a
     role: ap
@@ -166,7 +164,6 @@ networks:
   # UPLK - 10.31.155.192/29 as /32
   - vid: 50
     role: uplink
-    untagged: true
 
   - role: tunnel
     ifname: ts_wg0
