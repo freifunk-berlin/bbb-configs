@@ -1,0 +1,46 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+{% import 'libraries/network.j2' as libnetwork with context %}
+
+{% if 'qosify' in packages %}
+config defaults
+	list defaults '/etc/qosify/*.conf'
+	option dscp_prio 'video'
+	option dscp_icmp '+besteffort'
+	option dscp_default_udp 'besteffort'
+	option prio_max_avg_pkt_len '500'
+
+config class 'besteffort'
+	option ingress 'CS0'
+	option egress 'CS0'
+
+config class 'bulk'
+	option ingress 'LE'
+	option egress 'LE'
+
+config class 'video'
+	option ingress 'AF41'
+	option egress 'AF41'
+
+config class 'voice'
+	option ingress 'CS6'
+	option egress 'CS6'
+	option bulk_trigger_pps '100'
+	option bulk_trigger_timeout '5'
+	option dscp_bulk 'CS0'
+
+  {% for network in networks %}
+    {% if network.get('qos_engine') == 'qosify' and (network['ingress'] is defined or network['egress'] is defined) %}
+      {% set name = libnetwork.getUciIfname(network) %}
+config interface '{{ name }}'
+	option name '{{ name }}'
+      {% if network['ingress'] is defined %}
+	option bandwidth_down '{{ network['ingress'] }}mbit'
+      {% endif %}
+      {% if network['egress'] is defined %}
+	option bandwidth_up '{{ network['egress'] }}mbit'
+      {% endif %}
+	option overhead_type '{{ network.get('qosify_overhead_type', 'none') }}'
+
+    {% endif %}
+  {% endfor %}
+{% endif %}
