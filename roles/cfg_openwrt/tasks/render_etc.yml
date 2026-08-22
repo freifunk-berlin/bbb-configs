@@ -59,3 +59,25 @@
   when: (not item.path is regex('\.j2$')) and (item.state == 'file' or item.state == 'link')
   loop_control:
     label: "{{ item.path }}"
+
+- name: Create rootfs directories for static files
+  tags: always
+  file:
+    path: "{{ configs_dir }}/{{ item.path }}"
+    state: directory
+    mode: "755"
+  loop: "{{ lookup('community.general.filetree', role_path + '/rootfs/' + role, errors='ignore') }}"
+  when: item.state == 'directory'
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Copy rootfs static files
+  tags: always
+  copy:
+    src: "{{ item.root }}/{{ item.path }}"
+    dest: "{{ configs_dir }}/{{ item.path }}"
+    mode: "preserve"
+  loop: "{{ lookup('community.general.filetree', role_path + '/rootfs/' + role, errors='ignore') }}"
+  when: (not item.path is regex('\.j2$')) and (item.state == 'file' or item.state == 'link')
+  loop_control:
+    label: "{{ item.path }}"

@@ -1,9 +1,16 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
+{% import 'libraries/network.j2' as libnetwork with context %}
 {% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | default([]) %}
 {% set l3_mesh_networks = networks | selectattr('assignments', 'undefined') | selectattr('role', 'equalto', 'mesh') | default([]) %}
-{% set query = "[].{name: name||role,inbound_filtering: inbound_filtering}" %}
+{% set query = "[].{name: name||role,inbound_filtering: inbound_filtering, direct_internet: direct_internet}" %}
 {% set l3_networks = (l3_networks + l3_mesh_networks) | json_query(query) %}
 {% set zone_freifunk_networks = l3_networks | rejectattr('inbound_filtering') | map(attribute='name') %}
+{# Not scoped to inventory_hostname like l3_networks: uplink-role networks have no
+   'assignments' to filter by (same pre-existing limitation as tunspace.j2's own
+   uplink loop), so this assumes one corerouter per location owns all uplinks -
+   true for every location today. A location with two corerouters sharing a
+   networks: list, only one of which owns the pppoe line, needs that fixed here too. #}
+{% set uplink_networks = networks | selectattr('role', 'equalto', 'uplink') | selectattr('uplink_proto', 'defined') | selectattr('uplink_proto', 'equalto', 'pppoe') | list %}
 
 config defaults
 	option synflood_protect '1'
@@ -26,6 +33,38 @@ config zone 'zone_freifunk'
 	list device 'wg_+'
 	list device 'ts_+'
 
+{% if uplink_networks | length > 0 %}
+config zone 'zone_wan'
+	option name 'wan'
+	{# This zone faces the raw internet, unlike zone_freifunk (mesh/tunnel, semi-trusted) -
+	   reject unsolicited inbound instead of inheriting config defaults' input ACCEPT.
+	   DHCPv6-PD replies do NOT get through via conntrack established/related: the
+	   client's Solicit goes to the ff02::1:2 multicast group while the server's
+	   Advertise/Reply comes back from its own unicast address, so the reverse
+	   packet never matches the forward flow's conntrack tuple and needs the
+	   explicit Allow-DHCPv6 rule below instead. Without it odhcp6c never sees a
+	   reply and the dhcpv6 interface sits pending forever. #}
+	option input 'REJECT'
+	{# IPv4 has no real delegated space from the ISP, so it's masqueraded.
+	   IPv6 uses a real routed/delegated prefix (see ip6assign/reqprefix in
+	   network.j2), so it is NOT masqueraded - it's routed end-to-end. #}
+	option masq '1'
+	option mtu_fix '1'
+	{% for u in uplink_networks %}
+	list network '{{ libnetwork.getUciIfname(u) }}'
+	list network '{{ libnetwork.getUciIfname(u) }}6'
+	{% endfor %}
+
+config rule
+	option name		'Allow-DHCPv6'
+	option src		wan
+	option proto		udp
+	option dest_port	546
+	option family		ipv6
+	option target		ACCEPT
+
+{% endif %}
+
 {% for i in l3_networks | selectattr('inbound_filtering') %}
 config zone 'zone_{{ i['name'] }}'
         option name '{{ i['name'] }}'
@@ -38,12 +77,12 @@ config forwarding
 
 {% for i in l3_networks | selectattr('inbound_filtering') %}
 config forwarding
-        option dest 'freifunk'
+        option dest '{{ 'wan' if i.get('direct_internet') else 'freifunk' }}'
         option src '{{ i['name'] }}'
 
 {% endfor %}
 
-{% for i in l3_networks | selectattr('inbound_filtering') %}
+{% for i in l3_networks | selectattr('inbound_filtering') if not i.get('direct_internet') %}
 # Allow essential forwarded IPv6 ICMP traffic
 config rule
 	option name		Allow-ICMPv6-Forward-{{ i['name'] }}

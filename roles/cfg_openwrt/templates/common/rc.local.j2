@@ -1,5 +1,10 @@
 # Put your custom commands here that should be executed once
 # the system init finished. By default this file does nothing.
+#
+# sysfs_overrides and cpu_governor are NOT applied here - rc.local runs
+# last of all init scripts (START=95), which is both too late and doesn't
+# provide the ordering guarantee (cpu_governor before sysfs_overrides) that
+# governor-specific sysfs tunables need. See init.d/sysfs-overrides.j2.
 
 NFT_CONF="/etc/nftables.conf"
 if [[ -f "$NFT_CONF" ]]; then
@@ -20,10 +25,6 @@ rm -vf /lib/apk/packages/*.conffiles*
 sed -i '/^ \/etc/d' /usr/lib/opkg/status
     {% endif %}
 {% endif %}
-
-{% for override in sysfs_overrides | default([]) %}
-echo {{ override['value'] }} > {{ override['path'] }}
-{% endfor%}
 
 {% if role == 'corerouter' or role == 'gateway' %}
 # make sure mld listener reports are frequently sent on

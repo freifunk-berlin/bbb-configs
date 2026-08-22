@@ -1,27 +1,105 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
+{% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list %}
+{% set mesh_networks = networks | selectattr('role', 'equalto', 'mesh') | list %}
+{# unique: a mesh network can also carry 'assignments', which would otherwise duplicate it in both lists below. #}
+{% set freifunk_ipv4_policy_networks = (l3_networks + mesh_networks) | unique %}
+{# A corerouter with its own direct_internet uplink uses VRF-based isolation
+   (vrf_freifunk, below) instead of ip-rule policy routing for its
+   non-direct_internet networks - see DEVELOPER.md's direct_internet section. #}
+{% set vrf_freifunk_active = role == 'corerouter' and l3_networks | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | length > 0 %}
+{% if vrf_freifunk_active and not (bird_only | default(true)) %}
+{{ undef("VRF-based freifunk isolation (direct_internet networks) requires bird_only: true - OLSR-side routing into the vrf-freifunk table is not implemented") }}
+{% endif %}
 
 # Babel inserts into separate route table, add that to lookup list for IPv6
+{% if role == 'corerouter' and ipv6_prefix is defined and not vrf_freifunk_active %}
 config rule6
-	option priority 33000
+	option priority 30000
+	option src '{{ ipv6_prefix }}'
 	option lookup 'babel-src'
 
-# IPv4 Soft Migration by prioritizing Babel over OLSR
+{% endif %}
+
+# IPv4 Freifunk policy routing through Babel
+{% set freifunk_ipv4_policy_count = namespace(value=0) %}
+{% for network in freifunk_ipv4_policy_networks if network.get('prefix') and not network.get('direct_internet') and not vrf_freifunk_active %}
+{% set rule_index = freifunk_ipv4_policy_count.value %}
+{% set freifunk_ipv4_policy_count.value = freifunk_ipv4_policy_count.value + 1 %}
 config rule
-	option priority 33100
+	option priority {{ 30010 + rule_index * 100 }}
+	option src '{{ network['prefix'] }}'
 	option lookup 'babel-ff'
 
+{% if not (bird_only | default(true)) %}
 config rule
-	option priority 33101
+	option priority {{ 30011 + rule_index * 100 }}
+	option src '{{ network['prefix'] }}'
 	option lookup 'olsr-ff'
 
+{% endif %}
 config rule
-	option priority 33200
+	option priority {{ 30020 + rule_index * 100 }}
+	option src '{{ network['prefix'] }}'
 	option lookup 'babel-default'
+
+{% if not (bird_only | default(true)) %}
 config rule
-	option priority 33201
+	option priority {{ 30021 + rule_index * 100 }}
+	option src '{{ network['prefix'] }}'
 	option lookup 'olsr-default'
 
+{% endif %}
+{% endfor %}
+{% if freifunk_ipv4_policy_count.value > 0 %}
+config route 'fail_closed_babel_default'
+	option type 'unreachable'
+	option target '0.0.0.0/0'
+	option table 'babel-default'
+	option metric '32767'
+
+{% endif %}
+{% if role == 'corerouter' and ipv6_prefix is defined and not vrf_freifunk_active %}
+config route6 'fail_closed_babel_src'
+	option type 'unreachable'
+	option target '::/0'
+	option source '{{ freifunk_global_prefix }}'
+	option table 'babel-src'
+	option metric '32767'
+
+{% endif %}
+{% if role == 'corerouter' and ipv6_prefix is defined %}
+config route6 'fail_closed_main_freifunk_v6'
+	option type 'unreachable'
+	option target '{{ freifunk_global_prefix }}'
+	option metric '32767'
+
+{% endif %}
+{% if role == 'corerouter' %}
+config route 'fail_closed_main_freifunk_v4'
+	option type 'unreachable'
+	option target '10.0.0.0/8'
+	option metric '32767'
+
+{% endif %}
+{% if vrf_freifunk_active %}
+{% set vrf_freifunk_members = freifunk_ipv4_policy_networks | rejectattr('direct_internet', 'defined') | list + freifunk_ipv4_policy_networks | selectattr('direct_internet', 'defined') | rejectattr('direct_internet') | list %}
+config device
+	option type 'vrf'
+	option name 'vrf_freifunk'
+	option table 'vrf-freifunk'
+  {% for network in vrf_freifunk_members %}
+	list ports '{{ libnetwork.getIfname(network) }}'
+  {% endfor %}
+  {% for tunnel in networks | selectattr('role', 'equalto', 'tunnel') %}
+	list ports '{{ tunnel['ifname'] }}'
+  {% endfor %}
+
+config interface 'vrf_freifunk'
+	option proto 'none'
+	option device 'vrf_freifunk'
+
+{% endif %}
 config interface 'loopback'
 	option device 'lo'
 	option proto 'static'
@@ -37,14 +115,27 @@ config interface 'loopback'
   {% include './common/config/swconfig.network.inc' %}
 {% endif %}
 
+{% if dsl is defined and role == 'corerouter' %}
+config dsl 'dsl'
+	option annex '{{ dsl.annex }}'
+	option tone '{{ dsl.tone }}'
+
+{% endif %}
 
 {% for network in networks %}
   {% set name = libnetwork.getUciIfname(network) %}
+  {# uplink_topology: root means tunspace runs registration/tunnel directly in the root namespace,
+     relying on this interface already having a working route there - only proto pppoe wires
+     that up today. Fail loudly on other combinations instead of silently emitting proto 'none'. #}
+  {% set is_owned_uplink = role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_topology') == 'root' %}
+  {% if role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_proto') == 'pppoe' and network.get('uplink_topology') != 'root' %}
+{{ undef("network '" ~ name ~ "': uplink_proto: pppoe requires uplink_topology: root (PPPoE can only be dialed in the root namespace); got uplink_topology=" ~ (network.get('uplink_topology', 'unset') | string)) }}
+  {% endif %}
 
   {%- if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
      or name in libnetwork.getWirelessNetworks() | from_json
      or network.get('mesh_ap') == inventory_hostname
-     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct')
+     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_topology') != 'netns-move-interface')
      %}
 config interface '{{ name }}'
     {% if libnetwork.isPortNeeded(network) | from_json %}
@@ -78,14 +169,61 @@ config interface '{{ name }}'
     {% elif role == 'corerouter' and network['role'] == 'mesh' %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] }}'
+    {% elif is_owned_uplink %}
+      {% if network.get('uplink_proto') == 'pppoe' %}
+	option proto 'pppoe'
+	option username '{{ network['pppoe_username'] }}'
+	option password '{{ network['pppoe_password'] }}'
+	{# IPv6CP stays off: DHCPv6-PD (below) doesn't need it, and turning it on makes
+	   ppp6-up auto-create a second dynamic "{{ name }}_6" dhcpv6 interface that
+	   races the explicit "{{ name }}6" one below for the same device - see
+	   openwrt/netifd#72. #}
+	option ipv6 '0'
+      {% else %}
+{{ undef("network '" ~ name ~ "': uplink_topology: root currently only supports uplink_proto: pppoe; got uplink_proto=" ~ (network.get('uplink_proto', 'unset') | string)) }}
+      {% endif %}
     {% else %}
 	option proto 'none'
     {% endif %}
-    {% if role == 'corerouter' and ipv6_prefix is defined %}
+    {% if role == 'corerouter' and network.get('direct_internet') %}
+	{# IPv6 for internet access is delegated live from whatever prefix the uplink receives
+	   from the ISP (see the uplink's 'wan6'/reqprefix below), not carved out of our own
+	   internal ipv6_prefix. #}
+	option ip6assign '64'
+      {% if network.get('ip6class') %}
+	option ip6class '{{ network['ip6class'] }}'
+      {% endif %}
+    {% elif role == 'corerouter' and ipv6_prefix is defined %}
       {% if 'ipv6_subprefix' in network %}
         {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
 	option ip6addr '{{ subprefix | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
       {% endif %}
+    {% endif %}
+  {% endif %}
+
+  {% if is_owned_uplink and network.get('uplink_proto') == 'pppoe' %}
+config interface '{{ name }}6'
+	option device '@{{ name }}'
+	option proto 'dhcpv6'
+  {% if network.get('ipv6_reqaddress') %}
+	option reqaddress '{{ network['ipv6_reqaddress'] }}'
+  {% endif %}
+	option reqprefix '{{ network.get('ipv6_reqprefix', 'auto') }}'
+  {% if network.get('ipv6_norelease') %}
+	option norelease '1'
+  {% endif %}
+
+    {% if network.get('ipv6_default_route') %}
+    {# Bound to "{{ name }}6" (the dhcpv6 interface), not "{{ name }}" (the pppoe
+       interface): odhcpd's default-route detection for a direct_internet network's
+       RA lifetime is scoped to the interface its prefix delegation is attributed to
+       (ip6class), which is "{{ name }}6". A route bound to "{{ name }}" is invisible
+       to that check, so odhcpd never sees a default route and zeroes ra_lifetime -
+       even though the route itself still resolves fine at the routing-table level. #}
+config route6 '{{ name }}6_default'
+	option interface '{{ name }}6'
+	option target '::/0'
+	option metric '512'
     {% endif %}
   {% endif %}
 

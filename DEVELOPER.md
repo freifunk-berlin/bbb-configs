@@ -324,7 +324,7 @@ Some integrated LTE modems work with the [QMI protocol](https://openwrt.org/docs
     untagged: true
     ifname: wwan0
     role: uplink
-    uplink_mode: direct
+    uplink_topology: netns-move-interface
 
   - role: tunnel
     ifname: ts_wg0
@@ -339,6 +339,64 @@ qmi:
     pdptype: ipv4
 ```
 
+### uplink via PPPoE/VDSL
+
+For a location that has its own DSL line as the actual internet connection (rather than joining the Freifunk mesh via a neighbor's uplink), the corerouter can dial PPPoE directly. This needs the modem's line parameters declared once at the top level:
+
+```yml
+dsl:
+  annex: j            # as printed on your line/ISP docs, e.g. 'b' for most German VDSL lines
+  tone: b
+```
+
+Only ATM lines (rare for VDSL2, more common on old ADSL) need `config
+atm-bridge` - not currently supported by this `dsl:` block.
+
+and an uplink network with `uplink_proto: pppoe`:
+
+```yml
+networks:
+  - role: uplink
+    name: wan
+    ifname: dsl0               # the modem's virtual ethernet-like device
+    untagged: true
+    uplink_topology: root       # see below
+    uplink_proto: pppoe
+    pppoe_username: "file:/root/pppoe_user"
+    pppoe_password: "file:/root/pppoe_pass"
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.203.126/32
+    wireguard_port: 51820
+```
+
+This dials a single PPPoE session in the root namespace (`config interface 'wan'`), giving the router a real, usable default route there. Unlike the LTE/wireless uplink patterns, `uplink_topology: root` tells tunspace not to create a separate namespace or macvlan clone at all — the WireGuard tunnel to the Freifunk backbone (and any registration handshake with a gateway) uses that same root-namespace route directly. This only works because the DSL line is fully owned by this router; do not use `uplink_topology: root` for a borrowed/foreign uplink (neighbor's wifi, etc.), since that would let ordinary mesh traffic leak onto it un-tunneled - use `netns-macvlan-bridge`/`netns-move-interface`/`netns-macvlan-passthru` for those instead.
+
+A `dhcp` or `private`-style network can then be routed directly out over this same PPPoE connection instead of through the mesh, by setting `direct_internet: true`:
+
+```yml
+  - vid: 41
+    role: dhcp
+    name: private
+    prefix: 10.31.203.64/27
+    inbound_filtering: true
+    enforce_client_isolation: true
+    no_corerouter_dns_record: true
+    direct_internet: true       # NAT (v4) / route (v6) straight out the uplink instead of into the freifunk/mesh zone
+    ip6class: wan6              # only use the prefix delegated by the uplink's wan6 interface
+    assignments:
+      otto-core: 1
+```
+
+IPv4 for a `direct_internet` network is masqueraded out the uplink (there's no delegated IPv4 space on a residential PPPoE line). IPv6 instead gets `ip6assign '64'`, carving a real routed `/64` out of whatever prefix the uplink's `wan6` interface receives - not masqueraded, and not taken from this location's own internal `ipv6_prefix` like every other network here.
+
+Isolation between `direct_internet` networks and Freifunk is structural, not firewall-based. A corerouter with at least one `direct_internet` network gets a `vrf_freifunk` device (`config device`, `option type 'vrf'`, table `vrf-freifunk`), and every one of its *other* networks (plus the WireGuard tunnel interface) becomes a VRF port instead of being reachable through ip-rule policy routing. `private` itself is deliberately left out of any VRF and stays in the main table with the uplink - so `vrf_freifunk`'s routing table simply never contains a route to `private`'s subnet, and `private`'s own main-table lookups never contain a route to Freifunk (`fail_closed_main_freifunk_v4`/`v6` guarantee that, unconditionally, on every corerouter). Neither direction needs a firewall rule to enforce it - there's no `private → freifunk` or `freifunk → private` forwarding rule at all, and none should be added. `private`'s own prefix is also no longer announced into Babel (the existing `no_mesh_prefixes` export filter in `bird.conf.j2` already excludes any `direct_internet` network), so Freifunk has no way to even learn a route back to it.
+
+`bird`'s `babel` protocol is bound to `vrf "vrf_freifunk"` on these corerouters, and a dedicated Babel-sourced-only kernel-table export (table 20, avoiding leaking any locally-connected `direct_internet` subnet into the VRF) feeds `vrf_freifunk`'s routing table. This VRF path assumes `bird_only: true` (the default) - it does not have an OLSR-side equivalent.
+
+This adds a `zone_wan` firewall zone bound to the uplink interface (IPv4 masqueraded, IPv6 routed - see above) with `input` rejected by default since it faces the raw internet, and forwards the network's zone there instead of into `zone_freifunk`. That zone also carries an explicit `Allow-DHCPv6` rule (UDP 546) despite the input reject: DHCPv6-PD replies don't match conntrack established/related, because the client's Solicit goes to the `ff02::1:2` multicast group while the server's Advertise/Reply comes from its own unicast address, so the reverse packet never matches the forward flow's tuple. Without the explicit rule, odhcp6c never sees a reply and the `wan6` interface sits pending forever - this is not a redundant exception to remove during cleanup.
 
 ### ext
 
@@ -410,6 +468,35 @@ An optional configuration parameter can be added to any non-tunnel interface to 
 
 **WARNING:** This is made ineffective if [flow offloading](#flow-offloading) is enabled.
 
+By default this installs [`qos-scripts`](https://github.com/openwrt/packages/tree/master/net/qos-scripts) (a legacy HTB-based shaper). To use [`qosify`](https://github.com/openwrt/qosify) instead - a maintained CAKE + eBPF-based shaper with DSCP classification and per-link overhead compensation, recommended for new links - add `qos_engine: qosify`:
+
+```yml
+  - vid: 50
+    role: uplink
+    ingress: 150
+    egress: 50
+    qos_engine: qosify
+    qosify_overhead_type: pppoe-llcsnap   # optional, defaults to 'none' - see qosify's overhead_type
+```
+
+### ad blocking
+
+Corerouters can run DNS-based ad blocking via dnsmasq. It's off by default (`adblock_enabled: false`); enable it per location:
+
+```yml
+adblock_enabled: true
+adblock_provider: lean   # 'fast' (default) or 'lean'
+```
+
+Two mutually exclusive providers are supported, selected by `adblock_provider`:
+
+- **`fast`** (default): [`adblock-fast`](https://github.com/openwrt/packages/tree/master/net/adblock-fast) from the upstream OpenWrt `packages` feed, with its own LuCI app. Tunable via `adblock_fast_dns`, `adblock_fast_force_dns`, `adblock_fast_gateway_check`, `adblock_fast_ipv6_enabled`, `adblock_fast_procd_boot_wan_timeout`, and `adblock_fast_feeds` (a list of `{name, url}` blocklist sources).
+- **`lean`**: [`adblock-lean`](https://github.com/lynxthecat/adblock-lean), packaged in the `falter` feed (`falter-packages/packages/adblock-lean`). That package intentionally ships only the upstream runtime scripts with self-update disabled - bbb-configs owns everything else: `/etc/adblock-lean/config` (rendered from the `adblock_lean_*` variables below), the dnsmasq `addnmount` integration, cron scheduling, and service enablement. See `falter-packages/packages/adblock-lean/README.md` for the package's own update procedure - bumping that package's version can require matching changes to this project's `adblock-lean/config.j2` template if the upstream config format changes.
+
+`adblock_lean_*` variables map directly to `adblock-lean`'s own config keys (see the package's upstream documentation for exact semantics): `adblock_lean_raw_block_lists`, `adblock_lean_dnsmasq_block_lists`, `adblock_lean_dnsmasq_indexes`, `adblock_lean_dnsmasq_conf_dirs` (see the comment above its definition in `group_vars/role_corerouter/general.yml` - this one is fragile, derived from a UCI-internal ID), `adblock_lean_min_good_line_count`, `adblock_lean_max_file_part_size_kb`, `adblock_lean_max_blocklist_file_size_kb`, `adblock_lean_boot_start_delay_s`, and `adblock_lean_cron_schedule`.
+
+Do not set `adblock_provider: lean` without also having the `falter` feed available to the image build (see the feed setup in `roles/cfg_openwrt/tasks/imagebuilder.yml`) - the `adblock-lean` package only exists there, not in upstream OpenWrt's `packages` feed.
+
 ### ssh-keys
 
 By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys use this format:
@@ -451,6 +538,33 @@ host__packages__to_merge:
 ```
 
 This is useful for replacing kernel modules with alternative versions.
+
+### sysfs overrides and CPU governor
+
+`sysfs_overrides` writes arbitrary `value`s to arbitrary sysfs `path`s at boot, generically - it has no knowledge of what any given path does:
+
+```yml
+sysfs_overrides:
+  - path: /sys/class/leds/some-led/brightness
+    value: 0
+```
+
+Applied by a dedicated `/etc/init.d/sysfs-overrides` (not `rc.local` - see below), early in boot (`START=12`), **in the order listed**. A missing path or a failed write is logged via `logger` (visible in `logread`, tag `sysfs-overrides`) and that entry is skipped; it does not abort the rest of the list or fail the boot.
+
+Ordering matters for anything whose path only exists conditionally - the canonical example is a cpufreq governor's own tunables (e.g. `ondemand`'s `sampling_rate`, `sampling_down_factor`, `up_threshold` under `/sys/devices/system/cpu/cpufreq/ondemand/`), which the kernel only creates once that governor is actually selected. For exactly this case, use `cpu_governor` instead of a raw `scaling_governor` sysfs_overrides entry:
+
+```yml
+cpu_governor: ondemand
+sysfs_overrides:
+  - path: /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate
+    value: 400000
+  - path: /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
+    value: 5
+  - path: /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
+    value: 40
+```
+
+`cpu_governor` is applied before `sysfs_overrides`, in the same init script, which is what guarantees the tunables directory exists by the time the entries above run - not any governor-specific logic in `sysfs_overrides` itself. `cpu_governor` only writes `cpu0`'s `scaling_governor`; this assumes a single shared cpufreq policy across all cores, true for most embedded router SoCs (verified for `avm_fritzbox-7530`/IPQ40xx via `cpu0/cpufreq/related_cpus` listing every core). Hardware with independent per-core policies needs one `sysfs_overrides` entry per core instead of `cpu_governor`.
 
 ### wireless profiles
 

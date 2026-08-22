@@ -17,3 +17,10 @@ net.ipv6.conf.{{ port | replace('.', '/') }}.accept_ra=2
   {% endif %}
   {% endfor %}
 {% endif %}
+
+{% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list %}
+{% set vrf_freifunk_active = role == 'corerouter' and l3_networks | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | length > 0 %}
+{% if vrf_freifunk_active %}
+{# Without this, enslaving an interface into vrf_freifunk flushes its global IPv6 address (IPv4 unaffected). #}
+net.ipv6.conf.all.keep_addr_on_down=1
+{% endif %}

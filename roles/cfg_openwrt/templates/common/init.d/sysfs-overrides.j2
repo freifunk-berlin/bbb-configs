@@ -1,0 +1,49 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+#!/bin/sh /etc/rc.common
+# Applies cpu_governor and sysfs_overrides at boot.
+#
+# Runs as a dedicated early init script instead of from rc.local: rc.local
+# runs last of all init scripts (START=95), long after boot, which is both
+# needlessly late for something like a CPU governor and not actually where
+# the ordering guarantee below is enforced - START here is what guarantees
+# cpu_governor (if any) is applied before sysfs_overrides, since both run
+# in the same script in declaration order.
+#
+# Generic by design: apply_override() only knows about (path, value) pairs.
+# cpu_governor is sugar that expands to one such pair, rendered first - nothing
+# here has any special knowledge of "ondemand" or any other governor. Some
+# sysfs paths (e.g. a cpufreq governor's own tunables directory) only exist
+# once that governor is selected; the kernel creates them synchronously
+# inside the same write() that sets scaling_governor, so ordering entries
+# correctly (governor before its tunables) is sufficient - no polling or
+# retry logic is needed.
+START=12
+
+apply_override() {
+	local path="$1" value="$2"
+
+	if [ ! -e "$path" ]; then
+		logger -t sysfs-overrides -p daemon.err "path does not exist, skipping: $path"
+		return 1
+	fi
+
+	if ! echo "$value" > "$path" 2>/dev/null; then
+		logger -t sysfs-overrides -p daemon.err "failed to write '$value' to $path"
+		return 1
+	fi
+}
+
+start() {
+{% if cpu_governor is defined %}
+	# Targets cpu0 only: assumes a single shared cpufreq policy across all
+	# cores, which covers most embedded router SoCs (verified for
+	# otto-core/IPQ40xx via /sys/devices/system/cpu/cpu0/cpufreq/related_cpus
+	# listing all cores). Hardware with independent per-core policies needs
+	# one sysfs_overrides entry per core/policy instead of cpu_governor.
+	apply_override "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" "{{ cpu_governor }}"
+{% endif %}
+{% for override in sysfs_overrides | default([]) %}
+	apply_override "{{ override['path'] }}" "{{ override['value'] }}"
+{% endfor %}
+	:
+}

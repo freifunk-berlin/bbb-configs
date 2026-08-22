@@ -1,5 +1,6 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
+{% set vrf_freifunk_active = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | length > 0 %}
 
 log syslog all;
 #debug protocols {states};
@@ -11,6 +12,10 @@ include "/dev/shm/bird_*.conf";
 ipv6 sadr table v6_main;
 ipv4 table v4_babel_ff;
 ipv4 table v4_babel_default;
+{% if vrf_freifunk_active %}
+ipv4 table v4_freifunk_vrf;
+ipv6 sadr table v6_freifunk_vrf;
+{% endif %}
 
 protocol device {
 };
@@ -23,6 +28,9 @@ protocol direct {
 }
 
 protocol babel {
+{% if vrf_freifunk_active %}
+	vrf "vrf_freifunk";
+{% endif %}
 	randomize router id yes;
 	ipv6 sadr {
 		table v6_main;
@@ -44,6 +52,7 @@ protocol babel {
 			accept;
 		};
 
+		{# direct_internet networks use ip6assign/ip6class (a different prefix than ipv6_prefix), so they can't match either clause below - no explicit exclusion needed. #}
 		export filter {
 			if net = {{ ipv6_prefix }} from ::/0 then accept;
 			if source = RTS_BABEL then accept;
@@ -66,7 +75,21 @@ protocol babel {
 {% endfor %}
 			accept;
 		};
-		export where source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]; # Readvertise learned routes and advertise local networks from 10/8
+{% set no_mesh_prefixes = [] %}
+{% for nw in networks %}
+  {% if nw.get('direct_internet') %}
+    {% set _ = no_mesh_prefixes.append(nw['prefix']) %}
+  {% endif %}
+{% endfor %}
+		{# Unlike ipv6 sadr above, this needs an explicit reject: ipv4 direct_internet prefixes still live in 10.0.0.0/8, so the general accept below would otherwise re-admit them. Must stay ordered before that accept - BIRD's "if cond then reject;" is terminal. #}
+		export filter {
+{% if no_mesh_prefixes | length > 0 %}
+			# direct_internet networks use only the ISP uplink and must not be announced as Freifunk client prefixes.
+			if net ~ [ {{ no_mesh_prefixes | join(', ') }} ] then reject;
+{% endif %}
+			if source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ] then accept; # Readvertise learned routes and advertise local networks from 10/8
+			reject;
+		};
 	};
 
 	# Mesh interfaces
@@ -86,6 +109,7 @@ protocol babel {
 }
 
 protocol kernel {
+	kernel table 12;
 	ipv6 sadr {
 		table v6_main;
 		import all;
@@ -96,7 +120,8 @@ protocol kernel {
 
 
 
-# Currently not in use but keep for later purposes
+# Keep Babel IPv4 routes in policy tables so Freifunk-source traffic cannot
+# fall through to direct-internet uplinks in the kernel main table.
 protocol kernel {
 	ipv4 {
 		import none;
@@ -104,7 +129,6 @@ protocol kernel {
 	};
 }
 
-# TODO: Get rid of the following when OLSRD is gone
 protocol kernel {
 	kernel table 10;
 	ipv4 {
@@ -134,3 +158,42 @@ protocol pipe {
 	peer table v4_babel_default;
 	export where net = 0.0.0.0/0;
 }
+
+{% if vrf_freifunk_active %}
+# vrf_freifunk (network.j2) enslaves this location's non-direct_internet
+# networks into table 'vrf-freifunk' (20); only Babel-sourced routes are fed
+# in here - connected routes for enslaved devices are populated by the
+# kernel itself, and admitting anything else here would leak direct_internet
+# networks' own subnets into the Freifunk-reachable table.
+protocol pipe {
+        table master4;
+	peer table v4_freifunk_vrf;
+	export where source = RTS_BABEL;
+}
+
+protocol kernel {
+	vrf "vrf_freifunk";
+	kernel table 20;
+	ipv4 {
+		table v4_freifunk_vrf;
+		import none;
+		export all;
+	};
+}
+
+protocol pipe {
+	table v6_main;
+	peer table v6_freifunk_vrf;
+	export where source = RTS_BABEL;
+}
+
+protocol kernel {
+	vrf "vrf_freifunk";
+	kernel table 20;
+	ipv6 sadr {
+		table v6_freifunk_vrf;
+		import none;
+		export all;
+	};
+}
+{% endif %}

@@ -13,7 +13,11 @@
         {% set ifname = getPortIfname(network) %}
     {% endif %}
 
-{{- (ifname if ifname | length <= 15) | mandatory('The generated interface name exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') -}}
+{%- if ifname | length > 15 %}
+{{ undef('The generated interface name "' ~ ifname ~ '" exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') }}
+{%- else -%}
+{{- ifname -}}
+{%- endif %}
 {% endmacro %}
 
 {# Retrieve the Port Name of a network. This is either a physical vlan subinterface, or the switch vlan subinterface from DSA #}
@@ -47,7 +51,7 @@
 {% macro isBridgeNeeded(network) %}
 {{- (int_port is defined and (getUciIfname(network) in getWirelessNetworks()
      or (role == 'ap' and network.get('mesh_ap') == inventory_hostname)
-     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') != 'direct'))) | to_json -}}
+     or (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_topology') != 'netns-move-interface'))) | to_json -}}
 {% endmacro %}
 
 {# Do we need to configure a port or is this network only connected local (e.g. Mesh Endpoint on the core router)

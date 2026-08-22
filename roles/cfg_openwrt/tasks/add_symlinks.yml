@@ -11,3 +11,45 @@
     dest: "{{ configs_dir }}/etc/rc.d/S15replace_secrets"
     state: link
   when: role == "corerouter" or role == "ap"
+
+# One-shot boot action, no stop needed - matches replace_secrets above.
+- name: Enable sysfs-overrides symlink
+  file:
+    src: "../init.d/sysfs-overrides"
+    dest: "{{ configs_dir }}/etc/rc.d/S12sysfs-overrides"
+    state: link
+  when:
+    - (sysfs_overrides | default([]) | length > 0) or (cpu_governor is defined)
+
+# Deliberately create the rc.d symlinks directly instead of running
+# `service adblock-lean enable`: that shell function also calls
+# upd_cron_job(), which writes a cron entry directly into the live
+# crontab - a second, imperative owner of /etc/crontabs/root that would
+# fight crontabs/root.j2 (the declarative, Ansible-rendered one) and could
+# leave stale entries behind across sysupgrades. Symlinking directly gets
+# the same "enabled" end state without ever calling that function. Do not
+# "simplify" this to `service adblock-lean enable` without re-checking
+# that upd_cron_job() still isn't reachable from boot()/start() upstream.
+- name: Enable adblock-lean start symlink
+  file:
+    src: "../init.d/adblock-lean"
+    dest: "{{ configs_dir }}/etc/rc.d/S99adblock-lean"
+    state: link
+    force: true
+    follow: false
+  when:
+    - role == "corerouter"
+    - adblock_enabled | default(false) | bool
+    - adblock_provider | default('fast') == 'lean'
+
+- name: Enable adblock-lean stop symlink
+  file:
+    src: "../init.d/adblock-lean"
+    dest: "{{ configs_dir }}/etc/rc.d/K04adblock-lean"
+    state: link
+    force: true
+    follow: false
+  when:
+    - role == "corerouter"
+    - adblock_enabled | default(false) | bool
+    - adblock_provider | default('fast') == 'lean'

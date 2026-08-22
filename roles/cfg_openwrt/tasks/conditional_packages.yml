@@ -33,6 +33,30 @@
     - networks | selectattr('role', 'defined') | selectattr('role','equalto','tunnel') | count > 0
     - role == 'corerouter'
 
+- name: "Add kmod-vrf for VRF-based freifunk isolation if configured"
+  set_fact:
+    packages: "{{ packages + ['kmod-vrf'] }}"
+  when:
+    - role == 'corerouter'
+    - networks is defined
+    - networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname)
+      | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | length > 0
+
+- name: "Add DSL/PPPoE support if configured"
+  set_fact:
+    packages: >-
+      {{
+        packages
+        | map('split')
+        | flatten
+        | reject('in', ['-ppp', '-ppp-mod-pppoe', '-ltq-vdsl-vr11-app'])
+        | list
+        + ['ppp', 'ppp-mod-pppoe', 'ltq-vdsl-vr11-app']
+      }}
+  when:
+    - role == 'corerouter'
+    - dsl is defined
+
 - name: "Add zram-swap on low mem and big flash"
   set_fact:
     packages: "{{ packages + ['zram-swap'] }}"
@@ -54,6 +78,15 @@
   when:
     - role == 'corerouter'
     - adblock_enabled | default(false) | bool
+    - adblock_provider | default('fast') == 'fast'
+
+- name: "Add adblock-lean support on core-routers"
+  set_fact:
+    packages: "{{ packages + ['-adblock-fast', '-luci-app-adblock-fast', 'adblock-lean'] }}"
+  when:
+    - role == 'corerouter'
+    - adblock_enabled | default(false) | bool
+    - adblock_provider | default('fast') == 'lean'
 
 - name: "Remove or replace packages on low mem and low flash"
   set_fact:
@@ -107,4 +140,68 @@
     packages: "{{ packages + ['qos-scripts'] }}"
   when:
     - networks is defined
-    - networks | selectattr('ingress', 'defined') | count > 0 or networks | selectattr('egress', 'defined') | count > 0
+    # NOTE: tried collapsing this to rejectattr('qos_engine', 'equalto', 'qosify')
+    # to cover both "unset" and "set to something else" in one pass - that's
+    # equivalent under plain Jinja2 (verified), but Ansible's `when:` conditional
+    # evaluation is stricter and raises "object has no attribute 'qos_engine'"
+    # for the items where it's genuinely undefined, instead of treating the
+    # equalto test as falsy. Keeping the split defined/undefined form below,
+    # which is proven to work against this project's actual Ansible version.
+    - networks | rejectattr('qos_engine', 'defined') | selectattr('ingress', 'defined') | count > 0
+      or networks | rejectattr('qos_engine', 'defined') | selectattr('egress', 'defined') | count > 0
+      or networks | selectattr('qos_engine', 'defined') | rejectattr('qos_engine', 'equalto', 'qosify') | selectattr('ingress', 'defined') | count > 0
+      or networks | selectattr('qos_engine', 'defined') | rejectattr('qos_engine', 'equalto', 'qosify') | selectattr('egress', 'defined') | count > 0
+
+- name: "Add qosify support if configured"
+  set_fact:
+    packages: "{{ packages + ['qosify'] }}"
+  when:
+    - networks is defined
+    - networks | selectattr('qos_engine', 'defined') | selectattr('qos_engine', 'equalto', 'qosify') | selectattr('ingress', 'defined') | count > 0
+      or networks | selectattr('qos_engine', 'defined') | selectattr('qos_engine', 'equalto', 'qosify') | selectattr('egress', 'defined') | count > 0
+
+- name: "Add OLSR packages for corerouters when bird_only is disabled"
+  set_fact:
+    packages: "{{ packages + [item] }}"
+  when:
+    - not (bird_only | default(true))
+    - role == 'corerouter'
+  loop:
+    - olsrd
+    - olsrd-mod-arprefresh
+    - olsrd-mod-dyn-gw
+    - olsrd-mod-jsoninfo
+    - olsrd-mod-nameservice
+    - olsrd-mod-txtinfo
+    - olsrd-utils
+    - luci-app-olsr
+    - luci-app-olsr-services
+    - collectd-mod-olsrd
+
+- name: "Add OLSR packages for gateways when bird_only is disabled"
+  set_fact:
+    packages: "{{ packages + [item] }}"
+  when:
+    - not (bird_only | default(true))
+    - role == 'gateway'
+  loop:
+    - olsrd
+    - olsrd-mod-arprefresh
+    - olsrd-mod-jsoninfo
+    - olsrd-mod-nameservice
+    - olsrd-mod-txtinfo
+    - olsrd-utils
+    - luci-app-olsr
+    - luci-app-olsr-services
+    - wg-installer-server-hotplug-olsrd
+    - collectd-mod-olsrd
+
+- name: "Disable olsrd6"
+  set_fact:
+    disabled_services: "{{ disabled_services + ['olsrd6'] }}"
+  when:
+    # Unconditional, not just when bird_only is disabled: a harmless no-op
+    # when olsrd6 was never installed, but keeps the old fleet-wide defense
+    # in depth for bird-only hosts instead of relying solely on the package
+    # never being present.
+    - role == 'corerouter' or role == 'gateway'
