@@ -452,6 +452,33 @@ host__packages__to_merge:
 
 This is useful for replacing kernel modules with alternative versions.
 
+### sysfs overrides and CPU governor
+
+`sysfs_overrides` writes arbitrary `value`s to arbitrary sysfs `path`s at boot, generically - it has no knowledge of what any given path does:
+
+```yml
+sysfs_overrides:
+  - path: /sys/class/leds/some-led/brightness
+    value: 0
+```
+
+Applied by a dedicated `/etc/init.d/sysfs-overrides` (not `rc.local` - see below), early in boot (`START=12`), **in the order listed**. A missing path or a failed write is logged via `logger` (visible in `logread`, tag `sysfs-overrides`) and that entry is skipped; it does not abort the rest of the list or fail the boot.
+
+Ordering matters for anything whose path only exists conditionally - the canonical example is a cpufreq governor's own tunables (e.g. `ondemand`'s `sampling_rate`, `sampling_down_factor`, `up_threshold` under `/sys/devices/system/cpu/cpufreq/ondemand/`), which the kernel only creates once that governor is actually selected. For exactly this case, use `cpu_governor` instead of a raw `scaling_governor` sysfs_overrides entry:
+
+```yml
+cpu_governor: ondemand
+sysfs_overrides:
+  - path: /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate
+    value: 400000
+  - path: /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
+    value: 5
+  - path: /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
+    value: 40
+```
+
+`cpu_governor` is applied before `sysfs_overrides`, in the same init script, which is what guarantees the tunables directory exists by the time the entries above run - not any governor-specific logic in `sysfs_overrides` itself. `cpu_governor` only writes `cpu0`'s `scaling_governor`; this assumes a single shared cpufreq policy across all cores, true for most embedded router SoCs (verified for `avm_fritzbox-7530`/IPQ40xx via `cpu0/cpufreq/related_cpus` listing every core). Hardware with independent per-core policies needs one `sysfs_overrides` entry per core instead of `cpu_governor`.
+
 ### wireless profiles
 
 <!-- TODO: this section needs to be improved -->

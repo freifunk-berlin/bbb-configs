@@ -11,3 +11,11 @@
     dest: "{{ configs_dir }}/etc/rc.d/S15replace_secrets"
     state: link
   when: role == "corerouter" or role == "ap"
+
+- name: Enable sysfs-overrides symlink
+  file:
+    src: "../init.d/sysfs-overrides"
+    dest: "{{ configs_dir }}/etc/rc.d/S12sysfs-overrides"
+    state: link
+  when:
+    - (sysfs_overrides | default([]) | length > 0) or (cpu_governor is defined)

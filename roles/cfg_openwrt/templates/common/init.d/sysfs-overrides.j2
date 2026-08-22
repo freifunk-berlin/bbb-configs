@@ -1,0 +1,29 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+#!/bin/sh /etc/rc.common
+# Dedicated early script (not rc.local) so cpu_governor always runs before sysfs_overrides - see DEVELOPER.md.
+START=12
+
+apply_override() {
+	local path="$1" value="$2"
+
+	if [ ! -e "$path" ]; then
+		logger -t sysfs-overrides -p daemon.err "path does not exist, skipping: $path"
+		return 1
+	fi
+
+	if ! echo "$value" > "$path" 2>/dev/null; then
+		logger -t sysfs-overrides -p daemon.err "failed to write '$value' to $path"
+		return 1
+	fi
+}
+
+start() {
+{% if cpu_governor is defined %}
+	# cpu0 only - assumes a single shared cpufreq policy across cores, see DEVELOPER.md.
+	apply_override "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" "{{ cpu_governor }}"
+{% endif %}
+{% for override in sysfs_overrides | default([]) %}
+	apply_override "{{ override['path'] }}" "{{ override['value'] }}"
+{% endfor %}
+	:
+}
