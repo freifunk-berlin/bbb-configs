@@ -12,6 +12,7 @@ hosts:
   - hostname: perle44-core
     role: corerouter
     model: cudy_wr3000e-v1
+    openwrt_version: snapshot
     wireless_profile: freifunk_default
     host__rclocal__to_merge:
       - |
