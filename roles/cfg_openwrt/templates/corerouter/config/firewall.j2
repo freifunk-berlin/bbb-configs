@@ -23,7 +23,6 @@ config zone 'zone_freifunk'
 	{% for name in zone_freifunk_networks %}
 	list network '{{ name }}'
 	{% endfor %}
-	list device 'wg_+'
 	list device 'ts_+'
 
 {% for i in l3_networks | selectattr('inbound_filtering') %}
@@ -32,6 +31,27 @@ config zone 'zone_{{ i['name'] }}'
         list network '{{ i['name'] }}'
 
 {% endfor %}
+{% if wireguard_access is defined %}
+{% set wg_vids = wireguard_access['peers'] | map(attribute='vid') | unique | list %}
+{% for vid in wg_vids %}
+{% set network = networks | selectattr('vid', 'equalto', vid) | first %}
+{% set peer = wireguard_access['peers'] | selectattr('vid', 'equalto', vid) | first %}
+{% set wg_ifname = 'wg_' ~ peer['assignment'] %}
+{% if network.inbound_filtering | default(false) %}
+config zone 'zone_{{ network.name }}'
+        list device '{{ wg_ifname }}'
+{% else %}
+config zone 'zone_freifunk'
+        list device '{{ wg_ifname }}'
+{% endif %}
+{% endfor %}
+config rule
+        option name             'Allow WireGuard Access VPN'
+        option proto            udp
+        option dest_port        '{{ wireguard_access['port'] | default(51820) }}'
+        option target           ACCEPT
+
+{% endif %}
 config forwarding
 	option dest 'freifunk'
 	option src 'freifunk'
