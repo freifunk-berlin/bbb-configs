@@ -257,6 +257,23 @@ config rule
 	option target		ACCEPT
 {% endfor %}
 
+# Allow WireGuard access VPN connections to corerouters
+{% for h in groups['role_corerouter'] | sort %}
+{% set h_vars = hostvars[h] %}
+{% if h_vars['wireguard_access'] is defined and h_vars['ipv6_prefix'] is defined %}
+{% set wg_port = h_vars['wireguard_access']['port'] | default(51820) %}
+config rule
+	option name		'Allow WireGuard access VPN {{ h }}'
+	option src		uplink
+	option dest		freifunk
+	option dest_ip		'{{ h_vars['ipv6_prefix'] }}'
+	option proto		udp
+	option dest_port	'{{ wg_port }}'
+	option target		ACCEPT
+
+{% endif %}
+{% endfor %}
+
 # Allow essential forwarded IPv6 ICMP traffic
 config rule
 	option name		Allow-ICMPv6-Forward
