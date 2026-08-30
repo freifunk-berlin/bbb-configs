@@ -1,0 +1,3 @@
+{% if adblock_enabled | default(false) | bool and adblock_provider | default('fast') == 'lean' and adblock_lean_cron_schedule | default('disable') != 'disable' %}
+{{ adblock_lean_cron_schedule }} /etc/init.d/adblock-lean start
+{% endif %}

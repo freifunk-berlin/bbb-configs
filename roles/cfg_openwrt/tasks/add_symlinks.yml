@@ -19,3 +19,29 @@
     state: link
   when:
     - (sysfs_overrides | default([]) | length > 0) or (cpu_governor is defined)
+
+# Symlink directly instead of `service adblock-lean enable`: that shell function also
+# writes a cron entry itself, which would fight crontabs/root.j2's declarative rendering.
+- name: Enable adblock-lean start symlink
+  file:
+    src: "../init.d/adblock-lean"
+    dest: "{{ configs_dir }}/etc/rc.d/S99adblock-lean"
+    state: link
+    force: true
+    follow: false
+  when:
+    - role == "corerouter"
+    - adblock_enabled | default(false) | bool
+    - adblock_provider | default('fast') == 'lean'
+
+- name: Enable adblock-lean stop symlink
+  file:
+    src: "../init.d/adblock-lean"
+    dest: "{{ configs_dir }}/etc/rc.d/K04adblock-lean"
+    state: link
+    force: true
+    follow: false
+  when:
+    - role == "corerouter"
+    - adblock_enabled | default(false) | bool
+    - adblock_provider | default('fast') == 'lean'
