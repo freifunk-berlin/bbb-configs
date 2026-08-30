@@ -605,6 +605,13 @@ location__wireless_profiles__to_merge:
         ifname_hint: prdhcp
 ```
 
+#### 802.11k/v (RRM/WNM) options
+
+`disassoc_low_ack` defaults to `1` (hostapd disassociates a client purely on excessive tx
+failures/low ACK rate) and is left unset repo-wide; `locations/otto.yml` overrides it to `0` per-BSS
+since otto-core sees marginal links where that eagerness just forces an immediate reconnect instead
+of letting the link recover.
+
 ## groups_vars/
 
 ### all/
