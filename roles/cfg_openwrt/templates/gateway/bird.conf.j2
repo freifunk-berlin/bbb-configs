@@ -14,8 +14,10 @@ protocol device { };
 
 ipv6 sadr table v6_main;
 ipv4 table v4_main;
+{% if not (bird_only | default(true)) %}
 ipv4 table v4_babel_ff;
 ipv4 table v4_babel_default;
+{% endif %}
 
 
 protocol kernel kernel_v6_main {
@@ -27,8 +29,16 @@ protocol kernel kernel_v6_main {
 	learn all; # Allow learning loopback route
 }
 
-# Currently not in use due to OLSRD->Babel migration
-# For now babel IPv4 routes land in the subsequent KRTs
+{% if bird_only | default(true) %}
+protocol kernel kernel_v4_main {
+	ipv4 {
+		table v4_main;
+		import all;
+		export all;
+	};
+	learn all;
+}
+{% else %}
 protocol kernel kernel_v4_main {
 	ipv4 {
 		table v4_main;
@@ -68,6 +78,7 @@ protocol pipe pipe_v4_main_to_babel_default {
 	export where net = 0.0.0.0/0;
 	import none;
 }
+{% endif %}
 
 ##
 ## Uplink static IPv4 route

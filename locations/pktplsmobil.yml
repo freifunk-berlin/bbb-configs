@@ -62,7 +62,7 @@ networks:
     untagged: true
     ifname: wwan0
     role: uplink
-    uplink_mode: direct
+    uplink_topology: netns-move-interface
 
   - role: tunnel
     ifname: ts_wg0
