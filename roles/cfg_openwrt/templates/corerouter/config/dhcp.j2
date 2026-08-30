@@ -1,6 +1,16 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
-config dnsmasq
+{% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list %}
+{% set vrf_freifunk_active = role == 'corerouter' and l3_networks | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | length > 0 %}
+{% set ns = namespace(vrf_member_names=[], default_member_names=[]) %}
+{% for network in networks | rejectattr('role', 'in', ['uplink', 'wireless_uplink', 'mesh', 'tunnel', 'ext']) %}
+{% if not network.get('direct_internet') %}
+{% set ns.vrf_member_names = ns.vrf_member_names + [libnetwork.getUciIfname(network)] %}
+{% else %}
+{% set ns.default_member_names = ns.default_member_names + [libnetwork.getUciIfname(network)] %}
+{% endif %}
+{% endfor %}
+{% macro dnsmasq_common() %}
 	option domainneeded '1'
 	option localise_queries '1'
 	option rebind_protection '1'
@@ -24,6 +34,35 @@ config dnsmasq
 	list addnmount '/bin/busybox'
 	list addnmount '/var/run/adblock-lean/abl-blocklist.gz'
 {% endif %}
+{% endmacro %}
+config dnsmasq{{ " 'default'" if vrf_freifunk_active else "" }}
+{% if vrf_freifunk_active %}
+{# Positive scoping, not 'notinterface vrf_freifunk': excluding the VRF master device does NOT
+   exclude its slave interfaces' own link-local addresses (fe80::/10 is scope-link, bindable
+   regardless of VRF table membership), so this instance would still race vrf_freifunk's own
+   instance for switch0.40/switch0.42's fe80 addresses and lose ("Address in use"), permanently
+   crash-looping it. dnsmasq itself guarantees the loopback interface stays bound even under a
+   positive --interface= restriction (see enumerate_interfaces() in dnsmasq's network.c), so
+   127.0.0.1/::1 need no explicit entry here. #}
+  {% for name in ns.default_member_names %}
+	list interface '{{ name }}'
+  {% endfor %}
+{% endif %}
+{{ dnsmasq_common() }}
+{% if vrf_freifunk_active %}
+{# dnsmasq is a single default-table process: it can never bind/route to vrf_freifunk member
+   addresses (VRF virtualizes the local table too), so DNS/DHCP for those networks needs a
+   second instance actually running in that routing context. 'vrf' (procd's 'vrf' instance
+   param, see procd.sh/instance.c) is the routing/socket context; 'list interface' below is
+   the unrelated, ordinary dnsmasq option selecting which networks this instance serves - the
+   VRF master device itself is never a DHCP/DNS interface. #}
+config dnsmasq 'vrf_freifunk'
+	option vrf 'vrf_freifunk'
+  {% for name in ns.vrf_member_names %}
+	list interface '{{ name }}'
+  {% endfor %}
+{{ dnsmasq_common() }}
+{% endif %}
 
 {% if not (bird_only | default(true)) %}
 {% for network in networks | selectattr('role', 'equalto', 'mgmt') %}
@@ -42,6 +81,9 @@ config domain '{{ host | replace('-', '_') }}_olsr'
 config dhcp 'dhcp_{{ name }}'
 	option ignore '0'
 	option interface '{{ name }}'
+    {% if vrf_freifunk_active %}
+	option instance '{{ 'default' if network.get('direct_internet') else 'vrf_freifunk' }}'
+    {% endif %}
 	option ra 'server'
 	option dhcpv6 'disabled'
     {% if network['role'] == 'dhcp' %}
@@ -64,6 +106,9 @@ config dhcp 'dhcp_{{ name }}'
 config domain 'frei_funk_{{ name }}'
 	option name 'frei.funk'
 	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}'
+    {% if vrf_freifunk_active %}
+	option instance '{{ 'default' if network.get('direct_internet') else 'vrf_freifunk' }}'
+    {% endif %}
     {% endif %}
 {% endfor %}
 
@@ -81,6 +126,9 @@ config dhcp 'dhcp_{{ name }}'
 config host '{{ name }}_{{ assignment.replace("-", "_") }}'
 	option name '{{ assignment }}'
 	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][assignment]) | ansible.utils.ipaddr('address') }}'
+    {% if vrf_freifunk_active %}
+	option instance '{{ 'default' if network.get('direct_internet') else 'vrf_freifunk' }}'
+    {% endif %}
     {% endfor %}
 {% endfor %}
 

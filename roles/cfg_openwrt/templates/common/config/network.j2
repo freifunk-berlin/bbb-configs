@@ -2,10 +2,18 @@
 {% import 'libraries/network.j2' as libnetwork with context %}
 {% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list %}
 {% set mesh_networks = networks | selectattr('role', 'equalto', 'mesh') | list %}
-{% set freifunk_ipv4_policy_networks = l3_networks + mesh_networks %}
+{# unique: a mesh network can also carry 'assignments', which would otherwise duplicate it in both lists below. #}
+{% set freifunk_ipv4_policy_networks = (l3_networks + mesh_networks) | unique %}
+{# A corerouter with its own direct_internet uplink uses VRF-based isolation
+   (vrf_freifunk, below) instead of ip-rule policy routing for its
+   non-direct_internet networks - see DEVELOPER.md's direct_internet section. #}
+{% set vrf_freifunk_active = role == 'corerouter' and l3_networks | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | length > 0 %}
+{% if vrf_freifunk_active and not (bird_only | default(true)) %}
+{{ undef("VRF-based freifunk isolation (direct_internet networks) requires bird_only: true - OLSR-side routing into the vrf-freifunk table is not implemented") }}
+{% endif %}
 
 # Babel inserts into separate route table, add that to lookup list for IPv6
-{% if role == 'corerouter' and ipv6_prefix is defined %}
+{% if role == 'corerouter' and ipv6_prefix is defined and not vrf_freifunk_active %}
 config rule6
 	option priority 30000
 	option src '{{ ipv6_prefix }}'
@@ -15,7 +23,7 @@ config rule6
 
 # IPv4 Freifunk policy routing through Babel
 {% set freifunk_ipv4_policy_count = namespace(value=0) %}
-{% for network in freifunk_ipv4_policy_networks if network.get('prefix') and not network.get('direct_internet') %}
+{% for network in freifunk_ipv4_policy_networks if network.get('prefix') and not network.get('direct_internet') and not vrf_freifunk_active %}
 {% set rule_index = freifunk_ipv4_policy_count.value %}
 {% set freifunk_ipv4_policy_count.value = freifunk_ipv4_policy_count.value + 1 %}
 config rule
@@ -51,7 +59,7 @@ config route 'fail_closed_babel_default'
 	option metric '32767'
 
 {% endif %}
-{% if role == 'corerouter' and ipv6_prefix is defined %}
+{% if role == 'corerouter' and ipv6_prefix is defined and not vrf_freifunk_active %}
 config route6 'fail_closed_babel_src'
 	option type 'unreachable'
 	option target '::/0'
@@ -59,6 +67,8 @@ config route6 'fail_closed_babel_src'
 	option table 'babel-src'
 	option metric '32767'
 
+{% endif %}
+{% if role == 'corerouter' and ipv6_prefix is defined %}
 config route6 'fail_closed_main_freifunk_v6'
 	option type 'unreachable'
 	option target '{{ freifunk_global_prefix }}'
@@ -70,6 +80,24 @@ config route 'fail_closed_main_freifunk_v4'
 	option type 'unreachable'
 	option target '10.0.0.0/8'
 	option metric '32767'
+
+{% endif %}
+{% if vrf_freifunk_active %}
+{% set vrf_freifunk_members = freifunk_ipv4_policy_networks | rejectattr('direct_internet', 'defined') | list + freifunk_ipv4_policy_networks | selectattr('direct_internet', 'defined') | rejectattr('direct_internet') | list %}
+config device
+	option type 'vrf'
+	option name 'vrf_freifunk'
+	option table 'vrf-freifunk'
+  {% for network in vrf_freifunk_members %}
+	list ports '{{ libnetwork.getIfname(network) }}'
+  {% endfor %}
+  {% for tunnel in networks | selectattr('role', 'equalto', 'tunnel') %}
+	list ports '{{ tunnel['ifname'] }}'
+  {% endfor %}
+
+config interface 'vrf_freifunk'
+	option proto 'none'
+	option device 'vrf_freifunk'
 
 {% endif %}
 config interface 'loopback'
