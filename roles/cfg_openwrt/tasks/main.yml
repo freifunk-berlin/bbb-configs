@@ -79,6 +79,25 @@
     - always
     - config
 
+# Only rendered when vrf_freifunk_active (kept out of templates/corerouter/ so
+# render_etc.yml's always-on filetree loop can't create an empty /etc/config/dropbear
+# - which would blank out the package's own default config - on every other
+# corerouter). See DEVELOPER.md's direct_internet section: same detection as
+# network.j2/firewall.j2/dhcp.j2/sysctl.conf.j2, recomputed independently here
+# rather than shared, matching this repo's existing convention.
+- name: Add second (VRF-associated) dropbear config for Freifunk client SSH access
+  template:
+    src: "{{ role_path }}/templates/common/config/dropbear.j2"
+    dest: "{{ configs_dir }}/etc/config/dropbear"
+    mode: "644"
+  when:
+    - role == 'corerouter'
+    - networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname)
+        | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | length > 0
+  tags:
+    - always
+    - config
+
 - name: "Make sure /lib/firmware is present"
   file:
     dest: "{{ configs_dir }}/lib/firmware/ath10k"

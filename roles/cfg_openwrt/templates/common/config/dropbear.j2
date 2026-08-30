@@ -1,0 +1,38 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+{% import 'libraries/network.j2' as libnetwork with context %}
+{% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list %}
+{# See DEVELOPER.md's direct_internet section: same detection as network.j2/firewall.j2/dhcp.j2/sysctl.conf.j2, recomputed
+   independently per-template rather than shared, matching this repo's existing convention. #}
+{% set vrf_freifunk_active = role == 'corerouter' and l3_networks | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | length > 0 %}
+{% if vrf_freifunk_active %}
+{# The direct_internet network is the one excluded from vrf_freifunk (see network.j2's
+   vrf_freifunk_members) - it's the router's own main/root-table routing domain, used
+   here for private/management SSH access exactly as it is today (unrestricted, single
+   instance) everywhere vrf_freifunk isn't active. #}
+{% set private_network = l3_networks | selectattr('direct_internet', 'defined') | selectattr('direct_internet') | list | first %}
+{# The dhcp-role, non-direct_internet network is the public Freifunk client network
+   (mesh-routed, enslaved into vrf_freifunk) - see network.j2's vrf_freifunk_members
+   and the 'berlin.freifunk.net' wireless profile bound to it. #}
+{% set freifunk_network = l3_networks | selectattr('role', 'equalto', 'dhcp') | rejectattr('direct_internet', 'defined') | list | first %}
+
+# vrf_freifunk enslaves the Freifunk client network's interface into a separate
+# routing/socket domain (see network.j2), and net.ipv4.tcp_l3mdev_accept stays 0
+# (see sysctl.conf.j2) - a single default-table dropbear can never accept
+# connections arriving on that interface. Split into two instances instead,
+# exactly like dnsmasq's 'default'/'vrf_freifunk' split in dhcp.j2: one
+# ordinary instance for the main/root routing domain, and one explicitly
+# associated with vrf_freifunk via procd's generic 'vrf' instance param (see
+# dropbear.init, which just forwards it - dropbear itself has no VRF
+# awareness).
+config dropbear 'private'
+	option enable '1'
+	option Port '22'
+	option Interface '{{ libnetwork.getUciIfname(private_network) }}'
+
+config dropbear 'freifunk'
+	option enable '1'
+	option Port '22'
+	option Interface '{{ libnetwork.getUciIfname(freifunk_network) }}'
+	option vrf 'vrf_freifunk'
+
+{% endif %}
