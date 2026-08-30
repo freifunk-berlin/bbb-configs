@@ -89,7 +89,14 @@ config dhcp 'dhcp_{{ name }}'
     {% if network['role'] == 'dhcp' %}
 	option dhcpv4 'server'
 	option force '1'
-	option leasetime '5m'
+{# direct_internet networks (e.g. 'private') are a small, stable set of household devices, not
+   a public pool that needs fast address turnover - a 5m lease means any Wi-Fi blip longer than
+   that (routine roaming/inactivity-timeout reassociation, see DEVELOPER.md) fully expires the
+   client's lease instead of it just being due for renewal. Freifunk's public networks keep the
+   short lease for their high client turnover / small pools; scherer8.yml already hand-patches
+   this same 5m default up to 15m via a raw uci-defaults override for its public network, which
+   is evidence 5m is too aggressive even there. #}
+	option leasetime '{{ '12h' if network.get('direct_internet') else '5m' }}'
 	option start '2'
 	option limit '{{ network['prefix'] | ansible.utils.ipaddr('size') -3 }}'
       {% if network.get('direct_internet') %}
