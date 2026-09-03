@@ -178,12 +178,6 @@ networks:
     prefix: 10.31.126.135/32
     ipv6_subprefix: -20
 
-  - vid: 21
-    role: mesh
-    name: mesh_nw_5ghz
-    prefix: 10.31.126.136/32
-    ipv6_subprefix: -21
-
   - vid: 22
     role: mesh # NO-PEERS
     name: mesh_sw_5ghz
@@ -198,7 +192,7 @@ networks:
 
   - vid: 24
     role: mesh
-    name: mesh_nw_ac
+    name: mesh_nw_5ghz
     prefix: 10.31.126.139/32
     ipv6_subprefix: -24
 
