@@ -30,19 +30,19 @@ hosts:
         fi
 
 snmp_devices:
-  - hostname: rhxb-switch-roof
+  - hostname: rhxb-switch-roof # EdgeSwitch 24 250W
     address: 10.31.126.2
     snmp_profile: "edgeswitch"
 
-  - hostname: rhxb-l105
+  - hostname: rhxb-l105 # airFiber 60 LR
     address: 10.31.126.4
     snmp_profile: "af60"
 
-  - hostname: rhxb-flughafen
+  - hostname: rhxb-flughafen # airFiber 60 LR
     address: 10.31.126.5
     snmp_profile: "af60"
 
-  - hostname: rhxb-manstein
+  - hostname: rhxb-manstein # NanoBridge M5
     address: 10.31.126.6
     snmp_profile: "airos_6"
 
@@ -50,11 +50,11 @@ snmp_devices:
     address: 10.31.126.7
     snmp_profile: "airos_6"
 
-  - hostname: rhxb-rhnk
+  - hostname: rhxb-rhnk # airFiber 60 LR
     address: 10.31.126.8
     snmp_profile: "af60"
 
-  - hostname: rhxb-technikmuseum
+  - hostname: rhxb-technikmuseum # NanoBridge M5
     address: 10.31.126.9
     snmp_profile: "airos_6"
 
@@ -62,7 +62,7 @@ snmp_devices:
     address: 10.31.126.10
     snmp_profile: "airos_8"
 
-  - hostname: rhxb-nw-5ghz
+  - hostname: rhxb-nw-5ghz # NanoStation M5
     address: 10.31.126.11
     snmp_profile: "airos_6"
 
@@ -74,15 +74,15 @@ snmp_devices:
     address: 10.31.126.13
     snmp_profile: "airos_8"
 
-  - hostname: rhxb-simeon
+  - hostname: rhxb-simeon # PowerBeam 5AC 400
     address: 10.31.126.14
     snmp_profile: "airos_8"
 
-  - hostname: rhxb-nw-ac
+  - hostname: rhxb-nw-ac # Rocket 5AC Lite
     address: 10.31.126.15
     snmp_profile: "airos_8"
 
-  - hostname: rhxb-dragon
+  - hostname: rhxb-dragon # NanoBeam 5AC
     address: 10.31.126.17
     snmp_profile: "airos_8"
 
