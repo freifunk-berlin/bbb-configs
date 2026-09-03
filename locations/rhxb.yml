@@ -217,18 +217,18 @@ networks:
       rhxb-switch-roof: 2
       rhxb-cloudkey: 3
 
-      # p2p
+      # PTP
       rhxb-l105: 4
       rhxb-flughafen: 5
       rhxb-manstein: 6
       rhxb-emma: 7
       rhxb-rhnk: 8
       rhxb-technikmuseum: 9
-      rhxb-dragon: 17
+      rhxb-simeon: 14
 
-      # antenna 5ghz
+      # PTMP
       rhxb-no-5ghz: 10
       rhxb-sw-5ghz: 12
       rhxb-so-5ghz: 13
-      rhxb-simeon: 14
       rhxb-nw-5ghz: 15
+      rhxb-dragon: 17
