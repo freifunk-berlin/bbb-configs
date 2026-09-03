@@ -66,7 +66,7 @@ snmp_devices:
     address: 10.31.126.12
     snmp_profile: "airos_8"
 
-  - hostname: rhxb-5-so # Rocket 5AC Lite
+  - hostname: rhxb-so-5ghz # Rocket 5AC Lite
     address: 10.31.126.13
     snmp_profile: "airos_8"
 
