@@ -12,7 +12,6 @@ role_corerouter__packages__to_merge:
   - luci-app-olsr
   - luci-app-olsr-services
   - luci-mod-falter
-  - falter-berlin-owm-ucode
   - iptables-mod-ipopt
   - kmod-ipt-ipopt
 
@@ -25,3 +24,6 @@ collectd__packages__to_merge:
 bird__packages__to_merge:
   - bird3-babelpatch
   - bird3c
+
+owm__packages__to_merge:
+  - falter-berlin-owm-ucode
