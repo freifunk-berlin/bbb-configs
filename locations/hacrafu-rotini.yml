@@ -1,0 +1,78 @@
+---
+
+location: hacrafu-rotini
+location_nice: M
+# latitude: 52.0
+# longitude: 13.0
+contact_name: "Hacken Craften Funken e.V."
+contact_nickname: "HaCraFu e.V."
+contacts:
+  - "freifunk@hacrafu.de"
+
+hosts:
+  - hostname: hacrafu-rotini
+    role: corerouter
+    model: "genexis_pulse-ex400"
+    wireless_profile: disable
+    host__rclocal__to_merge:
+      - |
+        uci set network.vlan_40.ports='lan:u'
+        uci set network.vlan_42.ports='lan:t'
+        uci set network.vlan_50.ports='wan:u'
+        uci commit network; reload_config
+
+ipv6_prefix: "2001:bf7:850:6d00::/56"
+
+# DHCP      10.248.146.224/27
+# MGMT      10.31.168.36/32
+# TUNNEL    10.31.168.38/31
+
+networks:
+  # DHCP
+  - vid: 40
+    role: dhcp
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.146.224/27
+    ipv6_subprefix: 0
+    assignments:
+      hacrafu-rotini: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.168.36/32
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      hacrafu-rotini: 1
+
+  # UPLINK
+  - vid: 50
+    role: uplink
+    igress: 30
+    egress: 30
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.168.38/32
+    wireguard_port: 51820
+
+  - role: tunnel
+    ifname: ts_wg1
+    mtu: 1280
+    prefix: 10.31.168.39/32
+    wireguard_port: 51821
+
+# only place this ssh-keys
+ssh_keys:
+  - comment: Tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
+  - comment: Bob
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de
+  - comment: Peter
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIzevq2nqgb0rBAEEcDEkAIu24aTiWIkem3+59a6h10 HaCraFu Petersilie
+  - comment: Flupsy
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHG1Y5nkEm3yUIF1nQkbO8G2qHgtAz5b5Os9o5hVjyQZ HaCraFu Flupsy
