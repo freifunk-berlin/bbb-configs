@@ -50,7 +50,7 @@ snmp_devices:
     address: 10.31.126.8
     snmp_profile: "af60"
 
-  - hostname: rhxb-technikmuseum # PowerBeam 5AC ISO
+  - hostname: rhxb-dtmb # PowerBeam 5AC ISO
     address: 10.31.126.9
     snmp_profile: "airos_8"
 
@@ -211,7 +211,7 @@ networks:
       rhxb-flughafen: 5
       rhxb-manstein: 6
       rhxb-rhnk: 8
-      rhxb-technikmuseum: 9
+      rhxb-dtmb: 9
       rhxb-simeon: 14
 
       # PTMP
