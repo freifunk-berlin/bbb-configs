@@ -16,6 +16,10 @@ hosts:
     wireless_profile: freifunk_hacrafu
     host__rclocal__to_merge:
       - |
+        uci set network.vlan_22.ports='lan:t'
+        uci set network.vlan_23.ports='lan:t'
+        uci set network.vlan_40.ports='lan:t'
+        uci set network.vlan_42.ports='lan:t'
         uci set network.vlan_50.ports='wan:u'
         uci commit network; reload_config
 
