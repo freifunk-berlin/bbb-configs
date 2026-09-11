@@ -14,6 +14,10 @@ hosts:
     role: corerouter
     model: "genexis_pulse-ex400"
     wireless_profile: freifunk_hacrafu
+    host__rclocal__to_merge:
+      - |
+        uci set network.vlan_50.ports='wan:u'
+        uci commit network; reload_config
 
   - hostname: hacrafu-orecchiette-park
     role: ap
@@ -91,7 +95,8 @@ networks:
   # UPLINK
   - vid: 50
     role: uplink
-    untagged: true
+    ingress: 50
+    egress: 50
 
   - role: tunnel
     ifname: ts_wg0
