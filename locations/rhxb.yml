@@ -46,10 +46,6 @@ snmp_devices:
     address: 10.31.126.6
     snmp_profile: "airos_6"
 
-  - hostname: rhxb-emmaus
-    address: 10.31.126.7
-    snmp_profile: "airos_6"
-
   - hostname: rhxb-rhnk # airFiber 60 LR
     address: 10.31.126.8
     snmp_profile: "af60"
@@ -138,13 +134,6 @@ networks:
     mesh_metric: 128
     ptp: true
 
-  - vid: 13
-    role: mesh # NO-PEERS
-    name: mesh_emma
-    prefix: 10.31.126.131/32
-    ipv6_subprefix: -4
-    ptp: true
-
   - vid: 14
     role: mesh
     name: mesh_manstein
@@ -221,7 +210,6 @@ networks:
       rhxb-l105: 4
       rhxb-flughafen: 5
       rhxb-manstein: 6
-      rhxb-emma: 7
       rhxb-rhnk: 8
       rhxb-technikmuseum: 9
       rhxb-simeon: 14
