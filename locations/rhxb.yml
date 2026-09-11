@@ -168,14 +168,14 @@ networks:
     ipv6_subprefix: -20
 
   - vid: 22
-    role: mesh # NO-PEERS
+    role: mesh
     name: mesh_sw_5ghz
     prefix: 10.31.126.137/32
     ipv6_subprefix: -22
 
   - vid: 23
     role: mesh
-    name: mesh_so_5ghz # NO-PEERS
+    name: mesh_so_5ghz
     prefix: 10.31.126.138/32
     ipv6_subprefix: -23
 
