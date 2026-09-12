@@ -79,6 +79,30 @@ snmp_devices:
     snmp_profile: "airos_8"
 
 airos_dfs_reset:
+  - name: "rhxb-dtmb"
+    target: "10.31.126.9"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "rhxb-no-5ghz"
+    target: "10.31.126.10"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "rhxb-sw-5ghz"
+    target: "10.31.126.12"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
+  - name: "rhxb-so-5ghz"
+    target: "10.31.126.13"
+    username: "ubnt"
+    password: "file:/root/pwd"
+    daytime_limit: "2-7"
+
   - name: "rhxb-simeon"
     target: "10.31.126.14"
     username: "ubnt"
