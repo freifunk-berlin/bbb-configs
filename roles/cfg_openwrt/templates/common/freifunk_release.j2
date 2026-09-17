@@ -1,4 +1,5 @@
-FREIFUNK_DISTRIB_ID="Freifunk Falter"
-FREIFUNK_RELEASE='{{ feed_version }}'
-FREIFUNK_REVISION='{{ lookup("pipe", "git rev-parse --short HEAD") }}'
-FREIFUNK_VARIANT='standard'
+FREIFUNK_DISTRIB_ID="bbb-configs"
+FREIFUNK_RELEASE="{{ feed_version }}"
+FREIFUNK_REVISION="{{ git_revision }}"
+{% set tunnel_present = networks | default([]) | selectattr('role', 'equalto', 'tunnel') | list | length > 0 %}
+FREIFUNK_VARIANT="{{ 'tunnel' if role == 'corerouter' and tunnel_present else role }}"
