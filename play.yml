@@ -6,3 +6,5 @@
   any_errors_fatal: true
   roles:
     - { role: cfg_openwrt }
+  vars:
+    git_revision: "{{ lookup('pipe', 'git rev-parse --short HEAD') }}"
