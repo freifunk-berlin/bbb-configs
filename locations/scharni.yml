@@ -52,7 +52,7 @@ snmp_devices:
 ipv6_prefix: "2001:bf7:830:8400::/56"
 
 networks:
-  - vid: 10
+  - vid: 110
     role: mesh
     name: mesh_sama
     prefix: 10.31.52.192/32
@@ -60,14 +60,14 @@ networks:
     ptp: true
     mesh_metric: 128
 
-  - vid: 11
+  - vid: 111
     role: mesh
     name: mesh_zwingli
     prefix: 10.31.52.193/32
     ipv6_subprefix: -3
     ptp: true
 
-  - vid: 20
+  - vid: 120
     role: mesh
     name: mesh_ap3
     prefix: 10.31.52.194/32
@@ -76,7 +76,7 @@ networks:
     mesh_radio: 11a_standard
     mesh_iface: mesh
 
-  - vid: 40
+  - vid: 140
     role: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
@@ -85,7 +85,7 @@ networks:
     assignments:
       scharni-core: 1
 
-  - vid: 41
+  - vid: 141
     name: prdhcp
     role: dhcp
     inbound_filtering: true
