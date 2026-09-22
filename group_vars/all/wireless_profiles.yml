@@ -105,13 +105,13 @@ all__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
 
-      # - mode: ap
-      #   ssid: freifunk.hacrafu.de owe
-      #   encryption: owe
-      #   network: dhcp
-      #   radio: [11a_standard, 11g_standard]
-      #   ifname_hint: ffowe
-      #   ieee80211w: 2
+      - mode: ap
+        ssid: freifunk.hacrafu.de owe
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 2
 
       - mode: mesh
         mesh_id: Mesh-Freifunk-Berlin
@@ -130,10 +130,10 @@ all__wireless_profiles__to_merge:
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
 
-      # - mode: ap
-      #   ssid: freifunk.hacrafu.de owe
-      #   encryption: owe
-      #   network: dhcp
-      #   radio: [11a_standard, 11g_standard]
-      #   ifname_hint: ffowe
-      #   ieee80211w: 2
+      - mode: ap
+        ssid: freifunk.hacrafu.de owe
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 2
