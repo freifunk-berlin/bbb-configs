@@ -1,0 +1,83 @@
+---
+
+location: hacrafu-cavatappi
+location_nice: Dorfanger, 15370 Petershagen
+# latitude: 52.0
+# longitude: 13.0
+contact_name: "Hacken Craften Funken e.V."
+contact_nickname: "HaCraFu e.V."
+contacts:
+  - "freifunk@hacrafu.de"
+
+hosts:
+  - hostname: hacrafu-cavatappi
+    role: corerouter
+    model: "dlink_dap-x1860-a1"
+    wireless_profile: freifunk_hacrafu
+
+ipv6_prefix: "2001:bf7:850:6f00::/56"
+
+# DHCP    10.248.117.32/27
+# MESH    10.31.32.180/31
+# MGMT    10.31.32.182/32
+
+networks:
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.32.180/32
+    ipv6_subprefix: -20
+    mesh_ap: hacrafu-cavatappi
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.32.181/32
+    ipv6_subprefix: -21
+    mesh_ap: hacrafu-cavatappi
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # DHCP
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.248.117.32/27
+    ipv6_subprefix: 0
+    assignments:
+      hacrafu-cavatappi: 1
+
+  # MGMT
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.32.182/32
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      hacrafu-cavatappi: 1
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11a_standard__to_merge:
+  hacrafu-cavatappi: 36-40
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  hacrafu-cavatappi: 13-20
+
+# only place this ssh-keys
+ssh_keys:
+  - comment: Tom
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIpPZouLOf+1WT9ylMa/9mX1dhLTy8W07Q8G5w7KKNz freifunk@hacrafu.de
+  - comment: Bob
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHrBKcGS+pyrN4MvRNqg7TPA2EsJ0cDCYLjrDRlTO6k HaCraFu bob@bobgoehler.de
+  - comment: Peter
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIzevq2nqgb0rBAEEcDEkAIu24aTiWIkem3+59a6h10 HaCraFu Petersilie
+  - comment: Flupsy
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHG1Y5nkEm3yUIF1nQkbO8G2qHgtAz5b5Os9o5hVjyQZ HaCraFu Flupsy
