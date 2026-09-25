@@ -24,6 +24,7 @@ role_uplink_gw__packages__to_merge:
   - wg-installer-server-hotplug-olsrd
   - conntrackd
   - samplicator
+  - -uneighbord
 
 bird__packages__to_merge:
   - bird3-babelpatch
