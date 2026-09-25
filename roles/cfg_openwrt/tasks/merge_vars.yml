@@ -10,6 +10,7 @@
       wireless_profiles: []
       sysctl: {}
       rclocal: []
+      channel_assignments_11ax_standard: {}
       channel_assignments_11a_standard: {}
       channel_assignments_11g_standard: {}
 

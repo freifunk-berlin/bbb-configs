@@ -1,0 +1,59 @@
+---
+target: mediatek/filogic
+brand_nice: Sinovoip
+model_nice: Banana Pi BPI-R4
+
+model__rclocal__to_merge:
+  - echo "powersave" > /sys/module/pcie_aspm/parameters/policy
+
+dsa_ports:
+  - sfp-lan
+  - sfp-wan
+  - wan
+  - lan1
+  - lan2
+  - lan3
+
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: EHT
+    path: soc/11300000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
+    radio: 0
+    ifname_hint: wlan2
+
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: EHT
+    path: soc/11300000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
+    radio: 1
+    ifname_hint: wlan5
+
+  - name: 11ax_standard
+    band: 6g
+    htmode_prefix: EHT
+    path: soc/11300000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
+    radio: 2
+    ifname_hint: wlan6
+
+leds:
+  - name: wan
+    sysfs: mt7530-0:00:green:wan
+    trigger: netdev
+    mode: link tx rx
+    dev: wan
+  - name: lan1
+    sysfs: mt7530-0:01:green:lan
+    trigger: netdev
+    mode: link tx rx
+    dev: lan1
+  - name: lan2
+    sysfs: mt7530-0:02:green:lan
+    trigger: netdev
+    mode: link tx rx
+    dev: lan2
+  - name: lan3
+    sysfs: mt7530-0:03:green:lan
+    trigger: netdev
+    mode: link tx rx
+    dev: lan3
