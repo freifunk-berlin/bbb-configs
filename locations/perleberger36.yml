@@ -69,7 +69,7 @@ airos_dfs_reset:
     username: "root"
     password: "file:/root/pwd.txt"
     daytime_limit: "2-7"
-  - name: " perleberger36-turm-5ghz-o"
+  - name: "perleberger36-turm-5ghz-o"
     target: "10.36.243.182"
     username: "root"
     password: "file:/root/pwd.txt"
