@@ -1,4 +1,4 @@
-FREIFUNK_DISTRIB_ID="bbb-configs"
+FREIFUNK_DISTRIB_ID="BBB-Configs"
 FREIFUNK_RELEASE="{{ feed_version }}"
 FREIFUNK_REVISION="{{ git_revision }}"
 {% set tunnel_present = networks | default([]) | selectattr('role', 'equalto', 'tunnel') | list | length > 0 %}
