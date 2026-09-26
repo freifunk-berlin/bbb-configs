@@ -88,5 +88,5 @@ networks:
     prefix: 10.248.70.219/32
     wireguard_port: 51820
 
-location_channel_assignments_11a_standard_to_merge:
+location__channel_assignments_11a_standard__to_merge:
   q216_the_second-nf-no: 44-20
