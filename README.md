@@ -1,4 +1,4 @@
-# BerlinBackBone Configuration (BBB-configs)
+# BerlinBackBone Configuration (BBB-Configs)
 
 
 BBB-Configs manages and provisions OpenWrt mesh nodes in the city-wide backbone of Freifunk Berlin via ansible. It abstracts the typical OpenWrt mesh config to generic templates. Those templates provision all locations more or less the same helping the maintainers to orientate on all sites.
@@ -17,7 +17,7 @@ With BBB-Configs we
 
 ### Short Version
 
-With ansible you can build a specifically configured firmware image to flash onto your OpenWrt router. Due to properties of that image, BBB-configs can ensure proper function at certain locations, as it includes the full configuration. It also makes it easier for maintainers to remotely upgrade sites without worrying about configurations.
+With ansible you can build a specifically configured firmware image to flash onto your OpenWrt router. Due to properties of that image, BBB-Configs can ensure proper function at certain locations, as it includes the full configuration. It also makes it easier for maintainers to remotely upgrade sites without worrying about configurations.
 
 <details>
 
@@ -35,15 +35,15 @@ If we need someone to reproduce our setup, the person can just generate the imag
 
 ## Getting Started
 
-Using bbb-configs is quite simple. In the sections below you can find simple introductions to what you can do with bbb-configs. But before you can get started you might need to install some dependencies so everything will work properly.
+Using BBB-Configs is quite simple. In the sections below you can find simple introductions to what you can do with BBB-Configs. But before you can get started you might need to install some dependencies so everything will work properly.
 
 ### 1. Install OpenWrt build dependencies
 
 First install the OpenWrt build dependencies. You can find the dependencies for your specific Linux distribution [here](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem#linux_gnu-linux_distributions). As of 07/2025 there arent all dependencies available for Apple M-Chips.
 
-### 2. Install BBB-configs dependencies
+### 2. Install BBB-Configs dependencies
 
-Now install the BBB-configs dependencies. Depending on your distributions you might need to use a different package management system than `apt`.
+Now install the BBB-Configs dependencies. Depending on your distributions you might need to use a different package management system than `apt`.
 
 ```sh
 apt update
@@ -159,13 +159,13 @@ Ansible is a suite of software tools that enables infrastructure as code. It is 
 
 #### How to get started?
 
-Make sure to install ansible and clone the bbb-configs repository. Also don`t forget to check your dependencies.
+Make sure to install ansible and clone the BBB-Configs repository. Also don`t forget to check your dependencies.
 
 Depending on your system you might need more requirements. If something fails check out [this OpenWrt page](https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem).
 
 ## Developers and Maintainers
 
-If you want to use bbb-configs to work on a fork of the code yourself or do something else you should start reading the [FAQ](FAQ.md) and [Developers Guide](DEVELOPER.md).
+If you want to use BBB-Configs to work on a fork of the code yourself or do something else you should start reading the [FAQ](FAQ.md) and [Developers Guide](DEVELOPER.md).
 
 ## Support Information
 
