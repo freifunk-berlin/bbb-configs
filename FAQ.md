@@ -14,7 +14,7 @@
 <summary> sysupgrade fails with "image is incompatible"</summary>
 <br>
 
-When upgrading a router that was previously running a different OpenWrt version (e.g., stock OpenWrt or an older bbb-configs image), sysupgrade may fail with an error like:
+When upgrading a router that was previously running a different OpenWrt version (e.g., stock OpenWrt or an older BBB-Configs image), sysupgrade may fail with an error like:
 
 ```
 upgrade: The device is supported, but this image is incompatible for sysupgrade based on the image version (1.0->9.9).

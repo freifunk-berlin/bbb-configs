@@ -155,7 +155,7 @@ networks:
                               # worse for olsr, so certain links are preferred. Must be higher then 0.2,
                               # otherwise link wont work. Only used to connect to Falter-Routers.
     mesh_metric: 1024         # overrides the default metrics for for babel routing.
-                              # Lower metrics means a route is preferred. Babel is used within bbb-configs.
+                              # Lower metrics means a route is preferred. Babel is used within BBB-Configs.
                               # Defaults can be found at group_vars/all/general.yml
     untagged: true            # untags the vlan. It is commonly used for tunnel-uplinks. Only one
                               # network can be untagged. For more advanced use cases, look under
@@ -544,7 +544,7 @@ There are also files for the standard ssh keys and definitions for the Wi-Fi pro
 
 ### model_files
 
-These files define how bbb-configs needs to handle different hardware models:
+These files define how BBB-Configs needs to handle different hardware models:
 
 ```yml
 ---
