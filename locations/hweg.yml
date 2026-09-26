@@ -67,7 +67,7 @@ networks:
 location__channel_assignments_11a_standard__to_merge:
   hweg-core: 44-40
 
-location__channel_assignments_11b_standard__to_merge:
+location__channel_assignments_11g_standard__to_merge:
   hweg-core: 13-20
 
 location__wireless_profiles__to_merge:

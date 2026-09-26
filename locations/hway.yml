@@ -115,7 +115,7 @@ location__channel_assignments_11a_standard__to_merge:
   hway-indoor: 36-40
   hway-street: 44-40
 
-location__channel_assignments_11b_standard__to_merge:
+location__channel_assignments_11g_standard__to_merge:
   hway-indoor: 13-20
   hway-street: 5-20
 
