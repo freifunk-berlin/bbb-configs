@@ -1,0 +1,77 @@
+---
+location: behring21
+location_nice: "behring21"
+latitude: 52.465863
+longitude: 13.4900549
+altitude: 32
+height: 9
+contact_nickname: "xayax"
+contacts:
+  - "ff@xayax.de"
+
+hosts:
+  - hostname: b21-core
+    role: corerouter
+    model: "genexis_pulse-ex400"
+    wireless_profile: freifunk_default
+    flow_offload: hw
+
+snmp_devices:
+  - hostname: b21-cube
+    address: 10.31.202.2
+    snmp_profile: mikrotik_60g
+
+ipv6_prefix: "2001:bf7:840:7b00::/56"
+
+# Router: 10.31.202.0/26
+# --MGMT: 10.31.202.0/28
+# --MESH: 10.31.202.16/28
+# --DHCP: 10.31.202.32/27
+
+networks:
+  - vid: 11
+    role: mesh
+    name: mesh_vaterhaus
+    prefix: 10.31.202.16/32
+    ipv6_subprefix: -11
+    ptp: true
+
+  # MESH - 5 GHz 802.11s - b21-core
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.31.202.17/32
+    ipv6_subprefix: -20
+    mesh_ap: b21-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - b21-core
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.31.202.18/32
+    ipv6_subprefix: -21
+    mesh_ap: b21-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.202.32/27
+    ipv6_subprefix: 0
+    assignments:
+      b21-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.202.0/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      b21-core: 1  # 10.31.202.1
+      b21-cube: 2  # 10.31.202.2
