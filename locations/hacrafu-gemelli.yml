@@ -72,7 +72,7 @@ networks:
   # UPLINK
   - vid: 50
     role: uplink
-    igress: 10
+    ingress: 10
     egress: 5
 
   - role: tunnel
