@@ -4,8 +4,9 @@ import sys
 import yamale
 from yamale.validators import DefaultValidators
 
-
-parser = argparse.ArgumentParser(description="Validate YAML files against a Yamale schema")
+parser = argparse.ArgumentParser(
+    description="Validate YAML files against a Yamale schema"
+)
 parser.add_argument("schema", help="path to the Yamale schema file")
 parser.add_argument("files", nargs="+", help="YAML files to validate")
 args = parser.parse_args()
