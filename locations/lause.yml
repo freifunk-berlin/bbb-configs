@@ -102,3 +102,7 @@ location__wireless_profiles__to_merge:
         network: lab
         radio: [11a_standard, 11g_standard]
         ifname_hint: lab
+
+# AP-id, wifi-channel, bandwidth, txpower
+location__channel_assignments_11g_standard__to_merge:
+  lause-ap1: 1-20
