@@ -86,11 +86,11 @@ networks:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11a_standard__to_merge:
-  hacrafu-pisarei: 36-80
+  hacrafu-pisarei: 36-40
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  hacrafu-pisarei: 13-40
+  hacrafu-pisarei: 13-20
 
 # only place this ssh-keys
 ssh_keys:
