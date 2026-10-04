@@ -128,6 +128,16 @@ log_proto: udp  # optional, udp (default) or tcp
 
 The server gets the lines in the BSD syslog format (RFC 3164) with the hostname of the router.
 
+A router with a USB port can also write its log to a USB stick, where it survives reboots and new images:
+
+```yml
+log_usb: true
+log_usb_size: 10240         # optional, size of the log file in KiB (default)
+log_usb_device: /dev/sdb1   # optional, default is the first USB storage device (/dev/sda1 or /dev/sda)
+```
+
+The log is written to `<hostname>.log` on the stick, a full file is kept once as `<hostname>.log.old`. The stick can be formatted with FAT32, exFAT or ext4. The logging starts when the stick gets mounted, also when it is plugged in later. Lines logged before that are not written.
+
 ### airos dfs reset
 
 This section holds information about airos devices and how to access them. The information is used to initiate a DFS reset within a specific time window after a DFS event was detected.

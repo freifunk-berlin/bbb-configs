@@ -3,10 +3,13 @@ config system
         option zonename '{{ zonename }}'
         option timezone '{{ timezone }}'
         option ttylogin '0'
-{% if low_mem | default(false) %}
-        option log_size '{{ log_size | default(64)}}'
+{% set log_buffer_size = log_size | default(64 if low_mem | default(false) else 1024) %}
+{% if log_usb | default(false) | bool %}
+        option log_buffer_size '{{ log_buffer_size }}'
+        option log_file '/mnt/log/{{ inventory_hostname }}.log'
+        option log_size '{{ log_usb_size | default(10240) }}'
 {% else %}
-        option log_size '{{ log_size | default(1024)}}'
+        option log_size '{{ log_buffer_size }}'
 {% endif %}
 {% if log_ip is defined %}
         option log_ip '{{ log_ip }}'
