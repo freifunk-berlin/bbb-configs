@@ -49,6 +49,7 @@ qmi: list(include('qmi'), required=False)
 
 # --- addressing and networks -----------------------------------------------
 ipv6_prefix: ip(version=6)
+ula_prefix: ip(version=6, required=False)
 dns_servers: list(ip(), required=False)
 networks: list(include('network'), required=False)
 mesh_links: list(include('mesh_link'), required=False)
@@ -172,6 +173,8 @@ network:
   dhcp_no_ping: bool(required=False)
   enforce_client_isolation: bool(required=False)
   inbound_filtering: bool(required=False)
+  direct_internet: bool(required=False)
+  ip6class: any(str(), list(str()), required=False)
 
   # mesh
   mesh_ap: str(required=False)
