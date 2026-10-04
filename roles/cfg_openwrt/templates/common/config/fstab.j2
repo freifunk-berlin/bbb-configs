@@ -1,0 +1,15 @@
+config global
+	option anon_swap '0'
+	option anon_mount '0'
+	option auto_swap '0'
+	option auto_mount '1'
+	option check_fs '0'
+{# a stick has its filesystem on the first partition or, without a
+   partition table, on the device itself #}
+{% for device in [log_usb_device | default(['/dev/sda1', '/dev/sda'])] | flatten %}
+
+config mount
+	option device '{{ device }}'
+	option target '/mnt/log'
+	option enabled '1'
+{% endfor %}

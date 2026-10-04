@@ -99,6 +99,42 @@
     - always
     - config
 
+- name: Add fstab config to mount the USB stick for the log
+  template:
+    src: "{{ role_path }}/templates/common/config/fstab.j2"
+    dest: "{{ configs_dir }}/etc/config/fstab"
+    mode: "644"
+  when: log_usb | default(false) | bool
+  tags:
+    - always
+    - config
+
+- name: Add hotplug directory for the log on the USB stick
+  file:
+    path: "{{ configs_dir }}/etc/hotplug.d/mount"
+    state: directory
+    mode: "755"
+  when: log_usb | default(false) | bool
+  tags:
+    - always
+    - config
+
+# The log writer keeps a removed stick busy. The stick then gets another
+# device name when it is plugged in again and is not mounted.
+- name: Add hotplug script to stop the log writer when the USB stick is removed
+  copy:
+    content: |
+      #!/bin/sh
+
+      [ "$ACTION" = remove ] && grep -q "^/dev/$DEVICE /mnt/log " /proc/mounts &&
+        ubus call service delete '{ "name": "log", "instance": "logfile" }'
+    dest: "{{ configs_dir }}/etc/hotplug.d/mount/10-log"
+    mode: "644"
+  when: log_usb | default(false) | bool
+  tags:
+    - always
+    - config
+
 - name: Include fix_permissions.yml
   include_tasks:
     file: fix_permissions.yml
