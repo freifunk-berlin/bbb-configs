@@ -531,6 +531,7 @@ location__wireless_profiles__to_merge:
         network: prdhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: prdhcp
+        ieee80211r: true # fast roaming between the radios and APs with this SSID
 ```
 
 ## groups_vars/

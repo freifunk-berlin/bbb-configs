@@ -109,6 +109,9 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
       {% if 'ieee80211w' in iface %}
 	option ieee80211w '{{ iface['ieee80211w'] }}'
       {% endif %}
+      {% if 'ieee80211r' in iface %}
+	option ieee80211r '{{ iface['ieee80211r']|int }}'
+      {% endif %}
 	option time_advertisement '2'
 	option time_zone 'GMT0'
 	option ieee80211k '1'
