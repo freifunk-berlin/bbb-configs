@@ -142,3 +142,9 @@
     - networks is defined
     - networks | selectattr('qos_engine', 'defined') | selectattr('qos_engine', 'equalto', 'qosify') | selectattr('ingress', 'defined') | count > 0
       or networks | selectattr('qos_engine', 'defined') | selectattr('qos_engine', 'equalto', 'qosify') | selectattr('egress', 'defined') | count > 0
+
+- name: "Remove OLSR on bird-only hosts"
+  set_fact:
+    packages: "{{ packages | reject('match', '^(olsrd|luci-app-olsr|collectd-mod-olsrd|wg-installer-server-hotplug-olsrd)') | list }}"
+  when:
+    - bird_only | bool
