@@ -526,6 +526,26 @@ adblock_provider: lean   # fast (default) or lean
 
 `fast` uses adblock-fast from the OpenWrt packages feed, `lean` uses adblock-lean from the falter feed. adblock-lean is configured with the `adblock_lean_*` variables in `group_vars/role_corerouter/general.yml` and only filters the first dnsmasq instance, which on a router with direct internet networks doesn't serve Freifunk clients.
 
+### images with custom packages
+
+To build images with patched or additional packages, build your own ImageBuilder from an OpenWrt tree:
+
+```sh
+./build-imagebuilder.sh ~/openwrt otto-core
+```
+
+The script collects the packages of the given hosts, selects them in the OpenWrt tree and builds an ImageBuilder which contains all of them and uses no remote repositories. The tree needs all feeds the packages come from, including `falter`. Packages are taken from the tree and its feeds as they are, so patch them there or point a feed to a local checkout with `src-link` in `feeds.conf`. A single package of a feed can be replaced with `-o <package-dir>`.
+
+The script replaces the `.config` of the tree and keeps a backup next to it. Then set the ImageBuilder for the hosts and build the images as usual:
+
+```yml
+hosts:
+  - hostname: otto-core
+    openwrt_version: snapshot   # has to match the OpenWrt tree
+    imagebuilder: "/home/user/openwrt/bin/targets/ipq40xx/generic/openwrt-imagebuilder-ipq40xx-generic.Linux-x86_64.tar.zst"
+    imagebuilder_standalone: true
+```
+
 ### ssh-keys
 
 By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys use this format:
