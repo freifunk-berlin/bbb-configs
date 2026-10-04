@@ -38,6 +38,9 @@ log_usb: bool(required=False)
 log_usb_size: int(min=1, required=False)
 log_usb_device: str(required=False)
 
+# PPPoE uplinks
+dsl: include('dsl', required=False)
+
 # --- hosts and devices -----------------------------------------------------
 hosts: list(include('host'), min=1)
 snmp_devices: list(include('snmp_device'), required=False)
@@ -139,6 +142,13 @@ qmi:
   apn: str()
   pdptype: enum('ipv4', 'ipv6', 'ipv4v6')
 
+dsl:
+  annex: str()
+  tone: str()
+  xfer_mode: enum('atm', 'ptm', required=False)
+  line_mode: enum('adsl', 'vdsl', required=False)
+  ds_snr_offset: int(required=False)
+
 ssh_key:
   key: str(matches='^(ssh|ecdsa|sk)-')
   comment: str()
@@ -174,7 +184,14 @@ network:
   wireguard_port: int(min=1, max=65535, required=False)
 
   # uplink / qos
-  uplink_mode: enum('bridge', 'direct', 'passthru', required=False)
+  uplink_mode: enum('bridge', 'direct', 'passthru', 'root', required=False)
+  uplink_proto: enum('pppoe', required=False)
+  pppoe_username: str(required=False)
+  pppoe_password: str(required=False)
+  ipv6_reqaddress: enum('try', 'force', 'none', required=False)
+  ipv6_norelease: bool(required=False)
+  ipv6_reqprefix: any(int(min=0, max=64), enum('auto', 'no'), required=False)
+  ipv6_default_route: bool(required=False)
   uplink_gateway: ip(version=4, required=False)
   uplink_ipv4: ip(version=4, required=False)
   ingress: int(min=0, required=False)
