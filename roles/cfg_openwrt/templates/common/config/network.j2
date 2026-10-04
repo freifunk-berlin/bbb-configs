@@ -11,16 +11,20 @@ config rule
 	option priority 33100
 	option lookup 'babel-ff'
 
+{% if not bird_only | bool %}
 config rule
 	option priority 33101
 	option lookup 'olsr-ff'
+{% endif %}
 
 config rule
 	option priority 33200
 	option lookup 'babel-default'
+{% if not bird_only | bool %}
 config rule
 	option priority 33201
 	option lookup 'olsr-default'
+{% endif %}
 
 config interface 'loopback'
 	option device 'lo'
