@@ -1,0 +1,23 @@
+---
+- name: Create directories for the status snapshots
+  file:
+    state: directory
+    path: "{{ configs_dir }}/{{ item }}"
+    mode: "755"
+  loop:
+    - usr/sbin
+    - etc/crontabs
+
+- name: Add status snapshot script
+  copy:
+    src: "{{ role_path }}/files/log-status"
+    dest: "{{ configs_dir }}/usr/sbin/log-status"
+    mode: "755"
+
+# appended, other tasks write the crontab as well
+- name: Add status snapshot cron job
+  lineinfile:
+    path: "{{ configs_dir }}/etc/crontabs/root"
+    line: "*/10 * * * * /usr/sbin/log-status"
+    create: true
+    mode: "600"
