@@ -40,6 +40,27 @@
     - networks | selectattr('role', 'defined') | selectattr('role','equalto','tunnel') | count > 0
     - role == 'corerouter'
 
+- name: "Add PPPoE support if configured"
+  set_fact:
+    packages: "{{ packages | reject('in', ['-ppp', '-ppp-mod-pppoe']) | list + ['ppp', 'ppp-mod-pppoe'] }}"
+  when:
+    - role == 'corerouter'
+    - networks is defined
+    - networks | selectattr('uplink_proto', 'defined') | selectattr('uplink_proto', 'equalto', 'pppoe') | count > 0
+
+- name: "Add VDSL support if configured"
+  set_fact:
+    packages: "{{ packages | reject('in', ['-ltq-vdsl-vr11-app']) | list + ['ltq-vdsl-vr11-app'] }}"
+  when:
+    - role == 'corerouter'
+    - dsl is defined
+
+- name: "Add VRF support for the Freifunk VRF"
+  set_fact:
+    packages: "{{ packages + ['kmod-vrf'] }}"
+  when:
+    - freifunk_vrf
+
 - name: "Add zram-swap on low mem and big flash"
   set_fact:
     packages: "{{ packages + ['zram-swap'] }}"
