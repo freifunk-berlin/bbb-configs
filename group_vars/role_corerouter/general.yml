@@ -16,5 +16,16 @@ adblock_fast_feeds:
   - name: CERT Polska Dangerous Websites
     url: https://hole.cert.pl/domains/v2/domains.txt
 
+# Recover a PPPoE uplink which doesn't reach the internet anymore: restart
+# the interface, then the DSL modem, then the router. Set a time to 0 to skip
+# that step.
+uplink_watchdog: true
+uplink_watchdog_hosts:
+  - 9.9.9.9
+  - 1.1.1.1
+uplink_watchdog_restart_interface: 5m
+uplink_watchdog_restart_dsl: 15m
+uplink_watchdog_reboot: 1h
+
 role_corerouter__sysctl__to_merge:
   net.netfilter.nf_conntrack_max: 131072
