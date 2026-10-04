@@ -40,6 +40,11 @@ log_usb_device: str(required=False)
 
 # PPPoE uplinks
 dsl: include('dsl', required=False)
+uplink_watchdog: bool(required=False)
+uplink_watchdog_hosts: list(ip(), required=False)
+uplink_watchdog_restart_interface: include('watchdog_time', required=False)
+uplink_watchdog_restart_dsl: include('watchdog_time', required=False)
+uplink_watchdog_reboot: include('watchdog_time', required=False)
 
 # --- hosts and devices -----------------------------------------------------
 hosts: list(include('host'), min=1)
@@ -149,6 +154,9 @@ dsl:
   xfer_mode: enum('atm', 'ptm', required=False)
   line_mode: enum('adsl', 'vdsl', required=False)
   ds_snr_offset: int(required=False)
+
+# "0" skips the step
+watchdog_time: any(int(min=0), str(matches='^[0-9]+[smhd]?$'))
 
 ssh_key:
   key: str(matches='^(ssh|ecdsa|sk)-')

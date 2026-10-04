@@ -30,5 +30,16 @@ adblock_lean_boot_start_delay_s: 180
 # hagezi publishes the lists daily at 11:00 UTC
 adblock_lean_cron_schedule: "47 13 * * *"
 
+# Recover a PPPoE uplink which doesn't reach the internet anymore: restart
+# the interface, then the DSL modem, then the router. Set a time to 0 to skip
+# that step.
+uplink_watchdog: true
+uplink_watchdog_hosts:
+  - 9.9.9.9
+  - 1.1.1.1
+uplink_watchdog_restart_interface: 5m
+uplink_watchdog_restart_dsl: 15m
+uplink_watchdog_reboot: 1h
+
 role_corerouter__sysctl__to_merge:
   net.netfilter.nf_conntrack_max: 131072
