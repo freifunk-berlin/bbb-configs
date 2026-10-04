@@ -38,6 +38,7 @@ log_proto: enum('udp', 'tcp', required=False)
 log_usb: bool(required=False)
 log_usb_size: int(min=1, required=False)
 log_usb_device: str(required=False)
+log_status: bool(required=False)
 
 # PPPoE uplinks
 dsl: include('dsl', required=False)
