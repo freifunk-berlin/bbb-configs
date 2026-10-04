@@ -6,14 +6,30 @@
       tags: always
   tags: always
 
+- name: Find direct internet networks
+  set_fact:
+    direct_internet_networks: >-
+      {{ networks | default([]) | selectattr('direct_internet', 'defined') | selectattr('direct_internet')
+         | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list
+         if role == 'corerouter' else [] }}
+  tags: always
+
 # An uplink in the root namespace puts its default route into the main
 # table. The Freifunk networks then move into the vrf_freifunk VRF, only
-# the uplink stays in the main table.
+# the uplink and networks with direct internet access stay in the main table.
 - name: Enable the Freifunk VRF
   set_fact:
     freifunk_vrf: >-
       {{ role == 'corerouter' and networks | default([]) | selectattr('role', 'equalto', 'uplink')
          | selectattr('uplink_mode', 'defined') | selectattr('uplink_mode', 'equalto', 'root') | count > 0 }}
+  tags: always
+
+- name: Check the direct internet requirements
+  assert:
+    that:
+      - freifunk_vrf
+    fail_msg: "direct_internet needs an uplink with uplink_mode: root"
+  when: direct_internet_networks | length > 0
   tags: always
 
 - name: Check the Freifunk VRF requirements

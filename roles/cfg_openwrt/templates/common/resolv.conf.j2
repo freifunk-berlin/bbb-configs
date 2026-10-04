@@ -1,5 +1,6 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
-{% set vrf_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list %}
+{% set vrf_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname)
+   | reject('in', direct_internet_networks) | list %}
 {% set network = ((vrf_networks | selectattr('role', 'equalto', 'mgmt') | list) or vrf_networks) | first %}
 search ff
 nameserver 127.0.0.1
