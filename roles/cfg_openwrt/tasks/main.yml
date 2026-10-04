@@ -116,6 +116,19 @@
     - always
     - config
 
+- name: Include adblock-lean
+  include_tasks:
+    file: adblock_lean.yml
+    apply:
+      tags: always
+  when:
+    - role == 'corerouter'
+    - adblock_enabled | default(false) | bool
+    - adblock_provider == 'lean'
+  tags:
+    - always
+    - config
+
 - name: Include uplink watchdog
   include_tasks:
     file: uplink_watchdog.yml
