@@ -48,6 +48,12 @@
     - networks is defined
     - networks | selectattr('uplink_proto', 'defined') | selectattr('uplink_proto', 'equalto', 'pppoe') | count > 0
 
+- name: "Add watchcat for the uplink watchdog"
+  set_fact:
+    packages: "{{ packages + ['watchcat'] }}"
+  when:
+    - uplink_watchdog_networks | length > 0
+
 - name: "Add VDSL support if configured"
   set_fact:
     packages: "{{ packages | reject('in', ['-ltq-vdsl-vr11-app']) | list + ['ltq-vdsl-vr11-app'] }}"
