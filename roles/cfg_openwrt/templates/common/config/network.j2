@@ -1,5 +1,10 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
+{% if ula_prefix is defined %}
+
+config globals 'globals'
+	option ula_prefix '{{ ula_prefix }}'
+{% endif %}
 {% if freifunk_vrf %}
 
 # Freifunk networks live in their own VRF, never route Freifunk traffic
@@ -32,7 +37,7 @@ config device
 	option type 'vrf'
 	option name 'vrf_freifunk'
 	option table 'vrf-freifunk'
-  {% for network in vrf_networks | unique %}
+  {% for network in vrf_networks | unique if not network.get('direct_internet') %}
 	list ports '{{ libnetwork.getIfname(network) }}'
   {% endfor %}
   {% for tunnel in networks | selectattr('role', 'equalto', 'tunnel') %}
@@ -151,7 +156,13 @@ config interface '{{ name }}'
     {% else %}
 	option proto 'none'
     {% endif %}
-    {% if role == 'corerouter' and ipv6_prefix is defined %}
+    {% if role == 'corerouter' and network.get('direct_internet') %}
+	{# IPv6 from the prefix delegated to the uplink, not from ipv6_prefix #}
+	option ip6assign '64'
+      {% for class in [network.get('ip6class', [])] | flatten %}
+	list ip6class '{{ class }}'
+      {% endfor %}
+    {% elif role == 'corerouter' and ipv6_prefix is defined %}
       {% if 'ipv6_subprefix' in network %}
         {% set subprefix = ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) %}
 	option ip6addr '{{ subprefix | ansible.utils.ipaddr(1) | ansible.utils.ipaddr('address') }}/{{ '128' if network['role'] == 'mesh' else '64' }}'
