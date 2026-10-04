@@ -8,6 +8,11 @@ config system
 {% else %}
         option log_size '{{ log_size | default(1024)}}'
 {% endif %}
+{% if log_ip is defined %}
+        option log_ip '{{ log_ip }}'
+        option log_port '{{ log_port | default(514) }}'
+        option log_proto '{{ log_proto | default('udp') }}'
+{% endif %}
         option urandom_seed '0'
         option compat_version '9.9' # hardcoded to a bbb-configs exclusive version identifier, matches patch in image builder, because we dont retain device config.
 {% if role == 'corerouter' or role  == 'gateway' %}

@@ -116,6 +116,18 @@ snmp_devices:
     snmp_profile: airos_8 # SNMP profile
 ```
 
+### remote logging
+
+The log of a router is kept in memory and lost with every reboot. To also send it to a syslog server, set its address for the location or for single hosts:
+
+```yml
+log_ip: 10.31.42.10
+log_port: 514   # optional, default
+log_proto: udp  # optional, udp (default) or tcp
+```
+
+The server gets the lines in the BSD syslog format (RFC 3164) with the hostname of the router.
+
 ### airos dfs reset
 
 This section holds information about airos devices and how to access them. The information is used to initiate a DFS reset within a specific time window after a DFS event was detected.
