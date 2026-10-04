@@ -1,0 +1,36 @@
+---
+- name: Create adblock-lean directories
+  file:
+    state: directory
+    path: "{{ configs_dir }}/etc/{{ item }}"
+    mode: "755"
+  loop:
+    - adblock-lean
+    - crontabs
+    - rc.d
+
+- name: Add adblock-lean config
+  template:
+    src: "{{ role_path }}/templates/common/adblock-lean/config.j2"
+    dest: "{{ configs_dir }}/etc/adblock-lean/config"
+    mode: "644"
+
+- name: Add adblock-lean cron job
+  copy:
+    content: "{{ adblock_lean_cron_schedule }} /etc/init.d/adblock-lean start\n"
+    dest: "{{ configs_dir }}/etc/crontabs/root"
+    mode: "600"
+
+# Not 'service adblock-lean enable', it would also write its own cron job.
+# At boot adblock-lean sleeps for adblock_lean_boot_start_delay_s, so it is
+# started last to not delay the other services.
+- name: Enable adblock-lean
+  file:
+    src: "../init.d/adblock-lean"
+    dest: "{{ configs_dir }}/etc/rc.d/{{ item }}adblock-lean"
+    state: link
+    force: true
+    follow: false
+  loop:
+    - S99zz-
+    - K04

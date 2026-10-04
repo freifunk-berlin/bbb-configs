@@ -22,7 +22,8 @@
         list server '{{ _dns_server }}'
 {% endfor %}
 {% endmacro %}
-{% if freifunk_vrf %}
+{% set adblock_lean = adblock_enabled | default(false) | bool and adblock_provider == 'lean' %}
+{% if freifunk_vrf or adblock_lean %}
 config dnsmasq 'default'
 {% else %}
 config dnsmasq
@@ -33,6 +34,10 @@ config dnsmasq
 {% if freifunk_vrf and direct_internet_networks | length == 0 %}
 	{# only the resolver of the router itself, not the uplink #}
 	list interface 'loopback'
+{% endif %}
+{% if adblock_lean %}
+	list addnmount '/bin/busybox'
+	list addnmount '/var/run/adblock-lean/abl-blocklist.gz'
 {% endif %}
 {{ dnsmasq_options() -}}
 {% if freifunk_vrf %}

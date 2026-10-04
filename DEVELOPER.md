@@ -515,6 +515,17 @@ By default this installs [`qos-scripts`](https://github.com/openwrt/packages/tre
     qosify_overhead_type: pppoe-llcsnap   # optional, defaults to 'none' - see qosify's overhead_type
 ```
 
+### ad blocking
+
+Corerouters can block ads with dnsmasq:
+
+```yml
+adblock_enabled: true
+adblock_provider: lean   # fast (default) or lean
+```
+
+`fast` uses adblock-fast from the OpenWrt packages feed, `lean` uses adblock-lean from the falter feed. adblock-lean is configured with the `adblock_lean_*` variables in `group_vars/role_corerouter/general.yml` and only filters the first dnsmasq instance, which on a router with direct internet networks doesn't serve Freifunk clients.
+
 ### ssh-keys
 
 By default the ssh-keys within `all/ssh-keys.yml` will be installed on all hosts. To add additional ssh keys use this format:
