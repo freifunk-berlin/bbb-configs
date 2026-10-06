@@ -198,7 +198,10 @@ protocol static static_v6_bgp_upstream {
 
 protocol bgp bgp_upstream {
 	local {{ uplink['ipv6'] | ansible.utils.ipaddr('address') }} as {{ local_asn }};
-	neighbor {{ uplink['ipv6'] | ansible.utils.ipaddr('peer') }} as {{ peer_asn }};
+{% for peer in uplink['peers'] %}
+    # {{ peer['name'] | default("") }}
+	neighbor {{ peer['address'] }} as {{ peer['asn'] }};
+{% endfor %}
 	ipv6 {
 		table v6_bgp_upstream;
 		import where net = ::/0;

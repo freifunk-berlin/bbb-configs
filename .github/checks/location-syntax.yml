@@ -42,7 +42,6 @@ mesh_links: list(include('mesh_link'), required=False)
 uplink: include('gateway_uplink', required=False)
 mgmt: include('gateway_mgmt', required=False)
 local_asn: int(required=False)
-peer_asn: int(required=False)
 sgw: str(required=False)
 tunnel_metric: int(required=False)
 gre_base_prefix: ip(version=6, required=False)
@@ -179,6 +178,12 @@ gateway_uplink:
   ifname: str()
   ipv4: ip(version=4)
   ipv6: ip(version=6)
+  peers: list(include('uplink_peers'))
+
+uplink_peers:
+  name: str()
+  asn: int()
+  address: ip(version=6)
 
 gateway_mgmt:
   ifname: str()
