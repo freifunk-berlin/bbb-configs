@@ -1,0 +1,210 @@
+---
+# Schema for YAMALE https://github.com/23andMe/Yamale
+# Validates the location files in locations/*.yml (see check-syntax.py).
+#
+# Validation runs in strict mode: keys that are not listed here are rejected.
+# When you introduce a new variable, add it here as well.
+
+# --- general location info ------------------------------------------------
+location: str(matches='^[a-z0-9_-]+$')
+location_nice: str(required=False)
+latitude: num(required=False)
+longitude: num(required=False)
+altitude: num(required=False)
+height: num(required=False)
+community: str(required=False)
+development: bool(required=False)
+
+contact_name: str(required=False)
+contact_nickname: str(required=False)
+contacts: list(str(), required=False)
+
+# location wide defaults for all hosts
+role: include('host_role', required=False)
+model: str(required=False)
+wireless_profile: str(required=False)
+dhcp_no_ping: bool(required=False)
+adblock_enabled: bool(required=False)
+
+# --- hosts and devices -----------------------------------------------------
+hosts: list(include('host'), min=1)
+snmp_devices: list(include('snmp_device'), required=False)
+airos_dfs_reset: list(include('airos_dfs_reset'), required=False)
+qmi: list(include('qmi'), required=False)
+
+# --- addressing and networks -----------------------------------------------
+ipv6_prefix: ip(version=6)
+dns_servers: list(ip(), required=False)
+networks: list(include('network'), required=False)
+mesh_links: list(include('mesh_link'), required=False)
+
+# --- gateway specific ------------------------------------------------------
+uplink: include('gateway_uplink', required=False)
+mgmt: include('gateway_mgmt', required=False)
+local_asn: int(required=False)
+peer_asn: int(required=False)
+sgw: str(required=False)
+tunnel_metric: int(required=False)
+gre_base_prefix: ip(version=6, required=False)
+gre_tunnel_alias: str(required=False)
+wireguard_base_prefix_ipv4: ip(version=4, required=False)
+wireguard_base_prefix_ipv6: ip(version=6, required=False)
+
+# --- merged variables (*__to_merge) ----------------------------------------
+location__packages__to_merge: list(str(), required=False)
+all_collectd__packages__to_merge: list(str(), required=False)
+location__ssh_keys__to_merge: list(include('ssh_key'), required=False)
+ssh_keys: list(include('ssh_key'), required=False)
+location__wireless_profiles__to_merge: list(include('wireless_profile'), required=False)
+location__channel_assignments_11a_standard__to_merge: include('channel_assignments', required=False)
+location__channel_assignments_11b_standard__to_merge: include('channel_assignments', required=False)
+location__channel_assignments_11g_standard__to_merge: include('channel_assignments', required=False)
+location_scharni__channel_assignments_11a_standard__to_merge: include('channel_assignments', required=False)
+location_scharni__channel_assignments_11g_standard__to_merge: include('channel_assignments', required=False)
+
+---
+host_role: enum('ap', 'corerouter', 'gateway')
+
+hostname: str(matches='^[a-z0-9_-]+$')
+
+radio: enum('11a_standard', '11g_standard', '11a_mesh')
+
+host:
+  hostname: include('hostname')
+  # role and model can be omitted when they are set location wide
+  role: include('host_role', required=False)
+  model: str(required=False)
+  openwrt_version: str(required=False)
+  image_search_pattern: str(required=False)
+  imagebuilder_config: map(any(str(), int(), bool()), key=str(), required=False)
+  wireless_profile: str(required=False)
+  wifi_roaming: bool(required=False)
+  mac_override: map(mac(), key=str(), required=False)
+  flow_offload: enum('sw', 'hw', required=False)
+  dhcp_no_ping: bool(required=False)
+  int_port: str(required=False)
+  log_size: int(min=1, required=False)
+  low_flash: bool(required=False)
+  low_mem: bool(required=False)
+  poe_on: list(int(min=0), required=False)
+  poemgr_power_budget: int(min=0, required=False)
+  poemgr_ports: list(include('poemgr_port'), required=False)
+  port_untag: map(list(str()), key=int(min=1, max=4094), required=False)
+  host__packages__to_merge: list(str(), required=False)
+  host__rclocal__to_merge: list(str(), required=False)
+  host__disabled_services__to_merge: list(str(), required=False)
+  bird__packages__to_merge: list(str(), required=False)
+  collectd__packages__to_merge: list(str(), required=False)
+
+poemgr_port:
+  port: int(min=0)
+  name: str()
+  disabled: int(min=0, max=1, required=False)
+
+snmp_device:
+  hostname: include('hostname')
+  address: ip()
+  snmp_profile: enum('airos_6', 'airos_8', 'af60', 'edgerouter', 'edgeswitch', 'mikrotik_60g', 'netgear', 'routeros', 'swos', 'swos_lite', 'tplink', 'zyxel')
+
+airos_dfs_reset:
+  name: str()
+  target: str()
+  username: str()
+  password: str()
+  daytime_limit: str(matches='^[0-9]{1,2}-[0-9]{1,2}$')
+
+qmi:
+  name: str()
+  device: str()
+  apn: str()
+  pdptype: enum('ipv4', 'ipv6', 'ipv4v6')
+
+ssh_key:
+  key: str(matches='^(ssh|ecdsa|sk)-')
+  comment: str()
+
+network:
+  name: str(required=False)
+  role: enum('mesh', 'dhcp', 'mgmt', 'tunnel', 'uplink', 'ext', 'wireless_uplink')
+  vid: int(min=1, max=4094, required=False)
+  untagged: bool(required=False)
+  ifname: str(required=False)
+  mtu: int(min=576, max=9216, required=False)
+  ptp: bool(required=False)
+
+  prefix: ip(version=4, required=False)
+  ipv6_subprefix: int(required=False)
+  assignments: map(int(min=0), key=str(), required=False)
+  gateway: int(min=0, required=False)
+  dns: int(min=0, required=False)
+  ntp: int(min=0, required=False)
+  no_corerouter_dns_record: bool(required=False)
+  dhcp_no_ping: bool(required=False)
+  enforce_client_isolation: bool(required=False)
+  inbound_filtering: bool(required=False)
+
+  # mesh
+  mesh_ap: str(required=False)
+  mesh_radio: include('radio', required=False)
+  mesh_iface: enum('mesh', required=False)
+  mesh_metric: int(min=0, required=False)
+  mesh_metric_lqm: list(str(matches='^[^ ]+ [0-9.]+$'), required=False)
+
+  # tunnel
+  wireguard_port: int(min=1, max=65535, required=False)
+
+  # uplink / qos
+  uplink_mode: enum('bridge', 'direct', 'passthru', required=False)
+  uplink_gateway: ip(version=4, required=False)
+  uplink_ipv4: ip(version=4, required=False)
+  ingress: int(min=0, required=False)
+  egress: int(min=0, required=False)
+  qos_engine: enum('qosify', required=False)
+
+  # wireless_uplink
+  radio: include('radio', required=False)
+  wireless_ssid: str(required=False)
+  wireless_encryption: str(required=False)
+  wireless_key: str(required=False)
+
+mesh_link:
+  name: str()
+  ifname: str()
+  ipv4: ip(version=4)
+  ipv6: ip(version=6, required=False)
+  ptp: bool(required=False)
+  mesh_metric: int(min=0, required=False)
+
+gateway_uplink:
+  ifname: str()
+  ipv4: ip(version=4)
+  ipv6: ip(version=6)
+
+gateway_mgmt:
+  ifname: str()
+  ipv4: ip(version=4)
+  ipv6: ip(version=6)
+  assignments: map(int(min=0), key=str())
+
+wireless_profile:
+  name: str()
+  ifaces: list(include('wireless_iface'))
+
+wireless_iface:
+  mode: enum('ap', 'mesh')
+  radio: any(list(include('radio')), include('radio'))
+  ifname_hint: str()
+  ssid: str(required=False)
+  network: str(required=False)
+  encryption: enum('none', 'owe', 'psk2', 'psk-mixed', 'sae', 'sae-mixed', required=False)
+  key: str(required=False)
+  hidden: bool(required=False)
+  ieee80211w: int(min=0, max=2, required=False)
+  owe_transition_ifname_hint: str(required=False)
+  mcast_rate: int(min=0, required=False)
+  mesh_id: str(required=False)
+  mesh_fwding: int(min=0, max=1, required=False)
+  mesh_nolearn: int(min=0, max=1, required=False)
+
+# hostname -> "<channel>-<htmode>[-<txpower>]", e.g. '36-40' or '13-20-7'
+channel_assignments: map(str(matches='^[0-9]+-[0-9]+(-[0-9]+)?$'), key=str())

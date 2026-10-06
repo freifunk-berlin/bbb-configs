@@ -1,0 +1,39 @@
+---
+name: Check locations yaml Syntax
+
+on: [push, pull_request]
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  check-yaml-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip3 install yamale
+
+      - name: Get Changed Files and Run yaml syntax check
+        run: |
+          # Fetch previous commits for comparison
+          git fetch origin main
+
+          # Get list of changed files in locations
+          changed_files=$(git diff --name-only --diff-filter=d origin/main | grep -E '^locations/.*\.yml$' || true)
+
+          if [ -z "$changed_files" ]; then
+            echo "No location files changed, skipping check."
+            exit 0
+          fi
+
+          echo "$changed_files" | xargs ./.github/checks/check_syntax.py .github/checks/location-syntax.yml
