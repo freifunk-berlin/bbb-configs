@@ -392,9 +392,9 @@ networks:
     wireguard_port: 51820
 ```
 
-The uplink gets a `wan` firewall zone which rejects incoming connections. Its default route lives in the main table, so all Freifunk networks and the tunnel move into the VRF `vrf_freifunk`, where Babel installs its routes. dnsmasq, dropbear, collectd and the BGP sessions of bgpdisco run in the VRF, other services on the router can't reach the mesh. The VRF table is looked up before the local table, so hosts in the Freifunk networks can't reach the addresses the router has outside of the VRF. Processes in the VRF can't reach the resolver on the loopback interface, so `/etc/resolv.conf` also lists the address of the router in the VRF.
+The uplink gets a `wan` firewall zone which rejects incoming connections. Its default route lives in the main table, so all Freifunk networks and the tunnel move into the VRF `vrf_freifunk`, where Babel installs its routes. dnsmasq, dropbear, uhttpd, collectd and the BGP sessions of bgpdisco run in the VRF, other services on the router can't reach the mesh. The VRF table is looked up before the local table, so hosts in the Freifunk networks can't reach the addresses the router has outside of the VRF. Processes in the VRF can't reach the resolver on the loopback interface, so `/etc/resolv.conf` also lists the address of the router in the VRF.
 
-It needs `bird_only: true`, `kmod-vrf` (added automatically), a tunspace version which supports the `root` topology, and procd, dnsmasq, dropbear and collectd with support for the procd `vrf` instance parameter.
+It needs `bird_only: true`, `kmod-vrf` (added automatically), a tunspace version which supports the `root` topology, and procd, dnsmasq, dropbear, uhttpd and collectd with support for the procd `vrf` instance parameter.
 
 #### uplink watchdog
 
