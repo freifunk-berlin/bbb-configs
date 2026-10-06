@@ -3,6 +3,7 @@ exclude_paths:
   - ../.github
   - ../.git
   - ../venv
+  - .github/checks/location-syntax.yml
 
 warn_list:
   - literal-compare
