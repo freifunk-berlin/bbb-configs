@@ -540,6 +540,16 @@ adblock_provider: lean   # fast (default) or lean
 
 `fast` uses adblock-fast from the OpenWrt packages feed, `lean` uses adblock-lean from the falter feed. adblock-lean is configured with the `adblock_lean_*` variables in `group_vars/role_corerouter/general.yml`. It blocks ads and threats with the hagezi `pro` and `tif.mini` lists, the `medium` preset of adblock-lean. The blocklist is kept in memory, so the router downloads it again after a reboot.
 
+By default it filters the `default` dnsmasq instance. On a router with direct internet networks that instance only serves them, the Freifunk networks are served by the instance in the VRF, which can be filtered as well:
+
+```yml
+adblock_lean_dnsmasq_instances:
+  - default
+  - vrf_freifunk
+```
+
+On a router with a VRF, run adblock-lean from the private network or the console. From an SSH session over the Freifunk network it can't reach the `default` instance, so its checks fail. The instance in the VRF is tested with `ip vrf exec`.
+
 ### images with custom packages
 
 To build images with patched or additional packages, build your own ImageBuilder from an OpenWrt tree:

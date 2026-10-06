@@ -35,7 +35,7 @@ config dnsmasq
 	{# only the resolver of the router itself, not the uplink #}
 	list interface 'loopback'
 {% endif %}
-{% if adblock_lean %}
+{% if adblock_lean and 'default' in adblock_lean_dnsmasq_instances %}
 	list addnmount '/bin/busybox'
 	list addnmount '/var/run/adblock-lean/abl-blocklist.gz'
 {% endif %}
@@ -50,6 +50,10 @@ config dnsmasq 'vrf_freifunk'
   {% for network in dhcp_networks if not network.get('direct_internet') %}
 	list interface '{{ libnetwork.getUciIfname(network) }}'
   {% endfor %}
+  {% if adblock_lean and 'vrf_freifunk' in adblock_lean_dnsmasq_instances %}
+	list addnmount '/bin/busybox'
+	list addnmount '/var/run/adblock-lean/abl-blocklist.gz'
+  {% endif %}
 {{ dnsmasq_options() -}}
 {% endif %}
 
