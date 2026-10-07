@@ -522,6 +522,13 @@ UDP traffic without a rule is set to best effort. To keep the DSCP values the de
 qosify_dscp_default_udp: "+besteffort"
 ```
 
+Additional rules, in the syntax of qosify's mapping files, override the defaults of `/etc/qosify/00-defaults.conf`, for example to mark SSH as best effort unless the client sets a DSCP value:
+
+```yml
+qosify_rules:
+  - "tcp:22 +besteffort"
+```
+
 ### ad blocking
 
 Corerouters can block ads with dnsmasq:
