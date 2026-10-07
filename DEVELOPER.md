@@ -513,6 +513,13 @@ By default this installs [`qos-scripts`](https://github.com/openwrt/packages/tre
     egress: 50
     qos_engine: qosify
     qosify_overhead_type: pppoe-llcsnap   # optional, defaults to 'none' - see qosify's overhead_type
+    qosify_overhead_vlan: 1               # optional, VLAN tags on the line, e.g. for VDSL with VLAN 7
+```
+
+UDP traffic without a rule is set to best effort. To keep the DSCP values the devices set and only mark unmarked UDP traffic as best effort, set this for the location or host:
+
+```yml
+qosify_dscp_default_udp: "+besteffort"
 ```
 
 ### ad blocking

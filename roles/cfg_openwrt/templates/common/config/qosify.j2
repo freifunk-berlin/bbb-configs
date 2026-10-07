@@ -6,7 +6,7 @@ config defaults
 	list defaults '/etc/qosify/*.conf'
 	option dscp_prio 'video'
 	option dscp_icmp '+besteffort'
-	option dscp_default_udp 'besteffort'
+	option dscp_default_udp '{{ qosify_dscp_default_udp | default('besteffort') }}'
 	option prio_max_avg_pkt_len '500'
 
 config class 'besteffort'
@@ -40,6 +40,9 @@ config interface '{{ name }}'
 	option bandwidth_up '{{ network['egress'] }}mbit'
       {% endif %}
 	option overhead_type '{{ network.get('qosify_overhead_type', 'none') }}'
+      {% if network['qosify_overhead_vlan'] is defined %}
+	option overhead_vlan '{{ network['qosify_overhead_vlan'] }}'
+      {% endif %}
 
     {% endif %}
   {% endfor %}
