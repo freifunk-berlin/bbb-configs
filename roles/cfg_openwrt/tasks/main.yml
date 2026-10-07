@@ -107,6 +107,45 @@
     - always
     - config
 
+# overrides rules of /etc/qosify/00-defaults.conf, the files are loaded in
+# alphabetical order and the last rule for a match wins
+- name: Create the qosify directory
+  file:
+    path: "{{ configs_dir }}/etc/qosify"
+    state: directory
+    mode: "755"
+  when:
+    - "'qosify' in packages"
+    - qosify_rules | default([]) | length > 0
+  tags:
+    - always
+    - config
+
+- name: Add qosify rules
+  copy:
+    content: |
+      {% for rule in qosify_rules %}
+      {{ rule }}
+      {% endfor %}
+    dest: "{{ configs_dir }}/etc/qosify/50-bbb-configs.conf"
+    mode: "644"
+  when:
+    - "'qosify' in packages"
+    - qosify_rules | default([]) | length > 0
+  tags:
+    - always
+    - config
+
+# the configs directory is kept between runs
+- name: Remove qosify rules
+  file:
+    path: "{{ configs_dir }}/etc/qosify/50-bbb-configs.conf"
+    state: absent
+  when: "'qosify' not in packages or qosify_rules | default([]) | length == 0"
+  tags:
+    - always
+    - config
+
 - name: Include add_symlinks.yml
   include_tasks:
     file: add_symlinks.yml

@@ -26,6 +26,7 @@ wireless_profile: str(required=False)
 dhcp_no_ping: bool(required=False)
 adblock_enabled: bool(required=False)
 qosify_dscp_default_udp: str(required=False)
+qosify_rules: list(str(), required=False)
 
 # --- hosts and devices -----------------------------------------------------
 hosts: list(include('host'), min=1)
