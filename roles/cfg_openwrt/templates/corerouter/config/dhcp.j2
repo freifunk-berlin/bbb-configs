@@ -35,6 +35,11 @@ config dnsmasq
 	{# only the resolver of the router itself, not the uplink #}
 	list interface 'loopback'
 {% endif %}
+{% if freifunk_vrf %}
+	{# only read its own hosts file, the Freifunk host names of bgpdisco
+	   in /tmp/hosts are for the instance in the VRF #}
+	option ignore_hosts_dir '1'
+{% endif %}
 {% if adblock_lean and 'default' in adblock_lean_dnsmasq_instances %}
 	list addnmount '/bin/busybox'
 	list addnmount '/var/run/adblock-lean/abl-blocklist.gz'
