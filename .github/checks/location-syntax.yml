@@ -25,6 +25,7 @@ model: str(required=False)
 wireless_profile: str(required=False)
 dhcp_no_ping: bool(required=False)
 adblock_enabled: bool(required=False)
+qosify_dscp_default_udp: str(required=False)
 
 # --- hosts and devices -----------------------------------------------------
 hosts: list(include('host'), min=1)
@@ -160,6 +161,8 @@ network:
   ingress: int(min=0, required=False)
   egress: int(min=0, required=False)
   qos_engine: enum('qosify', required=False)
+  qosify_overhead_type: str(required=False)
+  qosify_overhead_vlan: int(min=0, max=2, required=False)
 
   # wireless_uplink
   radio: include('radio', required=False)
