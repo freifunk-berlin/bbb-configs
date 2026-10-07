@@ -2,8 +2,8 @@
 
 location: hacrafu-rotini
 location_nice: M -> W
-# latitude: 52.0
-# longitude: 13.0
+latitude: 52.483020341 # mining stage area
+longitude: 13.817252219 # mining stage area
 contact_name: "Hacken Craften Funken e.V."
 contact_nickname: "HaCraFu e.V."
 contacts:
@@ -23,7 +23,7 @@ hosts:
 
 ipv6_prefix: "2001:bf7:850:6d00::/56"
 
-# DHCP      10.248.146.224/27
+# DHCP      10.248.151.0/25
 # MGMT      10.31.168.36/32
 # TUNNEL    10.31.168.38/31
 
@@ -33,10 +33,11 @@ networks:
     role: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.248.146.224/27
+    prefix: 10.248.151.0/25
     ipv6_subprefix: 0
     assignments:
       hacrafu-rotini: 1
+      wlc: 2
 
   # MGMT
   - vid: 42
