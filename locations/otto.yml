@@ -44,6 +44,8 @@ ula_prefix: "fd6f:c8f8:829d::/48"
 
 # keep the log on a USB stick
 log_usb: true
+# and write status snapshots to it
+log_status: true
 
 dsl:
   annex: j

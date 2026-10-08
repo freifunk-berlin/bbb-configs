@@ -1,0 +1,91 @@
+#!/bin/sh
+#
+# Writes a snapshot of the system, DSL, shaper and wifi state to the log,
+# called by cron. Counters are cumulative, compare two snapshots to get rates.
+
+log() {
+	logger -t status "$*"
+}
+
+read -r load1 load5 _ < /proc/loadavg
+log "sys load=$load1/$load5" \
+	"mem_avail=$(awk '/MemAvailable/ { print int($2 / 1024) }' /proc/meminfo)MB" \
+	"conntrack=$(cat /proc/sys/net/netfilter/nf_conntrack_count 2>/dev/null)" \
+	"uptime=$(cut -d. -f1 /proc/uptime)s"
+
+ping_stats() {
+	ping -q -c 3 -W 2 "$@" 2>/dev/null | awk '
+		/packet loss/ { loss = $(NF - 2) }
+		/round-trip/ { split($4, t, "/"); avg = t[2]; max = t[3] }
+		END { printf "loss=%s avg=%sms max=%sms", loss ? loss : "100%", avg ? avg : "-", max ? max : "-" }'
+}
+
+log "ping uplink $(ping_stats 1.1.1.1)"
+ip link show vrf_freifunk >/dev/null 2>&1 &&
+	log "ping freifunk $(ping_stats -I vrf_freifunk 1.1.1.1)"
+
+dsl=$(ubus call dsl metrics 2>/dev/null)
+if [ -n "$dsl" ]; then
+	# shellcheck disable=SC2046
+	set -- $(echo "$dsl" | jsonfilter \
+		-e '@.up' -e '@.uptime' \
+		-e '@.downstream.data_rate' -e '@.upstream.data_rate' \
+		-e '@.downstream.attndr' -e '@.upstream.attndr' \
+		-e '@.downstream.snr' -e '@.upstream.snr' \
+		-e '@.errors.near.es' -e '@.errors.near.ses' -e '@.errors.near.crc_p' \
+		-e '@.errors.near.cv_p' -e '@.errors.near.fecs' -e '@.errors.near.uas' \
+		-e '@.errors.far.es' -e '@.errors.far.ses' -e '@.errors.far.crc_p' \
+		-e '@.errors.far.leftrs' -e '@.errors.far.uas')
+	log "dsl up=$1 uptime=$2s rate=$(($3 / 1000))/$(($4 / 1000))kbit" \
+		"attainable=$(($5 / 1000))/$(($6 / 1000))kbit" \
+		"snr=$(printf '%.1f/%.1f' "$7" "$8")dB" \
+		"near: es=$9 ses=${10} crc=${11} cv=${12} fecs=${13} uas=${14}" \
+		"far: es=${15} ses=${16} crc=${17} leftrs=${18} uas=${19}"
+fi
+
+for dev in $(tc qdisc show | awk '$2 == "cake" { print $5 }'); do
+	# shellcheck disable=SC2046
+	set -- $(tc -j -s qdisc show dev "$dev" | jsonfilter \
+		-e '@[0].bytes' -e '@[0].drops' -e '@[0].overlimits' -e '@[0].backlog' \
+		-e '@[0].tins[1].avg_delay_us' -e '@[0].tins[1].peak_delay_us' \
+		-e '@[0].tins[1].ecn_mark' -e '@[0].tins[1].drops')
+	log "cake $dev bytes=$1 drops=$2 overlimits=$3 backlog=$4" \
+		"besteffort: avg_delay=$5us peak_delay=$6us marks=$7 drops=$8"
+done
+
+seen=
+for dev in $(iw dev | awk '$1 == "Interface" { print $2 }'); do
+	freq=$(iw dev "$dev" survey dump | awk '/in use/ { print $2 }')
+	case " $seen " in
+	*" $freq "*) ;;
+	*)
+		seen="$seen $freq"
+		log "radio $freq $(iw dev "$dev" survey dump | awk '
+			/in use/ { use = 1 }
+			use && /noise/ { printf "noise=%sdBm ", $2 }
+			use && /active time/ { printf "active=%sms ", $4 }
+			use && /busy time/ { printf "busy=%sms ", $4 }
+			use && /receive time/ { printf "rx=%sms ", $4 }
+			use && /transmit time/ { printf "tx=%sms", $4; exit }')"
+		;;
+	esac
+
+	iw dev "$dev" station dump | awk -v dev="$dev" '
+		function flush() {
+			if (mac)
+				printf "sta %s %s signal=%s avg=%s tx=%s rx=%s tx_pkts=%s retries=%s failed=%s connected=%ss\n",
+					dev, mac, sig, avg, tx, rx, pkts, retries, failed, conn
+		}
+		$1 == "Station" { flush(); mac = $2; sig = avg = tx = rx = pkts = retries = failed = conn = "-" }
+		$1 == "signal:" { sig = $2 }
+		$1 == "signal" && $2 == "avg:" { avg = $3 }
+		$1 == "tx" && $2 == "bitrate:" { tx = $3 }
+		$1 == "rx" && $2 == "bitrate:" { rx = $3 }
+		$1 == "tx" && $2 == "packets:" { pkts = $3 }
+		$1 == "tx" && $2 == "retries:" { retries = $3 }
+		$1 == "tx" && $2 == "failed:" { failed = $3 }
+		$1 == "connected" { conn = $3 }
+		END { flush() }' | while read -r line; do
+		log "$line"
+	done
+done

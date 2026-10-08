@@ -312,6 +312,18 @@
     - always
     - config
 
+# Writes the state of the system, DSL, shaper and wifi to the log every
+# 10 minutes, to judge a setup from its log later on.
+- name: Include status snapshots
+  include_tasks:
+    file: log_status.yml
+    apply:
+      tags: always
+  when: log_status | default(false) | bool
+  tags:
+    - always
+    - config
+
 - name: Generate Imagebuilder command
   set_fact:
     make_command: >
