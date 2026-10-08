@@ -1,8 +1,4 @@
-#jinja2: trim_blocks: True, lstrip_blocks: True
-{# A listener in the main table doesn't accept connections from the VRF, so
-   there is a second instance for the Freifunk side. #}
-{% for instance in (['main', 'freifunk'] if freifunk_vrf | default(false) else ['main']) %}
-config uhttpd '{{ instance }}'
+config uhttpd 'main'
         list listen_http '0.0.0.0:80'
         list listen_http '[::]:80'
         list listen_https '0.0.0.0:443'
@@ -21,11 +17,7 @@ config uhttpd '{{ instance }}'
         option ubus_prefix '/ubus'
         option rfc1918_filter '0'
         option redirect_https '1'
-{% if instance == 'freifunk' %}
-        option vrf 'vrf_freifunk'
-{% endif %}
 
-{% endfor %}
 config cert 'defaults'
         option days '730'
         option key_type 'ec'
