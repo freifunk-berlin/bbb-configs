@@ -46,14 +46,6 @@
   when: freifunk_vrf
   tags: always
 
-- name: Enable the uplink watchdog
-  set_fact:
-    uplink_watchdog_networks: >-
-      {{ networks | default([]) | selectattr('role', 'equalto', 'uplink') | selectattr('uplink_proto', 'defined')
-         | selectattr('uplink_proto', 'equalto', 'pppoe') | list
-         if role == 'corerouter' and uplink_watchdog | default(false) | bool else [] }}
-  tags: always
-
 - name: Include tasks for conditional packages
   include_tasks:
     file: conditional_packages.yml
@@ -164,16 +156,6 @@
     - role == 'corerouter'
     - adblock_enabled | default(false) | bool
     - adblock_provider == 'lean'
-  tags:
-    - always
-    - config
-
-- name: Include uplink watchdog
-  include_tasks:
-    file: uplink_watchdog.yml
-    apply:
-      tags: always
-  when: uplink_watchdog_networks | length > 0
   tags:
     - always
     - config

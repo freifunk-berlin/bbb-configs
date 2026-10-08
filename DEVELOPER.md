@@ -396,18 +396,6 @@ The uplink gets a `wan` firewall zone which rejects incoming connections. Its de
 
 It needs `bird_only: true`, `kmod-vrf` (added automatically), a tunspace version which supports the `root` topology, and procd, dnsmasq, dropbear and collectd with support for the procd `vrf` instance parameter.
 
-#### uplink watchdog
-
-A router with a PPPoE uplink is only reachable through that uplink, so it tries to recover it on its own. If it can't ping the internet through the uplink, it restarts the interface after 5 minutes, the DSL modem after 15 minutes and itself after one hour, each repeatedly until the uplink is back. During an outage of the provider the router therefore reboots once per hour.
-
-```yml
-uplink_watchdog: true                    # default
-uplink_watchdog_hosts: [9.9.9.9, 1.1.1.1]
-uplink_watchdog_restart_interface: 5m    # 0 skips a step
-uplink_watchdog_restart_dsl: 15m
-uplink_watchdog_reboot: 1h
-```
-
 #### direct internet access
 
 With a PPPoE uplink, a `dhcp` network can use the line directly instead of Freifunk, e.g. for a private wifi:
