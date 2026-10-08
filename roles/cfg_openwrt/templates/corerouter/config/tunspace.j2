@@ -1,13 +1,6 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
 
-{# tunspace in falter main reads uplink_mode, newer versions uplink_topology #}
-{% set uplink_topologies = {
-  'bridge': 'netns-macvlan-bridge',
-  'direct': 'netns-move-interface',
-  'passthru': 'netns-macvlan-passthru',
-  'root': 'root',
-} %}
 {% set all_uplinks = networks | selectattr('role', 'in', ['wireless_uplink', 'uplink']) | list %}
 {% for uplink in all_uplinks %}
   {% if uplink['role'] == 'wireless_uplink' %}
@@ -16,12 +9,6 @@
     {% set uplink_ifname = wd['ifname_hint'] + '-sta' %}
     {% set uplink_mode = 'passthru' %}
     {% set uplink_mac = libnetwork.generateDeterministicMAC(inventory_hostname ~ "-tunspace-wlan") %}
-  {% elif uplink.get('uplink_mode') == 'root' %}
-    {# no namespace, the tunnel uses the default route of the root namespace #}
-    {% set uplink_netns = '' %}
-    {% set uplink_ifname = libnetwork.getUciIfname(uplink) %}
-    {% set uplink_mode = 'root' %}
-    {% set uplink_mac = libnetwork.generateDeterministicMAC(inventory_hostname ~ "-tunspace") %}
   {% else %}
     {% set uplink_netns = uplink['name'] if 'name' in uplink else 'uplink' %}
     {% set uplink_ifname = libnetwork.getIfname(uplink) %}
@@ -40,9 +27,7 @@ config tunspace "tunspace"
   # - bridge: creates a macvlan child in bridge mode, useful for creating multiple uplinks from the same original uplink interface.
   # - passthru: macvlan shares parent MAC, required for wireless uplinks (DHCP works with single lease).
   # - direct: moves the original uplink interface into the namespace directly, useful for wonky cheap USB sticks with broken drivers.
-  # - root: no namespace, uses the default route of an uplink the router owns (e.g. PPPoE).
   option uplink_mode "{{ uplink_mode }}"
-  option uplink_topology "{{ uplink_topologies[uplink_mode] }}"
   # Our own static uplink IPv4 address in CIDR format. Leave empty to use DHCP.
   option uplink_ipv4 "{{ uplink_ipv4 }}"
   # IPv4 address of the gateway. Required in combination with uplink_ipv4, ignored when using DHCP.

@@ -9,13 +9,8 @@ include "/dev/shm/bird_*.conf";
 
 #master4 is implicitly created
 ipv6 sadr table v6_main;
-{% if freifunk_vrf %}
-ipv4 table v4_freifunk_vrf;
-ipv6 sadr table v6_freifunk_vrf;
-{% else %}
 ipv4 table v4_babel_ff;
 ipv4 table v4_babel_default;
-{% endif %}
 
 protocol device {
 };
@@ -28,9 +23,6 @@ protocol direct {
 }
 
 protocol babel {
-{% if freifunk_vrf %}
-	vrf "vrf_freifunk";
-{% endif %}
 	randomize router id yes;
 	ipv6 sadr {
 		table v6_main;
@@ -97,11 +89,7 @@ protocol kernel {
 	ipv6 sadr {
 		table v6_main;
 		import all;
-{% if freifunk_vrf %}
-		export none; # Babel routes go to the VRF table only
-{% else %}
 		export all;
-{% endif %}
 	};
 	learn all; # Allow learning loopback route
 }
@@ -116,41 +104,6 @@ protocol kernel {
 	};
 }
 
-{% if freifunk_vrf %}
-# Babel routes for the Freifunk VRF. A table can only have one kernel
-# protocol, so they are piped into tables of their own.
-protocol pipe {
-	table master4;
-	peer table v4_freifunk_vrf;
-	export where source = RTS_BABEL;
-}
-
-protocol kernel {
-	vrf "vrf_freifunk";
-	kernel table 30;
-	ipv4 {
-		table v4_freifunk_vrf;
-		import none;
-		export all;
-	};
-}
-
-protocol pipe {
-	table v6_main;
-	peer table v6_freifunk_vrf;
-	export where source = RTS_BABEL;
-}
-
-protocol kernel {
-	vrf "vrf_freifunk";
-	kernel table 30;
-	ipv6 sadr {
-		table v6_freifunk_vrf;
-		import none;
-		export all;
-	};
-}
-{% else %}
 # TODO: Get rid of the following when OLSRD is gone
 protocol kernel {
 	kernel table 10;
@@ -181,4 +134,3 @@ protocol pipe {
 	peer table v4_babel_default;
 	export where net = 0.0.0.0/0;
 }
-{% endif %}

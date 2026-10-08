@@ -361,41 +361,6 @@ qmi:
     pdptype: ipv4
 ```
 
-### uplink over PPPoE/VDSL
-
-A corerouter can dial PPPoE on a line it owns, e.g. the built-in VDSL modem of a FRITZ!Box. With `uplink_mode: root` tunspace doesn't create a namespace and runs the tunnel over the default route of the PPPoE session. Don't use it for borrowed uplinks like a neighbor's wifi. IPv6 is requested with DHCPv6-PD on the `<name>6` interface.
-
-```yml
-dsl:                          # only for the built-in VDSL modem
-  annex: j
-  tone: b
-  xfer_mode: ptm              # optional, with line_mode the modem only tries VDSL
-  line_mode: vdsl             # optional
-
-networks:
-  - role: uplink
-    name: wan
-    ifname: dsl0
-    vid: 7                    # VLAN of the provider, e.g. 7 for Deutsche Telekom resellers
-    uplink_mode: root
-    uplink_proto: pppoe
-    pppoe_username: "file:/root/pppoe_user"
-    pppoe_password: "file:/root/pppoe_pass"
-    ipv6_reqaddress: try      # optional, odhcp6c reqaddress
-    ipv6_norelease: true      # optional, keep the prefix across reconnects
-    ipv6_default_route: true  # optional, adds an IPv6 default route
-
-  - role: tunnel
-    ifname: ts_wg0
-    mtu: 1280
-    prefix: 10.31.142.120/32
-    wireguard_port: 51820
-```
-
-The uplink gets a `wan` firewall zone which rejects incoming connections. Its default route lives in the main table, so all Freifunk networks and the tunnel move into the VRF `vrf_freifunk`, where Babel installs its routes. dnsmasq, dropbear, collectd and the BGP sessions of bgpdisco run in the VRF, other services on the router can't reach the mesh. The VRF table is looked up before the local table, so hosts in the Freifunk networks can't reach the addresses the router has outside of the VRF. Processes in the VRF can't reach the resolver on the loopback interface, so `/etc/resolv.conf` also lists the address of the router in the VRF.
-
-It needs `bird_only: true`, `kmod-vrf` (added automatically), a tunspace version which supports the `root` topology, and procd, dnsmasq, dropbear and collectd with support for the procd `vrf` instance parameter.
-
 
 ### ext
 

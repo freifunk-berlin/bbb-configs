@@ -1,50 +1,5 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
-{% if freifunk_vrf %}
-
-# Freifunk networks live in their own VRF, never route Freifunk traffic
-# out of the main table to the uplink
-config route 'unreachable_freifunk'
-	option type 'unreachable'
-	option target '10.0.0.0/8'
-
-config route6 'unreachable_freifunk6'
-	option type 'unreachable'
-	option target '{{ freifunk_global_prefix }}'
-
-# Without a route in the VRF table the lookup continues in the main table,
-# never route traffic from the VRF to the uplink
-config route 'unreachable_vrf'
-	option type 'unreachable'
-	option target '0.0.0.0/0'
-	option table 'vrf-freifunk'
-	option metric '4278198272'
-
-config route6 'unreachable_vrf6'
-	option type 'unreachable'
-	option target '::/0'
-	option table 'vrf-freifunk'
-	option metric '4278198272'
-
-  {% set vrf_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list
-     + networks | selectattr('role', 'equalto', 'mesh') | list %}
-config device
-	option type 'vrf'
-	option name 'vrf_freifunk'
-	option table 'vrf-freifunk'
-  {% for network in vrf_networks | unique %}
-	list ports '{{ libnetwork.getIfname(network) }}'
-  {% endfor %}
-  {% for tunnel in networks | selectattr('role', 'equalto', 'tunnel') %}
-	list ports '{{ tunnel['ifname'] }}'
-  {% endfor %}
-
-config interface 'vrf_freifunk'
-	option device 'vrf_freifunk'
-	option proto 'static'
-	{# programs check for a route to ::1 to decide whether IPv6 is usable #}
-	option ip6addr '::1/128'
-{% else %}
 
 # Babel inserts into separate route table, add that to lookup list for IPv6
 config rule6
@@ -70,7 +25,6 @@ config rule
 	option priority 33201
 	option lookup 'olsr-default'
 {% endif %}
-{% endif %}
 
 config interface 'loopback'
 	option device 'lo'
@@ -86,23 +40,10 @@ config interface 'loopback'
 {% elif switch_ports|default(0) > 0 %}
   {% include './common/config/swconfig.network.inc' %}
 {% endif %}
-{% if role == 'corerouter' and dsl is defined %}
-
-config dsl 'dsl'
-	option annex '{{ dsl['annex'] }}'
-	option tone '{{ dsl['tone'] }}'
-  {% for option in ['xfer_mode', 'line_mode', 'ds_snr_offset'] if option in dsl %}
-	option {{ option }} '{{ dsl[option] }}'
-  {% endfor %}
-{% endif %}
 
 
 {% for network in networks %}
   {% set name = libnetwork.getUciIfname(network) %}
-  {% set is_pppoe_uplink = role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_proto') == 'pppoe' %}
-  {% if is_pppoe_uplink != (role == 'corerouter' and network['role'] == 'uplink' and network.get('uplink_mode') == 'root') %}
-{{ undef("network '" ~ name ~ "': uplink_proto: pppoe and uplink_mode: root need each other") }}
-  {% endif %}
 
   {%- if (role == 'corerouter' and network['role'] == 'mesh') or ('assignments' in network and inventory_hostname in network['assignments'])
      or name in libnetwork.getWirelessNetworks() | from_json
@@ -141,13 +82,6 @@ config interface '{{ name }}'
     {% elif role == 'corerouter' and network['role'] == 'mesh' %}
 	option proto 'static'
 	option ipaddr '{{ network['prefix'] }}'
-    {% elif is_pppoe_uplink %}
-	option proto 'pppoe'
-	option username '{{ network['pppoe_username'] }}'
-	option password '{{ network['pppoe_password'] }}'
-	{# IPv6 comes from the '{{ name }}6' DHCPv6 interface below; with IPv6CP
-	   enabled, netifd would race it with an automatic '{{ name }}_6' one #}
-	option ipv6 '0'
     {% else %}
 	option proto 'none'
     {% endif %}
@@ -159,28 +93,6 @@ config interface '{{ name }}'
     {% endif %}
   {% endif %}
 
-  {% if is_pppoe_uplink %}
-config interface '{{ name }}6'
-	option device '@{{ name }}'
-	option proto 'dhcpv6'
-	option reqprefix '{{ network.get('ipv6_reqprefix', 'auto') }}'
-    {% if network.get('ipv6_reqaddress') %}
-	option reqaddress '{{ network['ipv6_reqaddress'] }}'
-    {% endif %}
-    {% if network.get('ipv6_norelease') %}
-	option norelease '1'
-    {% endif %}
-
-    {% if network.get('ipv6_default_route') %}
-{# bound to '{{ name }}6': odhcpd only advertises a default route in RAs for
-   prefixes delegated by an interface that has one #}
-config route6 '{{ name }}6_default'
-	option interface '{{ name }}6'
-	option target '::/0'
-	option metric '512'
-
-    {% endif %}
-  {% endif %}
   {% if libnetwork.isPortNeeded(network) | from_json and libnetwork.isBridgeNeeded(network) | from_json %}
 config device
 	option name '{{ libnetwork.getBridgeIfname(network) }}'

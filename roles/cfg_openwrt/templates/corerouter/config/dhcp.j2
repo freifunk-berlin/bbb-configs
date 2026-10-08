@@ -1,7 +1,11 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
-{% set dhcp_networks = networks | rejectattr('role', 'in', ['uplink', 'wireless_uplink', 'mesh', 'tunnel', 'ext']) | list %}
-{% macro dnsmasq_options() %}
+{% set adblock_lean = adblock_enabled | default(false) | bool and adblock_provider == 'lean' %}
+{% if adblock_lean %}
+config dnsmasq 'default'
+{% else %}
+config dnsmasq
+{% endif %}
 	option domainneeded '1'
 	option localise_queries '1'
 	option rebind_protection '1'
@@ -21,33 +25,9 @@
 {% for _dns_server in dns_servers %}
         list server '{{ _dns_server }}'
 {% endfor %}
-{% endmacro %}
-{% set adblock_lean = adblock_enabled | default(false) | bool and adblock_provider == 'lean' %}
-{% if freifunk_vrf or adblock_lean %}
-config dnsmasq 'default'
-{% else %}
-config dnsmasq
-{% endif %}
-{% if freifunk_vrf %}
-	{# only the resolver of the router itself, not the uplink #}
-	list interface 'loopback'
-{% endif %}
 {% if adblock_lean %}
 	list addnmount '/bin/busybox'
 	list addnmount '/var/run/adblock-lean/abl-blocklist.gz'
-{% endif %}
-{{ dnsmasq_options() -}}
-{% if freifunk_vrf %}
-
-{# a process in the VRF can only bind to addresses in the VRF #}
-config dnsmasq 'vrf_freifunk'
-	option vrf 'vrf_freifunk'
-	option leasefile '/tmp/dhcp.leases.vrf_freifunk'
-	option noresolv '1'
-  {% for network in dhcp_networks %}
-	list interface '{{ libnetwork.getUciIfname(network) }}'
-  {% endfor %}
-{{ dnsmasq_options() -}}
 {% endif %}
 
 {% for network in networks | selectattr('role', 'equalto', 'mgmt') %}
@@ -59,15 +39,12 @@ config domain '{{ host | replace('-', '_') }}_ff'
   {% endfor %}
 {% endfor %}
 
-{% for network in dhcp_networks %}
+{% for network in networks | rejectattr('role', 'in', ['uplink', 'wireless_uplink', 'mesh', 'tunnel', 'ext']) %}
     {% set name = libnetwork.getUciIfname(network) %}
 
 config dhcp 'dhcp_{{ name }}'
 	option ignore '0'
 	option interface '{{ name }}'
-    {% if freifunk_vrf %}
-	option instance 'vrf_freifunk'
-    {% endif %}
 	option ra 'server'
 	option dhcpv6 'disabled'
     {% if network['role'] == 'dhcp' %}
