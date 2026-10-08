@@ -26,7 +26,6 @@ wireless_profile: str(required=False)
 dhcp_no_ping: bool(required=False)
 adblock_enabled: bool(required=False)
 adblock_provider: enum('fast', 'lean', required=False)
-adblock_lean_dnsmasq_instances: list(str(), required=False)
 bird_only: bool(required=False)
 qosify_dscp_default_udp: str(required=False)
 qosify_rules: list(str(), required=False)
@@ -39,14 +38,6 @@ log_usb: bool(required=False)
 log_usb_size: int(min=1, required=False)
 log_usb_device: str(required=False)
 
-# PPPoE uplinks
-dsl: include('dsl', required=False)
-uplink_watchdog: bool(required=False)
-uplink_watchdog_hosts: list(ip(), required=False)
-uplink_watchdog_restart_interface: include('watchdog_time', required=False)
-uplink_watchdog_restart_dsl: include('watchdog_time', required=False)
-uplink_watchdog_reboot: include('watchdog_time', required=False)
-
 # --- hosts and devices -----------------------------------------------------
 hosts: list(include('host'), min=1)
 snmp_devices: list(include('snmp_device'), required=False)
@@ -55,7 +46,6 @@ qmi: list(include('qmi'), required=False)
 
 # --- addressing and networks -----------------------------------------------
 ipv6_prefix: ip(version=6)
-ula_prefix: ip(version=6, required=False)
 dns_servers: list(ip(), required=False)
 networks: list(include('network'), required=False)
 mesh_links: list(include('mesh_link'), required=False)
@@ -149,16 +139,6 @@ qmi:
   apn: str()
   pdptype: enum('ipv4', 'ipv6', 'ipv4v6')
 
-dsl:
-  annex: str()
-  tone: str()
-  xfer_mode: enum('atm', 'ptm', required=False)
-  line_mode: enum('adsl', 'vdsl', required=False)
-  ds_snr_offset: int(required=False)
-
-# "0" skips the step
-watchdog_time: any(int(min=0), str(matches='^[0-9]+[smhd]?$'))
-
 ssh_key:
   key: str(matches='^(ssh|ecdsa|sk)-')
   comment: str()
@@ -182,8 +162,6 @@ network:
   dhcp_no_ping: bool(required=False)
   enforce_client_isolation: bool(required=False)
   inbound_filtering: bool(required=False)
-  direct_internet: bool(required=False)
-  ip6class: any(str(), list(str()), required=False)
 
   # mesh
   mesh_ap: str(required=False)
@@ -196,13 +174,7 @@ network:
   wireguard_port: int(min=1, max=65535, required=False)
 
   # uplink / qos
-  uplink_mode: enum('bridge', 'direct', 'passthru', 'root', required=False)
-  uplink_proto: enum('pppoe', required=False)
-  pppoe_username: str(required=False)
-  pppoe_password: str(required=False)
-  ipv6_reqaddress: enum('try', 'force', 'none', required=False)
-  ipv6_norelease: bool(required=False)
-  ipv6_default_route: bool(required=False)
+  uplink_mode: enum('bridge', 'direct', 'passthru', required=False)
   uplink_gateway: ip(version=4, required=False)
   uplink_ipv4: ip(version=4, required=False)
   ingress: int(min=0, required=False)
