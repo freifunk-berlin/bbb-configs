@@ -61,10 +61,9 @@
     - role == 'corerouter'
     - dsl is defined
 
-# ip-full for 'ip vrf exec'
 - name: "Add VRF support for the Freifunk VRF"
   set_fact:
-    packages: "{{ packages + ['kmod-vrf', 'ip-full'] }}"
+    packages: "{{ packages + ['kmod-vrf'] }}"
   when:
     - freifunk_vrf
 

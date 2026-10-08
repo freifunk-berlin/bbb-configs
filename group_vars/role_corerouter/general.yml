@@ -26,11 +26,6 @@ adblock_lean_min_good_line_count: 250000
 adblock_lean_max_file_part_size_kb: 10240
 adblock_lean_max_blocklist_file_size_kb: 16384
 adblock_lean_unload_blocklist_before_update: 0
-# the dnsmasq instances which get the blocklist: default (the Freifunk
-# networks, or the direct internet networks on a router with a VRF) and
-# vrf_freifunk (the Freifunk networks of a router with a VRF)
-adblock_lean_dnsmasq_instances:
-  - default
 adblock_lean_boot_start_delay_s: 180
 # hagezi publishes the lists daily at 11:00 UTC
 adblock_lean_cron_schedule: "47 13 * * *"
