@@ -1,9 +1,16 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
-{% set vrf_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list %}
+{% set vrf_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname)
+   | reject('in', direct_internet_networks) | list %}
 {# A listener in the main table doesn't accept connections from the VRF, so
    there are instances for both routing domains. They bind to the addresses
    of one network each, wildcard listeners on the same port would collide. #}
+{% for network in direct_internet_networks %}
+config dropbear '{{ libnetwork.getUciIfname(network) }}'
+	option Port '22'
+	option Interface '{{ libnetwork.getUciIfname(network) }}'
+
+{% endfor %}
 {% for network in vrf_networks %}
 config dropbear 'freifunk_{{ libnetwork.getUciIfname(network) }}'
 	option Port '22'

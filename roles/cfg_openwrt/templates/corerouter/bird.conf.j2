@@ -74,7 +74,13 @@ protocol babel {
 {% endfor %}
 			accept;
 		};
+{% if direct_internet_networks | length > 0 %}
+		# Networks with direct internet access aren't part of Freifunk
+		export where net !~ [ {{ direct_internet_networks | map(attribute='prefix') | join(', ') }} ]
+			&& (source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]);
+{% else %}
 		export where source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]; # Readvertise learned routes and advertise local networks from 10/8
+{% endif %}
 	};
 
 	# Mesh interfaces

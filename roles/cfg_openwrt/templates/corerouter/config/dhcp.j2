@@ -28,7 +28,10 @@ config dnsmasq 'default'
 {% else %}
 config dnsmasq
 {% endif %}
-{% if freifunk_vrf %}
+{% for network in direct_internet_networks %}
+	list interface '{{ libnetwork.getUciIfname(network) }}'
+{% endfor %}
+{% if freifunk_vrf and direct_internet_networks | length == 0 %}
 	{# only the resolver of the router itself, not the uplink #}
 	list interface 'loopback'
 {% endif %}
@@ -44,7 +47,7 @@ config dnsmasq 'vrf_freifunk'
 	option vrf 'vrf_freifunk'
 	option leasefile '/tmp/dhcp.leases.vrf_freifunk'
 	option noresolv '1'
-  {% for network in dhcp_networks %}
+  {% for network in dhcp_networks if not network.get('direct_internet') %}
 	list interface '{{ libnetwork.getUciIfname(network) }}'
   {% endfor %}
 {{ dnsmasq_options() -}}
@@ -66,17 +69,21 @@ config dhcp 'dhcp_{{ name }}'
 	option ignore '0'
 	option interface '{{ name }}'
     {% if freifunk_vrf %}
-	option instance 'vrf_freifunk'
+	option instance '{{ 'default' if network.get('direct_internet') else 'vrf_freifunk' }}'
     {% endif %}
 	option ra 'server'
 	option dhcpv6 'disabled'
     {% if network['role'] == 'dhcp' %}
 	option dhcpv4 'server'
 	option force '1'
-	option leasetime '5m'
+	option leasetime '{{ '12h' if network.get('direct_internet') else '5m' }}'
 	option start '2'
 	option limit '{{ network['prefix'] | ansible.utils.ipaddr('size') -3 }}'
+      {% if network.get('direct_internet') %}
+        list dhcp_option '121,0.0.0.0/0,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}'
+      {% else %}
         list dhcp_option '121,0.0.0.0/0,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.31.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.36.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.230.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.248.0.0/14,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.30.96.0/19,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}'
+      {% endif %}
     {% else %}
 	option dhcpv4 'disabled'
     {% endif %}
