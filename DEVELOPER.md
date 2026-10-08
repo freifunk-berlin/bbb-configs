@@ -383,7 +383,7 @@ networks:
     pppoe_password: "file:/root/pppoe_pass"
     ipv6_reqaddress: try      # optional, odhcp6c reqaddress
     ipv6_norelease: true      # optional, keep the prefix across reconnects
-    ipv6_default_route: true  # optional, needed for direct_internet networks
+    ipv6_default_route: true  # optional, adds an IPv6 default route
 
   - role: tunnel
     ifname: ts_wg0
@@ -395,31 +395,6 @@ networks:
 The uplink gets a `wan` firewall zone which rejects incoming connections. Its default route lives in the main table, so all Freifunk networks and the tunnel move into the VRF `vrf_freifunk`, where Babel installs its routes. dnsmasq, dropbear, collectd and the BGP sessions of bgpdisco run in the VRF, other services on the router can't reach the mesh. The VRF table is looked up before the local table, so hosts in the Freifunk networks can't reach the addresses the router has outside of the VRF. Processes in the VRF can't reach the resolver on the loopback interface, so `/etc/resolv.conf` also lists the address of the router in the VRF.
 
 It needs `bird_only: true`, `kmod-vrf` (added automatically), a tunspace version which supports the `root` topology, and procd, dnsmasq, dropbear and collectd with support for the procd `vrf` instance parameter.
-
-#### direct internet access
-
-With a PPPoE uplink, a `dhcp` network can use the line directly instead of Freifunk, e.g. for a private wifi:
-
-```yml
-  - vid: 41
-    role: dhcp
-    name: private
-    prefix: 10.31.203.64/27
-    inbound_filtering: true
-    no_corerouter_dns_record: true
-    direct_internet: true
-    ip6class: [wan6, local]   # IPv6 /64 from the prefix delegated to wan6 and from ula_prefix
-    assignments:
-      otto-core: 1
-```
-
-The network stays in the main table with the uplink, so it has no routes to Freifunk and Freifunk has none to it. It is masqueraded to the `wan` zone, not announced to the mesh and served by its own dnsmasq and dropbear instances.
-
-The prefix delegated to the uplink can change with every dial-in. Set a ULA prefix to give the hosts of the network addresses which stay the same, e.g. for Matter and HomeKit devices:
-
-```yml
-ula_prefix: "fd12:3456:789a::/48"   # use a random one
-```
 
 
 ### ext

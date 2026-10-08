@@ -8,10 +8,7 @@ config general
 {% if inventory_hostname in groups['role_gateway'] %}
 	list exclude_interface_self '{{ uplink['ifname'] }}'
 {% endif %}
-{# the uplink and networks with direct internet access are not part of Freifunk #}
-{% for network in direct_internet_networks | default([]) %}
-	list ignore_interface_self '{{ libnetwork.getIfname(network) }}'
-{% endfor %}
+{# the uplink is not part of Freifunk #}
 {% for network in networks | default([]) if freifunk_vrf | default(false) and network.get('uplink_proto') == 'pppoe' %}
 	list ignore_interface_self 'pppoe-{{ libnetwork.getUciIfname(network) }}'
 {% endfor %}
