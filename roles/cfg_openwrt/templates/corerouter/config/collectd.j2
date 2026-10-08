@@ -1,6 +1,0 @@
-#jinja2: trim_blocks: True, lstrip_blocks: True
-config globals 'globals'
-	option Include '/etc/collectd/conf.d'
-{% if freifunk_vrf %}
-	option vrf 'vrf_freifunk'
-{% endif %}
