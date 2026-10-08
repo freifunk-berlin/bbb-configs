@@ -1,0 +1,8 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+{% set vrf_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list %}
+{% set network = ((vrf_networks | selectattr('role', 'equalto', 'mgmt') | list) or vrf_networks) | first %}
+search ff
+nameserver 127.0.0.1
+nameserver ::1
+# the loopback interface can't be reached from the Freifunk VRF
+nameserver {{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}

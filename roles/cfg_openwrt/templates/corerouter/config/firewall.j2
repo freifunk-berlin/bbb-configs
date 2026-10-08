@@ -1,9 +1,11 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
+{% import 'libraries/network.j2' as libnetwork with context %}
 {% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | default([]) %}
 {% set l3_mesh_networks = networks | selectattr('assignments', 'undefined') | selectattr('role', 'equalto', 'mesh') | default([]) %}
 {% set query = "[].{name: name||role,inbound_filtering: inbound_filtering}" %}
 {% set l3_networks = (l3_networks + l3_mesh_networks) | json_query(query) %}
 {% set zone_freifunk_networks = l3_networks | rejectattr('inbound_filtering') | map(attribute='name') %}
+{% set pppoe_uplinks = networks | selectattr('role', 'equalto', 'uplink') | selectattr('uplink_proto', 'defined') | selectattr('uplink_proto', 'equalto', 'pppoe') | list %}
 
 config defaults
 	option synflood_protect '1'
@@ -25,7 +27,33 @@ config zone 'zone_freifunk'
 	{% endfor %}
 	list device 'wg_+'
 	list device 'ts_+'
+{% if freifunk_vrf %}
+	{# forwarded packets from VRF ports have the VRF device as input interface #}
+	list device 'vrf_freifunk'
+{% endif %}
 
+{% if pppoe_uplinks | length > 0 %}
+config zone 'zone_wan'
+	option name 'wan'
+	option input 'REJECT'
+	option masq '1'
+	option mtu_fix '1'
+  {% for uplink in pppoe_uplinks %}
+	list network '{{ libnetwork.getUciIfname(uplink) }}'
+	list network '{{ libnetwork.getUciIfname(uplink) }}6'
+  {% endfor %}
+
+{# DHCPv6 replies come from a unicast address to a request sent to a
+   multicast group, so conntrack doesn't see them as related #}
+config rule
+	option name		'Allow-DHCPv6'
+	option src		wan
+	option proto		udp
+	option dest_port	546
+	option family		ipv6
+	option target		ACCEPT
+
+{% endif %}
 {% for i in l3_networks | selectattr('inbound_filtering') %}
 config zone 'zone_{{ i['name'] }}'
         option name '{{ i['name'] }}'

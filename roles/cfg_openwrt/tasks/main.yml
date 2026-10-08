@@ -6,6 +6,30 @@
       tags: always
   tags: always
 
+# An uplink in the root namespace puts its default route into the main
+# table. The Freifunk networks then move into the vrf_freifunk VRF, only
+# the uplink stays in the main table.
+- name: Enable the Freifunk VRF
+  set_fact:
+    freifunk_vrf: >-
+      {{ role == 'corerouter' and networks | default([]) | selectattr('role', 'equalto', 'uplink')
+         | selectattr('uplink_mode', 'defined') | selectattr('uplink_mode', 'equalto', 'root') | count > 0 }}
+  tags: always
+
+- name: Check the Freifunk VRF requirements
+  assert:
+    that:
+      - bird_only | bool
+    fail_msg: "uplink_mode: root needs bird_only: true, OLSR doesn't support the Freifunk VRF"
+  when: freifunk_vrf
+  tags: always
+
+- name: Keep IPv6 addresses of interfaces moved into the Freifunk VRF
+  set_fact:
+    sysctl: "{{ sysctl | combine({'net.ipv6.conf.all.keep_addr_on_down': 1}) }}"
+  when: freifunk_vrf
+  tags: always
+
 - name: Include tasks for conditional packages
   include_tasks:
     file: conditional_packages.yml
@@ -127,6 +151,64 @@
     mode: "644"
   when:
     - poemgr_ports is defined
+  tags:
+    - always
+    - config
+
+# not part of templates/corerouter, all other corerouters keep the default
+# configs of the packages
+- name: Add dropbear and bgpdisco config for the Freifunk VRF
+  template:
+    src: "{{ role_path }}/templates/common/config/{{ item }}.j2"
+    dest: "{{ configs_dir }}/etc/config/{{ item }}"
+    mode: "644"
+  loop:
+    - dropbear
+    - bgpdisco
+  when: freifunk_vrf
+  tags:
+    - always
+    - config
+
+# replaces the link to the resolv.conf written by dnsmasq
+- name: Add resolv.conf for the Freifunk VRF
+  template:
+    src: "{{ role_path }}/templates/common/resolv.conf.j2"
+    dest: "{{ configs_dir }}/etc/resolv.conf"
+    mode: "644"
+  when: freifunk_vrf
+  tags:
+    - always
+    - config
+
+- name: Add hotplug directory for the Freifunk VRF
+  file:
+    path: "{{ configs_dir }}/etc/hotplug.d/iface"
+    state: directory
+    mode: "755"
+  when: freifunk_vrf
+  tags:
+    - always
+    - config
+
+# The local table is looked up first by default and delivers packets from
+# the VRF to all addresses of the router, also to the ones of the uplink
+# and the direct internet networks. Look up the VRF table first, as
+# described in Documentation/networking/vrf.rst of the kernel. netifd
+# restores the default rules when it starts.
+- name: Add hotplug script to look up the Freifunk VRF before the local table
+  copy:
+    content: |
+      #!/bin/sh
+
+      [ "$ACTION" = ifup ] && for family in -4 -6; do
+          ip "$family" rule | grep -q '^32765:.*lookup local' ||
+              ip "$family" rule add pref 32765 lookup local || continue
+          while ip "$family" rule del pref 0 lookup local 2>/dev/null; do :; done
+      done
+    dest: "{{ configs_dir }}/etc/hotplug.d/iface/15-vrf-local-rule"
+    mode: "644"
+  when: freifunk_vrf
   tags:
     - always
     - config
