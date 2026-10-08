@@ -4,9 +4,9 @@ config device
 
 {% for network in networks | selectattr('vid', 'defined') | selectattr('ifname', 'undefined') %}
   {% set portmapping = [] %}
-  {% for port in dsa_ports %}
+  {% for port in network.get('ports', dsa_ports) %}
     {% set tagged = not network.get('untagged') %}
-    {{ portmapping.append(port|string + (":t" if tagged else ":u")) }}
+    {% set _ = portmapping.append(port|string if ':' in port|string else port|string + (":t" if tagged else ":u")) %}
   {%- endfor %}
 
 config bridge-vlan 'vlan_{{ network['vid'] }}'
