@@ -6,7 +6,6 @@ longitude: 13.41561550087894
 community: berlin
 
 local_asn: 44194
-peer_asn: 5405
 
 hosts:
   - hostname: saarbruecker-gw
@@ -40,6 +39,10 @@ uplink:
   ifname: eth5
   ipv4: 81.27.69.19/31
   ipv6: 2a11:4141:f202::b/127
+  peers:
+    - name: inter.link
+      asn: 5405
+      address: 2a11:4141:f202::a
 
 mgmt:
   ifname: eth4.430
