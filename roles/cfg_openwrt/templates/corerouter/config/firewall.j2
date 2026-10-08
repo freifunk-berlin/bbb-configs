@@ -2,11 +2,9 @@
 {% import 'libraries/network.j2' as libnetwork with context %}
 {% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | default([]) %}
 {% set l3_mesh_networks = networks | selectattr('assignments', 'undefined') | selectattr('role', 'equalto', 'mesh') | default([]) %}
-{% set query = "[].{name: name||role,inbound_filtering: inbound_filtering,direct_internet: direct_internet}" %}
+{% set query = "[].{name: name||role,inbound_filtering: inbound_filtering}" %}
 {% set l3_networks = (l3_networks + l3_mesh_networks) | json_query(query) %}
-{# networks with direct internet access always get their own zone #}
-{% set zoned_networks = l3_networks | selectattr('inbound_filtering') | list + l3_networks | rejectattr('inbound_filtering') | selectattr('direct_internet') | list %}
-{% set zone_freifunk_networks = l3_networks | rejectattr('inbound_filtering') | rejectattr('direct_internet') | map(attribute='name') %}
+{% set zone_freifunk_networks = l3_networks | rejectattr('inbound_filtering') | map(attribute='name') %}
 {% set pppoe_uplinks = networks | selectattr('role', 'equalto', 'uplink') | selectattr('uplink_proto', 'defined') | selectattr('uplink_proto', 'equalto', 'pppoe') | list %}
 
 config defaults
@@ -56,7 +54,7 @@ config rule
 	option target		ACCEPT
 
 {% endif %}
-{% for i in zoned_networks %}
+{% for i in l3_networks | selectattr('inbound_filtering') %}
 config zone 'zone_{{ i['name'] }}'
         option name '{{ i['name'] }}'
         list network '{{ i['name'] }}'
@@ -66,14 +64,14 @@ config forwarding
 	option dest 'freifunk'
 	option src 'freifunk'
 
-{% for i in zoned_networks %}
+{% for i in l3_networks | selectattr('inbound_filtering') %}
 config forwarding
-        option dest '{{ 'wan' if i['direct_internet'] else 'freifunk' }}'
+        option dest 'freifunk'
         option src '{{ i['name'] }}'
 
 {% endfor %}
 
-{% for i in l3_networks | selectattr('inbound_filtering') | rejectattr('direct_internet') %}
+{% for i in l3_networks | selectattr('inbound_filtering') %}
 # Allow essential forwarded IPv6 ICMP traffic
 config rule
 	option name		Allow-ICMPv6-Forward-{{ i['name'] }}
