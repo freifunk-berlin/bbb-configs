@@ -15,20 +15,6 @@
     dest: "{{ configs_dir }}/etc/adblock-lean/config"
     mode: "644"
 
-- name: Check the adblock-lean dnsmasq instances
-  assert:
-    that:
-      - adblock_lean_dnsmasq_instances | difference(['default'] + (['vrf_freifunk'] if freifunk_vrf else [])) | length == 0
-      - adblock_lean_dnsmasq_instances | length > 0
-    fail_msg: "adblock_lean_dnsmasq_instances can only contain default and, with a VRF, vrf_freifunk"
-
-- name: Add the adblock-lean lookup script for the VRF
-  copy:
-    src: "{{ role_path }}/files/common/adblock-lean/vrf-lookup.sh"
-    dest: "{{ configs_dir }}/etc/adblock-lean/vrf-lookup.sh"
-    mode: "644"
-  when: freifunk_vrf
-
 - name: Add adblock-lean cron job
   copy:
     content: "{{ adblock_lean_cron_schedule }} /etc/init.d/adblock-lean start\n"
