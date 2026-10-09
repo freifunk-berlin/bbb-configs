@@ -52,7 +52,16 @@ config led 'led_{{ led['name'] }}'
         option mode '{{ led['mode'] }}'
 {% endif %}
 {% if led['dev'] is defined %}
-        option mode '{{ led['dev'] }}'
+        option dev '{{ led['dev'] }}'
+{% endif %}
+{% if led['iface'] is defined %}
+        option iface '{{ led['iface'] }}'
+{% endif %}
+{% if led['minq'] is defined %}
+        option minq '{{ led['minq'] }}'
+{% endif %}
+{% if led['maxq'] is defined %}
+        option maxq '{{ led['maxq'] }}'
 {% endif %}
 {% endfor %}
 
