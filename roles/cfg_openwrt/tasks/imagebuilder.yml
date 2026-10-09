@@ -228,3 +228,21 @@
     src: "{{ image_src }}"
     dest: "{{ image }}"
     mode: "preserve"
+
+# The extracted ImageBuilder takes a lot of space for every host. The built
+# images in bin/ are kept, vm.sh uses them. A failed build keeps everything.
+- name: Find the workdir contents
+  find:
+    paths: "{{ build_dir }}"
+    file_type: any
+    hidden: true
+    excludes: bin
+  register: build_dir_contents
+
+- name: Remove the workdir except the built images
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ build_dir_contents.files }}"
+  loop_control:
+    label: "{{ item.path }}"
