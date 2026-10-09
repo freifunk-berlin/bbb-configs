@@ -9,23 +9,14 @@ if [ "$#" -gt 0 ]; then
 	location_files=("$@")
 else
 	# Use the default pattern if no arguments are passed
-	location_files=("locations/*.yml")
+	location_files=(locations/*.yml)
 fi
 
 # Function to check for errors in password file paths
 check() {
 	local yq_query="$1"
-	local file_pattern="$2"
-
-	# Expand the file pattern to a list of files
-	# shellcheck disable=SC2206
-	files=($file_pattern)
-
-	# Check if any files match the pattern
-	if [ ${#files[@]} -eq 0 ]; then
-		echo "No files matching pattern $file_pattern"
-		return
-	fi
+	shift
+	local files=("$@")
 
 	# Run the yq command with the expanded list of files
 	pwd_paths=$(yq "$yq_query" "${files[@]}" | grep -v -- '---' | sed 's/["'\'']//g' | sort | uniq)

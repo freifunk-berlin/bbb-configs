@@ -1,7 +1,11 @@
 #!/bin/bash
 
-# Locations pattern
-location_files="locations/*.yml"
+# If location files are passed as arguments, check them instead of all locations
+if [ "$#" -gt 0 ]; then
+  location_files=("$@")
+else
+  location_files=(locations/*.yml)
+fi
 
 # Initialize a variable to track if any errors are found
 error_found=0
@@ -9,17 +13,8 @@ error_found=0
 # Function to check for errors in interface names
 check() {
   local yq_query="$1"
-  local file_pattern="$2"
-
-  # Expand the file pattern to a list of files
-  # shellcheck disable=SC2206
-  files=($file_pattern)
-
-  # Check if any files match the pattern
-  if [ ${#files[@]} -eq 0 ]; then
-    echo "No files matching pattern $file_pattern"
-    return
-  fi
+  shift
+  local files=("$@")
 
   # Run the yq command with the expanded list of files
   ifnames=$(yq "$yq_query" "${files[@]}" | grep -v -- '---' | sed 's/["'\'']//g' | sort | uniq)
@@ -34,10 +29,10 @@ check() {
 }
 
 # Check for issues across locations
-echo "Checking $location_files"
+echo "Checking ${location_files[*]}"
 
 # Check for interface name issues
-check 'select(.networks != null) | .networks[] | select(.name != null) | .name' "$location_files"
+check 'select(.networks != null) | .networks[] | select(.name != null) | .name' "${location_files[@]}"
 
 # Exit with a non-zero status code if any errors were found
 if [ "$error_found" -eq 1 ]; then
