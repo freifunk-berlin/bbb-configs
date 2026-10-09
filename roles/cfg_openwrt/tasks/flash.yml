@@ -20,4 +20,4 @@
 
 - name: "Launch Sysupgrade"
   changed_when: false
-  command: ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_ssh_host }} "sysupgrade -n /tmp/{{ inventory_hostname }}.bin"
+  command: ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_ssh_host }} "sysupgrade -n /tmp/{{ image | basename }}"
