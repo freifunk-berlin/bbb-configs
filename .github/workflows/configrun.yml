@@ -31,15 +31,25 @@ jobs:
       - name: Install dependencies
         run: pip3 install -r requirements.txt --upgrade pip
 
-      - name: Determine branch name
+      # GITHUB_BASE_REF is only set for pull requests, a push is compared
+      # with the commit before it
+      - name: Determine the commit to compare with
+        env:
+          BEFORE: ${{ github.event.before }}
         run: |
-          BRANCH="${GITHUB_BASE_REF#refs/heads/}"
-          echo "Building for $BRANCH"
-          echo "BRANCH=$BRANCH" >> "$GITHUB_ENV"
+          if [ -n "$GITHUB_BASE_REF" ]; then
+            BASE="origin/${GITHUB_BASE_REF#refs/heads/}"
+          elif git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            BASE="$BEFORE"
+          else
+            BASE="HEAD^"
+          fi
+          echo "Comparing with $BASE"
+          echo "BASE=$BASE" >> "$GITHUB_ENV"
 
       - name: Determine changed locations
         run: |
-          CHANGED_HOSTS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" \
+          CHANGED_HOSTS=$(git diff --diff-filter=d --name-only "$BASE" \
             | grep 'host_vars/' \
             | sed 's/host_vars\/\(.*\)\/.*/\1/' \
             | sort \
@@ -48,19 +58,19 @@ jobs:
           echo "Building for $CHANGED_HOSTS"
           echo "CHANGED_HOSTS=$CHANGED_HOSTS" >> "$GITHUB_ENV"
 
-          CHANGED_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" \
+          CHANGED_LOCATIONS=$(git diff --diff-filter=d --name-only "$BASE" \
             | grep 'group_vars/location_' \
             | sed 's/group_vars\/\(.*\)\/.*/\1/' \
             | sort \
             | uniq \
             | sed -z 's/\n/,/g;s/,$//')
-          CHANGED_SINGE_FILE_LOCATIONS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" \
+          CHANGED_SINGE_FILE_LOCATIONS=$(git diff --diff-filter=d --name-only "$BASE" \
             | grep 'locations/' \
             | sed 's/locations\/\(.*\)\.yml/location_\1/' \
             | sed -z 's/-/_/g;s/\n/,/g;s/,$//')
           CHANGED_LOCATIONS=${CHANGED_LOCATIONS:+$CHANGED_LOCATIONS,}$CHANGED_SINGE_FILE_LOCATIONS
 
-          CHANGED_OTHER=$(git diff --diff-filter=d --name-only "origin/$BRANCH" \
+          CHANGED_OTHER=$(git diff --diff-filter=d --name-only "$BASE" \
             | grep -xP '(inventory|roles)/.+' \
             | sed -z 's/\n/,/g;s/,$//')
           if [ -z "${CHANGED_LOCATIONS}" ] && [ -n "${CHANGED_OTHER}" ]; then
