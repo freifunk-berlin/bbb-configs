@@ -1,8 +1,8 @@
 ---
 location: hacrafu-midolline
-location_nice: W
-# latitude: 52.0
-# longitude: 13.0
+location_nice: W -> M
+latitude: 52.483054643 # mining stage area
+longitude: 13.820865154 # mining stage area
 contact_name: "Hacken Craften Funken e.V."
 contact_nickname: "HaCraFu e.V."
 contacts:
