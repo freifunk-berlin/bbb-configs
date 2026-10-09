@@ -21,16 +21,13 @@ jobs:
           # Fetch previous commits for comparison
           git fetch origin main
 
-          # Get list of changed files compared to main branch
-          changed_files=$(git diff --name-only origin/main)
+          # Get the location files changed compared to the main branch
+          mapfile -t location_files < <(git diff --name-only --diff-filter=d origin/main | grep -E '^locations/.*\.yml$' || true)
 
-          # Filter out only the location files from the list of changed files
-          location_files=$(echo "$changed_files" | grep -E '^locations/.*\.yml$' || true)
-
-          if [ -z "$location_files" ]; then
+          if [ ${#location_files[@]} -eq 0 ]; then
             echo "No location files changed, skipping check."
             exit 0
           fi
 
-          # Run the interface name check script with the filtered location files
-          ./.github/checks/check-interface-names.sh "$location_files"
+          # Run the interface name check script with the changed location files
+          ./.github/checks/check-interface-names.sh "${location_files[@]}"
