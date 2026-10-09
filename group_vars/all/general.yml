@@ -48,6 +48,11 @@ bird_only: false
 
 freifunk_global_prefix: 2001:bf7::/32
 
+# IPv4 networks Babel accepts routes for from the mesh, besides the default
+# route. Routes for other networks, e.g. a public DNS server, are rejected.
+freifunk_global_ipv4_prefixes:
+  - 10.0.0.0/8
+
 # Default mesh metric in inbound direction (rxcost) for normal mesh links
 mesh_metric_default_in: 512
 

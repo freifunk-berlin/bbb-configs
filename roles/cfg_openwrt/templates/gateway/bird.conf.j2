@@ -98,7 +98,7 @@ protocol babel babel_mesh {
 		table v6_main;
 		# Import only /56 location aggregates and default routes
 		import filter {
-			if ! (net.len = 56 || net = {{ V6_SADR_DEFAULT_ROUTE }}) then reject;
+			if ! ((net.len = 56 && net.dst ~ [ {{ freifunk_global_prefix }}+ ]) || net = {{ V6_SADR_DEFAULT_ROUTE }}) then reject;
 {% for interface in mesh_links %}
 			if ifname = "{{ interface['ifname'] }}" then {
 			  babel_metric = babel_metric + {{ interface.get('mesh_metric', mesh_metric_default_in) }};
@@ -115,7 +115,9 @@ protocol babel babel_mesh {
 	};
 	ipv4 {
 		table v4_main;
+		# Import only Freifunk networks and default routes
 		import filter {
+			if ! (net ~ [ {% for prefix in freifunk_global_ipv4_prefixes %}{{ prefix }}+{{ ', ' if not loop.last }}{% endfor %} ] || net = 0.0.0.0/0) then reject;
 			if ifname ~ "gre4-*" then reject;
 {% for interface in mesh_links %}
 			if ifname = "{{ interface['ifname'] }}" then {
