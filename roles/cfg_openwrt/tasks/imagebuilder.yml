@@ -182,8 +182,10 @@
   debug:
     var: make_command
 
+# the build fails only after the log is written
 - name: Run Imagebuilder
   changed_when: false
+  failed_when: false
   command:
     chdir: "{{ build_dir }}"
     argv:
@@ -194,9 +196,14 @@
 
 - name: Write build log to output dir
   copy:
-    content: "{{ output.stderr }}"
+    content: "{{ output.stderr | default(output.msg) }}"
     dest: "{{ images_dir }}/{{ inventory_hostname }}.log"
     mode: "preserve"
+
+- name: Fail if the Imagebuilder failed
+  fail:
+    msg: "Imagebuilder failed, see {{ images_dir }}/{{ inventory_hostname }}.log"
+  when: output.rc | default(1) != 0
 
 - name: Find output image
   find:
