@@ -20,10 +20,12 @@
   set_fact:
     imagebuilder_path: "{{ [dl_dir, (imagebuilder | basename) | trim] | path_join }}"
 
+# the checksum also triggers a new download when the snapshot changed
 - name: Download Imagebuilder if upstream is newer
   get_url:
     url: "{{ imagebuilder }}"
     dest: "{{ dl_dir }}/{{ imagebuilder_filename }}"
+    checksum: "sha256:{{ imagebuilder | dirname }}/sha256sums"
     mode: "644"
   when: '"http" in imagebuilder'
 
