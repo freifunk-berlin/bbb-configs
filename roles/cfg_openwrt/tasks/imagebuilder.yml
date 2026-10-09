@@ -182,21 +182,24 @@
   debug:
     var: make_command
 
-- name: Run Imagebuilder
-  changed_when: false
-  command:
-    chdir: "{{ build_dir }}"
-    argv:
-      - "bash"
-      - "-c"
-      - "{{ make_command }}"
-  register: output
-
-- name: Write build log to output dir
-  copy:
-    content: "{{ output.stderr }}"
-    dest: "{{ images_dir }}/{{ inventory_hostname }}.log"
-    mode: "preserve"
+# the log is also written when the build fails
+- name: Build the image
+  block:
+    - name: Run Imagebuilder
+      changed_when: false
+      command:
+        chdir: "{{ build_dir }}"
+        argv:
+          - "bash"
+          - "-c"
+          - "{{ make_command }}"
+      register: output
+  always:
+    - name: Write build log to output dir
+      copy:
+        content: "{{ output.stderr }}"
+        dest: "{{ images_dir }}/{{ inventory_hostname }}.log"
+        mode: "preserve"
 
 - name: Find output image
   find:
