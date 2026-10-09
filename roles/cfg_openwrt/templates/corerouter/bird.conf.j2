@@ -28,7 +28,7 @@ protocol babel {
 		table v6_main;
 		# Import only /56 location aggregates and default routes
 		import filter {
-			if ! (net.len = 56 || net = ::/0 from {{ freifunk_global_prefix }}) then reject;
+			if ! ((net.len = 56 && net.dst ~ [ {{ freifunk_global_prefix }}+ ]) || net = ::/0 from {{ freifunk_global_prefix }}) then reject;
 {% for nw in networks | selectattr('role', 'equalto', 'mesh') %}
   {# metrics for 2 GHz adhoc get a penalty over 5 GHz adhoc so 5 GHz is preferred #}
   {% set default_mesh_metric = hostvars[inventory_hostname].get('mesh_metric_adhoc_' ~ nw.get('mesh_radio'), mesh_metric_default_in) %}
@@ -51,7 +51,9 @@ protocol babel {
 		};
 	};
 	ipv4 {
+		# Import only Freifunk networks and default routes
 		import filter {
+			if ! (net ~ [ {% for prefix in freifunk_global_ipv4_prefixes %}{{ prefix }}+{{ ', ' if not loop.last }}{% endfor %} ] || net = 0.0.0.0/0) then reject;
 {% for nw in networks | selectattr('role', 'equalto', 'mesh') %}
   {# metrics for 2 GHz adhoc get a penalty over 5 GHz adhoc so 5 GHz is preferred #}
   {% set default_mesh_metric = hostvars[inventory_hostname].get('mesh_metric_adhoc_' ~ nw.get('mesh_radio'), mesh_metric_default_in) %}
