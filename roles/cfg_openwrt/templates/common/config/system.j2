@@ -52,7 +52,7 @@ config led 'led_{{ led['name'] }}'
         option mode '{{ led['mode'] }}'
 {% endif %}
 {% if led['dev'] is defined %}
-        option mode '{{ led['dev'] }}'
+        option dev '{{ led['dev'] }}'
 {% endif %}
 {% endfor %}
 
