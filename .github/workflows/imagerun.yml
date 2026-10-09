@@ -64,8 +64,21 @@ jobs:
             | sed -z 's/-/_/g;s/\n/,/g;s/,$//')
           CHANGED_LOCATIONS=${CHANGED_LOCATIONS:+$CHANGED_LOCATIONS,}$CHANGED_SINGE_FILE_LOCATIONS
 
+          # Build one host of each changed model, role, target or version group
+          CHANGED_GROUPS=$(git diff --diff-filter=d --name-only "origin/$BRANCH" \
+            | grep -oP '^group_vars/\K(model|role|target|version)_[^/.]+' \
+            | sort \
+            | uniq \
+            | sed 's/$/[0]/' \
+            | sed -z 's/\n/,/g;s/,$//')
+          if [ -n "${CHANGED_GROUPS}" ] && ! ansible-playbook play.yml --list-hosts --limit "${CHANGED_GROUPS}" >/dev/null 2>&1; then
+            echo "No hosts in the changed groups ${CHANGED_GROUPS}"
+            CHANGED_GROUPS=""
+          fi
+          CHANGED_LOCATIONS=${CHANGED_LOCATIONS:+$CHANGED_LOCATIONS,}$CHANGED_GROUPS
+
           CHANGED_OTHER=$(git diff --diff-filter=d --name-only "origin/$BRANCH" \
-            | grep -xP '(inventory|roles)/.+' \
+            | grep -xP '(inventory|roles)/.+|group_vars/(all/.+|community_.+)' \
             | sed -z 's/\n/,/g;s/,$//')
           if [ -z "${CHANGED_LOCATIONS}" ] && [ -n "${CHANGED_OTHER}" ]; then
             CHANGED_LOCATIONS="sama-core,sama-nord-5ghz,l105-gw"
