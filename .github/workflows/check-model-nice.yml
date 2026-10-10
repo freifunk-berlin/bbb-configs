@@ -18,12 +18,10 @@ jobs:
       - name: Run model nice fields check
         run: |
           git fetch origin main
-          changed_files=$(git diff --name-only origin/main)
-          model_files=$(echo "$changed_files" | grep -E '^group_vars/model_.*\.yml$' || true)
-          if [ -z "$model_files" ]; then
+          mapfile -t model_files < <(git diff --name-only --diff-filter=d origin/main | grep -E '^group_vars/model_.*\.yml$' || true)
+          if [ ${#model_files[@]} -eq 0 ]; then
             echo "No model files changed, running against all models"
             bash ./.github/checks/check-model-nice.sh
           else
-            echo "Running check on changed model files"
-            bash ./.github/checks/check-model-nice.sh "$model_files"
+            bash ./.github/checks/check-model-nice.sh "${model_files[@]}"
           fi

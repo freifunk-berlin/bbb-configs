@@ -8,7 +8,6 @@
     - "{{ images_dir }}/{{ inventory_hostname }}.img"
     - "{{ images_dir }}/{{ inventory_hostname }}.itb"
     - "{{ images_dir }}/{{ inventory_hostname }}.log"
-    - "{{ images_dir }}/{{ inventory_hostname }}.json"
 
 - name: Create Download directory
   file:
@@ -21,10 +20,12 @@
   set_fact:
     imagebuilder_path: "{{ [dl_dir, (imagebuilder | basename) | trim] | path_join }}"
 
+# the checksum also triggers a new download when the snapshot changed
 - name: Download Imagebuilder if upstream is newer
   get_url:
     url: "{{ imagebuilder }}"
     dest: "{{ dl_dir }}/{{ imagebuilder_filename }}"
+    checksum: "sha256:{{ imagebuilder | dirname }}/sha256sums"
     mode: "644"
   when: '"http" in imagebuilder'
 
@@ -183,21 +184,24 @@
   debug:
     var: make_command
 
-- name: Run Imagebuilder
-  changed_when: false
-  command:
-    chdir: "{{ build_dir }}"
-    argv:
-      - "bash"
-      - "-c"
-      - "{{ make_command }}"
-  register: output
-
-- name: Write build log to output dir
-  copy:
-    content: "{{ output.stderr }}"
-    dest: "{{ images_dir }}/{{ inventory_hostname }}.log"
-    mode: "preserve"
+# the log is also written when the build fails
+- name: Build the image
+  block:
+    - name: Run Imagebuilder
+      changed_when: false
+      command:
+        chdir: "{{ build_dir }}"
+        argv:
+          - "bash"
+          - "-c"
+          - "{{ make_command }}"
+      register: output
+  always:
+    - name: Write build log to output dir
+      copy:
+        content: "{{ output.stderr }}"
+        dest: "{{ images_dir }}/{{ inventory_hostname }}.log"
+        mode: "preserve"
 
 - name: Find output image
   find:
@@ -224,3 +228,21 @@
     src: "{{ image_src }}"
     dest: "{{ image }}"
     mode: "preserve"
+
+# The extracted ImageBuilder takes a lot of space for every host. The built
+# images in bin/ are kept, vm.sh uses them. A failed build keeps everything.
+- name: Find the workdir contents
+  find:
+    paths: "{{ build_dir }}"
+    file_type: any
+    hidden: true
+    excludes: bin
+  register: build_dir_contents
+
+- name: Remove the workdir except the built images
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ build_dir_contents.files }}"
+  loop_control:
+    label: "{{ item.path }}"

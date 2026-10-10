@@ -18,12 +18,10 @@ jobs:
       - name: Run network fields check
         run: |
           git fetch origin main
-          changed_files=$(git diff --name-only origin/main)
-          location_files=$(echo "$changed_files" | grep -E '^locations/.*\.yml$' || true)
-          if [ -z "$location_files" ]; then
+          mapfile -t location_files < <(git diff --name-only --diff-filter=d origin/main | grep -E '^locations/.*\.yml$' || true)
+          if [ ${#location_files[@]} -eq 0 ]; then
             echo "No location files changed, running against all locations"
             bash ./.github/checks/check-network-fields.sh
           else
-            echo "Running check on changed location files"
-            bash ./.github/checks/check-network-fields.sh "$location_files"
+            bash ./.github/checks/check-network-fields.sh "${location_files[@]}"
           fi
