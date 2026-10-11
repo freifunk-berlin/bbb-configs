@@ -21,6 +21,12 @@ collectd_ping_hosts:
   - 1.1.1.1
   - 2606:4700:4700::1111
 
+prometheus_push_ping_hosts:
+  - 9.9.9.9
+  - ping.berlin.freifunk.net
+  - 194.150.168.168
+  - 2620:fe::fe
+
 # Preserve following files (allow list)
 sysupgrade_preserve_custom_files:
   - /etc/shadow
