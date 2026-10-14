@@ -74,6 +74,8 @@ networks:
     name: meshlan
     prefix: 10.230.226.213/32
     ipv6_subprefix: -1
+    assignments:
+      basta: 1
 
   # MESH - 5 GHz 802.11s
   - vid: 20

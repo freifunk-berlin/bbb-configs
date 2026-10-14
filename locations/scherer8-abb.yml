@@ -85,6 +85,8 @@ networks:
     name: meshlan
     prefix: 10.230.226.212/32
     ipv6_subprefix: -1
+    assignments:
+      scherer8-abb: 1
 
   # MESH - 5 GHz 802.11s
   - vid: 20
