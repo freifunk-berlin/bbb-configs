@@ -11,8 +11,11 @@ Exit codes:
  0 - OK
  1 - any issue found (overlap or out-of-range)
 """
+
+# pylint: disable=invalid-name,missing-function-docstring,broad-exception-caught
 import glob
 import ipaddress
+import itertools
 import os
 import sys
 
@@ -51,7 +54,7 @@ def load_prefixes(paths, unreadable):
     prefixes = []
     for p in paths:
         try:
-            with open(p) as f:
+            with open(p, encoding="utf-8") as f:
                 doc = yaml.safe_load(f) or {}
         except Exception as e:
             print(f"Unreadable: {p} could not be loaded: {e}")
@@ -92,6 +95,26 @@ def is_within_allowed(net: ipaddress._BaseNetwork) -> bool:
     return False
 
 
+def find_overlaps(prefixes, checked) -> bool:
+    found = False
+    for (path_a, str_a, a), (path_b, str_b, b) in itertools.combinations(prefixes, 2):
+        # skip unparsable entries
+        if a is None or b is None:
+            continue
+        if a.version != b.version:
+            continue
+        if path_a not in checked and path_b not in checked:
+            continue
+        try:
+            if a.overlaps(b):
+                print(f"Overlap: {path_a}:{str_a} overlaps with {path_b}:{str_b}")
+                found = True
+        except Exception:
+            # defensive: ignore weird comparison errors
+            continue
+    return found
+
+
 def main():
     all_paths = [os.path.normpath(p) for p in glob.glob("locations/*.yml")]
     if len(sys.argv) > 1:
@@ -121,26 +144,8 @@ def main():
             issue_found = True
 
     # 2) Detect overlaps within each IP family
-    for i in range(len(prefixes)):
-        for j in range(i + 1, len(prefixes)):
-            a = prefixes[i][2]
-            b = prefixes[j][2]
-            # skip unparsable entries
-            if a is None or b is None:
-                continue
-            if a.version != b.version:
-                continue
-            if prefixes[i][0] not in checked and prefixes[j][0] not in checked:
-                continue
-            try:
-                if a.overlaps(b):
-                    print(
-                        f"Overlap: {prefixes[i][0]}:{prefixes[i][1]} overlaps with {prefixes[j][0]}:{prefixes[j][1]}"
-                    )
-                    issue_found = True
-            except Exception:
-                # defensive: ignore weird comparison errors
-                continue
+    if find_overlaps(prefixes, checked):
+        issue_found = True
 
     if issue_found:
         print("One or more issues found (overlaps or out-of-range prefixes)")
