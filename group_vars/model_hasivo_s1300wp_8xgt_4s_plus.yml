@@ -1,0 +1,19 @@
+---
+target: realtek/rtl931x
+brand_nice: Hasivo
+model_nice: S1300WP-8XGT-4S-plus
+openwrt_version: snapshot
+
+dsa_ports:
+  - lan1
+  - lan2
+  - lan3
+  - lan4
+  - lan5
+  - lan6
+  - lan7
+  - lan8
+  - lan9
+  - lan10
+  - lan11
+  - lan12
