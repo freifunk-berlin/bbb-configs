@@ -71,17 +71,17 @@ config include
 ## Inbound to host
 #
 
-{% if 'ipv6' in uplink %}
+{% for peer in uplink['peers'] | default([]) %}
 config rule
-	option name             "Allow BGP"
+	option name             "Allow BGP - {{ peer['name'] }}"
 	option src		uplink
-	option src_ip		'{{ uplink['ipv6'] | ansible.utils.ipaddr('peer')  }}'
+	option src_ip		'{{ peer['address'] }}'
 	option proto		tcp
 # Dont match on destination Port
 # BGP Session is not always initiated by ourselves
 #	option dest_port        179
 	option target		ACCEPT
-{% endif %}
+{% endfor %}
 
 config rule
 	option name             "Allow conntrack sync"
