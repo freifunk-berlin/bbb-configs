@@ -26,6 +26,11 @@ hosts:
     model: "zyxel_nwa55axe"
     wireless_profile: ap_only
 
+  - hostname: lausetemp-sw-1
+    role: ap # Switch
+    model: hasivo_s1300wp-8xgt-4s-plus
+    wireless_profile: none
+
 snmp_devices:
 
   - hostname: lausetemp-sw-core
@@ -84,4 +89,5 @@ networks:
       lausetemp-emma: 3
       lausetemp-ap1: 4
       lausetemp-ap2: 5
+      lausetemp-sw-1: 7
       lausetemp-sw-5: 6
