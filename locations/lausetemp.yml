@@ -26,6 +26,11 @@ hosts:
     model: "zyxel_nwa55axe"
     wireless_profile: ap_only
 
+  - hostname: lausetemp-ap3
+    role: ap
+    model: "zyxel_nwa50ax-pro"
+    wireless_profile: ap_only
+
 snmp_devices:
 
   - hostname: lausetemp-sw-core
@@ -85,3 +90,4 @@ networks:
       lausetemp-ap1: 4
       lausetemp-ap2: 5
       lausetemp-sw-5: 6
+      lausetemp-ap3: 8
