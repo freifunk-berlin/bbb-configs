@@ -74,6 +74,10 @@ snmp_devices:
     address: 10.31.81.26
     snmp_profile: af60
 
+  - hostname: sama-west-60ghz
+    address: 10.31.81.27
+    snmp_profile: af60
+
   - hostname: sama-saarbruecker
     address: 10.31.81.30
     snmp_profile: af60
@@ -163,6 +167,14 @@ networks:
     ipv6_subprefix: -16
     mesh_metric: 128
 
+  # MESH - West, 60 GHz
+  - vid: 17
+    role: mesh
+    name: mesh_w60
+    prefix: 10.31.79.183/32
+    ipv6_subprefix: -17
+    mesh_metric: 128
+
   # DHCP with filtering and isolation
   - vid: 40
     role: dhcp
@@ -184,7 +196,7 @@ networks:
       sama-core: 1
       sama-poe-1: 2
       sama-poe-2: 3
-      # 6-15 (Local APs / OpenWRT)
+      # 6-15 (Local APs / OpenWrt)
       sama-nord-nf-5ghz: 10
       sama-ost-nf-5ghz: 11
       sama-sued-nf-5ghz: 12
@@ -197,6 +209,7 @@ networks:
       sama-west-5ghz: 23
       sama-ost-60ghz: 25
       sama-sued-60ghz: 26
+      sama-west-60ghz: 27
       sama-saarbruecker: 30
 
 # AP-id, wifi-channel, bandwidth, txpower in dBm
@@ -219,7 +232,7 @@ location__channel_assignments_11a_standard__to_merge:
 # Switch 2
 # 1: core
 # 2: --
-# 3: samai-nord-5ghz
+# 3: sama-nord-5ghz
 # 4: sama-ost-5ghz
 # 5: sama-nord-nf-5ghz
 # 6: sama-ost-nf-5ghz
