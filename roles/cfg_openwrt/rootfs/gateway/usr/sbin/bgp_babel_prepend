@@ -1,0 +1,795 @@
+#!/usr/bin/ucode
+'use strict';
+
+// bgp_babel_prepend - translate babel mesh reachability into BGP AS path prepends
+//
+// Goal: attract internet traffic for a prefix at the gateway that reaches its
+// locations best over the mesh, so the traffic does not have to cross the
+// inter-gateway GRE tunnels more than necessary.
+//
+// For every prefix announced to the upstream, the /56 location routes inside
+// it are inspected. All babel routes are considered, not only the selected
+// one: the Freifunk bird babel patch keeps every feasible route in the table,
+// and a route via gre4-X carries gateway X's own metric plus GRE_LINK_COST.
+// So every gateway can see how well the best gateway reaches a location and
+// compare that with its own reach:
+//
+//     direct(L) = best own metric to L not via GRE          (may not exist)
+//     gre(L)    = best own metric to L via a GRE tunnel      (may not exist)
+//     own(L)    = min(direct(L), gre(L) + GRE_PENALTY)
+//     best(L)   = min(direct(L), gre(L) - GRE_LINK_COST)
+//     excess(P) = weighted mean over locations L in P of own(L) - best(L)
+//     prepends  = clamp(round(excess(P) / STEP), 0, MAX_PREPENDS)
+//
+// excess is 0 when this gateway is the best entry point for every location
+// in the prefix, and GRE_LINK_COST + GRE_PENALTY when every location has to
+// be handed over through a tunnel.
+//
+// Locations that no gateway reaches over the mesh with a metric below
+// MESH_METRIC_MAX enter the mean with WEIGHT_TUNNEL instead of WEIGHT_MESH.
+// These are the locations served through their WireGuard tunnel: the tunnels
+// carry rxcost mesh_metric_tunnel_in (3072), terminate at whichever gateway
+// the location's tunspace daemon picked, and their metric moves with hello
+// loss, so they say less about where traffic should enter than a mesh link
+// does. A gateway cannot see the interface behind a route learned via
+// gre4-X, hence the metric rule instead of an interface rule; it also
+// covers locations with a mesh path worse than a tunnel, where babel forwards
+// through the tunnel anyway.
+//
+// A prefix without any location gets MAX_PREPENDS: a gateway that knows
+// nothing about a prefix must not attract its traffic, and when that holds
+// for all gateways the prepends cancel out. The result is written as filter
+// statements to OUT, which bird.conf includes inside the export filter
+// bgp_export_aggregates:
+//
+//     include "/dev/shm/announcement*.bird.conf";
+//
+// In loop mode the policy is damped: the first result after start is applied
+// immediately, after that a changed prepend count is applied only once it has
+// been computed STABLE_RUNS times in a row and at most once per
+// MIN_CHANGE_INTERVAL seconds per prefix. bird is only reconfigured when the
+// generated policy differs from the previous run, and never more often than
+// every MIN_RECONFIGURE_INTERVAL seconds.
+//
+// Besides syslog, loop and once mode append to LOG_FILE: one line per run
+// with the per-prefix numbers, and the per-location details of a prefix
+// whenever its prepend count is applied. The file is rotated once to
+// LOG_FILE.1 when it exceeds LOG_MAX_SIZE, so it takes at most twice that.
+//
+// Deployment: bbb-configs ships this file as /usr/sbin/bgp_babel_prepend on
+// the gateways and runs it in loop mode from the procd service
+// /etc/init.d/bgp_babel_prepend, which passes --plen from
+// freifunk_wahlkreis_announcement_prefix.
+//
+// A pid file in /tmp prevents a second instance.
+//
+// The announced prefixes are taken from bird (the static unreachable routes
+// in BIRD_ANNOUNCE_TABLE). ANNOUNCE_PLEN controls the granularity of the
+// policy: with ANNOUNCE_PLEN = 44 one statement per /44, with 48 the /44s are
+// split into /48s. It must match freifunk_wahlkreis_announcement_prefix in
+// bbb-configs, otherwise the generated statements never match an exported
+// route and have no effect; a mismatch is logged.
+//
+// Usage:
+//     bgp_babel_prepend                 run forever, recalculating every INTERVAL seconds
+//     bgp_babel_prepend once            single run without damping, log to stderr as well
+//     bgp_babel_prepend --input FILE    dry run: parse a saved "birdc show route" dump,
+//                                          print statistics and the policy, do not touch bird
+//     bgp_babel_prepend --plen N        override ANNOUNCE_PLEN (useful with --input)
+//     bgp_babel_prepend --interval N    override INTERVAL
+//     bgp_babel_prepend --out FILE      write the policy to FILE instead of OUT (testing)
+//
+// Requires ucode with the fs module (ucode-mod-fs); the log module
+// (ucode-mod-log) is used when available. Both ship with bgpdisco.
+
+import { popen, open, readfile, writefile, rename, unlink, stat, readlink } from 'fs';
+
+// --- configuration ---------------------------------------------------------
+
+const PREPEND_ASN = 44194;
+
+// Upper bound of prepends per prefix, also used when a prefix has no
+// reachable location at all.
+const MAX_PREPENDS = 6;
+
+// Babel metric of one GRE hop as configured in bbb-configs (gre_metric).
+// Subtracted from a route via gre4-X to recover gateway X's own metric.
+const GRE_LINK_COST = 256;
+
+// Extra cost charged for handing traffic over through a tunnel, on top of
+// the GRE hop itself. Together with GRE_LINK_COST a tunnel traversal costs
+// 2048, so a prefix served completely by another gateway gets 2048 / STEP
+// (rounded) prepends.
+const GRE_PENALTY = 1792;
+
+// Mean excess metric per prepend.
+const STEP = 384;
+
+// Locations whose best reach from any gateway is not below this metric count
+// as tunnel-served, see header. Equals mesh_metric_tunnel_in in bbb-configs,
+// the rxcost of the wg_* interfaces.
+const MESH_METRIC_MAX = 3072;
+
+// Weight of a mesh-served and of a tunnel-served location in the mean.
+const WEIGHT_MESH = 2;
+const WEIGHT_TUNNEL = 1;
+
+// Prefix length of the policy statements, see header. 44 = per Wahlkreis /44.
+let ANNOUNCE_PLEN = 44;
+
+const GRE_IFACE = /^gre4-/;
+
+// Seconds between two calculations in loop mode.
+let INTERVAL = 60;
+
+// bird is reconfigured at most once per this many seconds, whatever INTERVAL
+// is. A pending change is applied on a later run.
+const MIN_RECONFIGURE_INTERVAL = 30;
+
+// Damping in loop mode: a new prepend count for a prefix is applied only
+// after it has been computed STABLE_RUNS times in a row, and at most once per
+// MIN_CHANGE_INTERVAL seconds per prefix.
+const STABLE_RUNS = 5;
+const MIN_CHANGE_INTERVAL = 1800;
+
+let OUT = '/dev/shm/announcement_babel_prepend.bird.conf';
+
+const LOG_FILE = '/tmp/bgp_babel_prepend.log';
+const LOG_MAX_SIZE = 4 * 1024 * 1024;
+const PID_FILE = '/tmp/bgp_babel_prepend.pid';
+
+const BIRDC = 'birdc';
+const BIRD_TABLE = 'v6_main';
+const BIRD_BABEL_PROTO = 'babel_mesh';
+const BIRD_ANNOUNCE_TABLE = 'v6_bgp_upstream';
+const BIRD_ANNOUNCE_PROTO = 'static_v6_bgp_upstream';
+const LOCATION_PLEN = 56;
+
+// Only used in --input mode when bird cannot be asked for the announced prefixes.
+const ANNOUNCED_FALLBACK = [
+	'2001:bf7:750::/44', '2001:bf7:760::/44', '2001:bf7:770::/44',
+	'2001:bf7:780::/44', '2001:bf7:790::/44', '2001:bf7:800::/44',
+	'2001:bf7:810::/44', '2001:bf7:820::/44', '2001:bf7:830::/44',
+	'2001:bf7:840::/44', '2001:bf7:850::/44', '2001:bf7:860::/44',
+];
+
+// --- logging ---------------------------------------------------------------
+
+const INFO = 'info';
+const WARNING = 'warning';
+const ERR = 'err';
+const DEBUG = 'debug';
+
+let verbose = false;
+let syslog_mod = null;
+
+try {
+	syslog_mod = require('log');
+	syslog_mod.openlog('bgp_babel_prepend', syslog_mod.LOG_PID, syslog_mod.LOG_DAEMON);
+} catch (e) {
+	syslog_mod = null;
+}
+
+// Append to LOG_FILE when enabled (loop and once mode), rotating once when
+// the file grows beyond LOG_MAX_SIZE.
+let logfile_enabled = false;
+
+function timestamp() {
+	const t = localtime();
+	return sprintf('%04d-%02d-%02d %02d:%02d:%02d', t.year, t.mon, t.mday, t.hour, t.min, t.sec);
+}
+
+function flog(msg) {
+	if (!logfile_enabled)
+		return;
+
+	const st = stat(LOG_FILE);
+	if (st && st.size >= LOG_MAX_SIZE)
+		rename(LOG_FILE, LOG_FILE + '.1');
+
+	const fh = open(LOG_FILE, 'a');
+	if (!fh)
+		return;
+
+	fh.write(sprintf('%s %s\n', timestamp(), msg));
+	fh.close();
+}
+
+function log(prio, fmt, ...args) {
+	const msg = sprintf(fmt, ...args);
+	if (syslog_mod)
+		syslog_mod.syslog(prio, '%s', msg);
+	if (verbose || !syslog_mod)
+		warn(sprintf('[%s] %s\n', prio, msg));
+	if (prio != DEBUG)
+		flog(sprintf('[%s] %s', prio, msg));
+}
+
+
+// --- prefix helpers --------------------------------------------------------
+
+function parse_prefix(s) {
+	const m = match(s, /^([0-9a-fA-F:]+)\/([0-9]+)$/);
+	if (!m)
+		return null;
+
+	const addr = iptoarr(m[1]);
+	if (!addr || length(addr) != 16)
+		return null;
+
+	const len = int(m[2]);
+	if (len < 0 || len > 128)
+		return null;
+
+	return { str: s, addr, len };
+}
+
+function in_prefix(addr, pfx) {
+	const bytes = pfx.len >> 3;
+	const bits = pfx.len & 7;
+
+	for (let i = 0; i < bytes; i++)
+		if (addr[i] != pfx.addr[i])
+			return false;
+
+	if (bits) {
+		const mask = (0xff << (8 - bits)) & 0xff;
+		if ((addr[bytes] & mask) != (pfx.addr[bytes] & mask))
+			return false;
+	}
+
+	return true;
+}
+
+// Split a prefix into all subnets of length plen. Returns [pfx] when plen is
+// not longer than the prefix itself.
+function subdivide(pfx, plen) {
+	if (plen <= pfx.len || plen > 64)
+		return [ pfx ];
+
+	const result = [];
+	const count = 1 << (plen - pfx.len);
+
+	for (let i = 0; i < count; i++) {
+		const addr = [ ...pfx.addr ];
+
+		// Place the subnet index i into the bits pfx.len .. plen-1.
+		for (let b = 0; b < plen - pfx.len; b++) {
+			const bit = pfx.len + b;
+			const set = (i >> (plen - pfx.len - 1 - b)) & 1;
+			if (set)
+				addr[bit >> 3] |= 0x80 >> (bit & 7);
+			else
+				addr[bit >> 3] &= ~(0x80 >> (bit & 7)) & 0xff;
+		}
+
+		push(result, { str: sprintf('%s/%d', arrtoip(addr), plen), addr, len: plen });
+	}
+
+	return result;
+}
+
+// --- bird queries ----------------------------------------------------------
+
+function birdc(cmd) {
+	const proc = popen(sprintf('%s %s 2>&1', BIRDC, cmd), 'r');
+	if (!proc) {
+		log(ERR, 'cannot run %s: %s', BIRDC, error());
+		return null;
+	}
+
+	const out = proc.read('all');
+	const rc = proc.close();
+
+	if (rc != 0) {
+		log(ERR, '%s %s failed (%d): %s', BIRDC, cmd, rc, trim(out));
+		return null;
+	}
+
+	return out;
+}
+
+// Aggregates announced to the upstream, taken from the static unreachable routes.
+function get_announced() {
+	const out = birdc(sprintf('show route table %s protocol %s', BIRD_ANNOUNCE_TABLE, BIRD_ANNOUNCE_PROTO));
+	if (out == null)
+		return null;
+
+	const result = [];
+	for (let line in split(out, '\n')) {
+		const m = match(line, /^([0-9a-fA-F:]+\/[0-9]+)\s/);
+		if (!m)
+			continue;
+
+		const pfx = parse_prefix(m[1]);
+		if (pfx)
+			push(result, pfx);
+	}
+
+	return result;
+}
+
+// Expand the announced aggregates to ANNOUNCE_PLEN and warn when bird does not
+// export routes of that length (the policy would be ineffective).
+function policy_prefixes(announced) {
+	const result = [];
+	let mismatch = 0;
+
+	for (let pfx in announced) {
+		if (pfx.len != ANNOUNCE_PLEN)
+			mismatch++;
+		for (let sub in subdivide(pfx, ANNOUNCE_PLEN))
+			push(result, sub);
+	}
+
+	if (mismatch)
+		log(WARNING, '%d announced route(s) do not have length /%d; set freifunk_wahlkreis_announcement_prefix accordingly or the policy has no effect',
+			mismatch, ANNOUNCE_PLEN);
+
+	return result;
+}
+
+// Parse "birdc show route ..." output into { prefix, metric, ifname, gre,
+// selected } records, one per route. Alternative routes to the same prefix
+// follow the first one as continuation lines without the prefix:
+//
+//   2001:bf7:830:a500::/56 from ::/0 unicast [babel_mesh 20:59:15.038] * (130/1408) [7c:0b:...]
+//       via fe80::200:5efe:2d99:52d1 on gre4-ohlauer
+//                        unicast [babel_mesh 20:59:16.810] (130/1408) [7c:0b:...]
+//       via fe80::200:5efe:511b:4513 on gre4-saarbrue
+//
+// "(130/1408)" is preference/babel_metric as seen after the import filter,
+// "*" marks the selected route.
+function parse_routes(text) {
+	const routes = [];
+	let prefix = null;
+	let current = null;
+
+	for (let line in split(text, '\n')) {
+		let m = match(line, /^([0-9a-fA-F:]+\/([0-9]+)) from \S+ unicast \[[^\]]*\] (\*?) ?\(([0-9]+)\/([0-9]+)\)/);
+		if (m) {
+			prefix = null;
+			current = null;
+
+			if (int(m[2]) != LOCATION_PLEN)
+				continue;
+
+			prefix = parse_prefix(m[1]);
+			if (!prefix)
+				continue;
+
+			current = { prefix, metric: int(m[5]), selected: m[3] == '*', ifname: null };
+			continue;
+		}
+
+		m = match(line, /^\s+unicast \[[^\]]*\] (\*?) ?\(([0-9]+)\/([0-9]+)\)/);
+		if (m) {
+			current = prefix ? { prefix, metric: int(m[3]), selected: m[1] == '*', ifname: null } : null;
+			continue;
+		}
+
+		m = match(line, /^\s+via \S+ on (\S+)/);
+		if (m && current) {
+			current.ifname = m[1];
+			current.gre = match(m[1], GRE_IFACE) != null;
+			push(routes, current);
+			current = null;
+		}
+	}
+
+	return routes;
+}
+
+function get_routes() {
+	// No "primary": the alternative routes via the other gateways are needed.
+	const out = birdc(sprintf("show route table %s protocol %s where 'net.len = %d'",
+		BIRD_TABLE, BIRD_BABEL_PROTO, LOCATION_PLEN));
+	if (out == null)
+		return null;
+
+	return parse_routes(out);
+}
+
+// --- calculation -----------------------------------------------------------
+
+// Group the routes by location and derive the best direct and the best GRE
+// metric of each. Returns { prefix, direct, gre, selected_gre }.
+function locations_from(routes) {
+	const by_prefix = {};
+
+	for (let r in routes) {
+		let loc = by_prefix[r.prefix.str];
+		if (!loc) {
+			loc = { prefix: r.prefix, direct: null, gre: null, selected_gre: false, selected_ifname: null };
+			by_prefix[r.prefix.str] = loc;
+		}
+
+		if (r.gre) {
+			if (loc.gre == null || r.metric < loc.gre)
+				loc.gre = r.metric;
+		} else {
+			if (loc.direct == null || r.metric < loc.direct)
+				loc.direct = r.metric;
+		}
+
+		if (r.selected) {
+			loc.selected_gre = r.gre;
+			loc.selected_ifname = r.ifname;
+		}
+	}
+
+	return values(by_prefix);
+}
+
+// best(L) as described in the header: the best metric any gateway has to L.
+function best_of(loc) {
+	let best = loc.direct;
+
+	if (loc.gre != null) {
+		const other = loc.gre - GRE_LINK_COST;
+		if (best == null || other < best)
+			best = other;
+	}
+
+	return best;
+}
+
+// own(L) - best(L) as described in the header. Never negative.
+function excess_of(loc) {
+	let own = loc.direct;
+
+	if (loc.gre != null) {
+		const via = loc.gre + GRE_PENALTY;
+		if (own == null || via < own)
+			own = via;
+	}
+
+	return own - best_of(loc);
+}
+
+// round(excess_sum / weight_sum / STEP) in integer arithmetic. Without any
+// location the prefix is not steerable from here: MAX_PREPENDS.
+function prepends_for(excess_sum, weight_sum) {
+	if (weight_sum == 0)
+		return MAX_PREPENDS;
+
+	const p = int((excess_sum * 2 + weight_sum * STEP) / (weight_sum * STEP * 2));
+	return p > MAX_PREPENDS ? MAX_PREPENDS : (p < 0 ? 0 : p);
+}
+
+function compute(prefixes, routes) {
+	const locations = locations_from(routes);
+	const results = [];
+
+	for (let pfx in prefixes) {
+		let total = 0;
+		let gre = 0;
+		let tunnel = 0;
+		let weight_sum = 0;
+		let excess_sum = 0;
+		const details = [];
+
+		for (let loc in locations) {
+			if (!in_prefix(loc.prefix.addr, pfx))
+				continue;
+
+			const best = best_of(loc);
+			const excess = excess_of(loc);
+			let weight = WEIGHT_MESH;
+			if (best >= MESH_METRIC_MAX) {
+				tunnel++;
+				weight = WEIGHT_TUNNEL;
+			}
+
+			total++;
+			if (loc.selected_gre)
+				gre++;
+			weight_sum += weight;
+			excess_sum += weight * excess;
+
+			push(details, sprintf('%s own=%d best=%d excess=%d weight=%d via=%s',
+				loc.prefix.str, best + excess, best, excess, weight, loc.selected_ifname));
+		}
+
+		push(results, {
+			prefix: pfx.str,
+			total,
+			direct: total - gre,
+			gre,
+			tunnel,
+			excess: weight_sum ? int(excess_sum / weight_sum) : null,
+			prepends: prepends_for(excess_sum, weight_sum),
+			details,
+		});
+	}
+
+	return results;
+}
+
+// --- damping ---------------------------------------------------------------
+
+// Per-prefix state for loop mode: the prepend count currently applied, the
+// candidate value seen in the last runs and when the applied value last
+// changed. The first result after start is applied right away, but without
+// starting the MIN_CHANGE_INTERVAL timer, so a result computed while the mesh
+// is still converging can be corrected after STABLE_RUNS runs.
+let damping = {};
+
+// Write the per-location numbers behind a prefix result to the log file.
+function log_details(r, why) {
+	flog(sprintf('%s %s prepends=%d locations=%d:', r.prefix, why, r.prepends, r.total));
+	for (let d in r.details)
+		flog('    ' + d);
+}
+
+function damp(results, now) {
+	for (let r in results) {
+		let st = damping[r.prefix];
+		if (!st) {
+			st = { applied: r.prepends, candidate: null, runs: 0, changed_at: null };
+			damping[r.prefix] = st;
+			log_details(r, 'initial');
+		} else if (r.prepends == st.applied) {
+			st.candidate = null;
+			st.runs = 0;
+		} else {
+			if (r.prepends == st.candidate)
+				st.runs++;
+			else {
+				st.candidate = r.prepends;
+				st.runs = 1;
+			}
+
+			if (st.runs >= STABLE_RUNS && (st.changed_at == null || now - st.changed_at >= MIN_CHANGE_INTERVAL)) {
+				log(INFO, '%s: prepends %d -> %d', r.prefix, st.applied, r.prepends);
+				log_details(r, 'applied');
+				st.applied = r.prepends;
+				st.changed_at = now;
+				st.candidate = null;
+				st.runs = 0;
+			}
+		}
+
+		r.computed = r.prepends;
+		r.prepends = st.applied;
+	}
+
+	return results;
+}
+
+// Render the bird filter fragment. Deliberately free of volatile data
+// (timestamps, metrics) so that comparing against the previous file is
+// meaningful.
+function render(results) {
+	let out = '# Generated by bgp_babel_prepend - do not edit, changes are overwritten.\n';
+
+	for (let r in results) {
+		if (r.prepends <= 0)
+			continue;
+
+		out += sprintf('if net = %s then {\n', r.prefix);
+		for (let i = 0; i < r.prepends; i++)
+			out += sprintf('\tbgp_path.prepend(%d);\n', PREPEND_ASN);
+		out += '}\n';
+	}
+
+	return out;
+}
+
+function summary(results) {
+	const parts = [];
+	for (let r in results) {
+		let s = sprintf('%s total=%d direct=%d gre=%d tunnel=%d excess=%s prepends=%d',
+			r.prefix, r.total, r.direct, r.gre, r.tunnel, r.excess == null ? '-' : r.excess, r.prepends);
+		if (r.computed != null && r.computed != r.prepends)
+			s += sprintf(' (computed %d)', r.computed);
+		push(parts, s);
+	}
+	return join('; ', parts);
+}
+
+// --- apply -----------------------------------------------------------------
+
+let last_reconfigure = null;
+
+function apply(policy, now) {
+	const previous = readfile(OUT);
+	if (previous == policy)
+		return false;
+
+	if (last_reconfigure != null && now - last_reconfigure < MIN_RECONFIGURE_INTERVAL) {
+		log(DEBUG, 'policy change pending, last reconfigure %ds ago', now - last_reconfigure);
+		return false;
+	}
+
+	const tmp = OUT + '.tmp';
+	if (writefile(tmp, policy) == null) {
+		log(ERR, 'cannot write %s: %s', tmp, error());
+		return false;
+	}
+
+	if (!rename(tmp, OUT)) {
+		log(ERR, 'cannot rename %s to %s: %s', tmp, OUT, error());
+		unlink(tmp);
+		return false;
+	}
+
+	last_reconfigure = now;
+	const out = birdc('configure');
+	if (out == null)
+		return true;
+
+	if (index(out, 'Reconfigured') < 0)
+		log(WARNING, 'bird reconfigure did not report success: %s', trim(out));
+	else
+		log(INFO, 'bird reconfigured');
+
+	return true;
+}
+
+// --- pid file --------------------------------------------------------------
+
+function lock_pid() {
+	const old = readfile(PID_FILE);
+	if (old) {
+		const pid = int(trim(old));
+		if (pid > 0 && stat(sprintf('/proc/%d', pid))) {
+			warn(sprintf('already running with pid %d (%s)\n', pid, PID_FILE));
+			return false;
+		}
+	}
+
+	const self = readlink('/proc/self');
+	if (writefile(PID_FILE, (self ?? '0') + '\n') == null)
+		log(WARNING, 'cannot write %s: %s', PID_FILE, error());
+
+	return true;
+}
+
+// --- main ------------------------------------------------------------------
+
+function run(damped) {
+	const announced = get_announced();
+	if (announced == null)
+		return false;
+
+	if (!length(announced)) {
+		log(WARNING, 'no announced prefixes found in table %s, skipping', BIRD_ANNOUNCE_TABLE);
+		return false;
+	}
+
+	const routes = get_routes();
+	if (routes == null)
+		return false;
+
+	if (!length(routes)) {
+		log(WARNING, 'no babel /%d routes found, skipping', LOCATION_PLEN);
+		return false;
+	}
+
+	const now = time();
+	let results = compute(policy_prefixes(announced), routes);
+	if (damped)
+		results = damp(results, now);
+
+	const policy = render(results);
+	const changed = apply(policy, now);
+
+	if (changed)
+		log(INFO, 'policy changed: %s', summary(results));
+	else
+		log(DEBUG, 'policy unchanged: %s', summary(results));
+
+	flog(sprintf('run routes=%d %s%s', length(routes), changed ? 'RECONFIGURED ' : '', summary(results)));
+	return true;
+}
+
+function dry_run(path) {
+	const text = readfile(path);
+	if (text == null) {
+		log(ERR, 'cannot read %s: %s', path, error());
+		return 1;
+	}
+
+	let announced = get_announced();
+	if (!announced || !length(announced)) {
+		log(INFO, 'using built-in announced prefix list');
+		announced = [];
+		for (let s in ANNOUNCED_FALLBACK)
+			push(announced, parse_prefix(s));
+	}
+
+	const routes = parse_routes(text);
+	log(INFO, 'parsed %d routes', length(routes));
+
+	const results = compute(policy_prefixes(announced), routes);
+	let statements = 0;
+
+	for (let r in results) {
+		if (r.total == 0)
+			continue;
+
+		statements += r.prepends > 0;
+		warn(sprintf('%-22s locations=%-3d direct=%-3d gre=%-3d tunnel=%-3d mean_excess=%-5d prepends=%d\n',
+			r.prefix, r.total, r.direct, r.gre, r.tunnel, r.excess, r.prepends));
+	}
+
+	warn(sprintf('policy prefixes: %d (%d with locations, %d with prepends)\n',
+		length(results), length(filter(results, r => r.total > 0)), statements));
+
+	print(render(results));
+	return 0;
+}
+
+function main(args) {
+	let mode = 'loop';
+	let input = null;
+
+	for (let i = 0; i < length(args); i++) {
+		switch (args[i]) {
+		case 'once':
+			mode = 'once';
+			verbose = true;
+			break;
+		case '--input':
+			mode = 'dry';
+			verbose = true;
+			input = args[++i];
+			break;
+		case '--plen':
+			ANNOUNCE_PLEN = int(args[++i]);
+			if (ANNOUNCE_PLEN < 32 || ANNOUNCE_PLEN > 64) {
+				warn('--plen must be between 32 and 64\n');
+				return 2;
+			}
+			break;
+		case '--interval':
+			INTERVAL = int(args[++i]);
+			if (INTERVAL < 5) {
+				warn('--interval must be at least 5 seconds\n');
+				return 2;
+			}
+			break;
+		case '--out':
+			OUT = args[++i];
+			if (!OUT) {
+				warn('--out needs a file\n');
+				return 2;
+			}
+			break;
+		case '-v':
+		case '--verbose':
+			verbose = true;
+			break;
+		default:
+			warn(sprintf('unknown argument: %s\n', args[i]));
+			return 2;
+		}
+	}
+
+	switch (mode) {
+	case 'dry':
+		if (!input) {
+			warn('--input needs a file\n');
+			return 2;
+		}
+		return dry_run(input);
+
+	case 'once':
+		logfile_enabled = true;
+		return run(false) ? 0 : 1;
+
+	default:
+		if (!lock_pid())
+			return 1;
+		logfile_enabled = true;
+		log(INFO, 'starting, interval %ds, asn %d, max prepends %d, step %d, policy prefix length /%d, out %s',
+			INTERVAL, PREPEND_ASN, MAX_PREPENDS, STEP, ANNOUNCE_PLEN, OUT);
+		while (true) {
+			run(true);
+			sleep(INTERVAL * 1000);
+		}
+	}
+}
+
+exit(main(ARGV ?? []));
