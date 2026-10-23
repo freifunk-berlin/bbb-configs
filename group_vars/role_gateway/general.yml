@@ -40,15 +40,24 @@ gre_metric: 256 # Match default RX Cost
 
 # For IPv6 there is a stateful firewall implemented. In order to
 # achieve that using multiple active-active gateways, the
-# flows (connection-tracking) have to get synced. As the
-# outbound gateway (request, tracks state) could be different
-# from the inbound gateway (looks for state to accept), the
-# conntrack syncing would have to be faster than the actual
-# request. For TCP We can cheat by accepting existing connections
-# determined by the Flags, which dont belong to a (known) flow yet
-# at a low rate.
+# flows have to get synced. As the outbound gateway (request,
+# tracks state) could be different from the inbound gateway
+# (looks for state to accept), the flow syncing would have to
+# be faster than the actual request. This is done by flowsync
+# (falter-packages). For TCP We can cheat by accepting existing
+# connections determined by the Flags, which dont belong to a
+# (known) flow yet at a low rate.
 
-conntrackd_port: 3780
+flowsync_port: 3994
+# Has to be the same key on all gateways. Its not part of this repo,
+# generate it once with "openssl rand -hex 16" and copy it to every
+# gateway. /root/ survives a sysupgrade.
+flowsync_key_file: /root/flowsync.key
+# Accepted packets get forwarded by flowsync directly (tc), skipping the firewall
+flowsync_bypass: true
+# Size of the flow tables (own flows and flows of the other gateways)
+flowsync_max_flows: 524288
+flowsync_max_remote: 524288
 
 # Rate Limit for DNS replies
 untracked_flows_dns_rate: 5000

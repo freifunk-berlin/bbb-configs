@@ -62,11 +62,6 @@ config include
 	option position		chain-prepend
 	option chain 		'forward'
 
-config include
-	option type 		nftables
-	option path		/etc/custom_fw_includes/table_prepend_redirect_samplicator
-	option position		table-prepend
-
 #
 ## Inbound to host
 #
@@ -84,13 +79,13 @@ config rule
 {% endif %}
 
 config rule
-	option name             "Allow conntrack sync"
+	option name             "Allow flowsync"
 	option src		uplink
 {% for host in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
 	list src_ip		'{{ hostvars[host]['uplink']['ipv4'] | ansible.utils.ipaddr('address')  }}'
 {% endfor %}
 	option proto		udp
-	option dest_port        {{ conntrackd_port }}
+	option dest_port        {{ flowsync_port }}
 	option target		ACCEPT
 
 config rule
