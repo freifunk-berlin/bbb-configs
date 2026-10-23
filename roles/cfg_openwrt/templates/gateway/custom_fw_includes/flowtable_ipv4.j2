@@ -1,0 +1,33 @@
+# Flow offloading for forwarded IPv4 only.
+# The fw4 option flow_offloading would also offload IPv6 which is still tracked
+# (e.g. via GRE or when flowsync is down). flowsync doesnt support that.
+#
+# This is not a static nftables include for good reasons: if a listed device
+# doesnt exist (e.g. during boot), the whole ruleset fails to load.
+# fw4 runs this script after every start and reload, so only devices which
+# exist at that time get added. On ifup the firewall gets reloaded anyways.
+#
+# Only packets coming in on a listed device get offloaded. wg_* interfaces
+# created after the last reload are missing until the next reload, until
+# then they just take the normal path.
+
+ft4_devices=""
+for dev in {{ ([uplink['ifname']]
+              + (mesh_links | default([]) | map(attribute='ifname') | list)
+              + ([mgmt['ifname']] if mgmt is defined else [])) | join(' ') }} \
+           $(cd /sys/class/net && ls -d gre4-* wg_* 2>/dev/null); do
+	[ -d "/sys/class/net/$dev" ] && ft4_devices="${ft4_devices:+$ft4_devices, }\"$dev\""
+done
+
+# Remove leftovers of the last run, fw4 doesnt remove foreign flowtables on reload
+for handle in $(nft -a list chain inet fw4 forward 2>/dev/null | sed -n 's/.*comment "IPv4 flow offloading".* # handle //p'); do
+	nft delete rule inet fw4 forward handle "$handle"
+done
+nft list flowtable inet fw4 ft4 >/dev/null 2>&1 && nft delete flowtable inet fw4 ft4
+
+if [ -n "$ft4_devices" ]; then
+	nft -f - <<NFT
+add flowtable inet fw4 ft4 { hook ingress priority filter; devices = { $ft4_devices }; }
+insert rule inet fw4 forward meta nfproto ipv4 meta l4proto { tcp, udp } flow add @ft4 comment "IPv4 flow offloading"
+NFT
+fi

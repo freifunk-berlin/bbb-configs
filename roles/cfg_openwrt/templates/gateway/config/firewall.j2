@@ -67,6 +67,12 @@ config include
 	option path		/etc/custom_fw_includes/table_append_notrack
 	option position		table-append
 
+# IPv4 flow offloading, see include for details
+#config include
+#	option type 		script
+#	option path		/etc/custom_fw_includes/flowtable_ipv4
+#	option fw4_compatible	1
+
 #
 ## Inbound to host
 #
