@@ -1,0 +1,28 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+# See README of the flowsync package (falter-packages)
+config flowsync 'main'
+	option enabled '1'
+	option interface 'uplink'
+	option bind_address '{{ uplink['ipv4'] | ansible.utils.ipaddr('address') }}'
+	option port '{{ flowsync_port }}'
+	option key_file '{{ flowsync_key_file }}'
+	option bypass '{{ flowsync_bypass | bool | int }}'
+	option max_flows '{{ flowsync_max_flows }}'
+	option max_remote '{{ flowsync_max_remote }}'
+{% for host in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
+	list peer '{{ hostvars[host]['uplink']['ipv4'] | ansible.utils.ipaddr('address') }}'
+{% endfor %}
+{% for prefix in freifunk_wahlkreis_prefixes %}
+	list prefix '{{ prefix }}'
+{% endfor %}
+	# inbound_filtered_networks are accepted and not tracked anyways.
+	# We keep them synced, so replies via another gateway can use the bypass as well.
+	# Uncomment to save sync traffic and space in the flow tables of the other gateways.
+{% for h in groups['role_corerouter'] %}
+  {% set h_vars = hostvars[h] %}
+  {% for network in h_vars['networks']
+              | selectattr('inbound_filtering', 'defined') | selectattr('inbound_filtering')
+              | selectattr('ipv6_subprefix', 'defined') %}
+	# list exclude '{{ h_vars['ipv6_prefix'] | ansible.utils.ipsubnet(64, network['ipv6_subprefix']) }}' # {{ h }}
+  {% endfor %}
+{% endfor %}
