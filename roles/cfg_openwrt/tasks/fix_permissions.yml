@@ -25,3 +25,9 @@
     path: "{{ configs_dir }}/etc/force_mcast_mld_reports.sh"
     mode: "755"
   when: role in ['corerouter', 'gateway']
+
+- name: Set permission for bgp_babel_prepend service
+  file:
+    path: "{{ configs_dir }}/etc/init.d/bgp_babel_prepend"
+    mode: "755"
+  when: role == "gateway"
