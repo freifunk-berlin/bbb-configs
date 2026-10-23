@@ -1,0 +1,23 @@
+# Forwarded IPv6 from and to the uplink is handled by flowsync, which does
+# the notrack as long as its running (table ip6 flowsync).
+# Everything below doesnt need conntrack at all, no rule depends on it.
+
+chain notrack_prerouting {
+	type filter hook prerouting priority raw; policy accept;
+	# Mesh -> Mesh (not coming from the uplink, destination is a Wahlkreis prefix)
+	iifname != "{{ uplink['ifname'] }}" ip6 daddr { {{ freifunk_wahlkreis_prefixes | join(', ') }} } notrack
+	# Accepted anyways in forward_uplink
+	ip6 daddr @inbound_filtered_networks notrack
+	ip6 saddr @inbound_filtered_networks notrack
+	ip6 saddr @dns_servers_ipv6 meta l4proto { tcp, udp } th sport 53 notrack
+	ip6 daddr @dns_servers_ipv6 meta l4proto { tcp, udp } th dport 53 notrack
+	# ICMPv6 is accepted anyways in input_uplink and forward_uplink
+	iifname "{{ uplink['ifname'] }}" meta l4proto ipv6-icmp notrack
+}
+
+chain notrack_output {
+	type filter hook output priority raw; policy accept;
+	# Gateway -> Mesh. Otherwise answers to untracked requests would leave
+	# entries behind, which never see a reply
+	meta nfproto ipv6 oifname != "{{ uplink['ifname'] }}" notrack
+}
