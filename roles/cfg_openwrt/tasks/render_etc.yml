@@ -6,78 +6,36 @@
 # We copy Jinja2 templates (from ../templates) and static files (from ../files).
 # Files are simply copied, templates are rendered and then written to /etc.
 #
+# Rendering is done by the render_tree action plugin (../action_plugins) in a
+# single task per tree, as looping the template module over every file is
+# slow. It writes directly and thus relies on connection: local.
+#
 # Symlinks can be used for individual files, but not for directories.
-# If symlinks were used for directories too, we couldn't tell whether the
-# symlink target is a file or a directory - Ansible doesn't seem to let us.
+#
+# Files and templates keep the permissions they have in git (following
+# symlinks). Git only tracks the executable bit, so modes that need to be
+# stricter (dropbear) are set explicitly here. Modes must not be fixed up in a
+# later task, or every run would report changes.
 #
 # Possible future additions:
-# - preserve permissions
 # - ability to remove files, not just to add or change/override them
 # - collapse files/ into templates/ and treat everything as a template
 #
 
-- name: Create /etc directories for template output
+- name: Render /etc templates and copy /etc static files
   tags: always
-  file:
-    path: "{{ configs_dir }}/etc/{{ item.path }}"
-    state: directory
-    mode: "755"
-  loop: "{{ lookup('community.general.filetree', role_path + '/templates/' + role) }}"
-  when: item.state == 'directory'
-  loop_control:
-    label: "{{ item.path }}"
-
-- name: Create /etc directories for static files
-  tags: always
-  file:
-    path: "{{ configs_dir }}/etc/{{ item.path }}"
-    state: directory
-    mode: "755"
-  loop: "{{ lookup('community.general.filetree', role_path + '/files/' + role) }}"
-  when: item.state == 'directory'
-  loop_control:
-    label: "{{ item.path }}"
-
-- name: Render /etc templates
-  tags: always
-  template:
-    src: "{{ item.root }}/{{ item.path }}"
-    dest: "{{ configs_dir }}/etc/{{ item.path | regex_replace('.j2$', '') }}"
-    mode: "644"
-  loop: "{{ lookup('community.general.filetree', role_path + '/templates/' + role) }}"
-  when: item.path is regex('\.j2$')
-  loop_control:
-    label: "{{ item.path }}"
-
-- name: Copy /etc static files
-  tags: always
-  copy:
-    src: "{{ item.root }}/{{ item.path }}"
-    dest: "{{ configs_dir }}/etc/{{ item.path }}"
-    mode: "preserve"
-  loop: "{{ lookup('community.general.filetree', role_path + '/files/' + role) }}"
-  when: (not item.path is regex('\.j2$')) and (item.state == 'file' or item.state == 'link')
-  loop_control:
-    label: "{{ item.path }}"
-
-- name: Create rootfs directories for static files
-  tags: always
-  file:
-    path: "{{ configs_dir }}/{{ item.path }}"
-    state: directory
-    mode: "755"
-  loop: "{{ lookup('community.general.filetree', role_path + '/rootfs/' + role, errors='ignore') }}"
-  when: item.state == 'directory'
-  loop_control:
-    label: "{{ item.path }}"
+  render_tree:
+    templates: "{{ role_path }}/templates/{{ role }}"
+    files: "{{ role_path }}/files/{{ role }}"
+    dest: "{{ configs_dir }}/etc"
+    target: /etc
+    modes:
+      dropbear: "700"
+      dropbear/authorized_keys: "600"
 
 - name: Copy rootfs static files
   tags: always
-  copy:
-    src: "{{ item.root }}/{{ item.path }}"
-    dest: "{{ configs_dir }}/{{ item.path }}"
-    mode: "preserve"
-  loop: "{{ lookup('community.general.filetree', role_path + '/rootfs/' + role, errors='ignore') }}"
-  when: (not item.path is regex('\.j2$')) and (item.state == 'file' or item.state == 'link')
-  loop_control:
-    label: "{{ item.path }}"
+  render_tree:
+    files: "{{ role_path }}/rootfs/{{ role }}"
+    dest: "{{ configs_dir }}"
+    target: /

@@ -187,15 +187,6 @@
     - always
     - config
 
-- name: Include fix_permissions.yml
-  include_tasks:
-    file: fix_permissions.yml
-    apply:
-      tags: always
-  tags:
-    - always
-    - config
-
 - name: Generate Imagebuilder command
   set_fact:
     make_command: >
