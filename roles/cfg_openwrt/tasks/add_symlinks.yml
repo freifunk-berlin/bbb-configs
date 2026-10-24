@@ -12,6 +12,13 @@
     state: link
   when: role == "corerouter" or role == "ap"
 
+- name: Enable force_mcast_mld_reports symlink
+  file:
+    src: "../init.d/force_mcast_mld_reports"
+    dest: "{{ configs_dir }}/etc/rc.d/S99force_mcast_mld_reports"
+    state: link
+  when: role == "corerouter" or role == "gateway"
+
 - name: Enable sysfs-overrides symlink
   file:
     src: "../init.d/sysfs-overrides"

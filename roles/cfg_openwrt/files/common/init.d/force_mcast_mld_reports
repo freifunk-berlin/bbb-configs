@@ -1,0 +1,20 @@
+#!/bin/sh /etc/rc.common
+# START and USE_PROCD are read by rc.common
+# shellcheck disable=SC2034
+# Toggles the multicast flag on all interfaces every two minutes to trigger
+# MLD reports, see the header of /usr/sbin/force_mcast_mld_reports.
+START=99
+USE_PROCD=1
+
+start_service() {
+	procd_open_instance
+	procd_set_param command /usr/sbin/force_mcast_mld_reports
+	procd_set_param respawn
+	procd_close_instance
+}
+
+# The script turns multicast on again when it gets stopped, but not if it gets
+# killed, so make sure here that no interface is left with multicast off
+service_stopped() {
+	/usr/sbin/force_mcast_mld_reports restore
+}

@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# This hack toggles multicast flag on all configured interfaces except loopback
+# in order to generate new MLD reports. Those are required, if there is no
+# multicast querier within the network and a switch has igmp_snooping enabled.
+#
+# Ubiquiti Wave Series for instance have snooping enabled, which leads to
+# frequent multicast group timeouts
+#
+# This script runs in an infinite loop, started by the procd service
+# /etc/init.d/force_mcast_mld_reports. "force_mcast_mld_reports restore" only
+# turns multicast on again on all interfaces.
+#
+# An interface must never be left with multicast off, so multicast is turned
+# on again on all interfaces when the script is stopped, and on start in case a
+# previous instance was killed while toggling.
+
+interfaces() {
+	grep -A1 "config interface" /etc/config/network | grep device | cut -d \' -f2 | grep -v 'lo'
+}
+
+multicast_on() {
+	for i in $(interfaces); do
+		ip link set dev "$i" multicast on
+	done
+}
+
+if [ "$1" = "restore" ]; then
+	multicast_on
+	exit 0
+fi
+
+trap 'kill "$sleep_pid" 2>/dev/null; multicast_on; exit 0' INT TERM
+multicast_on
+
+while true; do
+	# Sleep in the background, as the shell only runs the trap once a
+	# foreground command has finished, while wait is interrupted right away
+	sleep 120 &
+	sleep_pid=$!
+	wait "$sleep_pid"
+	for i in $(interfaces); do
+		ip link set dev "$i" multicast off
+		ip link set dev "$i" multicast on
+	done
+done
