@@ -1,0 +1,76 @@
+---
+target: airoha/an7581
+brand_nice: Gemtek
+model_nice: MXF-W1700K
+override_target: "gemtek_w1700k-ubi"
+openwrt_version: snapshot
+
+dsa_ports:
+  - wan # 10g
+  - lan2 # 10g
+  - lan3 # 1g
+  - lan4 # 1g
+
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: EHT
+    path: soc/1fc00000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
+    radio: 0
+    ifname_hint: wlan2
+
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: EHT
+    path: soc/1fc00000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
+    radio: 1
+    ifname_hint: wlan5
+
+  - name: 11ax_standard
+    band: 6g
+    htmode_prefix: EHT
+    path: soc/1fc00000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0
+    radio: 2
+    ifname_hint: wlan6
+
+leds:
+  - name: wan_yellow
+    sysfs: mt7530-0:08:yellow:wan
+    trigger: netdev
+    mode: link_10 link_100 link_10000
+    dev: wan
+  - name: wan_green
+    sysfs: mt7530-0:08:green:wan
+    trigger: netdev
+    mode: link_1000 link_2500 link_5000 link_10000 tx rx
+    dev: wan
+  - name: lan2_yellow
+    sysfs: mt7530-0:05:yellow:lan-2
+    trigger: netdev
+    mode: link_10 link_100 link_10000
+    dev: lan2
+  - name: lan2_green
+    sysfs: mt7530-0:05:green:lan-2
+    trigger: netdev
+    mode: link_1000 link_2500 link_5000 link_10000 tx rx
+    dev: lan2
+  - name: lan3_yellow
+    sysfs: yellow:lan-3
+    trigger: netdev
+    mode: link_10 link_100
+    dev: lan3
+  - name: lan3_green
+    sysfs: green:lan-3
+    trigger: netdev
+    mode: link_1000 tx rx
+    dev: lan3
+  - name: lan4_yellow
+    sysfs: yellow:lan-4
+    trigger: netdev
+    mode: link_10 link_100
+    dev: lan4
+  - name: lan4_green
+    sysfs: green:lan-4
+    trigger: netdev
+    mode: link_1000 tx rx
+    dev: lan4

@@ -19,3 +19,10 @@
     state: link
   when:
     - (sysfs_overrides | default([]) | length > 0) or (cpu_governor is defined)
+
+- name: Enable bgp_babel_prepend symlink
+  file:
+    src: "../init.d/bgp_babel_prepend"
+    dest: "{{ configs_dir }}/etc/rc.d/S99bgp_babel_prepend"
+    state: link
+  when: role == "gateway"

@@ -79,7 +79,7 @@ host_role: enum('ap', 'corerouter', 'gateway')
 
 hostname: str(matches='^[a-z0-9_-]+$')
 
-radio: enum('11a_standard', '11g_standard', '11a_mesh')
+radio: enum('11ax_standard', '11a_standard', '11g_standard', '11a_mesh')
 
 host:
   hostname: include('hostname')

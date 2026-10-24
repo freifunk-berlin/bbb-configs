@@ -64,8 +64,14 @@ config include
 
 config include
 	option type 		nftables
-	option path		/etc/custom_fw_includes/table_prepend_redirect_samplicator
-	option position		table-prepend
+	option path		/etc/custom_fw_includes/table_append_notrack
+	option position		table-append
+
+# IPv4 flow offloading, see include for details
+#config include
+#	option type 		script
+#	option path		/etc/custom_fw_includes/flowtable_ipv4
+#	option fw4_compatible	1
 
 #
 ## Inbound to host
@@ -84,13 +90,13 @@ config rule
 {% endif %}
 
 config rule
-	option name             "Allow conntrack sync"
+	option name             "Allow flowsync"
 	option src		uplink
 {% for host in groups['role_gateway'] | difference([inventory_hostname]) | sort %}
 	list src_ip		'{{ hostvars[host]['uplink']['ipv4'] | ansible.utils.ipaddr('address')  }}'
 {% endfor %}
 	option proto		udp
-	option dest_port        {{ conntrackd_port }}
+	option dest_port        {{ flowsync_port }}
 	option target		ACCEPT
 
 config rule
@@ -168,33 +174,6 @@ config rule
 	option proto		all
 	option target		ACCEPT
 
-# Dont track (Internet -> inbound_filtered_networks)
-config rule
-	option name		'Dont track (Internet -> inbound_filtered_networks)'
-	option src		uplink
-	option dest		* # see note below
-	option ipset		'inbound_filtered_networks dest' # defined at EOF
-	option proto		all
-	option target		NOTRACK
-
-# Dont track (Internet via GRE -> inbound_filtered_networks)
-config rule
-	option name		'Dont track (Internet via GRE -> inbound_filtered_networks)'
-	option src		freifunk
-	option dest		* # see note below
-	option ipset		'inbound_filtered_networks dest' # defined at EOF
-	option proto		all
-	option target		NOTRACK
-
-# Dont track (inbound_filtered_networks -> Internet + Internet via GRE)
-config rule
-	option name		'Dont track (inbound_filtered_networks -> Internet + Internet via GRE)'
-	option src		freifunk
-	option dest		* # see note below
-	option ipset		'inbound_filtered_networks src'
-	option proto		all
-	option target		NOTRACK
-
 # Allow traffic (DNS Reply) from Internet IPv6 DNS resolvers unconditionally
 config rule
 	option name		'Accept Traffic from dns ipv6 resolver (DNS Reply)'
@@ -203,37 +182,6 @@ config rule
 	option ipset		'dns_servers_ipv6 src' # defined at EOF
 	option src_port		'53'
 	option target		ACCEPT
-
-# Dont track DNS Reply (DNS Reply) (dns_servers_ipv6 via Internet -> freifunk)
-config rule
-	option name		'Dont track traffic belonging to dns ipv6 resolver from the internet'
-	option src		uplink
-	option dest		* # see note below
-	option ipset		'dns_servers_ipv6 src'
-	option src_port		'53'
-	option target		NOTRACK
-
-# Dont track DNS Reply (dns_servers_ipv6 via GRE)
-config rule
-	option name		'Dont track DNS via GRE'
-	option src		freifunk
-	option dest		* # see note below
-	option ipset		'dns_servers_ipv6 src' # defined at EOF
-	option src_port		'53'
-	option target		NOTRACK
-
-# Dont track DNS Request (freifunk -> dns_servers_ipv6)
-config rule
-	option name		'Dont track traffic to dns ipv6 resolver (DNS Request)'
-	option src		freifunk
-	option dest		* # see note below
-	option ipset		'dns_servers_ipv6 dest'
-	option dest_port	'53'
-	option target		NOTRACK
-
-# Note: option dest actually has no impact in rendered nftables config by fw4, because
-# NOTRACK needs to be set on prerouting, where the outbound interface is not determined,
-# but is necessary in order to let fw4 know this is a forwarding rule.
 
 # Allow list via group_vars/role_gateway/general.yml
 {% for rule in inbound_allow | default([]) %}

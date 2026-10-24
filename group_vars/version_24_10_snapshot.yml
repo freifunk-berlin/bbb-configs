@@ -4,3 +4,6 @@ uses_opkg: true
 
 owm__packages__to_merge:
   - falter-berlin-owmsh
+
+statistics__packages__to_merge:
+  - -falter-berlin-statistics
