@@ -9,18 +9,18 @@ contacts:
   - "signal: keylanomi.13"
 
 location__ssh_keys__to_merge:
-  - comment: nomi
+  - comment: kts13key
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOa6Xw44GR/35cr8DYVqOwc8tShxNsridDC5qy6q4uGL
 
 hosts:
   - hostname: kts13-core
     role: corerouter
-    model: "avm_fritzbox-7530"
+    model: avm_fritzbox-7530
     wireless_profile: kts13
 
   - hostname: kts13-ap-schornstein
     role: ap
-    model: tplink_tl-wdr4300-v1
+    model: cudy_ap3000outdoor-v1
     wireless_profile: kts13
 
   - hostname: kts13-ap-mitte
@@ -30,18 +30,23 @@ hosts:
 
   - hostname: kts13-ap-gaesteplatte
     role: ap
-    model: tplink_tl-wdr3600-v1
+    model: siemens_ws-ap3610
     wireless_profile: kts13
 
   - hostname: kts13-ap-kueche
     role: ap
-    model: tplink_tl-wdr4300-v1
+    model: siemens_ws-ap3610
     wireless_profile: kts13
 
   - hostname: kts13-ap-wald
     role: ap
-    model: tplink_eap225-outdoor-v1
+    model: cudy_ap3000outdoor-v1
     wireless_profile: kts13
+
+  # - hostname: kts13-ap-nomi
+  #   role: ap
+  #   model: rpi_3 
+  #   wireless_profile: kts13
 
 ipv6_prefix: 2001:bf7:840:c00::/56
 
@@ -81,11 +86,13 @@ networks:
       kts13-sw-mitte: 3
       kts13-sw-wald1: 4
       kts13-sw-wald2: 5
-      kts13-ap-schornstein: 6
-      kts13-ap-mitte: 7
+      kts13-sw-gaesteplatte: 6
+      kts13-ap-schornstein: 7
+      kts13-ap-mitte: 8
       kts13-ap-gaesteplatte: 8
       kts13-ap-kueche: 9
       kts13-ap-wald: 10
+      # kts13-ap-nomi: 11
 
   - vid: 50
     role: uplink
@@ -103,6 +110,7 @@ location__channel_assignments_11a_standard__to_merge:
   kts13-ap-gaesteplatte: 44-20
   kts13-ap-kueche: 48-20
   kts13-ap-wald: 36-20
+  # kts13-ap-nomi: 44-20
 
 location__channel_assignments_11g_standard__to_merge:
   kts13-core: 1-20
@@ -110,21 +118,22 @@ location__channel_assignments_11g_standard__to_merge:
   kts13-ap-mitte: 1-20
   kts13-ap-gaesteplatte: 11-20
   kts13-ap-kueche: 6-20
-  kts13-ap-wald: 1-20
+  kts13-ap-wald: 11-20
+  # kts13-ap-nomi: 6-20
 
 location__wireless_profiles__to_merge:
   - name: kts13
 
     ifaces:
       - mode: ap
-        ssid: berlin.freifunk.net
+        ssid: berlin.freifunk.net old-devices
         encryption: none
         network: dhcp
         radio: [11a_standard, 11g_standard]
         ifname_hint: ff
 
       - mode: ap
-        ssid: berlin.freifunk.net Encrypted
+        ssid: berlin.freifunk.net 
         encryption: owe
         network: dhcp
         radio: [11a_standard, 11g_standard]
