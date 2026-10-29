@@ -16,10 +16,19 @@ hosts:
       - |
         uci -q get system.@system[0].bbb_config_first_boot > /dev/null
         if [ "1" -eq $? ]; then
-          # add domain for the bbb unifi controller
-          uci set dhcp.unifi=domain
-          uci set dhcp.unifi.ip=10.31.130.157
-          uci set dhcp.unifi.name=unifi
+          # set up static routes towards the UDM
+          uci set network.udmv4='route'
+          uci set network.udmv4.interface='dhcp'
+          uci set network.udmv4.target='10.31.129.0/24'
+          uci set network.udmv4.gateway='10.31.128.3'
+          uci set network.udmv6='route6'
+          uci set network.udmv6.interface='dhcp'
+          uci set network.udmv6.target='2001:bf7:830:9f02::/64'
+          uci set network.udmv6.gateway='2001:bf7:830:9f00::3'
+          uci commit network
+          # reduce the size of the dhcp_dhcp address range
+          uci set dhcp.dhcp_dhcp.start='10'
+          uci set dhcp.dhcp_dhcp.limit='240'
           uci commit dhcp
           /etc/init.d/dnsmasq restart
           # Prevent this from running again by setting a config option
@@ -211,12 +220,13 @@ networks:
 
   - vid: 40
     role: dhcp
-    inbound_filtering: true
+    inbound_filtering: false
     enforce_client_isolation: true
     prefix: 10.31.128.0/23
     ipv6_subprefix: 0
     assignments:
       rhxb-core: 1
+      rhxb-udm: 3
 
   - vid: 42
     name: mgmt
@@ -228,7 +238,7 @@ networks:
     assignments:
       rhxb-core: 1
       rhxb-switch-roof: 2
-      rhxb-cloudkey: 3
+      rhxb-udm: 3
 
       # PTP
       rhxb-l105: 4
