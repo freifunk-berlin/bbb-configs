@@ -4,75 +4,156 @@ location_nice: Karpfenteichstraße 13
 latitude: 52.48232
 longitude: 13.46545
 altitude: 37
-contact_nickname: "Packet Please"
+contact_nickname: "nomi"
 contacts:
-  - "pktpls@systemli.org"
+  - "signal: keylanomi.13"
 
 location__ssh_keys__to_merge:
-  - comment: pktpls@systemli.org
-    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINVY2XHiLDXbj7TGWtUpKEb8+qKw/DrkiVbLiyvyRaCi pktpls@systemli.org
+  - comment: kts13key
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOa6Xw44GR/35cr8DYVqOwc8tShxNsridDC5qy6q4uGL
 
 hosts:
   - hostname: kts13-core
     role: corerouter
-    model: "avm_fritzbox-7530"
-    wireless_profile: disable
+    model: avm_fritzbox-7530
+    wireless_profile: kts13
 
-  - hostname: kts13-ap1
+  - hostname: kts13-ap-schornstein
     role: ap
-    model: "mikrotik_sxtsq-5-ac"
-    mac_override:
-      eth0: 2C:C8:1B:8A:95:2E
+    model: cudy_ap3000outdoor-v1
+    wireless_profile: kts13
 
-ipv6_prefix: "2001:bf7:840:c00::/56"
+  - hostname: kts13-ap-mitte
+    role: ap
+    model: tplink_eap225-outdoor-v1
+    wireless_profile: kts13
+
+  - hostname: kts13-ap-gaesteplatte
+    role: ap
+    model: siemens_ws-ap3610
+    wireless_profile: kts13
+
+  - hostname: kts13-ap-kueche
+    role: ap
+    model: siemens_ws-ap3610
+    wireless_profile: kts13
+
+  - hostname: kts13-ap-wald
+    role: ap
+    model: cudy_ap3000outdoor-v1
+    wireless_profile: kts13
+
+  - hostname: kts13-ap-nomi
+    role: ap
+    model: rpi_3-b-plus
+    wireless_profile: kts13-rpi
+
+ipv6_prefix: 2001:bf7:840:c00::/56
 
 # mesh: 10.31.166.192/28
 # mgmt: 10.31.166.208/28
 # dhcp: 10.31.167.0/26
+# prdhcp: 10.248.151.128/25
 networks:
-  - vid: 20
-    role: mesh
-    name: mesh_core
-    prefix: "10.31.166.193/32"
-    ipv6_subprefix: -1
-
-  - vid: 21
-    role: mesh
-    name: mesh_ap1
-    prefix: "10.31.166.194/32"
-    ipv6_subprefix: -2
-    mesh_ap: kts13-ap1
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
-
   - vid: 40
     role: dhcp
-    prefix: "10.31.167.0/26"
-    ipv6_subprefix: 0
+    prefix: 10.31.167.0/26
+    ipv6_subprefix: 40
     inbound_filtering: true
     enforce_client_isolation: true
     assignments:
       kts13-core: 1
 
+  - vid: 41
+    name: prdhcp
+    role: dhcp
+    prefix: 10.248.151.128/25
+    ipv6_subprefix: 41
+    inbound_filtering: true
+    enforce_client_isolation: false
+    assignments:
+      kts13-core: 1
+
   - vid: 42
     role: mgmt
-    prefix: "10.31.166.208/28"
+    prefix: 10.31.166.208/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
     assignments:
       kts13-core: 1
-      kts13-ap1: 2
+      kts13-sw-schimmelhaus: 2
+      kts13-sw-mitte: 3
+      kts13-sw-wald1: 4
+      kts13-sw-wald2: 5
+      kts13-sw-gaesteplatte: 6
+      kts13-ap-schornstein: 7
+      kts13-ap-mitte: 8
+      kts13-ap-gaesteplatte: 8
+      kts13-ap-kueche: 9
+      kts13-ap-wald: 10
+      kts13-ap-nomi: 11
 
   - vid: 50
-    untagged: true
     role: uplink
 
   - role: tunnel
     ifname: ts_wg0
     mtu: 1280
-    prefix: 10.31.166.195/32
+    prefix: 10.31.166.192/32
     wireguard_port: 51820
 
 location__channel_assignments_11a_standard__to_merge:
-  kts13-ap1: 36-40-7 # 7 dBm + 16 dBi gain = 23 dBm
+  kts13-core: 36-20
+  kts13-ap-schornstein: 48-20
+  kts13-ap-mitte: 40-20
+  kts13-ap-gaesteplatte: 44-20
+  kts13-ap-kueche: 48-20
+  kts13-ap-wald: 36-20
+  kts13-ap-nomi: 44-20
+
+location__channel_assignments_11g_standard__to_merge:
+  kts13-core: 1-20
+  kts13-ap-schornstein: 6-20
+  kts13-ap-mitte: 1-20
+  kts13-ap-gaesteplatte: 11-20
+  kts13-ap-kueche: 6-20
+  kts13-ap-wald: 11-20
+
+location__wireless_profiles__to_merge:
+  - name: kts13
+
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net old-devices
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 2
+
+      - mode: ap
+        ssid: kts13
+        encryption: psk2
+        key: "file:/root/wifi_pass"
+        network: prdhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: prdhcp
+
+  - name: kts13-rpi
+
+    ifaces:
+      - mode: ap
+        ssid: kts13
+        encryption: psk2
+        key: "file:/root/wifi_pass"
+        network: prdhcp
+        radio: [11a_standard]
+        ifname_hint: prdhcp
