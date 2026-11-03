@@ -1,15 +1,15 @@
 ---
 
-location: lause
-location_nice: Lausitzer Straße 10
-latitude: 52.497459
-longitude: 13.427857
+location: ffraum
+location_nice: Freifunk-Raum @ Lause
+latitude: 52.497441
+longitude: 13.427841
 contact_nickname: Stadtfunk gGmbH
 contacts:
   - noc@stadtfunk.net
 
 hosts:
-  - hostname: lause-core
+  - hostname: ffraum-core
     role: corerouter
     model: ubnt_usw-flex
     host__rclocal__to_merge:
@@ -18,10 +18,10 @@ hosts:
         uci set network.vlan_50.ports='lan1:u lan2:t lan3:t lan4:u lan5:u'
         uci commit network; reload_config
 
-  - hostname: lause-ap1
+  - hostname: ffraum-ap1
     role: ap
     model: zyxel_nwa50ax
-    wireless_profile: freifunk_lause
+    wireless_profile: freifunk_ffraum
 
 # 10.248.46.0/24
 # 10.248.46.0/27    - mgmt  - vlan 42
@@ -40,7 +40,7 @@ networks:
     inbound_filtering: true
     enforce_client_isolation: true
     assignments:
-      lause-core: 1
+      ffraum-core: 1
 
   - vid: 41
     name: lab
@@ -51,7 +51,7 @@ networks:
     enforce_client_isolation: false
     no_corerouter_dns_record: true
     assignments:
-      lause-core: 1
+      ffraum-core: 1
 
   - vid: 42
     name: mgmt
@@ -61,9 +61,9 @@ networks:
     gateway: 1
     dns: 1
     assignments:
-      lause-core: 1
-      lause-ap1: 2
-      lause-uplink: 3
+      ffraum-core: 1
+      ffraum-ap1: 2
+      ffraum-uplink: 3
       testlab01: 30
 
   - vid: 50
@@ -83,7 +83,7 @@ networks:
     wireguard_port: 51821
 
 location__wireless_profiles__to_merge:
-  - name: freifunk_lause
+  - name: freifunk_ffraum
     ifaces:
       - mode: ap
         ssid: lause.freifunk.net
@@ -110,4 +110,4 @@ location__wireless_profiles__to_merge:
 
 # AP-id, wifi-channel, bandwidth, txpower
 location__channel_assignments_11g_standard__to_merge:
-  lause-ap1: 1-20
+  ffraum-ap1: 1-20
