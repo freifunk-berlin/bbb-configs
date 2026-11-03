@@ -1,48 +1,48 @@
 ---
 
-location: lausetemp
+location: lause
 location_nice: Roof, Lausitzer Straße 10, 10999 Berlin
-latitude: 52.497552
-longitude: 13.428032
+latitude: 52.497415
+longitude: 13.428319
 contact_nickname: Stadtfunk gGmbH
 contacts:
   - noc@stadtfunk.net
 
 hosts:
-  - hostname: lausetemp-core
+  - hostname: lause-core
     role: corerouter
     model: mikrotik_routerboard-750gr3
     bird__packages__to_merge:
       - bird3-babelpatch
       - bird3c
 
-  - hostname: lausetemp-ap1
+  - hostname: lause-ap1
     role: ap
     model: "zyxel_nwa55axe"
     wireless_profile: ap_only
 
-  - hostname: lausetemp-ap2
+  - hostname: lause-ap2
     role: ap
     model: "zyxel_nwa55axe"
     wireless_profile: ap_only
 
-  - hostname: lausetemp-sw-1
+  - hostname: lause-sw-1
     role: ap # Switch
     model: hasivo_s1300wp-8xgt-4s-plus
     wireless_profile: none
 
 snmp_devices:
 
-  - hostname: lausetemp-sw-core
+  - hostname: lause-sw-core
     address: 10.248.106.242
     snmp_profile: edgeswitch
 
-  - hostname: lausetemp-sw-5
+  - hostname: lause-sw-5
     address: 10.248.106.246
     snmp_profile: swos_lite
 
 
-  - hostname: lausetemp-emma
+  - hostname: lause-emma
     address: 10.248.106.243
     snmp_profile: mikrotik_60g
 
@@ -74,7 +74,7 @@ networks:
     inbound_filtering: true
     enforce_client_isolation: true
     assignments:
-      lausetemp-core: 1
+      lause-core: 1
 
   - vid: 42
     name: mgmt
@@ -84,10 +84,10 @@ networks:
     gateway: 1
     dns: 1
     assignments:
-      lausetemp-core: 1
-      lausetemp-sw-core: 2
-      lausetemp-emma: 3
-      lausetemp-ap1: 4
-      lausetemp-ap2: 5
-      lausetemp-sw-1: 7
-      lausetemp-sw-5: 6
+      lause-core: 1
+      lause-sw-core: 2
+      lause-emma: 3
+      lause-ap1: 4
+      lause-ap2: 5
+      lause-sw-1: 7
+      lause-sw-5: 6
