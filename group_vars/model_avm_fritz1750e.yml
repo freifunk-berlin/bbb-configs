@@ -7,6 +7,10 @@ openwrt_version: 25.12.6
 dsa_ports:
   - eth0
 
+model__packages__to_merge:
+  - "-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct"
+  - "kmod-ath10k-smallbuffers ath10k-firmware-qca988x"
+
 wireless_devices:
   - name: 11a_standard
     band: 5g
