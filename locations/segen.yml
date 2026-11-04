@@ -12,6 +12,8 @@ hosts:
   - hostname: segen-core
     role: corerouter
     model: "genexis_pulse-ex400"
+    # with 25.12.x the router keeps rebooting after some time
+    openwrt_version: 24.10-SNAPSHOT
     wireless_profile: freifunk_default
 
   - hostname: segen-n-nf-2ghz
