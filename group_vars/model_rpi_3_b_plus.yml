@@ -1,0 +1,33 @@
+---
+target: "bcm27xx/bcm2710"
+override_target: "rpi-3"
+brand_nice: Raspberry Pi
+model_nice: 3 Model B+
+openwrt_version: 25.12.6
+
+int_port: eth0
+
+model__packages__to_merge:
+  - kmod-brcmfmac
+  - kmod-brcmutil
+  - cypress-firmware-43455-sdio
+  - brcmfmac-nvram-43455-sdio
+  - kmod-fs-vfat
+  - kmod-nls-cp437
+  - kmod-nls-iso8859-1
+
+# can't use both devices, choose either 11g_standard or 11a_standard, not both
+wireless_devices:
+  - name: 11g_standard
+    band: 2g
+    htmode_prefix: HT
+    path: platform/soc/3f300000.mmcnr/mmc_host/mmc1/mmc1:0001/mmc1:0001:1
+    radio: 0
+    ifname_hint: wlan0
+
+  - name: 11a_standard
+    band: 5g
+    htmode_prefix: VHT
+    path: platform/soc/3f300000.mmcnr/mmc_host/mmc1/mmc1:0001/mmc1:0001:1
+    radio: 0
+    ifname_hint: wlan1
