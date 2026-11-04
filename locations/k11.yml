@@ -14,6 +14,22 @@ hosts:
     wireless_profile: freifunk_default
     # remove some packages for smaller image size (only 64 MB of memory)
     low_mem: true
+    # remove collectd completely to save flash and memory
+    # rely only on new statistics package for statistics
+    host__packages__to_merge:
+      - -collectd
+      - -collectd-mod-conntrack
+      - -collectd-mod-cpu
+      - -collectd-mod-dhcpleases
+      - -collectd-mod-interface
+      - -collectd-mod-iwinfo
+      - -collectd-mod-load
+      - -collectd-mod-memory
+      - -collectd-mod-network
+      - -collectd-mod-olsrd
+      - -collectd-mod-ping
+      - -collectd-mod-snmp
+      - -collectd-mod-uptime
 
 ipv6_prefix: "2001:bf7:760:100::/56"
 
