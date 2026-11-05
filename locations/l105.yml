@@ -7,7 +7,6 @@ altitude: 62
 community: berlin
 
 local_asn: 65023
-peer_asn: 44194
 
 hosts:
   - hostname: l105-gw
@@ -46,6 +45,10 @@ uplink:
   ifname: eth0
   ipv4: 77.87.49.8/24
   ipv6: 2001:bf7:b201:1312::1/127
+  peers:
+    - name: l105-cr1
+      asn: 44194
+      address: 2001:bf7:b201:1312::0
 
 mgmt:
   ifname: eth1.42
