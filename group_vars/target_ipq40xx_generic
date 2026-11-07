@@ -6,14 +6,5 @@ target__packages__to_merge:
   # Work around ipq40xx ethernet instabilities
   - naywatch
 
-# cpu_governor must be ondemand before sysfs_overrides below writes ondemand's own tunables - see DEVELOPER.md.
-cpu_governor: ondemand
-sysfs_overrides:
-  - path: /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    value: 200000
-  - path: /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate
-    value: 1000000
-  - path: /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
-    value: 10
-  - path: /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
-    value: 50
+# OpenWrt uses the performance governor on ipq40xx, ondemand added latency
+# (OpenWrt b8e52852bd)
