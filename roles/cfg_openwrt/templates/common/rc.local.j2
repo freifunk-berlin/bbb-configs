@@ -3,12 +3,15 @@
 #
 # sysfs_overrides/cpu_governor moved to init.d/sysfs-overrides.j2 - rc.local runs too late (START=95).
 
+{% if role != 'corerouter' %}
+{# corerouters load the bridge rules with fw4 #}
 NFT_CONF="/etc/nftables.conf"
 if [[ -f "$NFT_CONF" ]]; then
     # sleep in order to make sure all interfaces are created
     sleep 10
     nft -f "$NFT_CONF"
 fi
+{% endif %}
 
 {% if sysupgrade_preserve_custom_files|default(False) %}
 # sysupgrade_preserve_custom_files was set. Therefore delete all
