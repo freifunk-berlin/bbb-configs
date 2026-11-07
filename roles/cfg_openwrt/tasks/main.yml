@@ -59,6 +59,28 @@
     - always
     - config
 
+# fw4 loads the bridge rules (client isolation) with every start, reload
+# and restart of the firewall, rc.local on the APs only once at boot
+- name: Create the directory for the bridge rules of the firewall
+  file:
+    path: "{{ configs_dir }}/usr/share/nftables.d/ruleset-post"
+    state: directory
+    mode: "755"
+  when: role == 'corerouter'
+  tags:
+    - always
+    - config
+
+- name: Add the bridge rules to the firewall
+  template:
+    src: "{{ role_path }}/templates/common/nftables.conf.j2"
+    dest: "{{ configs_dir }}/usr/share/nftables.d/ruleset-post/30-bbb-bridge.nft"
+    mode: "644"
+  when: role == 'corerouter'
+  tags:
+    - always
+    - config
+
 # overrides rules of /etc/qosify/00-defaults.conf, the files are loaded in
 # alphabetical order and the last rule for a match wins
 - name: Create the qosify directory
