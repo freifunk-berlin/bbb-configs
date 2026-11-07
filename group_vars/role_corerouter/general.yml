@@ -31,4 +31,8 @@ adblock_lean_boot_start_delay_s: 180
 adblock_lean_cron_schedule: "47 13 * * *"
 
 role_corerouter__sysctl__to_merge:
-  net.netfilter.nf_conntrack_max: 131072
+  # The kernel sizes the hash for the RAM, 4096 buckets and as many
+  # connections on 256 MiB. A full table of 65536 connections takes about
+  # 20 MiB, 4 entries per bucket on average.
+  net.netfilter.nf_conntrack_buckets: 32768
+  net.netfilter.nf_conntrack_max: 65536
