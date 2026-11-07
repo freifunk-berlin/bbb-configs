@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Check networks (role: mesh|dhcp|mgmt) for missing prefix or ipv6_subprefix
+# Check networks (role: mesh|dhcp|mgmt) for missing prefix or ipv6_subprefix,
+# networks with direct internet access get no Freifunk IPv6 subprefix
 
 if [ "$#" -gt 0 ]; then
 	location_files=("$@")
@@ -17,15 +18,15 @@ for file in "${location_files[@]}"; do
 		continue
 	fi
 
-	# Query relevant networks (mesh|dhcp|mgmt) once and produce TSV: role,vid,prefix,ipv6_subprefix
-	mapfile -t rows < <(yq -r '.networks[] | select(.role=="mesh" or .role=="dhcp" or .role=="mgmt") | "\(.role)\t\(.vid // "")\t\(.prefix // "null")\t\(.ipv6_subprefix // "null")"' "$file" 2>/dev/null || true)
+	# Query relevant networks (mesh|dhcp|mgmt) once and produce TSV: role,vid,prefix,ipv6_subprefix,direct_internet
+	mapfile -t rows < <(yq -r '.networks[] | select(.role=="mesh" or .role=="dhcp" or .role=="mgmt") | "\(.role)\t\(.vid // "")\t\(.prefix // "null")\t\(.ipv6_subprefix // "null")\t\(.direct_internet // false)"' "$file" 2>/dev/null || true)
 
 	if [ ${#rows[@]} -eq 0 ]; then
 		continue
 	fi
 
 	for row in "${rows[@]}"; do
-		IFS=$'\t' read -r role vid prefix ipv6 <<<"$row"
+		IFS=$'\t' read -r role vid prefix ipv6 direct <<<"$row"
 		# normalize null/empty
 		[ -z "$prefix" ] && prefix="null"
 		[ -z "$ipv6" ] && ipv6="null"
@@ -35,7 +36,7 @@ for file in "${location_files[@]}"; do
 			error_found=1
 		fi
 
-		if [ "$ipv6" = "null" ]; then
+		if [ "$ipv6" = "null" ] && [ "$direct" != "true" ]; then
 			echo "Error: $file (role=$role vid=$vid) missing 'ipv6_subprefix'"
 			error_found=1
 		fi
