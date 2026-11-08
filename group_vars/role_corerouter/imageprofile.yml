@@ -12,8 +12,6 @@ role_corerouter__packages__to_merge:
   - luci-app-olsr
   - luci-app-olsr-services
   - luci-mod-falter
-  - iptables-mod-ipopt
-  - kmod-ipt-ipopt
 
 collectd__packages__to_merge:
   - collectd-mod-dhcpleases

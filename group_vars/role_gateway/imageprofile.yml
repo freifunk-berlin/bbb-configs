@@ -12,8 +12,6 @@ role_uplink_gw__packages__to_merge:
   - luci-app-olsr-services
   - luci-mod-falter
   - falter-berlin-gw
-  - iptables-mod-ipopt
-  - kmod-ipt-ipopt
   - bgpdisco
   - bgpdisco-plugin-nameservice
   - ip-full
