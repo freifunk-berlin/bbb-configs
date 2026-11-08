@@ -1,4 +1,11 @@
 ---
+- name: "Add the collectd SNMP plugin to query the SNMP devices"
+  set_fact:
+    packages: "{{ packages + ['collectd-mod-snmp'] }}"
+  when:
+    - snmp_devices | default([]) | length > 0
+    - packages | select('match', '^collectd-mod-') | list | length > 0
+
 - name: "Add irqbalance if multicore"
   set_fact:
     packages: "{{ packages + ['irqbalance'] }}"
