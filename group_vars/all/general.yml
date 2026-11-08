@@ -40,10 +40,8 @@ image_search_pattern: "*-sysupgrade.*"
 
 all__sysctl__to_merge:
   # when oom kicks in most likely something broke. Panic/Reboot then
+  # (OpenWrt sets kernel.panic=3)
   vm.panic_on_oom: 1
-
-  # resolves an issue where oom acting to early
-  vm.overcommit_memory: 2
 
 ## Routing Section:
 # Run Babel only and leave out OLSR (packages, config and policy routing rules)
