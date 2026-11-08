@@ -45,9 +45,6 @@ all__sysctl__to_merge:
   # resolves an issue where oom acting to early
   vm.overcommit_memory: 2
 
-  # especially on low mem devices this is important
-  vm.min_free_kbytes: 1024
-
 ## Routing Section:
 # Run Babel only and leave out OLSR (packages, config and policy routing rules)
 bird_only: false
