@@ -17,8 +17,6 @@ feed: "src/gz openwrt_falter https://firmware.berlin.freifunk.net/feed/{{ feed_v
 all__packages__to_merge:
   - falter-berlin-statistics
   - ethtool
-  - ip6tables-nft # Its not pulled in by default anymore bc fw4
-  - iptables-nft
   - iperf3
   - iwinfo
   - ip
