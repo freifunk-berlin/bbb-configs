@@ -10,5 +10,10 @@ config statistics 'ping'
 {% for host in prometheus_push_ping_hosts %}
 	list server '{{host}}'
 {% endfor %}
-{% set interface = networks | selectattr('assignments', 'defined') | selectattr('role', 'in', ['dhcp', 'mgmt', 'mesh', 'tunnel'] ) | first %}
+{% if freifunk_vrf %}
+	{# a source address doesn't select the VRF, the device does #}
+	option interface 'vrf_freifunk'
+{% else %}
+  {% set interface = networks | selectattr('assignments', 'defined') | selectattr('role', 'in', ['dhcp', 'mgmt', 'mesh', 'tunnel'] ) | first %}
 	option interface '{{ interface['prefix'] | ansible.utils.ipaddr(interface['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}'
+{% endif %}
