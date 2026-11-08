@@ -82,7 +82,7 @@ Without the `mac_override` these devices will still function, but generate a new
 
 #### Init Script rc.local
 
-For special use cases you can add lines to a script file. This script runs once after installation of the image. One use case is untagging certain vlans on some ports. For this it is important to check the model file at `group_vars/` to find the correct ports.
+For special use cases you can add lines to `/etc/rc.local`. It runs at the end of every boot, not only after the installation, so the lines have to work when they run again, e.g. `uci set` followed by `uci commit` and a reload. One use case is untagging certain vlans on some ports. For this it is important to check the model file at `group_vars/` to find the correct ports.
 
 ```yml
     host__rclocal__to_merge:
