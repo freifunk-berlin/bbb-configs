@@ -18,6 +18,9 @@ Options:
   modes:     optional {relative dest path: octal mode string} overrides.
              Files default to the mode of their source (following symlinks),
              directories default to 755.
+  exclude:   optional list of relative dest paths which are not written, e.g.
+             the configs of packages which are not installed; a file an
+             earlier run left there is removed
 
 Returns files, the sorted list of all managed files, and changed_files, the
 written or chmod'ed paths. All files are also printed with their status, as
@@ -188,6 +191,22 @@ class _TreeRenderer:
         elif old_mode != mode:
             os.chmod(path, mode)
 
+    def remove_file(self, rel):
+        """Remove file rel if an earlier run left it there."""
+        path = os.path.join(self.dest, rel)
+        if not os.path.lexists(path):
+            return
+        self.entries[rel] = {
+            "file": False,
+            "old_mode": None,
+            "mode": None,
+            "lines": "",
+            "what": ["removed"],
+        }
+        self.diffs.append(state_diff(path, {"state": "file"}, {"state": "absent"}))
+        if not self.check_mode:
+            os.remove(path)
+
     def render(self, src, loader, rel):
         """Render template src like the template action does."""
         temp_vars = self.task_vars.copy()
@@ -215,8 +234,8 @@ class _TreeRenderer:
         )
         return (resultant or "").encode("utf-8")
 
-    def walk(self, kind, root, loader):
-        """Render or copy all files below root."""
+    def walk(self, kind, root, loader, exclude):
+        """Render or copy all files below root, except the paths in exclude."""
         for dirpath, dirnames, filenames in os.walk(root):
             dirnames.sort()
             rel_dir = os.path.normpath(os.path.relpath(dirpath, root))
@@ -225,6 +244,10 @@ class _TreeRenderer:
             for name in sorted(filenames):
                 src = os.path.join(dirpath, name)
                 rel = os.path.normpath(os.path.join(rel_dir, name))
+                out = rel[:-3] if kind == "templates" and name.endswith(".j2") else rel
+                if out in exclude:
+                    self.remove_file(out)
+                    continue
                 if kind == "templates" and name.endswith(".j2"):
                     self.put_file(rel[:-3], self.render(src, loader, rel[:-3]), src)
                 elif kind == "files" and not name.endswith(".j2"):
@@ -259,9 +282,11 @@ class _TreeRenderer:
         file_rows = [row for row in rows if row["file"]]
         new = sum(1 for row in file_rows if row["status"] == "new")
         changed = sum(1 for row in file_rows if row["status"] == "changed")
+        removed = sum(1 for row in rows if row["status"] == "removed")
         check = " (check mode)" if self.check_mode else ""
         header = (
-            f"{host}: {len(self.files())} files, {new} new, {changed} changed{check}"
+            f"{host}: {len(self.files())} files, {new} new, {changed} changed"
+            f"{f', {removed} removed' if removed else ''}{check}"
         )
         return "\n".join([header] + self._lines(rows))
 
@@ -270,8 +295,8 @@ class _TreeRenderer:
         """Format the rows as aligned lines, coloured by status."""
         path_width = max((len(row["path"]) for row in rows), default=0)
         mode_width = max((len(row["mode"]) for row in rows), default=0)
-        # pylint: disable-next=no-member
-        colors = {"ok": C.COLOR_OK, "new": C.COLOR_CHANGED, "changed": C.COLOR_CHANGED}
+        ok, changed = C.COLOR_OK, C.COLOR_CHANGED  # pylint: disable=no-member
+        colors = {"ok": ok, "new": changed, "changed": changed, "removed": changed}
         lines = []
         for row in rows:
             line = (
@@ -284,12 +309,16 @@ class _TreeRenderer:
     @staticmethod
     def _row(rel, entry, target):
         old_mode, mode, what = entry["old_mode"], entry["mode"], entry["what"]
-        if old_mode is None or old_mode == mode:
+        if mode is None:
+            mode_text = ""
+        elif old_mode is None or old_mode == mode:
             mode_text = f"{mode:04o}"
         else:
             mode_text = f"{old_mode:04o} -> {mode:04o}"
         if not what:
             status = "ok"
+        elif "removed" in what:
+            status = "removed"
         elif "new" in what:
             status = "new"
         else:
@@ -307,7 +336,9 @@ class ActionModule(ActionBase):  # pylint: disable=too-few-public-methods
     """Render templates and copy static files into dest in a single task."""
 
     TRANSFERS_FILES = False
-    _VALID_ARGS = frozenset(("templates", "files", "dest", "target", "modes"))
+    _VALID_ARGS = frozenset(
+        ("templates", "files", "dest", "target", "modes", "exclude")
+    )
 
     def run(self, tmp=None, task_vars=None):
         """Render the trees and report the changed files."""
@@ -330,8 +361,9 @@ class ActionModule(ActionBase):  # pylint: disable=too-few-public-methods
         try:
             if roots:
                 renderer.make_dir(".")
+            exclude = {os.path.normpath(p) for p in args.get("exclude") or []}
             for kind, root in roots:
-                renderer.walk(kind, root, self._loader)
+                renderer.walk(kind, root, self._loader, exclude)
         except OSError as e:
             raise AnsibleActionFail(f"Failed to render {args['dest']}: {e}") from e
 
