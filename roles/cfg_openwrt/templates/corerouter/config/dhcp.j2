@@ -62,6 +62,12 @@ config domain '{{ host | replace('-', '_') }}_ff'
   {% endfor %}
 {% endfor %}
 
+{# The MTU of the path to the internet for the router advertisements: the
+   PPPoE uplink, or the tunnels when the router has no mesh networks #}
+{% set pppoe_uplink = networks | selectattr('uplink_proto', 'defined') | selectattr('uplink_proto', 'equalto', 'pppoe') | first | default({}) %}
+{% set tunnels = networks | selectattr('role', 'equalto', 'tunnel') | list %}
+{% set tunnel_mtu = ([1280] + tunnels | map(attribute='mtu', default=1280) | list) | min | int %}
+{% set tunnels_only = freifunk_vrf and tunnels | length > 0 and networks | selectattr('role', 'equalto', 'mesh') | list | length == 0 %}
 {% for network in dhcp_networks %}
     {% set name = libnetwork.getUciIfname(network) %}
 
@@ -73,6 +79,11 @@ config dhcp 'dhcp_{{ name }}'
     {% endif %}
 	option ra 'server'
 	option dhcpv6 'disabled'
+    {% if network.get('direct_internet') and pppoe_uplink %}
+	option ra_mtu '{{ pppoe_uplink.get('mtu', 1492) }}'
+    {% elif tunnels_only and not network.get('direct_internet') %}
+	option ra_mtu '{{ tunnel_mtu }}'
+    {% endif %}
     {% if network['role'] == 'dhcp' %}
 	option dhcpv4 'server'
 	option force '1'
