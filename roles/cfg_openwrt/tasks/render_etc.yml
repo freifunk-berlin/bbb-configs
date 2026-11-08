@@ -22,8 +22,24 @@
 # - collapse files/ into templates/ and treat everything as a template
 #
 
+# The configs of these packages are only written if the package is installed
 - name: Render /etc templates and copy /etc static files
   tags: always
+  vars:
+    package_configs:
+      config/adblock-fast: adblock-fast
+      config/airos-dfs-reset: airos-dfs-reset
+      config/dawn: dawn
+      config/naywatch: naywatch
+      config/olsrd: olsrd
+      config/qos: qos-scripts
+      config/qosify: qosify
+      config/tunspace: tunspace
+      config/umdns: umdns
+      config/uneighbord: uneighbord
+    installed_packages: >-
+      {{ packages | reject('match', '^-') | difference(packages | select('match', '^-')
+         | map('regex_replace', '^-', '')) }}
   render_tree:
     templates: "{{ role_path }}/templates/{{ role }}"
     files: "{{ role_path }}/files/{{ role }}"
@@ -32,6 +48,7 @@
     modes:
       dropbear: "700"
       dropbear/authorized_keys: "600"
+    exclude: "{{ package_configs | dict2items | rejectattr('value', 'in', installed_packages) | map(attribute='key') | list }}"
 
 - name: Copy rootfs static files
   tags: always
