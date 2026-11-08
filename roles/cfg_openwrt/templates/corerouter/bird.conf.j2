@@ -27,6 +27,10 @@ protocol direct {
 	ipv4;
 }
 
+{# Without mesh networks the Babel neighbours are only the gateways behind
+   the tunnels. Such a router only announces its own networks and doesn't
+   send the routes of one gateway back or to another one. #}
+{% set babel_leaf = networks | selectattr('role', 'equalto', 'mesh') | list | length == 0 %}
 protocol babel {
 {% if freifunk_vrf %}
 	vrf "vrf_freifunk";
@@ -54,7 +58,9 @@ protocol babel {
 
 		export filter {
 			if net = {{ ipv6_prefix }} from ::/0 then accept;
+{% if not babel_leaf %}
 			if source = RTS_BABEL then accept;
+{% endif %}
 			reject;
 		};
 	};
@@ -76,12 +82,18 @@ protocol babel {
 {% endfor %}
 			accept;
 		};
+{% if babel_leaf %}
+  {% set export4 = 'source != RTS_BABEL && net ~ [ 10.0.0.0/8{21,32} ]' %}
+{% else %}
+  {# readvertise learned routes and advertise local networks from 10/8 #}
+  {% set export4 = 'source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]' %}
+{% endif %}
 {% if direct_internet_networks | length > 0 %}
 		# Networks with direct internet access aren't part of Freifunk
 		export where net !~ [ {{ direct_internet_networks | map(attribute='prefix') | join(', ') }} ]
-			&& (source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]);
+			&& ({{ export4 }});
 {% else %}
-		export where source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]; # Readvertise learned routes and advertise local networks from 10/8
+		export where {{ export4 }};
 {% endif %}
 	};
 
