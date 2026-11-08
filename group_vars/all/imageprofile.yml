@@ -24,7 +24,6 @@ all__packages__to_merge:
   - mtr
   - nftables
   - tcpdump-mini
-  - vnstat
   - -ppp
   - -ppp-mod-pppoe
 

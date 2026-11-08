@@ -109,7 +109,6 @@
     - -opkg
     - -tcpdump
     - tcpdump-mini
-    - -vnstat
 
 - name: "Remove Luci on low mem and low flash"
   set_fact:
