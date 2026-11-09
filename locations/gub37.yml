@@ -15,9 +15,10 @@ ssh_keys:
 hosts:
   - hostname: gub37-core
     role: corerouter
-    model: "avm_fritzbox-7530"
+    model: "glinet_gl-be9300"
     wireless_profile: freifunk_default
     wifi_roaming: true
+    flow_offload: hw
 
   - hostname: gub37-hof-s
     role: ap
