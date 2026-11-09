@@ -1,7 +1,9 @@
 ---
 
+# 6 GHz primaries are 1,5,9,... — 39 is only valid as an 80 MHz *center*, not a primary.
+# 37-80 → primary PSC 37, center 39 (first common 80 MHz block).
 all__channel_assignments_11ax_standard__to_merge:
-  default: "39-80"
+  default: "37-80"
 
 all__channel_assignments_11a_standard__to_merge:
   default: "36-20"
