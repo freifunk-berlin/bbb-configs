@@ -39,11 +39,12 @@ all__wireless_profiles__to_merge:
 
   - name: ap_only
     ifaces:
+      # Open / pre-RSNA is not allowed on 6 GHz — keep it off 11ax_standard.
       - mode: ap
         ssid: berlin.freifunk.net
         encryption: none
         network: dhcp
-        radio: [11ax_standard, 11a_standard, 11g_standard]
+        radio: [11a_standard, 11g_standard]
         ifname_hint: ff
 
       - mode: ap
@@ -56,11 +57,12 @@ all__wireless_profiles__to_merge:
 
   - name: freifunk_default
     ifaces:
+      # Open / pre-RSNA is not allowed on 6 GHz — keep it off 11ax_standard.
       - mode: ap
         ssid: berlin.freifunk.net
         encryption: none
         network: dhcp
-        radio: [11ax_standard, 11a_standard, 11g_standard]
+        radio: [11a_standard, 11g_standard]
         ifname_hint: ff
 
       - mode: ap
