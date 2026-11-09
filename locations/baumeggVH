@@ -1,0 +1,77 @@
+---
+location: baumeggVH
+location_nice: "baumeggVH"
+latitude: 52.464583
+longitude: 13.486083
+altitude: 32
+height: 11
+contact_nickname: "xayax"
+contacts:
+  - "ff@xayax.de"
+
+hosts:
+  - hostname: baumeggVH-core
+    role: corerouter
+    model: "genexis_pulse-ex400"
+    wireless_profile: freifunk_default
+    flow_offload: hw
+
+snmp_devices:
+  - hostname: baumeggVH-pbm5
+    address: 10.248.156.66
+    snmp_profile: airos_6
+
+ipv6_prefix: "2001:bf7:840:8000::/56"
+
+# Router: 10.248.156.64/26
+# --MGMT: 10.248.156.64/28
+# --MESH: 10.248.156.80/28
+# --DHCP: 10.248.156.96/27
+
+networks:
+  - vid: 11
+    role: mesh
+    name: mesh_vaterhaus
+    prefix: 10.248.156.80/32
+    ipv6_subprefix: -11
+    ptp: true
+
+  # MESH - 5 GHz 802.11s - baumeggVH-core
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.248.156.81/32
+    ipv6_subprefix: -20
+    mesh_ap: baumeggVH-core
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s - baumeggVH-core
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.248.156.82/32
+    ipv6_subprefix: -21
+    mesh_ap: baumeggVH-core
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 40
+    role: dhcp
+    untagged: true
+    inbound_filtering: true
+    enforce_client_isolation: true
+    prefix: 10.31.202.32/27
+    ipv6_subprefix: 0
+    assignments:
+      baumeggVH-core: 1
+
+  - vid: 42
+    role: mgmt
+    prefix: 10.248.156.64/28
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      baumeggVH-core: 1 # 10.248.156.65
+      baumeggVH-pbm5: 2 # 10.248.156.66
