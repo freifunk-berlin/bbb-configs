@@ -1,6 +1,6 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 
-{% if 'naywatch' in packages %}
+{% if 'naywatch' in packages and '-naywatch' not in packages %}
 config naywatch general
     option check_interval   '30'
     option watchdog_timeout '120'

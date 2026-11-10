@@ -61,6 +61,7 @@ LoadPlugin conntrack
 {% if 'collectd-mod-dhcpleases' in packages %}
 LoadPlugin dhcpleases
 <Plugin dhcpleases>
-	Path "/tmp/dhcp.leases"
+{# with a VRF the Freifunk leases are in the file of the VRF instance #}
+	Path "{{ '/tmp/dhcp.leases.vrf_freifunk' if freifunk_vrf | default(false) else '/tmp/dhcp.leases' }}"
 </Plugin>
 {% endif %}

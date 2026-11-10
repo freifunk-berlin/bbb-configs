@@ -6,6 +6,54 @@
       tags: always
   tags: always
 
+- name: Find direct internet networks
+  set_fact:
+    direct_internet_networks: >-
+      {{ networks | default([]) | selectattr('direct_internet', 'defined') | selectattr('direct_internet')
+         | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | list
+         if role == 'corerouter' else [] }}
+  tags: always
+
+# An uplink in the root namespace puts its default route into the main
+# table. The Freifunk networks then move into the vrf_freifunk VRF, only
+# the uplink and networks with direct internet access stay in the main table.
+- name: Enable the Freifunk VRF
+  set_fact:
+    freifunk_vrf: >-
+      {{ role == 'corerouter' and networks | default([]) | selectattr('role', 'equalto', 'uplink')
+         | selectattr('uplink_mode', 'defined') | selectattr('uplink_mode', 'equalto', 'root') | count > 0 }}
+  tags: always
+
+- name: Check the direct internet requirements
+  assert:
+    that:
+      - freifunk_vrf
+    fail_msg: "direct_internet needs an uplink with uplink_mode: root"
+  when: direct_internet_networks | length > 0
+  tags: always
+
+- name: Check the Freifunk VRF requirements
+  assert:
+    that:
+      - bird_only | bool
+    fail_msg: "uplink_mode: root needs bird_only: true, OLSR doesn't support the Freifunk VRF"
+  when: freifunk_vrf
+  tags: always
+
+- name: Keep IPv6 addresses of interfaces moved into the Freifunk VRF
+  set_fact:
+    sysctl: "{{ sysctl | combine({'net.ipv6.conf.all.keep_addr_on_down': 1}) }}"
+  when: freifunk_vrf
+  tags: always
+
+- name: Enable the uplink watchdog
+  set_fact:
+    uplink_watchdog_networks: >-
+      {{ networks | default([]) | selectattr('role', 'equalto', 'uplink') | selectattr('uplink_proto', 'defined')
+         | selectattr('uplink_proto', 'equalto', 'pppoe') | list
+         if role == 'corerouter' and uplink_watchdog | default(false) | bool else [] }}
+  tags: always
+
 - name: Include tasks for conditional packages
   include_tasks:
     file: conditional_packages.yml
@@ -120,6 +168,16 @@
     - always
     - config
 
+- name: Include uplink watchdog
+  include_tasks:
+    file: uplink_watchdog.yml
+    apply:
+      tags: always
+  when: uplink_watchdog_networks | length > 0
+  tags:
+    - always
+    - config
+
 - name: Add poemgr config if poemgr target
   template:
     src: "{{ role_path }}/templates/common/config/poemgr.j2"
@@ -127,6 +185,67 @@
     mode: "644"
   when:
     - poemgr_ports is defined
+  tags:
+    - always
+    - config
+
+# not part of templates/corerouter, all other corerouters keep the default
+# configs of the packages
+- name: Add dropbear and bgpdisco config for the Freifunk VRF
+  template:
+    src: "{{ role_path }}/templates/common/config/{{ item }}.j2"
+    dest: "{{ configs_dir }}/etc/config/{{ item }}"
+    mode: "644"
+  loop:
+    - dropbear
+    - bgpdisco
+  when: freifunk_vrf
+  tags:
+    - always
+    - config
+
+# replaces the link to the resolv.conf written by dnsmasq
+- name: Add resolv.conf for the Freifunk VRF
+  template:
+    src: "{{ role_path }}/templates/common/resolv.conf.j2"
+    dest: "{{ configs_dir }}/etc/resolv.conf"
+    mode: "644"
+  when: freifunk_vrf
+  tags:
+    - always
+    - config
+
+- name: Add hotplug directory for the Freifunk VRF
+  file:
+    path: "{{ configs_dir }}/etc/hotplug.d/iface"
+    state: directory
+    mode: "755"
+  when: freifunk_vrf
+  tags:
+    - always
+    - config
+
+# The local table is looked up first by default and delivers packets from
+# the VRF to all addresses of the router, also to the ones of the uplink
+# and the direct internet networks. Look up the VRF table first, as
+# described in Documentation/networking/vrf.rst of the kernel. netifd
+# restores the default rules when it starts, which also removes the l3mdev
+# rule. The kernel only adds that one with the first VRF.
+- name: Add hotplug script to look up the Freifunk VRF before the local table
+  copy:
+    content: |
+      #!/bin/sh
+
+      [ "$ACTION" = ifup ] && for family in -4 -6; do
+          ip "$family" rule | grep -q 'l3mdev' ||
+              ip "$family" rule add pref 1000 l3mdev
+          ip "$family" rule | grep -q '^32765:.*lookup local' ||
+              ip "$family" rule add pref 32765 lookup local || continue
+          while ip "$family" rule del pref 0 lookup local 2>/dev/null; do :; done
+      done
+    dest: "{{ configs_dir }}/etc/hotplug.d/iface/15-vrf-local-rule"
+    mode: "644"
+  when: freifunk_vrf
   tags:
     - always
     - config
@@ -183,6 +302,18 @@
     dest: "{{ configs_dir }}/etc/hotplug.d/mount/10-log"
     mode: "644"
   when: log_usb | default(false) | bool
+  tags:
+    - always
+    - config
+
+# Writes the state of the system, DSL, shaper and wifi to the log every
+# 10 minutes, to judge a setup from its log later on.
+- name: Include status snapshots
+  include_tasks:
+    file: log_status.yml
+    apply:
+      tags: always
+  when: log_status | default(false) | bool
   tags:
     - always
     - config

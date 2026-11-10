@@ -1,0 +1,27 @@
+---
+- name: Add uplink watchdog config
+  template:
+    src: "{{ role_path }}/templates/common/config/watchcat.j2"
+    dest: "{{ configs_dir }}/etc/config/watchcat"
+    mode: "644"
+
+- name: Add uplink watchdog scripts to restart the uplink interfaces
+  copy:
+    content: |
+      #!/bin/sh
+      logger -t uplink-watchdog "restarting the interface {{ item }}"
+      ifup {{ item }}
+    dest: "{{ configs_dir }}/etc/uplink-watchdog-ifup-{{ item }}.sh"
+    mode: "755"
+  loop: "{{ uplink_watchdog_networks | map(attribute='name', default='uplink') | list }}"
+  when: uplink_watchdog_restart_interface | string != '0'
+
+- name: Add uplink watchdog script to restart the DSL modem
+  copy:
+    content: |
+      #!/bin/sh
+      logger -t uplink-watchdog "restarting the DSL modem"
+      /etc/init.d/dsl_control restart
+    dest: "{{ configs_dir }}/etc/uplink-watchdog-dsl.sh"
+    mode: "755"
+  when: dsl is defined
