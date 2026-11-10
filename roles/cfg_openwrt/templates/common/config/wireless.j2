@@ -1,4 +1,5 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
+{% import 'libraries/network.j2' as libnetwork with context %}
 
 {% set profile = wireless_profiles | selectattr('name', 'equalto', wireless_profile) | list | first %}
 # Wifi Config is derived from wireless profile: '{{ wireless_profile }}'
@@ -150,6 +151,10 @@ config wifi-iface '{{ wd_id }}_if{{ loop.index0 }}'
       {% endif %}
       {% if 'mcast_rate' in iface %}
 	option mcast_rate '{{ iface['mcast_rate'] }}'
+      {% endif %}
+      {# Deterministic MAC, so mesh APs of the location can filter reflections of it, see nftables.conf.j2 #}
+      {% if role != 'ap' %}
+	option macaddr '{{ libnetwork.generateDeterministicMAC(inventory_hostname ~ "-" ~ mesh_net['name']) }}'
       {% endif %}
 	option network '{{ (mesh_net['name'] if mesh_net['name'] | length <= 15) | mandatory('The generated inteface name exceeds the 15 characters limit of the linux kernel. Try to shorten the name to resolve this.') }}'
     {% endif %}
