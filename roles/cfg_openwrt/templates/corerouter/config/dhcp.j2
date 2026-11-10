@@ -41,6 +41,7 @@ config domain '{{ host | replace('-', '_') }}_ff'
 
 {% for network in networks | rejectattr('role', 'in', ['uplink', 'wireless_uplink', 'mesh', 'tunnel', 'ext']) %}
     {% set name = libnetwork.getUciIfname(network) %}
+    {% set dhcp_start = network['dhcp_start'] | default(2) | int %}
 
 config dhcp 'dhcp_{{ name }}'
 	option ignore '0'
@@ -51,9 +52,11 @@ config dhcp 'dhcp_{{ name }}'
 	option dhcpv4 'server'
 	option force '1'
 	option leasetime '5m'
-	option start '2'
-	option limit '{{ network['prefix'] | ansible.utils.ipaddr('size') -3 }}'
+	option start '{{ dhcp_start }}'
+	option limit '{{ network['prefix'] | ansible.utils.ipaddr('size') - dhcp_start - 1 }}'
+      {% if not network.get('nat') %}
         list dhcp_option '121,0.0.0.0/0,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.31.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.36.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.230.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.248.0.0/14,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.30.96.0/19,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}'
+      {% endif %}
     {% else %}
 	option dhcpv4 'disabled'
     {% endif %}
@@ -76,11 +79,25 @@ config dhcp 'dhcp_{{ name }}'
 
 {% for network in networks | selectattr('role','equalto','dhcp') %}
     {% set name = libnetwork.getUciIfname(network) %}
+  {% if network.get('nat') %}
+    {% for assignment, ip_num in network['assignments'].items() %}
+config domain '{{ name }}_{{ assignment.replace("-", "_") }}_lan'
+	option name '{{ assignment }}.lan'
+	option ip '{{ network['prefix'] | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }}'
+      {# Only the core-router has a fixed IPv6 address; clients use SLAAC #}
+      {% if assignment == inventory_hostname and ipv6_prefix is defined and 'ipv6_subprefix' in network %}
+config domain '{{ name }}_{{ assignment.replace("-", "_") }}_lan6'
+	option name '{{ assignment }}.lan'
+	option ip '{{ ipv6_prefix | ansible.utils.ipsubnet('64', network['ipv6_subprefix']) | ansible.utils.ipaddr(ip_num) | ansible.utils.ipaddr('address') }}'
+      {% endif %}
+    {% endfor %}
+  {% else %}
     {% for assignment in network['assignments'] %}
 config host '{{ name }}_{{ assignment.replace("-", "_") }}'
 	option name '{{ assignment }}'
 	option ip '{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][assignment]) | ansible.utils.ipaddr('address') }}'
     {% endfor %}
+  {% endif %}
 {% endfor %}
 
 config odhcpd 'odhcpd'
