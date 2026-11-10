@@ -57,7 +57,7 @@
 {# Do we need to configure a port or is this network only connected local (e.g. Mesh Endpoint on the core router)
  # Warning: returns a bool. Use |from_json filter when calling #}
 {% macro isPortNeeded(network) %}
-{{- (not (role == 'corerouter' and network.get('mesh_ap') == inventory_hostname)) | to_yaml -}}
+{{- (not (role == 'corerouter' and network.get('mesh_ap') == inventory_hostname)) | to_json -}}
 {% endmacro %}
 
 {# Retrieve the networks which shall be bridged to wifi
