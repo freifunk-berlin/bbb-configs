@@ -162,6 +162,8 @@ network:
   dhcp_no_ping: bool(required=False)
   enforce_client_isolation: bool(required=False)
   inbound_filtering: bool(required=False)
+  nat: bool(required=False)
+  dhcp_start: int(min=2, required=False)
 
   # mesh
   mesh_ap: str(required=False)

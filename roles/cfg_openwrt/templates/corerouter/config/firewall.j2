@@ -1,6 +1,8 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% set l3_networks = networks | selectattr('assignments', 'defined') | selectattr('assignments', 'contains', inventory_hostname) | default([]) %}
 {% set l3_mesh_networks = networks | selectattr('assignments', 'undefined') | selectattr('role', 'equalto', 'mesh') | default([]) %}
+{# masq_src must use original network objects — json_query below strips to name/inbound_filtering only #}
+{% set nat_prefixes = networks | selectattr('prefix', 'defined') | selectattr('nat', 'defined') | selectattr('nat') | map(attribute='prefix') | list %}
 {% set query = "[].{name: name||role,inbound_filtering: inbound_filtering}" %}
 {% set l3_networks = (l3_networks + l3_mesh_networks) | json_query(query) %}
 {% set zone_freifunk_networks = l3_networks | rejectattr('inbound_filtering') | map(attribute='name') %}
@@ -25,6 +27,12 @@ config zone 'zone_freifunk'
 	{% endfor %}
 	list device 'wg_+'
 	list device 'ts_+'
+{% if nat_prefixes | length > 0 %}
+	option masq '1'
+  {% for prefix in nat_prefixes %}
+	list masq_src '{{ prefix }}'
+  {% endfor %}
+{% endif %}
 
 {% for i in l3_networks | selectattr('inbound_filtering') %}
 config zone 'zone_{{ i['name'] }}'
