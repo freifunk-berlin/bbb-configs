@@ -76,9 +76,10 @@ table bridge client_isolation {
   Reflection filter
 
   We sometimes receive our own packets back. It happens when a location has
-  two or more mesh APs which are badly isolated, use overlapping frequencies,
-  or are aligned to be in each others beam. Can't be prevented 100%, happens.
-  Any suitable obstacle in a single antenna's beam can cause reflections too.
+  two or more mesh endpoints (mesh APs or the corerouter's own mesh wifi) on
+  the same channel which can hear each other, which is the common case since
+  everyone meshes on the same channels. Any suitable obstacle in a single
+  antenna's beam can cause reflections too.
 
   Reflections were observed in 2021 with old 2 GHz Nanostations at Emmauskirche:
   https://github.com/freifunk-berlin/bbb-configs/issues/119
@@ -87,46 +88,29 @@ table bridge client_isolation {
   the respective mesh AP receives it on its bridge and transmits it out over
   the wifi mesh interface. Another mesh AP at the same location receives
   the packet on its wifi mesh interface, and through its bridge puts it
-  on mesh VLAN 456, where the same corerouter receives it.
+  on mesh VLAN 456, where the same corerouter receives it. The same happens
+  between a mesh AP and the corerouter's own mesh wifi interface.
 
-  In our setup all VLAN interfaces on the corerouter share the same MAC address.
-  That means the corerouter receives a packet with its one of its own MAC
-  addresses as as the source address. In more traditional network environments,
-  this would be cause for concern, so Linux complains with a log message:
+  The corerouter then sees itself as a babel neighbour on the receiving
+  interface, and bgpdisco keeps trying to set up a BGP session with itself
+  ("Bad BGP identifier"), reconfiguring bird every time. Switches between
+  mesh AP and corerouter might also get confused about the same MAC address
+  seemingly living on multiple ports.
 
-      switch0: received packet on lan4 with own address as source address
+  So we drop packets coming in from a wifi mesh interface whose source MAC is
+  one of the location's routers' mesh MACs. Routers are always wired to their
+  mesh APs, so such a packet is a reflection. These MACs are deterministic
+  (see getLocationMeshRouterMACs()), so every host can compute the full list:
+  - mesh APs drop them on their mesh bridges, before they reach the location.
+  - the corerouter drops them on its own mesh wifi interfaces, and on the mesh
+    VLANs as a fallback for mesh APs that don't filter (yet).
 
-  It's fine in our meshy, non-traditional setup, but two things need consideration:
-
-  1) On the corerouter, reflected packets are purely an issue of asthetics:
-  it can become quite noisy in logread and drown out more important messages.
-
-  2) Infrastructure devices (= switches) between mesh AP and corerouter might
-  get confused about the same MAC address seamingly living on multiple ports.
-  All devices should handle this fine because it's on separate VLANs,
-  but you never know. We've seen all kinds of weird shit on cheap switches.
-
-  So we want to avoid letting these packets back into the location.
-
-  Our filter has nftables learn source MAC addresses from outgoing traffic
-  and reject any incoming packets with a matching source MAC address.
-
-  We do this only on the mesh AP though, because this is where we can prevent
-  the reflected packet from reaching possibly wonky cheap switches.
-  The filter as described works nicely on the mesh AP bridge interface covering
-  the mesh VLAN and the mesh wifi interface.
-
-  On the corerouter however, the filter would only prevent logread noise,
-  and it would need to be more complex as well. Mesh wifi interfaces directly
-  on the corerouter don't require a bridge over the mesh wifi interface since
-  a dedicated VLAN for that mesh direction isn't required. But without
-  a bridge, we somehow ended up blocking not just reflected packets, but also
-  intermittently blocked our mesh neighbours. All kinds of MAC addresses
-  ended up in the filter - not sure why.
-
-  Summary: we filter reflected packets on mesh APs, but where a corerouter
-  meshes on its own, using its own integrated wifi, we tolerate the log noise.
+  This used to be done by learning the source MACs of outgoing packets on each
+  mesh AP. That only worked as long as all VLAN interfaces of the corerouter
+  shared one MAC address. Learning on the corerouter also ended up blocking
+  mesh neighbours, so we don't do that.
 #}
+{% set location_router_macs = libnetwork.getLocationMeshRouterMACs() | from_json %}
 {% if role == 'ap' %}
   {% for network in networks | selectattr('role', 'equalto', 'mesh') | selectattr('name','in', network_ifname_map|map(attribute='network')) %}
     {% set wifi_if = network_ifname_map | selectattr('network', 'equalto', network['name']) | map(attribute='ifname') | first %}
@@ -136,6 +120,12 @@ table bridge client_isolation {
 table bridge prevent_mesh_reflection
 flush table bridge prevent_mesh_reflection
 table bridge prevent_mesh_reflection {
+      {% if location_router_macs | length > 0 %}
+	set location_routers {
+		type ether_addr
+		elements = { {{ location_router_macs | join(', ') }} }
+	}
+      {% endif %}
     {% endif %}
 	set {{ set_localrouter }} {
 		type ether_addr
@@ -148,11 +138,37 @@ table bridge prevent_mesh_reflection {
 	}
 	chain PREROUTING_{{ network['name'] }} {
 		type filter hook prerouting priority 0; policy accept;
+    {% if location_router_macs | length > 0 %}
+		iifname {{ wifi_if }} ether saddr @location_routers counter drop
+    {% endif %}
 		iifname {{ wifi_if }} ether saddr @{{ set_localrouter }} counter drop
-
 	}
     {% if loop.last %}
 }
     {% endif %}
   {% endfor %}
+{% elif location_router_macs | length > 0 %}
+  {% set mesh_ifnames = [] %}
+  {% for network in networks | selectattr('role', 'equalto', 'mesh') | selectattr('mesh_ap', 'defined') %}
+    {% if network['mesh_ap'] == inventory_hostname %}
+      {% set _ = mesh_ifnames.extend(network_ifname_map | selectattr('network', 'equalto', network['name']) | map(attribute='ifname')) %}
+    {% else %}
+      {% set _ = mesh_ifnames.append(libnetwork.getPortIfname(network)) %}
+    {% endif %}
+  {% endfor %}
+  {% if mesh_ifnames | length > 0 %}
+
+table inet prevent_mesh_reflection
+flush table inet prevent_mesh_reflection
+table inet prevent_mesh_reflection {
+	set location_routers {
+		type ether_addr
+		elements = { {{ location_router_macs | join(', ') }} }
+	}
+	chain PREROUTING {
+		type filter hook prerouting priority raw; policy accept;
+		iifname { {{ mesh_ifnames | map('to_json') | join(', ') }} } ether saddr @location_routers counter drop
+	}
+}
+  {% endif %}
 {% endif %}

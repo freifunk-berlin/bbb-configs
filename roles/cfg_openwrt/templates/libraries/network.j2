@@ -81,3 +81,18 @@
     ] -%}
 {{- mac|join(':') -}}
 {%- endmacro %}
+
+{# Retrieve the MAC addresses of all routers of this location on networks towards wireless mesh, which are the
+ # VLAN interfaces to mesh APs and their own mesh wifi interfaces. Both use generateDeterministicMAC() seeded with
+ # the router's hostname and the network name, so every host of the location can compute them.
+ # Warning: returns a list. Use |from_json filter when calling #}
+{% macro getLocationMeshRouterMACs() %}
+    {% set macs = [] %}
+    {# keyed_groups replace invalid characters of group names (e.g. '-') with '_' #}
+    {% for host in groups['location_' ~ (location | regex_replace('\\W', '_'))] | default([]) if hostvars[host]['role'] != 'ap' %}
+        {% for network in hostvars[host]['networks'] | selectattr('role', 'equalto', 'mesh') | selectattr('mesh_ap', 'defined') %}
+            {% set _ = macs.append(generateDeterministicMAC(host ~ '-' ~ network['name'])) %}
+        {% endfor %}
+    {% endfor %}
+{{- macs | unique | list | to_json -}}
+{% endmacro %}
