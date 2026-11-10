@@ -126,20 +126,42 @@ networks:
 
   - vid: 22
     role: mesh
-    name: mesh_hof_s
+    name: mesh_hof_s2g
     prefix: 10.31.157.112/32
     ipv6_subprefix: -22
     mesh_ap: gub37-hof-s
-    mesh_radio: 11a_standard
+    mesh_radio: 11g_standard
     mesh_iface: mesh
     mesh_metric: 4096
     mesh_metric_lqm: ["default 0.3"]
 
   - vid: 23
     role: mesh
-    name: mesh_hof_w
-    prefix: 10.31.157.103/32
+    name: mesh_hof_s5g
+    prefix: 10.31.157.113/32
     ipv6_subprefix: -23
+    mesh_ap: gub37-hof-s
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+    mesh_metric: 4096
+    mesh_metric_lqm: ["default 0.3"]
+
+  - vid: 24
+    role: mesh
+    name: mesh_hof_w2g
+    prefix: 10.31.157.114/32
+    ipv6_subprefix: -24
+    mesh_ap: gub37-hof-w
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+    mesh_metric: 4096
+    mesh_metric_lqm: ["default 0.3"]
+
+  - vid: 25
+    role: mesh
+    name: mesh_hof_w5g
+    prefix: 10.31.157.115/32
+    ipv6_subprefix: -25
     mesh_ap: gub37-hof-w
     mesh_radio: 11a_standard
     mesh_iface: mesh
