@@ -12,7 +12,7 @@ hosts:
     role: corerouter
     model: "ubnt_usw-flex"
     # We use Ubiquiti 802.11af-to-passive converters on all ports.
-    # They neogotiate more power than they actually draw,
+    # They negotiate more power than they actually draw,
     # so we need to increase poemgr's power budget.
     # Without this increase, devices will be not powered up randomly.
     poemgr_power_budget: 24
@@ -20,11 +20,10 @@ hosts:
     # includes files into root files system later on.
     host__rclocal__to_merge:
       - |
-        # untag payload traffic for AF60 to Teufelsberg
-        uci set network.vlan_10.ports='lan1:t lan2:u lan3:t lan4:t lan5:t'
-        # untag DHCP on ports 1 and 5 for convenient maintenance'
-        uci set network.vlan_40.ports='lan1:u lan2:t lan3:t lan4:t lan5:u'
+        # untag DHCP port 5 for convenient maintenance'
+        uci set network.vlan_40.ports='lan1:t lan2:t lan3:t lan4:t lan5:u'
         uci commit network; reload_config
+
 
 snmp_devices:
   - hostname: ilr-teufb
@@ -34,6 +33,14 @@ snmp_devices:
   - hostname: ilr-perleb
     address: 10.31.214.27
     snmp_profile: airos_8
+
+  - hostname: ilr-switch
+    address: 10.31.214.28
+    snmp_profile: swos
+
+  - hostname: ilr-hft
+    address: 10.31.214.29
+    snmp_profile: airos_6
 
 # ROUTER: 10.31.214.0/27
 # --DHCP: 10.31.214.0/28
@@ -50,7 +57,6 @@ networks:
     ptp: true
     prefix: 10.31.214.16/32
     ipv6_subprefix: -10
-    # WARNING: Custom port config {1t,2u,3u,4u,5t}
     mesh_metric: 128
 
   - vid: 11
@@ -60,6 +66,13 @@ networks:
     prefix: 10.31.214.17/32
     ipv6_subprefix: -11
 
+  - vid: 12
+    role: mesh
+    name: mesh_hft
+    ptp: true
+    prefix: 10.31.214.18/32
+    ipv6_subprefix: -12
+
   - vid: 40
     role: dhcp
     prefix: 10.31.214.0/28
@@ -67,7 +80,7 @@ networks:
     assignments:
       ilr-core: 1
       ilr-hyp: 5
-    # WARNING: Custom port config {1u,2t,3t,4t,5u}
+    # WARNING: Custom port config {1t,2t,3t,4t,5u}
 
   - vid: 435
     role: mgmt
@@ -80,6 +93,8 @@ networks:
       ilr-core: 1
       ilr-teufb: 2
       ilr-perleb: 3
+      ilr-switch: 4
+      ilr-hft: 5
 
 location__ssh_keys__to_merge:
   - comment: kian FFAG
