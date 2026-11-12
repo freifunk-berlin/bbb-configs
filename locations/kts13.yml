@@ -35,7 +35,7 @@ hosts:
 
   - hostname: kts13-ap-kueche
     role: ap
-    model: siemens_ws-ap3610
+    model: tplink_tl-wdr4300-v1
     wireless_profile: kts13
 
   - hostname: kts13-ap-wald
@@ -43,9 +43,39 @@ hosts:
     model: cudy_ap3000outdoor-v1
     wireless_profile: kts13
 
-  - hostname: kts13-ap-nomi
+  - hostname: kts13-ap-hornchengarten
     role: ap
     model: rpi_3-b-plus
+    wireless_profile: kts13-rpi
+
+  - hostname: kts13-ap-buehne
+    role: ap
+    model: rpi_3-b-plus
+    wireless_profile: kts13-rpi
+
+  - hostname: kts13-ap-brombeeren
+    role: ap
+    model: rpi_4
+    wireless_profile: kts13-rpi
+
+  - hostname: kts13-ap-wintergarten
+    role: ap
+    model: rpi_4
+    wireless_profile: kts13-rpi
+
+  - hostname: kts13-ap-lkv
+    role: ap
+    model: rpi_3-b-plus
+    wireless_profile: kts13-rpi
+
+  - hostname: kts13-ap-placeholder-1
+    role: ap
+    model: avm_fritzbox-7362sl
+    wireless_profile: kts13-rpi
+
+  - hostname: kts13-ap-placeholder-2
+    role: ap
+    model: rpi_3-b
     wireless_profile: kts13-rpi
 
 ipv6_prefix: 2001:bf7:840:c00::/56
@@ -76,7 +106,8 @@ networks:
 
   - vid: 42
     role: mgmt
-    prefix: 10.31.166.208/28
+    prefix: 10.248.155.0/27
+    # old prefix: 10.31.166.208/28
     gateway: 1
     dns: 1
     ipv6_subprefix: 1
@@ -84,15 +115,21 @@ networks:
       kts13-core: 1
       kts13-sw-schimmelhaus: 2
       kts13-sw-mitte: 3
-      kts13-sw-wald1: 4
-      kts13-sw-wald2: 5
+      kts13-sw-wald: 4
+      kts13-sw-buehne: 5
       kts13-sw-gaesteplatte: 6
       kts13-ap-schornstein: 7
       kts13-ap-mitte: 8
-      kts13-ap-gaesteplatte: 8
-      kts13-ap-kueche: 9
-      kts13-ap-wald: 10
-      kts13-ap-nomi: 11
+      kts13-ap-gaesteplatte: 9
+      kts13-ap-kueche: 10
+      kts13-ap-wald: 11
+      kts13-ap-hornchengarten: 12
+      kts13-ap-buehne: 13
+      kts13-ap-brombeeren: 14
+      kts13-ap-wintergarten: 15
+      kts13-ap-lkv: 16
+      kts13-ap-placeholder-1: 17
+      kts13-ap-placeholder-2: 18
 
   - vid: 50
     role: uplink
@@ -110,15 +147,21 @@ location__channel_assignments_11a_standard__to_merge:
   kts13-ap-gaesteplatte: 44-20
   kts13-ap-kueche: 48-20
   kts13-ap-wald: 36-20
-  kts13-ap-nomi: 44-20
 
 location__channel_assignments_11g_standard__to_merge:
   kts13-core: 1-20
   kts13-ap-schornstein: 6-20
-  kts13-ap-mitte: 1-20
+  kts13-ap-mitte: 6-20
   kts13-ap-gaesteplatte: 11-20
-  kts13-ap-kueche: 6-20
-  kts13-ap-wald: 11-20
+  kts13-ap-kueche: 11-20
+  kts13-ap-wald: 1-20
+  kts13-ap-buehne: 11-20
+  kts13-ap-brombeeren: 1-20
+  kts13-ap-wintergarten: 11-20
+  kts13-ap-hornchengarten: 11-20
+  kts13-ap-lkv: 6-20
+  kts13-ap-placeholder-1: 1-20
+  kts13-ap-placeholder-2: 1-20
 
 location__wireless_profiles__to_merge:
   - name: kts13
@@ -155,5 +198,5 @@ location__wireless_profiles__to_merge:
         encryption: psk2
         key: "file:/root/wifi_pass"
         network: prdhcp
-        radio: [11a_standard]
+        radio: [11g_standard]
         ifname_hint: prdhcp
