@@ -88,6 +88,6 @@ networks:
 
 location__channel_assignments_11a_standard__to_merge:
   # Channel - Bandwidth - TX Power
-  wilde-core: 165-40
+  wilde-core: 165-20
   wilde-nf-n: 36-20
   wilde-nf-s: 40-20
