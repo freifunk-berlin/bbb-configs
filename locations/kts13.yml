@@ -30,7 +30,8 @@ hosts:
 
   - hostname: kts13-ap-gaesteplatte
     role: ap
-    model: siemens_ws-ap3610
+    model: avm_fritzbox-7412
+    # model: siemens_ws-ap3610
     wireless_profile: kts13
 
   - hostname: kts13-ap-kueche
