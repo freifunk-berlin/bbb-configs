@@ -97,5 +97,5 @@ networks:
 
 location__channel_assignments_11a_standard__to_merge:
   # Channel - Bandwidth - TX Power
-  wildbreak-nf-o: 165-40
+  wildbreak-nf-o: 165-20
   wildbreak-nf-s: 40-20
