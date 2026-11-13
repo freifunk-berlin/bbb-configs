@@ -68,7 +68,19 @@ protocol babel {
 {% endfor %}
 			accept;
 		};
+{% set nat_networks = networks | selectattr('nat', 'defined') | selectattr('nat') | selectattr('prefix', 'defined') | list %}
+{% if nat_networks | length > 0 %}
+		export filter {
+			# Do not advertise IPv4 NAT LAN prefixes into Babel
+  {% for nw in nat_networks %}
+			if net ~ [ {{ nw['prefix'] }} ] then reject;
+  {% endfor %}
+			if source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ] then accept; # Readvertise learned routes and advertise local networks from 10/8
+			reject;
+		};
+{% else %}
 		export where source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]; # Readvertise learned routes and advertise local networks from 10/8
+{% endif %}
 	};
 
 	# Mesh interfaces

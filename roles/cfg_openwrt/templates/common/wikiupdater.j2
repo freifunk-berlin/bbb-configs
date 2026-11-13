@@ -43,7 +43,7 @@
 |Mesh Adressen = {{ network['prefix']}}
     {% elif network['role'] == 'mgmt'%}
 |Managementnetwork = {{ network['prefix'] }}
-    {% elif network['role'] == 'dhcp'%}
+    {% elif network['role'] == 'dhcp' and not network.get('nat') %}
     {# Doing it this way to account for different dhcp-networks like private ones (brdhcp) #}
 |{{network['name']|default('dhcp')}}network =  {{network['prefix']}}
     {% endif %}

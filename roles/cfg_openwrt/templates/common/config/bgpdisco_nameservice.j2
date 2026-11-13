@@ -19,7 +19,7 @@ config static-entry
 {% else %}
 
 {# Core-Router #}
-{% for network in networks | selectattr('assignments', 'defined') | selectattr('assignments', 'mapping') %}
+{% for network in networks | selectattr('assignments', 'defined') | selectattr('assignments', 'mapping') if not network.get('nat') %}
 {% for host, ip_num in network['assignments'].items() if host != inventory_hostname %}
 config static-entry
 	option host '{{ host }}'
