@@ -678,7 +678,9 @@ If you don't want to use the default OpenWrt version to build your location's fi
 - `YY` Minor
 - `ZZ` Bug fix / `snapshot`
 
-Version files for specific OpenWrt versions have to follow this format: **version_XX_YY_ZZ.yml**. They also need to use the same feed version and url as their snapshot counterpart
+Version files for specific OpenWrt versions have to follow this format: **version_XX_YY_ZZ.yml**. They also need to use the same feed version and url as their snapshot counterpart.
+
+For stable branches there is also **version_XX_YY_latest.yml**, containing the concrete version, e.g. `openwrt_version: 25.12.6`. Models use the channel (`openwrt_version: 25.12-latest`) and the version file overrides it, so a point release bump only changes this file. Location overrides must use a concrete version, not a channel.
 
 example filename: version_25.12.4.yml
 ```yml
