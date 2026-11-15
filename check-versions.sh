@@ -46,7 +46,31 @@ done
 get_model_version() {
 	local model="$1"
 	local model_file="group_vars/model_${model//-/_}.yml"
-	yq -r '.openwrt_version' "$model_file" 2>/dev/null || echo ""
+	local version version_slug version_file resolved
+
+	version=$(yq -r '.openwrt_version // ""' "$model_file" 2>/dev/null || echo "")
+	if [ -z "$version" ]; then
+		version=$(yq -r '.openwrt_version // ""' group_vars/all/imageprofile.yml 2>/dev/null || echo "")
+	fi
+	[ -n "$version" ] || {
+		echo ""
+		return
+	}
+
+	version_slug="${version,,}"
+	version_slug=${version_slug//./_}
+	version_slug=${version_slug//-/_}
+	version_file="group_vars/version_${version_slug}.yml"
+
+	if [ -f "$version_file" ]; then
+		resolved=$(yq -r '.openwrt_version // ""' "$version_file" 2>/dev/null || echo "")
+		if [ -n "$resolved" ] && [ "$resolved" != "null" ]; then
+			echo "$resolved"
+			return
+		fi
+	fi
+
+	echo "$version"
 }
 
 check_host() {
