@@ -18,6 +18,16 @@ hosts:
     host__packages__to_merge:
       - qemu-ga
 
+  - hostname: l105-poe
+    model: mikrotik_css610_8p_2s+in
+    role: switch
+
+  - hostname: l105-ost-60g
+    model: ubnt_wave_ap_micro
+
+  - hostname: l105-nord-60g
+    model: mikrotik_cube_60pro_ac
+    
 snmp_devices:
   - hostname: l105-poe
     address: 10.31.127.130

@@ -16,17 +16,9 @@ hosts:
     model: "ubnt_unifiac-mesh"
     wireless_profile: funkigel
 
-snmp_devices:
   - hostname: funkigel-frischauf
-    address: 10.248.9.194
-    snmp_profile: airos_8
-
-airos_dfs_reset:
-  - name: "funkigel-frischauf"
-    target: "10.248.9.194"
-    username: "ubnt"
-    password: "file:/root/pwd.txt"
-    daytime_limit: "2-7"
+    model: "ubnt_nanobeam_5ac"
+    role: client #TODO
 
 ipv6_prefix: "2001:bf7:780:800::/56"
 
