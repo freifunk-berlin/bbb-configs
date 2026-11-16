@@ -5,6 +5,7 @@
   gather_facts: false
   any_errors_fatal: true
   roles:
-    - { role: cfg_openwrt }
+    - role: cfg_openwrt
+      when: os == "openwrt"
   vars:
     git_revision: "{{ lookup('pipe', 'git rev-parse --short HEAD') }}"

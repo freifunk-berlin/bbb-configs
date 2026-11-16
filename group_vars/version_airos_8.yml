@@ -1,0 +1,7 @@
+---
+os: airos_8
+snmp_profile: airos_8
+# Airos DFS Reset
+username: "root"
+password: "file:/root/pwd"
+daytime_limit: "2-7"

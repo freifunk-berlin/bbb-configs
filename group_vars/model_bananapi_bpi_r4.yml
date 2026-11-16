@@ -2,6 +2,7 @@
 target: mediatek/filogic
 brand_nice: Sinovoip
 model_nice: Banana Pi BPI-R4
+openwrt_version: 25.12.6
 
 model__rclocal__to_merge:
   - echo "powersave" > /sys/module/pcie_aspm/parameters/policy

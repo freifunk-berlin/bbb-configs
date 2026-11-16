@@ -1,7 +1,4 @@
 ---
-# default OpenWrt version to build from unless overridden
-openwrt_version: 25.12.6
-
 openwrt_mirror: https://downloads.openwrt.org
 # openwrt_mirror: https://mirror.berlin.freifunk.net/downloads.openwrt.org
 openwrt_base: "{{ 'snapshots' if openwrt_version == 'snapshot' else 'releases/' ~ openwrt_version }}"

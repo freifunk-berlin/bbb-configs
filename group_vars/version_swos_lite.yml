@@ -1,0 +1,3 @@
+---
+os: swos_lite
+snmp_profile: swos_lite

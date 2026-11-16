@@ -1,6 +1,7 @@
 ---
 feed_version: 1.5.0-snapshot
 uses_opkg: true
+os: openwrt
 
 owm__packages__to_merge:
   - falter-berlin-owmsh
