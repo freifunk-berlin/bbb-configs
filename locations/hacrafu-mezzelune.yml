@@ -20,6 +20,7 @@ hosts:
         uci set network.vlan_42.ports='lan1:t lan2:t lan3:t'
         uci set network.vlan_50.ports='wan:u'
         uci commit network; reload_config
+    openwrt_version: 25.12-SNAPSHOT
 
 ipv6_prefix: "2001:bf7:850:6500::/56"
 
@@ -36,8 +37,11 @@ networks:
     prefix: 10.248.156.128/25
     ipv6_subprefix: 0
     assignments:
-      hacrafu-mezzelune: 1
-      fw: 2
+      hacrafu-mezzelune: 1 # 129
+      fw: 2 # 130
+      hw: 3 # 131
+      sw: 4 # 132
+
 
   # MGMT
   - vid: 42
