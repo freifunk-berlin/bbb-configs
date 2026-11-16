@@ -1,7 +1,7 @@
 ---
 
 location: hacrafu-mezzelune
-location_nice: Brandenburg
+location_nice: M
 latitude: 52.483195120196 # mining stage area
 longitude: 13.816632628437 # mining stage area
 contact_name: "Hacken Craften Funken e.V."
@@ -13,7 +13,7 @@ hosts:
   - hostname: hacrafu-mezzelune
     role: corerouter
     model: "zyxel_wsm20"
-    wireless_profile: freifunk_hacrafu
+    wireless_profile: disable
     host__rclocal__to_merge:
       - |
         uci set network.vlan_40.ports='lan1:u lan2:u lan3:u'
@@ -23,41 +23,21 @@ hosts:
 
 ipv6_prefix: "2001:bf7:850:6500::/56"
 
-# DHCP      10.31.202.192/27
-# MESH      10.31.27.164/31
+# DHCP      10.248.156.128/25
 # MGMT      10.31.24.63/32
 # TUNNEL    10.248.84.160/31
 
 networks:
-  # MESH - 5 GHz 802.11s
-  - vid: 20
-    role: mesh
-    name: mesh_5g
-    prefix: 10.31.27.164/32
-    ipv6_subprefix: -20
-    mesh_ap: hacrafu-mezzelune
-    mesh_radio: 11a_standard
-    mesh_iface: mesh
-
-  # MESH - 2.4 GHz 802.11s
-  - vid: 21
-    role: mesh
-    name: mesh_2g
-    prefix: 10.31.27.165/32
-    ipv6_subprefix: -21
-    mesh_ap: hacrafu-mezzelune
-    mesh_radio: 11g_standard
-    mesh_iface: mesh
-
   # DHCP
   - vid: 40
     role: dhcp
     inbound_filtering: true
     enforce_client_isolation: true
-    prefix: 10.31.202.192/27
+    prefix: 10.248.156.128/25
     ipv6_subprefix: 0
     assignments:
       hacrafu-mezzelune: 1
+      fw: 2
 
   # MGMT
   - vid: 42
@@ -72,6 +52,8 @@ networks:
   # UPLINK
   - vid: 50
     role: uplink
+    ingress: 20
+    egress: 20
 
   - role: tunnel
     ifname: ts_wg0
@@ -84,14 +66,6 @@ networks:
     mtu: 1280
     prefix: 10.31.32.209/32
     wireguard_port: 51821
-
-# AP-id, wifi-channel, bandwidth, txpower
-location__channel_assignments_11a_standard__to_merge:
-  hacrafu-mezzelune: 36-40
-
-# AP-id, wifi-channel, bandwidth, txpower
-location__channel_assignments_11g_standard__to_merge:
-  hacrafu-mezzelune: 13-20
 
 # only place these ssh-keys
 ssh_keys:
