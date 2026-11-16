@@ -1,8 +1,8 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 
-{% set profiles = snmp_devices | default([]) | map(attribute='snmp_profile') | list | unique %}
+{%- set profiles = snmp_hosts | default([]) | map('extract', hostvars) | map(attribute='snmp_profile') | list | unique %}
 
-{% if profiles | length > 0 %}
+{%- if profiles | length > 0 %}
 LoadPlugin snmp
 <Plugin snmp>
 {% endif %}
@@ -19,14 +19,15 @@ LoadPlugin snmp
 
 
 
-{% for device in snmp_devices | default([]) %}
-    <Host "{{ device['hostname'] }}">
-        Address "{{ device['address'] }}"
+{% for name in snmp_hosts | default([]) %}
+{%   set host = hostvars[name] %}
+    <Host "{{ name }}">
+        Address "{{ device_ips[name] }}"
         Version 1
         Interval 30
-        Community '{{ device['community'] | default('public') }}'
-  {% for metric_name in collectd_snmp_profiles[device['snmp_profile']] %}
-        Collect "{{ device['snmp_profile'] }}_{{ metric_name }}"
+        Community '{{ host.snmp_community | default('public') }}'
+  {% for metric_name in collectd_snmp_profiles[host.snmp_profile] %}
+        Collect "{{ host.snmp_profile }}_{{ metric_name }}"
   {% endfor %}
     </Host>
 {% endfor %}

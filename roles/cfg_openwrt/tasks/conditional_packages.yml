@@ -1,9 +1,34 @@
 ---
+- name: "Build device IP map"
+  ansible.builtin.set_fact:
+    device_ips_json: >-
+      {% set ns = namespace(map={}) %}
+      {% for net in networks | default([]) if net.assignments is defined %}
+      {%   for name, idx in net.assignments.items() if name not in ns.map %}
+      {%     set _ = ns.map.update({name: net.prefix | ipaddr(idx) | ipaddr('address')}) %}
+      {%   endfor %}
+      {% endfor %}
+      {{ ns.map | to_json }}
+
+# The to_json filter is needed as Ansible would return a plain string otherwise
+# Convert it back with from_json
+- name: "Parse device IP map"
+  ansible.builtin.set_fact:
+    device_ips: "{{ device_ips_json | from_json }}"
+
+- name: "Collect SNMP hosts"
+  ansible.builtin.set_fact:
+    snmp_hosts: >-
+      {{ device_ips.keys() | list | map('extract', hostvars)
+         | selectattr('snmp_profile', 'defined')
+         | map(attribute='inventory_hostname')
+         | list }}
+
 - name: "Add the collectd SNMP plugin to query the SNMP devices"
   set_fact:
     packages: "{{ packages + ['collectd-mod-snmp'] }}"
   when:
-    - snmp_devices | default([]) | length > 0
+    - snmp_hosts | default([]) | length > 0
     - packages | select('match', '^collectd-mod-') | list | length > 0
 
 - name: "Add irqbalance if multicore"
@@ -12,12 +37,20 @@
   when:
     - multicore|default(false)|bool
 
+- name: "Collect airOS DFS hosts"
+  ansible.builtin.set_fact:
+    airos_dfs_hosts: >-
+      {{ device_ips.keys() | list | map('extract', hostvars)
+         | selectattr('os', 'in', ['airos_6', 'airos_8'])
+         | map(attribute='inventory_hostname')
+         | list }}
+
 - name: "Add airos-dfs-reset if configured"
-  set_fact:
+  ansible.builtin.set_fact:
     packages: "{{ packages + ['airos-dfs-reset'] }}"
   when:
-    - airos_dfs_reset|default([])|length > 0
     - role == 'corerouter'
+    - airos_dfs_hosts | length > 0
 
 - name: "Add Dawn + Luci app for corerouters"
   set_fact:
