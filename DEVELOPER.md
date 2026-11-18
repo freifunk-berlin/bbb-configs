@@ -361,6 +361,78 @@ qmi:
     pdptype: ipv4
 ```
 
+### uplink over PPPoE/VDSL
+
+A corerouter can dial PPPoE on a line it owns, e.g. the built-in VDSL modem of a FRITZ!Box. With `uplink_mode: root` tunspace doesn't create a namespace and runs the tunnel over the default route of the PPPoE session. Don't use it for borrowed uplinks like a neighbor's wifi. IPv6 is requested with DHCPv6-PD on the `<name>6` interface.
+
+```yml
+dsl:                          # only for the built-in VDSL modem
+  annex: j
+  tone: b
+  xfer_mode: ptm              # optional, with line_mode the modem only tries VDSL
+  line_mode: vdsl             # optional
+
+networks:
+  - role: uplink
+    name: wan
+    ifname: dsl0
+    vid: 7                    # VLAN of the provider, e.g. 7 for Deutsche Telekom resellers
+    uplink_mode: root
+    uplink_proto: pppoe
+    pppoe_username: "file:/root/pppoe_user"
+    pppoe_password: "file:/root/pppoe_pass"
+    ipv6_reqaddress: try      # optional, odhcp6c reqaddress
+    ipv6_norelease: true      # optional, keep the prefix across reconnects
+    ipv6_default_route: true  # optional, needed for direct_internet networks
+
+  - role: tunnel
+    ifname: ts_wg0
+    mtu: 1280
+    prefix: 10.31.142.120/32
+    wireguard_port: 51820
+```
+
+The uplink gets a `wan` firewall zone which rejects incoming connections. Its default route lives in the main table, so all Freifunk networks and the tunnel move into the VRF `vrf_freifunk`, where Babel installs its routes. dnsmasq, dropbear, uhttpd, collectd and the BGP sessions of bgpdisco run in the VRF, other services on the router can't reach the mesh. The VRF table is looked up before the local table, so hosts in the Freifunk networks can't reach the addresses the router has outside of the VRF. Processes in the VRF can't reach the resolver on the loopback interface, so `/etc/resolv.conf` also lists the address of the router in the VRF.
+
+It needs `bird_only: true`, `kmod-vrf` (added automatically), a tunspace version which supports the `root` topology, and procd, dnsmasq, dropbear, uhttpd and collectd with support for the procd `vrf` instance parameter.
+
+#### uplink watchdog
+
+A router with a PPPoE uplink is only reachable through that uplink, so it tries to recover it on its own. If it can't ping the internet through the uplink, it restarts the interface after 5 minutes, the DSL modem after 15 minutes and itself after one hour, each repeatedly until the uplink is back. After a boot the reboot step only starts counting once the router has been up for an hour, so during an outage of the provider the router reboots about every two hours. The steps ping through the default route of the uplink and don't set the watchcat `interface` option: watchcat would then restart all steps on every event of the interface, also on its own restart of it, and the later steps would never run.
+
+```yml
+uplink_watchdog: true                    # default
+uplink_watchdog_hosts: [9.9.9.9, 1.1.1.1]
+uplink_watchdog_restart_interface: 5m    # 0 skips a step
+uplink_watchdog_restart_dsl: 15m
+uplink_watchdog_reboot: 1h
+```
+
+#### direct internet access
+
+With a PPPoE uplink, a `dhcp` network can use the line directly instead of Freifunk, e.g. for a private wifi:
+
+```yml
+  - vid: 41
+    role: dhcp
+    name: private
+    prefix: 10.31.203.64/27
+    inbound_filtering: true
+    no_corerouter_dns_record: true
+    direct_internet: true
+    ip6class: [wan6, local]   # IPv6 /64 from the prefix delegated to wan6 and from ula_prefix
+    assignments:
+      otto-core: 1
+```
+
+The network stays in the main table with the uplink, so it has no routes to Freifunk and Freifunk has none to it. It is masqueraded to the `wan` zone, not announced to the mesh and served by its own dnsmasq and dropbear instances.
+
+The prefix delegated to the uplink can change with every dial-in. Set a ULA prefix to give the hosts of the network addresses which stay the same, e.g. for Matter and HomeKit devices:
+
+```yml
+ula_prefix: "fd12:3456:789a::/48"   # use a random one
+```
+
 
 ### ext
 
@@ -467,6 +539,16 @@ adblock_provider: lean   # fast (default) or lean
 ```
 
 `fast` uses adblock-fast from the OpenWrt packages feed, `lean` uses adblock-lean from the falter feed. adblock-lean is configured with the `adblock_lean_*` variables in `group_vars/role_corerouter/general.yml`. It blocks ads and threats with the hagezi `pro` and `tif.mini` lists, the `medium` preset of adblock-lean. The blocklist is kept in memory, so the router downloads it again after a reboot.
+
+By default it filters the `default` dnsmasq instance. On a router with direct internet networks that instance only serves them, the Freifunk networks are served by the instance in the VRF, which can be filtered as well:
+
+```yml
+adblock_lean_dnsmasq_instances:
+  - default
+  - vrf_freifunk
+```
+
+On a router with a VRF, run adblock-lean from the private network or the console. From an SSH session over the Freifunk network it can't reach the `default` instance, so its checks fail. The instance in the VRF is tested with `ip vrf exec`.
 
 ### images with custom packages
 

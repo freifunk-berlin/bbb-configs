@@ -1,11 +1,7 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 {% import 'libraries/network.j2' as libnetwork with context %}
-{% set adblock_lean = adblock_enabled | default(false) | bool and adblock_provider == 'lean' %}
-{% if adblock_lean %}
-config dnsmasq 'default'
-{% else %}
-config dnsmasq
-{% endif %}
+{% set dhcp_networks = networks | rejectattr('role', 'in', ['uplink', 'wireless_uplink', 'mesh', 'tunnel', 'ext']) | list %}
+{% macro dnsmasq_options() %}
 	option domainneeded '1'
 	option localise_queries '1'
 	option rebind_protection '1'
@@ -25,9 +21,45 @@ config dnsmasq
 {% for _dns_server in dns_servers %}
         list server '{{ _dns_server }}'
 {% endfor %}
-{% if adblock_lean %}
+{% endmacro %}
+{% set adblock_lean = adblock_enabled | default(false) | bool and adblock_provider == 'lean' %}
+{% if freifunk_vrf or adblock_lean %}
+config dnsmasq 'default'
+{% else %}
+config dnsmasq
+{% endif %}
+{% for network in direct_internet_networks %}
+	list interface '{{ libnetwork.getUciIfname(network) }}'
+{% endfor %}
+{% if freifunk_vrf and direct_internet_networks | length == 0 %}
+	{# only the resolver of the router itself, not the uplink #}
+	list interface 'loopback'
+{% endif %}
+{% if freifunk_vrf %}
+	{# only read its own hosts file, the Freifunk host names of bgpdisco
+	   in /tmp/hosts are for the instance in the VRF #}
+	option ignore_hosts_dir '1'
+{% endif %}
+{% if adblock_lean and 'default' in adblock_lean_dnsmasq_instances %}
 	list addnmount '/bin/busybox'
 	list addnmount '/var/run/adblock-lean/abl-blocklist.gz'
+{% endif %}
+{{ dnsmasq_options() -}}
+{% if freifunk_vrf %}
+
+{# a process in the VRF can only bind to addresses in the VRF #}
+config dnsmasq 'vrf_freifunk'
+	option vrf 'vrf_freifunk'
+	option leasefile '/tmp/dhcp.leases.vrf_freifunk'
+	option noresolv '1'
+  {% for network in dhcp_networks if not network.get('direct_internet') %}
+	list interface '{{ libnetwork.getUciIfname(network) }}'
+  {% endfor %}
+  {% if adblock_lean and 'vrf_freifunk' in adblock_lean_dnsmasq_instances %}
+	list addnmount '/bin/busybox'
+	list addnmount '/var/run/adblock-lean/abl-blocklist.gz'
+  {% endif %}
+{{ dnsmasq_options() -}}
 {% endif %}
 
 {% for network in networks | selectattr('role', 'equalto', 'mgmt') %}
@@ -39,21 +71,39 @@ config domain '{{ host | replace('-', '_') }}_ff'
   {% endfor %}
 {% endfor %}
 
-{% for network in networks | rejectattr('role', 'in', ['uplink', 'wireless_uplink', 'mesh', 'tunnel', 'ext']) %}
+{# The MTU of the path to the internet for the router advertisements: the
+   PPPoE uplink, or the tunnels when the router has no mesh networks #}
+{% set pppoe_uplink = networks | selectattr('uplink_proto', 'defined') | selectattr('uplink_proto', 'equalto', 'pppoe') | first | default({}) %}
+{% set tunnels = networks | selectattr('role', 'equalto', 'tunnel') | list %}
+{% set tunnel_mtu = ([1280] + tunnels | map(attribute='mtu', default=1280) | list) | min | int %}
+{% set tunnels_only = freifunk_vrf and tunnels | length > 0 and networks | selectattr('role', 'equalto', 'mesh') | list | length == 0 %}
+{% for network in dhcp_networks %}
     {% set name = libnetwork.getUciIfname(network) %}
 
 config dhcp 'dhcp_{{ name }}'
 	option ignore '0'
 	option interface '{{ name }}'
+    {% if freifunk_vrf %}
+	option instance '{{ 'default' if network.get('direct_internet') else 'vrf_freifunk' }}'
+    {% endif %}
 	option ra 'server'
 	option dhcpv6 'disabled'
+    {% if network.get('direct_internet') and pppoe_uplink %}
+	option ra_mtu '{{ pppoe_uplink.get('mtu', 1492) }}'
+    {% elif tunnels_only and not network.get('direct_internet') %}
+	option ra_mtu '{{ tunnel_mtu }}'
+    {% endif %}
     {% if network['role'] == 'dhcp' %}
 	option dhcpv4 'server'
 	option force '1'
-	option leasetime '5m'
+	option leasetime '{{ '12h' if network.get('direct_internet') else '5m' }}'
 	option start '2'
 	option limit '{{ network['prefix'] | ansible.utils.ipaddr('size') -3 }}'
+      {% if network.get('direct_internet') %}
+        list dhcp_option '121,0.0.0.0/0,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}'
+      {% else %}
         list dhcp_option '121,0.0.0.0/0,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.31.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.36.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.230.0.0/16,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.248.0.0/14,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }},10.30.96.0/19,{{ network['prefix'] | ansible.utils.ipaddr(network['assignments'][inventory_hostname]) | ansible.utils.ipaddr('address') }}'
+      {% endif %}
     {% else %}
 	option dhcpv4 'disabled'
     {% endif %}
