@@ -8,7 +8,6 @@ altitude: 55
 community: berlin
 
 local_asn: 44194
-peer_asn: 5405
 
 hosts:
   - hostname: ohlauer-gw
@@ -33,6 +32,10 @@ uplink:
   ifname: lan0
   ipv4: 45.153.82.209/31
   ipv6: 2a11:4141:a402::5/127
+  peers:
+    - name: inter.link
+      asn: 5405
+      address: 2a11:4141:a402::4
 
 mgmt:
   ifname: lan3.42

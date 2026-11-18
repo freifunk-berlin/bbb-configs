@@ -7,8 +7,6 @@ location_nice: Alboinkontor Dev System
 community: berlin
 development: true
 
-local_asn: 65023
-peer_asn: 44194
 
 hosts:
   - hostname: ak36dev-gw
@@ -19,6 +17,7 @@ hosts:
     host__packages__to_merge:
       - qemu-ga
       - iperf3
+      - htop
 
 # AK36dev got following prefixes:
 # Router: 10.248.91.0/28 2001:bf7:810:2700::/56
@@ -27,10 +26,19 @@ hosts:
 
 ipv6_prefix: 2001:bf7:810:2700::/56
 
+local_asn: 65023
+
 uplink:
   ifname: eth0
   ipv4: 77.87.51.12/25
-  ipv6: 2001:bf7:b301:1312::13/127
+  ipv6: 2001:bf7:b301:1312::12/64
+  peers:
+    - name: a36s-cr1
+      asn: 44194
+      address: 2001:bf7:b301:1312::121
+    - name: a36s-cr2
+      asn: 44194
+      address: 2001:bf7:b301:1312::122
 
 mgmt:
   ifname: eth1.42
