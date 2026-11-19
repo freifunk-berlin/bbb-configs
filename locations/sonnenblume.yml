@@ -13,6 +13,33 @@ hosts:
     role: corerouter
     model: "avm_fritzbox-7530"
     wireless_profile: freifunk_default
+    host__rclocal__to_merge:
+      - |
+        # Preserve the FRITZ!Box 7530 port layout verified on 2026-11-19:
+        # DHCP (40) and management (42) tagged; uplink (50) untagged on LAN1-4.
+        (
+          for port in lan1 lan2 lan3 lan4; do
+            ip link show dev "$port" >/dev/null 2>&1 || exit 0
+          done
+          for vlan in 40 42 50; do
+            [ "$(uci -q get network.vlan_${vlan})" = 'bridge-vlan' ] &&
+              [ "$(uci -q get network.vlan_${vlan}.device)" = 'switch0' ] &&
+              [ "$(uci -q get network.vlan_${vlan}.vlan)" = "$vlan" ] || exit 0
+          done
+          # Skip if network changes are already staged.
+          pending_changes="$(uci -q changes network)" || exit 0
+          [ -z "$pending_changes" ] || exit 0
+          tagged_ports='lan1:t lan2:t lan3:t lan4:t'
+          uplink_ports='lan1:u lan2:u lan3:u lan4:u'
+          if [ "$(uci -q get network.vlan_40.ports)" != "$tagged_ports" ] ||
+            [ "$(uci -q get network.vlan_42.ports)" != "$tagged_ports" ] ||
+            [ "$(uci -q get network.vlan_50.ports)" != "$uplink_ports" ]; then
+            uci set "network.vlan_40.ports=$tagged_ports" &&
+              uci set "network.vlan_42.ports=$tagged_ports" &&
+              uci set "network.vlan_50.ports=$uplink_ports" &&
+              uci commit network && reload_config
+          fi
+        )
 
 ipv6_prefix: "2001:bf7:830:a200::/56"
 
