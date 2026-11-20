@@ -11,7 +11,7 @@ contacts:
 hosts:
   - hostname: basta
     role: corerouter
-    model: "siemens_ws-ap3610"
+    model: "sophos_ap100c"
     wireless_profile: basta
     host__rclocal__to_merge:
       - |
