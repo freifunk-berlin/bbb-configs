@@ -1,0 +1,91 @@
+---
+location: curly
+location_nice: Curly
+latitude: 52.547944714
+longitude: 13.366893232
+altitude: 3
+height: 2
+community: berlin
+
+hosts:
+  - hostname: curly
+    role: corerouter
+    model: "sophos_ap100c"
+    wireless_profile: curly
+
+ipv6_prefix: "2001:bf7:750:dd00::/56"
+
+# 10.248.157.32/27
+# DHCP: 10.248.157.32/27
+# MESH: 10.31.202.193
+#       10.31.202.194
+#       10.31.202.195
+
+networks:
+  - vid: 40
+    role: dhcp
+    inbound_filtering: false
+    enforce_client_isolation: false
+    prefix: 10.248.157.32/27
+    ipv6_subprefix: 0
+    gateway: 1
+    dns: 1
+    assignments:
+      curly: 1
+
+  # MESH - 5 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_5ghz
+    prefix: 10.31.202.193/32
+    ipv6_subprefix: -2
+    mesh_ap: curly
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - 2.4 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_2ghz
+    prefix: 10.31.202.194/32
+    ipv6_subprefix: -3
+    # make mesh_metric for 2GHz worse than 5GHz
+    mesh_metric_lqm: ["default 0.8"]
+    mesh_ap: curly
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  - vid: 211
+    role: mesh
+    name: lanmesh
+    prefix: 10.31.202.195/32
+    ipv6_subprefix: -4
+
+location__channel_assignments_11a_standard__to_merge:
+  curly: 36-40
+
+location__wireless_profiles__to_merge:
+  - name: curly
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: purpleplatypus
+        encryption: sae-mixed
+        key: "file:/root/wifi-pwd-curly"
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard, 11a_mesh]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        mesh_nolearn: 1
+        ifname_hint: mesh
