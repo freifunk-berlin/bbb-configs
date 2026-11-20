@@ -60,7 +60,7 @@ config interface '{{ name }}'
     {% endif %}
     {# Generate a deterministic random MAC address to avoid issues with multiple paths to the same location #}
     {% if network['role'] == 'mesh' %}
-        option macaddr '{{- libnetwork.generateDeterministicMAC(inventory_hostname ~ "-" ~ name) -}}'
+    option macaddr '{{- libnetwork.generateDeterministicMAC(inventory_hostname ~ "-" ~ name) -}}'
     {% endif %}
     {% if 'assignments' in network and inventory_hostname in network['assignments'] %}
 	option proto 'static'
