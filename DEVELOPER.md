@@ -202,6 +202,20 @@ networks:
     assignments:              # assign static addresses to devices
       magda-core: 1
 
+  - vid: 41
+    role: dhcp
+    name: priv
+    prefix: 192.168.0.0/24    # with nat: true, IPv4 may be RFC1918 and is reused freely across locations
+    ipv6_subprefix: 1         # IPv6 stays native Freifunk; combine with inbound_filtering for privacy
+    inbound_filtering: true
+    nat: true                 # masquerade IPv4 behind the core-router's Freifunk address. The prefix is not
+                              # announced via Babel/OLSR, and hosts get <name>.lan DNS records on the core only
+    dhcp_start: 11            # first address of the DHCP pool (default 2). Keeps lower addresses free for static hosts
+    no_corerouter_dns_record: true
+    assignments:
+      magda-core: 1
+      magda-nas: 8
+
   - vid: 42
     role: mgmt                # create a management vlan in which we can reach every device on this site for maintenance
     prefix: 10.31.42.0/28
