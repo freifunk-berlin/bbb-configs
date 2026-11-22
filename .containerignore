@@ -1,0 +1,10 @@
+**/__pycache__/
+.vscode/
+venv/
+.env
+tmp/
+# Ignore vim swap files:
+*~
+*.swp
+*.swo
+!.github/linters/
