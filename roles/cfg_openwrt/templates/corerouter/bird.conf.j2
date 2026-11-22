@@ -9,8 +9,13 @@ include "/dev/shm/bird_*.conf";
 
 #master4 is implicitly created
 ipv6 sadr table v6_main;
+{% if freifunk_vrf %}
+ipv4 table v4_freifunk_vrf;
+ipv6 sadr table v6_freifunk_vrf;
+{% else %}
 ipv4 table v4_babel_ff;
 ipv4 table v4_babel_default;
+{% endif %}
 
 protocol device {
 };
@@ -22,7 +27,14 @@ protocol direct {
 	ipv4;
 }
 
+{# Without mesh networks the Babel neighbours are only the gateways behind
+   the tunnels. Such a router only announces its own networks and doesn't
+   send the routes of one gateway back or to another one. #}
+{% set babel_leaf = networks | selectattr('role', 'equalto', 'mesh') | list | length == 0 %}
 protocol babel {
+{% if freifunk_vrf %}
+	vrf "vrf_freifunk";
+{% endif %}
 	randomize router id yes;
 	ipv6 sadr {
 		table v6_main;
@@ -46,7 +58,9 @@ protocol babel {
 
 		export filter {
 			if net = {{ ipv6_prefix }} from ::/0 then accept;
+{% if not babel_leaf %}
 			if source = RTS_BABEL then accept;
+{% endif %}
 			reject;
 		};
 	};
@@ -68,7 +82,19 @@ protocol babel {
 {% endfor %}
 			accept;
 		};
-		export where source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]; # Readvertise learned routes and advertise local networks from 10/8
+{% if babel_leaf %}
+  {% set export4 = 'source != RTS_BABEL && net ~ [ 10.0.0.0/8{21,32} ]' %}
+{% else %}
+  {# readvertise learned routes and advertise local networks from 10/8 #}
+  {% set export4 = 'source = RTS_BABEL || net ~ [ 10.0.0.0/8{21,32} ]' %}
+{% endif %}
+{% if direct_internet_networks | length > 0 %}
+		# Networks with direct internet access aren't part of Freifunk
+		export where net !~ [ {{ direct_internet_networks | map(attribute='prefix') | join(', ') }} ]
+			&& ({{ export4 }});
+{% else %}
+		export where {{ export4 }};
+{% endif %}
 	};
 
 	# Mesh interfaces
@@ -91,7 +117,11 @@ protocol kernel {
 	ipv6 sadr {
 		table v6_main;
 		import all;
+{% if freifunk_vrf %}
+		export none; # Babel routes go to the VRF table only
+{% else %}
 		export all;
+{% endif %}
 	};
 	learn all; # Allow learning loopback route
 }
@@ -106,6 +136,41 @@ protocol kernel {
 	};
 }
 
+{% if freifunk_vrf %}
+# Babel routes for the Freifunk VRF. A table can only have one kernel
+# protocol, so they are piped into tables of their own.
+protocol pipe {
+	table master4;
+	peer table v4_freifunk_vrf;
+	export where source = RTS_BABEL;
+}
+
+protocol kernel {
+	vrf "vrf_freifunk";
+	kernel table 30;
+	ipv4 {
+		table v4_freifunk_vrf;
+		import none;
+		export all;
+	};
+}
+
+protocol pipe {
+	table v6_main;
+	peer table v6_freifunk_vrf;
+	export where source = RTS_BABEL;
+}
+
+protocol kernel {
+	vrf "vrf_freifunk";
+	kernel table 30;
+	ipv6 sadr {
+		table v6_freifunk_vrf;
+		import none;
+		export all;
+	};
+}
+{% else %}
 # TODO: Get rid of the following when OLSRD is gone
 protocol kernel {
 	kernel table 10;
@@ -136,3 +201,4 @@ protocol pipe {
 	peer table v4_babel_default;
 	export where net = 0.0.0.0/0;
 }
+{% endif %}

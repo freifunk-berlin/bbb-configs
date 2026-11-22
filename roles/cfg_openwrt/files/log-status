@@ -1,0 +1,94 @@
+#!/bin/sh
+#
+# Writes a snapshot of the system, DSL, shaper and wifi state to the log,
+# called by cron. Counters are cumulative, compare two snapshots to get rates.
+
+log() {
+	logger -t status "$*"
+}
+
+read -r load1 load5 _ </proc/loadavg
+log "sys load=$load1/$load5" \
+	"mem_avail=$(awk '/MemAvailable/ { print int($2 / 1024) }' /proc/meminfo)MB" \
+	"conntrack=$(cat /proc/sys/net/netfilter/nf_conntrack_count 2>/dev/null)" \
+	"uptime=$(cut -d. -f1 /proc/uptime)s"
+
+ping_stats() {
+	ping -q -c 3 -W 2 "$@" 2>/dev/null | awk '
+		/packet loss/ { loss = $(NF - 2) }
+		/round-trip/ { split($4, t, "/"); avg = t[2]; max = t[3] }
+		END { printf "loss=%s avg=%sms max=%sms", loss ? loss : "100%", avg ? avg : "-", max ? max : "-" }'
+}
+
+log "ping uplink $(ping_stats 1.1.1.1)"
+ip link show vrf_freifunk >/dev/null 2>&1 &&
+	log "ping freifunk $(ping_stats -I vrf_freifunk 1.1.1.1)"
+
+dsl=$(ubus call dsl metrics 2>/dev/null)
+if [ -n "$dsl" ]; then
+	# jsonfilter leaves out missing values, e.g. while the line is down
+	up='' uptime='' ds_rate='' us_rate='' ds_attndr='' us_attndr='' ds_snr='' us_snr=''
+	n_es='' n_ses='' n_crc='' n_cv='' n_fecs='' n_uas='' f_es='' f_ses='' f_crc='' f_leftrs='' f_uas=''
+	eval "$(echo "$dsl" | jsonfilter \
+		-e 'up=@.up' -e 'uptime=@.uptime' \
+		-e 'ds_rate=@.downstream.data_rate' -e 'us_rate=@.upstream.data_rate' \
+		-e 'ds_attndr=@.downstream.attndr' -e 'us_attndr=@.upstream.attndr' \
+		-e 'ds_snr=@.downstream.snr' -e 'us_snr=@.upstream.snr' \
+		-e 'n_es=@.errors.near.es' -e 'n_ses=@.errors.near.ses' -e 'n_crc=@.errors.near.crc_p' \
+		-e 'n_cv=@.errors.near.cv_p' -e 'n_fecs=@.errors.near.fecs' -e 'n_uas=@.errors.near.uas' \
+		-e 'f_es=@.errors.far.es' -e 'f_ses=@.errors.far.ses' -e 'f_crc=@.errors.far.crc_p' \
+		-e 'f_leftrs=@.errors.far.leftrs' -e 'f_uas=@.errors.far.uas')"
+	log "dsl up=$up uptime=${uptime}s rate=$((${ds_rate:-0} / 1000))/$((${us_rate:-0} / 1000))kbit" \
+		"attainable=$((${ds_attndr:-0} / 1000))/$((${us_attndr:-0} / 1000))kbit" \
+		"snr=$(printf '%.1f/%.1f' "${ds_snr:-0}" "${us_snr:-0}")dB" \
+		"near: es=$n_es ses=$n_ses crc=$n_crc cv=$n_cv fecs=$n_fecs uas=$n_uas" \
+		"far: es=$f_es ses=$f_ses crc=$f_crc leftrs=$f_leftrs uas=$f_uas"
+fi
+
+for dev in $(tc qdisc show | awk '$2 == "cake" { print $5 }'); do
+	bytes='' drops='' overlimits='' backlog='' be_delay='' be_peak='' be_marks='' be_drops=''
+	eval "$(tc -j -s qdisc show dev "$dev" | jsonfilter \
+		-e 'bytes=@[0].bytes' -e 'drops=@[0].drops' \
+		-e 'overlimits=@[0].overlimits' -e 'backlog=@[0].backlog' \
+		-e 'be_delay=@[0].tins[1].avg_delay_us' -e 'be_peak=@[0].tins[1].peak_delay_us' \
+		-e 'be_marks=@[0].tins[1].ecn_mark' -e 'be_drops=@[0].tins[1].drops')"
+	log "cake $dev bytes=$bytes drops=$drops overlimits=$overlimits backlog=$backlog" \
+		"besteffort: avg_delay=${be_delay}us peak_delay=${be_peak}us marks=$be_marks drops=$be_drops"
+done
+
+seen=
+for dev in $(iw dev | awk '$1 == "Interface" { print $2 }'); do
+	freq=$(iw dev "$dev" survey dump | awk '/in use/ { print $2 }')
+	case " $seen " in
+	*" $freq "*) ;;
+	*)
+		seen="$seen $freq"
+		log "radio $freq $(iw dev "$dev" survey dump | awk '
+			/in use/ { use = 1 }
+			use && /noise/ { printf "noise=%sdBm ", $2 }
+			use && /active time/ { printf "active=%sms ", $4 }
+			use && /busy time/ { printf "busy=%sms ", $4 }
+			use && /receive time/ { printf "rx=%sms ", $4 }
+			use && /transmit time/ { printf "tx=%sms", $4; exit }')"
+		;;
+	esac
+
+	iw dev "$dev" station dump | awk -v dev="$dev" '
+		function flush() {
+			if (mac)
+				printf "sta %s %s signal=%s avg=%s tx=%s rx=%s tx_pkts=%s retries=%s failed=%s connected=%ss\n",
+					dev, mac, sig, avg, tx, rx, pkts, retries, failed, conn
+		}
+		$1 == "Station" { flush(); mac = $2; sig = avg = tx = rx = pkts = retries = failed = conn = "-" }
+		$1 == "signal:" { sig = $2 }
+		$1 == "signal" && $2 == "avg:" { avg = $3 }
+		$1 == "tx" && $2 == "bitrate:" { tx = $3 }
+		$1 == "rx" && $2 == "bitrate:" { rx = $3 }
+		$1 == "tx" && $2 == "packets:" { pkts = $3 }
+		$1 == "tx" && $2 == "retries:" { retries = $3 }
+		$1 == "tx" && $2 == "failed:" { failed = $3 }
+		$1 == "connected" { conn = $3 }
+		END { flush() }' | while read -r line; do
+		log "$line"
+	done
+done

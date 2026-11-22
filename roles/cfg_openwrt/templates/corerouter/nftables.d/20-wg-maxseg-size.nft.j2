@@ -9,5 +9,7 @@ chain wg_maxseg {
     type filter hook forward priority -1; policy accept;
 	oifname "ts_*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }
 	iifname "ts_*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }
+	# in a VRF the input interface is the VRF device, the tunnel is the slave
+	meta sdifname "ts_*" tcp flags syn tcp option maxseg size set meta nfproto map { ipv4 : {{ ipv4_mss }}, ipv6 : {{ ipv6_mss }} }
 }
 {% endif %}

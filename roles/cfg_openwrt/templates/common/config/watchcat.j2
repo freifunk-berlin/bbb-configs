@@ -1,0 +1,35 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+{% import 'libraries/network.j2' as libnetwork with context %}
+{# No interface option: watchcat restarts all its instances on every event
+   of a configured interface, also on its own ifup, so the later steps would
+   never run. The hosts are pinged through the default route of the uplink. #}
+{% macro watchcat(name, mode, period) %}
+config watchcat '{{ name }}'
+	option mode '{{ mode }}'
+	option period '{{ period }}'
+	option pinghosts '{{ uplink_watchdog_hosts | join(' ') }}'
+{{ caller() -}}
+{% endmacro %}
+{% for network in uplink_watchdog_networks %}
+  {% set uplink = libnetwork.getUciIfname(network) %}
+  {% if uplink_watchdog_restart_interface | string != '0' %}
+    {% call watchcat(uplink ~ '_interface', 'run_script', uplink_watchdog_restart_interface) %}
+	option script '/etc/uplink-watchdog-ifup-{{ uplink }}.sh'
+	option reset_failure_timer '1'
+    {% endcall %}
+
+  {% endif %}
+  {% if dsl is defined and uplink_watchdog_restart_dsl | string != '0' %}
+    {% call watchcat(uplink ~ '_dsl', 'run_script', uplink_watchdog_restart_dsl) %}
+	option script '/etc/uplink-watchdog-dsl.sh'
+	option reset_failure_timer '1'
+    {% endcall %}
+
+  {% endif %}
+  {% if uplink_watchdog_reboot | string != '0' %}
+    {% call watchcat(uplink ~ '_reboot', 'ping_reboot', uplink_watchdog_reboot) %}
+	option forcedelay '30'
+    {% endcall %}
+
+  {% endif %}
+{% endfor %}
