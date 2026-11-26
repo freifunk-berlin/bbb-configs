@@ -1,0 +1,122 @@
+---
+location: vonnegut
+location_nice: Wrangelkiez
+latitude: 52.4992704
+longitude: 13.4434143
+contacts:
+  - https://config.berlin.freifunk.net/contact/6161/InZvbm5lZ3V0Ig.awcp_Q.9FGa2WYcSaAGJqQXTplLPR8PxRM
+
+hosts:
+  - hostname: vonnegut
+    role: corerouter
+    model: cudy_wr3000e-v1
+    wireless_profile: vonnegut
+
+# All allocations for this one node (registered as vonnegut + vonnegut26 at config.berlin.freifunk.net):
+# 10.31.38.170/32 mesh 2.4 GHz, 10.31.38.171/32 mesh 5 GHz, 10.31.38.203/32 mesh wired (NanoBeam),
+# 10.31.104.192/28 private Wi-Fi, 10.31.202.200/29 public Wi-Fi, 10.31.104.208/30 MGMT,
+# 2001:bf7:831:2600::/56 IPv6
+
+ipv6_prefix: "2001:bf7:831:2600::/56"
+
+networks:
+  # MESH - 2.4 GHz 802.11s
+  - vid: 20
+    role: mesh
+    name: mesh_2g
+    prefix: 10.31.38.170/32
+    ipv6_subprefix: -20
+    mesh_ap: vonnegut
+    mesh_radio: 11g_standard
+    mesh_iface: mesh
+
+  # MESH - 5 GHz 802.11s
+  - vid: 21
+    role: mesh
+    name: mesh_5g
+    prefix: 10.31.38.171/32
+    ipv6_subprefix: -21
+    mesh_ap: vonnegut
+    mesh_radio: 11a_standard
+    mesh_iface: mesh
+
+  # MESH - wired, NanoBeam 5AC on the LAN port -> zwingli-sued-5ghz. zwingli's OLSR arrives
+  # TAGGED as VLAN 10 on this cable (measured 2026-11-26), although zwingli.yml has mesh_sued as vid 12.
+  - vid: 10
+    role: mesh
+    name: mesh_ptp
+    prefix: 10.31.38.203/32
+    ipv6_subprefix: -10
+
+  # DHCP - public Wi-Fi (berlin.freifunk.net), clients isolated
+  - vid: 40
+    role: dhcp
+    name: dhcp
+    prefix: 10.31.202.200/29
+    ipv6_subprefix: 0
+    inbound_filtering: true
+    enforce_client_isolation: true
+    assignments:
+      vonnegut: 1
+
+  # DHCP - private Wi-Fi (ausbreitung, WPA2), own devices can see each other, mesh can't get in
+  - vid: 41
+    role: dhcp
+    name: prdhcp
+    prefix: 10.31.104.192/28
+    ipv6_subprefix: 2
+    inbound_filtering: true
+    enforce_client_isolation: false
+    assignments:
+      vonnegut: 1
+
+  # MGMT - router only
+  - vid: 42
+    role: mgmt
+    prefix: 10.31.104.208/30
+    gateway: 1
+    dns: 1
+    ipv6_subprefix: 1
+    assignments:
+      vonnegut: 1
+
+# Public SSIDs as in freifunk_default, plus the private one. Its password is NOT here: put it in
+# /root/wifi_pass on the router (read at boot by replace_secrets), e.g.
+#   echo -n 'PASSWORD' > /root/wifi_pass; reboot
+location__wireless_profiles__to_merge:
+  - name: vonnegut
+    ifaces:
+      - mode: ap
+        ssid: berlin.freifunk.net
+        encryption: none
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ff
+
+      - mode: ap
+        ssid: berlin.freifunk.net Encrypted
+        encryption: owe
+        network: dhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: ffowe
+        ieee80211w: 2
+
+      - mode: mesh
+        mesh_id: Mesh-Freifunk-Berlin
+        radio: [11a_standard, 11g_standard]
+        mcast_rate: 12000
+        mesh_fwding: 0
+        mesh_nolearn: 1
+        ifname_hint: mesh
+
+      - mode: ap
+        ssid: ausbreitung
+        encryption: psk2
+        key: 'file:/root/wifi_pass'
+        network: prdhcp
+        radio: [11a_standard, 11g_standard]
+        ifname_hint: pr
+
+location__ssh_keys__to_merge:
+  - comment: vonnegut-owner
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKnuz3qufoKqpKUrVcl1QzSupqn/6wCDS9ynpMnCuWVL
