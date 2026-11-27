@@ -1,0 +1,14 @@
+---
+target: ramips/mt7621
+brand_nice: Cudy
+model_nice: C200P
+version_nice: v1
+wireless_profile: disable
+openwrt_version: 25.12-latest
+
+dsa_ports:
+  - wan
+  - lan2
+  - lan3
+  - lan4
+  - lan5
